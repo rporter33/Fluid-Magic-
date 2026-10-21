@@ -238,3 +238,37 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
 - Enemy armies are visible in provinces adjacent to any owned province or any own army
   and anywhere a scout can see (scouts see 2 provinces). Population and springs of a
   province are visible once it has been owned or scouted.
+
+## Implementation decisions
+
+Rules settled during implementation where this doc was silent or conflicted, recorded per
+`CLAUDE.md`. Numbers live in `src/content/mapgen.ts` and `docs/09-balance.md`.
+
+**Map generation (Phase 1)**
+- **Province count**: the New Game size (Small 40, Medium 60, Large 80) is the count for two
+  nations; each nation beyond two adds 25. Medium with two nations is section 2's 60. The
+  count is exact, not approximate.
+- **Capital terrain and name** come from the nation (Kharnath is Plains, Deepmoss is
+  Forest), overriding section 2's "Farmland or Plains" where the nation doc differs. When
+  the same nation appears twice, later capitals get numerals (Kharnath II).
+- **Capital placement**: farthest-point sampling on the province graph, at least 6 apart;
+  which nation gets which capital is shuffled. Maps whose capitals' starting neighborhoods
+  (provinces within 2 hops) differ in population by more than 1.5x are passed over: the
+  generator takes the first map within the ratio, or the most even of several valid maps.
+- **Terrain** is assigned by rank from simplex-noise elevation and moisture, so every map has
+  exactly the terrain shares in `TERRAIN_SHARES`, capitals included.
+- **Adjacency**: two provinces are neighbors exactly when their borders share a segment;
+  cells that meet at a single point are not. The drawn map and the graph always agree.
+- **Wellsprings** are never adjacent to each other and at least 3 from every capital. They
+  are chosen so every nation is equally far, in total, from the Wellsprings it needs to win
+  (2 of 3, 3 of 5), and then spread as far apart as that allows.
+- **Wellspring scale bonus**: "+1 to one scale" is one step toward one pole of one axis,
+  chosen by the generator. Axes differ between Wellsprings while there are axes left; the
+  pole is random.
+- **Springs** (section 4): independent provinces hold 0 to 2 springs. Across the
+  independents every color gets the same number of springs, give or take one, and at least
+  two; terrain decides which color goes where when there is a choice. Wellspring provinces
+  hold no ordinary springs, since they already yield every color.
+- **Independents** (section 9): each province stores its starting defender strength
+  (`8 + 4d`, 30 on Wellsprings) at generation. Troop composition by terrain comes in Phase 3.
+- **Starting population** is uniform in the terrain's range, rounded to 100.

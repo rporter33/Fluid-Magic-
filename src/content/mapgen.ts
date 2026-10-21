@@ -1,5 +1,5 @@
 // Map generation parameters (docs/01-core-rules.md sections 2, 4, 9, 13 and docs/07-ui.md
-// New Game). Values not given by the docs are recorded in docs/09-balance.md.
+// New Game). Values the docs do not give are recorded in docs/09-balance.md.
 import type { Color } from './colors';
 import type { TerrainId } from './terrain';
 
@@ -9,7 +9,7 @@ export type MapSizeId = (typeof MAP_SIZE_IDS)[number];
 export interface MapSizeDef {
   id: MapSizeId;
   name: string;
-  /** Province count for a two-nation game; each extra nation adds `provincesPerExtraNation`. */
+  /** Province count for MAPGEN.baseNations nations. */
   provinces: number;
 }
 
@@ -22,6 +22,9 @@ export const MAP_SIZES: Readonly<Record<MapSizeId, MapSizeDef>> = {
 export const MAPGEN = {
   minNations: 2,
   maxNations: 4,
+  /** Nation count that MAP_SIZES and wellspringsBase are defined for. */
+  baseNations: 2,
+  /** Provinces added per nation beyond baseNations. */
   provincesPerExtraNation: 25,
 
   // Geometry, in abstract map units. The renderer scales to the screen.
@@ -37,30 +40,45 @@ export const MAPGEN = {
   poissonRadius: 0.75,
   /** Candidate tries per active point in Bridson's algorithm. */
   poissonTries: 30,
+  /** Random candidates compared when a missing site is added (the farthest one wins). */
+  fillCandidates: 30,
   lloydRounds: 2,
-  /** Shared borders shorter than this fraction of sqrt(provinceArea) are not adjacent. */
-  minSharedEdge: 0.05,
+  /**
+   * Shared borders shorter than this fraction of sqrt(provinceArea) do not make provinces
+   * adjacent. Kept tiny so only point contacts are dropped and the graph matches the drawing.
+   */
+  minSharedEdge: 0.001,
   minNeighbors: 2,
 
   // Terrain noise: fractal simplex noise sampled at each province site.
   /** Noise features across the map's longer side at the base octave. */
-  noiseFeatures: 2.5,
+  noiseFeatures: 1.5,
   noiseOctaves: 3,
 
   // Capitals.
   capitalMinDistance: 6,
   capitalPop: 25000,
   capitalSprings: 4,
+  /** Hops around a capital counted as its starting neighborhood. */
+  capitalRingRadius: 2,
+  /** A map is balanced when the richest neighborhood's population is at most this times the poorest's. */
+  capitalBalanceRatio: 1.5,
+  /** Valid maps generated in search of a balanced one before the most balanced is taken. */
+  balanceCandidates: 6,
 
-  // Wellsprings: 3 for two nations, 5 for three or four.
-  wellspringsTwoNations: 3,
-  wellspringsMoreNations: 5,
+  // Wellsprings.
+  /** Wellsprings with up to baseNations nations. */
+  wellspringsBase: 3,
+  /** Wellsprings with more than baseNations nations. */
+  wellspringsAboveBase: 5,
   wellspringMinCapitalDistance: 3,
   /** Minimum graph distance between two Wellsprings (2 = never adjacent). */
   wellspringMinSeparation: 2,
   /** Cost of one hop of unfairness against one hop of separation when placing them. */
   wellspringFairnessWeight: 3,
-  /** Upper bound on improvement passes of the Wellspring swap search. */
+  /** Starting points of the Wellspring search; the lowest-cost result wins. */
+  wellspringSearchStarts: 8,
+  /** Upper bound on improvement passes per start of the Wellspring swap search. */
   wellspringSearchPasses: 20,
   wellspringStrength: 30,
 
@@ -94,13 +112,16 @@ export const TERRAIN_SHARES: Readonly<Record<TerrainId, number>> = {
   plains: 0.24,
 };
 
-/** Spring colors a terrain can hold; each spring picks one uniformly. */
+/**
+ * Spring colors each terrain suits. Every color gets an equal number of springs per map;
+ * these lists decide where each color lands when there is a choice.
+ */
 export const TERRAIN_SPRING_COLORS: Readonly<Record<TerrainId, readonly Color[]>> = {
-  plains: ['W', 'G'],
+  plains: ['W', 'U'],
   farmland: ['G', 'W'],
-  forest: ['G'],
+  forest: ['G', 'B'],
   hills: ['R', 'W'],
-  mountains: ['U', 'R'],
+  mountains: ['R', 'U'],
   swamp: ['B', 'U'],
   wasteland: ['R', 'B'],
 };

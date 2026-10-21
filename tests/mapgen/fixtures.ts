@@ -1,6 +1,7 @@
-// Shared helpers for mapgen tests.
+// Shared helpers for mapgen tests. They measure maps independently of src/mapgen, so a bug
+// there cannot hide itself.
+import type { CapitalSpec, MapData, Point } from '../../src/mapgen/types';
 import type { ProvinceId } from '../../src/sim/ids';
-import type { CapitalSpec, MapData } from '../../src/mapgen/types';
 
 export const KHARNATH: CapitalSpec = { color: 'R', terrain: 'plains', name: 'Kharnath' };
 export const DEEPMOSS: CapitalSpec = { color: 'G', terrain: 'forest', name: 'Deepmoss' };
@@ -32,19 +33,48 @@ export function gridGraph(w: number, h: number): number[][] {
   return adj;
 }
 
-/** Plain BFS used to check graph code independently of src/mapgen/graph.ts. */
-export function hops(adj: readonly (readonly number[])[], from: number, to: number): number {
-  const seen = new Map<number, number>([[from, 0]]);
+/** Hop distances from `from` by plain BFS; Infinity when unreachable. */
+export function hopsFrom(adj: readonly (readonly number[])[], from: number): number[] {
+  const dist = adj.map(() => Number.POSITIVE_INFINITY);
+  dist[from] = 0;
   const queue = [from];
   while (queue.length > 0) {
     const node = queue.shift()!;
-    if (node === to) return seen.get(node)!;
     for (const n of adj[node]!) {
-      if (!seen.has(n)) {
-        seen.set(n, seen.get(node)! + 1);
+      if (dist[n] === Number.POSITIVE_INFINITY) {
+        dist[n] = dist[node]! + 1;
         queue.push(n);
       }
     }
   }
-  return Number.POSITIVE_INFINITY;
+  return dist;
+}
+
+export function hops(adj: readonly (readonly number[])[], from: number, to: number): number {
+  return hopsFrom(adj, from)[to]!;
+}
+
+/**
+ * Length of boundary two polygons share: the overlap of their collinear edges. Measures the
+ * drawn border directly, without the bisector test src/mapgen/voronoi.ts uses.
+ */
+export function touchingLength(a: readonly Point[], b: readonly Point[], tol = 1e-6): number {
+  let total = 0;
+  a.forEach((p, i) => {
+    const q = a[(i + 1) % a.length]!;
+    const len = Math.hypot(q.x - p.x, q.y - p.y);
+    if (len === 0) return;
+    const ux = (q.x - p.x) / len;
+    const uy = (q.y - p.y) / len;
+    const offLine = (r: Point) => Math.abs((r.x - p.x) * uy - (r.y - p.y) * ux);
+    const along = (r: Point) => (r.x - p.x) * ux + (r.y - p.y) * uy;
+    b.forEach((r, j) => {
+      const s = b[(j + 1) % b.length]!;
+      if (offLine(r) > tol || offLine(s) > tol) return;
+      const lo = Math.max(0, Math.min(along(r), along(s)));
+      const hi = Math.min(len, Math.max(along(r), along(s)));
+      if (hi > lo) total += hi - lo;
+    });
+  });
+  return total;
 }

@@ -1,16 +1,18 @@
 // seed + size + capitals -> MapData. Pure and deterministic: the same params always give
-// the same map. A failed attempt (too few neighbors, capitals too close) retries with the
-// rng's next values, so retries are deterministic too.
+// the same map. Each attempt draws from the same rng stream, so retries are deterministic
+// too. Attempts that fail validation are discarded; among valid maps the first whose capital
+// neighborhoods are balanced wins, else the most balanced of MAPGEN.balanceCandidates.
 import { isColor } from '../content/colors';
 import { MAP_SIZES, MAPGEN } from '../content/mapgen';
-import { isTerrainId } from '../content/terrain';
+import { isTerrainId, type TerrainId } from '../content/terrain';
 import { newId, type ProvinceId } from '../sim/ids';
 import { createRng, type RngState } from '../sim/rng';
 import { centroid, roundedRect } from './geometry';
 import { bfsDistances, isConnected } from './graph';
 import { nameProvinces } from './names';
-import { createSimplex2D, fractal } from './noise';
+import { createSimplex2D, fractal, type Noise2D } from './noise';
 import {
+  capitalBalance,
   independentStrength,
   placeCapitals,
   placeSprings,
@@ -31,17 +33,13 @@ import {
   type Bounds,
 } from './voronoi';
 
-type Attempt = { ok: true; map: MapData } | { ok: false; problems: string[] };
-
-/** Coordinates are stored to 0.01 map units. */
-function roundPoint(p: Point): Point {
-  return { x: Math.round(p.x * 100) / 100, y: Math.round(p.y * 100) / 100 };
-}
+type Attempt = { ok: true; map: MapData; balance: number } | { ok: false; problems: string[] };
 
 function checkParams(params: MapGenParams): void {
   if (!Number.isFinite(params.seed)) throw new RangeError(`seed must be finite`);
-  if (!Object.hasOwn(MAP_SIZES, params.size))
+  if (!Object.hasOwn(MAP_SIZES, params.size)) {
     throw new RangeError(`unknown map size ${params.size}`);
+  }
   const nations = params.capitals.length;
   if (nations < MAPGEN.minNations || nations > MAPGEN.maxNations) {
     throw new RangeError(
@@ -63,6 +61,7 @@ function attempt(
   outline: readonly Point[],
 ): Attempt {
   const scale = Math.sqrt(MAPGEN.provinceArea);
+  const specs = params.capitals;
 
   // Geometry: sites, relaxation, cells, adjacency.
   const sampled = poissonDisc(
@@ -73,7 +72,7 @@ function attempt(
     MAPGEN.poissonTries,
   );
   const sites = lloydRelax(
-    adjustCount(rng, sampled, count, outline, bounds, MAPGEN.poissonTries),
+    adjustCount(rng, sampled, count, outline, bounds, MAPGEN.fillCandidates),
     outline,
     bounds,
     MAPGEN.lloydRounds,
@@ -85,51 +84,44 @@ function attempt(
   if (sparse >= 0) return { ok: false, problems: [`cell ${sparse} has too few neighbors`] };
   if (!isConnected(adj)) return { ok: false, problems: ['graph not connected'] };
 
+  // Capitals first, so terrain shares can count their fixed terrain.
+  const capitals = placeCapitals(rng, adj, specs.length);
+  if (capitals === null) return { ok: false, problems: ['capitals too close'] };
+  const capitalTerrain = new Map<number, TerrainId>(
+    capitals.map((index, slot) => [index, specs[slot]?.terrain ?? 'plains']),
+  );
+
   // Terrain from noise sampled at the sites.
   const elevationNoise = createSimplex2D(rng);
   const moistureNoise = createSimplex2D(rng);
   const frequency = MAPGEN.noiseFeatures / Math.max(bounds.width, bounds.height);
-  const sample = (noise: typeof elevationNoise) =>
+  const sample = (noise: Noise2D) =>
     sites.map((p) => fractal(noise, p.x * frequency, p.y * frequency, MAPGEN.noiseOctaves));
-  const terrains = assignTerrain(sample(elevationNoise), sample(moistureNoise));
+  const terrains = assignTerrain(sample(elevationNoise), sample(moistureNoise), capitalTerrain);
 
-  // Capitals take their nation's terrain.
-  const capitals = placeCapitals(rng, adj, params.capitals.length, MAPGEN.capitalMinDistance);
-  if (capitals === null) return { ok: false, problems: ['capitals too close'] };
-  capitals.forEach((index, slot) => {
-    terrains[index] = params.capitals[slot]?.terrain ?? terrains[index] ?? 'plains';
-  });
-  const wells = placeWellsprings(
-    rng,
-    adj,
-    capitals,
-    wellspringCount(params.capitals.length),
-    MAPGEN.wellspringMinCapitalDistance,
-    MAPGEN.wellspringMinSeparation,
-  );
+  const wells = placeWellsprings(rng, adj, capitals, wellspringCount(specs.length));
   if (wells === null) return { ok: false, problems: ['no room for Wellsprings'] };
   const steps = wellspringSteps(rng, wells.length);
-
   const springs = placeSprings(
     rng,
     terrains,
-    capitals.map((index, slot) => ({ index, color: params.capitals[slot]?.color ?? 'W' })),
+    capitals.map((index, slot) => ({ index, color: specs[slot]?.color ?? 'W' })),
     wells,
   );
   const names = nameProvinces(
     rng,
     terrains,
-    capitals.map((index, slot) => [index, params.capitals[slot]?.name ?? ''] as const),
+    capitals.map((index, slot) => [index, specs[slot]?.name ?? ''] as const),
   );
+  const pops = terrains.map((terrain, i) => startPopulation(rng, terrain, capitals.includes(i)));
   const nearest = bfsDistances(adj, capitals);
 
-  // Assemble.
+  // Assemble. Coordinates keep full precision so shared vertices stay identical.
   const counter = { nextId: 0 };
   const ids: ProvinceId[] = sites.map(() => newId(counter, 'province'));
   const provinces = {} as Record<ProvinceId, MapProvince>;
   sites.forEach((site, i) => {
     const id = ids[i] as ProvinceId;
-    const terrain = terrains[i] ?? 'plains';
     const slot = capitals.indexOf(i);
     const well = wells.indexOf(i);
     const polygon = cells.polygons[i] ?? [];
@@ -137,13 +129,13 @@ function attempt(
     const province: MapProvince = {
       id,
       name: names[i] ?? id,
-      terrain,
-      site: roundPoint(site),
-      center: roundPoint(centroid(polygon)),
-      polygon: polygon.map(roundPoint),
+      terrain: terrains[i] ?? 'plains',
+      site,
+      center: centroid(polygon),
+      polygon,
       neighbors: (adj[i] ?? []).map((j) => ids[j] as ProvinceId),
       capitalDistance,
-      startPop: startPopulation(rng, terrain, slot >= 0),
+      startPop: pops[i] ?? 0,
       springs: springs[i] ?? [],
       independentStrength: independentStrength(capitalDistance, slot >= 0, well >= 0),
     };
@@ -155,12 +147,13 @@ function attempt(
 
   return {
     ok: true,
+    balance: capitalBalance(adj, capitals, pops),
     map: {
       seed: params.seed,
       size: params.size,
-      width: Math.round(bounds.width * 100) / 100,
-      height: Math.round(bounds.height * 100) / 100,
-      outline: outline.map(roundPoint),
+      width: bounds.width,
+      height: bounds.height,
+      outline: [...outline],
       provinces,
       capitals: capitals.map((i) => ids[i] as ProvinceId),
       wellsprings: wells.map((i) => ids[i] as ProvinceId),
@@ -168,7 +161,10 @@ function attempt(
   };
 }
 
-/** Generates the map for `params`. Throws if no valid map is found in MAPGEN.maxAttempts. */
+/**
+ * Generates the map for `params`. Throws if no valid map is found within
+ * MAPGEN.maxAttempts attempts.
+ */
 export function generateMap(params: MapGenParams): MapData {
   checkParams(params);
   const rng = createRng(params.seed);
@@ -180,11 +176,19 @@ export function generateMap(params: MapGenParams): MapData {
     MAPGEN.cornerRadius * Math.min(bounds.width, bounds.height),
     MAPGEN.cornerSegments,
   );
+  let best: { map: MapData; balance: number } | null = null;
+  let valid = 0;
   let problems: string[] = [];
-  for (let i = 0; i < MAPGEN.maxAttempts; i++) {
+  for (let i = 0; i < MAPGEN.maxAttempts && valid < MAPGEN.balanceCandidates; i++) {
     const result = attempt(rng, params, count, bounds, outline);
     problems = result.ok ? validateMap(result.map, params) : result.problems;
-    if (result.ok && problems.length === 0) return result.map;
+    if (!result.ok || problems.length > 0) continue;
+    valid++;
+    if (best === null || result.balance < best.balance) best = result;
+    if (result.balance <= MAPGEN.capitalBalanceRatio) break;
   }
-  throw new Error(`no valid map for seed ${params.seed}: ${problems.join('; ')}`);
+  if (best === null) {
+    throw new Error(`no valid map for seed ${params.seed}: ${problems.join('; ')}`);
+  }
+  return best.map;
 }

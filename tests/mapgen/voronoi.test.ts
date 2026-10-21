@@ -53,18 +53,46 @@ describe('poissonDisc', () => {
 });
 
 describe('adjustCount', () => {
-  it('trims to the count by removing the most crowded points', () => {
-    const points = poissonDisc(createRng(3), outline, bounds, 30, 30);
-    const trimmed = adjustCount(createRng(3), points, 40, outline, bounds, 30);
-    expect(trimmed).toHaveLength(40);
-    expect(minPairDistance(trimmed)).toBeGreaterThanOrEqual(minPairDistance(points));
+  it('trims the most crowded points first', () => {
+    // The crowded pair comes first, so trimming from either end would keep both.
+    const points = [
+      { x: 100, y: 100 },
+      { x: 101, y: 100 },
+      { x: 300, y: 60 },
+      { x: 60, y: 190 },
+      { x: 320, y: 200 },
+    ];
+    const trimmed = adjustCount(createRng(1), points, 4, outline, bounds, 30);
+    expect(trimmed).toHaveLength(4);
+    expect(trimmed).toEqual(expect.arrayContaining(points.slice(2)));
+    expect(minPairDistance(trimmed)).toBeGreaterThan(50);
   });
 
-  it('fills up to the count inside the outline', () => {
-    const points = poissonDisc(createRng(4), outline, bounds, 60, 30);
-    const filled = adjustCount(createRng(4), points, points.length + 10, outline, bounds, 30);
-    expect(filled).toHaveLength(points.length + 10);
-    for (const p of filled) expect(insideOrOn(p)).toBe(true);
+  it('removes an endpoint of the closest pair at each step', () => {
+    const points = poissonDisc(createRng(3), outline, bounds, 30, 30);
+    const trimmed = adjustCount(createRng(3), points, points.length - 1, outline, bounds, 30);
+    const removed = points.find((p) => !trimmed.includes(p))!;
+    const nearest = (p: Point) =>
+      Math.min(...points.filter((q) => q !== p).map((q) => Math.hypot(p.x - q.x, p.y - q.y)));
+    expect(nearest(removed)).toBe(minPairDistance(points));
+  });
+
+  it('fills the emptiest area with the farthest of its candidates', () => {
+    const cluster = [
+      { x: 60, y: 60 },
+      { x: 70, y: 60 },
+      { x: 60, y: 70 },
+    ];
+    for (let seed = 1; seed <= 10; seed++) {
+      const filled = adjustCount(createRng(seed), cluster, 4, outline, bounds, 30);
+      expect(filled).toHaveLength(4);
+      const added = filled[3]!;
+      expect(insideOrOn(added)).toBe(true);
+      // The farthest of 30 candidates lands well across the map from the corner cluster.
+      expect(
+        Math.min(...cluster.map((c) => Math.hypot(c.x - added.x, c.y - added.y))),
+      ).toBeGreaterThan(200);
+    }
   });
 });
 

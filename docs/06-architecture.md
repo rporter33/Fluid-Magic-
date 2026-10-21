@@ -58,6 +58,8 @@ fluid-magic/
     content/              # DATA ONLY. Plain objects, typed.
       colors.ts           # the five colors, element names, palettes, enemy/ally pairs
       terrain.ts
+      mapgen.ts           # map sizes and every map generation number (shares, springs, placement)
+      names.ts            # province name syllables per terrain
       units/
         common.ts         # independents, summons shared across nations
         cinderHorde.ts
@@ -78,10 +80,17 @@ fluid-magic/
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
     mapgen/
+      types.ts            # MapGenParams, CapitalSpec, MapData, MapProvince
       generate.ts         # seed -> MapData (provinces, adjacency, terrain, springs, capitals, wellsprings)
-      voronoi.ts          # Poisson disc + Delaunay/Voronoi (use d3-delaunay)
-      terrain.ts
+      voronoi.ts          # Poisson disc + Delaunay/Voronoi (use d3-delaunay), Lloyd, adjacency
+      geometry.ts         # polygon area, centroid, rounded rectangle, convex clipping
+      noise.ts            # seeded simplex noise
+      terrain.ts          # terrain by rank from elevation and moisture
+      graph.ts            # BFS distances, connectivity
       placement.ts        # capitals, wellsprings, springs, independents
+      names.ts            # unique province names
+      size.ts             # province count, Wellspring count, map dimensions
+      validate.ts         # validateMap: the rules a generated map must satisfy
     ai/
       ai.ts               # runAi(state, nationId): Command[]  called every 5 days per AI nation
       economy.ts expansion.ts military.ts research.ts
@@ -107,7 +116,7 @@ fluid-magic/
       icons/
   tests/
     sim/*.test.ts
-    mapgen/*.test.ts
+    mapgen/*.test.ts      # one file per mapgen module; fixtures.ts holds shared helpers
     battle/*.test.ts
     content/validate.test.ts
   docs/
@@ -235,3 +244,12 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   framework imports), a source-scan test (`tests/sim/purity.test.ts`), and a second
   `tsc` pass (`tsconfig.sim.json`) without DOM or Node typings. Content is included
   because the sim imports it.
+- **MapData** (`src/mapgen/types.ts`) is produced once by `generateMap(params)` and stored as
+  `GameState.map`, static afterwards. Besides geometry and adjacency it carries each
+  province's starting values (`startPop`, `springs`, `independentStrength`,
+  `capitalDistance`) for `createGame` to copy into `ProvinceState`. Province ids are
+  `p0`..`pN-1` from a counter local to mapgen; the prefix keeps them distinct from ids drawn
+  from `GameState.nextId`. Coordinates are stored at full precision.
+- **Pure-module conventions**: `src/mapgen/voronoi.ts`, `geometry.ts`, `noise.ts`, and
+  `graph.ts` are generic and take every parameter explicitly; modules that apply game rules
+  (`placement.ts`, `size.ts`, `generate.ts`) read their numbers from `src/content`.

@@ -1,6 +1,6 @@
 // Terrain by rank: noise gives each province an elevation and a moisture, and terrains are
-// handed out in order so every map gets the shares in content/mapgen.ts exactly while the
-// noise keeps similar terrain clustered into ranges, forests, and marshes.
+// handed out in order so every map gets the shares in content/mapgen.ts exactly (capitals
+// included) while the noise keeps similar terrain clustered into ranges, forests, and marshes.
 import { TERRAIN_SHARES } from '../content/mapgen';
 import { TERRAIN_IDS, type TerrainId } from '../content/terrain';
 
@@ -32,16 +32,22 @@ export function apportion(
 
 /**
  * Assigns terrain from per-province elevation and moisture (any scale, higher is higher or
- * wetter). Order: mountains then hills by elevation; swamp by wetness minus elevation;
- * forest by moisture; wasteland by dryness; farmland by moisture; plains for the rest.
+ * wetter). Provinces in `fixed` (capitals) keep their terrain and count against its share.
+ * The rest go in order: mountains then hills by elevation; swamp by wetness minus
+ * elevation; forest by moisture; wasteland by dryness; farmland by moisture; plains last.
  */
 export function assignTerrain(
   elevation: readonly number[],
   moisture: readonly number[],
+  fixed: ReadonlyMap<number, TerrainId> = new Map(),
 ): TerrainId[] {
   const n = elevation.length;
   const counts = apportion(TERRAIN_SHARES, n);
   const result = new Array<TerrainId | undefined>(n).fill(undefined);
+  for (const [i, terrain] of fixed) {
+    result[i] = terrain;
+    counts[terrain] = Math.max(0, counts[terrain] - 1);
+  }
 
   const take = (terrain: TerrainId, score: (i: number) => number) => {
     const open = result.flatMap((t, i) => (t === undefined ? [i] : []));

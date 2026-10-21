@@ -46,6 +46,20 @@ describe('assignTerrain', () => {
     });
   });
 
+  it('keeps fixed terrain and counts it against the shares', () => {
+    const fixed = new Map([
+      [99, 'forest'],
+      [0, 'mountains'],
+    ] as const);
+    const withFixed = assignTerrain(elevation, moisture, fixed);
+    expect(withFixed[99]).toBe('forest');
+    expect(withFixed[0]).toBe('mountains');
+    const counts = apportion(TERRAIN_SHARES, n);
+    for (const id of TERRAIN_IDS) {
+      expect(withFixed.filter((t) => t === id)).toHaveLength(counts[id]);
+    }
+  });
+
   it('is a pure function of its inputs', () => {
     expect(assignTerrain(elevation, moisture)).toEqual(terrains);
   });

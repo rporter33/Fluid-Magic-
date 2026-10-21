@@ -171,6 +171,11 @@ describe('map generation content', () => {
     expect(MAPGEN.springCountWeights.some((w) => w > 0)).toBe(true);
     expect(MAPGEN.minNations).toBeGreaterThanOrEqual(2);
     expect(MAPGEN.maxNations).toBeGreaterThanOrEqual(MAPGEN.minNations);
+    expect(MAPGEN.baseNations).toBeGreaterThanOrEqual(MAPGEN.minNations);
+    expect(MAPGEN.baseNations).toBeLessThanOrEqual(MAPGEN.maxNations);
+    expect(MAPGEN.capitalBalanceRatio).toBeGreaterThanOrEqual(1);
+    expect(MAPGEN.balanceCandidates).toBeGreaterThanOrEqual(1);
+    expect(MAPGEN.wellspringSearchStarts).toBeGreaterThanOrEqual(1);
     expect(MAPGEN.wellspringMinSeparation).toBeGreaterThanOrEqual(2);
     expect(MAPGEN.capitalPop % MAPGEN.popRounding).toBe(0);
   });

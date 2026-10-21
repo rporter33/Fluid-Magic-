@@ -36,7 +36,10 @@ export interface MapProvince {
   site: Point;
   /** Area centroid of the polygon; where the label and army markers go. */
   center: Point;
-  /** Convex cell outline, counterclockwise in y-up terms, not closed (last != first). */
+  /**
+   * Convex cell outline with positive shoelace area (counterclockwise with y up), open
+   * (last != first), at full coordinate precision.
+   */
   polygon: Point[];
   /** Adjacent provinces, sorted by id number. */
   neighbors: ProvinceId[];

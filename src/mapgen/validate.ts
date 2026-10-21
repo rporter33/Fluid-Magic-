@@ -2,9 +2,10 @@
 // returns no problems; tests use it as a broad property check across many seeds.
 import { COLORS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
+import { SCALE_AXES } from '../content/pretenders/scales';
 import { TERRAIN } from '../content/terrain';
 import type { ProvinceId } from '../sim/ids';
-import { signedArea } from './geometry';
+import { distance, signedArea } from './geometry';
 import { bfsDistances, isConnected } from './graph';
 import { independentStrength } from './placement';
 import { provinceCount, wellspringCount } from './size';
@@ -26,6 +27,10 @@ export function validateMap(map: MapData, params: MapGenParams): string[] {
     if (p.polygon.length < 3 || signedArea(p.polygon) <= 0) {
       problems.push(`${p.id} has a degenerate polygon`);
     }
+    const repeated = p.polygon.some(
+      (v, k) => distance(v, p.polygon[(k + 1) % p.polygon.length] ?? v) === 0,
+    );
+    if (repeated) problems.push(`${p.id} polygon has a zero-length edge`);
     if (p.name.length === 0) problems.push(`${p.id} has no name`);
     const { min, max } = TERRAIN[p.terrain].startPop;
     if (p.capitalSlot === undefined && (p.startPop < min || p.startPop > max)) {
@@ -91,6 +96,25 @@ export function validateMap(map: MapData, params: MapGenParams): string[] {
   const wells = new Set(map.wellsprings);
   if (map.wellsprings.length !== wellspringCount(params.capitals.length)) {
     problems.push(`expected ${wellspringCount(params.capitals.length)} Wellsprings`);
+  }
+  const wellIndices = map.wellsprings.map((id) => index.get(id) ?? -1);
+  for (const w of wellIndices) {
+    const dist = bfsDistances(adjacency, [w]);
+    for (const v of wellIndices) {
+      if (v > w && (dist[v] ?? 0) < MAPGEN.wellspringMinSeparation) {
+        problems.push(`Wellsprings p${w} and p${v} are ${dist[v]} apart`);
+      }
+    }
+  }
+  // Typed as valid, but a loaded save could hold anything.
+  const validSteps: readonly number[] = [1, -1];
+  const steps = map.wellsprings.flatMap((id) => at(id)?.wellspring ?? []);
+  if (steps.some((s) => !SCALE_AXES.includes(s.axis) || !validSteps.includes(s.step))) {
+    problems.push('a Wellspring has an invalid scale step');
+  }
+  const axes = new Set(steps.map((s) => s.axis));
+  if (axes.size < Math.min(steps.length, SCALE_AXES.length)) {
+    problems.push('Wellsprings repeat a scale axis');
   }
   provinces.forEach((p, i) => {
     const isCapital = p.capitalSlot !== undefined;

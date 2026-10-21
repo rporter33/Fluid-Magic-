@@ -196,9 +196,11 @@ describe('helpers', () => {
       counts[k] = (counts[k] ?? 0) + 1;
     }
     expect(counts[1]).toBe(0);
-    expect(counts[0]! / 60_000).toBeCloseTo(0.5, 1);
-    expect(counts[2]! / 60_000).toBeCloseTo(0.35, 1);
-    expect(counts[3]! / 60_000).toBeCloseTo(0.15, 1);
+    const expected = [0.5, 0.35, 0.15].map((p) => p * 60_000);
+    const observed = [counts[0]!, counts[2]!, counts[3]!];
+    const chi2 = observed.reduce((acc, o, i) => acc + (o - expected[i]!) ** 2 / expected[i]!, 0);
+    // 2 degrees of freedom; p = 0.001 critical value is 13.82.
+    expect(chi2).toBeLessThan(13.82);
   });
 
   it('weightedIndex rejects bad weights', () => {
