@@ -184,8 +184,10 @@ export function targetsUpTo(field: Field, side: BattleSide, row: Formation): Fig
 
 /** First round a unit attacks in melee: by map speed, flyers as the fastest. */
 export function closingRound(stats: Readonly<CombatStats>): number {
-  const speed = stats.tags.includes('flying') ? 3 : stats.mapSpeed;
-  return BATTLE.closingRound[speed] ?? BATTLE.closingRound[1] ?? 4;
+  const speed = stats.tags.includes('flying') ? BATTLE.flyingSpeed : stats.mapSpeed;
+  const round = BATTLE.closingRound[speed];
+  if (round === undefined) throw new RangeError(`no closing round for map speed ${speed}`);
+  return round;
 }
 
 /**

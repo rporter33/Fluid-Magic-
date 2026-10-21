@@ -65,21 +65,34 @@ describe('siege', () => {
     expect(fort.siege).toBeNull();
   });
 
-  it('takes the fort once no defenders are left', () => {
-    const { state, red, green, deepmoss, fort } = siege();
-    for (const c of Object.values(state.commanders)) {
-      if (c.owner === green && c.location === deepmoss) c.squads = [];
-    }
+  it('takes an empty fort once its walls are down, with nobody to repair them', () => {
+    const { state, red, green, deepmoss, fort } = siege(40);
     for (const c of Object.values(state.commanders)) {
       if (c.owner === green && c.location === deepmoss && c.unit !== 'garrison') {
         c.location = state.nations[red]!.capital;
       }
     }
+    expect(siegeRates(state, deepmoss).repair).toBe(0);
+    const days = siegeRates(state, deepmoss).daysToBreach!;
+    runDays(state, days - 1);
+    expect(fort.owner).toBe(green);
     runDays(state, 1);
     expect(fort.owner).toBe(red);
     expect(fort.siege).toBeNull();
-    const holder = state.commanders[fort.garrison!]!;
-    expect(holder.owner).toBe(red);
+    expect(state.commanders[fort.garrison!]!.owner).toBe(red);
+  });
+
+  it('falls at once to a storm when nobody holds it', () => {
+    const { state, red, green, deepmoss, fort } = siege(5);
+    for (const c of Object.values(state.commanders)) {
+      if (c.owner === green && c.location === deepmoss && c.unit !== 'garrison') {
+        c.location = state.nations[red]!.capital;
+      }
+    }
+    applyCommand(state, { type: 'storm', nation: red, province: deepmoss });
+    runDays(state, 1);
+    expect(fort.owner).toBe(red);
+    expect(state.battles).toEqual([]);
   });
 
   it('keeps battered walls and a pending storm when reinforcements arrive', () => {

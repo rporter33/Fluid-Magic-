@@ -153,3 +153,50 @@ describe('a third army and a relief army', () => {
     expect(commandersIn(state, capital).length).toBeGreaterThan(0);
   });
 });
+
+describe('hidden commanders', () => {
+  it('neither fight, nor besiege, nor take a province', () => {
+    const { state, red, green, capital } = redField();
+    const scout = commandersIn(state, capital).find((c) => c.unit === 'cinderScout')!;
+    const empty = neighbors(state, capital)[0]!;
+    for (const g of guards(state, empty)) removeCommander(state, g.id);
+    annex(state, green, empty);
+    attack(state, red, scout, empty);
+    expect(scout.location).toBe(empty);
+    expect(state.provinces[empty]!.owner).toBe(green);
+    expect(state.battles).toEqual([]);
+    const deepmoss = state.nations[green]!.capital;
+    scout.location = deepmoss;
+    engage(state, red, deepmoss);
+    expect(state.provinces[deepmoss]!.siege).toBeNull();
+  });
+});
+
+describe('after a battle', () => {
+  it('leaves winners caught on the march standing idle where they fought', () => {
+    const { state, red, green, capital } = redField();
+    const own = neighbors(state, capital)[0]!;
+    annex(state, red, own);
+    const walker = addArmy(state, red, own, 'cinderWarrior', 150);
+    const onward = neighbors(state, own).find((n) => n !== capital)!;
+    walker.transit = { from: own, to: capital, progress: 1, totalDays: 4 };
+    walker.order = { kind: 'move', path: [onward], mapSpeed: 2 };
+    const raider = addArmy(state, green, own, 'thornMilitia', 2, 'wardenCaptain');
+    raider.cameFrom = onward;
+    engage(state, green, own);
+    expect(state.battles.at(-1)?.winner).toBe('defender');
+    expect(walker).toMatchObject({ location: own, transit: null, order: { kind: 'idle' } });
+  });
+
+  it('keeps no replay of a battle with no player in it', () => {
+    const { state, green } = redField();
+    const target = neighbors(state, state.nations[green]!.capital)[0]!;
+    const army = addArmy(state, green, target, 'warden', 60, 'wardenCaptain');
+    engage(state, green, target);
+    expect(state.battles).toEqual([]);
+    const note = state.messages.find((m) => m.nation === green && m.kind === 'battle');
+    expect(note?.battle).toBeNull();
+    expect(state.provinces[target]!.owner).toBe(green);
+    expect(army.location).toBe(target);
+  });
+});

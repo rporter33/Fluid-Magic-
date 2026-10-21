@@ -2,6 +2,7 @@
 // is rolled against the field as it stood when the phase began, then all damage lands, so no
 // unit gains by acting first. Rolls go attacker side first, in setup order.
 import { BATTLE } from '../../content/rules';
+import { UNARMED } from '../../content/units/base';
 import type { WeaponDef } from '../../content/types';
 import { drn } from '../drn';
 import { randBelow, type RngState } from '../rng';
@@ -30,8 +31,8 @@ interface Hit {
 }
 
 /**
- * Weapon damage: str + dmg + bonus + DRN - protection - DRN, never below 0. Armor piercing
- * halves protection (rounded down); armor negating ignores it.
+ * Weapon damage: str + dmg + bonus + DRN - protection - DRN, never below 0; ranged shots pass
+ * str 0. Armor piercing halves protection (rounded down); armor negating ignores it.
  */
 export function weaponDamage(
   rng: RngState,
@@ -131,9 +132,8 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
           const target = targets[randBelow(rng, targets.length)];
           if (!target) continue;
           const hit = prec + drn(rng) >= BATTLE.ranged.toHit + drn(rng);
-          const amount = hit
-            ? weaponDamage(rng, statOf(m, 'str'), w, statOf(target, 'prot'), 0)
-            : null;
+          // A shot's damage is the weapon's alone: the wielder's strength counts only in melee.
+          const amount = hit ? weaponDamage(rng, 0, w, statOf(target, 'prot'), 0) : null;
           hits.push({ by: g, weapon: w, target, amount });
         }
       });
@@ -141,9 +141,6 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
   }
   land(hits, 'volley', log);
 }
-
-/** Units with no melee weapon strike once, unarmed. */
-const UNARMED: WeaponDef = { name: 'Unarmed', dmg: 0 };
 
 export function meleePhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
   const hits: Hit[] = [];

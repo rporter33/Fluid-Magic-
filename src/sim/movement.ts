@@ -152,14 +152,14 @@ export interface Arrival {
 }
 
 /** The owners of the commanders present in each province, as far as hostility goes. */
-type Presence = Map<ProvinceId, Set<NationId | null>>;
+export type Presence = Map<ProvinceId, Set<NationId | null>>;
 
 /**
  * Who is present where for hostility. A commander is present at its location in transit or
  * not. Garrison holders never fight, and a stealthy commander is hidden: counting it would
  * give it away through refused paths.
  */
-function presence(state: GameState): Presence {
+export function presence(state: GameState): Presence {
   const present: Presence = new Map();
   for (const c of Object.values(state.commanders)) {
     if (isGarrisonHolder(c) || isStealthy(c)) continue;
@@ -170,7 +170,7 @@ function presence(state: GameState): Presence {
   return present;
 }
 
-function hostileWith(
+export function hostileWith(
   state: GameState,
   present: Presence,
   nation: NationId,

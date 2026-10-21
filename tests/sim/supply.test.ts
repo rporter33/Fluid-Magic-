@@ -87,17 +87,22 @@ describe('starvation', () => {
     expect(starvationMoralePenalty(100)).toBe(3);
   });
 
-  it('counts troops as the HP pool rounded up to whole troops', () => {
+  it('takes troops in proportion to the HP lost, wounds spread evenly', () => {
     const { state, red, province } = starvingArmy();
     const whole = addArmy(state, red, province, 'cinderWarrior', 7).squads[0]!;
-    const wounded = addArmy(state, red, province, 'cinderWarrior', 7).squads[0]!;
-    wounded.hp = 66.5;
+    const wounded = addArmy(state, red, province, 'cinderWarrior', 20).squads[0]!;
+    wounded.hp = 110;
     runDays(state, 1);
-    // 77 - 2% of 77 = 75.46, still 7 troops; 66.5 - 1.54 = 64.96 is 6 troops' worth.
+    // 77 - 2% of 77 = 75.46, still 7 troops' worth.
     expect(whole.hp).toBeCloseTo(75.46, 9);
     expect(whole.count).toBe(7);
-    expect(wounded.hp).toBeCloseTo(64.96, 9);
-    expect(wounded.count).toBe(6);
+    // 20 troops at half health lose 2% of 220: the pool falls by 4.4 of 110, 4% of its troops.
+    expect(wounded.hp).toBeCloseTo(105.6, 9);
+    expect(wounded.count).toBe(Math.ceil((20 * 105.6) / 110 - 1e-9));
+    expect(wounded.count).toBe(20);
+    runDays(state, 5);
+    expect(wounded.count).toBeLessThan(20);
+    expect(wounded.count).toBeGreaterThan(15);
   });
 
   it('drains and heals commanders by 2% of max HP, never above max', () => {

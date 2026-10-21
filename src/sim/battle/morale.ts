@@ -78,13 +78,14 @@ export function moralePhase(field: Field, round: number, rng: RngState, log: Bat
         if (g.leader !== null) brokeNow.add(g.leader);
       }
     }
-    // A commander checks once: in the round its last standing squad breaks.
+    // A commander whose last standing squad broke this round goes with its troops. One that
+    // led no squads, or whose squads all died, fights on.
     for (const c of groups) {
       if (!c.isCommander || !brokeNow.has(c.ref) || !present(c) || c.routingSince !== null)
         continue;
       const squads = groups.filter((g) => g.leader === c.ref && present(g));
       if (squads.some((g) => g.routingSince === null) || neverChecks(c)) continue;
-      if (breaks(rng, c, pressure)) rout(c, round, log);
+      rout(c, round, log);
     }
   }
 }

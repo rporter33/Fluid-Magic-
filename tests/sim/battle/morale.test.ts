@@ -158,3 +158,15 @@ describe('commander checks', () => {
     expect(routed).toBe(200);
   });
 });
+
+describe('a commander whose line breaks', () => {
+  it('goes with its troops, however brave', () => {
+    for (let seed = 0; seed < 50; seed++) {
+      const { field, g, c } = staged(-100);
+      c.base = { ...c.base, mor: 30 };
+      kill(g, 5);
+      moralePhase(field, 1, createRng(seed), []);
+      expect(c.routingSince).toBe(1);
+    }
+  });
+});

@@ -11,7 +11,7 @@ export type Element = (typeof ELEMENTS)[number];
 
 export interface WeaponDef {
   name: string;
-  /** Added to strength for melee damage, or the whole damage roll base for ranged. */
+  /** Damage base: added to the wielder's strength in melee, alone for ranged shots. */
   dmg: number;
   /** Ranged weapons only: 5 or more reaches the rear row. */
   range?: number;

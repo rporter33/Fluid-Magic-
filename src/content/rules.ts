@@ -143,7 +143,9 @@ export const BATTLE = {
   maxRounds: 75,
   attackerRetreatRound: 50,
   /** Round from which a unit attacks in melee, by map speed; flying units use speed 3. */
-  closingRound: { 1: 4, 2: 3, 3: 2 } as Readonly<Record<number, number>>,
+  closingRound: { 0: 4, 1: 4, 2: 3, 3: 2 } as Readonly<Record<number, number>>,
+  /** Flying units close as if they had this map speed. */
+  flyingSpeed: 3,
   /** Ranged weapons of at least this range reach the rear row; shorter ones reach the middle. */
   rearReach: 5,
   /** The base both rolls are compared with: prec + DRN >= toHit + DRN, mor + DRN >= ... */
@@ -174,6 +176,8 @@ export const BATTLE = {
 /** docs/01-core-rules.md section 11. */
 export const SIEGE = {
   wallHp: 300,
+  /** Walls under this many HP are down (shown as 0). */
+  wallsDownBelow: 1,
   /** Daily wall damage = attackers' total str / attackDivisor; repair = defenders' / repairDivisor. */
   attackDivisor: 10,
   repairDivisor: 20,

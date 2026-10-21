@@ -23,8 +23,8 @@ function writeSquads(commander: CommanderState, result: BattleResult): void {
 
 /**
  * Writes one side back. Survivors keep their wounds; a battle ends any march through the
- * province (the order may start a new leg). A dead commander's surviving squads join the
- * first living commander of the side, else the fort's garrison, else are lost.
+ * province, move order included. A dead commander's surviving squads join the first living
+ * commander of the side (leadership notwithstanding), else the fort's garrison, else are lost.
  */
 function writeSide(state: GameState, forces: SideForces, result: BattleResult): void {
   for (const c of forces.commanders) writeSquads(c, result);
@@ -38,14 +38,19 @@ function writeSide(state: GameState, forces: SideForces, result: BattleResult): 
   }
   for (const c of living) {
     const o = result.commanders.get(c.id);
+    // Fighting ends a march through the province; the player orders it again.
     c.transit = null;
+    if (c.order.kind === 'move') c.order = { kind: 'idle' };
     if (!o) continue;
     c.hp = o.hp;
     c.carriedMana = { ...o.carriedMana };
   }
 }
 
-/** Records the battle and applies its consequences; returns the record's id. */
+/**
+ * Applies a battle's consequences and records it (a record is kept only when a player's nation
+ * fought, the last BATTLE.keep of them); returns the battle's id.
+ */
 export function applyBattle(
   state: GameState,
   provinceId: ProvinceId,
@@ -65,18 +70,23 @@ export function applyBattle(
     p.unrest = Math.min(UNREST.max, p.unrest + BATTLE.lostBattleUnrest);
   }
 
+  // Replays are kept for battles a player fought in; the AI never reads them.
+  const human = [attacker.nation, defender.nation].some(
+    (n) => n !== null && state.nations[n]?.ai === null,
+  );
   const id = newId(state, 'battle');
-  state.battles.push({
-    id,
-    day: state.day,
-    province: provinceId,
-    attacker: attacker.nation,
-    defender: defender.nation,
-    winner: result.winner,
-    rounds: result.rounds,
-    roster: result.roster,
-    replay: result.replay,
-  });
+  if (human)
+    state.battles.push({
+      id,
+      day: state.day,
+      province: provinceId,
+      attacker: attacker.nation,
+      defender: defender.nation,
+      winner: result.winner,
+      rounds: result.rounds,
+      roster: result.roster,
+      replay: result.replay,
+    });
   if (state.battles.length > BATTLE.keep)
     state.battles.splice(0, state.battles.length - BATTLE.keep);
 
@@ -93,7 +103,7 @@ export function applyBattle(
     if (won) nation.stats.battlesWon += 1;
     else nation.stats.battlesLost += 1;
     const text = `Battle ${won ? 'won' : 'lost'} at ${where}.`;
-    postMessage(state, forces.nation, 'battle', text, provinceId, id);
+    postMessage(state, forces.nation, 'battle', text, provinceId, human ? id : null);
   }
   return id;
 }

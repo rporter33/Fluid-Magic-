@@ -1,7 +1,7 @@
 // Starvation and healing (docs/01-core-rules.md section 4, Supply). Where commanders and troops
 // eat more than a province supplies, every unit that eats loses part of its max HP each day
 // and its starvation counter rises; where they are fed they heal at the same rate and the
-// counter falls. Troops die as their squad's HP pool stops covering them at full health.
+// counter falls. A starving squad loses troops in proportion to the HP it loses.
 // Independents never eat and are always fed.
 import { unitDef } from '../content';
 import { SUPPLY } from '../content/rules';
@@ -16,14 +16,22 @@ import type { CommanderState, GameState, Squad } from './types';
 export const STARVED_DAYS_CAP =
   (SUPPLY.starvationMoraleCap + 1) * SUPPLY.starvationDaysPerMorale - 1;
 
+/** Rounds a troop count up, ignoring floating-point noise. */
+function wholeCount(x: number): number {
+  return Math.max(0, Math.ceil(x - 1e-9));
+}
+
 /** Starves or feeds one squad; returns true if it began starving today. */
 function feedSquad(squad: Squad, starving: boolean): boolean {
   const def = unitDef(squad.unit);
   if (troopSupply(def) === 0) return false;
   const max = squad.count * def.hp;
   if (starving) {
+    const before = squad.hp;
     squad.hp = Math.max(0, squad.hp - max * SUPPLY.starvationHpPerDay);
-    squad.count = Math.ceil(squad.hp / def.hp);
+    // Troops die in proportion to the pool lost, wounds spread evenly as in battle; for a
+    // healthy squad this is the pool rounded up to whole troops.
+    squad.count = before > 0 ? wholeCount((squad.count * squad.hp) / before) : 0;
     squad.starvedDays = Math.min(STARVED_DAYS_CAP, squad.starvedDays + 1);
     return squad.starvedDays === 1;
   }

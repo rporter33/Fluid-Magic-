@@ -30,3 +30,6 @@ export const COMMANDER_WEAPONS = {
   sword: { name: 'Sword', dmg: 4 },
   axe: { name: 'Axe', dmg: 5 },
 } as const satisfies Record<string, WeaponDef>;
+
+/** What a unit with no melee weapon strikes with in hand-to-hand combat. */
+export const UNARMED: WeaponDef = { name: 'Unarmed', dmg: 0 };
