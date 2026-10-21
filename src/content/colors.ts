@@ -1,5 +1,6 @@
 // The five colors of magic (docs/02-magic.md section 1, palettes from docs/09-art-direction.md).
-// Internally a color is always its MTG letter; element names are flavor only.
+// Internally a color is always its MTG letter; element names are flavor only. Primaries stay
+// distinct under color vision deficiencies; tests/content/palette.test.ts checks.
 
 export const COLORS = ['W', 'U', 'B', 'R', 'G'] as const;
 export type Color = (typeof COLORS)[number];
@@ -68,7 +69,7 @@ export const COLOR_DEFS: Readonly<Record<Color, ColorDef>> = {
     doesWell:
       'Burst damage, area fire, morale and attack buffs, fast troops, berserk, destroying buildings',
     neverDoes: 'Defense, long-term growth, control',
-    palette: { primary: '#D9442B', secondary: '#7A1E12', accent: '#FFB347' },
+    palette: { primary: '#FD6533', secondary: '#7A1E12', accent: '#FFB347' },
     symbol: 'flame',
   },
   G: {
@@ -80,7 +81,7 @@ export const COLOR_DEFS: Readonly<Record<Color, ColorDef>> = {
     doesWell:
       'Population growth, supply, big beasts, protection, regeneration, entangle, summoning animals',
     neverDoes: 'Flying, evasion, precision, undead',
-    palette: { primary: '#3F8F3A', secondary: '#244F22', accent: '#A6D96A' },
+    palette: { primary: '#00674B', secondary: '#244F22', accent: '#A6D96A' },
     symbol: 'leaf',
   },
 };

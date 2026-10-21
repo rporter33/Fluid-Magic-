@@ -15,16 +15,24 @@ tints. Hex values are the base; renderers may derive lighter and darker steps.
 | W Radiance | #F3E6B8 | #D9B85C | #FFFFFF | sun disc |
 | U Tide | #3A7BD5 | #1E3F7A | #9ED8FF | wave crest |
 | B Umbra | #3D2B4F | #1A1024 | #9B4DCA | skull in a drop |
-| R Ember | #D9442B | #7A1E12 | #FFB347 | flame |
-| G Loam | #3F8F3A | #244F22 | #A6D96A | leaf |
+| R Ember | #FD6533 | #7A1E12 | #FFB347 | flame |
+| G Loam | #00674B | #244F22 | #A6D96A | leaf |
 
 Nation chrome uses primary for borders and glow, secondary for panel headers, accent for
 highlights. Independents: #8C8A80 / #4A4A44 / #C9C4B0, symbol: a plain shield.
 
-Terrain fills: Plains #B9B069, Farmland #C9BE5A, Forest #4E7B3B, Hills #9C8A5C,
-Mountains #7B7B7B, Swamp #4F6B4A, Wasteland #A58C6B. A seamless noise texture at 10%
+Terrain fills: Plains #C1D29F, Farmland #EEBA3A, Forest #374C2B, Hills #856824,
+Mountains #8DA4AD, Swamp #1A727A, Wasteland #AE897F. A seamless noise texture at 10%
 opacity is multiplied over every fill. Borders #2B2620 at 2px. The map background is a
 deep parchment #E8DCC2 at the edges fading to #1C1A17 under the UI.
+
+**Distinct colors.** Every pair of terrain fills, and every pair of mana primaries
+(independents included), differs by at least CIEDE2000 20 for normal vision and 12 under
+simulated protanopia, deuteranopia, and tritanopia. Lightness and the blue-yellow axis,
+which those players still see, carry most of the difference. `tests/content/palette.test.ts` enforces
+this. The original fills failed it (Hills and Wasteland differed by 5.7, about 3 for color
+blind players), as did Red and Green, the two M1 nations (6.9 under deuteranopia). Those
+values were replaced: Red is brighter and more orange, Green deeper and closer to emerald.
 
 ## Sprite system
 

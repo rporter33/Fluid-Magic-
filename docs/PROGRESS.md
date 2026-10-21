@@ -39,6 +39,10 @@
   dealt evenly (Green had 2.5x Red's springs), and Wellspring placement is never adjacent
   and is fair for 3-4 nations. Mutation checks confirmed that the strengthened tests catch
   each of these regressions.
+- Terrain fills and the Red and Green mana colors were replaced so every pair is clearly
+  distinct, also for color blind players (CIEDE2000 at least 20 normally, 12 under simulated
+  protanopia, deuteranopia, tritanopia). The new values are in `docs/09-art-direction.md`,
+  and `tests/content/palette.test.ts` enforces the rule.
 - Generation over 200 seeds per configuration had no failures. Medium 2-nation maps take
   about 20 ms; 4-nation maps take up to about 0.4 s.
 

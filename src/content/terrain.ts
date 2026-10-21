@@ -1,5 +1,6 @@
 // Terrain types and base values (docs/01-core-rules.md section 2, fills from
 // docs/09-art-direction.md). Current values live here; changes go in docs/09-balance.md.
+// Fills stay distinct under color vision deficiencies; tests/content/palette.test.ts checks.
 
 export const TERRAIN_IDS = [
   'plains',
@@ -38,7 +39,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 4,
     startPop: { min: 6000, max: 12000 },
     battle: { defenderDef: 0, attackerAtt: 0 },
-    fill: '#B9B069',
+    fill: '#C1D29F',
   },
   farmland: {
     id: 'farmland',
@@ -48,7 +49,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 4,
     startPop: { min: 10000, max: 18000 },
     battle: { defenderDef: 0, attackerAtt: 0 },
-    fill: '#C9BE5A',
+    fill: '#EEBA3A',
   },
   forest: {
     id: 'forest',
@@ -58,7 +59,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 6,
     startPop: { min: 3000, max: 7000 },
     battle: { defenderDef: 1, attackerAtt: 0 },
-    fill: '#4E7B3B',
+    fill: '#374C2B',
   },
   hills: {
     id: 'hills',
@@ -68,7 +69,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 6,
     startPop: { min: 3000, max: 6000 },
     battle: { defenderDef: 1, attackerAtt: 0 },
-    fill: '#9C8A5C',
+    fill: '#856824',
   },
   mountains: {
     id: 'mountains',
@@ -78,7 +79,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 9,
     startPop: { min: 1000, max: 3000 },
     battle: { defenderDef: 2, attackerAtt: 0 },
-    fill: '#7B7B7B',
+    fill: '#8DA4AD',
   },
   swamp: {
     id: 'swamp',
@@ -88,7 +89,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 8,
     startPop: { min: 1000, max: 3000 },
     battle: { defenderDef: 0, attackerAtt: -1 },
-    fill: '#4F6B4A',
+    fill: '#1A727A',
   },
   wasteland: {
     id: 'wasteland',
@@ -98,7 +99,7 @@ export const TERRAIN: Readonly<Record<TerrainId, TerrainDef>> = {
     moveDays: 5,
     startPop: { min: 500, max: 2000 },
     battle: { defenderDef: 0, attackerAtt: 0 },
-    fill: '#A58C6B',
+    fill: '#AE897F',
   },
 };
 
