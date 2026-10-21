@@ -13,6 +13,15 @@ import {
   type ColorPair,
   type Palette,
 } from '../../src/content/colors';
+import {
+  MAP_SIZE_IDS,
+  MAP_SIZES,
+  MAPGEN,
+  TERRAIN_SHARES,
+  TERRAIN_SPRING_COLORS,
+} from '../../src/content/mapgen';
+import { NAME_MIDDLES, NAME_SYLLABLES } from '../../src/content/names';
+import { SCALE_AXES, SCALE_DEFS } from '../../src/content/pretenders/scales';
 import { isTerrainId, TERRAIN, TERRAIN_IDS } from '../../src/content/terrain';
 
 const HEX = /^#[0-9A-F]{6}$/;
@@ -104,5 +113,80 @@ describe('terrain', () => {
       expect(t.battle.attackerAtt).toBeLessThanOrEqual(0);
       expect(t.fill).toMatch(HEX);
     }
+  });
+});
+
+describe('scales', () => {
+  it('each axis joins two enemy colors, covering all five enemy pairs', () => {
+    expect(Object.keys(SCALE_DEFS).sort()).toEqual([...SCALE_AXES].sort());
+    const pairs = SCALE_AXES.map((axis) => {
+      const def = SCALE_DEFS[axis];
+      expect(def.id).toBe(axis);
+      expect(areEnemies(def.positive.color, def.negative.color)).toBe(true);
+      return pairKey([def.positive.color, def.negative.color]);
+    });
+    expect(new Set(pairs)).toEqual(new Set(ENEMY_PAIRS.map(pairKey)));
+  });
+
+  it('uses the pole names from the pretender doc', () => {
+    const poles = SCALE_AXES.map(
+      (a) => `${SCALE_DEFS[a].positive.name}/${SCALE_DEFS[a].negative.name}`,
+    );
+    expect(poles).toEqual([
+      'Order/Turmoil',
+      'Lore/Fury',
+      'Growth/Rot',
+      'Wild/Artifice',
+      'Sanctity/Dread',
+    ]);
+  });
+});
+
+describe('map generation content', () => {
+  it('defines the three map sizes from the New Game screen', () => {
+    expect(MAP_SIZE_IDS.map((id) => MAP_SIZES[id].provinces)).toEqual([40, 60, 80]);
+    for (const id of MAP_SIZE_IDS) expect(MAP_SIZES[id].id).toBe(id);
+  });
+
+  it('terrain shares cover every terrain and sum to 1', () => {
+    expect(Object.keys(TERRAIN_SHARES).sort()).toEqual([...TERRAIN_IDS].sort());
+    const total = TERRAIN_IDS.reduce((sum, id) => sum + TERRAIN_SHARES[id], 0);
+    expect(total).toBeCloseTo(1, 10);
+    for (const id of TERRAIN_IDS) expect(TERRAIN_SHARES[id]).toBeGreaterThan(0);
+  });
+
+  it('every terrain can hold springs and every color has a home terrain', () => {
+    for (const id of TERRAIN_IDS) {
+      const colors = TERRAIN_SPRING_COLORS[id];
+      expect(colors.length).toBeGreaterThan(0);
+      for (const c of colors) expect(isColor(c)).toBe(true);
+    }
+    for (const c of COLORS) {
+      expect(TERRAIN_IDS.some((id) => TERRAIN_SPRING_COLORS[id].includes(c))).toBe(true);
+    }
+  });
+
+  it('has consistent placement numbers', () => {
+    expect(MAPGEN.springCountWeights.every((w) => w >= 0)).toBe(true);
+    expect(MAPGEN.springCountWeights.some((w) => w > 0)).toBe(true);
+    expect(MAPGEN.minNations).toBeGreaterThanOrEqual(2);
+    expect(MAPGEN.maxNations).toBeGreaterThanOrEqual(MAPGEN.minNations);
+    expect(MAPGEN.wellspringMinSeparation).toBeGreaterThanOrEqual(2);
+    expect(MAPGEN.capitalPop % MAPGEN.popRounding).toBe(0);
+  });
+});
+
+describe('province names', () => {
+  it('every terrain has onsets and suffixes, with no repeats within a list', () => {
+    for (const id of TERRAIN_IDS) {
+      const { onsets, suffixes } = NAME_SYLLABLES[id];
+      expect(onsets.length).toBeGreaterThanOrEqual(8);
+      expect(suffixes.length).toBeGreaterThanOrEqual(6);
+      expect(new Set(onsets).size).toBe(onsets.length);
+      expect(new Set(suffixes).size).toBe(suffixes.length);
+      for (const o of onsets) expect(o).toMatch(/^[A-Z][a-z]+$/);
+      for (const x of suffixes) expect(x).toMatch(/^[a-z]+$/);
+    }
+    for (const m of NAME_MIDDLES) expect(m).toMatch(/^[a-z]+$/);
   });
 });

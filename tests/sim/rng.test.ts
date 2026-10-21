@@ -10,6 +10,7 @@ import {
   randBelow,
   randInt,
   shuffle,
+  weightedIndex,
   type RngState,
 } from '../../src/sim/rng';
 
@@ -185,6 +186,28 @@ describe('helpers', () => {
     for (let i = 0; i < 200; i++) seen.add(pick(rng, items));
     expect([...seen].sort()).toEqual(['a', 'b', 'c']);
     expect(() => pick(rng, [])).toThrow(RangeError);
+  });
+
+  it('weightedIndex follows the weights and skips zero weights', () => {
+    const rng = createRng(31);
+    const counts = [0, 0, 0, 0];
+    for (let i = 0; i < 60_000; i++) {
+      const k = weightedIndex(rng, [50, 0, 35, 15]);
+      counts[k] = (counts[k] ?? 0) + 1;
+    }
+    expect(counts[1]).toBe(0);
+    expect(counts[0]! / 60_000).toBeCloseTo(0.5, 1);
+    expect(counts[2]! / 60_000).toBeCloseTo(0.35, 1);
+    expect(counts[3]! / 60_000).toBeCloseTo(0.15, 1);
+  });
+
+  it('weightedIndex rejects bad weights', () => {
+    const rng = createRng(32);
+    expect(() => weightedIndex(rng, [])).toThrow(RangeError);
+    expect(() => weightedIndex(rng, [0, 0])).toThrow(RangeError);
+    expect(() => weightedIndex(rng, [1, -1])).toThrow(RangeError);
+    expect(() => weightedIndex(rng, [1, Number.NaN])).toThrow(RangeError);
+    expect(weightedIndex(rng, [0, 0, 3])).toBe(2);
   });
 
   it('shuffle permutes in place and is deterministic', () => {

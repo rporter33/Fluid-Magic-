@@ -106,6 +106,28 @@ export function pick<T>(rng: RngState, items: readonly T[]): T {
   return items[randBelow(rng, items.length)] as T;
 }
 
+/**
+ * Index chosen with probability proportional to its weight. Weights must be finite and
+ * non-negative with a positive sum. Always consumes one draw.
+ */
+export function weightedIndex(rng: RngState, weights: readonly number[]): number {
+  let total = 0;
+  for (const w of weights) {
+    if (!Number.isFinite(w) || w < 0) throw new RangeError(`bad weight ${w}`);
+    total += w;
+  }
+  if (total <= 0) throw new RangeError('weights must have a positive sum');
+  let roll = nextFloat(rng) * total;
+  for (let i = 0; i < weights.length; i++) {
+    const w = weights[i] ?? 0;
+    if (roll < w) return i;
+    roll -= w;
+  }
+  // Floating point can leave the roll a hair past the end; use the last positive weight.
+  for (let i = weights.length - 1; i >= 0; i--) if ((weights[i] ?? 0) > 0) return i;
+  return 0;
+}
+
 /** Fisher-Yates shuffle in place; returns the same array. */
 export function shuffle<T>(rng: RngState, items: T[]): T[] {
   for (let i = items.length - 1; i > 0; i--) {
