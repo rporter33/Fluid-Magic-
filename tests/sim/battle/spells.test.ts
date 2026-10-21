@@ -127,6 +127,12 @@ describe('fatigue', () => {
       .map(({ round }) => round);
     // 60 then 115: exhausted from 110 down to 100, casts at 95 (155), then waits to 95 again.
     expect(rounds.slice(0, 4)).toEqual([1, 2, 6, 18]);
+    // Each cast logs the caster's fatigue after paying for it (A4).
+    expect(
+      casts(result.replay)
+        .slice(0, 4)
+        .map((c) => c.fatigue),
+    ).toEqual([60, 115, 155, 155]);
   });
 
   /** A once-a-battle self buff: its 200 fatigue lasts until round 21. */

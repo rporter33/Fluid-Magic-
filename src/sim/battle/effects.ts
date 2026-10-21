@@ -5,9 +5,10 @@ import { FIELD_EFFECTS } from '../../content/rules';
 import type { BattleEffect, BattleSpellDef, Duration } from '../../content/spells/types';
 import { defaultFormation } from '../commanders';
 import type { RngState } from '../rng';
-import { rollDamage } from './attacks';
+import { rollDamageParts } from './attacks';
 import type { BattleEvent, StatKey } from './events';
 import {
+  detailAt,
   group,
   present,
   SIDES,
@@ -22,6 +23,8 @@ import { debuffSources } from './targets';
 /** What one effect of a cast lands on. */
 export interface Plan {
   effect: BattleEffect;
+  /** Its index in the spell's effects. */
+  index: number;
   groups: Group[];
   /** Troops hit, for damage. */
   troops: Fighter[];
@@ -66,35 +69,55 @@ function addMod(
   log?.push({ kind: 'buff', target: g.ref, stat, delta, source, untilRound: until, debuff });
 }
 
+/** Rolls the damage on every troop planned, in order; reports each roll to the detail sink. */
 function damage(
-  troops: Fighter[],
+  field: Field,
+  caster: Group,
+  spell: BattleSpellDef,
+  plan: Plan,
   e: Extract<BattleEffect, { kind: 'damage' }>,
   rng: RngState,
   log: BattleEvent[],
 ): void {
   const tally = new Map<Group, { amount: number; kills: number }>();
-  for (const t of troops) {
-    const amount = rollDamage(
+  for (const t of plan.troops) {
+    const roll = rollDamageParts(
       rng,
       e.amount,
       statOf(t, 'prot'),
       e.armorPiercing === true,
       e.armorNegating === true,
     );
+    const amount = roll.rolled;
     let entry = tally.get(t.group);
     if (!entry) {
       entry = { amount: 0, kills: 0 };
       tally.set(t.group, entry);
     }
-    if (!t.alive || amount <= 0) continue;
-    entry.amount += Math.min(amount, t.hp);
-    t.hp -= amount;
-    if (t.hp <= 0) {
-      t.hp = 0;
-      t.alive = false;
-      t.group.deathsThisRound += 1;
-      entry.kills += 1;
+    const hpBefore = t.alive ? t.hp : 0;
+    const dealt = t.alive ? Math.min(amount, t.hp) : 0;
+    if (t.alive && amount > 0) {
+      entry.amount += dealt;
+      t.hp -= amount;
+      if (t.hp <= 0) {
+        t.hp = 0;
+        t.alive = false;
+        t.group.deathsThisRound += 1;
+        entry.kills += 1;
+      }
     }
+    field.detail?.push({
+      kind: 'spellHit',
+      ...detailAt(field, log),
+      caster: caster.ref,
+      spell: spell.id,
+      effect: plan.index,
+      element: e.element,
+      target: t.group.ref,
+      targetMember: t.index,
+      damage: roll,
+      landing: { hpBefore, dealt, killed: hpBefore > 0 && !t.alive },
+    });
   }
   for (const [g, { amount, kills }] of tally) {
     log.push({ kind: 'damage', target: g.ref, amount, element: e.element, kills });
@@ -176,7 +199,7 @@ export function applyEffect(
   const e = plan.effect;
   switch (e.kind) {
     case 'damage':
-      damage(plan.troops, e, rng, log);
+      damage(field, caster, spell, plan, e, rng, log);
       return;
     case 'buff':
     case 'debuff':

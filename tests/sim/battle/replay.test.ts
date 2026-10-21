@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest';
 import { unitDef } from '../../../src/content';
 import { SPELLS } from '../../../src/content/spells';
 import type { BattleSpellDef } from '../../../src/content/spells/types';
-import { foldReplay } from '../../../src/sim/battle/replay';
+import type { BattlePhase } from '../../../src/sim/battle/events';
+import { foldReplay, startReplay, stepReplay } from '../../../src/sim/battle/replay';
 import type { ScriptSlot } from '../../../src/sim/types';
 import { commander, fightOnce, side, squad } from './fixtures';
 
@@ -102,6 +103,21 @@ describe('foldReplay', () => {
         if (!o.dead) expect(u?.hp ?? 0, `seed ${seed} ${ref}`).toBeCloseTo(o.hp, 9);
       }
     }
+  });
+
+  it('changes no unit on a phase marker', () => {
+    const result = fightOnce(
+      side([squad('a', 'cinderWarrior', 10, { leader: 'c' })], [commander('c', 'ashChieftain')]),
+      side([squad('d', 'ashMilitia', 10)]),
+    );
+    const state = startReplay(result.roster);
+    const before = structuredClone(state);
+    const phases: BattlePhase[] = ['scripts', 'ranged', 'melee', 'morale', 'end'];
+    for (const phase of phases) stepReplay(state, { kind: 'phase', phase });
+    expect(state).toEqual(before);
+    expect(result.replay.some((e) => e.kind === 'phase')).toBe(true);
+    const unmarked = result.replay.filter((e) => e.kind !== 'phase');
+    expect(foldReplay(result.roster, unmarked)).toEqual(foldReplay(result.roster, result.replay));
   });
 
   it('starts a summoned squad with its full HP pool', () => {

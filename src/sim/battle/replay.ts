@@ -100,8 +100,21 @@ export function stepReplay(state: ReplayState, e: BattleEvent): void {
         gone: false,
       });
       break;
-    default:
+    // Markers, casts, and changes the viewer's unit state does not show.
+    case 'phase':
+    case 'roundStart':
+    case 'cast':
+    case 'buff':
+    case 'expire':
+    case 'field':
+    case 'fieldEnd':
+    case 'fatigue':
+    case 'battleEnd':
       break;
+    default: {
+      const never: never = e;
+      throw new Error(`unknown battle event ${JSON.stringify(never)}`);
+    }
   }
 }
 

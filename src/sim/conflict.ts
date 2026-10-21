@@ -13,7 +13,7 @@ import { commanderDies, takesPart } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { canMove, hostileWith, presence, type Arrival, type Presence } from './movement';
 import { pdForce } from './pd';
-import { pick } from './rng';
+import { cloneRng, pick } from './rng';
 import { getMapProvince, getProvince } from './state';
 import type { CommanderState, GameState } from './types';
 
@@ -109,7 +109,10 @@ function retreat(state: GameState, provinceId: ProvinceId, forces: SideForces): 
   }
 }
 
-/** Fights a battle in a province and sends the losers away; returns the winner. */
+/**
+ * Fights a battle in a province and sends the losers away; returns the winner. The rng state
+ * from before the battle goes with the setup into the record (four numbers; it draws nothing).
+ */
 export function fight(
   state: GameState,
   provinceId: ProvinceId,
@@ -118,8 +121,9 @@ export function fight(
   storm: StormState | null = null,
 ): BattleSide {
   const setup = buildBattle(state, provinceId, attacker, defender, storm);
+  const rng = cloneRng(state.rng);
   const result = resolveBattle(setup, state.rng);
-  applyBattle(state, provinceId, attacker, defender, result);
+  applyBattle(state, provinceId, attacker, defender, result, { setup, rng, storm });
   retreat(state, provinceId, result.winner === 'attacker' ? defender : attacker);
   return result.winner;
 }

@@ -1,8 +1,16 @@
 // Morale rules (docs/04-battle.md, round step 4), tested on a staged field.
 import { describe, expect, it } from 'vitest';
+import type { DetailEvent } from '../../../src/sim/battle/detail';
 import type { BattleEvent } from '../../../src/sim/battle/events';
 import { buildField, troopsLost, type Field, type Group } from '../../../src/sim/battle/field';
-import { commanderDeaths, moralePhase } from '../../../src/sim/battle/morale';
+import {
+  breakThreshold,
+  commanderDeaths,
+  fearless,
+  moralePhase,
+  mustCheck,
+  neverChecks,
+} from '../../../src/sim/battle/morale';
 import { drn } from '../../../src/sim/drn';
 import { cloneRng, createRng } from '../../../src/sim/rng';
 import { commander, setup, side, squad } from './fixtures';
@@ -253,5 +261,84 @@ describe('a commander whose line breaks', () => {
       moralePhase(field, 1, createRng(seed), []);
       expect(c.routingSince).toBe(1);
     }
+  });
+});
+
+describe('the shared morale rules', () => {
+  /** The morale rolls a staged phase made, watched through a detail sink. */
+  function rolls(field: Field, seed = 1) {
+    const detail: DetailEvent[] = [];
+    field.detail = detail;
+    moralePhase(field, 1, createRng(seed), []);
+    return detail.flatMap((e) => (e.kind === 'morale' ? [e] : []));
+  }
+
+  it('mustCheck says exactly when a squad rolls (shaken), and why', () => {
+    for (let total = 0; total <= 8; total++) {
+      for (let thisRound = 0; thisRound <= total; thisRound++) {
+        for (const shock of [0, 3]) {
+          const { field, g } = staged(10);
+          kill(g, total);
+          g.deathsThisRound = thisRound;
+          g.shock = shock;
+          const rolled = rolls(field).filter((e) => e.group === 's');
+          const label = `lost ${String(total)}, ${String(thisRound)} now, shock ${String(shock)}`;
+          expect(rolled.length === 1, label).toBe(mustCheck(20, total, thisRound, shock));
+          if (rolled[0]) {
+            const cause = mustCheck(20, total, thisRound, 0) ? 'losses' : 'shock';
+            expect(rolled[0].cause, label).toBe(cause);
+          }
+        }
+      }
+    }
+  });
+
+  it('breakThreshold decides every roll the resolver makes, morale DRN drawn first', () => {
+    for (const mor of [0, 5, 10, 15, 20]) {
+      for (const shock of [0, 2, 6]) {
+        for (let seed = 0; seed < 20; seed++) {
+          const { field, g } = staged(mor);
+          kill(g, 5);
+          g.shock = shock;
+          const [roll] = rolls(field, seed).map((e) => e.roll);
+          const replay = createRng(seed);
+          expect(roll).toEqual({
+            morale: mor,
+            moraleDrn: drn(replay),
+            target: 10,
+            targetDrn: drn(replay),
+            pressure: shock,
+            broke: expect.any(Boolean) as unknown,
+          });
+          const r = roll!;
+          expect(r.broke).toBe(r.moraleDrn - r.targetDrn < breakThreshold(mor, r.pressure));
+          expect(g.routingSince !== null).toBe(r.broke);
+        }
+      }
+    }
+  });
+
+  it('fearless agrees with neverChecks, and the fearless never roll', () => {
+    for (const mor of [10, 49, 50, 60]) {
+      for (const tags of [[], ['berserk'], ['mindless']] as ('berserk' | 'mindless')[][]) {
+        const { field, g } = staged(mor, tags);
+        expect(neverChecks(g), `${String(mor)} ${tags.join()}`).toBe(fearless(mor, tags));
+        kill(g, 10);
+        expect(rolls(field).some((e) => e.group === 's')).toBe(!fearless(mor, tags));
+      }
+    }
+  });
+
+  it('labels a roll for a commander’s death as such', () => {
+    const { field, g, c } = staged(10);
+    kill(c, 1);
+    const detail: DetailEvent[] = [];
+    field.detail = detail;
+    commanderDeaths(field, 1, createRng(1), []);
+    expect(detail).toEqual([
+      expect.objectContaining({ kind: 'morale', group: g.ref, cause: 'commanderDeath' }),
+    ]);
+    const roll = detail[0]?.kind === 'morale' ? detail[0].roll : null;
+    expect(roll?.pressure).toBe(4);
   });
 });

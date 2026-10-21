@@ -6,11 +6,21 @@ import { BATTLE, PD, UNREST } from '../../content/rules';
 import { addSquad, commanderDies } from '../commanders';
 import { newId, type BattleId, type ProvinceId } from '../ids';
 import { postMessage } from '../messages';
+import type { RngState } from '../rng';
 import { getMapProvince, getProvince } from '../state';
 import type { CommanderState, GameState } from '../types';
 import type { BattleSide } from './events';
-import { PD_MILITIA_REF, type SideForces } from './setup';
-import type { BattleResult } from './types';
+import { battleRulesHash, toSetupRecord } from './rerun';
+import { PD_MILITIA_REF, type SideForces, type StormState } from './setup';
+import type { BattleResult, BattleSetup } from './types';
+
+/** What fight() kept from just before the battle, for the record's scene and re-run. */
+export interface BattleCapture {
+  setup: BattleSetup;
+  /** The rng state before the battle drew anything. */
+  rng: RngState;
+  storm: StormState | null;
+}
 
 function writeSquads(commander: CommanderState, result: BattleResult): void {
   for (const s of commander.squads) {
@@ -60,7 +70,8 @@ function writeSide(state: GameState, forces: SideForces, result: BattleResult): 
 
 /**
  * Applies a battle's consequences and records it (a record is kept only when a player's nation
- * fought, the last BATTLE.keep of them); returns the battle's id.
+ * fought, the last BATTLE.keep of them); returns the battle's id. With the capture, the record
+ * can be fought again blow by blow (rerun.ts); without it, its rerun is null.
  */
 export function applyBattle(
   state: GameState,
@@ -68,6 +79,7 @@ export function applyBattle(
   attacker: SideForces,
   defender: SideForces,
   result: BattleResult,
+  capture: BattleCapture | null = null,
 ): BattleId {
   writeSide(state, attacker, result);
   writeSide(state, defender, result);
@@ -99,6 +111,13 @@ export function applyBattle(
       rounds: result.rounds,
       roster: result.roster,
       replay: result.replay,
+      scene: {
+        terrain: getMapProvince(state, provinceId).terrain,
+        storm: capture?.storm ? { ...capture.storm } : null,
+      },
+      rerun: capture
+        ? { setup: toSetupRecord(capture.setup), rng: { ...capture.rng }, rules: battleRulesHash() }
+        : null,
     });
   if (state.battles.length > BATTLE.keep)
     state.battles.splice(0, state.battles.length - BATTLE.keep);

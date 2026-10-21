@@ -335,6 +335,55 @@
   carried mana, summons handed to the garrison, no `aiMemory`, and the dummy deleted. No
   tuning was needed: the behavior tests passed on the first run with wide margins.
 
+## Phase 10 S1: Battle detail sink and re-runnable records (done)
+
+The first stage of the battle presentation track (`docs/12-battle-presentation.md`, S1), built
+during Phase 7 at the owner's direction (visceral replays with per-blow detail and sound).
+- Stored log additions A1 to A5 (`docs/04-battle.md`, "Replay log" and "Replay detail"):
+  `phase` markers for every round step that logged something; `attacks`, `blocked`,
+  `onFallen`, and `dmg` on `volley` and `melee`; `by` on commander damage and fire-shield
+  burns; the caster's `fatigue` on `cast`; and `scene` (terrain, storm) on the record.
+- `resolveBattle(setup, rng, { detail })`: an observation-only sink (`battle/detail.ts`) gets
+  every strike with its rolls and landing, spell hit, burn, drain, morale roll, and the
+  fronts and contact of each ranged and melee phase. Every roll is bound to a local in the
+  old order; detail objects are built only when a sink is set, so the resolver without one
+  runs as fast as before.
+- Re-runnable records: player battles store `rerun` (the setup through a JSON round trip,
+  spells by id, and the rng state from just before the battle); `battle/rerun.ts` has
+  `toSetupRecord`, `fromSetupRecord`, `rerunBattle`, `matchesRecord`, and `validRerun`.
+  `STATE_VERSION` is 2; `src/sim/migrate.ts` holds the 1-to-2 migration and the lenient load
+  of a malformed `rerun`. `morale.ts` exports `mustCheck`, `breakThreshold`, and `fearless`,
+  which the resolver itself uses.
+- Proof that nothing moved: `tests/sim/battle/golden.json` (`npm run golden:battle`) pins
+  the logs, outcomes, and final rng states of 30 named fixtures on 5 seeds, written before
+  the refactor; with A1 to A5 stripped they still match. Outside the repository, 600 battles
+  (30 fixtures on 20 seeds) were compared in full before and after, with and without a sink,
+  and two 365-day games with a human nation plus two runner games ended in identical states
+  (minus the version and the record additions).
+- Tests: the golden pin; the sink equivalence (30 fixtures x 20 seeds, result, log, and rng);
+  the detail adding up to every tally, the HP of every group, the spell damage, and each
+  troop's single death; the order guarantees and phase labels; records that re-run and match
+  in the same session, after a save and load, for a storm, and through a played year; AI-only
+  battles unrecorded; unknown spells and tampering caught; the size pins (clash300 setup 9.3
+  KB, record at most 50.9 KB raw and 5.5 KB gzipped, starting at most 13.8 KB; pins 14, 56,
+  7, and 16 KB); the migration; the morale helpers on a grid; the worst re-run with detail
+  (about 14 ms against a 45 ms pin). 1291 tests.
+- Timing: the resolver without a sink measured unchanged within noise (best of 12: 300 v 300
+  0.74 ms before, 0.78 after; clash300 1.92 / 1.88; grind16 4.10 / 4.14; immortal 8.40 /
+  8.46). With a sink and verification, clash300 re-runs in about 4 ms and the worst battle
+  in about 14 to 19 ms.
+- Adversarial check: 1,500 random battles (random sides and units, commanders with random
+  spells and scripts, pretenders, PD, storms, field effects, damaged squads) and 11 edge cases
+  were fought on the Phase 6 resolver and the new one, with and without a sink. Results,
+  stripped logs, and rng states were identical. Every detail stream added up to its tallies,
+  HP, spell damage, burns, and commander damage, and every record re-ran to its log. Six whole
+  games (two runner games, four with a human nation) ended with the Phase 6 state hash, and
+  all 135 records they made re-ran and matched. Mutation testing found six guarantees no test
+  checked. Each now has a test: the fatigue a cast logs (`spells.test.ts`), a burn's `by` with
+  two shields and a strike's `berserk` flag (new `landing.test.ts`), the drain detail
+  (`detail.test.ts`), a spell hit on a troop an earlier effect felled (`effects.staged.test.ts`),
+  and a migration that keeps every record (`migrate.test.ts`).
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -376,6 +425,12 @@
   at the end of `docs/01-core-rules.md`. `GameState` differs from the
   `docs/06-architecture.md` sketch: no `activeRituals` (ritual progress lives in the
   caster's order) and `result` is `GameResult | null`.
+
+- Phase 10 S1 (`docs/12-battle-presentation.md`, "Implementation decisions"): landing the hits
+  lives in `battle/landing.ts` and the migration map in `src/sim/migrate.ts`, files the spec's
+  S1.1 table does not list; the migration test is `tests/sim/migrate.test.ts`, mirroring the
+  source, rather than part of `rerun.test.ts`; `golden.json` carries an outcome hash beside
+  the spec's log hash.
 
 ## Known issues and open questions
 
@@ -465,3 +520,17 @@
   warm-up), against a mean of about 1.2 to 1.8 ms on Medium and 2.3 ms on Large with three
   nations. The browser runs the AI inside a tick, so a long
   pause could show; no test times the AI.
+
+- Phase 10 S1 lands as two commits (`docs/12`, S1.9): first the golden pin alone
+  (`scripts/golden-battle.ts`, `package.json`, `tests/sim/battle/fixtures/named.ts`,
+  `armies.ts`, and `golden.ts` beside it, `tests/sim/battle/golden.test.ts`, `golden.json`),
+  which is green on the Phase 6 resolver and regenerates byte for byte there; then the rest.
+- Serialize (Phase 9) must call `migrateState` on load; until then nothing runs the
+  migration outside its test.
+- The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin) can fail when the
+  machine is loaded by other processes; they pass when run alone.
+- Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a
+  rule or spell change that left the log as it was went unnoticed (in a test that raised the
+  morale base by 1, about 80% of random records still matched and showed morale rolls against
+  the new target). `rerun.rules` now stores `battleRulesHash()`, and a save from a build with
+  other battle rules, spells or units loads with a null `rerun` (log-only replay).

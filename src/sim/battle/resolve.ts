@@ -1,10 +1,12 @@
-// resolveBattle(setup, rng): BattleResult (docs/04-battle.md). Pure: it reads only the setup,
-// never changes it, and draws only from the rng it is given, so the same setup and rng state
-// always give the same result and log.
+// resolveBattle(setup, rng, opts?): BattleResult (docs/04-battle.md). Pure: it reads only the
+// setup, never changes it, and draws only from the rng it is given, so the same setup and rng
+// state always give the same result and log. An optional detail sink receives every blow and
+// roll (detail.ts); it only watches, so the result is the same with or without it.
 import { BATTLE, CASTING } from '../../content/rules';
 import { meleePhase, rangedPhase } from './attacks';
+import type { DetailEvent } from './detail';
 import { dropMods } from './effects';
-import type { BattleEvent, BattleRoster, BattleSide } from './events';
+import type { BattleEvent, BattlePhase, BattleRoster, BattleSide } from './events';
 import {
   active,
   anyActive,
@@ -174,30 +176,77 @@ function decide(field: Field): BattleSide {
   return onField(field, 'attacker') > onField(field, 'defender') ? 'attacker' : 'defender';
 }
 
-export function resolveBattle(setup: BattleSetup, rng: RngState): BattleResult {
-  const field = buildField(setup);
+/**
+ * Round step 5 and the battle's end: the end of round, then the winner if a side has no active
+ * units left. Undecided at round 50, the attacker leaves the field safely and the defender
+ * wins. Null while the battle goes on.
+ */
+function endStep(field: Field, round: number, log: BattleEvent[]): BattleSide | null {
+  endOfRound(field, round, log);
+  if (!anyActive(field, 'attacker') || !anyActive(field, 'defender')) return decide(field);
+  if (round !== BATTLE.attackerRetreatRound) return null;
+  for (const g of field.sides.attacker) if (present(g)) leave(g, log);
+  return 'defender';
+}
+
+/**
+ * Runs one round step; inserts its phase marker (A1) before what it logged, if it logged
+ * anything. Detail events of the step sit after the marker.
+ */
+function span<T>(field: Field, phase: BattlePhase, log: BattleEvent[], step: () => T): T {
+  const at = log.length;
+  const from = field.detail?.length ?? 0;
+  field.phase = phase;
+  const out = step();
+  if (log.length === at) return out;
+  log.splice(at, 0, { kind: 'phase', phase });
+  // Every detail event of this span sits at or after `at`, so after the marker.
+  const d = field.detail;
+  if (d) {
+    for (let i = from; i < d.length; i++) {
+      const e = d[i];
+      if (e) e.at += 1;
+    }
+  }
+  return out;
+}
+
+export interface ResolveOptions {
+  /** Receives every blow, spell hit, burn, drain, and morale roll (never saved). */
+  detail?: DetailEvent[];
+}
+
+export function resolveBattle(
+  setup: BattleSetup,
+  rng: RngState,
+  opts: ResolveOptions = {},
+): BattleResult {
+  const field = buildField(setup, opts.detail ?? null);
   const replay: BattleEvent[] = [];
   let rounds = 0;
   let winner: BattleSide = 'defender';
   for (let round = 1; round <= BATTLE.maxRounds; round++) {
     rounds = round;
+    field.round = round;
     replay.push({ kind: 'roundStart', round });
-    scriptsPhase(field, round, rng, replay);
-    commanderDeaths(field, round, rng, replay);
-    rangedPhase(field, round, rng, replay);
-    commanderDeaths(field, round, rng, replay);
-    meleePhase(field, round, rng, replay);
-    commanderDeaths(field, round, rng, replay);
-    moralePhase(field, round, rng, replay);
-    endOfRound(field, round, replay);
-    if (!anyActive(field, 'attacker') || !anyActive(field, 'defender')) {
-      winner = decide(field);
-      break;
-    }
-    if (round === BATTLE.attackerRetreatRound) {
-      // Undecided at round 50: the attacker leaves the field safely.
-      for (const g of field.sides.attacker) if (present(g)) leave(g, replay);
-      winner = 'defender';
+    span(field, 'scripts', replay, () => {
+      scriptsPhase(field, round, rng, replay);
+      commanderDeaths(field, round, rng, replay);
+    });
+    span(field, 'ranged', replay, () => {
+      rangedPhase(field, round, rng, replay);
+      commanderDeaths(field, round, rng, replay);
+    });
+    span(field, 'melee', replay, () => {
+      meleePhase(field, round, rng, replay);
+      commanderDeaths(field, round, rng, replay);
+    });
+    span(field, 'morale', replay, () => {
+      moralePhase(field, round, rng, replay);
+    });
+    const decided = span(field, 'end', replay, () => endStep(field, round, replay));
+    if (decided !== null) {
+      winner = decided;
       break;
     }
   }

@@ -3,6 +3,7 @@
 // carry it. effects.test.ts follows the same primitives through whole battles.
 import { describe, expect, it } from 'vitest';
 import { SPELLS } from '../../../src/content/spells';
+import type { DetailEvent } from '../../../src/sim/battle/detail';
 import type { BattleEvent } from '../../../src/sim/battle/events';
 import { groupStat } from '../../../src/sim/battle/field';
 import { commanderDeaths, moralePhase } from '../../../src/sim/battle/morale';
@@ -31,6 +32,31 @@ describe('spell damage', () => {
         kills: 0,
       });
     }
+  });
+
+  it('reports every troop each damage effect rolls; one an earlier effect felled, as fallen', () => {
+    const area = { kind: 'area', count: 3 } as const;
+    const twice = testSpell('test:twice', [
+      { kind: 'damage', amount: 500, element: 'fire', targets: area },
+      { kind: 'damage', amount: 500, element: 'fire', targets: area },
+    ]);
+    const { field, castBy } = staged(
+      side([], [mage('m', [twice])]),
+      side([squad('d', 'ashMilitia', 10)]),
+    );
+    const detail: DetailEvent[] = [];
+    field.detail = detail;
+    const log = castBy('m', twice);
+    const hits = detail.flatMap((e) => (e.kind === 'spellHit' ? [e] : []));
+    const [first, second] = [0, 1].map((i) => hits.filter((h) => h.effect === i));
+    // The second effect lands on the troops the first one burnt to death.
+    expect(first?.length).toBeGreaterThan(0);
+    expect(second?.map((h) => h.targetMember)).toEqual(first?.map((h) => h.targetMember));
+    expect(second?.map((h) => h.landing)).toEqual(
+      second?.map(() => ({ hpBefore: 0, dealt: 0, killed: false })),
+    );
+    const kills = log.reduce((n, e) => n + (e.kind === 'damage' ? e.kills : 0), 0);
+    expect(hits.filter((h) => h.landing.killed)).toHaveLength(kills);
   });
 
   it('kills that count toward the round’s morale: a squad half burnt checks at once', () => {

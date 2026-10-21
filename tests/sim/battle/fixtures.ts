@@ -124,12 +124,12 @@ export function attackerWinRate(
   return wins / seeds;
 }
 
-/** The round each event happened in. */
+/** The round each event happened in; phase markers are left out. */
 export function byRound(result: BattleResult) {
   let round = 0;
-  return result.replay.map((e) => {
+  return result.replay.flatMap((e) => {
     if (e.kind === 'roundStart') round = e.round;
-    return { round, event: e };
+    return e.kind === 'phase' ? [] : [{ round, event: e }];
   });
 }
 

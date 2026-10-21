@@ -10,6 +10,7 @@ import type { TaxRate } from '../content/rules';
 import type { BuildingId } from '../content/types';
 import type { MapData } from '../mapgen/types';
 import type { BattleEvent, BattleRoster, BattleSide } from './battle/events';
+import type { BattleRerun, BattleScene } from './battle/record';
 import type {
   BattleId,
   CommanderId,
@@ -24,8 +25,11 @@ import type { RngState } from './rng';
 
 export type { Difficulty };
 
-/** Bumped whenever the saved shape changes; serialize.ts migrates older saves. */
-export const STATE_VERSION = 1;
+/**
+ * Bumped whenever the saved shape changes; migrate.ts lifts older saves. 2: battle records gained
+ * scene and rerun (Phase 10 S1).
+ */
+export const STATE_VERSION = 2;
 
 export type ColorAmounts = Record<Color, number>;
 export type Pips = Partial<Record<Color, number>>;
@@ -273,6 +277,10 @@ export interface BattleRecord {
   /** Both sides as the battle began. */
   roster: Record<BattleSide, BattleRoster>;
   replay: BattleEvent[];
+  /** A5: where it was fought. */
+  scene: BattleScene;
+  /** Setup and starting rng for a blow-by-blow re-run; null for older records. */
+  rerun: BattleRerun | null;
 }
 
 export type MessageKind =

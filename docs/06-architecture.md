@@ -11,7 +11,7 @@
 | Styling | CSS modules, no Tailwind | Keeps the UI self-contained. |
 | Tests | Vitest | Sim tests run in Node with no DOM. |
 | Lint and format | ESLint (typescript-eslint) and Prettier | |
-| Persistence | IndexedDB via `idb-keyval` | Save files are JSON of a few hundred KB; localStorage is too small. |
+| Persistence | IndexedDB via `idb-keyval` | Save files are JSON of a few hundred KB gzipped; localStorage is too small. |
 | Package manager | npm | |
 
 No backend in M1. The simulation is written as a pure, deterministic module so that M4
@@ -73,6 +73,7 @@ fluid-magic/
         resolve.ts        # resolveBattle(setup, rng): the round loop, scripts, the winner
         field.ts          # rows, troops, stat modifiers inside one battle
         attacks.ts        # ranged fire, melee, damage
+        landing.ts        # a phase's attacks landing: tallies, life drain, fire-shield burns
         morale.ts         # morale checks, routs, commander deaths
         spells.ts         # choosing and casting a spell, fatigue
         targets.ts        # who a spell lands on
@@ -81,7 +82,11 @@ fluid-magic/
         apply.ts          # a result written back: survivors, deaths, PD, records, messages
         replay.ts         # folding a replay log into the state the viewer shows
         events.ts         # BattleEvent types
+        detail.ts         # DetailEvent types: blows, spell hits, burns, drains, morale rolls (never saved)
+        record.ts         # BattleSetupRecord, BattleRerun, BattleScene types
+        rerun.ts          # toSetupRecord, fromSetupRecord, rerunBattle, matchesRecord
       selectors.ts        # every economic rate, read by the UI, the AI, and the tick alike
+      migrate.ts          # the migration map that lifts older saves to STATE_VERSION
       serialize.ts        # save/load JSON, version field, migrations
     content/              # DATA ONLY. Plain objects, typed.
       types.ts            # shapes of unit, nation, building records
@@ -272,6 +277,14 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
   migration map. Save on demand (button, Ctrl+S) and autosave every 30 game days to slot
   `autosave`. Three manual slots. Store in IndexedDB.
 - The seed and rng state are saved so a loaded game continues identically.
+- Saves are gzipped (`CompressionStream('gzip')`) before they go to IndexedDB, and read back
+  with `DecompressionStream`. Twenty large battle records (300 against 300, with re-run
+  setups) are about 0.9 MB of JSON but 0.1 MB gzipped; a test pins a 20-record save under
+  200 KB gzipped.
+- `STATE_VERSION` 2 (Phase 10 S1) adds `scene` and `rerun` to battle records; the migration
+  from 1 sets `rerun` to null and the scene from the province's terrain. The migration map
+  lives in `src/sim/migrate.ts`, which `serialize.ts` runs on load; loading is lenient about
+  replays, so a malformed `rerun` becomes null instead of failing the save.
 
 ## Performance targets
 

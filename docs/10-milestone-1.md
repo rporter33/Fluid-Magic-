@@ -5,9 +5,9 @@
 M1 is done when a player can open the game in a browser, design a pretender for Cinder
 Horde or Thornwood, play a full match on a generated Medium map against one or more AI
 nations in continuous time with pause and speed controls, fight auto-resolved battles and
-watch their replays, research and cast all ten Red or Green spells, spread dominion,
-claim Wellsprings, win or lose, and save and load at any point. Placeholder art is
-distinct per unit and animated. All sim tests pass.
+watch their replays blow by blow, with sound, research and cast all ten Red or Green spells,
+spread dominion, claim Wellsprings, win or lose, and save and load at any point. Placeholder
+art is distinct per unit and animated. All sim tests pass.
 
 ## Acceptance criteria
 
@@ -23,8 +23,11 @@ distinct per unit and animated. All sim tests pass.
    springs and dominion tint, unrest, tax rates, upkeep. All visible in the UI.
 6. Commanders, squads, movement with ETA and reversal, recruitment queues, garrison
    transfer, PD, buildings (Temple, Lab), pillage, patrol.
-7. Battle: resolver per `docs/04-battle.md`, scripts, formations, closing rounds,
-   morale, round limits, replay log, replay viewer. Sieges and storming of capitals.
+7. Battle: resolver per `docs/04-battle.md`, scripts, formations, closing rounds, morale,
+   round limits, replay log, and the replay viewer per `docs/07-ui.md` and
+   `docs/12-battle-presentation.md`: per-blow detail from a verified re-run (a labelled
+   summary when the re-run cannot be verified), pause, speeds, Beats mode, step, scrub, skip,
+   and at most 150 s per battle at 1x. Sieges and storming of capitals.
 8. Magic: pips, research tracks, fatigue, carried mana, 10 Red and 10 Green spells
    fully working, blessings for pips ≥ 4.
 9. Pretender: 6 chassis, pips, dominion, 5 scales with effects, awakening, prophet.
@@ -33,7 +36,9 @@ distinct per unit and animated. All sim tests pass.
 12. AI per `docs/08-ai.md` passing its behavior tests.
 13. Save/load with 3 slots plus autosave.
 14. Art: every unit, commander, chassis, building, terrain, and icon has a distinct SVG
-    placeholder; animations per `docs/09-art-direction.md`.
+    placeholder; animations per `docs/09-art-direction.md`, including the battle impact
+    grammar. Battle replays play procedural sound effects per `docs/11-sound.md`, with volume,
+    mute, captions, and the gore, shake, flash, and reduced-motion settings.
 15. Headless AI vs AI runner (`npm run sim:aivai -- --games 20 --seed 1`) reporting
     winner, months, and final stats per game.
 
@@ -41,6 +46,15 @@ distinct per unit and animated. All sim tests pass.
 
 Work in the order below. Each phase ends with its tests green and a commit. Do not start
 rendering before the sim phases are solid; the headless runner is the first "game".
+
+**Presentation track.** At the owner's direction ("the battles should be visceral with
+detail and sfx since its not real time that should be fine, take what you need to get this
+done"), the battle replay is built as its own track in stages S1 to S6
+(`docs/12-battle-presentation.md`), in parallel with the phases from Phase 7 on, and
+integrated in Phase 10. S1 (the resolver's detail sink and re-runnable records) lands
+during Phase 7, before Phase 9 creates saves, so its migration stays trivial. S2 to S5 are
+pure code, the audio engine, the renderer, and the lab; they need no game UI and run beside
+Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 S<n>:`.
 
 ### Phase 0: Scaffold (half a day)
 - Vite + React + TypeScript strict, ESLint, Prettier, Vitest, PixiJS 8, Zustand, idb-keyval,
@@ -101,11 +115,18 @@ rendering before the sim phases are solid; the headless runner is the first "gam
   menu, save/load, victory screen, settings.
 
 ### Phase 10: Battle replay viewer
-- BattleRenderer per the UI doc with the animation table from the art doc.
+- Integrate the presentation track (S6): the `BattleReplay` modal from battle messages
+  (`docs/07-ui.md`), the replay and sound sections of the settings screen, gzipped saves
+  with the `STATE_VERSION` 2 migration, `replay-modal.spec.ts`.
+- Done when the S1 to S5 tests pass, no sound mapping is pending, and the owner has signed
+  off the listening checklist in `docs/11-sound.md`.
 
 ### Phase 11: Art and animation
 - All SVG placeholders, part system, tinting, procedural animations, spell particles,
   icons, chassis portraits. Manifest with fallbacks.
+- Battle viewer: the SVG part sprites replace the procedural placeholder parts through the
+  same `PartSet` interface, part by part with procedural fallbacks; portraits for name cards;
+  the battle screenshot baselines are refreshed in this commit only.
 
 ### Phase 12: Balance and polish
 - Run the playtest checklist in `docs/09-balance.md`. Tune. Record changes. Fix the
@@ -114,7 +135,8 @@ rendering before the sim phases are solid; the headless runner is the first "gam
 ## Out of scope for M1 (do not build)
 
 Building new forts, random events, W/U/B nations as playable, hybrid mana costs, sea
-provinces, multiplayer, touch layout, sound, localization, mod support, map editor.
+provinces, multiplayer, touch layout, music, sound outside battle replays (map, menus, UI),
+localization, mod support, map editor.
 Stub nothing for these except where the data format is already designed to hold them
 (spell requirement strings, nation color identity arrays).
 
@@ -131,3 +153,5 @@ Decisions made without asking, recorded so they can be revisited:
 - PixiJS over Three.js for rendering, React for panels.
 - Dominions' squad-level positioning was simplified to three rows per side.
 - Research tops out at level 6 in M1 and the spell list is spread across levels 1 to 6.
+- Battle sound effects moved into M1 at the owner's direction. They are generated in code,
+  with no audio files; music and map or menu sound stay out.

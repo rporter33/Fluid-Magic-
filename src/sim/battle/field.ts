@@ -1,12 +1,14 @@
 // The battlefield inside the resolver: every squad split into single troops, every commander
 // a group of one, arranged in three rows per side. Setup stats are read-only bases; anything
 // that changes during the battle is a timed modifier on the group, so the caller's setup is
-// never touched. Nothing here outlives a battle.
+// never touched. Nothing here outlives a battle. The field also carries the optional detail
+// sink and the round and step being resolved, which detail events record.
 import type { UnitTypeId } from '../../content';
 import { BATTLE, CASTING } from '../../content/rules';
 import type { BattleSpellDef, FieldEffectKind } from '../../content/spells/types';
 import type { Formation, Pips, ScriptSlot } from '../types';
-import type { BattleSide, BattleUnitRef, StatKey } from './events';
+import type { DetailEvent } from './detail';
+import type { BattleEvent, BattlePhase, BattleSide, BattleUnitRef, StatKey } from './events';
 import type { BattleSetup, BattleSideSetup, CombatStats } from './types';
 
 export const ROWS: readonly Formation[] = ['front', 'middle', 'rear'];
@@ -16,6 +18,8 @@ export const OTHER: Record<BattleSide, BattleSide> = { attacker: 'defender', def
 /** One troop or one commander on the field. */
 export interface Fighter {
   group: Group;
+  /** Its fixed slot in group.members, which detail events name it by. */
+  index: number;
   hp: number;
   maxHp: number;
   alive: boolean;
@@ -85,6 +89,11 @@ export interface Field {
   /** Stats for units each side's spells summon, and the next summon ref number. */
   summons: Record<BattleSide, Partial<Record<UnitTypeId, CombatStats>>>;
   nextSummon: number;
+  /** The detail sink, or null: detail objects are built only when it is set. */
+  detail: DetailEvent[] | null;
+  /** The round and the round step being resolved, for detail events. */
+  round: number;
+  phase: BattlePhase;
 }
 
 /** What only commanders bring to a group. */
@@ -137,7 +146,7 @@ export function group(
   // docs/01 section 6: the HP pool is split into per-unit HP inside the resolver; evenly.
   const each = count > 0 ? hp / count : 0;
   for (let i = 0; i < count; i++) {
-    g.members.push({ group: g, hp: each, maxHp: stats.hp, alive: each > 0 });
+    g.members.push({ group: g, index: i, hp: each, maxHp: stats.hp, alive: each > 0 });
   }
   return g;
 }
@@ -158,7 +167,7 @@ function sideGroups(side: BattleSide, setup: BattleSideSetup): Group[] {
   return [...squads, ...commanders];
 }
 
-export function buildField(setup: BattleSetup): Field {
+export function buildField(setup: BattleSetup, detail: DetailEvent[] | null = null): Field {
   const sides = {
     attacker: sideGroups('attacker', setup.attacker),
     defender: sideGroups('defender', setup.defender),
@@ -170,7 +179,18 @@ export function buildField(setup: BattleSetup): Field {
     effects: [],
     summons: { attacker: setup.attacker.summons, defender: setup.defender.summons },
     nextSummon: 0,
+    detail,
+    round: 0,
+    phase: 'scripts',
   };
+}
+
+/** Where a detail event emitted now sits: after every stored event logged so far. */
+export function detailAt(
+  field: Field,
+  log: readonly BattleEvent[],
+): { at: number; round: number; phase: BattlePhase } {
+  return { at: log.length, round: field.round, phase: field.phase };
 }
 
 /** Too tired to act: no spells, no script moves, no attacks (docs/02-magic.md section 3). */
@@ -183,17 +203,15 @@ export function fieldHas(field: Field, test: (e: FieldEffect) => boolean): boole
   return field.effects.some(test);
 }
 
+/** A berserk troop below half its HP rages: more attack and strength (docs/03-nations.md). */
+export function raging(f: Fighter): boolean {
+  return f.group.base.tags.includes('berserk') && f.hp < f.maxHp * BATTLE.berserk.belowHpShare;
+}
+
 /** A numeric stat with every modifier, for one fighter (berserk depends on the troop's HP). */
 export function statOf(f: Fighter, key: StatKey): number {
-  const g = f.group;
-  let value = groupStat(g, key);
-  if (
-    (key === 'att' || key === 'str') &&
-    g.base.tags.includes('berserk') &&
-    f.hp < f.maxHp * BATTLE.berserk.belowHpShare
-  ) {
-    value += BATTLE.berserk[key];
-  }
+  let value = groupStat(f.group, key);
+  if ((key === 'att' || key === 'str') && raging(f)) value += BATTLE.berserk[key];
   return value;
 }
 

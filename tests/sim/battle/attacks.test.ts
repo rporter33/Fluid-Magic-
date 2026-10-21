@@ -206,6 +206,7 @@ describe('the fire shield', () => {
       amount: 5 * blows,
       element: 'fire',
       kills: 0,
+      by: 'c',
     });
     expect(colossus.members[0]!.alive).toBe(true);
   });
@@ -226,7 +227,7 @@ describe('the fire shield', () => {
     expect(damageTo(log, 'c', 'physical')).toHaveLength(2);
     expect(strikers.members[0]!.hp).toBe(11 - 10);
     expect(damageTo(log, 'a', 'fire')).toEqual([
-      { kind: 'damage', target: 'a', amount: 10, element: 'fire', kills: 0 },
+      { kind: 'damage', target: 'a', amount: 10, element: 'fire', kills: 0, by: 'c' },
     ]);
   });
 
@@ -242,7 +243,7 @@ describe('the fire shield', () => {
     expect(log.find((e) => e.kind === 'melee')).toMatchObject({ squad: 'a', hits: 3 });
     expect(field.sides.attacker[0]!.members.map((m) => m.hp)).toEqual([4, 4, 4]);
     expect(damageTo(log, 'a', 'fire')).toEqual([
-      { kind: 'damage', target: 'a', amount: 21, element: 'fire', kills: 0 },
+      { kind: 'damage', target: 'a', amount: 21, element: 'fire', kills: 0, by: 'd' },
     ]);
   });
 
@@ -262,7 +263,7 @@ describe('the fire shield', () => {
     expect(log.find((e) => e.kind === 'melee')).toMatchObject({ squad: 'a', hits: 4, kills: 0 });
     // The amount is the HP the strikers had left, not 4 x 5.
     expect(damageTo(log, 'a', 'fire')).toEqual([
-      { kind: 'damage', target: 'a', amount: 12, element: 'fire', kills: 4 },
+      { kind: 'damage', target: 'a', amount: 12, element: 'fire', kills: 4, by: 'c' },
     ]);
   });
 
@@ -286,7 +287,17 @@ describe('the fire shield', () => {
     const striker = field.sides.attacker[0]!;
     const log = melee(field);
     expect(damageTo(log, 'c', 'physical')).toHaveLength(1);
-    expect(log).toContainEqual({ kind: 'melee', squad: 'c', target: 'a', hits: 1, kills: 1 });
+    expect(log).toContainEqual({
+      kind: 'melee',
+      squad: 'c',
+      target: 'a',
+      attacks: 1,
+      hits: 1,
+      blocked: 0,
+      onFallen: 0,
+      kills: 1,
+      dmg: 1,
+    });
     expect(striker.members[0]).toMatchObject({ alive: false, hp: 0 });
     expect(striker.deathsThisRound).toBe(1);
     expect(damageTo(log, 'a', 'fire')).toEqual([]);
@@ -353,14 +364,19 @@ describe('the fire shield', () => {
       amount: 4,
       element: 'fire',
       kills: 1,
+      by: 'c',
     });
     expect(replay[burn + 1]).toEqual({ kind: 'death', commander: 'h' });
     expect(replay.slice(0, burn)).toContainEqual({
       kind: 'melee',
       squad: 'c',
       target: 'h',
+      attacks: 1,
       hits: 0,
+      blocked: 0,
+      onFallen: 0,
       kills: 0,
+      dmg: 0,
     });
     expect(result.commanders.get('h')?.dead).toBe(true);
     expect(result.winner).toBe('defender');

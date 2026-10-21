@@ -1,6 +1,6 @@
 // Replay records (docs/04-battle.md, "Replay log"): the shape of BattleRecord that saves and
 // the replay viewer share. A replay is the starting roster plus the event log: the viewer
-// needs nothing else.
+// needs nothing else. The blow-by-blow detail is not stored: see detail.ts and rerun.ts.
 import type { UnitTypeId } from '../../content';
 import type { FieldEffectKind, SpellStat } from '../../content/spells/types';
 import type { Element } from '../../content/types';
@@ -45,6 +45,30 @@ export interface BattleRoster {
 /** The stats spells and conditions can change in battle. */
 export type StatKey = SpellStat;
 
+/** Round steps in resolver order (docs/04-battle.md, "Round structure"). */
+export type BattlePhase = 'scripts' | 'ranged' | 'melee' | 'morale' | 'end';
+
+/**
+ * One attacking group against one target group in one ranged or melee phase. Every attack is
+ * rolled against the field as the phase began, so a later blow can land on a troop an
+ * earlier blow already felled. wounds = hits - blocked - onFallen - kills, never negative.
+ */
+export interface AttackTally {
+  squad: BattleUnitRef;
+  target: BattleUnitRef;
+  /** Attack rolls, misses included. */
+  attacks: number;
+  /** Rolls that hit. */
+  hits: number;
+  /** Hits on a living troop that rolled 0 damage: the armor held. */
+  blocked: number;
+  /** Hits on a troop already felled earlier in this phase. */
+  onFallen: number;
+  kills: number;
+  /** HP removed: each blow capped at its target's HP before the blow. */
+  dmg: number;
+}
+
 /**
  * The replay log. With the roster it is enough to replay the fight: every move between rows,
  * every hit, kill, and departure is in it (see replay.ts, which folds it into each unit's
@@ -52,11 +76,36 @@ export type StatKey = SpellStat;
  */
 export type BattleEvent =
   | { kind: 'roundStart'; round: number }
-  | { kind: 'cast'; caster: BattleUnitRef; spellId: string; targets: BattleUnitRef[] }
-  | { kind: 'volley'; squad: BattleUnitRef; target: BattleUnitRef; hits: number; kills: number }
-  | { kind: 'melee'; squad: BattleUnitRef; target: BattleUnitRef; hits: number; kills: number }
-  /** Damage to one unit (a commander) or, from spells, to a squad; kills it caused. */
-  | { kind: 'damage'; target: BattleUnitRef; amount: number; element: Element; kills: number }
+  /**
+   * A1. Opens the round step that logged the events after it. Logged only when the step
+   * logged something. A step's span includes the commander deaths checked right after it,
+   * and 'end' includes the round-50 departures.
+   */
+  | { kind: 'phase'; phase: BattlePhase }
+  /** A4: fatigue is the caster's fatigue after paying for this cast. */
+  | {
+      kind: 'cast';
+      caster: BattleUnitRef;
+      spellId: string;
+      targets: BattleUnitRef[];
+      fatigue: number;
+    }
+  | ({ kind: 'volley' } & AttackTally) // A2
+  | ({ kind: 'melee' } & AttackTally) // A2
+  /**
+   * Damage to one unit (a commander) or, from spells, to a squad; kills it caused. A3: by is
+   * the striking group, set for weapon hits on commanders. For fire-shield burns, by is the
+   * shield's group (the largest contributor if several burned the target). Spell damage
+   * leaves it out: the preceding cast names the caster.
+   */
+  | {
+      kind: 'damage';
+      target: BattleUnitRef;
+      amount: number;
+      element: Element;
+      kills: number;
+      by?: BattleUnitRef;
+    }
   | { kind: 'heal'; target: BattleUnitRef; amount: number }
   | { kind: 'rout'; squad: BattleUnitRef }
   /** A unit left the field: its exit round after a rout or retreat, or the round-50 retreat. */

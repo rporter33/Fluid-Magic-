@@ -2,15 +2,14 @@
 
 The resolver is a pure function:
 
-```
-resolveBattle(setup: BattleSetup, rng: Rng): BattleResult
-```
+    resolveBattle(setup: BattleSetup, rng: Rng, opts?: { detail?: DetailEvent[] }): BattleResult
 
 `BattleSetup` contains both sides (attacker and defender), each a list of commanders with
 their squads, scripts, and carried mana, plus the province terrain, the fort state, and
 the province scales. `BattleResult` contains survivors per side (squad counts, commander
 HP), the winner, the round count, and a `replay: BattleEvent[]` log sufficient to render
-the fight.
+the fight. The optional `detail` array, when given, receives one event per blow, spell hit,
+burn, drain, and morale roll; it never changes the result (see "Replay detail").
 
 ## Formation grid
 
@@ -94,13 +93,16 @@ heuristic: damage spells when enemies ≥ 10 troops, buffs otherwise.
 ## Replay log
 
 Every event is appended to `replay`. Event kinds:
-`roundStart(r)`, `cast(casterId, spellId, targets)`, `volley(squadId, targetSquadId, hits, kills)`,
-`melee(squadId, targetSquadId, hits, kills)`, `damage(unitRef, amount, element)`,
-`rout(squadId)`, `death(commanderId)`, `summon(side, unitTypeId, count)`, `buff(...)`,
+`roundStart(r)`, `phase(scripts | ranged | melee | morale | end)`,
+`cast(caster, spellId, targets, fatigue)`,
+`volley` and `melee(squad, target, attacks, hits, blocked, onFallen, kills, dmg)`,
+`damage(target, amount, element, kills, by?)`, `heal`, `rout`, `leave`, `advance`,
+`death(commander)`, `summon`, `buff`, `expire`, `field`, `fieldEnd`, `fatigue`,
 `battleEnd(winner, rounds)`.
 
-The replay viewer plays these back at 1 round per 1.5 seconds (adjustable), with squads
-drawn as sprite blocks in their rows, numbers floating up for damage, and a rout animation.
+The replay viewer plays a battle blow by blow, re-run from its record, with the pacing in
+`docs/12-battle-presentation.md` (about 5 to 10 s for a busy round at 1x, a hard cap of
+150 s per battle).
 
 ## Required tests
 
@@ -205,3 +207,37 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
   which log no `buff` or `expire` of their own; `fatigue` logs a drain. `expire` is logged
   once per group and source, for changes a `buff` announced.
 
+**Replay detail (Phase 10 S1)**
+- **Phase markers**: a `phase` event opens each round step that logged anything; a step's
+  span includes the commander deaths checked right after it, and `end` includes the round-50
+  departures. `foldReplay` ignores them.
+- **Attack tallies**: `volley` and `melee` carry `attacks` (rolls, misses included), `hits`,
+  `blocked` (hits on a living troop that rolled 0 damage), `onFallen` (hits on a troop
+  already felled earlier in the same phase, since every roll is made against the field as
+  the phase began; about 15% of hits in large battles), `kills`, and `dmg` (HP removed, each
+  blow capped at its target's HP). Wounds are `hits − blocked − onFallen − kills`.
+- **Killers and costs**: `damage` carries `by`, the striking group, for weapon hits on
+  commanders, and the shield's group for fire-shield burns; spell damage leaves it out (the
+  `cast` before it names the caster). `cast` carries the caster's fatigue after paying.
+- **Re-runnable records**: a `BattleRecord` stores `scene` (terrain, and the storm state
+  when a fort was stormed) and, for player battles, `rerun`: the setup (through a JSON round
+  trip, spells by id) and the rng state just before the battle. The viewer fights the battle
+  again with a `detail` sink and uses the detail only if the re-run's whole log, winner, and
+  rounds equal the record's; otherwise (no `rerun`, a mismatch after a rule or content
+  change, or an error) it plays a summary built from the tallies and shows no rolls. Detail
+  is never saved, so its shape can change freely. `STATE_VERSION` became 2: older records
+  load with `rerun: null`, and a malformed `rerun` loads as null rather than failing.
+- **Observation only**: with or without a sink, every draw happens on the same path and in
+  the same order (rolls are bound to local values; nothing draws inside a detail branch).
+  A golden test pins the stripped logs of 30 fixtures across the change, and an equivalence
+  test compares result, log, and rng state with and without a sink.
+- **Shared morale helpers**: `mustCheck()`, `breakThreshold()`, and `fearless()` in
+  `morale.ts` are the rules the resolver itself uses; the viewer imports them for its shaken
+  state and break chance instead of copying the rules.
+- **Choices the spec left open**: a fire-shield burn's `by` is the shield group that owed the
+  burned group the most fire (ties to the first shield struck). A morale roll's detail
+  `cause` is `losses` when the losses alone made the squad roll, `shock` when only a shock
+  spell did, and `commanderDeath` for the roll after a commander dies. Detail `engage` events
+  open every ranged phase that is not grounded by a storm and every melee phase. A strike's
+  `berserk` marks melee blows with the rage bonus; `firstRound` marks blows in the group's
+  first melee round.

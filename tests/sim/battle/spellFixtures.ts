@@ -45,13 +45,13 @@ export function casts(replay: readonly BattleEvent[]) {
   return replay.flatMap((e) => (e.kind === 'cast' ? [e] : []));
 }
 
-/** Events from a cast up to the next cast or phase event, i.e. the cast's own effects. */
+/** Events from a cast up to the next cast or round step, i.e. the cast's own effects. */
 export function afterCast(replay: readonly BattleEvent[], spellId: string): BattleEvent[] {
   const i = replay.findIndex((e) => e.kind === 'cast' && e.spellId === spellId);
   if (i < 0) return [];
   const out: BattleEvent[] = [];
   for (const e of replay.slice(i + 1)) {
-    if (['cast', 'volley', 'melee', 'roundStart'].includes(e.kind)) break;
+    if (['cast', 'volley', 'melee', 'roundStart', 'phase'].includes(e.kind)) break;
     out.push(e);
   }
   return out;

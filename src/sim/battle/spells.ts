@@ -143,11 +143,11 @@ export function chooseSpell(
  */
 function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState): Plan[] {
   const chosen = new Map<string, Plan>();
-  return spell.effects.map((effect) => {
+  return spell.effects.map((effect, index) => {
     const targets = 'targets' in effect ? effect.targets.kind : '';
     const key = targets === 'area' ? 'area' : `${effect.kind}:${targets}`;
     const earlier = chosen.get(key);
-    if (earlier) return { ...earlier, effect };
+    if (earlier) return { ...earlier, effect, index };
     const groups = effectGroups(field, caster, spell, effect);
     let troops: Plan['troops'] = [];
     if (effect.kind === 'damage' || (effect.kind === 'debuff' && effect.targets.kind === 'area')) {
@@ -164,13 +164,16 @@ function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState)
     }
     // An area effect lands on every group its troops belong to.
     const landed = targets === 'area' ? [...new Set(troops.map((t) => t.group))] : groups;
-    const result: Plan = { effect, groups: landed, troops };
+    const result: Plan = { effect, index, groups: landed, troops };
     chosen.set(key, result);
     return result;
   });
 }
 
-/** Casts a spell: fatigue and carried mana are paid, targets chosen, then each effect lands. */
+/**
+ * Casts a spell: fatigue and carried mana are paid, targets chosen, then each effect lands. The
+ * cast is logged with the caster's fatigue after paying.
+ */
 export function cast(
   field: Field,
   caster: Group,
@@ -190,7 +193,13 @@ export function cast(
     for (const g of p.groups) targets.add(g.ref);
     for (const t of p.troops) targets.add(t.group.ref);
   }
-  log.push({ kind: 'cast', caster: caster.ref, spellId: spell.id, targets: [...targets] });
+  log.push({
+    kind: 'cast',
+    caster: caster.ref,
+    spellId: spell.id,
+    targets: [...targets],
+    fatigue: caster.fatigue,
+  });
   // A recast replaces the spell's earlier changes on its targets; it never stacks.
   const changed = new Set<Group>();
   for (const p of plans) {
