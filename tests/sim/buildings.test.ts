@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { constructionCost, constructionDays, startConstruction } from '../../src/sim/buildings';
 import type { NationId } from '../../src/sim/ids';
 import {
+  addArmy,
   capitalOf,
   independentProvince,
   nationIds,
@@ -37,7 +38,7 @@ describe('construction', () => {
     const p = independentProvince(state);
     p.owner = red;
     const gold = state.nations[red]!.gold;
-    startConstruction(state, p.id, 'lab', red);
+    startConstruction(state, p.id, 'lab', red, null);
     expect(state.nations[red]!.gold).toBe(gold - 300);
     runDays(state, 29);
     expect(p.buildings).toEqual([]);
@@ -52,11 +53,34 @@ describe('construction', () => {
     const [red, green] = nationIds(state) as [NationId, NationId];
     const p = independentProvince(state);
     p.owner = red;
-    startConstruction(state, p.id, 'temple', red);
+    startConstruction(state, p.id, 'temple', red, null);
     runDays(state, 10);
     p.owner = green;
     runDays(state, 30);
     expect(p.construction).toBeNull();
     expect(p.buildings).toEqual([]);
+  });
+
+  it('returns the builder to idle when the work ends, unless it has moved on', () => {
+    const state = twoNationGame();
+    const red = nationIds(state)[0]!;
+    const p = independentProvince(state);
+    p.owner = red;
+    const builder = addArmy(state, red, p.id, 'cinderWarrior', 1);
+    const other = addArmy(state, red, p.id, 'cinderWarrior', 1);
+    builder.order = { kind: 'build', building: 'lab' };
+    other.order = { kind: 'pillage' };
+    startConstruction(state, p.id, 'lab', red, builder.id);
+    const rebuilt = independentProvince(state);
+    rebuilt.owner = red;
+    const mover = addArmy(state, red, rebuilt.id, 'cinderWarrior', 1);
+    mover.order = { kind: 'build', building: 'temple' };
+    startConstruction(state, rebuilt.id, 'temple', red, mover.id);
+    mover.order = { kind: 'patrol' };
+    runDays(state, 30);
+    expect(p.buildings).toEqual(['lab']);
+    expect(builder.order).toEqual({ kind: 'idle' });
+    expect(other.order).toEqual({ kind: 'pillage' });
+    expect(mover.order).toEqual({ kind: 'patrol' });
   });
 });

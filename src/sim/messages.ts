@@ -20,6 +20,11 @@ export function postMessage(
     province,
     battle,
   });
-  const excess = state.messages.length - MESSAGES.keep;
-  if (excess > 0) state.messages.splice(0, excess);
+  // Each nation keeps its own most recent messages, so AI chatter never pushes out the player's.
+  if (state.messages.filter((m) => m.nation === nation).length > MESSAGES.keep) {
+    state.messages.splice(
+      state.messages.findIndex((m) => m.nation === nation),
+      1,
+    );
+  }
 }

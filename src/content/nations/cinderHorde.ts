@@ -4,7 +4,7 @@ import type { NationDef } from '../types';
 export const CINDER_HORDE: NationDef = {
   id: 'cinderHorde',
   name: 'Cinder Horde',
-  color: 'R',
+  colors: ['R'],
   motto: 'The fire that walks',
   description:
     'A confederation of ash-born clans that worship a god of flame. Fast, aggressive, cheap ' +
@@ -23,6 +23,7 @@ export const CINDER_HORDE: NationDef = {
   ],
   commanders: ['cinderScout', 'ashChieftain', 'pyrePriest', 'emberAdept', 'cinderMagus'],
   pd: { militia: 'ashMilitia', archer: 'flameArcher' },
+  homeTerrain: null,
   startingArmy: [
     {
       commander: 'ashChieftain',

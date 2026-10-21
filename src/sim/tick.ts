@@ -2,6 +2,7 @@
 // documented order; steps owned by later phases are marked where they will slot in.
 import { progressConstruction } from './buildings';
 import { accrueGoldAndMana, accrueMaterials } from './economy';
+import { applyPillage } from './pillage';
 import { growPopulation } from './population';
 import { allProvinceEconomies } from './selectors';
 import { applySupply } from './supply';
@@ -17,11 +18,12 @@ export function advance(state: GameState): void {
   // 3. Queues: construction here; recruitment (Phase 3), rituals and research (Phase 5).
   progressConstruction(state);
 
-  // 4. Economy, population, unrest, supply. Rates come from one snapshot of the day.
+  // 4. Economy, pillage, population, unrest, supply. Rates come from one snapshot of the day.
   state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);
   const economies = allProvinceEconomies(state);
   accrueGoldAndMana(state, economies);
   accrueMaterials(state, economies);
+  applyPillage(state);
   growPopulation(state, economies);
   updateUnrest(state, economies);
   applySupply(state, economies);

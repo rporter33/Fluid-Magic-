@@ -103,17 +103,23 @@ describe('special unit details', () => {
 });
 
 describe('nations', () => {
+  it('have one color each in M1', () => {
+    for (const n of Object.values(NATIONS)) expect(n.colors).toHaveLength(1);
+  });
+
   it('match their starting armies, research, and AI weights', () => {
     expect(Object.keys(NATIONS)).toEqual(['cinderHorde', 'thornwood']);
     expect(nationDef('cinderHorde')).toMatchObject({
-      color: 'R',
+      colors: ['R'],
+      homeTerrain: null,
       capitalName: 'Kharnath',
       capitalTerrain: 'plains',
       startingResearch: { color: 'R', level: 1 },
       ai: { aggression: 0.8, expansion: 0.8, research: 0.4, pillage: 0.6 },
     });
     expect(nationDef('thornwood')).toMatchObject({
-      color: 'G',
+      colors: ['G'],
+      homeTerrain: { terrain: 'forest', def: 1 },
       capitalName: 'Deepmoss',
       capitalTerrain: 'forest',
       startingResearch: { color: 'G', level: 1 },

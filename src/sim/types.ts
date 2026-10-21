@@ -9,7 +9,7 @@ import type { Scales } from '../content/pretenders/scales';
 import type { TaxRate } from '../content/rules';
 import type { BuildingId } from '../content/types';
 import type { MapData } from '../mapgen/types';
-import type { BattleEvent, BattleSide } from './battle/events';
+import type { BattleEvent, BattleRoster, BattleSide } from './battle/events';
 import type {
   BattleId,
   CommanderId,
@@ -17,7 +17,6 @@ import type {
   MessageId,
   NationId,
   ProvinceId,
-  RitualId,
   SquadId,
 } from './ids';
 import type { RngState } from './rng';
@@ -64,6 +63,8 @@ export interface Construction {
   building: BuildingId;
   daysLeft: number;
   nation: NationId;
+  /** The commander who started it; its order returns to idle when the work ends. */
+  commander: CommanderId | null;
 }
 
 /** A fort's recruitment queue item. Gold and materials are paid on queueing. */
@@ -71,6 +72,8 @@ export interface RecruitOrder {
   unit: UnitTypeId;
   count: number;
   daysLeft: number;
+  /** What was paid, so a cancellation can refund it exactly. */
+  paid: { gold: number; materials: number };
 }
 
 export interface Dominion {
@@ -121,7 +124,11 @@ export interface Squad {
   /** Shared HP pool, at most count times the unit's hp. */
   hp: number;
   formation: Formation;
-  /** Starvation counter: up one per starving day, down one per fed day. */
+  /**
+   * Starvation counter: up one per starving day, down one per fed day, and capped so morale
+   * recovers at the rate it was lost. The docs' squad moraleMod is derived from this and the
+   * nation's unpaidDays, not stored.
+   */
   starvedDays: number;
 }
 
@@ -134,13 +141,18 @@ export type ScriptSlot =
 
 export type CommanderOrder =
   | { kind: 'idle' }
-  /** Provinces still to enter after the current transit, in order. */
-  | { kind: 'move'; path: ProvinceId[] }
+  /**
+   * Provinces still to enter after the current transit, in order. mapSpeed is frozen when the
+   * move is ordered: the slowest speed of every commander given this move, so a group keeps
+   * one pace on every leg.
+   */
+  | { kind: 'move'; path: ProvinceId[]; mapSpeed: number }
   | { kind: 'pillage' }
   | { kind: 'patrol' }
   | { kind: 'research' }
   | { kind: 'preach' }
-  | { kind: 'castRitual'; ritual: RitualId }
+  /** The ritual's progress lives in the order: replacing the order or losing the caster ends it. */
+  | { kind: 'castRitual'; spellId: string; target: ProvinceId | null; daysLeft: number }
   | { kind: 'claimWellspring'; daysLeft: number }
   | { kind: 'build'; building: BuildingId };
 
@@ -158,9 +170,11 @@ export interface CommanderState {
   /** Null for independent defenders. */
   owner: NationId | null;
   name: string;
-  /** Current province; while in transit, the province it left. */
+  /** Current province; while in transit always equal to transit.from (a reversal updates both). */
   location: ProvinceId;
   transit: Transit | null;
+  /** The province it last left, where routed attackers retreat to. */
+  cameFrom: ProvinceId | null;
   hp: number;
   squads: Squad[];
   order: CommanderOrder;
@@ -170,8 +184,6 @@ export interface CommanderState {
   pips: Pips;
   holy: number;
   carriedMana: Pips;
-  prophet: boolean;
-  pretender: boolean;
   /** Starvation counter, as on squads. */
   starvedDays: number;
 }
@@ -201,7 +213,10 @@ export interface NationState {
   id: NationId;
   def: NationDefId;
   name: string;
-  color: Color;
+  /** Color identity; one color in M1, the first is the primary. */
+  colors: readonly [Color, ...Color[]];
+  /** Display color for ownership bands, dominion candles, and army badges. */
+  banner: string;
   capital: ProvinceId;
   /** Null for the human player. */
   ai: { difficulty: Difficulty; memory: AiMemory } | null;
@@ -209,12 +224,16 @@ export interface NationState {
   mana: ColorAmounts;
   research: ResearchState;
   pretender: PretenderDesign;
-  /** The pretender's commander once it has arrived. */
+  /** The pretender's commander once it has arrived; the only record of who it is. */
   pretenderId: CommanderId | null;
+  /** The prophet's commander; the only record of who it is. */
   prophetId: CommanderId | null;
   /** First day a new prophet may be named. */
   prophetAvailableDay: number;
-  /** Consecutive days upkeep has gone unpaid; troops lose morale while it runs. */
+  /**
+   * Unpaid upkeep counter: up by the unpaid fraction of each short day, down one per fully
+   * paid day, capped like starvedDays. Troops lose morale by it.
+   */
   unpaidDays: number;
   godless: boolean;
   eliminated: boolean;
@@ -234,6 +253,8 @@ export interface BattleRecord {
   defender: NationId | null;
   winner: BattleSide | null;
   rounds: number;
+  /** Both sides as the battle began. */
+  roster: Record<BattleSide, BattleRoster>;
   replay: BattleEvent[];
 }
 
@@ -260,14 +281,6 @@ export interface Message {
   text: string;
   province: ProvinceId | null;
   battle: BattleId | null;
-}
-
-export interface RitualInProgress {
-  id: RitualId;
-  caster: CommanderId;
-  spellId: string;
-  target: ProvinceId | null;
-  daysLeft: number;
 }
 
 /** Timed province modifiers from rituals. The effect ends at the start of `untilDay`. */
@@ -308,8 +321,8 @@ export interface GameState {
   commanders: Record<CommanderId, CommanderState>;
   /** The most recent battles with replays, oldest first. */
   battles: BattleRecord[];
+  /** The most recent messages per nation, oldest first. */
   messages: Message[];
-  activeRituals: RitualInProgress[];
   provinceEffects: ProvinceEffect[];
   result: GameResult | null;
 }

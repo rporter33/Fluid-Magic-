@@ -9,7 +9,6 @@ export const ID_PREFIXES = {
   squad: 'sq',
   battle: 'b',
   message: 'm',
-  ritual: 'r',
   effect: 'fx',
 } as const;
 
@@ -22,7 +21,6 @@ export type CommanderId = Id<'commander'>;
 export type SquadId = Id<'squad'>;
 export type BattleId = Id<'battle'>;
 export type MessageId = Id<'message'>;
-export type RitualId = Id<'ritual'>;
 export type EffectId = Id<'effect'>;
 
 /** Anything that owns the id counter: GameState, or a scratch counter in mapgen. */

@@ -2,11 +2,11 @@
 // command (Phase 3); this module prices it and advances it a day at a time.
 import { buildingDef } from '../content';
 import type { BuildingId } from '../content/types';
-import type { NationId, ProvinceId } from './ids';
+import type { CommanderId, NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
 import { provinceScales, scaleEffect } from './scales';
 import { getMapProvince, getNation, getProvince } from './state';
-import type { GameState } from './types';
+import type { Construction, GameState } from './types';
 
 /** Days to build here: the building's days scaled by the province's build-time scale effect. */
 export function constructionDays(
@@ -36,13 +36,23 @@ export function startConstruction(
   provinceId: ProvinceId,
   building: BuildingId,
   nation: NationId,
+  commander: CommanderId | null,
 ): void {
   getNation(state, nation).gold -= constructionCost(state, provinceId, building);
   getProvince(state, provinceId).construction = {
     building,
     daysLeft: constructionDays(state, provinceId, building),
     nation,
+    commander,
   };
+}
+
+/** Frees the commander who started a construction if it is still on that Build order. */
+function releaseBuilder(state: GameState, job: Construction): void {
+  const builder = job.commander === null ? undefined : state.commanders[job.commander];
+  if (builder?.order.kind === 'build' && builder.order.building === job.building) {
+    builder.order = { kind: 'idle' };
+  }
 }
 
 /**
@@ -55,11 +65,13 @@ export function progressConstruction(state: GameState): void {
     if (!job) continue;
     if (p.owner !== job.nation) {
       p.construction = null;
+      releaseBuilder(state, job);
       continue;
     }
     job.daysLeft -= 1;
     if (job.daysLeft > 0) continue;
     p.construction = null;
+    releaseBuilder(state, job);
     if (!p.buildings.includes(job.building)) p.buildings.push(job.building);
     const text = `${buildingDef(job.building).name} completed in ${getMapProvince(state, p.id).name}.`;
     postMessage(state, job.nation, 'built', text, p.id);

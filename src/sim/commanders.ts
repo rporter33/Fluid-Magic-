@@ -53,6 +53,7 @@ export function createCommander(
     name: def.name,
     location,
     transit: null,
+    cameFrom: null,
     hp: def.hp,
     squads: [],
     order: { kind: 'idle' },
@@ -60,8 +61,6 @@ export function createCommander(
     pips,
     holy: def.commander.holy,
     carriedMana: {},
-    prophet: false,
-    pretender: false,
     starvedDays: 0,
   };
   state.commanders[commander.id] = commander;

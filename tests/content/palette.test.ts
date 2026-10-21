@@ -1,7 +1,17 @@
 // Map and mana colors must stay distinct for every player, including the roughly 1 in 12
 // men with a red-green color vision deficiency. Red and Green are the two M1 nations.
 import { describe, expect, it } from 'vitest';
-import { COLOR_DEFS, COLORS, INDEPENDENT_PALETTE } from '../../src/content/colors';
+import {
+  COLOR_DEFS,
+  COLORS,
+  contrastRatio,
+  INDEPENDENT_PALETTE,
+  keylineFor,
+  MAP_KEYLINES,
+  NATION_BANNERS,
+} from '../../src/content/colors';
+import { MAPGEN } from '../../src/content/mapgen';
+import { NATIONS } from '../../src/content/nations';
 import { TERRAIN, TERRAIN_IDS } from '../../src/content/terrain';
 import { closestPair, deltaE2000, labAs, VISIONS, type Lab } from './colorMath';
 
@@ -52,5 +62,54 @@ describe.each([
     const min = vision === 'normal' ? MIN_NORMAL : MIN_DEFICIENT;
     const { a, b, deltaE } = closestPair(palette, vision);
     expect(deltaE, `${a} vs ${b}`).toBeGreaterThanOrEqual(min);
+  });
+});
+
+// Banners of every nation that can share a game: all banner entries of the colors M1 nations use.
+const NATION_COLORS = [...new Set(Object.values(NATIONS).map((n) => n.colors[0]))];
+const banners = Object.fromEntries(
+  NATION_COLORS.flatMap((c) => NATION_BANNERS[c].map((hex, k) => [`${c}${k}`, hex])),
+);
+
+describe('nation banners', () => {
+  it('start with each color primary and cover a full game of one nation', () => {
+    for (const c of COLORS) expect(NATION_BANNERS[c][0]).toBe(COLOR_DEFS[c].palette.primary);
+    for (const c of NATION_COLORS) {
+      expect(NATION_BANNERS[c].length).toBeGreaterThanOrEqual(MAPGEN.maxNations);
+    }
+  });
+
+  it.each(VISIONS)('are distinct from each other with %s vision', (vision) => {
+    const min = vision === 'normal' ? MIN_NORMAL : MIN_DEFICIENT;
+    const { a, b, deltaE } = closestPair(banners, vision);
+    expect(deltaE, `${a} vs ${b}`).toBeGreaterThanOrEqual(min);
+  });
+});
+
+describe('ownership bands on terrain', () => {
+  it('pick a keyline with at least 3:1 contrast on every fill', () => {
+    for (const id of TERRAIN_IDS) {
+      expect(contrastRatio(keylineFor(TERRAIN[id].fill), TERRAIN[id].fill)).toBeGreaterThanOrEqual(
+        3,
+      );
+    }
+    expect(contrastRatio('#FFFFFF', '#000000')).toBeCloseTo(21, 9);
+    expect(keylineFor('#000000')).toBe(MAP_KEYLINES.light);
+    expect(keylineFor('#FFFFFF')).toBe(MAP_KEYLINES.dark);
+  });
+
+  it.each(VISIONS)('stand out on every fill with %s vision', (vision) => {
+    // A band reads if its banner differs from the fill, or if its keyline differs from both.
+    const min = vision === 'normal' ? MIN_NORMAL : MIN_DEFICIENT;
+    const dE = (x: string, y: string) => deltaE2000(labAs(x, vision), labAs(y, vision));
+    for (const [name, banner] of Object.entries(banners)) {
+      for (const id of TERRAIN_IDS) {
+        const fill = TERRAIN[id].fill;
+        const keyline = keylineFor(fill);
+        const direct = dE(banner, fill) >= min;
+        const outlined = dE(keyline, fill) >= min && dE(keyline, banner) >= min;
+        expect(direct || outlined, `${name} on ${id}`).toBe(true);
+      }
+    }
   });
 });

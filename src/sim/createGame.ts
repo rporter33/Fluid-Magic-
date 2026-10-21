@@ -1,8 +1,8 @@
 // GameSetup -> GameState (docs/06-architecture.md). Generates the map with each nation's
 // capital, then places nations, capital buildings, garrisons, and starting armies.
-import { isNationDefId, nationDef, type UnitTypeId } from '../content';
+import { isNationDefId, nationDef } from '../content';
 import { CAPITAL_BUILDINGS } from '../content/buildings';
-import { isColor } from '../content/colors';
+import { isColor, NATION_BANNERS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
 import { SCALE_AXES, SCALE_MAX, SCALE_MIN } from '../content/pretenders/scales';
 import { DOMINION, ECONOMY, RESEARCH_LEVEL_POINTS } from '../content/rules';
@@ -68,7 +68,11 @@ export function createGame(setup: GameSetup): GameState {
   const map = generateMap({
     seed: setup.seed,
     size: setup.mapSize,
-    capitals: defs.map((d) => ({ color: d.color, terrain: d.capitalTerrain, name: d.capitalName })),
+    capitals: defs.map((d) => ({
+      color: d.colors[0],
+      terrain: d.capitalTerrain,
+      name: d.capitalName,
+    })),
   });
 
   const state: GameState = {
@@ -83,7 +87,6 @@ export function createGame(setup: GameSetup): GameState {
     commanders: {},
     battles: [],
     messages: [],
-    activeRituals: [],
     provinceEffects: [],
     result: null,
   };
@@ -92,6 +95,7 @@ export function createGame(setup: GameSetup): GameState {
   }
 
   const names = new Set<string>();
+  const bannersUsed = new Map<string, number>();
   setup.nations.forEach((nationSetup, slot) => {
     const def = defs[slot];
     const capital = map.capitals[slot];
@@ -99,20 +103,27 @@ export function createGame(setup: GameSetup): GameState {
     const id = newId(state, 'nation');
     const name = numbered(def.name, names);
     names.add(name);
+    // The k-th nation of a primary color takes that color's k-th banner.
+    const primary = def.colors[0];
+    const k = bannersUsed.get(primary) ?? 0;
+    bannersUsed.set(primary, k + 1);
+    const banner = NATION_BANNERS[primary][k];
+    if (banner === undefined) throw new RangeError(`no banner left for color ${primary}`);
     const points = zeroMana();
     points[def.startingResearch.color] = RESEARCH_LEVEL_POINTS[def.startingResearch.level] ?? 0;
     state.nations[id] = {
       id,
       def: nationSetup.nation,
       name,
-      color: def.color,
+      colors: [...def.colors],
+      banner,
       capital,
       ai: nationSetup.ai
         ? { difficulty: nationSetup.ai.difficulty, memory: { target: null, lastPlanDay: -1 } }
         : null,
       gold: ECONOMY.startGold,
       mana: zeroMana(),
-      research: { color: def.color, points },
+      research: { color: def.startingResearch.color, points },
       pretender: {
         ...nationSetup.pretender,
         pips: { ...nationSetup.pretender.pips },
@@ -137,10 +148,9 @@ export function createGame(setup: GameSetup): GameState {
     province.dominion = { nation: nation.id, strength: nation.pretender.dominion };
     province.garrison = createCommander(state, 'garrison', nation.id, nation.capital).id;
     for (const start of nationDef(nation.def).startingArmy) {
-      const unit = start.commander as UnitTypeId;
-      const commander = createCommander(state, unit, nation.id, nation.capital);
+      const commander = createCommander(state, start.commander, nation.id, nation.capital);
       for (const squad of start.squads) {
-        commander.squads.push(createSquad(state, squad.unit as UnitTypeId, squad.count));
+        commander.squads.push(createSquad(state, squad.unit, squad.count));
       }
     }
   }

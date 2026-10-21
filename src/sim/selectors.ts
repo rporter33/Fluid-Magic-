@@ -86,7 +86,11 @@ export function provinceEconomy(
     (terrain.supplyBase + p.pop / SUPPLY.popDivisor) *
     Math.max(0, 1 + scaleEffect(scales, 'supplyPct') + supplyPct) *
     (besieged ? SUPPLY.besiegedFactor : 1);
-  const supplyUsed = present.reduce((sum, c) => sum + commanderSupply(c), 0);
+  // Independents never eat (they are always fed); everyone else shares the province.
+  const supplyUsed = present.reduce(
+    (sum, c) => sum + (c.owner === null ? 0 : commanderSupply(c)),
+    0,
+  );
 
   const mana = zeroMana();
   if (p.owner !== null) {
@@ -94,7 +98,7 @@ export function provinceEconomy(
     for (const color of mapProvince.springs) mana[color] += MANA.perSpring;
     if (mapProvince.wellspring) for (const color of COLORS) mana[color] += MANA.wellspringPerColor;
     if (p.dominion.nation === p.owner && p.dominion.strength > 0) {
-      mana[getNation(state, p.owner).color] += Math.floor(
+      mana[getNation(state, p.owner).colors[0]] += Math.floor(
         p.dominion.strength / MANA.tintStrengthPerMana,
       );
       mana.B += scaleEffect(scales, 'tintManaB');
@@ -187,9 +191,18 @@ export function dominionScore(state: GameState, nationId: NationId): number {
   return Math.min(DOMINION.max, getNation(state, nationId).pretender.dominion + claimed);
 }
 
-/** Troop morale lost to unpaid upkeep: one point per month unpaid. */
+/** Troop morale lost to unpaid upkeep: one point per month unpaid, at most 3. */
 export function unpaidMoralePenalty(unpaidDays: number): number {
-  return Math.floor(unpaidDays / ECONOMY.unpaidDaysPerMorale);
+  return Math.min(ECONOMY.unpaidMoraleCap, Math.floor(unpaidDays / ECONOMY.unpaidDaysPerMorale));
+}
+
+/** Prophet and pretender identity lives only in NationState. */
+export function isProphet(state: GameState, commander: CommanderState): boolean {
+  return commander.owner !== null && getNation(state, commander.owner).prophetId === commander.id;
+}
+
+export function isPretender(state: GameState, commander: CommanderState): boolean {
+  return commander.owner !== null && getNation(state, commander.owner).pretenderId === commander.id;
 }
 
 /** Troop morale lost to starvation: one point per 5 starving days, at most 3. */

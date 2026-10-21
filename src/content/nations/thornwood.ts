@@ -4,7 +4,7 @@ import type { NationDef } from '../types';
 export const THORNWOOD: NationDef = {
   id: 'thornwood',
   name: 'Thornwood',
-  color: 'G',
+  colors: ['G'],
   motto: 'The forest that remembers',
   description:
     'Druidic clans living inside a continent-spanning forest, allied with beasts and ' +
@@ -15,6 +15,7 @@ export const THORNWOOD: NationDef = {
   troops: ['thornMilitia', 'warden', 'longbowHunter', 'briarGuard', 'wolfRider', 'oakheart'],
   commanders: ['thornScout', 'wardenCaptain', 'grovePriest', 'saplingDruid', 'elderDruid'],
   pd: { militia: 'thornMilitia', archer: 'longbowHunter' },
+  homeTerrain: { terrain: 'forest', def: 1 },
   startingArmy: [
     {
       commander: 'wardenCaptain',

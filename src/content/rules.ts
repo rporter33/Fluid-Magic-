@@ -25,8 +25,18 @@ export const ECONOMY = {
   sacredUpkeepFactor: 0.5,
   /** Gold in the treasury at game start. */
   startGold: 300,
-  /** Days of unpaid upkeep per point of troop morale lost. */
+  /** Days of unpaid upkeep per point of troop morale lost, and the most that can be lost. */
   unpaidDaysPerMorale: 30,
+  unpaidMoraleCap: 3,
+} as const;
+
+/** docs/01-core-rules.md section 3: the Pillage order, per pillaged province per day. */
+export const PILLAGE = {
+  /** Share of the population removed. */
+  popFraction: 0.02,
+  /** Gold to the pillager per this many people lost. */
+  popPerGold: 20,
+  unrestPerDay: 5,
 } as const;
 
 export const MATERIALS = {

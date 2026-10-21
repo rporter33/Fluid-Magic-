@@ -126,6 +126,44 @@ export function areAllies(x: Color, y: Color): boolean {
   return inPairs(ALLIED_PAIRS, x, y);
 }
 
+/**
+ * Display colors for nations on the map (ownership band, dominion candles, army badges),
+ * by primary color. The k-th nation of a color in a game takes entry k, so duplicate nations
+ * look different; entry 0 is the color's primary. Duplicates leave the hue family because
+ * nothing else stays distinct for color blind players; the mana symbol and the numbered
+ * name keep the identity. tests/content/palette.test.ts checks every pair.
+ */
+export const NATION_BANNERS: Readonly<Record<Color, readonly string[]>> = {
+  W: ['#F3E6B8'],
+  U: ['#3A7BD5'],
+  B: ['#3D2B4F'],
+  R: ['#FD6533', '#51DDFC', '#3186F2', '#C98BAD'],
+  G: ['#00674B', '#5C488E', '#B5D69C', '#8F0F04'],
+};
+
+/** Keylines drawn along the inner edge of an ownership band, light or dark per terrain. */
+export const MAP_KEYLINES = { light: '#F4EEDF', dark: '#1C1A17' } as const;
+
+function relativeLuminance(hex: string): number {
+  const [r = 0, g = 0, b = 0] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** WCAG contrast ratio of two sRGB hex colors, 1 to 21. */
+export function contrastRatio(a: string, b: string): number {
+  const [hi, lo] = [relativeLuminance(a), relativeLuminance(b)].sort((x, y) => y - x);
+  return ((hi ?? 0) + 0.05) / ((lo ?? 0) + 0.05);
+}
+
+/** The keyline that contrasts more with a terrain fill. */
+export function keylineFor(fill: string): string {
+  const { light, dark } = MAP_KEYLINES;
+  return contrastRatio(light, fill) >= contrastRatio(dark, fill) ? light : dark;
+}
+
 export function isColor(value: unknown): value is Color {
   return typeof value === 'string' && (COLORS as readonly string[]).includes(value);
 }

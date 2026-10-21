@@ -65,7 +65,12 @@ function validateNation(key: string, n: NationDef): string[] {
   const problems: string[] = [];
   const where = `nation ${key}`;
   if (n.id !== key) problems.push(`${where} has id ${n.id}`);
-  if (!isColor(n.color)) problems.push(`${where} bad color`);
+  if (!n.colors.every(isColor) || new Set(n.colors).size !== n.colors.length) {
+    problems.push(`${where} bad color identity`);
+  }
+  if (n.homeTerrain && (!isTerrainId(n.homeTerrain.terrain) || n.homeTerrain.def < 0)) {
+    problems.push(`${where} bad home terrain`);
+  }
   if (!isTerrainId(n.capitalTerrain)) problems.push(`${where} bad capital terrain`);
   const unit = (id: string): UnitDef | undefined => (isUnitTypeId(id) ? UNITS[id] : undefined);
   for (const id of n.troops) {

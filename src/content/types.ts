@@ -2,6 +2,7 @@
 // registry in content/index.ts.
 import type { Color } from './colors';
 import type { TerrainId } from './terrain';
+import type { UnitTypeId } from './units';
 
 /** Damage elements. Physical is the default for weapons without one. */
 export const ELEMENTS = ['physical', 'fire', 'nature', 'cold', 'holy', 'decay'] as const;
@@ -93,8 +94,8 @@ export interface UnitDef {
 }
 
 export interface StartingCommander {
-  commander: string;
-  squads: readonly { unit: string; count: number }[];
+  commander: UnitTypeId;
+  squads: readonly { unit: UnitTypeId; count: number }[];
 }
 
 export interface AiPersonality {
@@ -107,17 +108,20 @@ export interface AiPersonality {
 export interface NationDef {
   id: string;
   name: string;
-  color: Color;
+  /** Color identity, primary first. M1 nations have one color; the format holds more. */
+  colors: readonly [Color, ...Color[]];
   motto: string;
   description: string;
   capitalName: string;
   capitalTerrain: TerrainId;
-  /** Recruitable troops, by unit id. */
-  troops: readonly string[];
-  /** Recruitable commanders, by unit id. */
-  commanders: readonly string[];
-  /** Provincial defense: militia-grade and archer-grade unit ids. */
-  pd: { militia: string; archer: string };
+  /** Recruitable troops. */
+  troops: readonly UnitTypeId[];
+  /** Recruitable commanders. */
+  commanders: readonly UnitTypeId[];
+  /** Provincial defense: militia-grade and archer-grade units. */
+  pd: { militia: UnitTypeId; archer: UnitTypeId };
+  /** Battle defense bonus for the nation's units on a home terrain, on either side. */
+  homeTerrain: { terrain: TerrainId; def: number } | null;
   startingArmy: readonly StartingCommander[];
   startingResearch: { color: Color; level: number };
   ai: AiPersonality;

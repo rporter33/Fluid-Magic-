@@ -1,6 +1,7 @@
 // Supply, starvation, and healing (docs/01-core-rules.md section 4, Supply).
 import { describe, expect, it } from 'vitest';
 import { provinceEconomy, starvationMoralePenalty } from '../../src/sim/selectors';
+import { STARVED_DAYS_CAP } from '../../src/sim/supply';
 import {
   addArmy,
   capitalOf,
@@ -122,6 +123,42 @@ describe('starvation', () => {
     expect(squad.hp).toBe(count * 11);
     expect(squad.starvedDays).toBe(0);
     expect(squad.count).toBe(count);
+  });
+
+  it('caps the counter so morale returns at the rate it was lost', () => {
+    const { state, army, red } = starvingArmy();
+    runDays(state, 40);
+    const squad = army.squads[0]!;
+    expect(squad.starvedDays).toBe(STARVED_DAYS_CAP);
+    expect(starvationMoralePenalty(squad.starvedDays)).toBe(3);
+    army.location = state.nations[red]!.capital;
+    runDays(state, 4);
+    expect(starvationMoralePenalty(squad.starvedDays)).toBe(3);
+    runDays(state, 1);
+    expect(starvationMoralePenalty(squad.starvedDays)).toBe(2);
+    runDays(state, 10);
+    expect(starvationMoralePenalty(squad.starvedDays)).toBe(0);
+  });
+
+  it('leaves independents fed: they neither eat nor starve', () => {
+    const state = twoNationGame();
+    const [red] = nationIds(state);
+    const p = independentProvince(state, 'mountains');
+    const supply = provinceEconomy(state, p.id).supply;
+    const guards = addArmy(
+      state,
+      null,
+      p.id,
+      'lightInfantry',
+      Math.ceil(supply) + 20,
+      'independentCaptain',
+    );
+    expect(provinceEconomy(state, p.id).supplyUsed).toBe(0);
+    const intruders = addArmy(state, red!, p.id, 'cinderWarrior', Math.ceil(supply) + 20);
+    runDays(state, 30);
+    expect(guards.squads[0]!.count).toBe(Math.ceil(supply) + 20);
+    expect(guards.squads[0]!.starvedDays).toBe(0);
+    expect(intruders.squads[0]!.count).toBeLessThan(Math.ceil(supply) + 20);
   });
 
   it('never starves units that eat nothing', () => {

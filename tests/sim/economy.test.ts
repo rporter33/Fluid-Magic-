@@ -3,7 +3,13 @@
 import { describe, expect, it } from 'vitest';
 import { MAPGEN } from '../../src/content/mapgen';
 import { ECONOMY } from '../../src/content/rules';
-import { fortMaterials, nationEconomy, provinceEconomy } from '../../src/sim/selectors';
+import { UNPAID_DAYS_CAP } from '../../src/sim/economy';
+import {
+  fortMaterials,
+  nationEconomy,
+  provinceEconomy,
+  unpaidMoralePenalty,
+} from '../../src/sim/selectors';
 import {
   addArmy,
   capitalOf,
@@ -101,13 +107,41 @@ describe('upkeep', () => {
     expect(nation.unpaidDays).toBeCloseTo(30 * (1 - income / upkeep), 1);
   });
 
-  it('clears the unpaid count on a fully paid day', () => {
+  it('recovers one unpaid day per fully paid day, so a short surplus cannot wipe it', () => {
     const state = twoNationGame();
-    const [red] = nationIds(state);
-    const nation = state.nations[red!]!;
-    nation.unpaidDays = 45;
+    const nation = state.nations[nationIds(state)[0]!]!;
+    nation.unpaidDays = 90;
+    expect(unpaidMoralePenalty(nation.unpaidDays)).toBe(3);
     runDays(state, 1);
+    expect(nation.unpaidDays).toBe(89);
+    expect(unpaidMoralePenalty(nation.unpaidDays)).toBe(2);
+    runDays(state, 59);
+    expect(nation.unpaidDays).toBe(30);
+    runDays(state, 30);
     expect(nation.unpaidDays).toBe(0);
+  });
+
+  it('caps the morale penalty at 3 and the counter just below a fourth point', () => {
+    const state = twoNationGame();
+    const nation = state.nations[nationIds(state)[0]!]!;
+    for (let k = 0; k < 6; k++) addArmy(state, nation.id, nation.capital, 'flamebrand', 80);
+    nation.gold = 0;
+    runDays(state, 400);
+    expect(nation.unpaidDays).toBeLessThanOrEqual(UNPAID_DAYS_CAP);
+    expect(nation.unpaidDays).toBeGreaterThan(UNPAID_DAYS_CAP - 1);
+    expect(unpaidMoralePenalty(nation.unpaidDays)).toBe(3);
+    expect(unpaidMoralePenalty(1000)).toBe(3);
+  });
+
+  it('never turns a negative treasury into free gold', () => {
+    const state = twoNationGame();
+    const nation = state.nations[nationIds(state)[0]!]!;
+    nation.gold = -50;
+    const income = nationEconomy(state, nation.id).gold / 30;
+    runDays(state, 1);
+    // The day's income arrives; nothing can be paid from a negative treasury.
+    expect(nation.gold).toBeCloseTo(-50 + income, 9);
+    expect(nation.unpaidDays).toBeCloseTo(1, 9);
   });
 });
 
@@ -177,6 +211,20 @@ describe('materials', () => {
     expect(cap).toBeCloseTo(6 * provinceEconomy(state, capital.id).materials, 6);
     runDays(state, 30);
     expect(capital.materials).toBeLessThanOrEqual(fortMaterials(state, capital.id).cap + 1e-9);
+  });
+
+  it('keeps a stockpile above the cap instead of deleting it', () => {
+    const state = twoNationGame();
+    const [red, green] = nationIds(state);
+    const capital = capitalOf(state, red!);
+    capital.materials = 300;
+    capital.siege = { attacker: green!, wallHp: 300 };
+    runDays(state, 5);
+    expect(capital.materials).toBe(300);
+    capital.siege = null;
+    capital.materials = 1000;
+    runDays(state, 1);
+    expect(capital.materials).toBe(1000);
   });
 
   it('collects nothing for an unowned province or one without a fort', () => {

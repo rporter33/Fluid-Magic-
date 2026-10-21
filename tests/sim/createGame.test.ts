@@ -1,6 +1,7 @@
 // GameSetup -> GameState: nations, capitals, garrisons, starting armies.
 import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef } from '../../src/content';
+import { NATION_BANNERS } from '../../src/content/colors';
 import { NEUTRAL_SCALES } from '../../src/content/pretenders/scales';
 import { ECONOMY } from '../../src/content/rules';
 import { createGame } from '../../src/sim/createGame';
@@ -15,18 +16,19 @@ describe('createGame', () => {
     expect(nationIds(state)).toEqual(['n0', 'n1']);
     const r = state.nations[red!]!;
     const g = state.nations[green!]!;
-    expect([r.def, r.name, r.color, r.capital]).toEqual([
+    expect([r.def, r.name, r.colors, r.capital]).toEqual([
       'cinderHorde',
       'Cinder Horde',
-      'R',
+      ['R'],
       state.map.capitals[0],
     ]);
-    expect([g.def, g.name, g.color, g.capital]).toEqual([
+    expect([g.def, g.name, g.colors, g.capital]).toEqual([
       'thornwood',
       'Thornwood',
-      'G',
+      ['G'],
       state.map.capitals[1],
     ]);
+    expect([r.banner, g.banner]).toEqual([NATION_BANNERS.R[0], NATION_BANNERS.G[0]]);
     expect(r.ai).toBeNull();
     expect(g.ai).toEqual({ difficulty: 'normal', memory: { target: null, lastPlanDay: -1 } });
   });
@@ -69,6 +71,7 @@ describe('createGame', () => {
         for (const s of c.squads) expect(s.hp).toBe(s.count * unitDef(s.unit).hp);
         expect(c.hp).toBe(unitDef(c.unit).hp);
         expect(c.script).toHaveLength(5);
+        expect(c.cameFrom).toBeNull();
       });
     }
   });
@@ -83,23 +86,46 @@ describe('createGame', () => {
     ]);
   });
 
+  it('gives casters a cast-best script and others a hold script', () => {
+    const army = commandersIn(state, state.nations[red!]!.capital);
+    const script = (unit: string) => army.find((c) => c.unit === unit)!.script;
+    expect(script('emberAdept')[0]).toEqual({ kind: 'cast', spellId: null });
+    expect(script('pyrePriest')[0]).toEqual({ kind: 'cast', spellId: null });
+    expect(script('ashChieftain')[0]).toEqual({ kind: 'hold' });
+  });
+
   it('starts research, gold, and exploration', () => {
     const r = state.nations[red!]!;
     expect(r.research).toEqual({ color: 'R', points: { W: 0, U: 0, B: 0, R: 60, G: 0 } });
     expect(r.gold).toBe(ECONOMY.startGold);
     expect(r.mana).toEqual({ W: 0, U: 0, B: 0, R: 0, G: 0 });
     expect(r.explored).toEqual([r.capital]);
+    expect([r.pretenderId, r.prophetId]).toEqual([null, null]);
   });
 
-  it('numbers duplicate nations', () => {
-    const twin = createGame({
+  it('numbers duplicate nations and gives each its own banner', () => {
+    const four = createGame({
       seed: 3,
       mapSize: 'medium',
-      nations: [nation('cinderHorde'), nation('cinderHorde')],
+      nations: [
+        nation('cinderHorde'),
+        nation('thornwood'),
+        nation('cinderHorde'),
+        nation('cinderHorde'),
+      ],
     });
-    expect(Object.values(twin.nations).map((n) => n.name)).toEqual([
+    const nations = Object.values(four.nations);
+    expect(nations.map((n) => n.name)).toEqual([
       'Cinder Horde',
+      'Thornwood',
       'Cinder Horde II',
+      'Cinder Horde III',
+    ]);
+    expect(nations.map((n) => n.banner)).toEqual([
+      NATION_BANNERS.R[0],
+      NATION_BANNERS.G[0],
+      NATION_BANNERS.R[1],
+      NATION_BANNERS.R[2],
     ]);
   });
 
