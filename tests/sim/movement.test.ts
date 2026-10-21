@@ -9,6 +9,8 @@ import {
   commanderMapSpeed,
   etaDays,
   findPath,
+  hostileProvinces,
+  isHostile,
   legDays,
   pathDays,
   pathEta,
@@ -238,6 +240,52 @@ describe('moving', () => {
   });
 });
 
+describe('hostile provinces', () => {
+  it('include an own province with a foreign army in it, marching or not, but not a hidden one', () => {
+    const { state, red, capital } = setup();
+    const green = nationIds(state)[1]!;
+    const a = neighbors(state, capital)[0]!;
+    annex(state, red, a);
+    expect(isHostile(state, red, a)).toBe(false);
+    const scout = addArmy(state, green, a, 'warden', 1, 'thornScout');
+    scout.squads = [];
+    expect(isHostile(state, red, a)).toBe(false);
+    const foe = addArmy(state, green, a, 'warden', 5, 'wardenCaptain');
+    expect(isHostile(state, red, a)).toBe(true);
+    foe.transit = { from: a, to: capital, progress: 1, totalDays: 6 };
+    expect(isHostile(state, red, a)).toBe(true);
+    expect(hostileProvinces(state, red).has(a)).toBe(true);
+    expect(hostileProvinces(state, red).has(capital)).toBe(false);
+  });
+
+  it('may only end a path', () => {
+    const { state, red, capital, army } = setup();
+    const a = neighbors(state, capital)[0]!;
+    const b = neighbors(state, a).find((n) => n !== capital)!;
+    const result = move(state, red, [army], [a, b]);
+    expect(result.ok).toBe(false);
+    if (!result.ok) expect(result.error).toMatch(/hostile/);
+    expect(move(state, red, [army], [a]).ok).toBe(true);
+    runDays(state, 1);
+    // Its leg ends in a hostile province, so a new path from there is refused.
+    expect(move(state, red, [army], [b]).ok).toBe(false);
+  });
+
+  it('stop a march home into a besieged fort', () => {
+    const { state, red, capital, army } = setup();
+    const green = nationIds(state)[1]!;
+    const a = neighbors(state, capital)[0]!;
+    annex(state, red, a);
+    army.location = a;
+    move(state, red, [army], [capital, a]);
+    addArmy(state, green, capital, 'warden', 30, 'wardenCaptain');
+    state.provinces[capital]!.siege = { attacker: green, wallHp: 300 };
+    runDays(state, legDays(state, capital, 2));
+    expect(army.location).toBe(capital);
+    expect(army.order).toEqual({ kind: 'idle' });
+  });
+});
+
 describe('reverse', () => {
   it('turns back with the days walked as the days home, then stops', () => {
     const { state, red, capital, army } = setup();
@@ -251,6 +299,7 @@ describe('reverse', () => {
     expect(army.transit).toEqual({ from: a, to: capital, progress: days - 2, totalDays: days });
     // It never reached the far end: it still stands, eats, and sees from home.
     expect(army.location).toBe(capital);
+    expect(commandersIn(state, capital)).toContain(army);
     expect(etaDays(state, army)).toBe(2);
     runDays(state, 2);
     expect(army.location).toBe(capital);

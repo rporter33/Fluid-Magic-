@@ -3,7 +3,7 @@
 // Completed troops join the fort's garrison holder; completed commanders stand in the fort.
 import { nationDef, unitDef, type UnitTypeId } from '../content';
 import { RECRUITMENT, UNREST } from '../content/rules';
-import { createCommander, createSquad, isGarrisonHolder, mergeSquads } from './commanders';
+import { addSquad, createCommander, createSquad } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
 import { provinceScales, scaleEffect } from './scales';
@@ -81,32 +81,36 @@ export function recruitRequirementError(
   return null;
 }
 
-/** The fort's garrison holder for its current owner, or null if it has none yet. */
-export function garrisonHolder(state: GameState, provinceId: ProvinceId): CommanderState | null {
+/**
+ * The fort's garrison holder. Every fort has exactly one, owned by the fort's owner and
+ * standing there (createGame sets this up; replaceGarrison keeps it when a fort changes
+ * hands), so a missing or foreign holder is a bug and throws.
+ */
+export function garrisonOf(state: GameState, provinceId: ProvinceId): CommanderState {
   const p = getProvince(state, provinceId);
   const holder = p.garrison === null ? undefined : state.commanders[p.garrison];
-  const valid = holder && holder.owner === p.owner && holder.location === p.id;
-  return valid && p.owner !== null && p.buildings.includes('fort') ? holder : null;
+  if (!holder || holder.owner !== p.owner || holder.location !== p.id) {
+    throw new Error(`fort ${provinceId} has no garrison holder of its owner`);
+  }
+  return holder;
 }
 
 /**
- * The fort's garrison holder for its current owner, made if missing. A holder left behind by a
- * previous owner is removed with any troops it kept (Phase 4 captures call this too).
+ * Gives a fort that changed hands (Phase 4 captures) a holder for its new owner. The old
+ * holder is removed with any troops it still keeps.
  */
-export function ensureGarrison(state: GameState, provinceId: ProvinceId): CommanderState | null {
+export function replaceGarrison(state: GameState, provinceId: ProvinceId): void {
   const p = getProvince(state, provinceId);
-  if (p.owner === null || !p.buildings.includes('fort')) return null;
-  const current = garrisonHolder(state, provinceId);
-  if (current) return current;
-  const stale = p.garrison === null ? undefined : state.commanders[p.garrison];
-  if (stale && isGarrisonHolder(stale)) {
+  const old = p.garrison;
+  if (old !== null) {
     state.commanders = Object.fromEntries(
-      Object.entries(state.commanders).filter(([id]) => id !== stale.id),
+      Object.entries(state.commanders).filter(([id]) => id !== old),
     );
   }
-  const holder = createCommander(state, 'garrison', p.owner, provinceId);
-  p.garrison = holder.id;
-  return holder;
+  p.garrison =
+    p.owner !== null && p.buildings.includes('fort')
+      ? createCommander(state, 'garrison', p.owner, provinceId).id
+      : null;
 }
 
 /** Turns a finished queue item into troops or a commander. */
@@ -122,11 +126,7 @@ function complete(
   if (def.commander) {
     createCommander(state, unit, owner, p.id);
   } else {
-    const holder = ensureGarrison(state, p.id);
-    if (holder) {
-      holder.squads.push(createSquad(state, unit, count));
-      mergeSquads(holder);
-    }
+    addSquad(garrisonOf(state, p.id), createSquad(state, unit, count));
   }
   const what = def.commander ? def.name : `${count} ${def.name}`;
   postMessage(

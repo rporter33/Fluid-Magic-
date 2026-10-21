@@ -117,3 +117,42 @@ describe('independent strength', () => {
     expect(independentStrengthView(state, red, near)).toEqual({ word: 'weak', exact: null });
   });
 });
+
+describe('sighted messages', () => {
+  it('tell a nation once per province and enemy when armies come into sight', () => {
+    const { state, red, green, capital } = setup();
+    const next = state.map.provinces[capital]!.neighbors[0]!;
+    const far = Object.keys(state.map.provinces).find(
+      (p) => !ball(state, capital, 3).has(p as ProvinceId),
+    ) as ProvinceId;
+    const one = addArmy(state, green, far, 'warden', 5, 'wardenCaptain');
+    const two = addArmy(state, green, far, 'warden', 5, 'wardenCaptain');
+    runDays(state, 1);
+    const sightings = () => state.messages.filter((m) => m.nation === red && m.kind === 'sighted');
+    expect(sightings()).toEqual([]);
+    one.location = next;
+    two.location = next;
+    runDays(state, 1);
+    expect(sightings().map((m) => [m.province, m.text])).toEqual([
+      [next, `Thornwood army sighted in ${state.map.provinces[next]!.name}.`],
+    ]);
+    // Still in sight: nothing new. Out and back in: told again.
+    runDays(state, 3);
+    expect(sightings()).toHaveLength(1);
+    one.location = far;
+    two.location = far;
+    runDays(state, 1);
+    one.location = next;
+    runDays(state, 1);
+    expect(sightings()).toHaveLength(2);
+    expect(state.nations[red]!.inSight).toEqual([one.id]);
+  });
+
+  it('are not sent for stealthy scouts or empty garrisons', () => {
+    const { state, red, green, capital } = setup();
+    const next = state.map.provinces[capital]!.neighbors[0]!;
+    addArmy(state, green, next, 'warden', 1, 'thornScout').squads = [];
+    runDays(state, 2);
+    expect(state.messages.some((m) => m.nation === red && m.kind === 'sighted')).toBe(false);
+  });
+});

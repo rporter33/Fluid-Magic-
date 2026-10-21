@@ -33,23 +33,21 @@ export function createSquad(state: GameState, unit: UnitTypeId, count: number): 
 }
 
 /**
- * Merges squads so a commander holds at most one squad per unit type and row: a later squad
- * joins the first matching one, adding its troops and HP; the hungrier starvation counter
- * stays. Keeps troops from being split into many tiny squads.
+ * Gives a squad to a commander, which holds at most one squad per unit type and row: troops
+ * joining a matching squad add their count and HP to it (it keeps its id), and the hungrier
+ * starvation counter stays. Keeps troops from being split into many tiny squads.
  */
-export function mergeSquads(commander: CommanderState): void {
-  const kept: Squad[] = [];
-  for (const squad of commander.squads) {
-    const match = kept.find((k) => k.unit === squad.unit && k.formation === squad.formation);
-    if (!match) {
-      kept.push(squad);
-      continue;
-    }
-    match.count += squad.count;
-    match.hp += squad.hp;
-    match.starvedDays = Math.max(match.starvedDays, squad.starvedDays);
+export function addSquad(commander: CommanderState, squad: Squad): void {
+  const match = commander.squads.find(
+    (s) => s !== squad && s.unit === squad.unit && s.formation === squad.formation,
+  );
+  if (!match) {
+    commander.squads.push(squad);
+    return;
   }
-  commander.squads = kept;
+  match.count += squad.count;
+  match.hp += squad.hp;
+  match.starvedDays = Math.max(match.starvedDays, squad.starvedDays);
 }
 
 /** Adds a commander to the game; adept-tier mages roll their extra pip here. */

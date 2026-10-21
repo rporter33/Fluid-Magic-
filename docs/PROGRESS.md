@@ -133,6 +133,14 @@
 - `NationState.capital` never changes; Phase 6 decides what happens when a capital falls.
 - Starving wounded squads lose troops by the rounded-up HP pool, so a squad at half HP
   loses troops sooner than a healthy one. Kept as the simplest consistent model.
-- For Phase 3: Wild and Artifice "build time" also scales recruitment time, or not, to be
-  decided with recruitment. Arrivals should be grouped by province and then nation, and a
-  leg's `totalDays` comes from the move order's frozen `mapSpeed`.
+- Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
+  are grouped by province and then nation; legs use the move order's frozen `mapSpeed`.
+- For Phase 4: resolve battles, captures, and sieges in `resolveArrivals` (movement.ts), which
+  runs before `continueMoves`, so commanders passing through stand in the province. A
+  commander in transit is present at its location for battles: it defends there and is caught
+  by arrivals there, and a battle there ends its transit; change this only together with
+  `isHostile`. Capture calls `replaceGarrison`, sets PD to 0, and leaves the old owner's
+  queue to the drop rule. A stealthy scout entering a hostile province stops there and fights.
+- Forts start with an empty materials pool, so the capital's first batch of 10 Cinder
+  Warriors (80 materials at about 60 a month) waits about 40 days. Revisit in playtesting
+  (Phase 8) or balance (Phase 12).

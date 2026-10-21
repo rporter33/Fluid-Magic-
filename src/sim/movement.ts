@@ -132,16 +132,19 @@ export interface Arrival {
   commanders: CommanderState[];
 }
 
-/** A commander that makes a province hostile to other nations' arrivals. */
+/**
+ * A commander that makes a province hostile to other nations' arrivals. A commander is present
+ * at its location in transit or not. Garrison holders never fight, and a stealthy commander
+ * is hidden: counting it would give it away through refused paths.
+ */
 function blocks(c: CommanderState, nation: NationId): boolean {
-  return c.owner !== nation && !c.transit && !isGarrisonHolder(c) && !isStealthy(c);
+  return c.owner !== nation && !isGarrisonHolder(c) && !isStealthy(c);
 }
 
 /**
  * Provinces where a nation's commanders meet hostiles on arrival: every province it does not
- * own, and its own provinces where another owner's commander stands (not in transit, not a
- * garrison holder, not hidden by stealth, which would give it away). Phase 4 fights,
- * besieges, or captures there.
+ * own, and its own provinces where another owner's commander stands (a besieged fort is
+ * one). Phase 4 fights, besieges, or captures there.
  */
 export function hostileProvinces(state: GameState, nation: NationId): Set<ProvinceId> {
   const hostile = new Set<ProvinceId>();

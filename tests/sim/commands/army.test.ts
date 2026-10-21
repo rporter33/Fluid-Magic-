@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { applyCommand } from '../../../src/sim/commands';
 import type { NationId } from '../../../src/sim/ids';
-import type { CommanderState, GameState, ScriptSlot } from '../../../src/sim/types';
+import type { CommanderState, GameState, ScriptSlot, Squad } from '../../../src/sim/types';
 import {
   addArmy,
   annex,
@@ -204,6 +204,78 @@ describe('transferSquad', () => {
     expect(transfer(away, 1).ok).toBe(false);
     priest.transit = { from: priest.location, to: priest.location, progress: 1, totalDays: 4 };
     expect(transfer(priest, 1).ok).toBe(false);
+  });
+});
+
+describe('squad bookkeeping', () => {
+  it('keeps one squad per unit and row and conserves troops and HP through any shuffle', () => {
+    const { state, red, chieftain, garrison, priest } = setup();
+    const total = () =>
+      [chieftain, garrison, priest].reduce(
+        (sum, c) => {
+          for (const s of c.squads) {
+            sum.count += s.count;
+            sum.hp += s.hp;
+          }
+          return sum;
+        },
+        { count: 0, hp: 0 },
+      );
+    const start = total();
+    const people = [chieftain, garrison, priest];
+    const rows = ['front', 'middle', 'rear'] as const;
+    let seed = 7;
+    const next = (n: number) => {
+      seed = (seed * 1103515245 + 12345) % 2147483648;
+      return seed % n;
+    };
+    for (let step = 0; step < 300; step++) {
+      const from = people[next(3)]!;
+      const squad = from.squads[next(Math.max(1, from.squads.length))];
+      if (!squad) continue;
+      if (next(2) === 0) {
+        applyCommand(state, {
+          type: 'transferSquad',
+          nation: red,
+          from: from.id,
+          to: people[next(3)]!.id,
+          squad: squad.id,
+          count: 1 + next(squad.count),
+        });
+      } else {
+        applyCommand(state, {
+          type: 'setFormation',
+          nation: red,
+          commander: from.id,
+          squad: squad.id,
+          formation: rows[next(3)]!,
+        });
+      }
+      for (const c of people) {
+        const keys = c.squads.map((s) => `${s.unit} ${s.formation}`);
+        expect(new Set(keys).size).toBe(keys.length);
+        for (const s of c.squads) expect(s.count).toBeGreaterThan(0);
+      }
+    }
+    expect(total().count).toBe(start.count);
+    expect(total().hp).toBeCloseTo(start.hp, 6);
+  });
+
+  it('merges a squad moved into an occupied row into the squad already there', () => {
+    const { state, red, chieftain } = setup();
+    const [warriors, archers] = chieftain.squads as [Squad, Squad];
+    // Stand in a second squad of warriors in the middle row.
+    archers.unit = 'cinderWarrior';
+    archers.hp = 110;
+    applyCommand(state, {
+      type: 'setFormation',
+      nation: red,
+      commander: chieftain.id,
+      squad: archers.id,
+      formation: 'front',
+    });
+    expect(chieftain.squads).toEqual([{ ...warriors, count: 30, hp: 330 }]);
+    expect(chieftain.squads[0]!.id).toBe(warriors.id);
   });
 });
 

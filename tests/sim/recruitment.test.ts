@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { UnitTypeId } from '../../src/content';
 import { applyCommand } from '../../src/sim/commands';
 import type { NationId, ProvinceId, RecruitId } from '../../src/sim/ids';
-import { recruitDays, recruitGold } from '../../src/sim/recruitment';
+import { garrisonOf, recruitDays, recruitGold, replaceGarrison } from '../../src/sim/recruitment';
 import { fortMaterials } from '../../src/sim/selectors';
 import type { GameState } from '../../src/sim/types';
 import {
@@ -127,6 +127,16 @@ describe('recruit time and cost', () => {
     const state = redGame(10, { order: 2 });
     const capital = capitalOf(state, nationIds(state)[0]!).id;
     expect(recruitDays(state, capital, 'cinderWarrior', 50)).toBe(55);
+  });
+
+  it('rounds every batch size cleanly', () => {
+    // Order 2: 50 Oakhearts take 18 * 5 * 1.1 = 99 days.
+    const state = twoNationGame(1, {}, {});
+    const green = nationIds(state)[1]!;
+    const deepmoss = capitalOf(state, green);
+    deepmoss.dominion = { nation: green, strength: 10 };
+    state.nations[green]!.pretender.scales.order = 2;
+    expect(recruitDays(state, deepmoss.id, 'oakheart', 50)).toBe(99);
   });
 
   it('slows with Wild and speeds up with Artifice, which scale build time', () => {
@@ -268,13 +278,17 @@ describe('cancelling and losing the fort', () => {
     expect(capital.recruitQueue).toEqual([]);
   });
 
-  it("gives the new owner its own garrison holder, removing the old one's", () => {
+  it('needs a garrison holder of the fort owner, which a change of hands replaces', () => {
     const { state, red, capital, garrison } = setup();
     const green = nationIds(state)[1]!;
     recruit(state, red, capital.id, 'ashMilitia', 10);
     runDays(state, 8);
     expect(garrison.squads).toHaveLength(1);
+    expect(garrisonOf(state, capital.id)).toBe(garrison);
     capital.owner = green;
+    expect(() => garrisonOf(state, capital.id)).toThrow();
+    replaceGarrison(state, capital.id);
+    expect(garrisonOf(state, capital.id).owner).toBe(green);
     capital.recruitQueue.push({
       id: 'rq9000' as RecruitId,
       unit: 'thornMilitia',

@@ -319,27 +319,28 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Leg days** are whole days: `round(moveDays * speedFactor)`, at least 1 (table in
   docs/09-balance.md). Progress counts days, so a reversal and an ETA are whole days too.
 - **Hostile provinces**: a province is hostile to a nation if it does not own it, or if a
-  commander of another owner stands in it (not in transit, not a garrison holder, and not
-  hidden by stealth, since a refused path would give it away; a besieged fort is hostile to
-  its owner's arrivals). A move ends on arrival in a hostile province; Phase 4 fights there.
+  commander of another owner is present in it (in transit or not; garrison holders never
+  count, and neither do commanders hidden by stealth, since a refused path would give them
+  away; a besieged fort is hostile to its owner's arrivals). A move ends on arrival in a hostile province; Phase 4 fights there.
   Paths may cross only friendly provinces, so only the last province of a path may be
   hostile; the pathfinder and move validation both enforce this. A stealthy scout that
   enters a hostile province stops there like any army.
 - **Movement within a day** (step 2): every transit advances; arrivals settle (Phase 4
   battles go here); then commanders with a move order start their next leg the same day.
   Commanders passing through therefore stand in the province while arrivals are resolved.
-- **Location** is always the last province a commander stood in. A reversal swaps the leg's
-  ends and turns the days walked into the days back (section 6), but the commander never
-  reached the far end, so its location, supply, vision, and `cameFrom` stay those of the
-  province it left. Reversing a leg not yet begun cancels it. A reversed commander stops when
+- **Location** is always the last province a commander stood in, and a commander is present
+  there for every purpose, in transit or not: supply, vision, hostility, and (Phase 4)
+  battles. A reversal swaps the leg's ends and turns the days walked into the days back
+  (section 6), but the commander never reached the far end, so its location, supply,
+  vision, and `cameFrom` stay those of the province it left. Reversing a leg not yet begun cancels it. A reversed commander stops when
   it gets back. A new path for a commander in transit starts where its current leg ends.
 - **Orders** set without arguments (idle, pillage, patrol, research, preach) take effect on
   arrival when given on the march; research needs a mage standing in an own province with a
   lab; preach needs holy pips. Orders with progress or targets come only from their own
   commands. The garrison holder takes no orders, scripts, or builds; only its squads move.
 - **Squads**: a commander holds at most one squad per unit type and row. Transfers,
-  formation changes, and recruits merge into a matching squad (troops and HP add up; the
-  higher starvation counter stays). A partial transfer splits off a proportional share of
+  formation changes, and recruits merge into a matching squad, which keeps its id (troops
+  and HP add up; the higher starvation counter stays). A partial transfer splits off a proportional share of
   the HP pool. Leadership counts troops, whatever their size.
 - **Recruitment** (section 8): time is `recruitDays * ceil(count / 10)` for troops and
   `recruitDays` for commanders, scaled by the fort province's recruit time (Order +5%, Turmoil
@@ -351,9 +352,9 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   Items queued by a nation that no longer owns the fort are dropped. Cancelling returns the
   gold in full and the materials only up to the fort's pool cap, so the queue cannot bank
   materials past the cap.
-- **Garrison holder**: one per fort, owned by the fort's owner. A fort that changes hands gets
-  a new holder the next time it needs one; a holder left by the old owner is removed with
-  any troops it kept.
+- **Garrison holder**: exactly one per fort, owned by the fort's owner and standing there;
+  createGame sets this up. A fort that changes hands (Phase 4 capture) gets a new holder, and
+  the old one is removed with any troops it still keeps.
 - **Provincial defense** (section 8): raising PD from level L costs `(L + 1) * 15`, so 0 to 30
   costs 6975 gold. PD cannot be bought during a siege. PD levels are public knowledge, like
   terrain and ownership.

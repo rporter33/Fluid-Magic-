@@ -109,8 +109,9 @@ export interface ProvinceState {
   materials: number;
   recruitQueue: RecruitOrder[];
   /**
-   * The fort's garrison holder, owned by the province's owner; null without a fort. A fort
-   * that changes hands gets a new holder for its new owner when it next needs one.
+   * The fort's garrison holder: null exactly when there is no fort; otherwise an existing
+   * holder owned by the province's owner and standing here. A fort that changes hands gets a
+   * new one (recruitment.ts replaceGarrison).
    */
   garrison: CommanderId | null;
   dominion: Dominion;
@@ -184,8 +185,9 @@ export interface CommanderState {
   owner: NationId | null;
   name: string;
   /**
-   * The province the commander last stood in. In transit that is transit.from, or transit.to
-   * after a reversal (it turned back before arriving).
+   * The province the commander last stood in, where it eats, sees, and is present for every
+   * purpose. In transit that is transit.from on an outbound leg and transit.to on a reversed
+   * one (it turned back before arriving). Between ticks, a move order always has a transit.
    */
   location: ProvinceId;
   transit: Transit | null;

@@ -3,7 +3,7 @@ import { buildingDef, isBuildingId, unitDef } from '../../content';
 import { SCRIPT_SLOTS } from '../../content/rules';
 import { constructionCost, startConstruction } from '../buildings';
 import { newId } from '../ids';
-import { isGarrisonHolder, mergeSquads } from '../commanders';
+import { addSquad, isGarrisonHolder } from '../commanders';
 import { canMove, commanderMapSpeed, hostileProvinces, startLeg } from '../movement';
 import { getCommander, getMapProvince, getNation } from '../state';
 import {
@@ -174,7 +174,13 @@ export function applySetFormation(state: GameState, cmd: CommandOf<'setFormation
   const squad = c.squads.find((s) => s.id === cmd.squad);
   if (!squad) return;
   squad.formation = cmd.formation;
-  mergeSquads(c);
+  // Moving into a row that already holds this unit merges into the squad there.
+  if (
+    c.squads.some((s) => s !== squad && s.unit === squad.unit && s.formation === squad.formation)
+  ) {
+    c.squads = c.squads.filter((s) => s !== squad);
+    addSquad(c, squad);
+  }
 }
 
 // ---------------------------------------------------------------- squads
@@ -211,14 +217,13 @@ export function applyTransferSquad(state: GameState, cmd: CommandOf<'transferSqu
   const count = cmd.count ?? squad.count;
   if (count >= squad.count) {
     from.squads.splice(index, 1);
-    to.squads.push(squad);
-  } else {
-    const hp = (squad.hp * count) / squad.count;
-    squad.count -= count;
-    squad.hp -= hp;
-    to.squads.push({ ...squad, id: newId(state, 'squad'), count, hp });
+    addSquad(to, squad);
+    return;
   }
-  mergeSquads(to);
+  const hp = (squad.hp * count) / squad.count;
+  squad.count -= count;
+  squad.hp -= hp;
+  addSquad(to, { ...squad, id: newId(state, 'squad'), count, hp });
 }
 
 // ---------------------------------------------------------------- build

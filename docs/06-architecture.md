@@ -301,6 +301,8 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   next leg). Step 3 runs recruitment before construction, as listed above.
 - **GameState additions** (Phase 3): `RecruitOrder` has an `id` and the queuing `nation`;
   `NationState.inSight` holds the enemy commanders a nation saw at the end of the last day,
-  for 'sighted' messages. Vision and visible armies are otherwise computed on demand.
+  for 'sighted' messages. Storing it costs one visibility pass a day instead of two (before
+  and after the day), and it also announces armies revealed by commands between days. Vision
+  and visible armies are otherwise computed on demand.
 - **State hash**: `stateHash(state)` (`src/sim/hash.ts`) is a 53-bit hash of the JSON form,
   used by the determinism tests and later by save verification.

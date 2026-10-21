@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { applyCommand, validateCommand, type Command } from '../../../src/sim/commands';
 import type { NationId, RecruitId } from '../../../src/sim/ids';
+import { stateHash } from '../../../src/sim/hash';
 import type { GameState } from '../../../src/sim/types';
 import { capitalOf, commandersIn, nationIds, twoNationGame } from '../fixtures';
 
@@ -96,5 +97,31 @@ describe('validateCommand', () => {
     expect(validateCommand(state, cmd)).toBeNull();
     expect(applyCommand(state, cmd)).toEqual({ ok: true });
     expect(capital.taxRate).toBe('high');
+  });
+});
+
+describe('applyCommand', () => {
+  it('copies what it stores, so changing a command afterwards changes nothing', () => {
+    const state = twoNationGame();
+    const red = nationIds(state)[0]!;
+    const capital = capitalOf(state, red);
+    const army = commandersIn(state, capital.id).find((c) => c.unit === 'ashChieftain')!;
+    const a = state.map.provinces[capital.id]!.neighbors[0]!;
+    const b = state.map.provinces[a]!.neighbors.find((n) => n !== capital.id)!;
+    state.provinces[a]!.owner = red;
+    for (const c of Object.values(state.commanders)) {
+      if (c.owner === null && c.location === a) c.location = b;
+    }
+    const move: Command = { type: 'move', nation: red, commanders: [army.id], path: [a, b] };
+    const slots = army.script.map((slot) => ({ ...slot }));
+    const script: Command = { type: 'setScript', nation: red, commander: army.id, slots };
+    expect(applyCommand(state, move)).toEqual({ ok: true });
+    expect(applyCommand(state, script)).toEqual({ ok: true });
+    const hash = stateHash(state);
+    move.path.push(a);
+    move.commanders.length = 0;
+    slots[0] = { kind: 'retreat' };
+    slots.pop();
+    expect(stateHash(state)).toBe(hash);
   });
 });
