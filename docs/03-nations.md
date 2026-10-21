@@ -4,8 +4,9 @@ M1 ships two nations fully: **Cinder Horde (R)** and **Thornwood (G)**. The othe
 are sketched so the content format and the AI are written to accommodate them.
 
 Every nation entry is data under `src/content/nations/<id>.ts` with: id, name, color
-identity, description, capital name, unit list, commander list, starting army, starting
-pretender chassis options, and AI personality weights.
+identity, description, capital name, unit list, commander list, starting army, the two
+pretender chassis that fit it (the realm rule of `docs/05-pretender.md` decides which chassis
+it may take), and AI personality weights.
 
 ## Unit stat model
 
@@ -39,6 +40,11 @@ striking first and burning the enemy economy.
 Capital: **Kharnath**, Plains. Palette: ember orange, charcoal, hot white.
 
 Identity levers: Turmoil-friendly, Fury-friendly. Berserkers. Pillage is strong.
+
+Pretender chassis (`docs/05-pretender.md`): the generic chassis (Oracle of the Flux, Titan,
+Great Wyrm, Living Monolith) and the Red realm, today the Ash Colossus. Fits: Titan and Ash
+Colossus. Phase 6b.3 adds the generic Ascended Hero and Primordial and the Red Ash Phoenix,
+Pyre Lord, Cinder Idol and Ember Hierophant, for eleven.
 
 ### Troops (recruit at fort)
 | Unit | hp | str | att | def | prot | mor | mapSpd | Weapons | Cost (g/m/pop) | Days/10 | Tags |
@@ -78,6 +84,11 @@ Capital: **Deepmoss**, Forest. Palette: moss green, bark brown, pale blossom.
 Identity levers: Growth-friendly, Wild-friendly. Regeneration bless. Forests are home
 turf (+1 def in forests for Thornwood units).
 
+Pretender chassis (`docs/05-pretender.md`): the generic chassis and the Green realm, today
+the Wild Spirit. Fits: Wild Spirit and Living Monolith. Phase 6b.3 adds the generic Ascended
+Hero and Primordial and the Green World Tree, Horned Hunter, Elder Wyrm and Mother of Beasts,
+for eleven.
+
 ### Troops
 | Unit | hp | str | att | def | prot | mor | mapSpd | Weapons | Cost (g/m/pop) | Days/10 | Tags |
 |------|----|-----|-----|-----|------|-----|--------|---------|----------------|---------|------|
@@ -114,6 +125,9 @@ AI personality: aggression 0.4, expansion 0.6, research 0.7, pillage 0.1.
 - **Hollow Court (B)**: necromancer nobility, skeleton hordes with 0 upkeep and 0 supply,
   population sacrifice, fear. Capital Gravehold. Rot and Dread.
 
+Each M2 nation brings its color's pretender realm (six chassis, sketched in the 2026-10-21
+pretender design) and its full blessing menu.
+
 ## Independents
 
 Independent unit pool (shared, nation-neutral, palette grey and tan):
@@ -148,5 +162,10 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Default spells** (Phase 5): Pyre and Grove Priests carry `defaultSpell: 'bless'`, so their
   default script casts Bless. Whether a commander gets a caster script follows its own pips
   and holy pips, not only its unit's.
-- **Chassis that fit** (Phase 6, for the pretender screen to highlight): Cinder Horde, Titan
-  and Ash Colossus; Thornwood, Wild Spirit and Living Monolith (`NationDef.chassis`).
+- **Chassis** (Phase 6, revised in Phase 6b at the owner's direction for "good options for
+  pretenders like Dominions has"): a nation may take the generic chassis and those of its own
+  colors' realms (`availableChassis`, `docs/05`); the owner chose realms over every chassis
+  for every nation on 2026-10-21. That is five for each M1 nation after Phase 6b.1 and eleven
+  after Phase 6b.3. `NationDef.chassis` names the two the pretender screen marks as fitting:
+  Cinder Horde, Titan and Ash Colossus; Thornwood, Wild Spirit and Living Monolith. Content
+  validation refuses a fitting chassis outside the nation's realm.

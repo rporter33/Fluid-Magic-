@@ -1,17 +1,20 @@
-// Builds a BattleSetup from the game (docs/04-battle.md, "Province modifiers"). Every modifier
-// is folded into each unit's stats here, so the resolver stays a pure function of its input.
+// Builds a BattleSetup from the game (docs/04-battle.md, "Province modifiers"). Every modifier,
+// blessings included, is folded into each unit's stats here, so the resolver stays a pure
+// function of its input.
 import { nationDef, unitDef, type UnitTypeId } from '../../content';
 import { PROPHET, STORM } from '../../content/rules';
 import { BATTLE_SPELLS } from '../../content/spells';
 import type { BattleSpellDef } from '../../content/spells/types';
 import { TERRAIN } from '../../content/terrain';
-import { blessOf, NO_BLESS } from '../bless';
+import type { WeaponDef } from '../../content/types';
+import { nationBless, NO_BLESS, type Bless } from '../bless';
 import { defaultFormation } from '../commanders';
 import { pdForce } from '../pd';
 import { meetsRequirement } from '../pips';
 import { researchLevels } from '../research';
 import { provinceScales, scaleEffect } from '../scales';
-import { isProphet, starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
+import { hasAvatar } from '../pretender';
+import { isPretender, isProphet, starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
 import { activeEffects, getMapProvince, getNation, getProvince } from '../state';
 import type { CommanderId, NationId, ProvinceId } from '../ids';
 import type { CommanderState, GameState, Pips, Squad } from '../types';
@@ -53,15 +56,38 @@ interface Context {
 }
 
 /**
+ * Melee weapons with the bless's weapon effects (docs/02 decisions, "Blessing folds"): more
+ * damage, an element, armor piercing, a first-round bonus. The same list when it has none.
+ */
+function blessedWeapons(weapons: readonly WeaponDef[], bless: Bless): readonly WeaponDef[] {
+  const { meleeDmg, meleeElement, meleeArmorPiercing, firstRoundBonus } = bless;
+  if (meleeDmg === 0 && meleeElement === null && !meleeArmorPiercing && firstRoundBonus === 0) {
+    return weapons;
+  }
+  return weapons.map((w) => {
+    if (w.range !== undefined) return w;
+    const out: WeaponDef = { ...w, dmg: w.dmg + meleeDmg };
+    if (meleeElement !== null) out.element = meleeElement;
+    if (meleeArmorPiercing) out.armorPiercing = true;
+    if (firstRoundBonus !== 0) out.firstRoundBonus = (w.firstRoundBonus ?? 0) + firstRoundBonus;
+    return out;
+  });
+}
+
+/** Who a commander is to its nation: the prophet and the pretender may fight blessed. */
+type Role = 'prophet' | 'pretender' | null;
+
+/**
  * A unit's stats with every modifier. `upkeep` is false for units that draw no pay (PD,
- * summons); `prophet` marks the nation's prophet, which fights blessed and braver.
+ * summons). The nation's prophet fights blessed and braver; its pretender fights blessed with
+ * Avatar in a province its nation dominates.
  */
 function statsFor(
   ctx: Context,
   unit: UnitTypeId,
   starvedDays: number,
   upkeep = true,
-  prophet = false,
+  role: Role = null,
 ): CombatStats {
   const { state, province, side, nation } = ctx;
   const def = unitDef(unit);
@@ -87,12 +113,15 @@ function statsFor(
     if (upkeep) mor -= unpaidMoralePenalty(getNation(state, nation).unpaidDays);
   }
   mor -= starvationMoralePenalty(starvedDays);
-  // docs/02 section 8: sacred units carry their nation's bless, and so does the prophet.
-  const bless =
-    nation !== null && (def.tags.includes('sacred') || prophet)
-      ? blessOf(getNation(state, nation).pretender.pips)
-      : NO_BLESS;
-  if (prophet) mor += PROPHET.morale;
+  // docs/02 section 8: sacred units carry their nation's bless, and so do the prophet and an
+  // Avatar in its own dominion (the owner's decision: only through Avatar).
+  const blessed =
+    nation !== null &&
+    (def.tags.includes('sacred') ||
+      role === 'prophet' ||
+      (role === 'pretender' && mine && hasAvatar(getNation(state, nation).pretender)));
+  const bless = blessed ? nationBless(state, nation) : NO_BLESS;
+  if (role === 'prophet') mor += PROPHET.morale;
   att += bless.att;
   defense += bless.def;
   prot += bless.prot;
@@ -128,11 +157,14 @@ function statsFor(
     mor,
     prec,
     mapSpeed: def.mapSpeed,
-    weapons: def.weapons,
-    tags: def.tags,
+    weapons: blessedWeapons(def.weapons, bless),
+    tags: bless.berserk && !def.tags.includes('berserk') ? [...def.tags, 'berserk'] : def.tags,
     regeneration: (def.regeneration ?? 0) + bless.regeneration,
     lifeDrain: bless.lifeDrain,
-    fireShield: def.fireShield ?? 0,
+    // Only fire shields fold until shields by element land (Phase 6b.2); content allows no other.
+    fireShield:
+      (def.fireShield ?? 0) +
+      bless.shields.reduce((sum, sh) => sum + (sh.element === 'fire' ? sh.amount : 0), 0),
   };
 }
 
@@ -154,6 +186,11 @@ export function knownSpells(
   );
 }
 
+function roleOf(state: GameState, c: CommanderState): Role {
+  if (isProphet(state, c)) return 'prophet';
+  return isPretender(state, c) ? 'pretender' : null;
+}
+
 function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
   return {
     ref: c.id,
@@ -161,7 +198,7 @@ function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
     name: c.name,
     hp: c.hp,
     row: 'rear',
-    stats: statsFor(ctx, c.unit, c.starvedDays, true, isProphet(ctx.state, c)),
+    stats: statsFor(ctx, c.unit, c.starvedDays, true, roleOf(ctx.state, c)),
     script: c.script.map((s) => ({ ...s })),
     pips: { ...c.pips },
     holy: c.holy,

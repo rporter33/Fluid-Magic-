@@ -27,9 +27,10 @@ export type { Difficulty };
 
 /**
  * Bumped whenever the saved shape changes; migrate.ts lifts older saves. 2: battle records gained
- * scene and rerun (Phase 10 S1).
+ * scene and rerun (Phase 10 S1). 3: nations gained pretenderName and pretenderReturnDay,
+ * provinces extraSprings (Phase 6b.1).
  */
-export const STATE_VERSION = 2;
+export const STATE_VERSION = 3;
 
 export type ColorAmounts = Record<Color, number>;
 export type Pips = Partial<Record<Color, number>>;
@@ -41,6 +42,11 @@ export type { Awakening, PretenderDesign } from '../content/pretenders/types';
 export interface NationSetup {
   nation: NationDefId;
   pretender: PretenderDesign;
+  /**
+   * The god's name (docs/05-pretender.md decisions): 1 to 24 Latin letters, spaces,
+   * apostrophes, hyphens and periods, starting with a letter. Absent: the body's name.
+   */
+  pretenderName?: string;
   /** Null for the human player. */
   ai: { difficulty: Difficulty } | null;
 }
@@ -114,6 +120,11 @@ export interface ProvinceState {
   siege: SiegeState | null;
   /** The nation that has claimed this province's Wellspring. */
   wellspringClaimedBy: NationId | null;
+  /**
+   * Springs added in play to the map's (the World Tree's and the Sacred Spring boon's, at the
+   * capital); they pay mana like map springs and stay with the province when it changes hands.
+   */
+  extraSprings: Color[];
 }
 
 // ---------------------------------------------------------------- commanders
@@ -245,6 +256,13 @@ export interface NationState {
   pretenderId: CommanderId | null;
   /** The pretender died; it never returns in M1. */
   pretenderDead: boolean;
+  /** The god's name from the setup, given to its commander on every arrival; null: the body's. */
+  pretenderName: string | null;
+  /**
+   * The day a pretender that reforms after death returns (the Ash Phoenix, Phase 6b.3); null
+   * otherwise. Nothing sets it yet.
+   */
+  pretenderReturnDay: number | null;
   /** The prophet's commander; the only record of who it is. */
   prophetId: CommanderId | null;
   /** First day a new prophet may be named. */

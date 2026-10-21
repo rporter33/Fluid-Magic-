@@ -54,7 +54,7 @@ fluid-magic/
       scales.ts           # effective scales of a province
       research.ts         # research points, levels, the daily research step
       pips.ts             # pips against spell requirements
-      bless.ts            # the bless of sacred units
+      bless.ts            # bless points, default picks, the blessing fold (sacred, prophet, Avatar)
       recruitment.ts      # recruit cost and time, queues, garrison holders
       movement.ts         # speeds, leg days, paths (pathsFrom) and ETAs, transit and arrival
       independents.ts     # independent forces at game start, strength words
@@ -120,6 +120,9 @@ fluid-magic/
         costs.ts          # design points: budget, pips, dominion, scales, awakening
         scales.ts         # the five axes with per-pole effects
         presets.ts
+        blessings.ts      # the blessing menu
+        boons.ts          # Sacred Spring, Avatar
+        validate.ts       # chassis, blessing and boon checks for content validation
         types.ts          # PretenderDesign, awakenings
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
@@ -285,6 +288,12 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
   from 1 sets `rerun` to null and the scene from the province's terrain. The migration map
   lives in `src/sim/migrate.ts`, which `serialize.ts` runs on load; loading is lenient about
   replays, so a malformed `rerun` becomes null instead of failing the save.
+- `STATE_VERSION` 3 (Phase 6b.1) adds `NationState.pretenderName` and
+  `NationState.pretenderReturnDay` (both null) and `ProvinceState.extraSprings` ([]); its
+  migration runs after the 1-to-2 step in `MIGRATIONS` (`src/sim/migrate.ts`). It appends the
+  new keys, and `createGame` puts them in the same place (last in the nation and the province
+  record), so a lifted save hashes like the same game created on version 3 (`stateHash`
+  hashes the JSON text, so key order counts).
 
 ## Performance targets
 

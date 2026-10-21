@@ -1,9 +1,10 @@
-// The pretender (docs/05-pretender.md): what a design costs, whether it is valid, and when the
-// pretender stands on the map. Prices take the nation's definition, so the pretender screen can
-// use them before a game exists.
+// The pretender (docs/05-pretender.md): which chassis a nation may take, what a design costs,
+// whether it is valid, and when the pretender stands on the map. Prices take the nation's
+// definition, so the pretender screen can use them before a game exists.
 import { unitDef } from '../content';
 import { COLORS, isColor, type Color } from '../content/colors';
-import { CHASSIS, isChassisId, type ChassisDef } from '../content/pretenders/chassis';
+import { BOONS, isBoonId } from '../content/pretenders/boons';
+import { CHASSIS, chassisDef, isChassisId, type ChassisDef } from '../content/pretenders/chassis';
 import { AWAKENING, PRETENDER_COSTS } from '../content/pretenders/costs';
 import {
   SCALE_AXES,
@@ -13,8 +14,9 @@ import {
   type ScaleAxis,
 } from '../content/pretenders/scales';
 import { AWAKENINGS, type Awakening, type PretenderDesign } from '../content/pretenders/types';
-import { DOMINION, MAX_PIPS } from '../content/rules';
+import { DOMINION, MAX_PIPS, PRETENDER_NAME } from '../content/rules';
 import type { NationDef } from '../content/types';
+import { blessingProblem } from './bless';
 import {
   addSquad,
   createCommander,
@@ -27,6 +29,17 @@ import { postMessage } from './messages';
 import { getMapProvince, getNation, getProvince } from './state';
 import type { GameState, Pips } from './types';
 
+/** D1: a chassis is offered to every nation (generic) or to nations of its realm's color. */
+export function offersChassis(def: NationDef, chassis: ChassisDef): boolean {
+  return chassis.realm === 'generic' || def.colors.includes(chassis.realm);
+}
+
+/** The chassis a nation may take: the generic ones and those of its colors, in content order. */
+export function availableChassis(def: NationDef): ChassisDef[] {
+  const all: ChassisDef[] = Object.values(CHASSIS);
+  return all.filter((c) => offersChassis(def, c));
+}
+
 /** The pips a chassis gives for free, for this nation. */
 export function basePips(def: NationDef, chassis: ChassisDef): Pips {
   const base = chassis.basePips;
@@ -34,7 +47,11 @@ export function basePips(def: NationDef, chassis: ChassisDef): Pips {
   return { [base.color === 'nation' ? def.colors[0] : base.color]: base.count };
 }
 
-/** Design points for reaching pip `level` (1 to MAX_PIPS) in a color. */
+/**
+ * Design points for reaching pip `level` (1 to MAX_PIPS) in a color. The first pip of a color
+ * outside the nation's identity costs the chassis's new-color price (D2); the chassis's
+ * discount comes off every step.
+ */
 export function pipStepCost(
   def: NationDef,
   chassis: ChassisDef,
@@ -42,27 +59,42 @@ export function pipStepCost(
   level: number,
 ): number {
   const listed = PRETENDER_COSTS.pipLevel[level - 1] ?? Infinity;
-  const first =
-    level === 1 && !def.colors.includes(color) ? PRETENDER_COSTS.newColorFirstPip : listed;
+  const first = level === 1 && !def.colors.includes(color) ? chassis.newColorFirstPip : listed;
   return first - chassis.pipDiscount;
 }
 
-/** Design points for one scale step toward a pole: cheap toward the nation's own colors. */
+/**
+ * Design points for one scale step toward a pole: cheap toward the nation's own colors and
+ * toward a pole the chassis is attuned to (D3).
+ */
 export function scaleStepCost(
   def: NationDef,
+  chassis: ChassisDef,
   axis: ScaleAxis,
   toward: 'positive' | 'negative',
 ): number {
   const pole = SCALE_DEFS[axis][toward];
-  return def.colors.includes(pole.color)
+  const attuned = (chassis.attunement ?? []).some((a) => a.axis === axis && a.toward === toward);
+  return attuned || def.colors.includes(pole.color)
     ? PRETENDER_COSTS.scaleStep.own
     : PRETENDER_COSTS.scaleStep.other;
 }
 
-/** What a design costs in points: chassis, pips beyond the base, dominion above it, scales. */
+/** What a design's boons cost in points; an unknown boon costs Infinity. */
+function boonsCost(design: PretenderDesign): number {
+  let total = 0;
+  for (const boon of design.boons ?? [])
+    total += isBoonId(boon.id) ? BOONS[boon.id].cost : Infinity;
+  return total;
+}
+
+/**
+ * What a design costs in points: chassis, pips beyond the base, dominion above it, scales, and
+ * boons. Blessings cost bless points, not design points.
+ */
 export function designCost(def: NationDef, design: PretenderDesign): number {
   if (!isChassisId(design.chassis)) return Infinity;
-  const chassis = CHASSIS[design.chassis];
+  const chassis = chassisDef(design.chassis);
   const free = basePips(def, chassis);
   let total = chassis.cost;
   for (const color of COLORS) {
@@ -74,9 +106,9 @@ export function designCost(def: NationDef, design: PretenderDesign): number {
   for (const axis of SCALE_AXES) {
     const steps = design.scales[axis];
     const toward = steps > 0 ? 'positive' : 'negative';
-    total += Math.abs(steps) * scaleStepCost(def, axis, toward);
+    total += Math.abs(steps) * scaleStepCost(def, chassis, axis, toward);
   }
-  return total;
+  return total + boonsCost(design);
 }
 
 /** Points a design may spend: the budget plus the awakening refund. */
@@ -84,11 +116,58 @@ export function designBudget(awakening: Awakening): number {
   return PRETENDER_COSTS.budget + AWAKENING[awakening].refund;
 }
 
-/** Why a design is not allowed for this nation, or null. */
+/** The god fights blessed in its own dominion: the Avatar boon, or a chassis with it built in. */
+export function hasAvatar(design: PretenderDesign): boolean {
+  const builtIn = isChassisId(design.chassis) && chassisDef(design.chassis).avatar === true;
+  return builtIn || (design.boons ?? []).some((b) => b.id === 'avatar');
+}
+
+/**
+ * The springs a design adds to its capital at game creation (D5): the chassis's, then each
+ * Sacred Spring's.
+ */
+export function startingSprings(def: NationDef, design: PretenderDesign): Color[] {
+  const springs: Color[] = [];
+  const own = isChassisId(design.chassis) ? chassisDef(design.chassis).startSprings : undefined;
+  if (own) {
+    const color = own.color === 'nation' ? def.colors[0] : own.color;
+    for (let i = 0; i < own.count; i++) springs.push(color);
+  }
+  for (const boon of design.boons ?? []) {
+    if (boon.id === 'sacredSpring') springs.push(boon.color);
+  }
+  return springs;
+}
+
+/** Why the design's boons are not allowed, or null. */
+function boonProblem(chassis: ChassisDef, design: PretenderDesign): string | null {
+  const seen = new Set<string>();
+  for (const boon of design.boons ?? []) {
+    if (!isBoonId(boon.id)) return `Unknown boon ${String(boon.id)}`;
+    const name = BOONS[boon.id].name;
+    if (seen.has(boon.id)) return `${name} is chosen twice`;
+    seen.add(boon.id);
+    if (
+      boon.id === 'sacredSpring' &&
+      (!isColor(boon.color) || (design.pips[boon.color] ?? 0) < 1)
+    ) {
+      return 'A Sacred Spring needs a pip in its color';
+    }
+    if (boon.id === 'avatar' && chassis.avatar) return `${chassis.name} already has Avatar`;
+  }
+  return null;
+}
+
+/** Why a design is not allowed for this nation, or null; the first problem only. */
 export function validatePretender(def: NationDef, design: PretenderDesign): string | null {
   if (!isChassisId(design.chassis)) return `Unknown chassis ${design.chassis}`;
-  const chassis = CHASSIS[design.chassis];
+  const chassis = chassisDef(design.chassis);
+  if (!offersChassis(def, chassis)) return `${chassis.name} is not offered to ${def.name}`;
   if (!AWAKENINGS.includes(design.awakening)) return 'Unknown awakening';
+  const least = chassis.minAwakening;
+  if (least && AWAKENINGS.indexOf(design.awakening) < AWAKENINGS.indexOf(least)) {
+    return `${chassis.name} must start at least ${least}`;
+  }
   const free = basePips(def, chassis);
   for (const [color, count] of Object.entries(design.pips)) {
     if (!isColor(color) || !Number.isInteger(count) || count < 0 || count > MAX_PIPS) {
@@ -110,9 +189,37 @@ export function validatePretender(def: NationDef, design: PretenderDesign): stri
       return `Scales run from ${String(SCALE_MIN)} to ${String(SCALE_MAX)}`;
     }
   }
+  const problem = blessingProblem(design) ?? boonProblem(chassis, design);
+  if (problem !== null) return problem;
   const cost = designCost(def, design);
   const budget = designBudget(design.awakening);
   if (cost > budget) return `The design costs ${String(cost)} of ${String(budget)} points`;
+  return null;
+}
+
+/**
+ * Why a name cannot be the god's (D7), or null: 1 to 24 symbols of the identity alphabet
+ * (Latin letters, space, apostrophe, hyphen, period), starting with a letter, not ending in a
+ * space, and with no two spaces in a row.
+ */
+export function validatePretenderName(name: string): string | null {
+  const { maxLength, symbols } = PRETENDER_NAME;
+  // The alphabet first: every symbol it holds is one UTF-16 unit, so after it name.length
+  // counts symbols, and a name in another script is told so rather than its length.
+  for (const ch of name) {
+    if (!symbols.includes(ch)) {
+      return "A god's name may use only Latin letters, spaces, apostrophes, hyphens and periods";
+    }
+  }
+  if (name.length < 1 || name.length > maxLength) {
+    const what = 'symbols (letters, spaces, apostrophes, hyphens, periods)';
+    return `A god's name has 1 to ${String(maxLength)} ${what}`;
+  }
+  // Only Latin letters pass the alphabet and change case.
+  const first = name.charAt(0);
+  if (first.toLowerCase() === first.toUpperCase()) return "A god's name must start with a letter";
+  if (name.endsWith(' ')) return "A god's name may not end with a space";
+  if (name.includes('  ')) return "A god's name may not hold two spaces in a row";
   return null;
 }
 
@@ -160,6 +267,7 @@ export function settlePretender(state: GameState, nationId: NationId): void {
   if (getProvince(state, nation.capital).owner !== nationId || !isChassisId(design.chassis)) return;
   const body = CHASSIS[design.chassis].body;
   const pretender = createCommander(state, body, nationId, nation.capital);
+  if (nation.pretenderName !== null) pretender.name = nation.pretenderName;
   pretender.pips = { ...design.pips };
   pretender.script = defaultScript(unitDef(body), pretender.pips, pretender.holy);
   nation.pretenderId = pretender.id;
@@ -170,5 +278,5 @@ export function settlePretender(state: GameState, nationId: NationId): void {
 /** The chassis of a nation's pretender. */
 export function chassisOf(state: GameState, nationId: NationId): ChassisDef | null {
   const id = getNation(state, nationId).pretender.chassis;
-  return isChassisId(id) ? CHASSIS[id] : null;
+  return isChassisId(id) ? chassisDef(id) : null;
 }

@@ -9,6 +9,16 @@ import type { UnitTypeId } from './units';
 export const ELEMENTS = ['physical', 'fire', 'nature', 'cold', 'holy', 'decay'] as const;
 export type Element = (typeof ELEMENTS)[number];
 
+/**
+ * A retaliation shield: each melee hit that deals damage to its bearer deals `amount` back to
+ * the striker in `element`. Until shields by element land (Phase 6b.2, N4) the battle folds
+ * only fire shields, so content validation allows no other element.
+ */
+export interface Shield {
+  element: Element;
+  amount: number;
+}
+
 export interface WeaponDef {
   name: string;
   /** Damage base: added to the wielder's strength in melee, alone for ranged shots. */

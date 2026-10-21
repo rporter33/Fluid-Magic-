@@ -142,19 +142,26 @@ Rituals: Dark Tithe (L1, B, sacrifice 2% pop of caster's province for 6 B mana),
 
 ## 8. Blessings
 
-Sacred units of a nation receive a **bless** derived from the pretender's pips at game
-start (computed once):
+Sacred units, the prophet, and a pretender with Avatar fight **blessed**. What they get is
+chosen at pretender design from a blessing menu (`docs/05-pretender.md`, Step 6), after
+Dominions 6. The menu was introduced on 2026-10-21 at the owner's direction ("good options for
+pretenders like Dominions has").
 
-| Color pips ≥ 4 | Bless effect on sacred units |
-|----------------|------------------------------|
-| W | +2 morale, +1 protection |
-| U | +2 defense, +2 precision |
-| B | Life drain 2 per hit, +1 attack |
-| R | +2 attack, +2 strength |
-| G | Regeneration 10% max HP per round, +1 protection |
+- Bless points per color = pips in that color − 1; a color's points buy only its blessings.
+- A blessing costs its requirement − 1 (at least 1); requirements run from 2 to 6.
+- At most one blessing per group. Incarnate blessings work only while the god is on the map.
+- Without a choice, each color at 4 or 5 pips gives its standard blessing and at 6 its greater
+  one:
 
-Pips ≥ 6 in a color doubles the numeric parts. Blesses apply only in battle and only to
-units with `sacred: true`.
+| Color | Standard (4 pips) | Greater (6 pips) |
+|-------|-------------------|------------------|
+| W | +2 morale, +1 protection | +4 morale, +2 protection |
+| U | +2 defense, +2 precision | +4 defense, +4 precision |
+| B | Life drain 2 per hit, +1 attack | Life drain 4 per hit, +2 attack |
+| R | +2 attack, +2 strength | +4 attack, +4 strength |
+| G | Regeneration 10% max HP per round, +1 protection | Regeneration 20%, +2 protection |
+
+Blessings apply only in battle.
 
 ## Implementation decisions
 
@@ -231,6 +238,15 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   them in.
 - **Life drain** (the Black bless) heals each striker 2 per damaging hit, paid after every hit
   of the phase has landed and only to strikers still alive.
+- **Blessing folds** (Phase 6b.1): every blessing is a stat change folded in at battle setup
+  (`battle/setup.ts`); the resolver gains nothing for blessings. Weapon blessings copy each
+  melee weapon (no range) with more damage, an element and armor piercing; a first-round
+  blessing raises each melee weapon's first-round bonus; a berserk blessing adds the tag; a
+  shield blessing adds a retaliation shield of its element (fire only until shields by element
+  land in Phase 6b.2, when Thornhide's nature shield joins). Ranged weapons and unarmed blows
+  gain nothing. Blessings fold in content order, so the order a design lists them never
+  matters; with two blessings naming a melee element the first in content order wins (no M1
+  content has two). Pretender abilities and spell power join these decisions in Phase 6b.2.
 
 **Rituals** (sections 3, 5, 6)
 - **Casting** needs a nation that is not godless, a caster standing in a lab province its

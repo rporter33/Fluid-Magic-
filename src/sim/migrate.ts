@@ -17,6 +17,15 @@ export const MIGRATIONS: Readonly<Record<number, Migration>> = {
       b.rerun = null;
     }
   },
+  // 2 to 3 (Phase 6b.1): nations gained the god's name and a reform day, provinces the springs
+  // added in play. Older games named no god, reformed none, and added no springs.
+  2: (state) => {
+    for (const n of Object.values(state.nations)) {
+      n.pretenderName = null;
+      n.pretenderReturnDay = null;
+    }
+    for (const p of Object.values(state.provinces)) p.extraSprings = [];
+  },
 };
 
 /**

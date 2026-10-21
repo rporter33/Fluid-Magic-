@@ -21,6 +21,19 @@ describe('content validation of each nation’s chassis', () => {
       expect(validateContent()).toEqual([]);
     });
   });
+
+  it('reports a fitting chassis outside the nation’s realm (D1)', () => {
+    patched(nationDef('thornwood'), 'chassis', ['titan', 'ashColossus'], () => {
+      expect(validateContent()).toEqual([
+        'nation thornwood fits chassis ashColossus outside its realm',
+      ]);
+    });
+    patched(nationDef('cinderHorde'), 'chassis', ['wildSpirit', 'ashColossus'], () => {
+      expect(validateContent()).toEqual([
+        'nation cinderHorde fits chassis wildSpirit outside its realm',
+      ]);
+    });
+  });
 });
 
 describe('the pip cap', () => {

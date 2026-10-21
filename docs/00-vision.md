@@ -37,10 +37,18 @@ and the colors stand on their own rather than translating Dominions' eight paths
 
 | Milestone | Summary |
 |-----------|---------|
-| M1 (this scope) | Solo skirmish, one generated map, two mono-color nations (Red and Green), 12 units each, 10 spells per shipped color, pretender design, dominion, Wellsprings victory, simple AI, placeholder art with animations, save/load. |
-| M2 | Remaining three mono nations (White, Blue, Black) with their 30 spells, forts, more pretender chassis, events, balance pass. |
+| M1 (this scope) | Solo skirmish, one generated map, two mono-color nations (Red and Green), 12 units each, 10 spells per shipped color, pretender design with 16 chassis (11 per nation), a blessing menu and appearance customization, dominion, Wellsprings victory, simple AI, placeholder art with animations, save/load. |
+| M2 | Remaining three mono nations (White, Blue, Black) with their 30 spells, their pretender chassis and blessing menus, forts, events, deeper pretender customization (more slots and variants, a color picker), balance pass. |
 | M3 | Ten two-color nations, hybrid mana costs in depth, more rituals, touch layout. |
 | M4 | Multiplayer on an authoritative server (the sim is written for this from day one). |
+
+The pretender's M1 scope grew on 2026-10-21 at the owner's direction: "I think flashy magic
+effects is always interesting and good options for pretenders like Dominions has is always a
+highlight. If it's possible. A customization level matching Age of Wonders 4 would be very
+ideal." Ten new chassis, the blessing menu and the customization system moved from M2 into
+M1 (Phase 6b and additions to Phases 8 to 12 in `docs/10-milestone-1.md`); the per-slot depth
+that matches Age of Wonders 4 arrives in M2. The owner approved the scope change and its
+cut order on 2026-10-21 (owner decision 1 in `docs/05-pretender.md`).
 
 ## Naming glossary
 

@@ -4,9 +4,16 @@ import { AI, DIFFICULTIES } from './ai';
 import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
 import { isNationDefId, NATIONS, type NationDefId } from './nations';
-import { CHASSIS, isChassisId, type ChassisDef } from './pretenders/chassis';
+import { BLESSINGS } from './pretenders/blessings';
+import { CHASSIS, isChassisId } from './pretenders/chassis';
 import { PRETENDER_COSTS } from './pretenders/costs';
 import { PRESETS } from './pretenders/presets';
+import {
+  validateBlessing,
+  validateBlessingTiers,
+  validateBoons,
+  validateChassis,
+} from './pretenders/validate';
 import { DOMINION, MAX_PIPS, PD, RECRUITMENT, UNREST } from './rules';
 import { isSpellId, SPELLS } from './spells';
 import { validateSpell } from './spells/validate';
@@ -117,6 +124,12 @@ function validateNation(key: string, n: NationDef): string[] {
   if (!n.chassis.every(isChassisId) || n.chassis[0] === n.chassis[1]) {
     problems.push(`${where} needs two different chassis`);
   }
+  for (const id of n.chassis) {
+    const realm = isChassisId(id) ? CHASSIS[id].realm : 'generic';
+    if (realm !== 'generic' && !n.colors.includes(realm)) {
+      problems.push(`${where} fits chassis ${id} outside its realm`);
+    }
+  }
   if (PRESETS.filter((p) => p.nation === key).length !== 3) {
     problems.push(`${where} needs three presets`);
   }
@@ -127,27 +140,6 @@ function validateNation(key: string, n: NationDef): string[] {
   for (const [k, v] of Object.entries(n.ai)) {
     if (!(v >= 0 && v <= 1)) problems.push(`${where} AI ${k} outside 0..1`);
   }
-  return problems;
-}
-
-function validateChassis(key: string, c: ChassisDef): string[] {
-  const problems: string[] = [];
-  const where = `chassis ${key}`;
-  if (c.id !== key) problems.push(`${where} has id ${c.id}`);
-  if (!(c.cost >= 0)) problems.push(`${where} bad cost`);
-  if (c.basePips) {
-    const { color, count } = c.basePips;
-    if ((color !== 'nation' && !isColor(color)) || !Number.isInteger(count) || count < 1) {
-      problems.push(`${where} bad base pips`);
-    }
-  }
-  if (!Number.isInteger(c.baseDominion) || c.baseDominion < 1 || c.baseDominion > 10) {
-    problems.push(`${where} bad base dominion`);
-  }
-  const body: UnitDef | undefined = isUnitTypeId(c.body) ? UNITS[c.body] : undefined;
-  if (!body?.commander) problems.push(`${where} body ${c.body} is not a commander`);
-  else if (body.cost !== null) problems.push(`${where} body ${c.body} is recruitable`);
-  if (!(c.pipDiscount >= 0) || !(c.dominionFactor >= 1)) problems.push(`${where} bad modifiers`);
   return problems;
 }
 
@@ -244,6 +236,8 @@ export function validateContent(): string[] {
   }
   for (const [key, spell] of Object.entries(SPELLS)) problems.push(...validateSpell(key, spell));
   for (const [key, c] of Object.entries(CHASSIS)) problems.push(...validateChassis(key, c));
+  for (const [key, bl] of Object.entries(BLESSINGS)) problems.push(...validateBlessing(key, bl));
+  problems.push(...validateBlessingTiers(), ...validateBoons());
   if (PRETENDER_COSTS.pipLevel.length !== MAX_PIPS) {
     problems.push(`pip level costs must price levels 1 to ${String(MAX_PIPS)}`);
   }

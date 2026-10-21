@@ -29,8 +29,13 @@ art is distinct per unit and animated. All sim tests pass.
    summary when the re-run cannot be verified), pause, speeds, Beats mode, step, scrub, skip,
    and at most 150 s per battle at 1x. Sieges and storming of capitals.
 8. Magic: pips, research tracks, fatigue, carried mana, 10 Red and 10 Green spells
-   fully working, blessings for pips ≥ 4.
-9. Pretender: 6 chassis, pips, dominion, 5 scales with effects, awakening, prophet.
+   fully working, blessings per `docs/05` Step 6 (the blessing menu).
+9. Pretender: 16 chassis in three realms (11 per nation), pips with per-chassis new-color
+   prices, dominion, five scales with effects and attunement, awakening, prophet, the blessing
+   menu (per-color bless points, groups, incarnate blessings; the fixed bless as its default),
+   two boons, the new battle and map rules of `docs/04` and `docs/05` (battle-start abilities,
+   trample, spell power, shields by element, bound squads, monthly summons, the Phoenix's
+   reform), and twelve presets with looks.
 10. Dominion spread, scales applied per province, Godless state.
 11. Wellsprings claim and victory; elimination defeat; victory screen with stats.
 12. AI per `docs/08-ai.md` passing its behavior tests.
@@ -39,8 +44,15 @@ art is distinct per unit and animated. All sim tests pass.
     placeholder; animations per `docs/09-art-direction.md`, including the battle impact
     grammar. Battle replays play procedural sound effects per `docs/11-sound.md`, with volume,
     mute, captions, and the gore, shake, flash, and reduced-motion settings.
+    Pretender portraits are composed from the same parts as their battle sprites, with every
+    appearance choice visible; every spell, ability and ritual has its effect per the magic
+    effects grammar.
 15. Headless AI vs AI runner (`npm run sim:aivai -- --games 20 --seed 1`) reporting
     winner, months, and final stats per game.
+16. The pretender designer has six steps (Body, Magic, Realm, Blessings, Appearance,
+    Identity), a live preview, presets with looks, a random god and look with locks and a
+    10-roll history, saved gods, and a share code that round-trips; no look or identity field
+    other than the name changes the game state (determinism test).
 
 ## Build order
 
@@ -100,6 +112,24 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
 - Tests: presets within budget; dominion spreads from the capital; claim completes in 10
   days; victory triggers.
 
+### Phase 6b: Pretender variety
+- At the owner's direction ("good options for pretenders like Dominions has is always a
+  highlight ... A customization level matching Age of Wonders 4 would be very ideal"), the
+  pretender grows before the UI phases. The design is the 2026-10-21 pretender build spec;
+  its rules are in `docs/04` and `docs/05`. The owner approved the scope and its defaults on
+  2026-10-21 (`docs/05`, "Owner decisions"). Three commits, each green:
+- 6b.1: realms, per-chassis new-color prices, attunement, minimum awakening, starting springs,
+  the god's name, roles, AI power for the existing six; the blessing menu with the fixed bless
+  as its default; the Sacred Spring and Avatar boons; one save-version step.
+- 6b.2 (after the battle track's S1): battle-start abilities, multi-strike weapons, spell
+  power, shields by element (with the Thornhide blessing), bound squads; the battle
+  presentation's record and event amendments.
+- 6b.3: monthly summons, the Phoenix's reform, the ten new chassis and six new presets with
+  their content fixtures, `sim:aivai --presets` and `--matrix`, `sim:duel` with pinned bands
+  and `--calibrate`, the AI's pretender step by role.
+- Tests: every rule's own tests; every existing preset's bless and cost unchanged; the battle
+  goldens unchanged; determinism with each new preset.
+
 ### Phase 7: AI
 - Per `docs/08-ai.md`. Replace the dummy AI in the headless runner. Behavior tests.
 
@@ -108,18 +138,26 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   store, loop, top bar, speed controls, province panel, commander panel, recruit panel,
   messages. Right-click move. Tooltips.
 - This is the first point where the game is playable by a human. Play it.
+- Map spell effects: the channeling sigil and stream, a completion pulse per color, dominion
+  candles and the flip pulse, the map effect pool and its limits; effect tags on messages and
+  the victim's ritual message; `aiPower` in `armyPower`.
 
 ### Phase 9: Remaining UI
 - Research panel, ritual panel with target picking, build and PD buttons, scripts and
   formations, garrison drag and drop, pretender design screen, new game screen, main
   menu, save/load, victory screen, settings.
+- The pretender designer (`docs/07`): six steps, live preview and card, looks, identity,
+  sigils, random with history and locks, My Gods, share codes; looks in the save's UI block.
 
 ### Phase 10: Battle replay viewer
 - Integrate the presentation track (S6): the `BattleReplay` modal from battle messages
   (`docs/07-ui.md`), the replay and sound sections of the settings screen, gzipped saves
-  with the `STATE_VERSION` 2 migration, `replay-modal.spec.ts`.
+  with the `STATE_VERSION` migrations (2 from S1, 3 from Phase 6b.1), `replay-modal.spec.ts`.
 - Done when the S1 to S5 tests pass, no sound mapping is pending, and the owner has signed
   off the listening checklist in `docs/11-sound.md`.
+- Spell and ability looks for every spell and ability; the eleven storyboards with their
+  layers, sound and reduced-motion detail; blessing rings, the god's aura and first-cast
+  flourish; placeholder parts for every chassis and slot family.
 
 ### Phase 11: Art and animation
 - All SVG placeholders, part system, tinting, procedural animations, spell particles,
@@ -127,16 +165,21 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
 - Battle viewer: the SVG part sprites replace the procedural placeholder parts through the
   same `PartSet` interface, part by part with procedural fallbacks; portraits for name cards;
   the battle screenshot baselines are refreshed in this commit only.
+- The pretender SVGs (bodies of the new chassis, slot variants, portrait detail layers,
+  sigils), the map ritual templates, the god's divine moments, and the looks contact sheet.
 
 ### Phase 12: Balance and polish
 - Run the playtest checklist in `docs/09-balance.md`. Tune. Record changes. Fix the
   rough edges found by playing three full matches as each nation.
+- The preset matrix and duel bands; the cost-parity and blessing-bounds snapshots reviewed;
+  AI power recalibrated.
 
 ## Out of scope for M1 (do not build)
 
 Building new forts, random events, W/U/B nations as playable, hybrid mana costs, sea
 provinces, multiplayer, touch layout, music, sound outside battle replays (map, menus, UI),
-localization, mod support, map editor.
+localization, mod support, map editor, pretender appearance editing during a game, links that
+carry a god, random presets for AI opponents, a free color picker, designer and map sound.
 Stub nothing for these except where the data format is already designed to hold them
 (spell requirement strings, nation color identity arrays).
 
@@ -155,3 +198,7 @@ Decisions made without asking, recorded so they can be revisited:
 - Research tops out at level 6 in M1 and the spell list is spread across levels 1 to 6.
 - Battle sound effects moved into M1 at the owner's direction. They are generated in code,
   with no audio files; music and map or menu sound stay out.
+- Bless points are per color, not pooled as in Dominions, so that White, Blue and Black pips
+  (which buy nothing else in M1) cannot buy Red and Green blessings.
+- Iron Will (a god that never routs with its troops) was designed and measured, then left out
+  of M1: it added 35 to 55 points of win rate to every god-led army.

@@ -384,6 +384,69 @@ during Phase 7 at the owner's direction (visceral replays with per-blow detail a
   (`detail.test.ts`), a spell hit on a troop an earlier effect felled (`effects.staged.test.ts`),
   and a migration that keeps every record (`migrate.test.ts`).
 
+## Phase 6b.1: Pretender design rules, the blessing menu, boons (done)
+
+The first of three Phase 6b steps (`docs/10-milestone-1.md`), built at the owner's direction
+("good options for pretenders like Dominions has is always a highlight"; the 2026-10-21
+pretender build spec, E.1). The owner approved the spec's defaults; they are recorded as owner
+decisions in `docs/05-pretender.md`.
+- Content: `ChassisDef` gained `realm`, `role`, `newColorFirstPip` and `aiPower` (set on the
+  six chassis) and the optional `attunement`, `minAwakening`, `startSprings` and `avatar`
+  (used by no chassis until 6b.3); `PRETENDER_COSTS.newColorFirstPip` is gone. New
+  `pretenders/blessings.ts` (31 blessings: full Red and Green menus but Thornhide, two minors
+  plus the fixed bless for White, Blue and Black), `pretenders/boons.ts` (Sacred Spring 40,
+  Avatar 40) and `pretenders/validate.ts` (chassis, blessing, tier and boon checks, run by
+  `validateContent`). `PretenderDesign` gained optional `blessings` and `boons`;
+  `content/rules.ts` gained `BLESSING_MENU` and `PRETENDER_NAME`; `content/types.ts` the
+  `Shield` type.
+- Sim: `pretender.ts` has `offersChassis` and `availableChassis` (D1), the per-chassis
+  new-color price (D2), attunement in `scaleStepCost(def, chassis, axis, toward)` (D3), the
+  minimum awakening (D4), `startingSprings` (D5), `validatePretenderName` and the named
+  commander on every arrival (D7), boon costs and checks, and `hasAvatar`. `bless.ts` has
+  `blessPoints`, `defaultBlessings`, `chosenBlessings`, `blessOf(design, godPresent)`,
+  `nationBless` and `blessingProblem`. `battle/setup.ts` folds every blessing (weapons,
+  first-round bonus, berserk, fire shields) and blesses an Avatar in its own dominion.
+  `createGame` stores the name, copies the design's lists and adds the capital's springs;
+  `selectors.ts` has `provinceSprings` and pays added springs.
+- State: `NationState.pretenderName` and `pretenderReturnDay` (null until 6b.3),
+  `ProvinceState.extraSprings`, `NationSetup.pretenderName`; `STATE_VERSION` 3, its migration
+  chained after S1's in `MIGRATIONS`.
+- Tests: `tests/sim/bless.test.ts` (the 16,807-vector default check, folds, incarnate in play,
+  every refusal, the bounds table), `pretender.design.test.ts` (realms, prices, attunement,
+  minimum awakening, boons, names), `pretender.name.test.ts` (the name in the commander, its
+  messages and battle roster, and 365 dummy-AI days that differ only where the name appears),
+  `battle/setup.bless.test.ts` (every fold, incarnate, Avatar), `tests/content/blessings.test.ts`,
+  `presets.test.ts` (the six presets byte for byte, cost and bless, and behavior pins computed
+  on the Phase 6 code before the change: every battle setup the bless reaches and 360 days of
+  the dummy AI per preset, new fields stripped), and additions to `validate.chassis`,
+  `validate.pretender`, `createGame`, `selectors` and `migrate`. 1291 tests before, 1364
+  after.
+- Deviations from the build spec: the ten new chassis records come with their bodies in
+  6b.3, so attunement, the minimum awakening, chassis springs and built-in Avatar are tested
+  on patched content, and each nation has five chassis, not eleven. `CombatStats` keeps
+  `fireShield` until N4 (6b.2): blessing shields are fire only, folded into it, and content
+  validation refuses other elements. `ChassisDef.monthlySummon` and `reform` arrive with their
+  rules in 6b.3. Choices where the spec is silent are in `docs/05` "Implementation decisions"
+  (validation order, fold order, the design's own scales for scale requirements, an empty
+  blessing list choosing none, the name's refusals, springs order).
+- Review findings applied: `createGame` now puts `pretenderName` and `pretenderReturnDay` last
+  in the nation record, where the 2-to-3 migration appends them, so a lifted version 2 save
+  hashes like the same game created on version 3 (before, it was deep-equal but hashed
+  differently for the rest of the game; `migrate.test.ts` now compares the JSON text and the
+  hash for version 1 and 2 saves). `validatePretenderName` checks the alphabet before the
+  length and says "1 to 24 symbols (letters, spaces, apostrophes, hyphens, periods)", so a
+  25-symbol name with 23 letters, or a name in another script, gets the rule it breaks. Docs:
+  the breath color (`docs/05`) is marked as Phase 9, `docs/10` criterion 8 points to the
+  blessing menu, and `docs/06` has the new files, the `bless.ts` role and `STATE_VERSION` 3.
+  Mutation testing (116 mutants) left 28 alive; each now has a test: weapon, shield and
+  berserk folds on the prophet and an Avatar god, Avatar when the god attacks, blessings that
+  cost no design points, a built-in Avatar that costs no boon, the realm before the
+  awakening, blessings before boons and the budget, the design before the name, the springs'
+  order with a color the map lacks, the nation's income from added springs, full rows for the
+  White, Blue and Black minors with def and prec bounds, and the untested branches of
+  blessing validation (melee element and negative damage, zero scale steps, a scale on a
+  default pick, the default picks' thresholds and extra fields). 1371 tests after the fixes.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -426,6 +489,10 @@ during Phase 7 at the owner's direction (visceral replays with per-blow detail a
   `docs/06-architecture.md` sketch: no `activeRituals` (ritual progress lives in the
   caster's order) and `result` is `GameResult | null`.
 
+- Phase 6b.1 (`docs/05-pretender.md`, "Owner decisions" and "Implementation decisions"):
+  realms replace "the nation offers all chassis"; the new-color price is per chassis (the
+  Oracle's fell from 50 to 30 net); the fixed bless is now the blessing menu's default. Each
+  nation offers five chassis until the ten new ones land in Phase 6b.3.
 - Phase 10 S1 (`docs/12-battle-presentation.md`, "Implementation decisions"): landing the hits
   lives in `battle/landing.ts` and the migration map in `src/sim/migrate.ts`, files the spec's
   S1.1 table does not list; the migration test is `tests/sim/migrate.test.ts`, mirroring the
@@ -527,6 +594,20 @@ during Phase 7 at the owner's direction (visceral replays with per-blow detail a
   which is green on the Phase 6 resolver and regenerates byte for byte there; then the rest.
 - Serialize (Phase 9) must call `migrateState` on load; until then nothing runs the
   migration outside its test.
+- For merging Phase 7 (AI) and later tracks over Phase 6b.1: `scaleStepCost` takes the
+  chassis as its second argument, `PRETENDER_COSTS.newColorFirstPip` is gone (use
+  `ChassisDef.newColorFirstPip`), `blessOf` takes the design and whether the god is on the
+  map (`nationBless` for a nation in play), and new `ProvinceState`/`NationState` literals
+  need `extraSprings`, `pretenderName` and `pretenderReturnDay`. A later `STATE_VERSION`
+  step takes 4 and chains after the 2-to-3 migration; a field it adds goes last in the
+  `createGame` literal too, where the migration appends it, so lifted saves hash like new
+  ones.
+- Phase 6b.1 leaves for later: `aiPower` is unread until `armyPower` moves into the sim
+  (Phase 8); no AI picks blessings or boons (AI nations keep their default presets); the
+  designer's "Recommended" blessings and the unspent-points display are Phase 9 UI; Thornhide
+  and the bounds' nature-shield column wait for shields by element (6b.2). Incarnate
+  blessings soften the "sleeping builds are strong" issue only for designs that pick them;
+  the default picks still bless from day 0.
 - The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin) can fail when the
   machine is loaded by other processes; they pass when run alone.
 - Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a

@@ -49,7 +49,7 @@ describe('design costs', () => {
     expect(pipStepCost(RED, CHASSIS.titan, 'R', 7)).toBe(Infinity);
   });
 
-  it('opening a color outside the nation costs 60, so a second color at 2 pips costs 80', () => {
+  it('opening a color outside the nation costs the Titan 60, so a second color at 2 costs 80', () => {
     expect(pipStepCost(RED, CHASSIS.titan, 'G', 1)).toBe(60);
     expect(pipStepCost(RED, CHASSIS.titan, 'G', 2)).toBe(20);
     expect(pipStepCost(RED, CHASSIS.titan, 'G', 3)).toBe(25);
@@ -63,7 +63,8 @@ describe('design costs', () => {
   it('the Oracle pays 10 less for every pip', () => {
     const steps = [1, 2, 3, 4, 5, 6].map((l) => pipStepCost(RED, CHASSIS.oracle, 'R', l));
     expect(steps).toEqual([30, 10, 15, 20, 25, 30]);
-    expect(pipStepCost(RED, CHASSIS.oracle, 'G', 1)).toBe(50);
+    // The Oracle's new-color price is 40, less its discount (D2).
+    expect(pipStepCost(RED, CHASSIS.oracle, 'G', 1)).toBe(30);
     expect(designCost(RED, design({ chassis: 'oracle', pips: { R: 6 }, dominion: 1 }))).toBe(
       20 + 130,
     );
@@ -84,13 +85,14 @@ describe('design costs', () => {
     expect(designCost(RED, design({ chassis: 'greatWyrm', pips: { R: 3 }, dominion: 2 }))).toBe(
       220 + 25,
     );
-    // A Wild Spirit's free G pip makes Green's second pip a level-2 step even for Cinder Horde.
-    expect(designCost(RED, design({ chassis: 'wildSpirit', pips: { G: 2 }, dominion: 2 }))).toBe(
+    // A Wild Spirit's free G pip makes Green's second pip a level-2 step; Red is new to
+    // Thornwood, at the Wild Spirit's new-color price of 80.
+    expect(designCost(GREEN, design({ chassis: 'wildSpirit', pips: { G: 2 }, dominion: 2 }))).toBe(
       80 + 20,
     );
     expect(
-      designCost(RED, design({ chassis: 'wildSpirit', pips: { G: 1, R: 1 }, dominion: 2 })),
-    ).toBe(80 + 40);
+      designCost(GREEN, design({ chassis: 'wildSpirit', pips: { G: 1, R: 1 }, dominion: 2 })),
+    ).toBe(80 + 80);
     expect(designCost(RED, design({ chassis: 'oracle', pips: {}, dominion: 1 }))).toBe(20);
     expect(designCost(RED, MONOLITH)).toBe(60);
   });
@@ -107,16 +109,17 @@ describe('design costs', () => {
   });
 
   it('a scale step costs 20 toward a pole of the nation color and 40 otherwise', () => {
-    expect(scaleStepCost(RED, 'order', 'negative')).toBe(20); // Turmoil, R
-    expect(scaleStepCost(RED, 'lore', 'negative')).toBe(20); // Fury, R
-    expect(scaleStepCost(RED, 'order', 'positive')).toBe(40); // Order, W
-    expect(scaleStepCost(RED, 'lore', 'positive')).toBe(40); // Lore, U
-    expect(scaleStepCost(RED, 'growth', 'positive')).toBe(40); // Growth, G
-    expect(scaleStepCost(GREEN, 'growth', 'positive')).toBe(20);
-    expect(scaleStepCost(GREEN, 'wild', 'positive')).toBe(20);
-    expect(scaleStepCost(GREEN, 'growth', 'negative')).toBe(40); // Rot, B
-    expect(scaleStepCost(GREEN, 'wild', 'negative')).toBe(40); // Artifice, U
-    expect(scaleStepCost(GREEN, 'order', 'negative')).toBe(40); // Turmoil, R
+    const titan = CHASSIS.titan;
+    expect(scaleStepCost(RED, titan, 'order', 'negative')).toBe(20); // Turmoil, R
+    expect(scaleStepCost(RED, titan, 'lore', 'negative')).toBe(20); // Fury, R
+    expect(scaleStepCost(RED, titan, 'order', 'positive')).toBe(40); // Order, W
+    expect(scaleStepCost(RED, titan, 'lore', 'positive')).toBe(40); // Lore, U
+    expect(scaleStepCost(RED, titan, 'growth', 'positive')).toBe(40); // Growth, G
+    expect(scaleStepCost(GREEN, titan, 'growth', 'positive')).toBe(20);
+    expect(scaleStepCost(GREEN, titan, 'wild', 'positive')).toBe(20);
+    expect(scaleStepCost(GREEN, titan, 'growth', 'negative')).toBe(40); // Rot, B
+    expect(scaleStepCost(GREEN, titan, 'wild', 'negative')).toBe(40); // Artifice, U
+    expect(scaleStepCost(GREEN, titan, 'order', 'negative')).toBe(40); // Turmoil, R
   });
 
   it('every scale step from 0 counts, in both directions', () => {
@@ -192,10 +195,10 @@ describe('validatePretender', () => {
     expect(validatePretender(RED, { ...TITAN_R4, chassis: 'greatWyrm', pips: { R: 1 } })).toBe(
       'Great Wyrm comes with 2 R pips',
     );
-    // The Wild Spirit's pip is Green whatever the nation.
+    // The Wild Spirit's pip is Green, its realm's color.
     const spirit = design({ chassis: 'wildSpirit', pips: { R: 1 }, dominion: 2 });
-    expect(validatePretender(RED, spirit)).toBe('Wild Spirit comes with 1 G pips');
-    expect(validatePretender(RED, { ...spirit, pips: { R: 1, G: 1 } })).toBeNull();
+    expect(validatePretender(GREEN, spirit)).toBe('Wild Spirit comes with 1 G pips');
+    expect(validatePretender(GREEN, { ...spirit, pips: { R: 1, G: 1 } })).toBeNull();
   });
 
   it('refuses dominion below the chassis base, above 10, or fractional', () => {

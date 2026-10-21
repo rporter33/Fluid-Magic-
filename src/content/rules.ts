@@ -262,9 +262,11 @@ export const FIELD_EFFECTS = {
 } as const;
 
 /**
- * Blessings of sacred units (docs/02-magic.md section 8): each color in which the pretender
- * has at least minPips gives its bless; doubleAt doubles its numbers. lifeDrain is HP healed
- * per damaging hit; regeneration a share of max HP per round.
+ * The fixed bless of Phase 5 (docs/02-magic.md section 8), now the blessing menu's default
+ * picks: each color with at least minPips gives its standard blessing (these numbers), and
+ * doubleAt its greater one (twice these numbers). Content validation holds the menu's standard
+ * and greater blessings to this table. lifeDrain is HP healed per damaging hit; regeneration a
+ * share of max HP per round.
  */
 export const BLESS = {
   minPips: 4,
@@ -274,6 +276,28 @@ export const BLESS = {
   B: { lifeDrain: 2, att: 1 },
   R: { att: 2, str: 2 },
   G: { regeneration: 0.1, prot: 1 },
+} as const;
+
+/**
+ * The blessing menu (docs/05-pretender.md Step 6, after Dominions 6). Bless points per color
+ * are max(0, pips - freePips), and a color's points buy only its own blessings. A blessing
+ * requires minRequires to maxRequires pips in its color and costs max(minCost, requires -
+ * freePips), so a god exactly at a requirement can afford one blessing of it.
+ */
+export const BLESSING_MENU = {
+  freePips: 1,
+  minRequires: 2,
+  maxRequires: 6,
+  minCost: 1,
+} as const;
+
+/**
+ * The god's name (docs/05-pretender.md decisions): 1 to maxLength symbols of the identity
+ * alphabet, Latin letters, space, apostrophe, hyphen and period (the owner's decision for M1).
+ */
+export const PRETENDER_NAME = {
+  maxLength: 24,
+  symbols: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '-.",
 } as const;
 
 /** The scry ritual primitive shows its province this many days. */

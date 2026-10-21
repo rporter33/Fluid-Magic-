@@ -4,7 +4,12 @@
 import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef, validateContent, type NationDefId } from '../../src/content';
 import { NATIONS } from '../../src/content/nations';
-import { CHASSIS, isChassisId, type ChassisDef } from '../../src/content/pretenders/chassis';
+import {
+  CHASSIS,
+  CHASSIS_ROLES,
+  isChassisId,
+  type ChassisDef,
+} from '../../src/content/pretenders/chassis';
 import { AWAKENING, PRETENDER_COSTS } from '../../src/content/pretenders/costs';
 import { defaultPreset, PRESETS, type PresetDef } from '../../src/content/pretenders/presets';
 import { NEUTRAL_SCALES, type Scales } from '../../src/content/pretenders/scales';
@@ -63,6 +68,25 @@ describe('pretender chassis', () => {
     ]);
   });
 
+  it('carry the realm, role, new-color price and AI power of the build spec (A.2, A.4, A.11)', () => {
+    expect(chassis.map((c) => [c.id, c.realm, c.role, c.newColorFirstPip, c.aiPower])).toEqual([
+      ['oracle', 'generic', 'mage', 40, 0],
+      ['titan', 'generic', 'leader', 60, 94],
+      ['greatWyrm', 'generic', 'monster', 80, 247],
+      ['livingMonolith', 'generic', 'idol', 50, 595],
+      ['wildSpirit', 'G', 'raider', 80, 65],
+      ['ashColossus', 'R', 'fighter', 60, 160],
+    ]);
+    for (const c of chassis) {
+      expect(CHASSIS_ROLES, c.id).toContain(c.role);
+      // None of the six has an attunement, a minimum awakening, springs, or Avatar built in.
+      expect(c.attunement, c.id).toBeUndefined();
+      expect(c.minAwakening, c.id).toBeUndefined();
+      expect(c.startSprings, c.id).toBeUndefined();
+      expect(c.avatar, c.id).toBeUndefined();
+    }
+  });
+
   it('each walk the map as their own body: a commander nobody can recruit', () => {
     for (const c of chassis) {
       expect(c.body, c.id).toBe(c.id);
@@ -83,10 +107,10 @@ describe('pretender chassis', () => {
 
 describe('design point costs', () => {
   it('match docs/05 steps 2 to 5', () => {
+    // The new-color price moved onto each chassis in Phase 6b.1.
     expect(PRETENDER_COSTS).toEqual({
       budget: 400,
       pipLevel: [40, 20, 25, 30, 35, 40],
-      newColorFirstPip: 60,
       dominionPoint: 30,
       scaleStep: { own: 20, other: 40 },
     });
@@ -262,6 +286,51 @@ describe('content validation of chassis and presets', () => {
     check('baseDominion', 11, 'chassis titan bad base dominion');
     check('pipDiscount', -10, 'chassis titan bad modifiers');
     check('dominionFactor', 0.5, 'chassis titan bad modifiers');
+  });
+
+  it('reports a bad realm, role, new-color price, attunement, awakening, springs, or AI power', () => {
+    const check = <K extends keyof ChassisDef>(key: K, value: ChassisDef[K], problem: string) => {
+      patched(titan, key, value, () => {
+        expect(validateContent(), `${key} ${JSON.stringify(value)}`).toEqual([problem]);
+      });
+    };
+    // The Oracle fits no nation, so its realm is reported alone.
+    patched(CHASSIS.oracle as ChassisDef, 'realm', 'X' as ChassisDef['realm'], () => {
+      expect(validateContent()).toEqual(['chassis oracle bad realm']);
+    });
+    check('role', 'support' as ChassisDef['role'], 'chassis titan bad role');
+    check('newColorFirstPip', 0, 'chassis titan bad new-color price');
+    check('newColorFirstPip', 55.5, 'chassis titan bad new-color price');
+    check('aiPower', -1, 'chassis titan bad AI power');
+    check('aiPower', NaN, 'chassis titan bad AI power');
+    const bad = 'chassis titan bad attunement';
+    check('attunement', [{ axis: 'luck' as 'lore', toward: 'positive' }], bad);
+    check('attunement', [{ axis: 'lore', toward: 'up' as 'positive' }], bad);
+    check(
+      'attunement',
+      [
+        { axis: 'lore', toward: 'positive' },
+        { axis: 'lore', toward: 'negative' },
+      ],
+      bad,
+    );
+    check('minAwakening', 'awake' as 'dormant', 'chassis titan bad minimum awakening');
+    check('startSprings', { color: 'G', count: 0 }, 'chassis titan bad start springs');
+    check('startSprings', { color: 'X' as 'G', count: 1 }, 'chassis titan bad start springs');
+    // The Oracle's discount may not make a new color free.
+    patched(CHASSIS.oracle as ChassisDef, 'newColorFirstPip', 10, () => {
+      expect(validateContent()).toEqual(['chassis oracle bad new-color price']);
+    });
+    // Valid values of the optional fields pass.
+    patched(titan, 'attunement', [{ axis: 'growth', toward: 'positive' }], () => {
+      expect(validateContent()).toEqual([]);
+    });
+    patched(titan, 'startSprings', { color: 'nation', count: 1 }, () => {
+      expect(validateContent()).toEqual([]);
+    });
+    patched(titan, 'minAwakening', 'imprisoned', () => {
+      expect(validateContent()).toEqual([]);
+    });
   });
 
   it('reports presets with a repeated id or an unknown chassis', () => {

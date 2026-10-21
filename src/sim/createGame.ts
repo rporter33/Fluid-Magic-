@@ -10,11 +10,22 @@ import { numbered } from '../mapgen/names';
 import { createCommander, createSquad } from './commanders';
 import { newId, type NationId, type ProvinceId } from './ids';
 import { placeIndependents } from './independents';
-import { settlePretender, validatePretender } from './pretender';
+import {
+  settlePretender,
+  startingSprings,
+  validatePretender,
+  validatePretenderName,
+} from './pretender';
 import { createRng } from './rng';
 import { zeroMana } from './selectors';
 import { getProvince } from './state';
-import { STATE_VERSION, type GameSetup, type GameState, type ProvinceState } from './types';
+import {
+  STATE_VERSION,
+  type GameSetup,
+  type GameState,
+  type PretenderDesign,
+  type ProvinceState,
+} from './types';
 import { updateExplored, updateSightings } from './visibility';
 
 /** Keeps the game's random stream apart from the map generator's, which uses the bare seed. */
@@ -25,9 +36,11 @@ function checkSetup(setup: GameSetup): void {
   if (n < MAPGEN.minNations || n > MAPGEN.maxNations) {
     throw new RangeError(`need ${MAPGEN.minNations} to ${MAPGEN.maxNations} nations, got ${n}`);
   }
-  for (const { nation, pretender } of setup.nations) {
+  for (const { nation, pretender, pretenderName } of setup.nations) {
     if (!isNationDefId(nation)) throw new RangeError(`unknown nation ${String(nation)}`);
-    const problem = validatePretender(nationDef(nation), pretender);
+    const problem =
+      validatePretender(nationDef(nation), pretender) ??
+      (pretenderName === undefined ? null : validatePretenderName(pretenderName));
     if (problem !== null) throw new RangeError(problem);
   }
 }
@@ -48,7 +61,21 @@ function independentProvince(id: ProvinceId, pop: number): ProvinceState {
     dominion: { nation: null, strength: 0 },
     siege: null,
     wellspringClaimedBy: null,
+    // Last, where the migration from version 2 appends it (see the nation record below).
+    extraSprings: [],
   };
+}
+
+/** A copy of a design that shares no array or object with the setup. */
+function copyDesign(design: PretenderDesign): PretenderDesign {
+  const copy: PretenderDesign = {
+    ...design,
+    pips: { ...design.pips },
+    scales: { ...design.scales },
+  };
+  if (design.blessings) copy.blessings = [...design.blessings];
+  if (design.boons) copy.boons = design.boons.map((b) => ({ ...b }));
+  return copy;
 }
 
 export function createGame(setup: GameSetup): GameState {
@@ -113,11 +140,7 @@ export function createGame(setup: GameSetup): GameState {
       gold: ECONOMY.startGold,
       mana: zeroMana(),
       research: { color: def.startingResearch.color, points },
-      pretender: {
-        ...nationSetup.pretender,
-        pips: { ...nationSetup.pretender.pips },
-        scales: { ...nationSetup.pretender.scales },
-      },
+      pretender: copyDesign(nationSetup.pretender),
       pretenderId: null,
       pretenderDead: false,
       prophetId: null,
@@ -128,6 +151,10 @@ export function createGame(setup: GameSetup): GameState {
       explored: [],
       inSight: [],
       stats: { battlesWon: 0, battlesLost: 0, provincesTaken: 0, manaSpent: zeroMana() },
+      // Last, where the migration from version 2 appends them: stateHash hashes the JSON text,
+      // so a lifted save hashes like a game created on this version only if the keys agree.
+      pretenderName: nationSetup.pretenderName ?? null,
+      pretenderReturnDay: null,
     };
   });
 
@@ -137,6 +164,7 @@ export function createGame(setup: GameSetup): GameState {
     province.owner = nation.id;
     province.buildings = [...CAPITAL_BUILDINGS];
     province.dominion = { nation: nation.id, strength: nation.pretender.dominion };
+    province.extraSprings = startingSprings(nationDef(nation.def), nation.pretender);
     province.garrison = createCommander(state, 'garrison', nation.id, nation.capital).id;
     for (const start of nationDef(nation.def).startingArmy) {
       const commander = createCommander(state, start.commander, nation.id, nation.capital);

@@ -2,7 +2,7 @@
 // here, pillage included; tick.ts applies these same rates a day at a time, so what the UI
 // shows is what happens. Scales come from scales.ts.
 import { DIFFICULTIES } from '../content/ai';
-import { COLORS } from '../content/colors';
+import { COLORS, type Color } from '../content/colors';
 import type { Scales } from '../content/pretenders/scales';
 import {
   DOMINION,
@@ -98,6 +98,11 @@ function pillageOf(
   };
 }
 
+/** A province's springs: the map's, then those added in play (D5), in that order. */
+export function provinceSprings(state: GameState, id: ProvinceId): Color[] {
+  return [...getMapProvince(state, id).springs, ...getProvince(state, id).extraSprings];
+}
+
 export function provinceEconomy(
   state: GameState,
   id: ProvinceId,
@@ -144,7 +149,9 @@ export function provinceEconomy(
 
   const mana = zeroMana();
   if (p.owner !== null) {
+    // The map's springs and those added in play (provinceSprings), without a new list each day.
     for (const color of mapProvince.springs) mana[color] += MANA.perSpring;
+    for (const color of p.extraSprings) mana[color] += MANA.perSpring;
     if (mapProvince.wellspring) for (const color of COLORS) mana[color] += MANA.wellspringPerColor;
     if (p.dominion.nation === p.owner && p.dominion.strength > 0) {
       mana[getNation(state, p.owner).colors[0]] += Math.floor(

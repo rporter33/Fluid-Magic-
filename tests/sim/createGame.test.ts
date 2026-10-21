@@ -2,10 +2,12 @@
 import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef } from '../../src/content';
 import { NATION_BANNERS } from '../../src/content/colors';
+import { CHASSIS, type ChassisDef } from '../../src/content/pretenders/chassis';
 import { NEUTRAL_SCALES } from '../../src/content/pretenders/scales';
 import { ECONOMY } from '../../src/content/rules';
 import { createGame } from '../../src/sim/createGame';
 import type { GameState } from '../../src/sim/types';
+import { patched } from '../content/patched';
 import { commandersIn, nation, nationIds, pretender, twoNationGame } from './fixtures';
 
 describe('createGame', () => {
@@ -169,5 +171,66 @@ describe('createGame', () => {
         ],
       }),
     ).toThrow(RangeError);
+  });
+});
+
+describe('createGame and the design of Phase 6b.1', () => {
+  const titan = pretender({ chassis: 'titan', pips: { R: 4 }, dominion: 2, awakening: 'awake' });
+
+  it('starts every province without added springs, the god unnamed and not reforming', () => {
+    const state = twoNationGame(7);
+    for (const p of Object.values(state.provinces)) expect(p.extraSprings, p.id).toEqual([]);
+    for (const n of Object.values(state.nations)) {
+      expect([n.pretenderName, n.pretenderReturnDay]).toEqual([null, null]);
+    }
+  });
+
+  it('adds a Sacred Spring of its color to the capital, after the map’s springs', () => {
+    const state = twoNationGame(7, {
+      pretender: { ...titan, boons: [{ id: 'sacredSpring', color: 'R' }] },
+    });
+    const [red, green] = nationIds(state);
+    const capital = state.provinces[state.nations[red!]!.capital]!;
+    expect(capital.extraSprings).toEqual(['R']);
+    expect(state.provinces[state.nations[green!]!.capital]!.extraSprings).toEqual([]);
+    // Mapgen data is never edited.
+    expect(state.map).toEqual(twoNationGame(7).map);
+  });
+
+  it('adds a chassis’s starting springs before the boon’s', () => {
+    const chassis: ChassisDef = CHASSIS.titan;
+    patched(chassis, 'startSprings', { color: 'nation', count: 1 }, () => {
+      const state = twoNationGame(7, {
+        pretender: { ...titan, pips: { R: 4, G: 1 }, boons: [{ id: 'sacredSpring', color: 'G' }] },
+      });
+      const red = nationIds(state)[0]!;
+      expect(state.provinces[state.nations[red]!.capital]!.extraSprings).toEqual(['R', 'G']);
+    });
+  });
+
+  it('copies the design, so the setup’s lists never alias the game’s', () => {
+    const blessings = ['emberWrath'];
+    const boons = [{ id: 'avatar' as const }];
+    const setup = { ...titan, blessings, boons };
+    const state = twoNationGame(7, { pretender: setup });
+    const kept = state.nations[nationIds(state)[0]!]!.pretender;
+    expect(kept).toEqual(setup);
+    expect(kept.blessings).not.toBe(blessings);
+    expect(kept.boons).not.toBe(boons);
+    expect(kept.boons![0]).not.toBe(boons[0]);
+    // A design without the lists gets none: absent means the default picks and no boons.
+    const other = twoNationGame(7, { pretender: titan });
+    const plain = other.nations[nationIds(other)[0]!]!.pretender;
+    expect(Object.keys(plain)).not.toContain('blessings');
+    expect(Object.keys(plain)).not.toContain('boons');
+  });
+
+  it('refuses a design with a bad blessing or boon', () => {
+    expect(() =>
+      twoNationGame(7, { pretender: { ...titan, blessings: ['flamingWeapons'] } }),
+    ).toThrow('Flaming Weapons needs R5');
+    expect(() =>
+      twoNationGame(7, { pretender: { ...titan, boons: [{ id: 'sacredSpring', color: 'U' }] } }),
+    ).toThrow('A Sacred Spring needs a pip in its color');
   });
 });
