@@ -6,7 +6,14 @@ built on the Magic: The Gathering color pie.
 
 ## Status
 
-Design and milestone 1 scope complete. Implementation has not started.
+Milestone 1 in progress. See [docs/PROGRESS.md](docs/PROGRESS.md) for completed phases.
+
+```
+npm install
+npm run dev        # Vite dev server
+npm test           # vitest
+npm run typecheck && npm run lint
+```
 
 ## Documents
 

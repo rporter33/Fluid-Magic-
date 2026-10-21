@@ -218,3 +218,20 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
 unit referenced by a nation or spell exists; every spell's primitives are implemented;
 every preset fits the budget; every nation has a capital unit list that can be recruited
 on day 1 (requirements satisfiable); color keys are only W U B R G.
+
+## Implementation decisions
+
+Choices made where this doc was silent, recorded per `CLAUDE.md`:
+- **RNG**: xoshiro128** seeded by four splitmix32 steps. `RngState` is `{ a, b, c, d }`, four
+  uint32 words, mutated in place by the helpers in `src/sim/rng.ts` (`nextU32`,
+  `nextFloat`, `randBelow`, `randInt`, `chance`, `pick`, `shuffle`). Seeds are reduced to
+  32 bits (ToUint32 of the truncated number). A test pins the stream for seed 1, so
+  changing the algorithm is a save-breaking change.
+- **Ids**: one counter (`GameState.nextId`) shared by every kind; an id is a kind prefix
+  plus the counter value (`c12`, `sq13`, `p0`). Ids are branded string types
+  (`CommanderId`, `SquadId`, ...) so kinds cannot be mixed up at compile time.
+- **Purity guard**: `src/sim`, `src/mapgen`, and `src/content` are checked three ways:
+  ESLint restrictions (no `Math.random`, `Date`, `performance`, `crypto`, no render/ui or
+  framework imports), a source-scan test (`tests/sim/purity.test.ts`), and a second
+  `tsc` pass (`tsconfig.sim.json`) without DOM or Node typings. Content is included
+  because the sim imports it.
