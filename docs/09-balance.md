@@ -16,6 +16,12 @@ the truth for current values.
 | 2026-10-21 | (new) | Capital neighborhood balance | unspecified | 2-hop starting pop ratio ≤ 1.5, else the most even of 6 valid maps | 15% of Medium maps had one capital with twice the nearby population |
 | 2026-10-21 | 01 §13 | Wellspring placement | ≥ 3 from capitals | also ≥ 2 apart; fairness weight 3 per hop; 8 search starts of up to 20 passes | Adjacent Wellsprings appeared on 85% of 3-nation maps; single-start search left 4-nation maps unfair |
 | 2026-10-21 | (new) | Starting population rounding | unspecified | 100 | Readable numbers |
+| 2026-10-21 | (new) | Starting gold | unspecified | 300 | A little over a month of capital income |
+| 2026-10-21 | 03 | Commander weapons | none listed | Scout Dagger 2; priests and mages Staff 2; Ash Chieftain Axe 5; Warden Captain and Independent Captain Sword 4 | Every commander needs a melee weapon in battle |
+| 2026-10-21 | 01 §4 | Unpaid upkeep morale | 1 per month unpaid, recovers when paid | 1 per 30 unpaid days, at most 3; one day of recovery per fully paid day | Caps match starvation; a one-day surplus cannot wipe a long deficit |
+| 2026-10-21 | 01 §4 | Starvation counter | -1 morale per 5 days, cap -3, recovers at the same rate | counter capped at 19 days | Recovery of the first point takes 5 fed days, as its loss did |
+| 2026-10-21 | (new) | Message log | unspecified | 300 most recent per nation | Bounded save size; AI messages never push out the player's |
+| 2026-10-21 | 01 §4 vs 09 checklist | Supply pop divisor | pop / 50 | unchanged (pop / 50) | Conflict: Hills supply is 100-160, so the checklist item "armies larger than 60 troops in a Hills province starve within a month" cannot pass. Phase 12 should retune (about pop / 250 fits) or change the checklist |
 
 ## Playtest checklist (run before calling M1 done)
 

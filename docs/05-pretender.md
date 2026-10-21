@@ -102,3 +102,12 @@ Each nation ships three presets so a new player can start in one click:
   Loam* (Great Wyrm G4, Growth 2, dominion 4, dormant).
 
 The implementer validates that each preset costs ≤ budget; if not, adjust the preset.
+
+## Implementation decisions
+
+- **Scale effects** are data per pole and per step (`src/content/pretenders/scales.ts`).
+  Where the core rules give a formula, its effect applies in both directions as well as the
+  table's: Turmoil lowers gold, Wild lowers materials, Artifice lowers supply.
+- **Prophet and pretender identity** is stored once, as ids on the nation
+  (`prophetId`, `pretenderId`), not as flags on commanders.
+- **Wellspring scale steps** add to the owner's national scales while it holds the province.

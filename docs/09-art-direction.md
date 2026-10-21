@@ -34,6 +34,21 @@ this. The original fills failed it (Hills and Wasteland differed by 5.7, about 3
 blind players), as did Red and Green, the two M1 nations (6.9 under deuteranopia). Those
 values were replaced: Red is brighter and more orange, Green deeper and closer to emerald.
 
+**Nation banners.** Ownership bands, dominion candles, and army badges use the nation's
+banner, not its mana color. The first nation of a color in a game takes that color's
+primary. A duplicate (a second Cinder Horde) takes the next entry of `NATION_BANNERS` in
+`src/content/colors.ts`. Red: #FD6533, #51DDFC, #3186F2, #C98BAD. Green: #00674B, #5C488E,
+#B5D69C, #8F0F04. Duplicates leave the hue family because no other choice stays distinct
+for color blind players. The mana symbol and the numbered name keep the identity. All
+eight banners differ by at least 28 normally and 16.7 under the simulated deficiencies.
+
+**Ownership bands.** A band is a flat strip of the banner color along the inner border,
+with a 1px keyline on its inner edge. The keyline is light #F4EEDF or dark #1C1A17,
+whichever contrasts more with the terrain fill (`keylineFor`). A band reads on every fill
+if either the banner differs from the fill, or the keyline differs from both the fill and
+the banner, at the minimums above. Bare bands fail: Thornwood green on Forest is 8.8 under
+deuteranopia. `tests/content/palette.test.ts` checks every banner on every fill.
+
 ## Sprite system
 
 - Every unit sprite is a 64x64 SVG composed from **parts**: body silhouette, armor

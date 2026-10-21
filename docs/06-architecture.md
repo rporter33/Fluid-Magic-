@@ -32,10 +32,16 @@ fluid-magic/
       rng.ts              # seeded PRNG (xoshiro128** or mulberry32), serializable state
       drn.ts              # open-ended 2d6
       ids.ts              # id generation from a counter in state (never Math.random)
+      state.ts            # checked lookups (getProvince, getNation, getCommander)
+      commanders.ts       # creating commanders and squads; per-unit upkeep and supply
       createGame.ts       # GameSetup -> GameState (uses mapgen, nations, pretender)
       tick.ts             # advance(state): one day
       commands.ts         # Command union, validate(state, cmd), apply(state, cmd)
-      economy.ts          # gold, materials, supply, upkeep
+      economy.ts          # gold, mana, upkeep, fort materials (daily accrual)
+      supply.ts           # starvation and healing
+      pillage.ts
+      messages.ts         # the per-nation message log
+      buildings.ts        # construction cost, time, and progress
       population.ts
       unrest.ts
       dominion.ts
@@ -53,15 +59,19 @@ fluid-magic/
         formation.ts
         spells.ts         # battle effect primitives
         events.ts         # BattleEvent types
-      selectors.ts        # read-only derived data for UI and AI (income per province, etc.)
+      selectors.ts        # every economic rate, read by the UI, the AI, and the tick alike
       serialize.ts        # save/load JSON, version field, migrations
     content/              # DATA ONLY. Plain objects, typed.
-      colors.ts           # the five colors, element names, palettes, enemy/ally pairs
+      types.ts            # shapes of unit, nation, building records
+      rules.ts            # rule numbers: time, tax, economy, materials, supply, unrest, mana, pillage
+      ai.ts               # difficulty levels
+      colors.ts           # the five colors, palettes, enemy/ally pairs, nation banners, map keylines
       terrain.ts
       mapgen.ts           # map sizes and every map generation number (shares, springs, placement)
       names.ts            # province name syllables per terrain
       units/
-        common.ts         # independents, summons shared across nations
+        base.ts           # baseline stats and commander weapons
+        common.ts         # independents, summons shared across nations, the garrison holder
         cinderHorde.ts
         thornwood.ts
       nations/
@@ -75,7 +85,7 @@ fluid-magic/
         index.ts
       pretenders/
         chassis.ts
-        scales.ts
+        scales.ts         # the five axes with per-pole effects
         presets.ts
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
@@ -253,3 +263,13 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
 - **Pure-module conventions**: `src/mapgen/voronoi.ts`, `geometry.ts`, `noise.ts`, and
   `graph.ts` are generic and take every parameter explicitly; modules that apply game rules
   (`placement.ts`, `size.ts`, `generate.ts`) read their numbers from `src/content`.
+- **GameState changes from the sketch above** (Phase 2): ritual progress lives in the
+  caster's `castRitual` order, so there is no `activeRituals` list and no ritual id kind;
+  a dead caster or a new order ends the ritual. `result` is `GameResult | null`.
+  `BattleRecord` carries both sides' starting roster. Prophet and pretender identity are
+  ids on the nation only. A move order stores the group's map speed, frozen when ordered.
+  A nation has a color identity array and a display `banner`.
+- **Rates in one place**: `selectors.ts` computes every economic rate (province economy,
+  nation economy, fort materials, scales, dominion score). `tick.ts` applies those rates a
+  day at a time, so the UI and the simulation cannot disagree. Pure helpers that apply
+  rules read their numbers from `src/content`; the sim hard-codes none.

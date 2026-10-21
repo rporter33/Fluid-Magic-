@@ -272,3 +272,35 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Independents** (section 9): each province stores its starting defender strength
   (`8 + 4d`, 30 on Wellsprings) at generation. Troop composition by terrain comes in Phase 3.
 - **Starting population** is uniform in the terrain's range, rounded to 100.
+
+**Economy and population (Phase 2)**
+- **Daily application**: every monthly rate (gold, materials, mana, growth, unrest) is
+  applied each day as rate / 30. A day's rates come from one snapshot taken before any of
+  them change. Discrete monthly events (dominion spread) fire on the last day of a month.
+- **Start**: 300 gold, no mana, an empty materials pool. The capital starts with dominion
+  of its own nation at the pretender's dominion score.
+- **Scales in a province** (section 12): `effectiveScale` rounds halves away from zero, so
+  both poles round alike. A nation's own scales gain one step per Wellspring province it
+  owns. Scale effects from section 4's formulas apply in both directions, alongside the
+  pretender table: Turmoil lowers gold 7% per step, Wild lowers materials 10% per step,
+  Artifice lowers supply 10% per step.
+- **Upkeep** (section 4): upkeep is paid as far as the treasury allows; gold never goes
+  below zero from upkeep. A short day adds its unpaid share to the nation's unpaid-days
+  counter and a fully paid day takes one off, so morale recovers at the rate it was lost.
+  Troops lose 1 morale per 30 unpaid days, at most 3 (the "gold below zero" rule).
+- **Materials cap**: the 6-month cap only stops a pool from growing. A pool above the cap
+  (after a siege or a population drop) keeps what it has.
+- **Supply**: commanders eat where they stand, also while in transit (at the province they
+  left). Independents never eat and never starve. Starving troops die as their squad's HP
+  pool stops covering them at full health; commanders cannot starve below 1 HP. The
+  starvation counter is capped so morale returns at the rate it was lost. Fed units heal
+  2% of max HP per day, which also heals battle wounds. The squad `moraleMod` of section 6
+  is derived from the starvation counter and the unpaid-days counter, not stored.
+- **Unrest** (section 5): priests calm only their own nation's provinces and only while
+  standing there. "Enemy dominion present" means another nation dominates the province.
+- **Mana**: sieges stop gold, materials, and recruits, not mana.
+- **Pillage** (section 3): one army with the Pillage order is enough; more do not stack.
+  Pillage works in any province the army stands in. With several nations pillaging, the
+  first in nation order takes the gold. Patrol has no economic effect.
+- **Buildings** (section 7): one construction per province at a time. It is abandoned if the
+  province changes hands, and the commander who started it returns to idle when it ends.

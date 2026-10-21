@@ -121,3 +121,22 @@ Light Infantry (as Ash Militia with prot 2), Heavy Infantry (hp 11, prot 7, mor 
 Sword 4), Archer (Shortbow 5 range 5 ammo 10), Wolf (as above), Swamp Fighter (def 12,
 Spear 3, ignores swamp penalty), Giant (hp 40, str 18, prot 4, size 4, Club 12),
 Independent Captain (hp 12, leadership 60).
+
+## Implementation decisions
+
+Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
+- **Unit ids**: camelCase names (`cinderWarrior`, `wardenCaptain`). The two Scouts are
+  `cinderScout` and `thornScout`. The Wolf is one shared unit used by Thornwood summons and
+  independents.
+- **Stats the tables leave out** take the baseline (`hp 10, str 10, att 10, def 10, prot 0,
+  mr 10, mor 10, prec 10`), size 1, and map speed 2. This applies to every commander
+  (including Scouts) and to mounted troops, whose size is not listed.
+- **Commander weapons** are not listed. Scouts carry a Dagger 2, priests and mages a Staff
+  2, Ash Chieftain an Axe 5, and Warden Captain and Independent Captain a Sword 4.
+- **Requirements**: every recruitable unit needs a fort; priests and sacred units also need a
+  temple; mages need a lab; the adept tier is capital only. The Salamander has the beast tag.
+- **Color identity** is an array (`colors: ['R']`), as the milestone asks. Thornwood's forest
+  bonus is nation data: `homeTerrain: { terrain: 'forest', def: 1 }`.
+- **Provincial defense** uses the nation's militia (Ash Militia, Thorn Militia) and archer
+  (Flame Archer, Longbow Hunter) units.
+- **The garrison holder** is a common unit: free, immobile, never fights, and never eats.

@@ -110,3 +110,17 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
 - Archers with 3 free volleys kill at least 2 of 20 militia on average.
 - Pyre Storm on a 30-militia front row kills at least 8 on average.
 - Round 50 attacker retreat triggers when both sides are 1 immortal-equivalent (mor 50, prot 99).
+
+## Implementation decisions
+
+- **Replay record**: a `BattleRecord` holds both sides' starting roster (commanders and
+  squads with unit, count, HP, and row) plus the event log. The viewer needs nothing from
+  live state, because dead commanders and emptied squads are gone by the time a replay is
+  opened.
+- **Battle refs**: squads and commanders use their state ids. Units without a state entry
+  get battle-local refs: provincial defense `pd0`, `pd1`, ..., summons `su0`, `su1`, ....
+  A `summon` event carries its row. A `heal` event logs regeneration and healing.
+- **Morale penalties** carried into battle are derived: up to 3 from starvation (one per 5
+  starving days) and up to 3 from unpaid upkeep (one per 30 days).
+- **Scripts**: a Cast slot may name no spell, meaning the best castable one. This is the
+  default for mages and priests.
