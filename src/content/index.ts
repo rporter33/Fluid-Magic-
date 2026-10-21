@@ -1,6 +1,6 @@
 // Content registry: lookups by id and a validation pass over every record
 // (docs/06-architecture.md, "Content validation").
-import { BUILDING_IDS, BUILDINGS, CAPITAL_BUILDINGS } from './buildings';
+import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
 import { isNationDefId, NATIONS, type NationDefId } from './nations';
 import { isTerrainId } from './terrain';
@@ -8,7 +8,7 @@ import type { BuildingDef, BuildingId, NationDef, UnitDef } from './types';
 import { UNIT_TAGS } from './types';
 import { isUnitTypeId, UNITS, type UnitTypeId } from './units';
 
-export { isNationDefId, isUnitTypeId, type NationDefId, type UnitTypeId };
+export { isBuildingId, isNationDefId, isUnitTypeId, type NationDefId, type UnitTypeId };
 
 export function unitDef(id: UnitTypeId): UnitDef {
   return UNITS[id];
@@ -121,8 +121,9 @@ export function validateContent(): string[] {
     if (!isNationDefId(key)) problems.push(`nation key ${key}`);
     problems.push(...validateNation(key, n));
   }
-  for (const id of BUILDING_IDS) {
-    if (BUILDINGS[id].id !== id) problems.push(`building ${id} has id ${BUILDINGS[id].id}`);
+  for (const [key, b] of Object.entries(BUILDINGS)) {
+    if (b.id !== key) problems.push(`building ${key} has id ${b.id}`);
+    if (b.gold < 0 || b.materials < 0 || b.days < 1) problems.push(`building ${key} bad cost`);
   }
   return problems;
 }

@@ -5,7 +5,7 @@ import { CAPITAL_BUILDINGS } from '../content/buildings';
 import { isColor, NATION_BANNERS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
 import { SCALE_AXES, SCALE_MAX, SCALE_MIN } from '../content/pretenders/scales';
-import { DOMINION, ECONOMY, RESEARCH_LEVEL_POINTS } from '../content/rules';
+import { DEFAULT_TAX_RATE, DOMINION, ECONOMY, RESEARCH_LEVEL_POINTS } from '../content/rules';
 import { generateMap } from '../mapgen/generate';
 import { numbered } from '../mapgen/names';
 import { createCommander, createSquad } from './commanders';
@@ -49,7 +49,7 @@ function independentProvince(id: ProvinceId, pop: number): ProvinceState {
     owner: null,
     pop,
     unrest: 0,
-    taxRate: 'normal',
+    taxRate: DEFAULT_TAX_RATE,
     pd: 0,
     buildings: [],
     construction: null,

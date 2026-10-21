@@ -8,6 +8,9 @@ export const TIME = {
 export const TAX_RATE_IDS = ['low', 'normal', 'high'] as const;
 export type TaxRate = (typeof TAX_RATE_IDS)[number];
 
+/** Tax rate of every province at game start and when a province is taken. */
+export const DEFAULT_TAX_RATE: TaxRate = 'normal';
+
 /** Section 4, Gold: tax multiplier and its unrest per month. */
 export const TAX_RATES: Readonly<Record<TaxRate, { rate: number; unrestPerMonth: number }>> = {
   low: { rate: 0.5, unrestPerMonth: -2 },
@@ -51,7 +54,8 @@ export const MATERIALS = {
 export const SUPPLY = {
   /** Supply per day = terrain base + pop / popDivisor. */
   popDivisor: 50,
-  /** Units of this size or larger eat bigUnitSupply per day; others eat 1. */
+  /** Supply a troop eats per day; units of bigUnitSize or larger eat bigUnitSupply. */
+  troopSupply: 1,
   bigUnitSize: 3,
   bigUnitSupply: 3,
   commanderSupply: 1,
@@ -96,8 +100,16 @@ export const DOMINION = {
 } as const;
 
 export const MESSAGES = {
-  /** Messages kept in the log; older ones are dropped. */
+  /** Messages kept per nation; each nation's oldest are dropped first. */
   keep: 300,
+} as const;
+
+/** docs/04-battle.md, "Scripts": script slots per commander. */
+export const SCRIPT_SLOTS = 5;
+
+export const CONSTRUCTION = {
+  /** No construction finishes in fewer days, however fast the scales make it. */
+  minDays: 1,
 } as const;
 
 /** Cumulative research points to reach each level, 0 to 6 (docs/02-magic.md section 4). */

@@ -148,9 +148,9 @@ interface GameState {
   commanders: Record<CommanderId, CommanderState>;
   battles: BattleRecord[];   // recent battles with replays (keep last 20)
   messages: Message[];       // event log for the player
-  activeRituals: RitualInProgress[];
   provinceEffects: ProvinceEffect[];   // timed effects from rituals
-  result?: GameResult;
+  result: GameResult | null;
+  // Ritual progress lives in the caster's castRitual order (see Implementation decisions).
 }
 
 function advance(state: GameState): void;              // mutates, one day
@@ -169,6 +169,9 @@ Rules:
   2. Movement progress, arrivals, battle resolution, siege progress.
   3. Recruitment queues, building queues, ritual progress, research.
   4. Economy accrual (gold, materials, mana, upkeep), population, unrest, supply damage.
+     Phase 2 order: one snapshot of every province's rates; gold, mana, and upkeep;
+     fort materials; pillage; population; unrest; supply. Province effects whose
+     `untilDay` is the next day are dropped once the day is over.
   5. On the last day of a month: dominion spread, monthly effects tick, AI planning hook.
   6. Visibility recompute (cheap: owned/adjacent/scout sets).
   7. Victory check.
@@ -270,6 +273,7 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   ids on the nation only. A move order stores the group's map speed, frozen when ordered.
   A nation has a color identity array and a display `banner`.
 - **Rates in one place**: `selectors.ts` computes every economic rate (province economy,
-  nation economy, fort materials, scales, dominion score). `tick.ts` applies those rates a
-  day at a time, so the UI and the simulation cannot disagree. Pure helpers that apply
+  pillage, nation economy, fort materials, dominion score), reading scales from
+  `scales.ts`. `tick.ts` applies those rates a day at a time from one snapshot taken at the
+  start of step 4, so the UI and the simulation cannot disagree. Pure helpers that apply
   rules read their numbers from `src/content`; the sim hard-codes none.

@@ -46,6 +46,36 @@
 - Generation over 200 seeds per configuration had no failures. Medium 2-nation maps take
   about 20 ms; 4-nation maps take up to about 0.4 s.
 
+## Phase 2: Economy and population (done)
+
+- `src/sim/types.ts` holds the full `GameState` (provinces, nations, commanders, squads,
+  orders, scripts, battles with a starting roster, messages, province effects, result);
+  `src/sim/battle/events.ts` holds the battle event union for Phase 4. Everything is plain
+  JSON.
+- `createGame(setup)` builds nations, capitals (fort, temple, lab, garrison holder,
+  dominion at the pretender's score), and the starting armies from `docs/03-nations.md`.
+- `advance(state)` runs one day in the documented order. Phase 2 fills step 3 with
+  construction and step 4 with gold, mana, upkeep, fort materials, pillage, population,
+  unrest, and supply; later phases slot into the marked steps.
+- `selectors.ts` computes every rate (province and nation economy, pillage, fort
+  materials, dominion score, morale penalties) and the tick applies the same numbers, from
+  one snapshot per day. `scales.ts` turns pretender scales and owned Wellsprings into
+  province scales.
+- Content: all M1 units and both nations from `docs/03-nations.md`, buildings, per-pole
+  scale effects, rule numbers (`src/content/rules.ts`), and AI difficulty income factors.
+- Tests: the milestone's three (capital income on day 30, starvation drain, materials cap)
+  plus every formula in `docs/01-core-rules.md` sections 3 to 7 with expected values
+  computed in the test, scales rounding and clamping, upkeep shortfalls, healing,
+  pillage, construction and builder release, the message cap, and determinism: the same
+  seed twice, and a save and load in the middle of a busy 4-nation game.
+- A design review of the types and a code review of the implementation (multi-lens, two
+  skeptics per finding) were applied. The code review confirmed 29 findings; among them,
+  gold could be created from a negative treasury, an expired effect stayed in force for a
+  day, a besieged fort still collected its neighbors' materials, a builder could be freed
+  from a different job, and pillage was computed apart from the selectors. A 4-nation
+  Medium game (110 provinces, 220 commanders, some pillaging) runs about 0.7 ms per day
+  after the review's performance fixes, against the 2 ms budget.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -53,6 +83,11 @@
 - Map rules settled in Phase 1 (province count by size and nation count, capital terrain
   from the nation, Wellspring separation and fairness, even spring colors, and more) are
   listed at the end of `docs/01-core-rules.md`. Their numbers are in `docs/09-balance.md`.
+- Economy rules settled in Phase 2 (daily application of monthly rates, upkeep shortfall
+  and recovery, materials cap, supply in transit, pillage order, construction) are listed
+  at the end of `docs/01-core-rules.md`. `GameState` differs from the
+  `docs/06-architecture.md` sketch: no `activeRituals` (ritual progress lives in the
+  caster's order) and `result` is `GameResult | null`.
 
 ## Known issues and open questions
 
@@ -69,3 +104,14 @@
   `src/mapgen/placement.ts`; Phase 6 victory should reuse it. The docs give independent
   troop pools for plains, forest, hills, mountains, and swamp but not for farmland or
   wasteland (Phase 3).
+- Supply conflict: at pop / 50, Hills supply is 100 to 160 a day, so the balance checklist
+  item "armies larger than 60 troops in a Hills province starve within a month" cannot pass.
+  Phase 12 decides between retuning (about pop / 250) and changing the checklist.
+- Tax rate changes cost nothing yet, and High tax at the capital is free income until
+  unrest bites; Phase 12 balance.
+- `NationState.capital` never changes; Phase 6 decides what happens when a capital falls.
+- Starving wounded squads lose troops by the rounded-up HP pool, so a squad at half HP
+  loses troops sooner than a healthy one. Kept as the simplest consistent model.
+- For Phase 3: Wild and Artifice "build time" also scales recruitment time, or not, to be
+  decided with recruitment. Arrivals should be grouped by province and then nation, and a
+  leg's `totalDays` comes from the move order's frozen `mapSpeed`.

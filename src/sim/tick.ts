@@ -19,11 +19,10 @@ export function advance(state: GameState): void {
   progressConstruction(state);
 
   // 4. Economy, pillage, population, unrest, supply. Rates come from one snapshot of the day.
-  state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);
   const economies = allProvinceEconomies(state);
   accrueGoldAndMana(state, economies);
   accrueMaterials(state, economies);
-  applyPillage(state);
+  applyPillage(state, economies);
   growPopulation(state, economies);
   updateUnrest(state, economies);
   applySupply(state, economies);
@@ -32,4 +31,6 @@ export function advance(state: GameState): void {
   // 6. Visibility (Phase 3). 7. Victory check (Phase 6).
 
   state.day += 1;
+  // Drop effects that end today, so the state never holds an expired one between ticks.
+  state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);
 }

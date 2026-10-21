@@ -1,5 +1,6 @@
 // Shapes of content records. Content is plain typed data; the sim reads it through the
 // registry in content/index.ts.
+import type { BuildingId } from './buildings';
 import type { Color } from './colors';
 import type { TerrainId } from './terrain';
 import type { UnitTypeId } from './units';
@@ -127,7 +128,7 @@ export interface NationDef {
   ai: AiPersonality;
 }
 
-export type BuildingId = 'temple' | 'lab' | 'fort';
+export type { BuildingId };
 
 export interface BuildingDef {
   id: BuildingId;

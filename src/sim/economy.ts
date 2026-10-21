@@ -2,7 +2,7 @@
 import { COLORS } from '../content/colors';
 import { ECONOMY, TIME } from '../content/rules';
 import type { ProvinceId } from './ids';
-import { fortMaterials, nationEconomy, type ProvinceEconomy } from './selectors';
+import { allNationEconomies, fortMaterials, type ProvinceEconomy } from './selectors';
 import type { GameState } from './types';
 
 const PER_DAY = 1 / TIME.daysPerMonth;
@@ -20,9 +20,10 @@ export function accrueGoldAndMana(
   state: GameState,
   economies: ReadonlyMap<ProvinceId, ProvinceEconomy>,
 ): void {
+  const totals = allNationEconomies(state, economies);
   for (const nation of Object.values(state.nations)) {
-    if (nation.eliminated) continue;
-    const e = nationEconomy(state, nation.id, economies);
+    const e = totals.get(nation.id);
+    if (nation.eliminated || !e) continue;
     nation.gold += e.gold * PER_DAY;
     for (const color of COLORS) nation.mana[color] += e.mana[color] * PER_DAY;
     const due = e.upkeep * PER_DAY;

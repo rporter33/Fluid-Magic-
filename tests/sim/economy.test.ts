@@ -2,6 +2,7 @@
 // computed here from the doc formulas, not from src/sim/selectors.ts.
 import { describe, expect, it } from 'vitest';
 import { MAPGEN } from '../../src/content/mapgen';
+import { NEUTRAL_SCALES } from '../../src/content/pretenders/scales';
 import { ECONOMY } from '../../src/content/rules';
 import { UNPAID_DAYS_CAP } from '../../src/sim/economy';
 import {
@@ -15,6 +16,7 @@ import {
   capitalOf,
   independentProvince,
   nationIds,
+  pretender,
   redGame,
   runDays,
   twoNationGame,
@@ -71,10 +73,18 @@ describe('gold', () => {
     expect(gold(-3)).toBeCloseTo(250 * 0.86, 9);
   });
 
-  it('gives easy AI nations 80% of their income', () => {
+  it('gives easy AI nations 80% of their income, and nothing else changes', () => {
     const state = twoNationGame(1, {}, { ai: { difficulty: 'easy' } });
     const [, green] = nationIds(state);
-    expect(nationEconomy(state, green!).gold).toBeCloseTo(250 * 0.8, 9);
+    const e = nationEconomy(state, green!);
+    expect(e.gold).toBeCloseTo(250 * 0.8, 9);
+    expect(e.upkeep).toBeCloseTo(THORNWOOD_UPKEEP, 9);
+    expect(e.mana).toEqual({ W: 0, U: 0, B: 0, R: 0, G: 5 });
+  });
+
+  it('starts every nation with 300 gold', () => {
+    const state = twoNationGame();
+    expect(Object.values(state.nations).map((n) => n.gold)).toEqual([300, 300]);
   });
 
   it('pays no gold from a besieged province', () => {
@@ -122,6 +132,7 @@ describe('upkeep', () => {
   });
 
   it('caps the morale penalty at 3 and the counter just below a fourth point', () => {
+    expect(UNPAID_DAYS_CAP).toBe(119);
     const state = twoNationGame();
     const nation = state.nations[nationIds(state)[0]!]!;
     for (let k = 0; k < 6; k++) addArmy(state, nation.id, nation.capital, 'flamebrand', 80);
@@ -165,6 +176,19 @@ describe('mana', () => {
     expect(mana).toEqual({ W: 2, U: 2, B: 2, R: 2, G: 2 });
   });
 
+  it('pays no tint, and no Rot Black, where another nation dominates', () => {
+    // Thornwood has Rot 3 and dominates the Cinder capital: the owner keeps only its springs.
+    const state = twoNationGame(
+      1,
+      {},
+      { pretender: pretender({ scales: { ...NEUTRAL_SCALES, growth: -3 } }) },
+    );
+    const [red, green] = nationIds(state);
+    const capital = capitalOf(state, red!);
+    capital.dominion = { nation: green!, strength: 9 };
+    expect(provinceEconomy(state, capital.id).mana).toEqual({ W: 0, U: 0, B: 0, R: 4, G: 0 });
+  });
+
   it('adds Black tint mana per Rot step where the owner dominates', () => {
     // Rot 3 at strength 9 is round(2.7) = 3 steps; tint is floor(9 / 3) = 3 Red.
     const state = redGame(9, { growth: -3 });
@@ -193,6 +217,20 @@ describe('materials', () => {
     expect(fortMaterials(state, capital.id).perMonth).toBeCloseTo(own, 9);
     state.provinces[neighbor]!.owner = red!;
     expect(fortMaterials(state, capital.id).perMonth).toBeCloseTo(own + theirs / 2, 9);
+    expect(fortMaterials(state, capital.id).cap).toBeCloseTo(6 * (own + theirs / 2), 9);
+  });
+
+  it('collects nothing, own or neighbors, while the fort is besieged', () => {
+    const state = twoNationGame();
+    const [red, green] = nationIds(state);
+    const capital = capitalOf(state, red!);
+    const neighbor = state.map.provinces[capital.id]!.neighbors[0]!;
+    state.provinces[neighbor]!.owner = red!;
+    capital.siege = { attacker: green!, wallHp: 300 };
+    expect(fortMaterials(state, capital.id)).toEqual({ perMonth: 0, cap: 0 });
+    capital.materials = 0;
+    runDays(state, 3);
+    expect(capital.materials).toBe(0);
   });
 
   it('caps the fort pool at 6 months of collection', () => {

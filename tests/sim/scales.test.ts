@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { NEUTRAL_SCALES } from '../../src/content/pretenders/scales';
 import { nationScales, provinceScales, roundHalfAway, scaleEffect } from '../../src/sim/scales';
-import type { NationId } from '../../src/sim/ids';
+import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { capitalOf, independentProvince, nationIds, redGame } from './fixtures';
 
 describe('roundHalfAway', () => {
@@ -28,6 +28,25 @@ describe('nationScales', () => {
       expected[axis] = Math.max(-3, Math.min(3, expected[axis] + step));
     }
     expect(scales).toEqual(expected);
+  });
+});
+
+describe('nationScales clamp', () => {
+  it('stops at 3 and -3 and moves free axes', () => {
+    const state = redGame(5, { order: 3, lore: -3 });
+    const red = nationIds(state)[0]!;
+    const [a, b, c] = state.map.wellsprings as [ProvinceId, ProvinceId, ProvinceId];
+    state.map.provinces[a]!.wellspring = { axis: 'order', step: 1 };
+    state.map.provinces[b]!.wellspring = { axis: 'lore', step: -1 };
+    state.map.provinces[c]!.wellspring = { axis: 'growth', step: -1 };
+    for (const id of [a, b, c]) state.provinces[id]!.owner = red;
+    expect(nationScales(state, red)).toEqual({
+      order: 3,
+      lore: -3,
+      growth: -1,
+      wild: 0,
+      sanctity: 0,
+    });
   });
 });
 
@@ -69,6 +88,25 @@ describe('provinceScales', () => {
       deltaScale: 2,
     });
     expect(provinceScales(state, capital.id).growth).toBe(3);
+  });
+
+  it('applies a growth effect only in its own province', () => {
+    const state = redGame(10, { growth: 1 });
+    const red = nationIds(state)[0]!;
+    const capital = capitalOf(state, red);
+    const other = independentProvince(state);
+    other.dominion = { nation: red, strength: 10 };
+    state.provinceEffects.push({
+      id: 'fx99' as never,
+      province: capital.id,
+      nation: red,
+      source: 'fertileSeason',
+      untilDay: 180,
+      kind: 'growth',
+      deltaScale: 1,
+    });
+    expect(provinceScales(state, capital.id).growth).toBe(2);
+    expect(provinceScales(state, other.id).growth).toBe(1);
   });
 });
 

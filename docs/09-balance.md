@@ -21,6 +21,9 @@ the truth for current values.
 | 2026-10-21 | 01 §4 | Unpaid upkeep morale | 1 per month unpaid, recovers when paid | 1 per 30 unpaid days, at most 3; one day of recovery per fully paid day | Caps match starvation; a one-day surplus cannot wipe a long deficit |
 | 2026-10-21 | 01 §4 | Starvation counter | -1 morale per 5 days, cap -3, recovers at the same rate | counter capped at 19 days | Recovery of the first point takes 5 fed days, as its loss did |
 | 2026-10-21 | (new) | Message log | unspecified | 300 most recent per nation | Bounded save size; AI messages never push out the player's |
+| 2026-10-21 | (new) | Starting tax rate | unspecified | Normal, also for a newly taken province | The neutral rate; the player opts into Low or High |
+| 2026-10-21 | (new) | Minimum construction time | unspecified | 1 day | Artifice 3 times a short build cannot reach 0 days |
+| 2026-10-21 | 01 §4 | Healing when fed | "recover at the same rate" | 2% of max HP a day, battle wounds included | One rate for starvation and healing; no separate wound rule in M1 |
 | 2026-10-21 | 01 §4 vs 09 checklist | Supply pop divisor | pop / 50 | unchanged (pop / 50) | Conflict: Hills supply is 100-160, so the checklist item "armies larger than 60 troops in a Hills province starve within a month" cannot pass. Phase 12 should retune (about pop / 250 fits) or change the checklist |
 
 ## Playtest checklist (run before calling M1 done)

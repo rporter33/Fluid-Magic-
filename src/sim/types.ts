@@ -154,7 +154,7 @@ export type CommanderOrder =
   /** The ritual's progress lives in the order: replacing the order or losing the caster ends it. */
   | { kind: 'castRitual'; spellId: string; target: ProvinceId | null; daysLeft: number }
   | { kind: 'claimWellspring'; daysLeft: number }
-  | { kind: 'build'; building: BuildingId };
+  | { kind: 'build'; building: BuildingId; province: ProvinceId };
 
 export interface Transit {
   from: ProvinceId;
@@ -283,7 +283,10 @@ export interface Message {
   battle: BattleId | null;
 }
 
-/** Timed province modifiers from rituals. The effect ends at the start of `untilDay`. */
+/**
+ * Timed province modifiers from rituals. Active while state.day < untilDay; readers go through
+ * activeEffects, and advance drops expired ones at the end of each day.
+ */
 export type ProvinceEffect = {
   id: EffectId;
   province: ProvinceId;

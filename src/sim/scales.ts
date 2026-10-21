@@ -10,7 +10,7 @@ import {
   type Scales,
 } from '../content/pretenders/scales';
 import type { NationId, ProvinceId } from './ids';
-import { getMapProvince, getNation, getProvince } from './state';
+import { activeEffects, getMapProvince, getNation, getProvince } from './state';
 import type { GameState } from './types';
 
 function clampScale(value: number): number {
@@ -37,19 +37,22 @@ export function nationScales(state: GameState, nationId: NationId): Scales {
  * Scales in force in a province: the dominating nation's, scaled by dominion strength and
  * rounded, plus timed growth effects from rituals. Without dominion every axis is 0.
  */
-export function provinceScales(state: GameState, provinceId: ProvinceId): Scales {
+export function provinceScales(
+  state: GameState,
+  provinceId: ProvinceId,
+  /** Precomputed nation scales, when reading many provinces in one day. */
+  national?: ReadonlyMap<NationId, Scales>,
+): Scales {
   const { dominion } = getProvince(state, provinceId);
   const scales = { ...NEUTRAL_SCALES };
   if (dominion.nation !== null && dominion.strength > 0) {
-    const national = nationScales(state, dominion.nation);
+    const ruler = national?.get(dominion.nation) ?? nationScales(state, dominion.nation);
     for (const axis of SCALE_AXES) {
-      scales[axis] = roundHalfAway((national[axis] * dominion.strength) / DOMINION.max);
+      scales[axis] = roundHalfAway((ruler[axis] * dominion.strength) / DOMINION.max);
     }
   }
-  for (const effect of state.provinceEffects) {
-    if (effect.province === provinceId && effect.kind === 'growth') {
-      scales.growth += effect.deltaScale;
-    }
+  for (const effect of activeEffects(state, provinceId)) {
+    if (effect.kind === 'growth') scales.growth += effect.deltaScale;
   }
   for (const axis of SCALE_AXES) scales[axis] = clampScale(scales[axis]);
   return scales;

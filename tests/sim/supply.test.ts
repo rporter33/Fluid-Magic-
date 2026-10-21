@@ -30,6 +30,17 @@ describe('supply', () => {
     expect(provinceEconomy(state, p.id).supplyUsed).toBe(11 + 13 + 1);
   });
 
+  it('counts a commander in transit where it set out from', () => {
+    const state = twoNationGame();
+    const [red] = nationIds(state);
+    const p = independentProvince(state);
+    const q = state.map.provinces[p.id]!.neighbors[0]!;
+    const army = addArmy(state, red!, p.id, 'cinderWarrior', 10);
+    army.transit = { from: p.id, to: q, progress: 1, totalDays: 4 };
+    expect(provinceEconomy(state, p.id).supplyUsed).toBe(11);
+    expect(provinceEconomy(state, q).supplyUsed).toBe(0);
+  });
+
   it('is shared by every army in the province and halved by a siege', () => {
     const state = twoNationGame();
     const [red, green] = nationIds(state);
@@ -70,9 +81,37 @@ describe('starvation', () => {
   });
 
   it('caps the morale loss at 3', () => {
+    expect(STARVED_DAYS_CAP).toBe(19);
     expect(starvationMoralePenalty(4)).toBe(0);
     expect(starvationMoralePenalty(5)).toBe(1);
     expect(starvationMoralePenalty(100)).toBe(3);
+  });
+
+  it('counts troops as the HP pool rounded up to whole troops', () => {
+    const { state, red, province } = starvingArmy();
+    const whole = addArmy(state, red, province, 'cinderWarrior', 7).squads[0]!;
+    const wounded = addArmy(state, red, province, 'cinderWarrior', 7).squads[0]!;
+    wounded.hp = 66.5;
+    runDays(state, 1);
+    // 77 - 2% of 77 = 75.46, still 7 troops; 66.5 - 1.54 = 64.96 is 6 troops' worth.
+    expect(whole.hp).toBeCloseTo(75.46, 9);
+    expect(whole.count).toBe(7);
+    expect(wounded.hp).toBeCloseTo(64.96, 9);
+    expect(wounded.count).toBe(6);
+  });
+
+  it('drains and heals commanders by 2% of max HP, never above max', () => {
+    const { state, army, red } = starvingArmy();
+    // Ash Chieftain: 14 HP.
+    runDays(state, 1);
+    expect(army.hp).toBeCloseTo(14 - 0.28, 9);
+    expect(army.starvedDays).toBe(1);
+    army.location = state.nations[red]!.capital;
+    runDays(state, 1);
+    expect(army.hp).toBe(14);
+    expect(army.starvedDays).toBe(0);
+    runDays(state, 1);
+    expect(army.hp).toBe(14);
   });
 
   it('starves commanders to no less than 1 HP', () => {
@@ -107,6 +146,26 @@ describe('starvation', () => {
     const notes = state.messages.filter((m) => m.kind === 'starvation' && m.nation === red);
     expect(notes).toHaveLength(1);
     expect(notes[0]!.province).toBe(province);
+  });
+
+  it('posts one message per nation, however many of its armies starve', () => {
+    const { state, red, province } = starvingArmy();
+    addArmy(state, red, province, 'cinderWarrior', 50);
+    addArmy(state, red, province, 'cinderWarrior', 50);
+    runDays(state, 1);
+    const notes = state.messages.filter((m) => m.kind === 'starvation' && m.nation === red);
+    expect(notes).toHaveLength(1);
+  });
+
+  it('heals wounded troops at 2% of max HP a day', () => {
+    const state = twoNationGame();
+    const [red] = nationIds(state);
+    const army = addArmy(state, red!, state.nations[red!]!.capital, 'cinderWarrior', 10);
+    const squad = army.squads[0]!;
+    squad.hp = 55;
+    runDays(state, 1);
+    expect(squad.hp).toBeCloseTo(55 + 110 * 0.02, 9);
+    expect(squad.count).toBe(10);
   });
 
   it('heals 2% of max HP a day once fed, and the counter falls', () => {

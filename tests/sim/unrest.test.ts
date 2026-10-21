@@ -6,6 +6,7 @@ import {
   addArmy,
   capitalOf,
   commandersIn,
+  independentProvince,
   nationIds,
   redGame,
   runDays,
@@ -24,6 +25,19 @@ describe('unrest', () => {
     capital.unrest = 50;
     runDays(state, 30);
     expect(capital.unrest).toBeCloseTo(43, 9);
+  });
+
+  it('counts only priests of the owner that stand in the province', () => {
+    const state = twoNationGame();
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const capital = capitalOf(state, red);
+    // The starting Pyre Priest, a second one, one marching out, and a Thornwood priest.
+    addArmy(state, red, capital.id, 'cinderWarrior', 1, 'pyrePriest');
+    const leaving = addArmy(state, red, capital.id, 'cinderWarrior', 1, 'pyrePriest');
+    const next = state.map.provinces[capital.id]!.neighbors[0]!;
+    leaving.transit = { from: capital.id, to: next, progress: 0, totalDays: 3 };
+    addArmy(state, green, capital.id, 'warden', 1, 'grovePriest');
+    expect(provinceEconomy(state, capital.id).unrest).toBe(-2 - 5 * 2);
   });
 
   it('rises 4 a month at high tax and falls 2 more at low tax', () => {
@@ -55,6 +69,28 @@ describe('unrest', () => {
     greenCapital.dominion = { nation: red, strength: 7 };
     // floor(7 / 3) = 2, and Dread round(-3 * 0.7) = -2 steps adds 2 * 2.
     expect(provinceEconomy(state, greenCapital.id).unrest).toBe(-2 + 2 + 4);
+  });
+
+  it('adds nothing for enemy dominion below 3 strength', () => {
+    const state = twoNationGame();
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const greenCapital = capitalOf(state, green);
+    for (const c of commandersIn(state, greenCapital.id)) c.holy = 0;
+    greenCapital.dominion = { nation: red, strength: 2 };
+    expect(provinceEconomy(state, greenCapital.id).unrest).toBe(-2);
+    greenCapital.dominion = { nation: red, strength: 3 };
+    expect(provinceEconomy(state, greenCapital.id).unrest).toBe(-2 + 1);
+  });
+
+  it('follows the dominating Order scale in unowned provinces too, without tax or priests', () => {
+    const state = redGame(10, { order: -3 });
+    const red = nationIds(state)[0]!;
+    const p = independentProvince(state);
+    p.taxRate = 'high';
+    addArmy(state, red, p.id, 'cinderWarrior', 1, 'pyrePriest');
+    expect(provinceEconomy(state, p.id).unrest).toBe(-2);
+    p.dominion = { nation: red, strength: 10 };
+    expect(provinceEconomy(state, p.id).unrest).toBe(6 - 2);
   });
 
   it('stays within 0 to 100', () => {

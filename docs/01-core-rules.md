@@ -289,7 +289,10 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   counter and a fully paid day takes one off, so morale recovers at the rate it was lost.
   Troops lose 1 morale per 30 unpaid days, at most 3 (the "gold below zero" rule).
 - **Materials cap**: the 6-month cap only stops a pool from growing. A pool above the cap
-  (after a siege or a population drop) keeps what it has.
+  (after a siege or a population drop) keeps what it has. A besieged fort collects
+  nothing, neither its own materials nor its neighbors' share.
+- **Province effects** (timed ritual effects) are in force while the day is before their
+  `untilDay` and are dropped at the end of the day before it.
 - **Supply**: commanders eat where they stand, also while in transit (at the province they
   left). Independents never eat and never starve. Starving troops die as their squad's HP
   pool stops covering them at full health; commanders cannot starve below 1 HP. The
@@ -301,6 +304,10 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Mana**: sieges stop gold, materials, and recruits, not mana.
 - **Pillage** (section 3): one army with the Pillage order is enough; more do not stack.
   Pillage works in any province the army stands in. With several nations pillaging, the
-  first in nation order takes the gold. Patrol has no economic effect.
+  first in nation order takes the gold. Patrol has no economic effect. Pillage is applied
+  after the day's gold and before growth, which is computed from the population at the
+  start of the day.
 - **Buildings** (section 7): one construction per province at a time. It is abandoned if the
-  province changes hands, and the commander who started it returns to idle when it ends.
+  province changes hands, and the commander who started it returns to idle when it ends,
+  unless it has since been given another order (a Build order names its province). Wild and
+  Artifice scale construction time; it is never under 1 day.

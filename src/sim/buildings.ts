@@ -1,6 +1,7 @@
 // Temples, labs, and forts (docs/01-core-rules.md section 7). Starting a construction is a
 // command (Phase 3); this module prices it and advances it a day at a time.
 import { buildingDef } from '../content';
+import { CONSTRUCTION } from '../content/rules';
 import type { BuildingId } from '../content/types';
 import type { CommanderId, NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
@@ -15,7 +16,8 @@ export function constructionDays(
   building: BuildingId,
 ): number {
   const pct = scaleEffect(provinceScales(state, provinceId), 'buildTimePct');
-  return Math.max(1, Math.ceil(buildingDef(building).days * Math.max(0, 1 + pct)));
+  const days = Math.ceil(buildingDef(building).days * Math.max(0, 1 + pct));
+  return Math.max(CONSTRUCTION.minDays, days);
 }
 
 /** Gold to build here; temples get cheaper with the province's Sanctity. */
@@ -47,10 +49,12 @@ export function startConstruction(
   };
 }
 
-/** Frees the commander who started a construction if it is still on that Build order. */
-function releaseBuilder(state: GameState, job: Construction): void {
+/** Frees the commander who started a construction if it still holds that Build order. */
+function releaseBuilder(state: GameState, provinceId: ProvinceId, job: Construction): void {
   const builder = job.commander === null ? undefined : state.commanders[job.commander];
-  if (builder?.order.kind === 'build' && builder.order.building === job.building) {
+  if (!builder) return;
+  const { order } = builder;
+  if (order.kind === 'build' && order.building === job.building && order.province === provinceId) {
     builder.order = { kind: 'idle' };
   }
 }
@@ -65,13 +69,13 @@ export function progressConstruction(state: GameState): void {
     if (!job) continue;
     if (p.owner !== job.nation) {
       p.construction = null;
-      releaseBuilder(state, job);
+      releaseBuilder(state, p.id, job);
       continue;
     }
     job.daysLeft -= 1;
     if (job.daysLeft > 0) continue;
     p.construction = null;
-    releaseBuilder(state, job);
+    releaseBuilder(state, p.id, job);
     if (!p.buildings.includes(job.building)) p.buildings.push(job.building);
     const text = `${buildingDef(job.building).name} completed in ${getMapProvince(state, p.id).name}.`;
     postMessage(state, job.nation, 'built', text, p.id);

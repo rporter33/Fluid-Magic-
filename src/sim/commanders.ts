@@ -1,12 +1,10 @@
 // Creating commanders and squads, and per-unit numbers the economy needs.
 import { unitDef, type UnitTypeId } from '../content';
-import { ECONOMY, SUPPLY } from '../content/rules';
+import { ECONOMY, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
 import { newId, type NationId, type ProvinceId } from './ids';
 import { chance } from './rng';
 import type { CommanderState, Formation, GameState, ScriptSlot, Squad } from './types';
-
-const SCRIPT_SLOTS = 5;
 
 /** Squads with a ranged weapon stand in the middle row, everyone else in front. */
 export function defaultFormation(def: UnitDef): Formation {
@@ -84,7 +82,7 @@ export function commanderUpkeep(commander: CommanderState): number {
 /** Daily supply one troop eats: 3 for size 3 and up, 0 for undead and constructs, else 1. */
 export function troopSupply(def: UnitDef): number {
   if (def.tags.includes('undead') || def.tags.includes('construct')) return 0;
-  return def.size >= SUPPLY.bigUnitSize ? SUPPLY.bigUnitSupply : 1;
+  return def.size >= SUPPLY.bigUnitSize ? SUPPLY.bigUnitSupply : SUPPLY.troopSupply;
 }
 
 /** Daily supply a commander and its troops eat. The garrison holder eats nothing itself. */
@@ -93,10 +91,6 @@ export function commanderSupply(commander: CommanderState): number {
   let total = def.commander?.garrison ? 0 : SUPPLY.commanderSupply;
   for (const squad of commander.squads) total += squad.count * troopSupply(unitDef(squad.unit));
   return total;
-}
-
-export function squadMaxHp(squad: Squad): number {
-  return squad.count * unitDef(squad.unit).hp;
 }
 
 export function commanderMaxHp(commander: CommanderState): number {

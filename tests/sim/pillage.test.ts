@@ -1,7 +1,7 @@
 // The Pillage order (docs/01-core-rules.md section 3).
 import { describe, expect, it } from 'vitest';
 import type { NationId } from '../../src/sim/ids';
-import { nationEconomy } from '../../src/sim/selectors';
+import { nationEconomy, provinceEconomy } from '../../src/sim/selectors';
 import type { GameState } from '../../src/sim/types';
 import { addArmy, independentProvince, nationIds, runDays, twoNationGame } from './fixtures';
 
@@ -25,6 +25,23 @@ describe('pillage', () => {
     expect(p.pop).toBeCloseTo(pop - lost + (pop * 0.002) / 30, 9);
     expect(state.nations[red]!.gold).toBeCloseTo(gold + lost / 20, 9);
     expect(p.unrest).toBeCloseTo(5 - 2 / 30, 9);
+  });
+
+  it('shows in the selectors as it will be applied', () => {
+    const state = twoNationGame();
+    const red = nationIds(state)[0]!;
+    const p = independentProvince(state);
+    expect(provinceEconomy(state, p.id).pillage).toBeNull();
+    expect(nationEconomy(state, red).plunderPerDay).toBe(0);
+    addArmy(state, red, p.id, 'cinderWarrior', 10).order = { kind: 'pillage' };
+    const lost = p.pop * 0.02;
+    expect(provinceEconomy(state, p.id).pillage).toEqual({
+      taker: red,
+      popPerDay: lost,
+      goldPerDay: lost / 20,
+      unrestPerDay: 5,
+    });
+    expect(nationEconomy(state, red).plunderPerDay).toBeCloseTo(lost / 20, 12);
   });
 
   it('does not stack, and the first nation in order takes the gold', () => {

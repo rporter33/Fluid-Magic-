@@ -1,6 +1,13 @@
-// Content validation (docs/06-architecture.md, "Content validation"). Grows with each phase:
-// units, nations, spells, chassis, and presets join these fixtures as they are added.
+// Content validation (docs/06-architecture.md, "Content validation"): colors, terrain, scales,
+// buildings, map generation, and names. Unit and nation fixtures live in units.test.ts, map
+// palette checks in palette.test.ts. Spells, chassis, and presets join as they are added.
 import { describe, expect, it } from 'vitest';
+import {
+  BUILDING_IDS,
+  BUILDINGS,
+  CAPITAL_BUILDINGS,
+  isBuildingId,
+} from '../../src/content/buildings';
 import {
   ALLIED_PAIRS,
   areAllies,
@@ -139,6 +146,56 @@ describe('scales', () => {
       'Wild/Artifice',
       'Sanctity/Dread',
     ]);
+  });
+});
+
+describe('scale effects', () => {
+  it('match the docs/05-pretender.md table per step, with formula effects both ways', () => {
+    const effects = Object.fromEntries(
+      SCALE_AXES.flatMap((a) => [
+        [SCALE_DEFS[a].positive.name, SCALE_DEFS[a].positive.effects],
+        [SCALE_DEFS[a].negative.name, SCALE_DEFS[a].negative.effects],
+      ]),
+    );
+    expect(effects).toEqual({
+      Order: { goldPct: 0.07, unrestPerMonth: -2, recruitTimePct: 0.05 },
+      Turmoil: { goldPct: -0.07, unrestPerMonth: 2, recruitTimePct: -0.1, eventChancePct: 0.05 },
+      Lore: { researchPct: 0.1, precision: 1 },
+      Fury: { attack: 1, morale: 1, researchPct: -0.1 },
+      Growth: { popGrowth: 0.003, supplyPct: 0.1 },
+      Rot: { popGrowth: -0.003, supplyPct: -0.1, tintManaB: 1 },
+      Wild: { supplyPct: 0.15, beastCostPct: -0.1, buildTimePct: 0.15, materialsPct: -0.1 },
+      Artifice: { materialsPct: 0.1, buildTimePct: -0.15, supplyPct: -0.1 },
+      Sanctity: { templeChecks: 1, sacredMorale: 1, templeCostPct: -0.25 },
+      Dread: { enemyUnrestPerMonth: 2, undeadUpkeepPct: -0.25, enemyMoralePer3Dominion: -1 },
+    });
+  });
+});
+
+describe('buildings', () => {
+  it('lists every building once, keyed by its own id', () => {
+    expect(Object.keys(BUILDINGS).sort()).toEqual([...BUILDING_IDS].sort());
+    for (const id of BUILDING_IDS) expect(BUILDINGS[id].id).toBe(id);
+  });
+
+  it('match docs/01-core-rules.md section 7', () => {
+    const table = BUILDING_IDS.map((id) => {
+      const b = BUILDINGS[id];
+      return [id, b.gold, b.materials, b.days, b.buildable];
+    });
+    expect(table).toEqual([
+      ['temple', 200, 0, 30, true],
+      ['lab', 300, 0, 30, true],
+      ['fort', 600, 300, 150, false],
+    ]);
+    expect(CAPITAL_BUILDINGS).toEqual(['fort', 'temple', 'lab']);
+  });
+
+  it('isBuildingId accepts only building ids', () => {
+    for (const id of BUILDING_IDS) expect(isBuildingId(id)).toBe(true);
+    for (const bad of ['Temple', 'toString', 'constructor', '', 3, null, undefined]) {
+      expect(isBuildingId(bad)).toBe(false);
+    }
   });
 });
 

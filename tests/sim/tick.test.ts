@@ -1,8 +1,20 @@
 // advance(): day counting, effect expiry, and determinism (acceptance criterion 4).
 import { describe, expect, it } from 'vitest';
+import { startConstruction } from '../../src/sim/buildings';
+import { createGame } from '../../src/sim/createGame';
+import { newId, type NationId } from '../../src/sim/ids';
+import { provinceEconomy } from '../../src/sim/selectors';
 import { advance } from '../../src/sim/tick';
 import type { GameState } from '../../src/sim/types';
-import { capitalOf, nationIds, runDays, twoNationGame } from './fixtures';
+import {
+  addArmy,
+  capitalOf,
+  independentProvince,
+  nation,
+  nationIds,
+  runDays,
+  twoNationGame,
+} from './fixtures';
 
 describe('advance', () => {
   it('moves one day at a time', () => {
@@ -12,20 +24,29 @@ describe('advance', () => {
     expect(state.day).toBe(2);
   });
 
-  it('expires province effects on their until day', () => {
+  it('applies a province effect before its until day and drops it at the end of the day before', () => {
     const state = twoNationGame();
     const red = nationIds(state)[0]!;
+    const capital = capitalOf(state, red).id;
+    const supply = provinceEconomy(state, capital).supply;
     state.provinceEffects.push({
       id: 'fx99' as never,
-      province: capitalOf(state, red).id,
+      province: capital,
       nation: red,
       source: 'test',
       untilDay: 3,
       kind: 'supply',
       deltaPct: 1,
     });
-    runDays(state, 3);
+    // In force on days 0, 1, and 2.
+    runDays(state, 2);
+    expect(state.day).toBe(2);
     expect(state.provinceEffects).toHaveLength(1);
+    expect(provinceEconomy(state, capital).supply).toBeGreaterThan(supply * 1.9);
+    // A stored effect past its day is ignored even before the tick drops it.
+    state.day = 3;
+    expect(provinceEconomy(state, capital).supply).toBeLessThan(supply * 1.1);
+    state.day = 2;
     runDays(state, 1);
     expect(state.provinceEffects).toHaveLength(0);
   });
@@ -45,6 +66,30 @@ describe('advance', () => {
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
+  it('continues identically after a save and load in the middle of everything', () => {
+    const a = busyGame();
+    runDays(a, 12);
+    // Mid-construction, mid-pillage, starving, with an effect that outlives the save.
+    expect(Object.values(a.provinces).some((p) => p.construction !== null)).toBe(true);
+    expect(a.provinceEffects).toHaveLength(1);
+    expect(a.messages.some((m) => m.kind === 'starvation')).toBe(true);
+    expect(a.nations[nationIds(a)[3]!]!.unpaidDays).toBeGreaterThan(0);
+    expect(Object.values(a.commanders).some((c) => c.order.kind === 'pillage')).toBe(true);
+    const b = JSON.parse(JSON.stringify(a)) as GameState;
+    runDays(a, 60);
+    runDays(b, 60);
+    expect(JSON.stringify(b)).toBe(JSON.stringify(a));
+    expect(a.provinceEffects).toHaveLength(0);
+  });
+
+  it('runs a busy game the same way twice', () => {
+    const a = busyGame();
+    const b = busyGame();
+    runDays(a, 90);
+    runDays(b, 90);
+    expect(JSON.stringify(b)).toBe(JSON.stringify(a));
+  });
+
   it('continues identically after a save and load', () => {
     const a = twoNationGame(12);
     runDays(a, 100);
@@ -54,3 +99,44 @@ describe('advance', () => {
     expect(JSON.stringify(b)).toBe(JSON.stringify(a));
   });
 });
+
+/**
+ * Four nations, one an easy AI, with a construction under way, a pillaging army, a starving
+ * army, an unpaid treasury, and a timed effect.
+ */
+function busyGame(): GameState {
+  const state = createGame({
+    seed: 21,
+    mapSize: 'medium',
+    nations: [
+      nation('cinderHorde'),
+      nation('thornwood', { ai: { difficulty: 'easy' } }),
+      nation('cinderHorde', { ai: { difficulty: 'normal' } }, { order: -2, growth: -3 }),
+      nation('thornwood', { ai: { difficulty: 'normal' } }, { wild: 3, sanctity: -2 }),
+    ],
+  });
+  const [red, green, red2, green2] = nationIds(state) as [NationId, NationId, NationId, NationId];
+  const site = independentProvince(state);
+  site.owner = red;
+  const builder = addArmy(state, red, site.id, 'cinderWarrior', 3);
+  builder.order = { kind: 'build', building: 'temple', province: site.id };
+  startConstruction(state, site.id, 'temple', red, builder.id);
+  addArmy(state, green, independentProvince(state).id, 'warden', 30, 'wardenCaptain').order = {
+    kind: 'pillage',
+  };
+  addArmy(state, red2, independentProvince(state, 'mountains').id, 'cinderWarrior', 250);
+  state.nations[green2]!.gold = 0;
+  for (let k = 0; k < 4; k++) {
+    addArmy(state, green2, state.nations[green2]!.capital, 'oakheart', 60, 'wardenCaptain');
+  }
+  state.provinceEffects.push({
+    id: newId(state, 'effect'),
+    province: state.nations[red2]!.capital,
+    nation: red2,
+    source: 'test',
+    untilDay: 40,
+    kind: 'growth',
+    deltaScale: 1,
+  });
+  return state;
+}

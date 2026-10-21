@@ -1,7 +1,13 @@
 // Checked lookups into GameState. Records are keyed by branded ids, so a missing entry is a
 // bug; these throw instead of returning undefined.
 import type { CommanderId, NationId, ProvinceId } from './ids';
-import type { CommanderState, GameState, NationState, ProvinceState } from './types';
+import type {
+  CommanderState,
+  GameState,
+  NationState,
+  ProvinceEffect,
+  ProvinceState,
+} from './types';
 import type { MapProvince } from '../mapgen/types';
 
 export function getProvince(state: GameState, id: ProvinceId): ProvinceState {
@@ -26,4 +32,9 @@ export function getCommander(state: GameState, id: CommanderId): CommanderState 
   const c = state.commanders[id];
   if (!c) throw new Error(`no commander ${id}`);
   return c;
+}
+
+/** Province effects in force today: a stored effect may have ended but not yet been dropped. */
+export function activeEffects(state: GameState, provinceId: ProvinceId): ProvinceEffect[] {
+  return state.provinceEffects.filter((e) => e.province === provinceId && e.untilDay > state.day);
 }

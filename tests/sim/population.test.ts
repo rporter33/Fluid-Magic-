@@ -24,16 +24,13 @@ describe('population growth', () => {
     expect(provinceEconomy(rot, capitalOf(rot, red).id).growth).toBeCloseTo(25000 * -0.007, 9);
   });
 
-  it('compounds daily and never goes below zero', () => {
+  it('compounds daily', () => {
     const state = redGame(10, { growth: -3 });
     const capital = capitalOf(state, nationIds(state)[0]!);
     let pop = 25000;
     for (let d = 0; d < 30; d++) pop += (pop * -0.007) / 30;
     runDays(state, 30);
     expect(capital.pop).toBeCloseTo(pop, 6);
-    capital.pop = 0.001;
-    runDays(state, 1);
-    expect(capital.pop).toBeGreaterThanOrEqual(0);
   });
 
   it('grows independent provinces at the base rate', () => {

@@ -1,12 +1,15 @@
 // Read-only derived data for the UI, the AI, and the tick. Every economic rate is computed
-// here; tick.ts applies these same rates a day at a time, so what the UI shows is what happens.
+// here, pillage included; tick.ts applies these same rates a day at a time, so what the UI
+// shows is what happens. Scales come from scales.ts.
 import { DIFFICULTIES } from '../content/ai';
 import { COLORS } from '../content/colors';
+import type { Scales } from '../content/pretenders/scales';
 import {
   DOMINION,
   ECONOMY,
   MANA,
   MATERIALS,
+  PILLAGE,
   POPULATION,
   SUPPLY,
   TAX_RATES,
@@ -15,12 +18,21 @@ import {
 import { TERRAIN } from '../content/terrain';
 import { commanderSupply, commanderUpkeep } from './commanders';
 import type { NationId, ProvinceId } from './ids';
-import { provinceScales, scaleEffect } from './scales';
-import { getMapProvince, getNation, getProvince } from './state';
+import { nationScales, provinceScales, scaleEffect } from './scales';
+import { activeEffects, getMapProvince, getNation, getProvince } from './state';
 import type { ColorAmounts, CommanderState, GameState } from './types';
 
 export function zeroMana(): ColorAmounts {
   return { W: 0, U: 0, B: 0, R: 0, G: 0 };
+}
+
+/** A province being pillaged today. Per-day values, unlike the monthly rates around it. */
+export interface Pillage {
+  /** The first pillaging nation in nation order; it takes the gold. */
+  taker: NationId;
+  popPerDay: number;
+  goldPerDay: number;
+  unrestPerDay: number;
 }
 
 /** Rates for one province. Monthly unless marked per day. */
@@ -35,10 +47,11 @@ export interface ProvinceEconomy {
   supplyUsed: number;
   /** Mana to the owner. */
   mana: ColorAmounts;
-  /** Population change. */
+  /** Population change, before pillage. */
   growth: number;
-  /** Unrest change. */
+  /** Unrest change, before pillage. */
   unrest: number;
+  pillage: Pillage | null;
 }
 
 /** Commanders by the province they stand in (or left, while in transit). */
@@ -52,15 +65,49 @@ export function commandersByProvince(state: GameState): Map<ProvinceId, Commande
   return byProvince;
 }
 
+/** Every nation's scales, computed once for a day's worth of province reads. */
+function allNationScales(state: GameState): Map<NationId, Scales> {
+  const result = new Map<NationId, Scales>();
+  for (const id of Object.keys(state.nations) as NationId[]) {
+    result.set(id, nationScales(state, id));
+  }
+  return result;
+}
+
+function pillageOf(
+  state: GameState,
+  pop: number,
+  present: readonly CommanderState[],
+): Pillage | null {
+  const pillagers = new Set<NationId>();
+  for (const c of present) {
+    if (c.order.kind === 'pillage' && !c.transit && c.owner !== null && c.squads.length > 0) {
+      pillagers.add(c.owner);
+    }
+  }
+  if (pillagers.size === 0) return null;
+  const taker = (Object.keys(state.nations) as NationId[]).find((n) => pillagers.has(n));
+  if (taker === undefined) return null;
+  const popPerDay = pop * PILLAGE.popFraction;
+  return {
+    taker,
+    popPerDay,
+    goldPerDay: popPerDay / PILLAGE.popPerGold,
+    unrestPerDay: PILLAGE.unrestPerDay,
+  };
+}
+
 export function provinceEconomy(
   state: GameState,
   id: ProvinceId,
   present: readonly CommanderState[] = commandersByProvince(state).get(id) ?? [],
+  national?: ReadonlyMap<NationId, Scales>,
 ): ProvinceEconomy {
   const p = getProvince(state, id);
-  const terrain = TERRAIN[getMapProvince(state, id).terrain];
-  const scales = provinceScales(state, id);
-  const effects = state.provinceEffects.filter((e) => e.province === id);
+  const mapProvince = getMapProvince(state, id);
+  const terrain = TERRAIN[mapProvince.terrain];
+  const scales = provinceScales(state, id, national);
+  const effects = activeEffects(state, id);
   const besieged = p.siege !== null;
 
   let gold = 0;
@@ -94,7 +141,6 @@ export function provinceEconomy(
 
   const mana = zeroMana();
   if (p.owner !== null) {
-    const mapProvince = getMapProvince(state, id);
     for (const color of mapProvince.springs) mana[color] += MANA.perSpring;
     if (mapProvince.wellspring) for (const color of COLORS) mana[color] += MANA.wellspringPerColor;
     if (p.dominion.nation === p.owner && p.dominion.strength > 0) {
@@ -118,22 +164,25 @@ export function provinceEconomy(
     }
   }
 
-  return { gold, materials, supply, supplyUsed, mana, growth, unrest };
+  const pillage = pillageOf(state, p.pop, present);
+  return { gold, materials, supply, supplyUsed, mana, growth, unrest, pillage };
 }
 
-/** Every province's economy, sharing one pass over the commanders. */
+/** Every province's economy, sharing one pass over the commanders and the nation scales. */
 export function allProvinceEconomies(state: GameState): Map<ProvinceId, ProvinceEconomy> {
   const byProvince = commandersByProvince(state);
+  const national = allNationScales(state);
   const result = new Map<ProvinceId, ProvinceEconomy>();
   for (const id of Object.keys(state.provinces) as ProvinceId[]) {
-    result.set(id, provinceEconomy(state, id, byProvince.get(id) ?? []));
+    result.set(id, provinceEconomy(state, id, byProvince.get(id) ?? [], national));
   }
   return result;
 }
 
 /**
  * A fort's monthly materials: its own production plus a share of each adjacent, owned,
- * fortless province's. The pool holds at most MATERIALS.capMonths of this.
+ * fortless province's. Nothing while besieged. The pool holds at most MATERIALS.capMonths
+ * of this.
  */
 export function fortMaterials(
   state: GameState,
@@ -141,7 +190,9 @@ export function fortMaterials(
   economies: ReadonlyMap<ProvinceId, ProvinceEconomy> = allProvinceEconomies(state),
 ): { perMonth: number; cap: number } {
   const fort = getProvince(state, fortId);
-  if (!fort.buildings.includes('fort') || fort.owner === null) return { perMonth: 0, cap: 0 };
+  if (!fort.buildings.includes('fort') || fort.owner === null || fort.siege !== null) {
+    return { perMonth: 0, cap: 0 };
+  }
   let perMonth = economies.get(fortId)?.materials ?? 0;
   for (const n of getMapProvince(state, fortId).neighbors) {
     const neighbor = getProvince(state, n);
@@ -152,12 +203,45 @@ export function fortMaterials(
   return { perMonth, cap: perMonth * MATERIALS.capMonths };
 }
 
-/** Monthly totals for a nation. */
+/** Totals for a nation. Monthly, except plunder. */
 export interface NationEconomy {
   /** Gold income after the difficulty factor. */
   gold: number;
   upkeep: number;
   mana: ColorAmounts;
+  /** Gold per day from pillage. */
+  plunderPerDay: number;
+}
+
+/** Every nation's totals in one pass over provinces and one over commanders. */
+export function allNationEconomies(
+  state: GameState,
+  economies: ReadonlyMap<ProvinceId, ProvinceEconomy> = allProvinceEconomies(state),
+): Map<NationId, NationEconomy> {
+  const result = new Map<NationId, NationEconomy>();
+  for (const id of Object.keys(state.nations) as NationId[]) {
+    result.set(id, { gold: 0, upkeep: 0, mana: zeroMana(), plunderPerDay: 0 });
+  }
+  for (const p of Object.values(state.provinces)) {
+    const e = economies.get(p.id);
+    if (!e) continue;
+    const owner = p.owner === null ? undefined : result.get(p.owner);
+    if (owner) {
+      owner.gold += e.gold;
+      for (const color of COLORS) owner.mana[color] += e.mana[color];
+    }
+    const taker = e.pillage ? result.get(e.pillage.taker) : undefined;
+    if (taker && e.pillage) taker.plunderPerDay += e.pillage.goldPerDay;
+  }
+  for (const c of Object.values(state.commanders)) {
+    const owner = c.owner === null ? undefined : result.get(c.owner);
+    if (owner) owner.upkeep += commanderUpkeep(c);
+  }
+  for (const [id, totals] of result) {
+    const ai = getNation(state, id).ai;
+    totals.gold *= ai ? DIFFICULTIES[ai.difficulty].incomeFactor : 1;
+  }
+  return result;
 }
 
 export function nationEconomy(
@@ -165,22 +249,9 @@ export function nationEconomy(
   nationId: NationId,
   economies: ReadonlyMap<ProvinceId, ProvinceEconomy> = allProvinceEconomies(state),
 ): NationEconomy {
-  const nation = getNation(state, nationId);
-  const factor = nation.ai ? DIFFICULTIES[nation.ai.difficulty].incomeFactor : 1;
-  let gold = 0;
-  const mana = zeroMana();
-  for (const p of Object.values(state.provinces)) {
-    if (p.owner !== nationId) continue;
-    const e = economies.get(p.id);
-    if (!e) continue;
-    gold += e.gold;
-    for (const color of COLORS) mana[color] += e.mana[color];
-  }
-  let upkeep = 0;
-  for (const c of Object.values(state.commanders)) {
-    if (c.owner === nationId) upkeep += commanderUpkeep(c);
-  }
-  return { gold: gold * factor, upkeep, mana };
+  const totals = allNationEconomies(state, economies).get(nationId);
+  if (!totals) throw new Error(`no nation ${nationId}`);
+  return totals;
 }
 
 /** Dominion score: the pretender's, plus one per claimed Wellspring, at most DOMINION.max. */
@@ -196,6 +267,14 @@ export function unpaidMoralePenalty(unpaidDays: number): number {
   return Math.min(ECONOMY.unpaidMoraleCap, Math.floor(unpaidDays / ECONOMY.unpaidDaysPerMorale));
 }
 
+/** Troop morale lost to starvation: one point per 5 starving days, at most 3. */
+export function starvationMoralePenalty(starvedDays: number): number {
+  return Math.min(
+    SUPPLY.starvationMoraleCap,
+    Math.floor(starvedDays / SUPPLY.starvationDaysPerMorale),
+  );
+}
+
 /** Prophet and pretender identity lives only in NationState. */
 export function isProphet(state: GameState, commander: CommanderState): boolean {
   return commander.owner !== null && getNation(state, commander.owner).prophetId === commander.id;
@@ -203,12 +282,4 @@ export function isProphet(state: GameState, commander: CommanderState): boolean 
 
 export function isPretender(state: GameState, commander: CommanderState): boolean {
   return commander.owner !== null && getNation(state, commander.owner).pretenderId === commander.id;
-}
-
-/** Troop morale lost to starvation: one point per 5 starving days, at most 3. */
-export function starvationMoralePenalty(starvedDays: number): number {
-  return Math.min(
-    SUPPLY.starvationMoraleCap,
-    Math.floor(starvedDays / SUPPLY.starvationDaysPerMorale),
-  );
 }
