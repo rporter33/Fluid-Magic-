@@ -2,7 +2,7 @@
 // every modifier already folded into each unit's stats, so the resolver needs nothing but
 // the setup and the rng, and tests can stage any fight.
 import type { UnitTypeId } from '../../content';
-import type { Color } from '../../content/colors';
+import type { BattleSpellDef } from '../../content/spells/types';
 import type { UnitTag, WeaponDef } from '../../content/types';
 import type { NationId, ProvinceId } from '../ids';
 import type { Formation, Pips, ScriptSlot } from '../types';
@@ -22,6 +22,8 @@ export interface CombatStats {
   tags: readonly UnitTag[];
   /** Fraction of max HP regained per round. */
   regeneration: number;
+  /** HP a troop regains per damaging hit it lands (the Black bless). */
+  lifeDrain: number;
 }
 
 export interface BattleSquadSetup {
@@ -46,17 +48,22 @@ export interface BattleCommanderSetup {
   script: readonly ScriptSlot[];
   pips: Pips;
   holy: number;
-  /** Mana carried for spells that consume it (Phase 5); written back after the battle. */
+  /** Mana carried for spells that consume it; what is left is written back after the battle. */
   carriedMana: Pips;
+  /**
+   * The battle spells it knows: its pips meet them and its nation has researched them (holy
+   * spells need no research). The resolver casts only these.
+   */
+  spells: readonly BattleSpellDef[];
 }
 
 export interface BattleSideSetup {
   /** Null for Independents. */
   nation: NationId | null;
-  /** Research level per color, which gates battle spells (Phase 5); empty for Independents. */
-  research: Partial<Record<Color, number>>;
   commanders: BattleCommanderSetup[];
   squads: BattleSquadSetup[];
+  /** Stats, with this side's modifiers, of every unit its commanders' spells can summon. */
+  summons: Partial<Record<UnitTypeId, CombatStats>>;
 }
 
 export interface BattleSetup {

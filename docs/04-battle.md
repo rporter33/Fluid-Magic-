@@ -123,7 +123,7 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
 - **Morale penalties** carried into battle are derived: up to 3 from starvation (one per 5
   starving days) and up to 3 from unpaid upkeep (one per 30 days).
 - **Scripts**: a Cast slot may name no spell, meaning the best castable one. This is the
-  default for mages and priests.
+  default for mages; priests default to Bless (Phase 5, `docs/02-magic.md` decisions).
 
 **Resolver (Phase 4)**
 - **Closing and contact**: a unit's closing round is 2 for flyers and map speed 3, 3 for speed
@@ -192,4 +192,14 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
   retreat). `damage` carries the weapon's element, physical when it has none.
   `foldReplay(roster, events)` (`battle/replay.ts`) rebuilds each unit's count, commander HP,
   row, and rout state from a record, and a test checks that it ends where the result ends.
+
+**Spellcasting (Phase 5)**
+- **Step 1 is sequential**: commanders act in caster order (attacker 0, defender 0,
+  attacker 1, ...), and each cast's effects land before the next commander acts. Spell kills
+  count toward this round's morale, and commander deaths are checked right after step 1, so
+  a caster killed by an earlier cast neither casts nor acts that round. The rest of the
+  casting rules are in the `docs/02-magic.md` decisions.
+- **Replay additions**: `cast` lists the target groups; spell damage logs one `damage` per
+  target group; `buff` carries `debuff`; `field` and `fieldEnd` mark field effects;
+  `fatigue` logs a drain. `expire` is logged once per group and source.
 

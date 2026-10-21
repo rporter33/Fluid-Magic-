@@ -7,6 +7,8 @@ import { advanceTransits, continueMoves } from './movement';
 import { applyPillage } from './pillage';
 import { growPopulation } from './population';
 import { progressRecruitment } from './recruitment';
+import { progressResearch } from './research';
+import { progressRituals } from './rituals';
 import { progressSieges } from './siege';
 import { allProvinceEconomies } from './selectors';
 import { applySupply } from './supply';
@@ -23,9 +25,11 @@ export function advance(state: GameState): void {
   progressSieges(state);
   continueMoves(state);
 
-  // 3. Queues: recruitment, construction; rituals and research join in Phase 5.
+  // 3. Queues: recruitment, construction, rituals, research.
   progressRecruitment(state);
   progressConstruction(state);
+  progressRituals(state);
+  progressResearch(state);
 
   // 4. Economy, pillage, population, unrest, supply. Rates come from one snapshot of the day.
   const economies = allProvinceEconomies(state);

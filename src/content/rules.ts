@@ -208,3 +208,53 @@ export const CONSTRUCTION = {
 
 /** Cumulative research points to reach each level, 0 to 6 (docs/02-magic.md section 4). */
 export const RESEARCH_LEVEL_POINTS: readonly number[] = [0, 60, 150, 300, 500, 750, 1050];
+
+/** docs/02-magic.md section 4: monthly research points per researching mage. */
+export const RESEARCH = {
+  /** Base + perPip per color pip (holy pips do not count), times the Lore/Fury scale effect. */
+  base: 3,
+  perPip: 2,
+} as const;
+
+/** Battle spellcasting (docs/02-magic.md section 3, docs/04-battle.md round step 1). */
+export const CASTING = {
+  /** Fatigue a cast costs drops this much per pip beyond the requirement... */
+  fatiguePerExtraPip: 5,
+  /** ...but never below this share of the listed fatigue. */
+  minFatigueShare: 0.2,
+  /** At this fatigue a commander takes no action (docs/02 "cannot act"). */
+  exhaustedAt: 100,
+  recoveryPerRound: 5,
+  /** The best castable spell is a damage spell while the enemy has this many active troops. */
+  damageWhenEnemiesAtLeast: 10,
+} as const;
+
+/**
+ * Field effects (docs/02-magic.md fieldEffect). Storm is Tempest's "no ranged, -2 att all";
+ * no spell defines fog or wall, so their numbers are this milestone's choice.
+ */
+export const FIELD_EFFECTS = {
+  storm: { att: -2, prec: 0, noRanged: true, noMelee: false },
+  fog: { att: 0, prec: -4, noRanged: false, noMelee: false },
+  wall: { att: 0, prec: 0, noRanged: false, noMelee: true },
+} as const;
+
+/**
+ * Blessings of sacred units (docs/02-magic.md section 8): each color in which the pretender
+ * has at least minPips gives its bless; doubleAt doubles its numbers. lifeDrain is HP healed
+ * per damaging hit; regeneration a share of max HP per round.
+ */
+export const BLESS = {
+  minPips: 4,
+  doubleAt: 6,
+  W: { mor: 2, prot: 1 },
+  U: { def: 2, prec: 2 },
+  B: { lifeDrain: 2, att: 1 },
+  R: { att: 2, str: 2 },
+  G: { regeneration: 0.1, prot: 1 },
+} as const;
+
+/** The scry ritual primitive shows its province this many days. */
+export const SCRY = {
+  days: 30,
+} as const;

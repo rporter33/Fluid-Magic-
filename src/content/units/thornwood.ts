@@ -169,7 +169,7 @@ export const THORNWOOD_UNITS = {
     cost: { gold: 60, materials: 4, pop: 50 },
     recruitDays: 20,
     requires: ['fort', 'temple'],
-    commander: { leadership: 20, pips: { G: 1 }, holy: 2 },
+    commander: { leadership: 20, pips: { G: 1 }, holy: 2, defaultSpell: 'bless' },
   },
   saplingDruid: {
     ...COMMANDER_BASELINE,

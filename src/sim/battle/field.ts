@@ -2,8 +2,10 @@
 // a group of one, arranged in three rows per side. Setup stats are read-only bases; anything
 // that changes during the battle is a timed modifier on the group, so the caller's setup is
 // never touched. Nothing here outlives a battle.
-import { BATTLE } from '../../content/rules';
-import type { Formation, ScriptSlot } from '../types';
+import type { UnitTypeId } from '../../content';
+import { BATTLE, CASTING } from '../../content/rules';
+import type { BattleSpellDef, FieldEffectKind } from '../../content/spells/types';
+import type { Formation, Pips, ScriptSlot } from '../types';
 import type { BattleSide, BattleUnitRef, StatKey } from './events';
 import type { BattleSetup, BattleSideSetup, CombatStats } from './types';
 
@@ -54,16 +56,45 @@ export interface Group {
   deathsThisRound: number;
   /** It rolled morale this round. */
   checked: boolean;
-  /** Commanders only. */
+  /** Extra morale pressure from shock spells this round; it must check while above 0. */
+  shock: number;
+  /** Commanders only: script, pips, the spells it can cast, fatigue, and mana carried. */
   script: readonly ScriptSlot[];
+  pips: Pips;
+  holy: number;
+  spells: readonly BattleSpellDef[];
+  fatigue: number;
+  carriedMana: Pips;
+}
+
+/** A field effect in force (wall, fog, storm) until the end of untilRound. */
+export interface FieldEffect {
+  kind: FieldEffectKind;
+  source: string;
+  untilRound: number;
 }
 
 export interface Field {
   sides: Record<BattleSide, Group[]>;
   startTroops: Record<BattleSide, number>;
+  effects: FieldEffect[];
+  /** Stats for units each side's spells summon, and the next summon ref number. */
+  summons: Record<BattleSide, Partial<Record<UnitTypeId, CombatStats>>>;
+  nextSummon: number;
 }
 
-function group(
+/** What only commanders bring to a group. */
+interface CommanderParts {
+  script: readonly ScriptSlot[];
+  pips: Pips;
+  holy: number;
+  spells: readonly BattleSpellDef[];
+  carriedMana: Pips;
+}
+
+const TROOPS: CommanderParts = { script: [], pips: {}, holy: 0, spells: [], carriedMana: {} };
+
+export function group(
   side: BattleSide,
   ref: BattleUnitRef,
   leader: BattleUnitRef | null,
@@ -71,14 +102,14 @@ function group(
   row: Formation,
   count: number,
   hp: number,
-  script: readonly ScriptSlot[],
-  isCommander: boolean,
+  commander: CommanderParts | null,
 ): Group {
+  const parts = commander ?? TROOPS;
   const g: Group = {
     ref,
     side,
     leader,
-    isCommander,
+    isCommander: commander !== null,
     summoned: false,
     base: stats,
     mods: [],
@@ -91,7 +122,13 @@ function group(
     firstMelee: null,
     deathsThisRound: 0,
     checked: false,
-    script,
+    shock: 0,
+    script: parts.script,
+    pips: parts.pips,
+    holy: parts.holy,
+    spells: parts.spells,
+    fatigue: 0,
+    carriedMana: { ...parts.carriedMana },
   };
   // docs/01 section 6: the HP pool is split into per-unit HP inside the resolver; evenly.
   const each = count > 0 ? hp / count : 0;
@@ -103,10 +140,16 @@ function group(
 
 function sideGroups(side: BattleSide, setup: BattleSideSetup): Group[] {
   const squads = setup.squads.map((s) =>
-    group(side, s.ref, s.commander, s.stats, s.row, s.count, s.hp, [], false),
+    group(side, s.ref, s.commander, s.stats, s.row, s.count, s.hp, null),
   );
   const commanders = setup.commanders.map((c) =>
-    group(side, c.ref, null, c.stats, c.row, 1, c.hp, c.script, true),
+    group(side, c.ref, null, c.stats, c.row, 1, c.hp, {
+      script: c.script,
+      pips: c.pips,
+      holy: c.holy,
+      spells: c.spells,
+      carriedMana: c.carriedMana,
+    }),
   );
   return [...squads, ...commanders];
 }
@@ -120,7 +163,20 @@ export function buildField(setup: BattleSetup): Field {
   return {
     sides,
     startTroops: { attacker: troops(sides.attacker), defender: troops(sides.defender) },
+    effects: [],
+    summons: { attacker: setup.attacker.summons, defender: setup.defender.summons },
+    nextSummon: 0,
   };
+}
+
+/** Too tired to act: no spells, no script moves, no attacks (docs/02-magic.md section 3). */
+export function exhausted(g: Group): boolean {
+  return g.fatigue >= CASTING.exhaustedAt;
+}
+
+/** A field effect of this kind is in force. */
+export function fieldHas(field: Field, test: (e: FieldEffect) => boolean): boolean {
+  return field.effects.some(test);
 }
 
 /** A numeric stat with every modifier, for one fighter (berserk depends on the troop's HP). */

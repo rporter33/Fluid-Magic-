@@ -116,3 +116,7 @@ The implementer validates that each preset costs ≤ budget; if not, adjust the 
   scale. The effective scale already grows with dominion strength (`scale * strength / 10`,
   rounded), so Dread 3 at full strength costs enemies 3 morale and at strength 3 costs 1.
   Independents count as enemies.
+- **Pretender pips** (Phase 5): `PretenderDesign.pips` is the pretender's whole pip set, the
+  chassis's base pips included ("Titan R4" means R = 4). The bless reads it, and Phase 6 gives
+  the pretender commander the same pips, so bless, casting, and research agree.
+

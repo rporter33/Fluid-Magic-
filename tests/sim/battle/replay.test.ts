@@ -1,5 +1,7 @@
 // The replay log is self-sufficient: folding it over the roster gives the battle's outcome.
 import { describe, expect, it } from 'vitest';
+import { SPELLS } from '../../../src/content/spells';
+import type { BattleSpellDef } from '../../../src/content/spells/types';
 import { foldReplay } from '../../../src/sim/battle/replay';
 import type { ScriptSlot } from '../../../src/sim/types';
 import { commander, fightOnce, side, squad } from './fixtures';
@@ -48,6 +50,55 @@ describe('foldReplay', () => {
         expect(u?.count === 0, `seed ${seed} ${ref}`).toBe(o.dead);
         if (!o.dead) expect(u?.hp ?? 0).toBeCloseTo(o.hp, 9);
         expect((u?.routing ?? false) || (u?.gone ?? false), `seed ${seed} ${ref}`).toBe(o.routed);
+      }
+    }
+  });
+
+  it('still ends where the result ends when mages cast every kind of spell', () => {
+    const red: BattleSpellDef[] = [
+      SPELLS.emberDart,
+      SPELLS.fireball,
+      SPELLS.warcry,
+      SPELLS.bloodFury,
+      SPELLS.pyreStorm,
+    ];
+    const green: BattleSpellDef[] = [
+      SPELLS.thornSpray,
+      SPELLS.barkSkin,
+      SPELLS.entangle,
+      SPELLS.swarm,
+      SPELLS.regrowth,
+    ];
+    const caster = (ref: string, spells: BattleSpellDef[]) =>
+      commander(ref, 'cinderMagus', {
+        spells,
+        pips: { R: 3, G: 3 },
+        carriedMana: { R: 3, G: 3 },
+        script: Array.from({ length: 5 }, () => ({ kind: 'cast' as const, spellId: null })),
+      });
+    for (let seed = 0; seed < 60; seed++) {
+      const result = fightOnce(
+        side(
+          [
+            squad('aw', 'cinderWarrior', 15, { leader: 'ac' }),
+            squad('ab', 'berserker', 5, { leader: 'ac', stats: { lifeDrain: 2 } }),
+          ],
+          [commander('ac', 'ashChieftain'), caster('am', red)],
+        ),
+        side(
+          [squad('dw', 'warden', 12, { leader: 'dc' }), squad('dl', 'longbowHunter', 8)],
+          [commander('dc', 'wardenCaptain', { script: attackFirst }), caster('dm', green)],
+        ),
+        seed,
+      );
+      const folded = foldReplay(result.roster, result.replay);
+      for (const [ref, o] of result.squads) {
+        expect(folded.get(ref)?.count, `seed ${seed} ${ref}`).toBe(o.count);
+      }
+      for (const [ref, o] of result.commanders) {
+        const u = folded.get(ref);
+        expect(u?.count === 0, `seed ${seed} ${ref}`).toBe(o.dead);
+        if (!o.dead) expect(u?.hp ?? 0, `seed ${seed} ${ref}`).toBeCloseTo(o.hp, 9);
       }
     }
   });

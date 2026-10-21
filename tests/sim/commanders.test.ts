@@ -63,18 +63,28 @@ describe('defaults', () => {
     expect(defaultFormation(unitDef('cinderWarrior'))).toBe('front');
   });
 
-  it('gives mages and priests five cast-best slots and everyone else five holds', () => {
-    for (const unit of ['emberAdept', 'pyrePriest', 'cinderMagus'] as const) {
-      expect(defaultScript(unitDef(unit))).toEqual(
+  it('gives mages five cast-best slots, priests five Bless slots, and everyone else holds', () => {
+    const script = (unit: 'emberAdept' | 'pyrePriest' | 'cinderMagus' | 'ashChieftain') => {
+      const d = unitDef(unit);
+      return defaultScript(d, d.commander?.pips ?? {}, d.commander?.holy ?? 0);
+    };
+    for (const unit of ['emberAdept', 'cinderMagus'] as const) {
+      expect(script(unit)).toEqual(
         Array.from({ length: 5 }, () => ({ kind: 'cast', spellId: null })),
       );
     }
-    expect(defaultScript(unitDef('ashChieftain'))).toEqual(
-      Array.from({ length: 5 }, () => ({ kind: 'hold' })),
+    expect(script('pyrePriest')).toEqual(
+      Array.from({ length: 5 }, () => ({ kind: 'cast', spellId: 'bless' })),
     );
+    expect(script('ashChieftain')).toEqual(Array.from({ length: 5 }, () => ({ kind: 'hold' })));
+    // A commander's own pips decide: an Ash Chieftain given a pip casts.
+    expect(defaultScript(unitDef('ashChieftain'), { R: 1 }, 0)[0]).toEqual({
+      kind: 'cast',
+      spellId: null,
+    });
     // Each slot is its own object, so editing one leaves the rest alone.
-    const script = defaultScript(unitDef('pyrePriest'));
-    expect(script[0]).not.toBe(script[1]);
+    const slots = script('pyrePriest');
+    expect(slots[0]).not.toBe(slots[1]);
   });
 });
 

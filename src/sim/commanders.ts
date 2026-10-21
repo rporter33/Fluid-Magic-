@@ -4,18 +4,21 @@ import { ECONOMY, PROPHET, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
 import { newId, type CommanderId, type NationId, type ProvinceId } from './ids';
 import { chance } from './rng';
-import type { CommanderState, Formation, GameState, ScriptSlot, Squad } from './types';
+import type { CommanderState, Formation, GameState, Pips, ScriptSlot, Squad } from './types';
 
 /** Squads with a ranged weapon stand in the middle row, everyone else in front. */
 export function defaultFormation(def: UnitDef): Formation {
   return def.weapons.some((w) => w.range !== undefined) ? 'middle' : 'front';
 }
 
-/** docs/04-battle.md: mages and priests cast (their best castable spell), others hold. */
-export function defaultScript(def: UnitDef): ScriptSlot[] {
-  const caster =
-    Object.keys(def.commander?.pips ?? {}).length > 0 || (def.commander?.holy ?? 0) > 0;
-  const slot: ScriptSlot = caster ? { kind: 'cast', spellId: null } : { kind: 'hold' };
+/**
+ * docs/04-battle.md: a commander with color or holy pips casts (its unit's default spell, else
+ * its best castable one); others hold. Priests default to Bless (docs/08-ai.md).
+ */
+export function defaultScript(def: UnitDef, pips: Pips, holy: number): ScriptSlot[] {
+  const caster = Object.values(pips).some((n) => n > 0) || holy > 0;
+  const spellId = def.commander?.defaultSpell ?? null;
+  const slot: ScriptSlot = caster ? { kind: 'cast', spellId } : { kind: 'hold' };
   return Array.from({ length: SCRIPT_SLOTS }, () => ({ ...slot }));
 }
 
@@ -98,7 +101,7 @@ export function createCommander(
     hp: def.hp,
     squads: [],
     order: { kind: 'idle' },
-    script: defaultScript(def),
+    script: defaultScript(def, pips, def.commander.holy),
     pips,
     holy: def.commander.holy,
     carriedMana: {},

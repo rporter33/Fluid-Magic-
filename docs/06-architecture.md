@@ -38,7 +38,8 @@ fluid-magic/
       tick.ts             # advance(state): one day
       commands/           # Command union; validateCommand and applyCommand (index.ts)
         army.ts           # move, reverse, orders, scripts, formations, squads, build
-        province.ts       # recruit, cancel, PD, tax
+        province.ts       # recruit, cancel, PD, tax, storm
+        magic.ts          # research color, rituals, giving mana
         check.ts          # ownership lookups shared by validators
       economy.ts          # gold, mana, upkeep, fort materials (daily accrual)
       supply.ts           # starvation and healing
@@ -47,9 +48,11 @@ fluid-magic/
       buildings.ts        # construction cost, time, and progress
       population.ts
       unrest.ts
-      dominion.ts
+      dominion.ts         # dominion pushes (rituals now, monthly spread in Phase 6)
       scales.ts           # effective scales of a province
-      research.ts
+      research.ts         # research points, levels, the daily research step
+      pips.ts             # pips against spell requirements
+      bless.ts            # the bless of sacred units
       recruitment.ts      # recruit cost and time, queues, garrison holders
       movement.ts         # speeds, leg days, paths and ETAs, transit and arrival
       independents.ts     # independent forces at game start, strength words
@@ -58,7 +61,8 @@ fluid-magic/
       conflict.ts         # what a hostile arrival does: battles, sieges, captures, retreats
       siege.ts            # daily wall damage and repair, storms
       capture.ts          # a province changing hands
-      rituals.ts
+      rituals.ts          # who may cast what where, payment, the daily ritual step
+      ritualEffects.ts    # the ritual primitives
       wellsprings.ts
       victory.ts
       visibility.ts       # fog of war
@@ -68,10 +72,12 @@ fluid-magic/
         field.ts          # rows, troops, stat modifiers inside one battle
         attacks.ts        # ranged fire, melee, damage
         morale.ts         # morale checks, routs, commander deaths
+        spells.ts         # choosing and casting a spell, fatigue
+        targets.ts        # who a spell lands on
+        effects.ts        # the battle primitives
         setup.ts          # a BattleSetup from game state, every modifier folded in
         apply.ts          # a result written back: survivors, deaths, PD, records, messages
         replay.ts         # folding a replay log into the state the viewer shows
-        spells.ts         # battle effect primitives (Phase 5)
         events.ts         # BattleEvent types
       selectors.ts        # every economic rate, read by the UI, the AI, and the tick alike
       serialize.ts        # save/load JSON, version field, migrations
@@ -94,10 +100,13 @@ fluid-magic/
         thornwood.ts
         index.ts
       spells/
+        types.ts          # spell records and the primitive unions
         red.ts
         green.ts
-        white.ts blue.ts black.ts   # data present, may be partially implemented
-        index.ts
+        holy.ts           # the priests' Bless
+        validate.ts       # spell checks for content validation
+        index.ts          # registry and the requirement parser
+                          # white.ts blue.ts black.ts are M2 (docs/02 decisions)
       pretenders/
         chassis.ts
         scales.ts         # the five axes with per-pole effects
@@ -330,4 +339,17 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   besieging the province while one of its commanders (not a hidden one) stands there, and
   sets `siege.storm`; the storm is fought in the next tick's siege step. `SiegeState` gained
   `storm: boolean`.
+- **Magic** (Phase 5): commands `{ type: 'setResearchColor', nation, color }`,
+  `{ type: 'castRitual', nation, commander, spell, target, generic? }` (target null for
+  rituals cast where the caster stands; `generic` an optional whole-number split of the
+  generic cost), and `{ type: 'giveMana', nation, commander, color, amount }`. `setScript`
+  accepts a named battle spell the commander's pips meet; research is checked in battle.
+  Tick step 3 runs recruitment, construction, rituals, then research.
+- **Battle setup** (Phase 5): each `BattleCommanderSetup` lists the battle spells the
+  commander knows (`spells`), and each `BattleSideSetup` carries the stats of every unit its
+  spells can summon (`summons`), both worked out from game state; `research` levels are no
+  longer on the side. `CombatStats` gained `lifeDrain`. `ProvinceEffect` gained `scry`.
+- **Content validation** checks every spell: its requirement parses and holds its color,
+  levels and numbers are in range, every unit it names exists, and every primitive is one of
+  docs/02 section 5 with valid fields.
 

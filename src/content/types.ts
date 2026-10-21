@@ -62,6 +62,8 @@ export interface CommanderTraits {
   sight?: number;
   /** A fort's garrison holder: free, immobile, never fights itself. */
   garrison?: boolean;
+  /** The battle spell its default script casts (a spell id); else its best castable spell. */
+  defaultSpell?: string;
 }
 
 export interface UnitDef {

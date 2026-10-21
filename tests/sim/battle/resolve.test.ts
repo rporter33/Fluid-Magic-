@@ -1,5 +1,7 @@
 // The battle resolver (docs/04-battle.md), including its "Required tests".
 import { describe, expect, it } from 'vitest';
+import { SPELLS } from '../../../src/content/spells';
+import type { BattleSpellDef } from '../../../src/content/spells/types';
 import { weaponDamage } from '../../../src/sim/battle/attacks';
 import { resolveBattle } from '../../../src/sim/battle/resolve';
 import { drn } from '../../../src/sim/drn';
@@ -423,6 +425,33 @@ describe('the log and the result', () => {
       setup(
         side([squad('a0', 'cinderWarrior', 200), squad('a1', 'flameArcher', 100)]),
         side([squad('d0', 'warden', 200), squad('d1', 'longbowHunter', 100)]),
+      );
+    resolveBattle(big(), createRng(1));
+    const start = performance.now();
+    for (let i = 0; i < 5; i++) resolveBattle(big(), createRng(i));
+    expect((performance.now() - start) / 5).toBeLessThan(50);
+  });
+
+  it('stays well under 50 ms with four mages casting on each side', () => {
+    const mages = (prefix: string, spells: BattleSpellDef[]) =>
+      Array.from({ length: 4 }, (_, i) =>
+        commander(`${prefix}${String(i)}`, 'cinderMagus', {
+          spells,
+          pips: { R: 3, G: 3 },
+          carriedMana: { R: 2, G: 2 },
+          script: Array.from({ length: 5 }, () => ({ kind: 'cast' as const, spellId: null })),
+        }),
+      );
+    const big = () =>
+      setup(
+        side(
+          [squad('a0', 'cinderWarrior', 200), squad('a1', 'flameArcher', 100)],
+          mages('am', [SPELLS.emberDart, SPELLS.fireball, SPELLS.warcry, SPELLS.pyreStorm]),
+        ),
+        side(
+          [squad('d0', 'warden', 200), squad('d1', 'longbowHunter', 100)],
+          mages('dm', [SPELLS.thornSpray, SPELLS.barkSkin, SPELLS.swarm, SPELLS.regrowth]),
+        ),
       );
     resolveBattle(big(), createRng(1));
     const start = performance.now();

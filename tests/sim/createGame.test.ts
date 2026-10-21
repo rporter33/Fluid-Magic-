@@ -86,11 +86,11 @@ describe('createGame', () => {
     ]);
   });
 
-  it('gives casters a cast-best script and others a hold script', () => {
+  it('gives mages a cast-best script, priests Bless, and others a hold script', () => {
     const army = commandersIn(state, state.nations[red!]!.capital);
     const script = (unit: string) => army.find((c) => c.unit === unit)!.script;
     expect(script('emberAdept')[0]).toEqual({ kind: 'cast', spellId: null });
-    expect(script('pyrePriest')[0]).toEqual({ kind: 'cast', spellId: null });
+    expect(script('pyrePriest')[0]).toEqual({ kind: 'cast', spellId: 'bless' });
     expect(script('ashChieftain')[0]).toEqual({ kind: 'hold' });
   });
 

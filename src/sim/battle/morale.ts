@@ -6,7 +6,7 @@ import type { RngState } from '../rng';
 import type { BattleEvent } from './events';
 import { groupStat, living, present, SIDES, troopsLost, type Field, type Group } from './field';
 
-function neverChecks(g: Group): boolean {
+export function neverChecks(g: Group): boolean {
   return groupStat(g, 'mor') >= BATTLE.morale.fearless || g.base.tags.includes('berserk');
 }
 
@@ -50,13 +50,26 @@ export function commanderDeaths(
         if (g.leader !== c.ref || !present(g) || g.routingSince !== null || g.checked) continue;
         if (neverChecks(g)) continue;
         g.checked = true;
-        if (breaks(rng, g, pressure)) rout(g, round, log);
+        if (breaks(rng, g, pressure + g.shock)) rout(g, round, log);
       }
     }
   }
 }
 
-/** Round step 4: squads shaken by this round's losses, then commanders left without a line. */
+/** This round's losses are enough to make a squad check. */
+function shaken(g: Group): boolean {
+  if (g.deathsThisRound === 0) return false;
+  const total = g.startCount - living(g);
+  return (
+    total > g.startCount * BATTLE.morale.totalLossShare ||
+    g.deathsThisRound > g.startCount * BATTLE.morale.roundLossShare
+  );
+}
+
+/**
+ * Round step 4: squads shaken by this round's losses or by a shock spell (which also makes the
+ * roll harder), then commanders left without a line.
+ */
 export function moralePhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
   for (const side of SIDES) {
     const groups = field.sides[side];
@@ -64,16 +77,9 @@ export function moralePhase(field: Field, round: number, rng: RngState, log: Bat
     const brokeNow = new Set<string>();
     for (const g of groups) {
       if (g.isCommander || !present(g) || g.routingSince !== null || g.checked) continue;
-      if (neverChecks(g) || g.deathsThisRound === 0) continue;
-      const total = g.startCount - living(g);
-      if (
-        total <= g.startCount * BATTLE.morale.totalLossShare &&
-        g.deathsThisRound <= g.startCount * BATTLE.morale.roundLossShare
-      ) {
-        continue;
-      }
+      if (neverChecks(g) || (g.shock <= 0 && !shaken(g))) continue;
       g.checked = true;
-      if (breaks(rng, g, pressure)) {
+      if (breaks(rng, g, pressure + g.shock)) {
         rout(g, round, log);
         if (g.leader !== null) brokeNow.add(g.leader);
       }

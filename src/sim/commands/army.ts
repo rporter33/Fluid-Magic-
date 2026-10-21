@@ -1,10 +1,13 @@
 // Commands to commanders: movement, orders, scripts, formations, squads, and building.
 import { buildingDef, isBuildingId, unitDef } from '../../content';
 import { SCRIPT_SLOTS } from '../../content/rules';
+import { isSpellId, spellDef } from '../../content/spells';
 import { constructionCost, startConstruction } from '../buildings';
 import { newId } from '../ids';
 import { addSquad, isGarrisonHolder } from '../commanders';
 import { canMove, commanderMapSpeed, hostileProvinces, startLeg } from '../movement';
+import { meetsRequirement } from '../pips';
+import { canResearch } from '../research';
 import { getCommander, getMapProvince, getNation } from '../state';
 import {
   FORMATIONS,
@@ -125,7 +128,7 @@ export function validateSetOrder(state: GameState, cmd: CommandOf<'setOrder'>): 
     case 'preach':
       return c.holy > 0 ? null : `${c.name} is not a priest`;
     case 'research': {
-      if (!Object.values(c.pips).some((n) => n > 0)) return `${c.name} is not a mage`;
+      if (!canResearch(c)) return `${c.name} is not a mage`;
       if (c.transit) return `${c.name} is on the move`;
       const p = ownProvince(state, cmd.nation, c.location);
       return p?.buildings.includes('lab') ? null : 'Research needs a lab in a province you own';
@@ -148,8 +151,13 @@ export function validateSetScript(state: GameState, cmd: CommandOf<'setScript'>)
   if (cmd.slots.length !== SCRIPT_SLOTS) return `A script has ${SCRIPT_SLOTS} slots`;
   for (const slot of cmd.slots) {
     if (!SCRIPT_KINDS.includes(slot.kind)) return 'Unknown script action';
-    // Spells arrive in Phase 5; until then a cast slot can only mean "best spell".
-    if (slot.kind === 'cast' && slot.spellId !== null) return 'Unknown spell';
+    if (slot.kind !== 'cast' || slot.spellId === null) continue;
+    // A named battle spell the commander's pips can meet. Research is checked in battle,
+    // where a spell not yet researched falls back to the best castable one.
+    if (!isSpellId(slot.spellId)) return 'Unknown spell';
+    const spell = spellDef(slot.spellId);
+    if (spell.kind !== 'battle') return `${spell.name} is a ritual`;
+    if (!meetsRequirement(c.pips, c.holy, spell)) return `${c.name} cannot cast ${spell.name}`;
   }
   return null;
 }

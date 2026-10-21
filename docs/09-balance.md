@@ -40,6 +40,13 @@ the truth for current values.
 | 2026-10-21 | 01 §11 | Walls down | wall HP reaches 0 | below 1 HP (shown as 0) | Fractional damage and repair would otherwise leave walls at 0.4 that count as standing |
 | 2026-10-21 | 01 §8 | PD after a battle | unspecified | min(pd, ceil(militia left / 2)); archers ignored | 2 militia per level |
 | 2026-10-21 | 06 | Battle records kept | last 20 | last 20 battles in which a player's nation fought | AI battles would push the player's replays out |
+| 2026-10-21 | 04 | Bless fatigue | unspecified | 10 | As cheap as the level-1 spells |
+| 2026-10-21 | 02 §5 | Fog and wall field effects | unspecified | fog −4 precision for everyone; wall stops melee between the fronts | No spell defines them; storm takes Tempest's "no ranged, −2 att" |
+| 2026-10-21 | 02 §5 | Scry duration | unspecified | 30 days, the one province only | One month of sight for one cast |
+| 2026-10-21 | 02 §5 | remoteDamage | "dice per unit" | plain dice per troop, no protection, commanders and PD untouched | "Every troop"; with protection Ash Rain would kill almost no Wardens. 2d6 kills about 17% of 10-HP troops |
+| 2026-10-21 | 02 §5 | manaConvert | unspecified amount | the whole `from` pool, `ratio` to one | No M1 spell uses it |
+| 2026-10-21 | 02 §3 | Fatigue thresholds | cannot act at 100, unconscious at 200 | no action at 100 or more; 200 the same in M1 | Only drains can reach 200 and no M1 spell drains |
+| 2026-10-21 | 02 §4 vs 09 checklist | Research to level 4 | "level 4 by month 24 with 4 mages" | unchanged formula | Conflict: four apprentices from level 1 reach level 4 on day 660 at neutral scales but on day 825 at capital Fury −2 (the Warlord and Wildfire presets); adepts make it. Phase 12 decides between retuning and changing the checklist |
 | 2026-10-21 | 04 | Armor piercing | halves protection | floor(prot * 0.5), in content | The doc gives no rounding |
 
 ## Playtest checklist (run before calling M1 done)

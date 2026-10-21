@@ -1,16 +1,20 @@
 // Builds a BattleSetup from the game (docs/04-battle.md, "Province modifiers"). Every modifier
 // is folded into each unit's stats here, so the resolver stays a pure function of its input.
 import { nationDef, unitDef, type UnitTypeId } from '../../content';
-import { COLORS, type Color } from '../../content/colors';
-import { RESEARCH_LEVEL_POINTS, STORM } from '../../content/rules';
+import { STORM } from '../../content/rules';
+import { BATTLE_SPELLS } from '../../content/spells';
+import type { BattleSpellDef } from '../../content/spells/types';
 import { TERRAIN } from '../../content/terrain';
+import { blessOf, NO_BLESS } from '../bless';
 import { defaultFormation } from '../commanders';
 import { pdForce } from '../pd';
+import { meetsRequirement } from '../pips';
+import { researchLevels } from '../research';
 import { provinceScales, scaleEffect } from '../scales';
 import { starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
 import { activeEffects, getMapProvince, getNation, getProvince } from '../state';
 import type { CommanderId, NationId, ProvinceId } from '../ids';
-import type { CommanderState, GameState, Squad } from '../types';
+import type { CommanderState, GameState, Pips, Squad } from '../types';
 import type { BattleSide } from './events';
 import type { BattleCommanderSetup, BattleSetup, BattleSideSetup, CombatStats } from './types';
 
@@ -74,6 +78,16 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = 
     if (upkeep) mor -= unpaidMoralePenalty(getNation(state, nation).unpaidDays);
   }
   mor -= starvationMoralePenalty(starvedDays);
+  // docs/02 section 8: sacred units carry their nation's bless.
+  const bless =
+    nation !== null && def.tags.includes('sacred')
+      ? blessOf(getNation(state, nation).pretender.pips)
+      : NO_BLESS;
+  att += bless.att;
+  defense += bless.def;
+  prot += bless.prot;
+  mor += bless.mor;
+  prec += bless.prec;
   if (mine) {
     att += scaleEffect(scales, 'attack');
     mor += scaleEffect(scales, 'morale');
@@ -97,7 +111,7 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = 
   }
   return {
     hp: def.hp,
-    str: def.str,
+    str: def.str + bless.str,
     att,
     def: defense,
     prot,
@@ -106,8 +120,27 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = 
     mapSpeed: def.mapSpeed,
     weapons: def.weapons,
     tags: def.tags,
-    regeneration: def.regeneration ?? 0,
+    regeneration: (def.regeneration ?? 0) + bless.regeneration,
+    lifeDrain: bless.lifeDrain,
   };
+}
+
+/**
+ * The battle spells a commander knows: its pips meet them and its nation has researched their
+ * level in their color. Holy spells need no research.
+ */
+export function knownSpells(
+  state: GameState,
+  nation: NationId | null,
+  pips: Pips,
+  holy: number,
+): BattleSpellDef[] {
+  const levels = nation === null ? null : researchLevels(state, nation);
+  return BATTLE_SPELLS.filter(
+    (s) =>
+      meetsRequirement(pips, holy, s) &&
+      (s.color === null || (levels !== null && levels[s.color] >= s.level)),
+  );
 }
 
 function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
@@ -122,30 +155,16 @@ function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
     pips: { ...c.pips },
     holy: c.holy,
     carriedMana: { ...c.carriedMana },
+    spells: knownSpells(ctx.state, ctx.nation, c.pips, c.holy),
   };
-}
-
-/** Research level reached in each color (docs/02-magic.md section 4). */
-function researchLevels(state: GameState, nation: NationId | null): Partial<Record<Color, number>> {
-  if (nation === null) return {};
-  const points = getNation(state, nation).research.points;
-  const levels: Partial<Record<Color, number>> = {};
-  for (const color of COLORS) {
-    let level = 0;
-    RESEARCH_LEVEL_POINTS.forEach((need, i) => {
-      if (points[color] >= need) level = i;
-    });
-    levels[color] = level;
-  }
-  return levels;
 }
 
 function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
   const side: BattleSideSetup = {
     nation: forces.nation,
-    research: researchLevels(ctx.state, forces.nation),
     commanders: [],
     squads: [],
+    summons: {},
   };
   const squad = (s: Squad, leader: CommanderId | null) => {
     side.squads.push({
@@ -159,7 +178,14 @@ function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
     });
   };
   for (const c of forces.commanders) {
-    side.commanders.push(commanderSetup(ctx, c));
+    const commander = commanderSetup(ctx, c);
+    side.commanders.push(commander);
+    // Summoned troops fight with this side's modifiers, worked out here; they draw no pay.
+    for (const spell of commander.spells) {
+      for (const e of spell.effects) {
+        if (e.kind === 'summon') side.summons[e.unit] ??= statsFor(ctx, e.unit, 0, false);
+      }
+    }
     for (const s of c.squads) squad(s, c.id);
   }
   for (const s of forces.garrison?.squads ?? []) squad(s, null);

@@ -135,7 +135,7 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Commander map speed** is 3 for every national commander (Phase 3). A commander moves at
   the slowest of itself and its squads, so with speed 2 no army could ever use its speed-3
   troops (Ash Riders, Ember Skirmishers, Wolf Riders). Lone scouts, priests, and mages move at
-  3. Summoned commanders keep the baseline until Phase 5.
+  3. Summoned commanders (Salamander, Treant) keep the baseline speed 2.
 - **Commander weapons** are not listed. Scouts carry a Dagger 2, priests and mages a Staff
   2, Ash Chieftain an Axe 5, and Warden Captain and Independent Captain a Sword 4.
 - **Requirements**: every recruitable unit needs a fort; priests and sacred units also need a
@@ -145,3 +145,7 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Provincial defense** uses the nation's militia (Ash Militia, Thorn Militia) and archer
   (Flame Archer, Longbow Hunter) units.
 - **The garrison holder** is a common unit: free, immobile, never fights, and never eats.
+- **Default spells** (Phase 5): Pyre and Grove Priests carry `defaultSpell: 'bless'`, so their
+  default script casts Bless. Whether a commander gets a caster script follows its own pips
+  and holy pips, not only its unit's.
+

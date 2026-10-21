@@ -12,7 +12,8 @@ import type {
 import { defaultFormation } from '../../../src/sim/commanders';
 import type { ProvinceId } from '../../../src/sim/ids';
 import { createRng } from '../../../src/sim/rng';
-import type { Formation, ScriptSlot } from '../../../src/sim/types';
+import type { BattleSpellDef } from '../../../src/content/spells/types';
+import type { Formation, Pips, ScriptSlot } from '../../../src/sim/types';
 
 export function statsOf(unit: UnitTypeId, overrides: Partial<CombatStats> = {}): CombatStats {
   const d = unitDef(unit);
@@ -28,6 +29,7 @@ export function statsOf(unit: UnitTypeId, overrides: Partial<CombatStats> = {}):
     weapons: d.weapons,
     tags: d.tags,
     regeneration: d.regeneration ?? 0,
+    lifeDrain: 0,
     ...overrides,
   };
 }
@@ -53,9 +55,20 @@ export function squad(
 export function commander(
   ref: string,
   unit: UnitTypeId,
-  opts: { script?: ScriptSlot[]; stats?: Partial<CombatStats>; hp?: number; row?: Formation } = {},
+  opts: {
+    script?: ScriptSlot[];
+    stats?: Partial<CombatStats>;
+    hp?: number;
+    row?: Formation;
+    /** Spells it knows; its pips default to the unit's. */
+    spells?: readonly BattleSpellDef[];
+    pips?: Pips;
+    holy?: number;
+    carriedMana?: Pips;
+  } = {},
 ): BattleCommanderSetup {
   const stats = statsOf(unit, opts.stats);
+  const traits = unitDef(unit).commander;
   return {
     ref,
     unit,
@@ -64,17 +77,25 @@ export function commander(
     row: opts.row ?? 'rear',
     stats,
     script: opts.script ?? Array.from({ length: 5 }, () => ({ kind: 'hold' as const })),
-    pips: {},
-    holy: 0,
-    carriedMana: {},
+    pips: opts.pips ?? { ...(traits?.pips ?? {}) },
+    holy: opts.holy ?? traits?.holy ?? 0,
+    carriedMana: opts.carriedMana ?? {},
+    spells: opts.spells ?? [],
   };
 }
 
+/** A side; summoned units get their plain unit stats. */
 export function side(
   squads: BattleSquadSetup[],
   commanders: BattleCommanderSetup[] = [],
 ): BattleSideSetup {
-  return { nation: null, research: {}, commanders, squads };
+  const summons: BattleSideSetup['summons'] = {};
+  for (const c of commanders) {
+    for (const spell of c.spells) {
+      for (const e of spell.effects) if (e.kind === 'summon') summons[e.unit] = statsOf(e.unit);
+    }
+  }
+  return { nation: null, commanders, squads, summons };
 }
 
 export function setup(attacker: BattleSideSetup, defender: BattleSideSetup): BattleSetup {

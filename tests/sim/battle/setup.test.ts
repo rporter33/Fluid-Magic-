@@ -44,7 +44,7 @@ describe('buildBattle', () => {
     expect(setup.attacker.squads.map((s) => [s.ref, s.commander, s.count, s.row])).toEqual([
       [atk.squads[0]!.id, atk.id, 10, 'front'],
     ]);
-    expect(setup.attacker.research).toMatchObject({ R: 1, G: 0 });
+    expect(setup.attacker.commanders[0]!.spells).toEqual([]);
   });
 
   it('gives defenders their terrain bonus and Thornwood its forest on either side', () => {
@@ -122,6 +122,51 @@ describe('buildBattle', () => {
       ['pd0', null, 'ashMilitia', 12],
       ['pd1', null, 'flameArcher', 1],
     ]);
+  });
+
+  it('blesses the nation’s sacred units by its pretender’s pips', () => {
+    const { state, red, p, atk } = stage('plains');
+    atk.squads.push(...addArmy(state, red, p.id, 'flamebrand', 5).squads);
+    const flamebrand = () =>
+      buildBattle(state, p.id, forces(red, [atk]), forces(null, [])).attacker.squads.find(
+        (s) => s.unit === 'flamebrand',
+      )!.stats;
+    const warrior = () =>
+      buildBattle(state, p.id, forces(red, [atk]), forces(null, [])).attacker.squads[0]!.stats;
+    const base = flamebrand();
+    state.nations[red]!.pretender.pips = { R: 4 };
+    expect(flamebrand()).toMatchObject({ att: base.att + 2, str: base.str + 2 });
+    state.nations[red]!.pretender.pips = { R: 6, B: 4 };
+    expect(flamebrand()).toMatchObject({ att: base.att + 5, str: base.str + 4, lifeDrain: 2 });
+    expect(warrior().lifeDrain).toBe(0);
+  });
+
+  it('gives commanders the spells their pips and research allow, and summons local stats', () => {
+    const s = redField();
+    const forest = independentProvince(s.state, 'forest');
+    forest.owner = s.green;
+    const druid = addArmy(s.state, s.green, forest.id, 'warden', 5, 'elderDruid');
+    druid.pips = { G: 3 };
+    const raider = addArmy(s.state, s.red, forest.id, 'cinderWarrior', 5);
+    const build = () =>
+      buildBattle(s.state, forest.id, forces(s.red, [raider]), forces(s.green, [druid]));
+    // Thornwood starts at Green 1: Thorn Spray, and Bless for the druid's holy pip.
+    expect(build().defender.commanders[0]!.spells.map((sp) => sp.id)).toEqual([
+      'bless',
+      'thornSpray',
+    ]);
+    s.state.nations[s.green]!.research.points.G = 500;
+    const setup = build();
+    expect(setup.defender.commanders[0]!.spells.map((sp) => sp.id)).toEqual([
+      'bless',
+      'thornSpray',
+      'barkSkin',
+      'entangle',
+      'swarm',
+    ]);
+    // Hornets defend a Thornwood forest: 13, +1 forest, +1 home terrain.
+    expect(setup.defender.summons.hornetSwarm?.def).toBe(15);
+    expect(setup.attacker.summons).toEqual({});
   });
 
   it('lowers morale by Dread only for those fighting the dominating nation', () => {

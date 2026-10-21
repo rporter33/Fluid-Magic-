@@ -2,6 +2,7 @@
 // the replay viewer share. A replay is the starting roster plus the event log: the viewer
 // needs nothing else.
 import type { UnitTypeId } from '../../content';
+import type { FieldEffectKind, SpellStat } from '../../content/spells/types';
 import type { Element } from '../../content/types';
 import type { NationId } from '../ids';
 import type { Formation } from '../types';
@@ -42,7 +43,7 @@ export interface BattleRoster {
 }
 
 /** The stats spells and conditions can change in battle. */
-export type StatKey = 'str' | 'att' | 'def' | 'prot' | 'mor' | 'prec';
+export type StatKey = SpellStat;
 
 /**
  * The replay log. With the roster it is enough to replay the fight: every move between rows,
@@ -74,7 +75,7 @@ export type BattleEvent =
       /** The caster leading the summoned squad, if any. */
       commander: BattleUnitRef | null;
     }
-  /** A stat change; rounds null lasts the whole battle. */
+  /** A stat change; rounds null lasts the whole battle. Debuffs come from enemy spells. */
   | {
       kind: 'buff';
       target: BattleUnitRef;
@@ -82,7 +83,13 @@ export type BattleEvent =
       delta: number;
       source: string;
       rounds: number | null;
+      debuff: boolean;
     }
-  /** A timed change ran out or was removed. */
+  /** A group's changes from one source ran out or were removed. */
   | { kind: 'expire'; target: BattleUnitRef; source: string }
+  /** A field effect began; it lasts through untilRound. */
+  | { kind: 'field'; effect: FieldEffectKind; caster: BattleUnitRef; untilRound: number }
+  | { kind: 'fieldEnd'; effect: FieldEffectKind }
+  /** Fatigue forced on a caster by an enemy spell. */
+  | { kind: 'fatigue'; unit: BattleUnitRef; amount: number }
   | { kind: 'battleEnd'; winner: BattleSide; rounds: number };

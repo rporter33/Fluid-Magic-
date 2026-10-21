@@ -76,7 +76,19 @@ export function allVision(state: GameState): Map<NationId, Set<ProvinceId>> {
     for (const [origin, sight] of from) addWithin(state, origin, sight, vision);
     result.set(nation, vision);
   }
+  // A scried province is seen by itself, with no radius.
+  for (const e of state.provinceEffects) {
+    if (e.kind === 'scry' && e.untilDay > state.day) result.get(e.nation)?.add(e.province);
+  }
   return result;
+}
+
+/** The nation scries the province today. */
+function scried(state: GameState, nation: NationId, province: ProvinceId): boolean {
+  return state.provinceEffects.some(
+    (e) =>
+      e.kind === 'scry' && e.nation === nation && e.province === province && e.untilDay > state.day,
+  );
 }
 
 export function visionOf(state: GameState, nation: NationId): Set<ProvinceId> {
@@ -145,7 +157,7 @@ export function isExplored(state: GameState, nation: NationId, province: Provinc
 
 /**
  * What a nation knows of a province's independent defenders: a strength word everywhere, the
- * exact troop count where one of its scouts is in or next to the province.
+ * exact troop count where one of its scouts is in or next to the province, or it scries it.
  */
 export function independentStrengthView(
   state: GameState,
@@ -158,7 +170,8 @@ export function independentStrengthView(
     if (c.owner === nation && isScout(c))
       addWithin(state, c.location, VISION.scoutExactRange, near);
   }
-  return { word: strengthWord(count), exact: near.has(province) ? count : null };
+  const exact = near.has(province) || scried(state, nation, province);
+  return { word: strengthWord(count), exact: exact ? count : null };
 }
 
 /**

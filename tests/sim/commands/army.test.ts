@@ -84,7 +84,7 @@ describe('setOrder', () => {
 });
 
 describe('setScript and setFormation', () => {
-  it('takes exactly five known slots, with no named spells yet', () => {
+  it('takes exactly five known slots', () => {
     const { state, red, chieftain } = setup();
     const slots: ScriptSlot[] = [
       { kind: 'attack' },
@@ -100,8 +100,33 @@ describe('setScript and setFormation', () => {
     expect(chieftain.script[0]).not.toBe(slots[0]);
     expect(set(slots.slice(0, 4)).ok).toBe(false);
     expect(set([...slots, { kind: 'hold' }]).ok).toBe(false);
-    expect(set([{ kind: 'cast', spellId: 'fireball' }, ...slots.slice(1)]).ok).toBe(false);
     expect(set([{ kind: 'dance' } as never, ...slots.slice(1)]).ok).toBe(false);
+  });
+
+  it('names battle spells the commander’s pips can cast, research aside', () => {
+    const { state, red, chieftain, adept, priest } = setup();
+    const named = (c: CommanderState, spellId: string) =>
+      applyCommand(state, {
+        type: 'setScript',
+        nation: red,
+        commander: c.id,
+        slots: [{ kind: 'cast', spellId }, ...adept.script.slice(1)],
+      });
+    expect(named(adept, 'emberDart')).toEqual({ ok: true });
+    // Pyre Storm needs RRR; Warcry needs only R and level 2 research, checked in battle.
+    expect(named(adept, 'pyreStorm')).toEqual({
+      ok: false,
+      error: 'Ember Adept cannot cast Pyre Storm',
+    });
+    expect(named(adept, 'warcry')).toEqual({ ok: true });
+    expect(named(priest, 'bless')).toEqual({ ok: true });
+    expect(named(adept, 'bless').ok).toBe(false);
+    expect(named(chieftain, 'emberDart').ok).toBe(false);
+    expect(named(adept, 'callFireSprites')).toEqual({
+      ok: false,
+      error: 'Call Fire Sprites is a ritual',
+    });
+    expect(named(adept, 'fireworks')).toEqual({ ok: false, error: 'Unknown spell' });
   });
 
   it('moves a squad to another row', () => {

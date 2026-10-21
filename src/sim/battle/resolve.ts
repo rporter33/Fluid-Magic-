@@ -1,14 +1,14 @@
 // resolveBattle(setup, rng): BattleResult (docs/04-battle.md). Pure: it reads only the setup,
 // never changes it, and draws only from the rng it is given, so the same setup and rng state
 // always give the same result and log.
-import { BATTLE } from '../../content/rules';
-import type { RngState } from '../rng';
+import { BATTLE, CASTING } from '../../content/rules';
 import { meleePhase, rangedPhase } from './attacks';
 import type { BattleEvent, BattleRoster, BattleSide } from './events';
 import {
   active,
   anyActive,
   buildField,
+  exhausted,
   frontRow,
   living,
   present,
@@ -17,14 +17,15 @@ import {
   type Group,
 } from './field';
 import { commanderDeaths, moralePhase, rout } from './morale';
+import { cast, chooseSpell } from './spells';
 import type {
-  BattleCommanderSetup,
   BattleResult,
   BattleSetup,
   BattleSideSetup,
   CommanderOutcome,
   SquadOutcome,
 } from './types';
+import type { RngState } from '../rng';
 
 function roster(side: BattleSideSetup): BattleRoster {
   return {
@@ -62,14 +63,20 @@ function interleaved(field: Field): Group[] {
 }
 
 /**
- * Round step 1: each commander follows its script slot for the round (slot 5 repeats). Cast
- * slots hold until Phase 5 brings battle spells. Attack moves the commander into its side's
- * front row. Retreat takes it and its squads off the field this round; berserkers stay.
+ * Round step 1: each commander follows its script slot for the round (slot 5 repeats), one
+ * after another in caster order. Cast casts the named spell, or the best castable one, and
+ * the effects land before the next commander acts. Attack moves the commander into its side's
+ * front row. Retreat takes it and its squads off the field this round; berserkers stay. A
+ * commander too tired to act does nothing.
  */
-function scriptsPhase(field: Field, round: number, log: BattleEvent[]): void {
+function scriptsPhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
   for (const c of interleaved(field)) {
-    if (!active(c)) continue;
+    if (!active(c) || exhausted(c)) continue;
     const slot = c.script[Math.min(round, c.script.length) - 1];
+    if (slot?.kind === 'cast') {
+      const spell = chooseSpell(field, c, slot.spellId);
+      if (spell) cast(field, c, spell, round, rng, log);
+    }
     if (slot?.kind === 'attack') {
       const row = frontRow(field, c.side) ?? 'front';
       if (c.row !== row) {
@@ -93,17 +100,28 @@ function leave(g: Group, log: BattleEvent[]): void {
   if (living(g) > 0) log.push({ kind: 'leave', unit: g.ref });
 }
 
-/** Round step 5: routing groups leave after their exit round; effects end; regeneration. */
+/**
+ * Round step 5: routing groups leave after their exit round; timed effects end; casters
+ * recover; regeneration.
+ */
 function endOfRound(field: Field, round: number, log: BattleEvent[]): void {
+  for (const e of field.effects.filter((f) => f.untilRound <= round)) {
+    log.push({ kind: 'fieldEnd', effect: e.kind });
+  }
+  field.effects = field.effects.filter((f) => f.untilRound > round);
   for (const side of SIDES) {
     for (const g of field.sides[side]) {
       if (g.routingSince !== null && g.routingSince < round) leave(g, log);
       g.deathsThisRound = 0;
       g.checked = false;
+      g.shock = 0;
+      g.fatigue = Math.max(0, g.fatigue - CASTING.recoveryPerRound);
       const ending = g.mods.filter((m) => m.untilRound !== null && m.untilRound <= round);
       if (ending.length > 0) {
         g.mods = g.mods.filter((m) => !ending.includes(m));
-        for (const m of ending) log.push({ kind: 'expire', target: g.ref, source: m.source });
+        for (const source of new Set(ending.map((m) => m.source))) {
+          log.push({ kind: 'expire', target: g.ref, source });
+        }
       }
       if (g.gone || g.base.regeneration <= 0) continue;
       let healed = 0;
@@ -118,8 +136,7 @@ function endOfRound(field: Field, round: number, log: BattleEvent[]): void {
   }
 }
 
-function outcomes(field: Field, commanders: readonly BattleCommanderSetup[]) {
-  const mana = new Map(commanders.map((c) => [c.ref, c.carriedMana]));
+function outcomes(field: Field) {
   const squads = new Map<string, SquadOutcome>();
   const leaders = new Map<string, CommanderOutcome>();
   let casualties = 0;
@@ -133,7 +150,7 @@ function outcomes(field: Field, commanders: readonly BattleCommanderSetup[]) {
           hp: g.members[0]?.hp ?? 0,
           dead: alive === 0,
           routed,
-          carriedMana: { ...(mana.get(g.ref) ?? {}) },
+          carriedMana: { ...g.carriedMana },
         });
       } else {
         const hp = g.members.reduce((sum, m) => sum + (m.alive ? m.hp : 0), 0);
@@ -170,7 +187,8 @@ export function resolveBattle(setup: BattleSetup, rng: RngState): BattleResult {
   for (let round = 1; round <= BATTLE.maxRounds; round++) {
     rounds = round;
     replay.push({ kind: 'roundStart', round });
-    scriptsPhase(field, round, replay);
+    scriptsPhase(field, round, rng, replay);
+    commanderDeaths(field, round, rng, replay);
     rangedPhase(field, round, rng, replay);
     commanderDeaths(field, round, rng, replay);
     meleePhase(field, round, rng, replay);
@@ -189,8 +207,7 @@ export function resolveBattle(setup: BattleSetup, rng: RngState): BattleResult {
     }
   }
   replay.push({ kind: 'battleEnd', winner, rounds });
-  const all = [...setup.attacker.commanders, ...setup.defender.commanders];
-  const { squads, commanders, casualties } = outcomes(field, all);
+  const { squads, commanders, casualties } = outcomes(field);
   return {
     winner,
     rounds,

@@ -1,7 +1,7 @@
 // Ranged fire and melee (docs/04-battle.md, round steps 2 and 3). Within a phase every attack
 // is rolled against the field as it stood when the phase began, then all damage lands, so no
 // unit gains by acting first. Rolls go attacker side first, in setup order.
-import { BATTLE } from '../../content/rules';
+import { BATTLE, FIELD_EFFECTS } from '../../content/rules';
 import { UNARMED } from '../../content/units/base';
 import type { WeaponDef } from '../../content/types';
 import type { Formation } from '../types';
@@ -11,6 +11,8 @@ import type { BattleEvent } from './events';
 import {
   active,
   closingRound,
+  exhausted,
+  fieldHas,
   frontRow,
   groupStat,
   OTHER,
@@ -26,15 +28,29 @@ import {
 /** One attack: a miss has no amount. Misses are kept so the log shows every volley. */
 interface Hit {
   by: Group;
+  /** The troop that struck, which life drain heals. */
+  from: Fighter;
   weapon: WeaponDef;
   target: Fighter;
   amount: number | null;
 }
 
 /**
- * Weapon damage: str + dmg + bonus + DRN - protection - DRN, never below 0; ranged shots pass
- * str 0. Armor piercing halves protection (rounded down); armor negating ignores it.
+ * One blow: base + DRN - protection - DRN, never below 0. Armor piercing keeps half the
+ * protection (rounded down); armor negating ignores it. Weapons and damage spells both roll it.
  */
+export function rollDamage(
+  rng: RngState,
+  base: number,
+  prot: number,
+  piercing: boolean,
+  negating: boolean,
+): number {
+  const armor = negating ? 0 : piercing ? Math.floor(prot * BATTLE.armorPiercingFactor) : prot;
+  return Math.max(0, base + drn(rng) - armor - drn(rng));
+}
+
+/** Weapon damage: str + dmg + bonus as the base; ranged shots pass str 0. */
 export function weaponDamage(
   rng: RngState,
   str: number,
@@ -42,12 +58,36 @@ export function weaponDamage(
   prot: number,
   bonus: number,
 ): number {
-  const armor = w.armorNegating
-    ? 0
-    : w.armorPiercing
-      ? Math.floor(prot * BATTLE.armorPiercingFactor)
-      : prot;
-  return Math.max(0, str + w.dmg + bonus + drn(rng) - armor - drn(rng));
+  return rollDamage(
+    rng,
+    str + w.dmg + bonus,
+    prot,
+    w.armorPiercing === true,
+    w.armorNegating === true,
+  );
+}
+
+/**
+ * Life drain owed for the phase's damaging hits, paid only once every hit has landed, to
+ * strikers still alive, so neither side gains by rolling first.
+ */
+function drainLife(hits: Hit[], log: BattleEvent[]): void {
+  const owed = new Map<Fighter, number>();
+  for (const h of hits) {
+    const drain = h.by.base.lifeDrain;
+    if (drain > 0 && h.amount !== null && h.amount > 0) {
+      owed.set(h.from, (owed.get(h.from) ?? 0) + drain);
+    }
+  }
+  const healed = new Map<Group, number>();
+  for (const [f, amount] of owed) {
+    if (!f.alive) continue;
+    const gain = Math.min(f.maxHp - f.hp, amount);
+    if (gain <= 0) continue;
+    f.hp += gain;
+    healed.set(f.group, (healed.get(f.group) ?? 0) + gain);
+  }
+  for (const [g, amount] of healed) log.push({ kind: 'heal', target: g.ref, amount });
 }
 
 /** Lands the phase's hits in order and logs one event per attacking and target group. */
@@ -84,6 +124,7 @@ function land(hits: Hit[], kind: 'volley' | 'melee', log: BattleEvent[]): void {
   for (const t of tally.values()) {
     log.push({ kind, squad: t.by.ref, target: t.target.ref, hits: t.hits, kills: t.kills });
   }
+  drainLife(hits, log);
 }
 
 /** A ranged weapon reaches a row this deep: the rear needs BATTLE.rearReach, else the middle. */
@@ -104,6 +145,8 @@ function armed(g: Group, enemyFront: Formation): boolean {
  * back and keep firing. A group the enemy has closed on is in contact and fights back.
  */
 function engaged(field: Field, round: number): Set<Group> {
+  // A wall between the armies keeps them apart.
+  if (fieldHas(field, (e) => FIELD_EFFECTS[e.kind].noMelee)) return new Set();
   const fronts = { attacker: frontRow(field, 'attacker'), defender: frontRow(field, 'defender') };
   const closing = new Set<Group>();
   for (const side of SIDES) {
@@ -112,6 +155,7 @@ function engaged(field: Field, round: number): Set<Group> {
     for (const g of field.sides[side]) {
       if (
         active(g) &&
+        !exhausted(g) &&
         g.row === fronts[side] &&
         !armed(g, enemyFront) &&
         round >= closingRound(g.base)
@@ -129,6 +173,8 @@ function engaged(field: Field, round: number): Set<Group> {
 }
 
 export function rangedPhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
+  // A storm grounds every shot.
+  if (fieldHas(field, (e) => FIELD_EFFECTS[e.kind].noRanged)) return;
   const hits: Hit[] = [];
   const contact = engaged(field, round);
   for (const side of SIDES) {
@@ -137,7 +183,7 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
     if (row === null) continue;
     const targets = targetsUpTo(field, enemy, row);
     for (const g of field.sides[side]) {
-      if (!active(g) || contact.has(g)) continue;
+      if (!active(g) || exhausted(g) || contact.has(g)) continue;
       g.base.weapons.forEach((w, i) => {
         const range = w.range;
         if (range === undefined || (g.ammo[i] ?? 0) <= 0 || !reaches(range, row)) return;
@@ -150,7 +196,7 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
           const hit = prec + drn(rng) >= BATTLE.ranged.toHit + drn(rng);
           // A shot's damage is the weapon's alone: the wielder's strength counts only in melee.
           const amount = hit ? weaponDamage(rng, 0, w, statOf(target, 'prot'), 0) : null;
-          hits.push({ by: g, weapon: w, target, amount });
+          hits.push({ by: g, from: m, weapon: w, target, amount });
         }
       });
     }
@@ -167,7 +213,7 @@ export function meleePhase(field: Field, round: number, rng: RngState, log: Batt
     if (row === null) continue;
     const targets = targetsUpTo(field, enemy, row);
     for (const g of field.sides[side]) {
-      if (!contact.has(g)) continue;
+      if (!contact.has(g) || exhausted(g)) continue;
       g.firstMelee ??= round;
       const melee = g.base.weapons.filter((w) => w.range === undefined);
       const swings = melee.length > 0 ? melee : [UNARMED];
@@ -181,7 +227,7 @@ export function meleePhase(field: Field, round: number, rng: RngState, log: Batt
           const amount = hit
             ? weaponDamage(rng, statOf(m, 'str'), w, statOf(target, 'prot'), bonus)
             : null;
-          hits.push({ by: g, weapon: w, target, amount });
+          hits.push({ by: g, from: m, weapon: w, target, amount });
         }
       }
     }

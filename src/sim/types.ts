@@ -308,6 +308,15 @@ export interface Message {
   battle: BattleId | null;
 }
 
+/** What a timed province effect does. */
+export type ProvinceEffectBody =
+  | { kind: 'growth'; deltaScale: number }
+  | { kind: 'supply'; deltaPct: number }
+  | { kind: 'materials'; delta: number }
+  | { kind: 'defense'; prot: number; def: number }
+  /** The nation sees this province as if it stood there. */
+  | { kind: 'scry' };
+
 /**
  * Timed province modifiers from rituals. Active while state.day < untilDay; readers go through
  * activeEffects, and advance drops expired ones at the end of each day.
@@ -319,12 +328,7 @@ export type ProvinceEffect = {
   /** The spell that made it. */
   source: string;
   untilDay: number;
-} & (
-  | { kind: 'growth'; deltaScale: number }
-  | { kind: 'supply'; deltaPct: number }
-  | { kind: 'materials'; delta: number }
-  | { kind: 'defense'; prot: number; def: number }
-);
+} & ProvinceEffectBody;
 
 export interface GameResult {
   day: number;

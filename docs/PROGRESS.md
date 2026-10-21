@@ -147,6 +147,35 @@
   (morale boundaries, heirs, PD after battle, retreats, storms, reach, lances, berserk, rng
   ties) now fail it. Armor piercing's factor moved to content.
 
+## Phase 5: Magic (done)
+
+- Content: `src/content/spells/` holds the ten Red and ten Green spells of `docs/02-magic.md`
+  and the priests' Bless as data built from the section 5 primitives, with requirement strings
+  that can hold hybrids, and content validation for every spell. Rule numbers (fatigue,
+  research, blessings, field effects, scry) are in `src/content/rules.ts`.
+- Battle: the resolver casts in round step 1, one commander after another: named spells or
+  the best castable one, fatigue and recovery, carried mana, and all eight battle primitives
+  (`battle/spells.ts`, `targets.ts`, `effects.ts`). Setup lists each commander's known spells
+  and the stats of what it can summon; sacred units carry the pretender's bless, life drain
+  included.
+- Map: research (`research.ts`), rituals with payment, targets, a completion check, and all
+  eleven ritual primitives (`rituals.ts`, `ritualEffects.ts`), dominion pushes
+  (`dominion.ts`), scry vision, and the commands `setResearchColor`, `castRitual`, `giveMana`;
+  `setScript` takes named spells. Priests default to Bless.
+- Tests: every Red and Green spell cast in a fixture battle or run to completion as a ritual
+  through its command; the docs/04 Pyre Storm test (at least 8 of 30 militia); fatigue math
+  and exhaustion; script choice and caster order; every primitive, including those no M1
+  spell uses; research timing (one apprentice reaches level 2 on day 540, four reach level 4
+  on day 660); payment, targets, refusals, and failures; blessings; replay folding with
+  spells; 300 against 300 with eight casters under 50 ms.
+- A design review (4 lenses, 49 issues, two independent judges) settled the rules recorded in
+  `docs/02-magic.md`, `docs/04-battle.md`, `docs/05-pretender.md`, and `docs/06-architecture.md`.
+  The main changes: named spells in scripts, priests that Bless, requirement strings with
+  hybrids, no action at fatigue 100, summons with their side's modifiers, recasts that
+  replace instead of stack, rituals that cannot be stacked on one province, leadership for
+  summoned troops, Ash Rain on troops only and without armor, and one dominion push for
+  rituals and Phase 6's spread.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -166,6 +195,11 @@
   storms, battle records only for the player's battles) are listed at the end of
   `docs/04-battle.md` and `docs/01-core-rules.md`; numbers in `docs/09-balance.md`. Dread's
   battle morale follows the effective scale (`docs/05-pretender.md`).
+- Magic rules settled in Phase 5 (requirement strings, fatigue at 100, known spells and the
+  casting heuristic, targets, recasts, summons for the battle only, field effects, research
+  points and the level-6 cap, ritual payment, targets, completion checks, leadership, and
+  each primitive's reading) are at the end of `docs/02-magic.md`. White, Blue, and Black
+  spell data is not written (M2; the `docs/06` layout lists those files).
 - Economy rules settled in Phase 2 (daily application of monthly rates, upkeep shortfall
   and recovery, materials cap, supply in transit, pillage order, construction) are listed
   at the end of `docs/01-core-rules.md`. `GameState` differs from the
@@ -199,9 +233,15 @@
 - A commander in transit is present at its location for battles: it defends there and is
   caught by arrivals there, and a battle there ends its transit. Change this only together
   with `isHostile`.
-- For Phase 5: the Pyre Storm required test ("kills at least 8 of a 30-militia front row on
-  average") arrives with battle spells; Cast slots hold until then. Timed modifiers and their
-  `expire` events are already in the resolver for spells to use.
+- Research conflict: four apprentices reach level 4 by month 24 only at neutral or better
+  Lore; at capital Fury −2 (the Warlord and Wildfire presets) they take until day 825.
+  Phase 12 decides (see `docs/09-balance.md`).
+- For Phase 6: whether pretenders other than the Oracle research is one predicate,
+  `canResearch` in `research.ts`. A new prophet keeps its script; Phase 6 decides whether it
+  gets a caster script. Godless already blocks rituals.
+- For Phase 7 (AI): Warcry, Pyre Storm, Swarm, and Regrowth need carried mana, so the AI
+  needs a `giveMana` step; its research step must not replace a `castRitual` order, which
+  would throw away the mana already paid.
 - For Phase 6: `pretenderId` is null both before the pretender arrives and after it dies, so
   awakening must track the arrival separately.
 - For Phase 7 (AI): there is no sally; a besieged fort is relieved only by an army arriving

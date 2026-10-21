@@ -155,3 +155,101 @@ start (computed once):
 
 Pips ≥ 6 in a color doubles the numeric parts. Blesses apply only in battle and only to
 units with `sacred: true`.
+
+## Implementation decisions
+
+Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
+
+**Spell data**
+- **Requirements** are strings in this doc's notation: one letter per pip, a slash joining
+  the letters of a pip either color can fill (`RR`, `R/G`, `RR/G`). They parse once into pip
+  slots; a caster meets a requirement when its pips fill every slot, one pip each (an exact
+  search, so `R` plus `R/G` needs two pips). Holy spells have an empty requirement and a holy
+  pip count. Every castability check (battle, scripts, rituals, the UI) uses this one rule.
+- **White, Blue, and Black** spell data is not written in M1. Section 6 calls them M2 and
+  gives none of their fatigue, mana costs, cast days, or durations, and several need effects
+  the primitive list lacks (Edict of Order, Beacon, Swift Currents, Veil the Border, Deep
+  Study, Rift Step, Dark Tithe, Hollowing, Raise the Fallen "from casualties", "double vs
+  undead") or units that do not exist. Every primitive is still implemented and tested with
+  test-only spells. The Research panel shows those colors' levels without spell names.
+- **Bless** is the priests' holy spell: holy 1, no research, fatigue 10, +1 morale on one
+  friendly squad for the battle. Pyre and Grove Priests default to it (docs/08 "priests
+  Bless"); when every squad is blessed they fall back to their best castable spell.
+- **Blood Fury**'s "debuff defense −2" falls on its own squad, so it is a buff with a
+  negative delta: the price of the fury, which Regrowth never lifts.
+- **Area damage** has one shape in M1: `n` distinct random living troops among every present
+  unit in the target group's row. The damage primitive omits `aoeShape` until a second shape
+  exists.
+
+**Research** (section 4)
+- A researcher is a commander with a color pip (holy pips do not count) whose order is
+  Research, standing, in a lab province its nation owns. Phase 6 decides which pretenders
+  research; one predicate (`canResearch`) holds that rule.
+- Monthly points `(3 + 2 * colorPips) * (1 + researchPct)`, where `researchPct` is the
+  province's Lore/Fury scale effect (+10% per Lore step, −10% per Fury step), applied daily
+  as a thirtieth. A level is reached at its threshold, with a 1e-9 slack for the daily sums.
+  Points stop at the level-6 threshold (1050); research beyond it is lost. A message names
+  each level reached and the spells it unlocks.
+
+**Battle spells** (section 3, docs/04 round step 1)
+- **Fatigue** at 100 or more stops a commander from acting at all: no spell, no Attack or
+  Retreat slot, no melee or ranged attack. It can still be hit and recovers 5 a round. M1
+  treats 200 ("unconscious") the same: only a fatigue drain can reach it and no M1 spell
+  drains. A cast costs `max(fatigue * 0.2, fatigue − 5 * extra)`, `extra` being the caster's
+  pips in the requirement's colors beyond its slots (holy pips beyond for holy spells).
+- **The spells a commander knows** are fixed at battle setup: those its pips meet and its
+  nation has researched. A Cast slot casts the named spell if it is known and has a target,
+  else the best castable one: against 10 or more active enemy troops damage spells first,
+  otherwise the rest first, then the highest level, then content order. A spell is castable
+  with its carried mana in hand and a target for every effect.
+- **Targets** are chosen once per cast and target kind, so a spell's effects share them.
+  Enemy groups: the largest present group in the enemy's front row, then the rows behind it.
+  Friendly squads: the largest active squad lacking the spell's effect (or, for heals,
+  wounded or cursed), front row first. A buff or curse is cast only on a target without it;
+  a recast (Warcry once a summon arrives) first removes the spell's earlier changes from its
+  targets, so effects never stack. Damage spells roll `amount + DRN − prot − DRN` per troop
+  hit, at least 0, with armor piercing and negating as for weapons, and no hit roll.
+- **Summons** last the battle: they join on the caster's side under the caster, with the
+  side's modifiers worked out at setup (terrain, scales, storm), and are not written back or
+  counted as casualties.
+- **Heal** with `removeDebuffs n` lifts every change of the `n` newest curse spells on each
+  target group (Regrowth lifts a whole Entangle).
+- **moraleShock** adds its amount to a group's morale pressure for the round and makes it
+  check in the morale step even without losses; a squad still rolls once a round.
+  **fatigueDrain** tires the enemy caster with the most pips (or all of them).
+- **Field effects**: storm stops all ranged fire and gives everyone −2 attack (Tempest's
+  text); fog gives everyone −4 precision; wall stops melee between the fronts. One of each
+  kind at a time. Their stat parts fall on every unit present when cast; later summons
+  arrive unaffected. Fog and wall numbers are this milestone's own (no spell defines them).
+- **Carried mana** a battle spell uses is spent from the caster's carried pool and counted in
+  the nation's mana spent.
+- **Life drain** (the Black bless) heals each striker 2 per damaging hit, paid after every hit
+  of the phase has landed and only to strikers still alive.
+
+**Rituals** (sections 3, 5, 6)
+- **Casting** needs a nation that is not godless, a caster standing in a lab province its
+  nation owns, its pips, the research level, a fitting target, and the mana. The whole cost
+  is paid when the ritual begins: the colored part, then the generic part as the command
+  splits it (whole amounts) or by default from the spell's color first and then the largest
+  other pools. The caster's order counts down castDays; any other order, a retreat, or death
+  ends the ritual and the mana is lost.
+- **Targets**: rituals cast on the caster's own province take no target; Forge of Cinders
+  needs a fort there; ranged rituals reach provinces within their hops (by adjacency), and
+  "owned" ones only provinces the nation owns. A ritual with timed effects cannot be cast on
+  a province that holds an effect of the same spell from anyone.
+- **At completion** the same checks run again (mana and leadership aside); if one fails, it fails
+  with a message naming why, and nothing is refunded.
+- **Summoned troops** must fit the caster's leadership when the ritual begins; when they
+  arrive they join whatever it leads by then. Summoned commanders (Salamander, Treant) stand
+  in the caster's province with their unit's pips and the default caster script.
+- **Primitives**: timed effects last `months * 30` days. `remoteDamage` hits troops only
+  (every squad in the province, any owner, hidden ones included), each taking plain `dice`
+  d6 with no protection; wounds spread evenly, the dead leave, survivors keep their wounds;
+  commanders and PD are untouched. `scry` shows the nation that province alone for 30 days
+  (armies and exact independent strength) and explores it. `dominionPush` applies single
+  docs/01 section 12 steps through the same function Phase 6's spread will use (own or
+  empty: +1 up to the dominion score; another nation's: −1, leaving no dominion at 0).
+  `manaConvert` turns the nation's whole `from` pool into `to`, `ratio` to one.
+- **giveMana** moves whole mana from the pool to a commander standing in a lab province its
+  nation owns; nothing moves back in M1. Mana carried is lost with its commander.
+

@@ -1,6 +1,7 @@
 // Writes a battle's result back into the game (docs/04-battle.md; docs/01-core-rules.md
 // sections 3 and 5): survivors and wounds, deaths, PD losses, the province's population and
 // unrest, the battle record, messages, and nation stats.
+import { COLORS } from '../../content/colors';
 import { BATTLE, PD, UNREST } from '../../content/rules';
 import { addSquad, commanderDies } from '../commanders';
 import { newId, type BattleId, type ProvinceId } from '../ids';
@@ -43,6 +44,12 @@ function writeSide(state: GameState, forces: SideForces, result: BattleResult): 
     if (c.order.kind === 'move') c.order = { kind: 'idle' };
     if (!o) continue;
     c.hp = o.hp;
+    // Mana the battle's spells used up counts as spent.
+    const spent = forces.nation === null ? null : state.nations[forces.nation]?.stats.manaSpent;
+    for (const color of COLORS) {
+      const used = (c.carriedMana[color] ?? 0) - (o.carriedMana[color] ?? 0);
+      if (spent && used > 0) spent[color] += used;
+    }
     c.carriedMana = { ...o.carriedMana };
   }
 }

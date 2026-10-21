@@ -3,6 +3,8 @@
 import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
 import { isNationDefId, NATIONS, type NationDefId } from './nations';
+import { isSpellId, SPELLS } from './spells';
+import { validateSpell } from './spells/validate';
 import { isTerrainId } from './terrain';
 import type { BuildingDef, BuildingId, NationDef, UnitDef } from './types';
 import { UNIT_TAGS } from './types';
@@ -57,6 +59,10 @@ function validateUnit(key: string, u: UnitDef): string[] {
       }
     }
     if (u.commander.holy < 0 || u.commander.holy > 3) problems.push(`${where} bad holy`);
+    const spell = u.commander.defaultSpell;
+    if (spell !== undefined && (!isSpellId(spell) || SPELLS[spell].kind !== 'battle')) {
+      problems.push(`${where} default spell ${spell} is not a battle spell`);
+    }
   }
   return problems;
 }
@@ -125,5 +131,6 @@ export function validateContent(): string[] {
     if (b.id !== key) problems.push(`building ${key} has id ${b.id}`);
     if (b.gold < 0 || b.materials < 0 || b.days < 1) problems.push(`building ${key} bad cost`);
   }
+  for (const [key, spell] of Object.entries(SPELLS)) problems.push(...validateSpell(key, spell));
   return problems;
 }

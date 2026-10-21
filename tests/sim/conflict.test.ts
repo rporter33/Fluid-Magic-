@@ -1,5 +1,6 @@
 // Arrival battles, capture, and retreat (docs/01-core-rules.md sections 6, 9-11).
 import { describe, expect, it } from 'vitest';
+import { applyCommand } from '../../src/sim/commands';
 import { removeCommander } from '../../src/sim/commanders';
 import { captureIfHeld, engage } from '../../src/sim/conflict';
 import { createGame } from '../../src/sim/createGame';
@@ -181,6 +182,28 @@ describe('hidden commanders', () => {
     scout.location = deepmoss;
     engage(state, red, deepmoss);
     expect(state.provinces[deepmoss]!.siege).toBeNull();
+  });
+});
+
+describe('spells in an arrival battle', () => {
+  it('casts what the player scripted', () => {
+    const { state, red, capital, army } = redField();
+    const adept = commandersIn(state, capital).find((c) => c.unit === 'emberAdept')!;
+    const slots = Array.from({ length: 5 }, () => ({
+      kind: 'cast' as const,
+      spellId: 'emberDart',
+    }));
+    expect(
+      applyCommand(state, { type: 'setScript', nation: red, commander: adept.id, slots }),
+    ).toEqual({ ok: true });
+    army.squads[0]!.count = 120;
+    army.squads[0]!.hp = 120 * 11;
+    const target = neighbors(state, capital)[0]!;
+    expect(move(state, red, [army, adept], [target])).toEqual({ ok: true });
+    runDays(state, legDays(state, target, 2));
+    const record = state.battles.at(-1)!;
+    const cast = record.replay.find((e) => e.kind === 'cast');
+    expect(cast).toMatchObject({ caster: adept.id, spellId: 'emberDart' });
   });
 });
 

@@ -28,6 +28,14 @@ import {
   validateSetTax,
   validateStorm,
 } from './province';
+import {
+  applyCastRitual,
+  applyGiveMana,
+  applySetResearchColor,
+  validateCastRitual,
+  validateGiveMana,
+  validateSetResearchColor,
+} from './magic';
 import type { GameState } from '../types';
 import type { Command, CommandResult } from './types';
 
@@ -63,6 +71,12 @@ export function validateCommand(state: GameState, cmd: Command): string | null {
       return validateSetTax(state, cmd);
     case 'storm':
       return validateStorm(state, cmd);
+    case 'setResearchColor':
+      return validateSetResearchColor(cmd);
+    case 'castRitual':
+      return validateCastRitual(state, cmd);
+    case 'giveMana':
+      return validateGiveMana(state, cmd);
     default:
       return 'Unknown command';
   }
@@ -108,6 +122,15 @@ export function applyCommand(state: GameState, cmd: Command): CommandResult {
       break;
     case 'storm':
       applyStorm(state, cmd);
+      break;
+    case 'setResearchColor':
+      applySetResearchColor(state, cmd);
+      break;
+    case 'castRitual':
+      applyCastRitual(state, cmd);
+      break;
+    case 'giveMana':
+      applyGiveMana(state, cmd);
       break;
   }
   return { ok: true };

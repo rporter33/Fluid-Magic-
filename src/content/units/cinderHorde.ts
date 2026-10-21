@@ -186,7 +186,7 @@ export const CINDER_HORDE_UNITS = {
     cost: { gold: 60, materials: 4, pop: 50 },
     recruitDays: 20,
     requires: ['fort', 'temple'],
-    commander: { leadership: 20, pips: { R: 1 }, holy: 2 },
+    commander: { leadership: 20, pips: { R: 1 }, holy: 2, defaultSpell: 'bless' },
   },
   emberAdept: {
     ...COMMANDER_BASELINE,
