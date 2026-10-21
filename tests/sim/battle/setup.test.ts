@@ -123,4 +123,59 @@ describe('buildBattle', () => {
       ['pd1', null, 'flameArcher', 1],
     ]);
   });
+
+  it('lowers morale by Dread only for those fighting the dominating nation', () => {
+    const { state, red, green, p, atk } = stage('plains');
+    p.owner = null;
+    const guards = addArmy(state, null, p.id, 'lightInfantry', 10, 'independentCaptain');
+    const vsIndependents = () =>
+      buildBattle(state, p.id, forces(red, [atk]), forces(null, [guards]));
+    // Green dominates with Dread 3 but takes no part: nobody loses morale.
+    setScales(state, green, p.id, { sanctity: -3 });
+    expect(vsIndependents().attacker.squads[0]!.stats.mor).toBe(11);
+    expect(vsIndependents().defender.squads[0]!.stats.mor).toBe(9);
+    // Red dominates: the independents fighting Red lose 3.
+    setScales(state, red, p.id, { sanctity: -3 });
+    expect(vsIndependents().defender.squads[0]!.stats.mor).toBe(6);
+    expect(vsIndependents().attacker.squads[0]!.stats.mor).toBe(11);
+  });
+
+  it('gives Thornwood its forest defense when attacking too', () => {
+    const s = redField();
+    const forest = independentProvince(s.state, 'forest');
+    forest.owner = s.red;
+    const wardens = addArmy(s.state, s.green, forest.id, 'warden', 10, 'wardenCaptain');
+    const red = addArmy(s.state, s.red, forest.id, 'cinderWarrior', 10);
+    const setup = buildBattle(s.state, forest.id, forces(s.green, [wardens]), forces(s.red, [red]));
+    expect(setup.attacker.squads[0]!.stats.def).toBe(12);
+  });
+
+  it('raises sacred units’ morale by the dominating nation’s Sanctity', () => {
+    const { state, red, p, atk, build } = stage('plains');
+    atk.squads = addArmy(state, red, p.id, 'flamebrand', 5).squads;
+    setScales(state, red, p.id, { sanctity: 3 });
+    expect(build().attacker.squads[0]!.stats.mor).toBe(16);
+  });
+
+  it('spares provincial defense the unpaid-upkeep morale loss: PD draws no pay', () => {
+    const { state, green, capital } = (() => {
+      const f = redField();
+      return { ...f, capital: f.state.nations[f.green]!.capital };
+    })();
+    const p = state.provinces[capital]!;
+    p.pd = 10;
+    state.nations[green]!.unpaidDays = 90;
+    const holder = state.commanders[p.garrison!]!;
+    const setup = buildBattle(state, capital, forces(null, []), {
+      nation: green,
+      commanders: [],
+      garrison: holder,
+      pd: true,
+    });
+    const pd = setup.defender.squads.filter((s) => s.ref.startsWith('pd'));
+    expect(pd.map((s) => [s.unit, s.stats.mor])).toEqual([
+      ['thornMilitia', 10],
+      ['longbowHunter', 10],
+    ]);
+  });
 });

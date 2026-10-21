@@ -402,6 +402,8 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   (`state.rng`); else the commander dies with its troops. Independents never move, so beaten
   independents die. A fort's garrison troops are lost when its defenders lose. Retreating
   commanders arrive at once, idle.
+- **Heirs at a fort**: the fort's garrison holder takes in a fallen defender's troops even when
+  it kept none of its own (docs/04 "After the battle").
 - **After a battle**, every surviving commander that fought, on either side, ends its transit
   and its move order (idle) where it fought; the losers then retreat. A winning side's routed
   squads and commanders stay in the province with their side: section 10's "return to the
@@ -421,7 +423,8 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   and commander present on that side (garrison troops and PD defend; the holder does not).
   Walls are down below 1 HP, shown as 0. An undefended fort falls once its walls are down.
   Reinforcements of the besieger join the siege as it stands; a nation that beats the
-  besiegers in the province takes over the siege and its battered walls.
+  besiegers in the province takes over the siege and its battered walls. A nation that
+  arrives after the besiegers left, without a fight, starts with the walls whole.
 - **Storm**: the besieger may order a storm at any time while it has a commander there. It is
   fought in the next day's siege step: an undefended fort falls at once; otherwise the
   defenders get +2 morale and +6 protection while the walls stand, +3 once they are down.

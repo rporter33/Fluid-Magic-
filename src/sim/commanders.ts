@@ -113,6 +113,14 @@ export function isGarrisonHolder(commander: CommanderState): boolean {
   return unitDef(commander.unit).commander?.garrison === true;
 }
 
+/**
+ * Takes part in conflict and counts for hostility: not a garrison holder (which never fights)
+ * and not hidden (counting it would give it away).
+ */
+export function takesPart(commander: CommanderState): boolean {
+  return !isGarrisonHolder(commander) && !isStealthy(commander);
+}
+
 /** Hidden from other nations: a stealthy commander leading only stealthy troops. */
 export function isStealthy(commander: CommanderState): boolean {
   if (!unitDef(commander.unit).tags.includes('stealthy')) return false;

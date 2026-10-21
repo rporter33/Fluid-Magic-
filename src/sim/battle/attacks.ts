@@ -4,6 +4,7 @@
 import { BATTLE } from '../../content/rules';
 import { UNARMED } from '../../content/units/base';
 import type { WeaponDef } from '../../content/types';
+import type { Formation } from '../types';
 import { drn } from '../drn';
 import { randBelow, type RngState } from '../rng';
 import type { BattleEvent } from './events';
@@ -41,7 +42,11 @@ export function weaponDamage(
   prot: number,
   bonus: number,
 ): number {
-  const armor = w.armorNegating ? 0 : w.armorPiercing ? Math.floor(prot / 2) : prot;
+  const armor = w.armorNegating
+    ? 0
+    : w.armorPiercing
+      ? Math.floor(prot * BATTLE.armorPiercingFactor)
+      : prot;
   return Math.max(0, str + w.dmg + bonus + drn(rng) - armor - drn(rng));
 }
 
@@ -81,9 +86,16 @@ function land(hits: Hit[], kind: 'volley' | 'melee', log: BattleEvent[]): void {
   }
 }
 
-/** Can still shoot: a ranged weapon with ammunition left. */
-function armed(g: Group): boolean {
-  return g.base.weapons.some((w, i) => w.range !== undefined && (g.ammo[i] ?? 0) > 0);
+/** A ranged weapon reaches a row this deep: the rear needs BATTLE.rearReach, else the middle. */
+function reaches(range: number, row: Formation): boolean {
+  return ROWS.indexOf(row) <= ROWS.indexOf(range >= BATTLE.rearReach ? 'rear' : 'middle');
+}
+
+/** Can still shoot at the enemy's front: a ranged weapon with ammunition that reaches it. */
+function armed(g: Group, enemyFront: Formation): boolean {
+  return g.base.weapons.some(
+    (w, i) => w.range !== undefined && (g.ammo[i] ?? 0) > 0 && reaches(w.range, enemyFront),
+  );
 }
 
 /**
@@ -95,9 +107,15 @@ function engaged(field: Field, round: number): Set<Group> {
   const fronts = { attacker: frontRow(field, 'attacker'), defender: frontRow(field, 'defender') };
   const closing = new Set<Group>();
   for (const side of SIDES) {
-    if (fronts[OTHER[side]] === null) continue;
+    const enemyFront = fronts[OTHER[side]];
+    if (enemyFront === null) continue;
     for (const g of field.sides[side]) {
-      if (active(g) && g.row === fronts[side] && !armed(g) && round >= closingRound(g.base)) {
+      if (
+        active(g) &&
+        g.row === fronts[side] &&
+        !armed(g, enemyFront) &&
+        round >= closingRound(g.base)
+      ) {
         closing.add(g);
       }
     }
@@ -117,14 +135,12 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
     const enemy = OTHER[side];
     const row = frontRow(field, enemy);
     if (row === null) continue;
-    const depth = ROWS.indexOf(row);
     const targets = targetsUpTo(field, enemy, row);
     for (const g of field.sides[side]) {
       if (!active(g) || contact.has(g)) continue;
       g.base.weapons.forEach((w, i) => {
         const range = w.range;
-        if (range === undefined || (g.ammo[i] ?? 0) <= 0) return;
-        if (depth > (range >= BATTLE.rearReach ? 2 : 1)) return;
+        if (range === undefined || (g.ammo[i] ?? 0) <= 0 || !reaches(range, row)) return;
         g.ammo[i] = (g.ammo[i] ?? 0) - 1;
         const prec = groupStat(g, 'prec');
         for (const m of g.members) {

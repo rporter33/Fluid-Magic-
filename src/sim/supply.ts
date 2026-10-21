@@ -8,18 +8,13 @@ import { SUPPLY } from '../content/rules';
 import { commanderMaxHp, troopSupply } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
-import { getMapProvince } from './state';
+import { getMapProvince, roundUp } from './state';
 import { commandersByProvince, type ProvinceEconomy } from './selectors';
 import type { CommanderState, GameState, Squad } from './types';
 
 /** Highest starvedDays: one below the next penalty point, so recovery runs at the loss rate. */
 export const STARVED_DAYS_CAP =
   (SUPPLY.starvationMoraleCap + 1) * SUPPLY.starvationDaysPerMorale - 1;
-
-/** Rounds a troop count up, ignoring floating-point noise. */
-function wholeCount(x: number): number {
-  return Math.max(0, Math.ceil(x - 1e-9));
-}
 
 /** Starves or feeds one squad; returns true if it began starving today. */
 function feedSquad(squad: Squad, starving: boolean): boolean {
@@ -31,7 +26,7 @@ function feedSquad(squad: Squad, starving: boolean): boolean {
     squad.hp = Math.max(0, squad.hp - max * SUPPLY.starvationHpPerDay);
     // Troops die in proportion to the pool lost, wounds spread evenly as in battle; for a
     // healthy squad this is the pool rounded up to whole troops.
-    squad.count = before > 0 ? wholeCount((squad.count * squad.hp) / before) : 0;
+    squad.count = before > 0 ? Math.max(0, roundUp((squad.count * squad.hp) / before)) : 0;
     squad.starvedDays = Math.min(STARVED_DAYS_CAP, squad.starvedDays + 1);
     return squad.starvedDays === 1;
   }

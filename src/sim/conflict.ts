@@ -1,14 +1,15 @@
 // What happens when a nation's commanders arrive among hostiles (docs/01-core-rules.md
 // sections 6, 9, 10, 11): battles, sieges, capture, and the losers' retreat. Tick step 2b.
 // Hidden commanders (stealthy, leading only stealthy troops) take no part in any of it: they
-// never fight, besiege, or take a province, on either side.
+// never fight, besiege, or take a province, on either side. Each step of an arrival reads who
+// stands in the province once.
 import { SIEGE } from '../content/rules';
 import { applyBattle } from './battle/apply';
 import type { BattleSide } from './battle/events';
 import { resolveBattle } from './battle/resolve';
 import { buildBattle, type SideForces, type StormState } from './battle/setup';
 import { captureProvince } from './capture';
-import { commanderDies, isGarrisonHolder, isStealthy } from './commanders';
+import { commanderDies, takesPart } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { hostileWith, presence, type Arrival, type Presence } from './movement';
 import { pdForce } from './pd';
@@ -16,16 +17,18 @@ import { pick } from './rng';
 import { getMapProvince, getProvince } from './state';
 import type { CommanderState, GameState } from './types';
 
-/** A nation's commanders in a province that take part in conflict there. */
-function fightersOf(
-  state: GameState,
-  provinceId: ProvinceId,
-  nation: NationId | null,
-): CommanderState[] {
-  return Object.values(state.commanders).filter(
-    (c) =>
-      c.location === provinceId && c.owner === nation && !isGarrisonHolder(c) && !isStealthy(c),
-  );
+/** The commanders in a province that take part in conflict there, by owner, in state order. */
+export type Fighters = Map<NationId | null, CommanderState[]>;
+
+export function fightersIn(state: GameState, provinceId: ProvinceId): Fighters {
+  const pool: Fighters = new Map();
+  for (const c of Object.values(state.commanders)) {
+    if (c.location !== provinceId || !takesPart(c)) continue;
+    const list = pool.get(c.owner);
+    if (list) list.push(c);
+    else pool.set(c.owner, [c]);
+  }
+  return pool;
 }
 
 /** The forces a nation brings to a fight or a siege in a province. */
@@ -33,22 +36,27 @@ export function attackersAt(
   state: GameState,
   provinceId: ProvinceId,
   nation: NationId,
+  pool: Fighters = fightersIn(state, provinceId),
 ): SideForces {
-  return { nation, commanders: fightersOf(state, provinceId, nation), garrison: null, pd: false };
+  return { nation, commanders: pool.get(nation) ?? [], garrison: null, pd: false };
 }
 
 /**
- * The province owner's defenders: its commanders there, the fort's garrison troops, and
- * provincial defense; for an independent province, the independents.
+ * The province owner's defenders: its commanders there, the fort's garrison holder (whose
+ * troops fight and who takes in a fallen commander's troops), and provincial defense; for an
+ * independent province, the independents.
  */
-export function ownerForces(state: GameState, provinceId: ProvinceId): SideForces {
+export function ownerForces(
+  state: GameState,
+  provinceId: ProvinceId,
+  pool: Fighters = fightersIn(state, provinceId),
+): SideForces {
   const p = getProvince(state, provinceId);
   const holder = p.garrison === null ? undefined : state.commanders[p.garrison];
-  const garrison = holder && holder.owner === p.owner && holder.squads.length > 0 ? holder : null;
   return {
     nation: p.owner,
-    commanders: fightersOf(state, provinceId, p.owner),
-    garrison,
+    commanders: pool.get(p.owner) ?? [],
+    garrison: holder && holder.owner === p.owner ? holder : null,
     pd: p.owner !== null && p.pd > 0,
   };
 }
@@ -69,12 +77,13 @@ export function hasForces(state: GameState, provinceId: ProvinceId, forces: Side
  */
 function retreat(state: GameState, provinceId: ProvinceId, forces: SideForces): void {
   if (forces.garrison) forces.garrison.squads = [];
-  const present: Presence = presence(state);
+  // Built on first use: losers without a nation or commanders never need it.
+  let present: Presence | null = null;
   const nation = forces.nation;
   const friendly = (p: ProvinceId) =>
     nation !== null &&
     getProvince(state, p).owner === nation &&
-    !hostileWith(state, present, nation, p);
+    !hostileWith(state, (present ??= presence(state)), nation, p);
   for (const c of forces.commanders) {
     if (!state.commanders[c.id]) continue;
     let to: ProvinceId | undefined;
@@ -110,9 +119,13 @@ export function fight(
   return result.winner;
 }
 
-/** A nation takes a province only with someone of its own still standing there. */
-export function captureIfHeld(state: GameState, provinceId: ProvinceId, nation: NationId): void {
-  if (fightersOf(state, provinceId, nation).length > 0) captureProvince(state, provinceId, nation);
+/** The winners take the province only with one of their commanders still standing there. */
+export function captureIfHeld(state: GameState, provinceId: ProvinceId, winners: SideForces): void {
+  if (winners.nation === null) return;
+  const held = winners.commanders.some(
+    (c) => state.commanders[c.id] === c && c.location === provinceId,
+  );
+  if (held) captureProvince(state, provinceId, winners.nation);
 }
 
 /**
@@ -122,35 +135,43 @@ export function captureIfHeld(state: GameState, provinceId: ProvinceId, nation: 
  */
 export function engage(state: GameState, nation: NationId, provinceId: ProvinceId): boolean {
   let acted = false;
-  for (let guard = 0; guard <= Object.keys(state.nations).length; guard++) {
-    const attackers = attackersAt(state, provinceId, nation);
+  // The besiegers of this fort were beaten here, so their siege passes on with its walls.
+  let beatBesiegers = false;
+  const nations = Object.keys(state.nations) as NationId[];
+  for (let guard = 0; guard <= nations.length; guard++) {
+    const pool = fightersIn(state, provinceId);
+    const attackers = attackersAt(state, provinceId, nation, pool);
     if (attackers.commanders.length === 0) return acted;
     const p = getProvince(state, provinceId);
-    const third = (Object.keys(state.nations) as NationId[]).find(
-      (n) => n !== nation && n !== p.owner && fightersOf(state, provinceId, n).length > 0,
+    const third = nations.find(
+      (n) => n !== nation && n !== p.owner && (pool.get(n)?.length ?? 0) > 0,
     );
     if (third !== undefined) {
       acted = true;
-      const defender = attackersAt(state, provinceId, third);
+      const defender = attackersAt(state, provinceId, third, pool);
       if (fight(state, provinceId, attackers, defender) !== 'attacker') return acted;
+      if (p.siege?.attacker === third) beatBesiegers = true;
       continue;
     }
     if (p.owner === nation) return acted;
     acted = true;
     if (p.owner !== null && p.buildings.includes('fort')) {
-      // Reinforcements join a siege as it stands; a new besieger inherits battered walls.
-      if (!p.siege) p.siege = { attacker: nation, wallHp: SIEGE.wallHp, storm: false };
-      else if (p.siege.attacker !== nation)
-        p.siege = { ...p.siege, attacker: nation, storm: false };
+      // Reinforcements join a siege as it stands; a nation that beat the besiegers here takes
+      // over their battered walls; anyone else starts afresh.
+      if (p.siege?.attacker === nation) return acted;
+      p.siege =
+        p.siege && beatBesiegers
+          ? { ...p.siege, attacker: nation, storm: false }
+          : { attacker: nation, wallHp: SIEGE.wallHp, storm: false };
       return acted;
     }
-    const defender = ownerForces(state, provinceId);
+    const defender = ownerForces(state, provinceId, pool);
     if (!hasForces(state, provinceId, defender)) {
       captureProvince(state, provinceId, nation);
       return acted;
     }
     if (fight(state, provinceId, attackers, defender) === 'attacker') {
-      captureIfHeld(state, provinceId, nation);
+      captureIfHeld(state, provinceId, attackers);
     }
     return acted;
   }

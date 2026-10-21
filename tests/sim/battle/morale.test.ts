@@ -1,9 +1,10 @@
 // Morale rules (docs/04-battle.md, round step 4), tested on a staged field.
 import { describe, expect, it } from 'vitest';
 import type { BattleEvent } from '../../../src/sim/battle/events';
-import { buildField, type Field, type Group } from '../../../src/sim/battle/field';
+import { buildField, troopsLost, type Field, type Group } from '../../../src/sim/battle/field';
 import { commanderDeaths, moralePhase } from '../../../src/sim/battle/morale';
-import { createRng } from '../../../src/sim/rng';
+import { drn } from '../../../src/sim/drn';
+import { cloneRng, createRng } from '../../../src/sim/rng';
 import { commander, setup, side, squad } from './fixtures';
 
 function kill(g: Group, n: number): void {
@@ -75,6 +76,27 @@ describe('squad morale checks', () => {
         },
       ),
     ).toBe(1);
+    // Exactly 20% in all and 10% this round is neither over: still no check.
+    expect(
+      routRate(
+        () => staged(-100),
+        (_, g) => {
+          kill(g, 2);
+          g.deathsThisRound = 0;
+          kill(g, 2);
+        },
+      ),
+    ).toBe(0);
+    // Losses in earlier rounds alone bring no check.
+    expect(
+      routRate(
+        () => staged(-100),
+        (_, g) => {
+          kill(g, 5);
+          g.deathsThisRound = 0;
+        },
+      ),
+    ).toBe(0);
     // Past 20% in all, even one more death this round brings a check.
     expect(
       routRate(
@@ -107,6 +129,43 @@ describe('squad morale checks', () => {
     ).toBe(0);
   });
 
+  it('break exactly when mor + DRN < 10 + DRN + pressure', () => {
+    for (let seed = 0; seed < 300; seed++) {
+      const { field, g } = staged(10);
+      kill(g, 5);
+      const rng = createRng(seed);
+      const replay = cloneRng(rng);
+      const breaks = 10 + drn(replay) < 10 + drn(replay);
+      moralePhase(field, 1, rng, []);
+      expect(g.routingSince !== null, `seed ${String(seed)}`).toBe(breaks);
+    }
+  });
+
+  it('count fled troops as lost, and add pressure only past half, not at it', () => {
+    const { field, g } = staged(10);
+    const other = field.sides.attacker[1]!;
+    kill(g, 5);
+    other.gone = true;
+    expect(troopsLost(field, 'attacker')).toBe(25);
+    // Exactly half lost (20 of 40) brings no pressure: the same rate as no losses elsewhere.
+    const plain = routRate(
+      () => staged(10),
+      (_, sq) => {
+        kill(sq, 5);
+      },
+    );
+    const half = routRate(
+      () => staged(10),
+      (f, sq) => {
+        kill(sq, 5);
+        const x = f.sides.attacker[1]!;
+        kill(x, 15);
+        x.deathsThisRound = 0;
+      },
+    );
+    expect(half).toBe(plain);
+  });
+
   it('get harder once the side has lost over half its troops', () => {
     const plain = routRate(
       () => staged(10),
@@ -128,6 +187,19 @@ describe('squad morale checks', () => {
 });
 
 describe('commander checks', () => {
+  it('give a squad that rolled for its commander’s death no second roll that round', () => {
+    for (let seed = 0; seed < 50; seed++) {
+      const { field, g, c } = staged(14);
+      kill(c, 1);
+      kill(g, 5);
+      const rng = createRng(seed);
+      commanderDeaths(field, 1, rng, []);
+      const after = cloneRng(rng);
+      moralePhase(field, 1, rng, []);
+      expect(rng).toEqual(after);
+    }
+  });
+
   it("roll a commander's squads at once, with pressure, when it dies", () => {
     let routs = 0;
     for (let seed = 0; seed < 400; seed++) {
@@ -160,6 +232,19 @@ describe('commander checks', () => {
 });
 
 describe('a commander whose line breaks', () => {
+  it('stays when it is fearless or berserk', () => {
+    for (const traits of [{ mor: 50 }, { mor: 10, tags: ['berserk' as const] }]) {
+      for (let seed = 0; seed < 30; seed++) {
+        const { field, g, c } = staged(-100);
+        c.base = { ...c.base, ...traits };
+        kill(g, 5);
+        moralePhase(field, 1, createRng(seed), []);
+        expect(g.routingSince).toBe(1);
+        expect(c.routingSince).toBeNull();
+      }
+    }
+  });
+
   it('goes with its troops, however brave', () => {
     for (let seed = 0; seed < 50; seed++) {
       const { field, g, c } = staged(-100);

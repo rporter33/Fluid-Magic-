@@ -1,16 +1,17 @@
-// Sieges (docs/01-core-rules.md section 11). An army that enters a fort province with
-// defenders lays siege: each day it batters the walls and the defenders repair them. The
-// besieger may storm at any time; walls still standing make it much harder. Tick step 2,
+// Sieges (docs/01-core-rules.md section 11). An army that enters an enemy nation's fort
+// province lays siege, defended or not: each day it batters the walls and the defenders, if
+// any, repair them. An undefended fort falls once its walls are down, or at once to a storm.
+// The besieger may storm at any time; walls still standing make it much harder. Tick step 2,
 // after arrivals.
 import { unitDef } from '../content';
 import { SIEGE } from '../content/rules';
 import { captureProvince } from './capture';
-import { attackersAt, captureIfHeld, fight, hasForces, ownerForces } from './conflict';
+import { attackersAt, captureIfHeld, fight, fightersIn, hasForces, ownerForces } from './conflict';
 import type { ProvinceId } from './ids';
 import { pdForce } from './pd';
 import { wholeDays } from './state';
-import type { GameState } from './types';
-import type { SideForces } from './battle/setup';
+import type { SideForces, StormState } from './battle/setup';
+import type { GameState, SiegeState } from './types';
 
 /** Total strength of a side: every troop's and commander's str. */
 function strength(state: GameState, provinceId: ProvinceId, forces: SideForces): number {
@@ -31,6 +32,27 @@ export function wallsDown(wallHp: number): boolean {
   return wallHp < SIEGE.wallsDownBelow;
 }
 
+/** What a storm of this siege faces: walls still standing, or breached. */
+export function stormState(siege: SiegeState): StormState {
+  return { wallsStanding: !wallsDown(siege.wallHp) };
+}
+
+/** Wall damage and repair a day from two sides' forces, and days until the walls are down. */
+function rates(
+  state: GameState,
+  provinceId: ProvinceId,
+  wallHp: number,
+  attackers: SideForces,
+  defenders: SideForces,
+): { damage: number; repair: number; daysToBreach: number | null } {
+  const damage = strength(state, provinceId, attackers) / SIEGE.attackDivisor;
+  const repair = strength(state, provinceId, defenders) / SIEGE.repairDivisor;
+  const net = damage - repair;
+  const left = wallHp - SIEGE.wallsDownBelow;
+  const daysToBreach = wallsDown(wallHp) ? 0 : net > 0 ? wholeDays(left / net) : null;
+  return { damage, repair, daysToBreach };
+}
+
 /**
  * A siege's daily numbers, for the tick, the UI, and the AI: wall damage, repair, and days until
  * the walls are down at this rate (null if they never will be).
@@ -41,14 +63,14 @@ export function siegeRates(
 ): { damage: number; repair: number; daysToBreach: number | null } {
   const siege = state.provinces[provinceId]?.siege;
   if (!siege) return { damage: 0, repair: 0, daysToBreach: null };
-  const damage =
-    strength(state, provinceId, attackersAt(state, provinceId, siege.attacker)) /
-    SIEGE.attackDivisor;
-  const repair = strength(state, provinceId, ownerForces(state, provinceId)) / SIEGE.repairDivisor;
-  const net = damage - repair;
-  const left = siege.wallHp - SIEGE.wallsDownBelow;
-  const daysToBreach = wallsDown(siege.wallHp) ? 0 : net > 0 ? wholeDays(left / net) : null;
-  return { damage, repair, daysToBreach };
+  const pool = fightersIn(state, provinceId);
+  return rates(
+    state,
+    provinceId,
+    siege.wallHp,
+    attackersAt(state, provinceId, siege.attacker, pool),
+    ownerForces(state, provinceId, pool),
+  );
 }
 
 /**
@@ -60,12 +82,13 @@ export function progressSieges(state: GameState): void {
   for (const p of Object.values(state.provinces)) {
     const siege = p.siege;
     if (!siege) continue;
-    const attackers = attackersAt(state, p.id, siege.attacker);
+    const pool = fightersIn(state, p.id);
+    const attackers = attackersAt(state, p.id, siege.attacker, pool);
     if (attackers.commanders.length === 0) {
       p.siege = null;
       continue;
     }
-    const defenders = ownerForces(state, p.id);
+    const defenders = ownerForces(state, p.id, pool);
     const held = hasForces(state, p.id, defenders);
     if (siege.storm) {
       siege.storm = false;
@@ -73,14 +96,13 @@ export function progressSieges(state: GameState): void {
         captureProvince(state, p.id, siege.attacker);
         continue;
       }
-      const storm = { wallsStanding: !wallsDown(siege.wallHp) };
-      const won = fight(state, p.id, attackers, defenders, storm) === 'attacker';
+      const won = fight(state, p.id, attackers, defenders, stormState(siege)) === 'attacker';
       // A storm ends the siege either way: the fort falls, or the besiegers are beaten or gone.
       p.siege = null;
-      if (won) captureIfHeld(state, p.id, siege.attacker);
+      if (won) captureIfHeld(state, p.id, attackers);
       continue;
     }
-    const { damage, repair } = siegeRates(state, p.id);
+    const { damage, repair } = rates(state, p.id, siege.wallHp, attackers, defenders);
     siege.wallHp = Math.min(SIEGE.wallHp, Math.max(0, siege.wallHp - damage + repair));
     if (!held && wallsDown(siege.wallHp)) captureProvince(state, p.id, siege.attacker);
   }

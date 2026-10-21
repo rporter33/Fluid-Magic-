@@ -1,6 +1,8 @@
 // Writing a battle back (docs/04-battle.md; docs/01-core-rules.md sections 3 and 5).
 import { describe, expect, it } from 'vitest';
 import { applyBattle } from '../../../src/sim/battle/apply';
+import { removeCommander } from '../../../src/sim/commanders';
+import { ownerForces } from '../../../src/sim/conflict';
 import type { SideForces } from '../../../src/sim/battle/setup';
 import type { BattleResult } from '../../../src/sim/battle/types';
 import type { CommanderState } from '../../../src/sim/types';
@@ -144,5 +146,88 @@ describe('applyBattle', () => {
       }),
     );
     expect(state.nations[red]).toMatchObject({ prophetId: null, prophetAvailableDay: 100 + 720 });
+  });
+
+  it('sets PD from the militia that held: ceil(militia / 2), archers aside', () => {
+    const { state, green } = redField();
+    const p = state.provinces[state.nations[green]!.capital]!;
+    p.pd = 20;
+    const owner: SideForces = { nation: green, commanders: [], garrison: null, pd: true };
+    const nobody: SideForces = { nation: null, commanders: [], garrison: null, pd: false };
+    applyBattle(
+      state,
+      p.id,
+      nobody,
+      owner,
+      result({
+        winner: 'defender',
+        squads: new Map([
+          ['pd0', { count: 5, hp: 50, routed: false }],
+          ['pd1', { count: 4, hp: 40, routed: false }],
+        ]),
+      }),
+    );
+    expect(p.pd).toBe(3);
+  });
+
+  it('hands a fallen commander’s troops to the first living commander before the garrison', () => {
+    const { state, green } = redField();
+    const capital = state.nations[green]!.capital;
+    const holder = state.commanders[state.provinces[capital]!.garrison!]!;
+    const fallen = addArmy(state, green, capital, 'thornMilitia', 6, 'wardenCaptain');
+    const first = addArmy(state, green, capital, 'warden', 1, 'wardenCaptain');
+    const second = addArmy(state, green, capital, 'warden', 1, 'wardenCaptain');
+    applyBattle(
+      state,
+      capital,
+      { nation: null, commanders: [], garrison: null, pd: false },
+      { nation: green, commanders: [fallen, first, second], garrison: holder, pd: false },
+      result({
+        winner: 'defender',
+        commanders: new Map([[fallen.id, { hp: 0, dead: true, routed: false, carriedMana: {} }]]),
+      }),
+    );
+    expect(first.squads.map((s) => s.unit)).toEqual(['warden', 'thornMilitia']);
+    expect(second.squads.map((s) => s.unit)).toEqual(['warden']);
+  });
+
+  it('lets an empty garrison take in a fallen defender’s troops at its fort', () => {
+    const { state, green } = redField();
+    const capital = state.nations[green]!.capital;
+    for (const c of Object.values(state.commanders)) {
+      if (c.location === capital && c.owner === green && c.unit !== 'garrison') {
+        removeCommander(state, c.id);
+      }
+    }
+    const holder = state.commanders[state.provinces[capital]!.garrison!]!;
+    expect(holder.squads).toEqual([]);
+    const guard = addArmy(state, green, capital, 'thornMilitia', 4, 'wardenCaptain');
+    applyBattle(
+      state,
+      capital,
+      { nation: null, commanders: [], garrison: null, pd: false },
+      ownerForces(state, capital),
+      result({
+        winner: 'defender',
+        commanders: new Map([[guard.id, { hp: 0, dead: true, routed: false, carriedMana: {} }]]),
+      }),
+    );
+    expect(holder.squads.map((s) => [s.unit, s.count])).toEqual([['thornMilitia', 4]]);
+  });
+
+  it('clears the pretender when it dies', () => {
+    const { state, red, army } = redField();
+    state.nations[red]!.pretenderId = army.id;
+    applyBattle(
+      state,
+      army.location,
+      { nation: red, commanders: [army], garrison: null, pd: false },
+      { nation: null, commanders: [], garrison: null, pd: false },
+      result({
+        winner: 'defender',
+        commanders: new Map([[army.id, { hp: 0, dead: true, routed: false, carriedMana: {} }]]),
+      }),
+    );
+    expect(state.nations[red]!.pretenderId).toBeNull();
   });
 });

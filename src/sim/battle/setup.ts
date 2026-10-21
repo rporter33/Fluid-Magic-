@@ -5,12 +5,12 @@ import { COLORS, type Color } from '../../content/colors';
 import { RESEARCH_LEVEL_POINTS, STORM } from '../../content/rules';
 import { TERRAIN } from '../../content/terrain';
 import { defaultFormation } from '../commanders';
-import type { NationId, ProvinceId } from '../ids';
 import { pdForce } from '../pd';
 import { provinceScales, scaleEffect } from '../scales';
 import { starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
 import { activeEffects, getMapProvince, getNation, getProvince } from '../state';
-import type { CommanderState, GameState } from '../types';
+import type { CommanderId, NationId, ProvinceId } from '../ids';
+import type { CommanderState, GameState, Squad } from '../types';
 import type { BattleSide } from './events';
 import type { BattleCommanderSetup, BattleSetup, BattleSideSetup, CombatStats } from './types';
 
@@ -24,6 +24,15 @@ export interface SideForces {
   pd: boolean;
 }
 
+/**
+ * Battle refs of provincial defense, in pdForce order: militia first (`pd0`), then archers.
+ * After a battle, PD is set from the militia that held.
+ */
+export function pdRef(i: number): string {
+  return `pd${String(i)}`;
+}
+export const PD_MILITIA_REF = pdRef(0);
+
 /** The fort's state when the defenders are stormed. */
 export interface StormState {
   wallsStanding: boolean;
@@ -34,10 +43,13 @@ interface Context {
   province: ProvinceId;
   side: BattleSide;
   nation: NationId | null;
+  /** The nation on the other side, or null for Independents. */
+  opponent: NationId | null;
   storm: StormState | null;
 }
 
-function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number): CombatStats {
+/** A unit's stats with every modifier; `upkeep` is false for PD, which draws no pay. */
+function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = true): CombatStats {
   const { state, province, side, nation } = ctx;
   const def = unitDef(unit);
   const p = getProvince(state, province);
@@ -59,7 +71,7 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number): CombatSt
   if (nation !== null) {
     const home = nationDef(getNation(state, nation).def).homeTerrain;
     if (home?.terrain === terrain) defense += home.def;
-    mor -= unpaidMoralePenalty(getNation(state, nation).unpaidDays);
+    if (upkeep) mor -= unpaidMoralePenalty(getNation(state, nation).unpaidDays);
   }
   mor -= starvationMoralePenalty(starvedDays);
   if (mine) {
@@ -67,7 +79,8 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number): CombatSt
     mor += scaleEffect(scales, 'morale');
     prec += scaleEffect(scales, 'precision');
     if (def.tags.includes('sacred')) mor += scaleEffect(scales, 'sacredMorale');
-  } else if (dominator !== null) {
+  } else if (dominator !== null && dominator === ctx.opponent) {
+    // Dread unsettles those fighting the dominating nation, Independents included.
     mor += scaleEffect(scales, 'enemyMorale');
   }
   if (defending) {
@@ -134,41 +147,32 @@ function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
     commanders: [],
     squads: [],
   };
-  for (const c of forces.commanders) {
-    side.commanders.push(commanderSetup(ctx, c));
-    for (const s of c.squads) {
-      side.squads.push({
-        ref: s.id,
-        commander: c.id,
-        unit: s.unit,
-        count: s.count,
-        hp: s.hp,
-        row: s.formation,
-        stats: statsFor(ctx, s.unit, s.starvedDays),
-      });
-    }
-  }
-  for (const s of forces.garrison?.squads ?? []) {
+  const squad = (s: Squad, leader: CommanderId | null) => {
     side.squads.push({
       ref: s.id,
-      commander: null,
+      commander: leader,
       unit: s.unit,
       count: s.count,
       hp: s.hp,
       row: s.formation,
       stats: statsFor(ctx, s.unit, s.starvedDays),
     });
+  };
+  for (const c of forces.commanders) {
+    side.commanders.push(commanderSetup(ctx, c));
+    for (const s of c.squads) squad(s, c.id);
   }
+  for (const s of forces.garrison?.squads ?? []) squad(s, null);
   if (forces.pd) {
     pdForce(ctx.state, ctx.province).forEach(({ unit, count }, i) => {
       side.squads.push({
-        ref: `pd${i}`,
+        ref: pdRef(i),
         commander: null,
         unit,
         count,
         hp: count * unitDef(unit).hp,
         row: defaultFormation(unitDef(unit)),
-        stats: statsFor(ctx, unit, 0),
+        stats: statsFor(ctx, unit, 0, false),
       });
     });
   }
@@ -185,7 +189,13 @@ export function buildBattle(
   const base = { state, province, storm };
   return {
     province,
-    attacker: sideSetup({ ...base, side: 'attacker', nation: attacker.nation }, attacker),
-    defender: sideSetup({ ...base, side: 'defender', nation: defender.nation }, defender),
+    attacker: sideSetup(
+      { ...base, side: 'attacker', nation: attacker.nation, opponent: defender.nation },
+      attacker,
+    ),
+    defender: sideSetup(
+      { ...base, side: 'defender', nation: defender.nation, opponent: attacker.nation },
+      defender,
+    ),
   };
 }

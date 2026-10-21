@@ -111,14 +111,35 @@ describe('closing and reach', () => {
 
   it('reaches the rear only with range 5 or more', () => {
     const target = () => side([squad('d', 'ashMilitia', 10, { row: 'rear', stats: IMMORTAL })]);
-    const shots = (unit: 'flameArcher' | 'emberSkirmisher') =>
+    const shots = (unit: 'flameArcher' | 'archer' | 'emberSkirmisher') =>
       fightOnce(
         side([squad('a', unit, 10, { row: 'rear', stats: { mor: 50 } })]),
         target(),
       ).replay.filter((e) => e.kind === 'volley').length;
     expect(shots('flameArcher')).toBeGreaterThan(0);
+    // The independents' Shortbow has range 5 exactly.
+    expect(shots('archer')).toBeGreaterThan(0);
     // Javelins reach 3: the rear row is out of reach.
     expect(shots('emberSkirmisher')).toBe(0);
+  });
+
+  it('closes when its missiles cannot reach the enemy front, though it has some left', () => {
+    // Javelins (range 3) against a front in the rear row: the skirmishers charge in round 2.
+    const result = fightOnce(
+      side([squad('a', 'emberSkirmisher', 20, { row: 'front', stats: { mor: 50 } })]),
+      side([squad('d', 'longbowHunter', 10, { row: 'rear', stats: IMMORTAL })]),
+    );
+    const first = byRound(result).find(
+      ({ event }) => event.kind === 'melee' && event.squad === 'a',
+    );
+    expect(first?.round).toBe(2);
+    // Two skirmisher lines in their rear rows fight it out instead of waiting for round 50.
+    const standoff = fightOnce(
+      side([squad('a', 'emberSkirmisher', 10, { row: 'rear' })]),
+      side([squad('d', 'emberSkirmisher', 10, { row: 'rear' })]),
+    );
+    expect(standoff.replay.some((e) => e.kind === 'melee')).toBe(true);
+    expect(standoff.rounds).toBeLessThan(50);
   });
 
   it('stops shooting once in melee contact, and uses ammunition', () => {
@@ -199,7 +220,118 @@ describe('damage', () => {
   });
 });
 
+describe('ranged damage', () => {
+  it('leaves out the shooter’s strength', () => {
+    const volleys = (str: number) =>
+      fightOnce(
+        side([
+          squad('w', 'cinderWarrior', 10, { stats: IMMORTAL }),
+          squad('a', 'flameArcher', 10, { stats: { str } }),
+        ]),
+        side([squad('m', 'ashMilitia', 20, { stats: { mapSpeed: 1, mor: 50 } })]),
+        7,
+      ).replay.filter((e) => e.kind === 'volley');
+    expect(volleys(30)).toEqual(volleys(0));
+  });
+});
+
+describe('lances', () => {
+  it('hit harder in the rider’s first melee round only', () => {
+    let first = 0;
+    let firstHits = 0;
+    let later = 0;
+    let laterHits = 0;
+    for (let seed = 0; seed < 100; seed++) {
+      const result = fightOnce(
+        side([squad('r', 'ashRider', 10, { stats: { mor: 50 } })]),
+        side(
+          [],
+          [
+            commander('c', 'ashChieftain', {
+              hp: 1e6,
+              stats: { hp: 1e6, prot: 0, mor: 50, def: 0 },
+            }),
+          ],
+        ),
+        seed,
+      );
+      for (const { round, event } of byRound(result)) {
+        if (event.kind !== 'damage' || event.target !== 'c') continue;
+        if (round === 2) {
+          first += event.amount;
+          firstHits += 1;
+        } else if (round === 3) {
+          later += event.amount;
+          laterHits += 1;
+        }
+      }
+    }
+    // The lance's +3 lands on one of the rider's two weapons: about 1.5 a hit.
+    expect(first / firstHits - later / laterHits).toBeGreaterThan(1);
+  });
+});
+
 describe('commanders and scripts', () => {
+  it('Attack takes a commander to its side’s current front, not always the front row', () => {
+    const result = fightOnce(
+      side(
+        [squad('a', 'flameArcher', 10, { leader: 'c', row: 'middle', stats: IMMORTAL })],
+        [commander('c', 'ashChieftain', { script: [{ kind: 'attack' }], stats: IMMORTAL })],
+      ),
+      side([squad('d', 'ashMilitia', 10, { stats: IMMORTAL })]),
+    );
+    expect(result.replay).toContainEqual({ kind: 'advance', unit: 'c', row: 'middle' });
+  });
+
+  it('Retreat leaves berserkers on the field', () => {
+    const result = fightOnce(
+      side(
+        [squad('b', 'berserker', 10, { leader: 'c', stats: { ...IMMORTAL, tags: ['berserk'] } })],
+        [commander('c', 'ashChieftain', { script: [{ kind: 'retreat' }] })],
+      ),
+      side([squad('d', 'ashMilitia', 10, { stats: IMMORTAL })]),
+    );
+    expect(result.replay).not.toContainEqual({ kind: 'rout', squad: 'b' });
+    expect(result.rounds).toBe(50);
+  });
+
+  it('checks a commander shot dead before melee, so its squad may break before it swings', () => {
+    let checked = 0;
+    for (let seed = 0; seed < 100; seed++) {
+      const result = fightOnce(
+        side([
+          squad('w', 'cinderWarrior', 10, { stats: IMMORTAL }),
+          squad('a', 'flameArcher', 20, { stats: { prec: 99 } }),
+        ]),
+        side(
+          [squad('s', 'ashMilitia', 10, { leader: 'c', row: 'front', stats: { mor: 50 } })],
+          // Tough enough to live until the lines meet in round 3.
+          [commander('c', 'ashChieftain', { row: 'front', hp: 30, stats: { hp: 30, mor: 50 } })],
+        ),
+        seed,
+      );
+      const rounds = byRound(result);
+      const death = rounds.findIndex(
+        ({ event }) => event.kind === 'death' && event.commander === 'c',
+      );
+      if (death < 0) continue;
+      const round = rounds[death]!.round;
+      // Only deaths from arrows: a volley that killed the commander that round.
+      const shot = rounds.some(
+        ({ round: r, event }) =>
+          r === round && event.kind === 'volley' && event.target === 'c' && event.kills > 0,
+      );
+      const melee = rounds.findIndex(
+        ({ round: r, event }) => r === round && event.kind === 'melee',
+      );
+      if (shot && melee >= 0) {
+        checked += 1;
+        expect(death).toBeLessThan(melee);
+      }
+    }
+    expect(checked).toBeGreaterThan(0);
+  });
+
   const script = (...slots: ScriptSlot['kind'][]): ScriptSlot[] =>
     slots.map((kind) => (kind === 'cast' ? { kind, spellId: null } : { kind }));
 

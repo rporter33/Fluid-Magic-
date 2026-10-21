@@ -148,6 +148,8 @@ export const BATTLE = {
   flyingSpeed: 3,
   /** Ranged weapons of at least this range reach the rear row; shorter ones reach the middle. */
   rearReach: 5,
+  /** Armor piercing keeps this share of the target's protection, rounded down. */
+  armorPiercingFactor: 0.5,
   /** The base both rolls are compared with: prec + DRN >= toHit + DRN, mor + DRN >= ... */
   ranged: { toHit: 10 },
   morale: {
@@ -193,7 +195,7 @@ export const STORM = {
 
 /** docs/05-pretender.md, "Prophet": a new prophet may be named this long after one dies. */
 export const PROPHET = {
-  cooldownDays: 24 * 30,
+  cooldownDays: 24 * TIME.daysPerMonth,
 } as const;
 
 /** docs/04-battle.md, "Scripts": script slots per commander. */

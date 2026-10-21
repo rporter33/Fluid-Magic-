@@ -141,7 +141,7 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
 - **Rows**: a side's front is its first row with an active (alive, not routing) unit. Attacks
   draw targets from every unit still on the field, routing ones included, in the enemy front
   and any row before it, so stragglers can be cut down in their exit round. Ranged reach is
-  measured to that front.
+  measured to that front. A routing unit only flees: it neither shoots nor fights back.
 - **Simultaneous resolution**: within a phase every attack is rolled against the field as the
   phase began, then all damage lands, so two units that kill each other both fall. Rolls go
   attacker side first, in setup order, so the rng stream is fixed. A unit with no melee
@@ -182,8 +182,10 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
   (rows, routs, ammunition, timed modifiers) on its own groups, reading stats through one
   accessor. The same setup object fought twice with equal rng states gives the same result.
 - **Modifiers**: attackers lose terrain attack (swamp −1) unless swamp walkers; Thornwood's
-  forest defense applies on either side; starvation and unpaid upkeep lower morale; Dread
-  is in the `docs/05-pretender.md` decisions. Carried mana passes through battle unchanged
+  forest defense applies on either side; starvation and unpaid upkeep lower morale, but
+  provincial defense draws no pay and never suffers the unpaid-upkeep loss; Dread is in the
+  `docs/05-pretender.md` decisions and touches only those fighting the dominating nation.
+  Armor piercing keeps half the protection, rounded down (`BATTLE.armorPiercingFactor`). Carried mana passes through battle unchanged
   until Phase 5.
 - **Replay additions**: `advance(unit, row)` when a script moves a commander and
   `leave(unit)` when a living unit leaves the field (rout exit, Retreat, the round-50

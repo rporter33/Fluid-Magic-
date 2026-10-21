@@ -1,11 +1,23 @@
 // Arrival battles, capture, and retreat (docs/01-core-rules.md sections 6, 9-11).
 import { describe, expect, it } from 'vitest';
 import { removeCommander } from '../../src/sim/commanders';
-import { engage } from '../../src/sim/conflict';
+import { captureIfHeld, engage } from '../../src/sim/conflict';
+import { createGame } from '../../src/sim/createGame';
+import { createRng } from '../../src/sim/rng';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { legDays } from '../../src/sim/movement';
 import type { CommanderState, GameState } from '../../src/sim/types';
-import { addArmy, annex, commandersIn, move, neighbors, redField, runDays } from './fixtures';
+import {
+  addArmy,
+  annex,
+  commandersIn,
+  move,
+  nation,
+  nationIds,
+  neighbors,
+  redField,
+  runDays,
+} from './fixtures';
 
 /** Independent defenders standing in a province. */
 function guards(state: GameState, p: ProvinceId): CommanderState[] {
@@ -198,5 +210,113 @@ describe('after a battle', () => {
     expect(note?.battle).toBeNull();
     expect(state.provinces[target]!.owner).toBe(green);
     expect(army.location).toBe(target);
+  });
+});
+
+describe('retreats', () => {
+  const retreating = Array.from({ length: 5 }, () => ({ kind: 'retreat' as const }));
+
+  /** An independent province next to Red's capital, with every neighbor given to Red. */
+  function ringed() {
+    const s = redField();
+    const target = neighbors(s.state, s.capital).find(
+      (n) => s.state.provinces[n]!.owner === null && guards(s.state, n).length > 0,
+    )!;
+    for (const n of neighbors(s.state, target)) {
+      if (s.state.provinces[n]!.owner === null) annex(s.state, s.red, n);
+    }
+    const others = neighbors(s.state, target).filter(
+      (n) => n !== s.capital && s.state.provinces[n]!.owner === s.red,
+    );
+    const loser = addArmy(s.state, s.red, target, 'ashMilitia', 1);
+    loser.script = retreating;
+    return { ...s, target, others, loser };
+  }
+
+  it('go back where they came from when it is friendly, even with other friends near', () => {
+    for (let seed = 1; seed <= 6; seed++) {
+      const { state, red, target, others, loser } = ringed();
+      if (others.length === 0) continue;
+      state.rng = createRng(seed);
+      loser.cameFrom = others[0]!;
+      loser.order = { kind: 'pillage' };
+      engage(state, red, target);
+      expect(loser.location).toBe(others[0]);
+      expect(loser.order).toEqual({ kind: 'idle' });
+    }
+  });
+
+  it('never into a province another nation’s army stands in', () => {
+    const { state, red, green, target, others, loser } = ringed();
+    const occupied = others[0]!;
+    addArmy(state, green, occupied, 'warden', 30, 'wardenCaptain');
+    loser.cameFrom = occupied;
+    engage(state, red, target);
+    expect(state.commanders[loser.id]).toBeDefined();
+    expect(loser.location).not.toBe(occupied);
+    expect(loser.location).not.toBe(target);
+  });
+
+  it('end in death with nowhere friendly to go, prophets included', () => {
+    const { state, red, green, capital } = redField();
+    const far = Object.values(state.provinces).find(
+      (p) =>
+        p.owner === null &&
+        guards(state, p.id).length > 0 &&
+        !neighbors(state, p.id).includes(capital) &&
+        neighbors(state, p.id).every((n) => state.provinces[n]!.owner !== red),
+    )!;
+    // Its one Red neighbor holds a Green army, so it is no refuge.
+    const refuge = neighbors(state, far.id)[0]!;
+    annex(state, red, refuge);
+    addArmy(state, green, refuge, 'warden', 30, 'wardenCaptain');
+    const prophet = addArmy(state, red, far.id, 'ashMilitia', 1);
+    prophet.script = retreating;
+    state.nations[red]!.prophetId = prophet.id;
+    state.day = 100;
+    engage(state, red, far.id);
+    expect(state.commanders[prophet.id]).toBeUndefined();
+    expect(state.nations[red]).toMatchObject({ prophetId: null, prophetAvailableDay: 820 });
+  });
+});
+
+describe('capture', () => {
+  it('needs one of the winners still standing in the province', () => {
+    const { state, red, capital } = redField();
+    const target = neighbors(state, capital)[0]!;
+    const fallen = addArmy(state, red, target, 'cinderWarrior', 5);
+    const winners = { nation: red, commanders: [fallen], garrison: null, pd: false };
+    removeCommander(state, fallen.id);
+    captureIfHeld(state, target, winners);
+    expect(state.provinces[target]!.owner).toBeNull();
+  });
+
+  it('besieges an enemy fort even when nobody defends it', () => {
+    const { state, red, green } = redField();
+    const deepmoss = state.nations[green]!.capital;
+    for (const c of Object.values(state.commanders)) {
+      if (c.location === deepmoss && c.unit !== 'garrison') removeCommander(state, c.id);
+    }
+    state.provinces[deepmoss]!.pd = 0;
+    addArmy(state, red, deepmoss, 'cinderWarrior', 10);
+    engage(state, red, deepmoss);
+    expect(state.provinces[deepmoss]).toMatchObject({
+      owner: green,
+      siege: { attacker: red, wallHp: 300, storm: false },
+    });
+  });
+
+  it('starts fresh walls for a newcomer when the old besiegers left without a fight', () => {
+    const state = createGame({
+      seed: 2,
+      mapSize: 'medium',
+      nations: [nation('cinderHorde'), nation('thornwood'), nation('cinderHorde')],
+    });
+    const [red, green, red2] = nationIds(state) as [NationId, NationId, NationId];
+    const deepmoss = state.nations[green]!.capital;
+    state.provinces[deepmoss]!.siege = { attacker: red, wallHp: 40, storm: false };
+    addArmy(state, red2, deepmoss, 'cinderWarrior', 10);
+    engage(state, red2, deepmoss);
+    expect(state.provinces[deepmoss]!.siege).toEqual({ attacker: red2, wallHp: 300, storm: false });
   });
 });

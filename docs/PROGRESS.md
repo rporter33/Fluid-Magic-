@@ -137,6 +137,15 @@
   the required "20 Cinder Warriors beat 10 Ash Militia in 95%" test failed (89%), so the side
   holding the field wins instead (recorded in `docs/04-battle.md` and `docs/09-balance.md`).
   Starvation now kills troops in proportion to the HP lost, closing the Phase 3 known issue.
+- A code review (4 lenses, each finding re-checked by a skeptic) confirmed 59 findings. Rule
+  bugs: missile troops that could not reach the enemy front neither shot nor charged; a
+  fallen defender's troops vanished when the fort's garrison held none; Dread lowered morale
+  in battles the dominating nation was not part of; PD lost morale for unpaid upkeep it never
+  draws; and a newcomer took over battered walls from besiegers that had simply left. An
+  arrival scanned every commander about eight times; it now reads the province once a step,
+  and sieges no longer compute their rates twice. 45 mutations the suite did not catch
+  (morale boundaries, heirs, PD after battle, retreats, storms, reach, lances, berserk, rng
+  ties) now fail it. Armor piercing's factor moved to content.
 
 ## Deviations from the docs
 

@@ -40,9 +40,12 @@ export function activeEffects(state: GameState, provinceId: ProvinceId): Provinc
 }
 
 /**
- * Rounds a day count up to whole days, ignoring floating-point noise: 50 * 1.1 is
+ * Rounds up to a whole number, ignoring floating-point noise: 50 * 1.1 is
  * 55.00000000000001 in binary floating point and must come out as 55, not 56.
  */
-export function wholeDays(days: number): number {
-  return Math.ceil(days - 1e-9);
+export function roundUp(x: number): number {
+  return Math.ceil(x - 1e-9);
 }
+
+/** A day count rounded up to whole days. */
+export const wholeDays = roundUp;

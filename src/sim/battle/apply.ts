@@ -8,7 +8,7 @@ import { postMessage } from '../messages';
 import { getMapProvince, getProvince } from '../state';
 import type { CommanderState, GameState } from '../types';
 import type { BattleSide } from './events';
-import type { SideForces } from './setup';
+import { PD_MILITIA_REF, type SideForces } from './setup';
 import type { BattleResult } from './types';
 
 function writeSquads(commander: CommanderState, result: BattleResult): void {
@@ -62,7 +62,7 @@ export function applyBattle(
   writeSide(state, defender, result);
   const p = getProvince(state, provinceId);
   if (defender.pd) {
-    const militia = result.squads.get('pd0');
+    const militia = result.squads.get(PD_MILITIA_REF);
     if (militia) p.pd = Math.min(p.pd, Math.ceil(militia.count / PD.militiaPerLevel));
   }
   p.pop = Math.max(0, p.pop * (1 - (BATTLE.popLossPer100 * result.casualties) / 100));

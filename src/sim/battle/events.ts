@@ -1,6 +1,6 @@
-// Replay records (docs/04-battle.md, "Replay log"). The resolver arrives in Phase 4; these
-// types fix the shape of BattleRecord now so saves and the replay viewer agree. A replay is
-// the starting roster plus the event log: the viewer needs nothing else.
+// Replay records (docs/04-battle.md, "Replay log"): the shape of BattleRecord that saves and
+// the replay viewer share. A replay is the starting roster plus the event log: the viewer
+// needs nothing else.
 import type { UnitTypeId } from '../../content';
 import type { Element } from '../../content/types';
 import type { NationId } from '../ids';

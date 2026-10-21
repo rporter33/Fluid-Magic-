@@ -6,7 +6,7 @@
 import { unitDef } from '../content';
 import { MOVEMENT } from '../content/rules';
 import { TERRAIN } from '../content/terrain';
-import { isGarrisonHolder, isStealthy } from './commanders';
+import { takesPart } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { getMapProvince, getProvince } from './state';
 import type { CommanderState, GameState } from './types';
@@ -162,7 +162,7 @@ export type Presence = Map<ProvinceId, Set<NationId | null>>;
 export function presence(state: GameState): Presence {
   const present: Presence = new Map();
   for (const c of Object.values(state.commanders)) {
-    if (isGarrisonHolder(c) || isStealthy(c)) continue;
+    if (!takesPart(c)) continue;
     const owners = present.get(c.location);
     if (owners) owners.add(c.owner);
     else present.set(c.location, new Set([c.owner]));
