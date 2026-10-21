@@ -1,7 +1,8 @@
 // Movement along the province graph (docs/01-core-rules.md section 6, Movement). A commander
-// in transit walks one leg at a time; each leg takes whole days. Tick step 2 runs in three
-// parts, so Phase 4 can fight at arrivals before anyone marches on: advanceTransits,
-// resolveArrivals, continueMoves. Paths and ETAs are selectors shared by the UI and the AI.
+// in transit walks one leg at a time; each leg takes whole days. Tick step 2 runs in parts,
+// so battles happen at arrivals before anyone marches on: advanceTransits, then
+// resolveArrivals and progressSieges (conflict.ts, siege.ts), then continueMoves. Paths and
+// ETAs are selectors shared by the UI and the AI.
 import { unitDef } from '../content';
 import { MOVEMENT } from '../content/rules';
 import { TERRAIN } from '../content/terrain';
@@ -226,21 +227,6 @@ export function advanceTransits(state: GameState): Arrival[] {
   return arrivals.sort(
     (a, b) => (firstSeen.get(a.province) ?? 0) - (firstSeen.get(b.province) ?? 0),
   );
-}
-
-/**
- * Tick step 2b: an arrival among hostiles ends the move there. Phase 4 puts battles,
- * sieges, and captures here. Orders other than move (set while marching) stay.
- */
-export function resolveArrivals(state: GameState, arrivals: readonly Arrival[]): void {
-  if (arrivals.length === 0) return;
-  const present = presence(state);
-  for (const arrival of arrivals) {
-    if (!hostileWith(state, present, arrival.nation, arrival.province)) continue;
-    for (const c of arrival.commanders) {
-      if (c.order.kind === 'move') c.order = { kind: 'idle' };
-    }
-  }
 }
 
 /**

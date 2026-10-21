@@ -2,10 +2,12 @@
 // documented order; steps owned by later phases are marked where they will slot in.
 import { progressConstruction } from './buildings';
 import { accrueGoldAndMana, accrueMaterials } from './economy';
-import { advanceTransits, continueMoves, resolveArrivals } from './movement';
+import { resolveArrivals } from './conflict';
+import { advanceTransits, continueMoves } from './movement';
 import { applyPillage } from './pillage';
 import { growPopulation } from './population';
 import { progressRecruitment } from './recruitment';
+import { progressSieges } from './siege';
 import { allProvinceEconomies } from './selectors';
 import { applySupply } from './supply';
 import type { GameState } from './types';
@@ -16,8 +18,9 @@ export function advance(state: GameState): void {
   if (state.result) return;
 
   // 1. Commands were applied by the caller before this call.
-  // 2. Movement: walk, settle arrivals (battles and sieges join here in Phase 4), march on.
+  // 2. Movement: walk; battles, sieges, and captures at arrivals; sieges and storms; march on.
   resolveArrivals(state, advanceTransits(state));
+  progressSieges(state);
   continueMoves(state);
 
   // 3. Queues: recruitment, construction; rituals and research join in Phase 5.

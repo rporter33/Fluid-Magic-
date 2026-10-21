@@ -21,10 +21,12 @@ import {
   applyCancelRecruit,
   applyRecruit,
   applySetTax,
+  applyStorm,
   validateBuyPd,
   validateCancelRecruit,
   validateRecruit,
   validateSetTax,
+  validateStorm,
 } from './province';
 import type { GameState } from '../types';
 import type { Command, CommandResult } from './types';
@@ -59,6 +61,8 @@ export function validateCommand(state: GameState, cmd: Command): string | null {
       return validateBuyPd(state, cmd);
     case 'setTax':
       return validateSetTax(state, cmd);
+    case 'storm':
+      return validateStorm(state, cmd);
     default:
       return 'Unknown command';
   }
@@ -101,6 +105,9 @@ export function applyCommand(state: GameState, cmd: Command): CommandResult {
       break;
     case 'setTax':
       applySetTax(state, cmd);
+      break;
+    case 'storm':
+      applyStorm(state, cmd);
       break;
   }
   return { ok: true };

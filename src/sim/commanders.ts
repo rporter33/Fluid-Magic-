@@ -1,6 +1,6 @@
 // Creating commanders and squads, and per-unit numbers the economy needs.
 import { unitDef, type UnitTypeId } from '../content';
-import { ECONOMY, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
+import { ECONOMY, PROPHET, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
 import { newId, type CommanderId, type NationId, type ProvinceId } from './ids';
 import { chance } from './rng';
@@ -52,10 +52,27 @@ export function addSquad(commander: CommanderState, squad: Squad): void {
 
 /**
  * Takes a commander out of the game. Deleting the key keeps the record's identity and the
- * order of the other commanders, so saves and hashes stay stable.
+ * order of the other commanders, so saves and hashes stay stable. For deaths use
+ * commanderDies, which also settles the nation's prophet and pretender.
  */
 export function removeCommander(state: GameState, id: CommanderId): void {
   Reflect.deleteProperty(state.commanders, id);
+}
+
+/**
+ * A commander dies, wherever it happens (battle, a retreat with nowhere to go, later spells).
+ * A dead prophet frees the post after the cooldown; a dead pretender clears the nation's id
+ * (Phase 6 decides what that means for the nation).
+ */
+export function commanderDies(state: GameState, id: CommanderId): void {
+  const c = state.commanders[id];
+  const nation = c?.owner === null || c === undefined ? undefined : state.nations[c.owner];
+  if (nation?.prophetId === id) {
+    nation.prophetId = null;
+    nation.prophetAvailableDay = state.day + PROPHET.cooldownDays;
+  }
+  if (nation?.pretenderId === id) nation.pretenderId = null;
+  removeCommander(state, id);
 }
 
 /** Adds a commander to the game; adept-tier mages roll their extra pip here. */

@@ -1,6 +1,7 @@
 // Commands to provinces: recruitment, provincial defense, and tax.
 import { isUnitTypeId, unitDef } from '../../content';
 import { PD, RECRUITMENT, TAX_RATE_IDS } from '../../content/rules';
+import { attackersAt } from '../conflict';
 import { newId } from '../ids';
 import { pdCost } from '../pd';
 import { fortMaterials } from '../selectors';
@@ -106,4 +107,17 @@ export function validateSetTax(state: GameState, cmd: CommandOf<'setTax'>): stri
 
 export function applySetTax(state: GameState, cmd: CommandOf<'setTax'>): void {
   getProvince(state, cmd.province).taxRate = cmd.rate;
+}
+
+export function validateStorm(state: GameState, cmd: CommandOf<'storm'>): string | null {
+  const p = state.provinces[cmd.province];
+  if (!p) return 'No such province';
+  if (p.siege?.attacker !== cmd.nation) return 'You are not besieging it';
+  if (attackersAt(state, p.id, cmd.nation).commanders.length === 0) return 'No army is there';
+  return null;
+}
+
+export function applyStorm(state: GameState, cmd: CommandOf<'storm'>): void {
+  const siege = getProvince(state, cmd.province).siege;
+  if (siege) siege.storm = true;
 }

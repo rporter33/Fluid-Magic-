@@ -137,6 +137,61 @@ export const VISION = {
   scoutExactRange: 1,
 } as const;
 
+/** docs/04-battle.md and docs/01-core-rules.md section 10. */
+export const BATTLE = {
+  /** Safety cap; the attacker retreats at attackerRetreatRound if nothing is decided. */
+  maxRounds: 75,
+  attackerRetreatRound: 50,
+  /** Round from which a unit attacks in melee, by map speed; flying units use speed 3. */
+  closingRound: { 1: 4, 2: 3, 3: 2 } as Readonly<Record<number, number>>,
+  /** Ranged weapons of at least this range reach the rear row; shorter ones reach the middle. */
+  rearReach: 5,
+  /** The base both rolls are compared with: prec + DRN >= toHit + DRN, mor + DRN >= ... */
+  ranged: { toHit: 10 },
+  morale: {
+    base: 10,
+    /** Squads check when losses since the start exceed this share, or this round's exceed the other. */
+    totalLossShare: 0.2,
+    roundLossShare: 0.1,
+    /** Units with this morale or more never check. */
+    fearless: 50,
+    /** Added when the side has lost more than halfLost of its starting troops. */
+    halfLostShare: 0.5,
+    halfLostPressure: 2,
+    /** Added for squads whose commander died this round. */
+    commanderDeathPressure: 4,
+  },
+  /** docs/03-nations.md: berserk troops gain att and str below this share of their max HP. */
+  berserk: { att: 2, str: 2, belowHpShare: 0.5 },
+  /** Population lost: popLossPer100 of the province's people per 100 casualties. */
+  popLossPer100: 0.005,
+  /** Unrest when the province owner loses a battle there. */
+  lostBattleUnrest: 10,
+  /** Battle records kept, newest last. */
+  keep: 20,
+} as const;
+
+/** docs/01-core-rules.md section 11. */
+export const SIEGE = {
+  wallHp: 300,
+  /** Daily wall damage = attackers' total str / attackDivisor; repair = defenders' / repairDivisor. */
+  attackDivisor: 10,
+  repairDivisor: 20,
+} as const;
+
+/** Storm bonuses for the fort's defenders. */
+export const STORM = {
+  morale: 2,
+  /** Protection once the walls are down, and while they stand. */
+  breachedProt: 3,
+  wallsProt: 6,
+} as const;
+
+/** docs/05-pretender.md, "Prophet": a new prophet may be named this long after one dies. */
+export const PROPHET = {
+  cooldownDays: 24 * 30,
+} as const;
+
 /** docs/04-battle.md, "Scripts": script slots per commander. */
 export const SCRIPT_SLOTS = 5;
 

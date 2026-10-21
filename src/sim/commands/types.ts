@@ -36,6 +36,8 @@ export type Command = { nation: NationId } & (
   | { type: 'cancelRecruit'; province: ProvinceId; recruit: RecruitId }
   | { type: 'buyPd'; province: ProvinceId; levels: number }
   | { type: 'setTax'; province: ProvinceId; rate: TaxRate }
+  /** Storm a fort this nation besieges; fought in the next tick. */
+  | { type: 'storm'; province: ProvinceId }
 );
 
 export type CommandType = Command['type'];

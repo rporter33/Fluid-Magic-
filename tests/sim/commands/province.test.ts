@@ -21,7 +21,7 @@ describe('buyPd', () => {
     expect(capital.pd).toBe(30);
     expect(buy(1).ok).toBe(false);
     capital.pd = 0;
-    capital.siege = { attacker: green!, wallHp: 300 };
+    capital.siege = { attacker: green!, wallHp: 300, storm: false };
     expect(buy(1).ok).toBe(false);
   });
 

@@ -14,6 +14,7 @@ import {
   redGame,
   runDays,
   twoNationGame,
+  besiege,
 } from './fixtures';
 
 function recruit(
@@ -238,7 +239,7 @@ describe('recruit validation', () => {
   it('refuses to cancel while the fort is besieged', () => {
     const { state, red, green, capital } = setup();
     recruit(state, red, capital.id, 'ashMilitia', 10);
-    capital.siege = { attacker: green, wallHp: 300 };
+    besiege(state, green, capital.id);
     const cancel = () =>
       applyCommand(state, {
         type: 'cancelRecruit',
@@ -259,7 +260,7 @@ describe('recruit validation', () => {
     expect(recruit(state, red, capital.id, 'ashMilitia', 10).ok).toBe(false);
     capital.unrest = 50;
     expect(recruit(state, red, capital.id, 'ashMilitia', 10).ok).toBe(true);
-    capital.siege = { attacker: green, wallHp: 300 };
+    besiege(state, green, capital.id);
     expect(recruit(state, red, capital.id, 'ashMilitia', 10).ok).toBe(false);
     runDays(state, 20);
     expect(capital.recruitQueue[0]!.daysLeft).toBe(8);

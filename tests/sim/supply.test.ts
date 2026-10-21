@@ -49,7 +49,7 @@ describe('supply', () => {
     addArmy(state, green!, p.id, 'warden', 10, 'wardenCaptain');
     expect(provinceEconomy(state, p.id).supplyUsed).toBe(22);
     const full = provinceEconomy(state, p.id).supply;
-    state.provinces[p.id]!.siege = { attacker: red!, wallHp: 300 };
+    state.provinces[p.id]!.siege = { attacker: red!, wallHp: 300, storm: false };
     expect(provinceEconomy(state, p.id).supply).toBeCloseTo(full / 2, 9);
   });
 });

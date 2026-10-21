@@ -281,7 +281,7 @@ describe('hostile provinces', () => {
     army.location = a;
     move(state, red, [army], [capital, a]);
     addArmy(state, green, capital, 'warden', 30, 'wardenCaptain');
-    state.provinces[capital]!.siege = { attacker: green, wallHp: 300 };
+    state.provinces[capital]!.siege = { attacker: green, wallHp: 300, storm: false };
     runDays(state, legDays(state, capital, 2));
     expect(army.location).toBe(capital);
     expect(army.order).toEqual({ kind: 'idle' });

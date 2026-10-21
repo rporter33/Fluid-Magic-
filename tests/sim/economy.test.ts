@@ -20,6 +20,7 @@ import {
   redGame,
   runDays,
   twoNationGame,
+  besiege,
 } from './fixtures';
 
 /** Starting army upkeep per month from the docs/03 gold costs: commanders plus troops, / 15. */
@@ -91,7 +92,7 @@ describe('gold', () => {
     const state = twoNationGame();
     const [red, green] = nationIds(state);
     const capital = capitalOf(state, red!);
-    capital.siege = { attacker: green!, wallHp: 300 };
+    besiege(state, green!, capital.id);
     expect(provinceEconomy(state, capital.id).gold).toBe(0);
     expect(provinceEconomy(state, capital.id).materials).toBe(0);
   });
@@ -226,7 +227,7 @@ describe('materials', () => {
     const capital = capitalOf(state, red!);
     const neighbor = state.map.provinces[capital.id]!.neighbors[0]!;
     state.provinces[neighbor]!.owner = red!;
-    capital.siege = { attacker: green!, wallHp: 300 };
+    besiege(state, green!, capital.id);
     expect(fortMaterials(state, capital.id)).toEqual({ perMonth: 0, cap: 0 });
     capital.materials = 0;
     runDays(state, 3);
@@ -256,7 +257,7 @@ describe('materials', () => {
     const [red, green] = nationIds(state);
     const capital = capitalOf(state, red!);
     capital.materials = 300;
-    capital.siege = { attacker: green!, wallHp: 300 };
+    besiege(state, green!, capital.id);
     runDays(state, 5);
     expect(capital.materials).toBe(300);
     capital.siege = null;

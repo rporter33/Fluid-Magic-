@@ -90,6 +90,8 @@ export interface Dominion {
 export interface SiegeState {
   attacker: NationId;
   wallHp: number;
+  /** The besieger ordered a storm; it is fought in the next tick's siege step. */
+  storm: boolean;
 }
 
 export interface ProvinceState {
@@ -271,7 +273,7 @@ export interface BattleRecord {
   /** Null when Independents fought. */
   attacker: NationId | null;
   defender: NationId | null;
-  winner: BattleSide | null;
+  winner: BattleSide;
   rounds: number;
   /** Both sides as the battle began. */
   roster: Record<BattleSide, BattleRoster>;

@@ -139,3 +139,10 @@ export function move(
     path,
   });
 }
+
+/** Lays siege to a province: an army of the besieger stands there, walls at full strength. */
+export function besiege(state: GameState, nation: NationId, province: ProvinceId): CommanderState {
+  const army = addArmy(state, nation, province, 'cinderWarrior', 5);
+  state.provinces[province]!.siege = { attacker: nation, wallHp: 300, storm: false };
+  return army;
+}
