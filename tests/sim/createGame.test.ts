@@ -99,7 +99,13 @@ describe('createGame', () => {
     expect(r.research).toEqual({ color: 'R', points: { W: 0, U: 0, B: 0, R: 60, G: 0 } });
     expect(r.gold).toBe(ECONOMY.startGold);
     expect(r.mana).toEqual({ W: 0, U: 0, B: 0, R: 0, G: 0 });
-    expect(r.explored).toEqual([r.capital]);
+    // The capital, then everything within 2 of it, seen by the starting scout.
+    const near = new Set([r.capital]);
+    for (let step = 0; step < 2; step++) {
+      for (const p of [...near]) for (const n of state.map.provinces[p]!.neighbors) near.add(n);
+    }
+    expect(r.explored[0]).toBe(r.capital);
+    expect(new Set(r.explored)).toEqual(near);
     expect([r.pretenderId, r.prophetId]).toEqual([null, null]);
   });
 

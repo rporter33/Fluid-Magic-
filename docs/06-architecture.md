@@ -36,7 +36,10 @@ fluid-magic/
       commanders.ts       # creating commanders and squads; per-unit upkeep and supply
       createGame.ts       # GameSetup -> GameState (uses mapgen, nations, pretender)
       tick.ts             # advance(state): one day
-      commands.ts         # Command union, validate(state, cmd), apply(state, cmd)
+      commands/           # Command union; validateCommand and applyCommand (index.ts)
+        army.ts           # move, reverse, orders, scripts, formations, squads, build
+        province.ts       # recruit, cancel, PD, tax
+        check.ts          # ownership lookups shared by validators
       economy.ts          # gold, mana, upkeep, fort materials (daily accrual)
       supply.ts           # starvation and healing
       pillage.ts
@@ -47,8 +50,11 @@ fluid-magic/
       dominion.ts
       scales.ts           # effective scales of a province
       research.ts
-      recruitment.ts
-      movement.ts         # transit, arrival, battle trigger
+      recruitment.ts      # recruit cost and time, queues, garrison holders
+      movement.ts         # speeds, leg days, paths and ETAs, transit and arrival
+      independents.ts     # independent forces at game start, strength words
+      pd.ts               # PD cost and the defenders it fields
+      hash.ts             # state hash for determinism checks
       siege.ts
       rituals.ts
       wellsprings.ts
@@ -65,6 +71,7 @@ fluid-magic/
       types.ts            # shapes of unit, nation, building records
       rules.ts            # rule numbers: time, tax, economy, materials, supply, unrest, mana, pillage
       ai.ts               # difficulty levels
+      independents.ts     # independent troop pools by terrain, strength words
       colors.ts           # the five colors, palettes, enemy/ally pairs, nation banners, map keylines
       terrain.ts
       mapgen.ts           # map sizes and every map generation number (shares, springs, placement)
@@ -277,3 +284,23 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   `scales.ts`. `tick.ts` applies those rates a day at a time from one snapshot taken at the
   start of step 4, so the UI and the simulation cannot disagree. Pure helpers that apply
   rules read their numbers from `src/content`; the sim hard-codes none.
+- **Commands** (Phase 3): every command carries the issuing `nation`, and validation checks
+  every commander and province it names against that nation, so "rejects commands against
+  units the nation does not own" has a subject. Fields are named for what they hold
+  (`commanders`, `commander`, `squad`, `from`, `to`, `province`, `unit`, `building`).
+  `validateCommand(state, cmd)` returns an error string or null; `applyCommand(state, cmd)`
+  validates, then applies, and returns `{ ok: true }` or `{ ok: false, error }`. Applying
+  copies every array it stores, so state never shares objects with a command. `setOrder`
+  takes only an order kind (idle, pillage, patrol, research, preach); orders that carry
+  progress or targets come from their own commands, which compute them. `cancelRecruit`
+  names the queue item by id (`RecruitOrder.id`), not by index, so an item finishing between a
+  render and a click cannot shift the target. The commands live in `src/sim/commands/`
+  rather than one `commands.ts`, per the small-modules rule.
+- **Movement in tick step 2** runs as `advanceTransits` (walk, arrive), `resolveArrivals`
+  (Phase 3 ends moves among hostiles; Phase 4 fights there), and `continueMoves` (start the
+  next leg). Step 3 runs recruitment before construction, as listed above.
+- **GameState additions** (Phase 3): `RecruitOrder` has an `id` and the queuing `nation`;
+  `NationState.inSight` holds the enemy commanders a nation saw at the end of the last day,
+  for 'sighted' messages. Vision and visible armies are otherwise computed on demand.
+- **State hash**: `stateHash(state)` (`src/sim/hash.ts`) is a 53-bit hash of the JSON form,
+  used by the determinism tests and later by save verification.

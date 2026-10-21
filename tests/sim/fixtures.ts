@@ -101,3 +101,13 @@ export function independentProvince(state: GameState, terrain?: string): Provinc
 export function runDays(state: GameState, days: number): void {
   for (let d = 0; d < days; d++) advance(state);
 }
+
+/** Gives a province to a nation and removes the independent defenders standing in it. */
+export function annex(state: GameState, nation: NationId, province: ProvinceId): ProvinceState {
+  state.commanders = Object.fromEntries(
+    Object.entries(state.commanders).filter(([, c]) => c.owner !== null || c.location !== province),
+  );
+  const p = state.provinces[province]!;
+  p.owner = nation;
+  return p;
+}

@@ -6,7 +6,7 @@ import type { BuildingId } from '../content/types';
 import type { CommanderId, NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
 import { provinceScales, scaleEffect } from './scales';
-import { getMapProvince, getNation, getProvince } from './state';
+import { getMapProvince, getNation, getProvince, wholeDays } from './state';
 import type { Construction, GameState } from './types';
 
 /** Days to build here: the building's days scaled by the province's build-time scale effect. */
@@ -16,7 +16,7 @@ export function constructionDays(
   building: BuildingId,
 ): number {
   const pct = scaleEffect(provinceScales(state, provinceId), 'buildTimePct');
-  const days = Math.ceil(buildingDef(building).days * Math.max(0, 1 + pct));
+  const days = wholeDays(buildingDef(building).days * Math.max(0, 1 + pct));
   return Math.max(CONSTRUCTION.minDays, days);
 }
 

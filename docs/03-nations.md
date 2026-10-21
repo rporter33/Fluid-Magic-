@@ -130,7 +130,12 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
   independents.
 - **Stats the tables leave out** take the baseline (`hp 10, str 10, att 10, def 10, prot 0,
   mr 10, mor 10, prec 10`), size 1, and map speed 2. This applies to every commander
-  (including Scouts) and to mounted troops, whose size is not listed.
+  (including Scouts) and to mounted troops, whose size is not listed, except for map speed
+  below.
+- **Commander map speed** is 3 for every national commander (Phase 3). A commander moves at
+  the slowest of itself and its squads, so with speed 2 no army could ever use its speed-3
+  troops (Ash Riders, Ember Skirmishers, Wolf Riders). Lone scouts, priests, and mages move at
+  3. Summoned commanders keep the baseline until Phase 5.
 - **Commander weapons** are not listed. Scouts carry a Dagger 2, priests and mages a Staff
   2, Ash Chieftain an Axe 5, and Warden Captain and Independent Captain a Sword 4.
 - **Requirements**: every recruitable unit needs a fort; priests and sacred units also need a

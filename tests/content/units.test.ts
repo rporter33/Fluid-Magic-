@@ -4,6 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef, validateContent, type UnitTypeId } from '../../src/content';
 import { NATIONS } from '../../src/content/nations';
 import { UNITS } from '../../src/content/units';
+import { createGame } from '../../src/sim/createGame';
+import { recruitRequirementError } from '../../src/sim/recruitment';
+import { nation } from '../sim/fixtures';
 
 /** [hp, str, att, def, prot, mor, mapSpeed, gold, materials, pop, recruitDays] per docs/03. */
 const TROOPS: Record<string, readonly number[]> = {
@@ -135,5 +138,31 @@ describe('nations', () => {
       { unit: 'warden', count: 20 },
       { unit: 'longbowHunter', count: 10 },
     ]);
+  });
+});
+
+describe('day-one recruitment', () => {
+  it('every nation can recruit its whole unit list at its capital (docs/06 Content validation)', () => {
+    const state = createGame({
+      seed: 1,
+      mapSize: 'medium',
+      nations: [nation('cinderHorde'), nation('thornwood')],
+    });
+    for (const n of Object.values(state.nations)) {
+      const def = nationDef(n.def);
+      for (const unit of [...def.troops, ...def.commanders]) {
+        expect(recruitRequirementError(state, n.id, n.capital, unit), unit).toBeNull();
+      }
+    }
+  });
+});
+
+describe('map speeds', () => {
+  it('give national commanders speed 3, so troops set the pace', () => {
+    for (const n of Object.values(NATIONS)) {
+      for (const id of n.commanders) expect(unitDef(id).mapSpeed, id).toBe(3);
+    }
+    expect(unitDef('ashRider').mapSpeed).toBe(3);
+    expect(unitDef('warden').mapSpeed).toBe(1);
   });
 });

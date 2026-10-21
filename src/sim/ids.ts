@@ -10,6 +10,7 @@ export const ID_PREFIXES = {
   battle: 'b',
   message: 'm',
   effect: 'fx',
+  recruit: 'rq',
 } as const;
 
 export type IdKind = keyof typeof ID_PREFIXES;
@@ -22,6 +23,7 @@ export type SquadId = Id<'squad'>;
 export type BattleId = Id<'battle'>;
 export type MessageId = Id<'message'>;
 export type EffectId = Id<'effect'>;
+export type RecruitId = Id<'recruit'>;
 
 /** Anything that owns the id counter: GameState, or a scratch counter in mapgen. */
 export interface IdCounter {

@@ -10,10 +10,12 @@ import { generateMap } from '../mapgen/generate';
 import { numbered } from '../mapgen/names';
 import { createCommander, createSquad } from './commanders';
 import { newId, type ProvinceId } from './ids';
+import { placeIndependents } from './independents';
 import { createRng } from './rng';
 import { zeroMana } from './selectors';
 import { getProvince } from './state';
 import { STATE_VERSION, type GameSetup, type GameState, type ProvinceState } from './types';
+import { updateExplored, updateSightings } from './visibility';
 
 /** Keeps the game's random stream apart from the map generator's, which uses the bare seed. */
 const GAME_RNG_SALT = 0x5f3759df;
@@ -135,7 +137,8 @@ export function createGame(setup: GameSetup): GameState {
       unpaidDays: 0,
       godless: false,
       eliminated: false,
-      explored: [capital],
+      explored: [],
+      inSight: [],
       stats: { battlesWon: 0, battlesLost: 0, provincesTaken: 0, manaSpent: zeroMana() },
     };
   });
@@ -154,5 +157,8 @@ export function createGame(setup: GameSetup): GameState {
       }
     }
   }
+  placeIndependents(state);
+  updateExplored(state);
+  updateSightings(state);
   return state;
 }

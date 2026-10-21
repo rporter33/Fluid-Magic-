@@ -16,6 +16,13 @@ export const BASELINE = {
   mapSpeed: 2,
 } as const;
 
+/**
+ * National commanders move at map speed 3, so an army's pace is set by its troops: with the
+ * baseline 2, speed-3 troops (riders, skirmishers) could never move faster than infantry,
+ * since a commander moves at the slowest of itself and its squads (docs/09-balance.md).
+ */
+export const COMMANDER_BASELINE = { ...BASELINE, mapSpeed: 3 } as const;
+
 /** Commander weapons; the commander tables list none (values in docs/09-balance.md). */
 export const COMMANDER_WEAPONS = {
   dagger: { name: 'Dagger', dmg: 2 },

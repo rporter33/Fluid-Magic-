@@ -1,7 +1,7 @@
 // Thornwood units and commanders (docs/03-nations.md, Thornwood tables). The Wolf summon
 // is shared with independents and lives in common.ts.
 import type { UnitDef } from '../types';
-import { BASELINE, COMMANDER_WEAPONS } from './base';
+import { BASELINE, COMMANDER_BASELINE, COMMANDER_WEAPONS } from './base';
 
 export const THORNWOOD_UNITS = {
   thornMilitia: {
@@ -130,7 +130,7 @@ export const THORNWOOD_UNITS = {
   },
 
   thornScout: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'thornScout',
     name: 'Scout',
     hp: 10,
@@ -144,7 +144,7 @@ export const THORNWOOD_UNITS = {
     commander: { leadership: 10, pips: {}, holy: 0, sight: 2 },
   },
   wardenCaptain: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'wardenCaptain',
     name: 'Warden Captain',
     hp: 14,
@@ -158,7 +158,7 @@ export const THORNWOOD_UNITS = {
     commander: { leadership: 80, pips: {}, holy: 0 },
   },
   grovePriest: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'grovePriest',
     name: 'Grove Priest',
     hp: 10,
@@ -172,7 +172,7 @@ export const THORNWOOD_UNITS = {
     commander: { leadership: 20, pips: { G: 1 }, holy: 2 },
   },
   saplingDruid: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'saplingDruid',
     name: 'Sapling Druid',
     hp: 10,
@@ -186,7 +186,7 @@ export const THORNWOOD_UNITS = {
     commander: { leadership: 10, pips: { G: 1 }, holy: 0 },
   },
   elderDruid: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'elderDruid',
     name: 'Elder Druid',
     hp: 11,

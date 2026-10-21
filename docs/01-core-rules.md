@@ -311,3 +311,62 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   province changes hands, and the commander who started it returns to idle when it ends,
   unless it has since been given another order (a Build order names its province). Wild and
   Artifice scale construction time; it is never under 1 day.
+
+**Commanders, movement, recruitment, independents, fog (Phase 3)**
+- **Map speed**: national commanders move at speed 3 (docs/03), so an army's pace is set by
+  its slowest troops; a lone commander or scout moves at 3. A group moved together keeps the
+  slowest member's speed on every leg, frozen when ordered.
+- **Leg days** are whole days: `round(moveDays * speedFactor)`, at least 1 (table in
+  docs/09-balance.md). Progress counts days, so a reversal and an ETA are whole days too.
+- **Hostile provinces**: a province is hostile to a nation if it does not own it, or if a
+  commander of another owner stands in it (not in transit, not a garrison holder, and not
+  hidden by stealth, since a refused path would give it away; a besieged fort is hostile to
+  its owner's arrivals). A move ends on arrival in a hostile province; Phase 4 fights there.
+  Paths may cross only friendly provinces, so only the last province of a path may be
+  hostile; the pathfinder and move validation both enforce this. A stealthy scout that
+  enters a hostile province stops there like any army.
+- **Movement within a day** (step 2): every transit advances; arrivals settle (Phase 4
+  battles go here); then commanders with a move order start their next leg the same day.
+  Commanders passing through therefore stand in the province while arrivals are resolved.
+- **Location** is always the last province a commander stood in. A reversal swaps the leg's
+  ends and turns the days walked into the days back (section 6), but the commander never
+  reached the far end, so its location, supply, vision, and `cameFrom` stay those of the
+  province it left. Reversing a leg not yet begun cancels it. A reversed commander stops when
+  it gets back. A new path for a commander in transit starts where its current leg ends.
+- **Orders** set without arguments (idle, pillage, patrol, research, preach) take effect on
+  arrival when given on the march; research needs a mage standing in an own province with a
+  lab; preach needs holy pips. Orders with progress or targets come only from their own
+  commands. The garrison holder takes no orders, scripts, or builds; only its squads move.
+- **Squads**: a commander holds at most one squad per unit type and row. Transfers,
+  formation changes, and recruits merge into a matching squad (troops and HP add up; the
+  higher starvation counter stays). A partial transfer splits off a proportional share of
+  the HP pool. Leadership counts troops, whatever their size.
+- **Recruitment** (section 8): time is `recruitDays * ceil(count / 10)` for troops and
+  `recruitDays` for commanders, scaled by the fort province's recruit time (Order +5%, Turmoil
+  -10% per step) and build time (Wild +15%, Artifice -15% per step; section 8 calls recruit
+  time "build time"), rounded up to whole days and fixed when queued. Beasts cost 10% less
+  gold per Wild step. The queue pauses while the fort is besieged or its unrest is above 50,
+  and queueing is refused then. A finished item waits until the province has the population
+  it costs. Completed troops join the fort's garrison holder; commanders stand in the fort.
+  Items queued by a nation that no longer owns the fort are dropped. Cancelling returns the
+  gold in full and the materials only up to the fort's pool cap, so the queue cannot bank
+  materials past the cap.
+- **Garrison holder**: one per fort, owned by the fort's owner. A fort that changes hands gets
+  a new holder the next time it needs one; a holder left by the old owner is removed with
+  any troops it kept.
+- **Provincial defense** (section 8): raising PD from level L costs `(L + 1) * 15`, so 0 to 30
+  costs 6975 gold. PD cannot be bought during a siege. PD levels are public knowledge, like
+  terrain and ownership.
+- **Independents** (section 9): one Independent Captain leads each province's force. Pools are
+  split by weight (largest remainders): plains, farmland, and wasteland 2 light infantry to 1
+  archer; forest 2 wolves to 1 archer; hills heavy infantry; mountains heavy infantry plus one
+  giant (counted in the strength) at 3 or more from a capital; swamp swamp fighters.
+  Farmland and wasteland have no pool in section 9 and use the plains pool.
+- **Fog** (section 14): a nation sees other nations' armies in and next to its provinces and
+  its commanders' locations, and within 2 of its scouts. A stealthy commander leading only
+  stealthy troops is never seen; garrison holders show only while they keep troops. Explored
+  provinces (population and springs known) are those ever owned or within a scout's sight.
+  Independent strength reads as weak (under 16), moderate (under 24), strong (under 30), or
+  fortress, and exactly where one of the nation's scouts is in or next to the province.
+  Each day a nation is told, once per province and enemy nation, of armies that came into
+  sight; it remembers which enemy commanders it saw at the end of the last day.

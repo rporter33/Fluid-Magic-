@@ -104,6 +104,39 @@ export const MESSAGES = {
   keep: 300,
 } as const;
 
+/** docs/01-core-rules.md section 6, Movement. */
+export const MOVEMENT = {
+  /** Leg days = terrain move days * speedFactor[map speed], rounded, at least minLegDays. */
+  speedFactor: { 1: 1.5, 2: 1, 3: 0.7 } as Readonly<Record<number, number>>,
+  minLegDays: 1,
+} as const;
+
+/** docs/01-core-rules.md section 8. */
+export const RECRUITMENT = {
+  /** Troops per batch for the batch time: days = recruitDays * ceil(count / batchSize). */
+  batchSize: 10,
+  maxBatch: 50,
+  minDays: 1,
+} as const;
+
+/** Provincial defense (docs/01-core-rules.md section 8). */
+export const PD = {
+  maxLevel: 30,
+  /** Raising PD from level L costs (L + 1) * goldPerLevel. */
+  goldPerLevel: 15,
+  militiaPerLevel: 2,
+  /** One archer-grade defender per this many levels. */
+  levelsPerArcher: 5,
+} as const;
+
+/** docs/01-core-rules.md section 14. */
+export const VISION = {
+  /** Graph distance seen from owned provinces and from commanders without their own sight. */
+  baseSight: 1,
+  /** Independents' exact strength shows within this distance of one of the nation's scouts. */
+  scoutExactRange: 1,
+} as const;
+
 /** docs/04-battle.md, "Scripts": script slots per commander. */
 export const SCRIPT_SLOTS = 5;
 

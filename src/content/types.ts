@@ -58,7 +58,7 @@ export interface CommanderTraits {
   holy: number;
   /** Chance of one extra pip in a color when recruited (adept-tier mages). */
   extraPip?: { color: Color; chance: number };
-  /** Provinces seen beyond the commander's own (scouts). */
+  /** Graph distance this commander sees, marking it a scout; others see VISION.baseSight. */
   sight?: number;
   /** A fort's garrison holder: free, immobile, never fights itself. */
   garrison?: boolean;

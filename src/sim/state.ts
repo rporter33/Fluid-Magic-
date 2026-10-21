@@ -38,3 +38,11 @@ export function getCommander(state: GameState, id: CommanderId): CommanderState 
 export function activeEffects(state: GameState, provinceId: ProvinceId): ProvinceEffect[] {
   return state.provinceEffects.filter((e) => e.province === provinceId && e.untilDay > state.day);
 }
+
+/**
+ * Rounds a day count up to whole days, ignoring floating-point noise: 50 * 1.1 is
+ * 55.00000000000001 in binary floating point and must come out as 55, not 56.
+ */
+export function wholeDays(days: number): number {
+  return Math.ceil(days - 1e-9);
+}

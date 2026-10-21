@@ -1,6 +1,6 @@
 // Cinder Horde units and commanders (docs/03-nations.md, Cinder Horde tables).
 import type { UnitDef } from '../types';
-import { BASELINE, COMMANDER_WEAPONS } from './base';
+import { BASELINE, COMMANDER_BASELINE, COMMANDER_WEAPONS } from './base';
 
 export const CINDER_HORDE_UNITS = {
   ashMilitia: {
@@ -147,7 +147,7 @@ export const CINDER_HORDE_UNITS = {
   },
 
   cinderScout: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'cinderScout',
     name: 'Scout',
     hp: 10,
@@ -161,7 +161,7 @@ export const CINDER_HORDE_UNITS = {
     commander: { leadership: 10, pips: {}, holy: 0, sight: 2 },
   },
   ashChieftain: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'ashChieftain',
     name: 'Ash Chieftain',
     hp: 14,
@@ -175,7 +175,7 @@ export const CINDER_HORDE_UNITS = {
     commander: { leadership: 80, pips: {}, holy: 0 },
   },
   pyrePriest: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'pyrePriest',
     name: 'Pyre Priest',
     hp: 10,
@@ -189,7 +189,7 @@ export const CINDER_HORDE_UNITS = {
     commander: { leadership: 20, pips: { R: 1 }, holy: 2 },
   },
   emberAdept: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'emberAdept',
     name: 'Ember Adept',
     hp: 10,
@@ -203,7 +203,7 @@ export const CINDER_HORDE_UNITS = {
     commander: { leadership: 10, pips: { R: 1 }, holy: 0 },
   },
   cinderMagus: {
-    ...BASELINE,
+    ...COMMANDER_BASELINE,
     id: 'cinderMagus',
     name: 'Cinder Magus',
     hp: 11,

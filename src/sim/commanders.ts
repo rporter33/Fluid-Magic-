@@ -32,6 +32,26 @@ export function createSquad(state: GameState, unit: UnitTypeId, count: number): 
   };
 }
 
+/**
+ * Merges squads so a commander holds at most one squad per unit type and row: a later squad
+ * joins the first matching one, adding its troops and HP; the hungrier starvation counter
+ * stays. Keeps troops from being split into many tiny squads.
+ */
+export function mergeSquads(commander: CommanderState): void {
+  const kept: Squad[] = [];
+  for (const squad of commander.squads) {
+    const match = kept.find((k) => k.unit === squad.unit && k.formation === squad.formation);
+    if (!match) {
+      kept.push(squad);
+      continue;
+    }
+    match.count += squad.count;
+    match.hp += squad.hp;
+    match.starvedDays = Math.max(match.starvedDays, squad.starvedDays);
+  }
+  commander.squads = kept;
+}
+
 /** Adds a commander to the game; adept-tier mages roll their extra pip here. */
 export function createCommander(
   state: GameState,
@@ -63,6 +83,20 @@ export function createCommander(
   };
   state.commanders[commander.id] = commander;
   return commander;
+}
+
+/** A fort's garrison holder: keeps the fort's troops, never moves, fights, or eats itself. */
+export function isGarrisonHolder(commander: CommanderState): boolean {
+  return unitDef(commander.unit).commander?.garrison === true;
+}
+
+/** Hidden from other nations: a stealthy commander leading only stealthy troops. */
+export function isStealthy(commander: CommanderState): boolean {
+  if (!unitDef(commander.unit).tags.includes('stealthy')) return false;
+  for (const s of commander.squads) {
+    if (!unitDef(s.unit).tags.includes('stealthy')) return false;
+  }
+  return true;
 }
 
 /** Monthly gold upkeep of one unit: goldCost / 15, half for sacred units, 0 without a cost. */

@@ -17,6 +17,7 @@ import type {
   MessageId,
   NationId,
   ProvinceId,
+  RecruitId,
   SquadId,
 } from './ids';
 import type { RngState } from './rng';
@@ -69,8 +70,11 @@ export interface Construction {
 
 /** A fort's recruitment queue item. Gold and materials are paid on queueing. */
 export interface RecruitOrder {
+  id: RecruitId;
   unit: UnitTypeId;
   count: number;
+  /** The nation that queued it; the item is dropped if the fort changes hands. */
+  nation: NationId;
   daysLeft: number;
   /** What was paid, so a cancellation can refund it exactly. */
   paid: { gold: number; materials: number };
@@ -104,7 +108,10 @@ export interface ProvinceState {
   /** The fort's materials pool; stays 0 without a fort. */
   materials: number;
   recruitQueue: RecruitOrder[];
-  /** The fort's garrison holder, present exactly when the province has a fort. */
+  /**
+   * The fort's garrison holder, owned by the province's owner; null without a fort. A fort
+   * that changes hands gets a new holder for its new owner when it next needs one.
+   */
   garrison: CommanderId | null;
   dominion: Dominion;
   siege: SiegeState | null;
@@ -114,14 +121,18 @@ export interface ProvinceState {
 
 // ---------------------------------------------------------------- commanders
 
-export type Formation = 'front' | 'middle' | 'rear';
+export const FORMATIONS = ['front', 'middle', 'rear'] as const;
+export type Formation = (typeof FORMATIONS)[number];
 
 /** Identical troops under a commander. Troops have no identity: a count and an HP pool. */
 export interface Squad {
   id: SquadId;
   unit: UnitTypeId;
   count: number;
-  /** Shared HP pool, at most count times the unit's hp. */
+  /**
+   * Shared HP pool: 0 < hp <= count * unit hp. Splits divide it in proportion and never
+   * recompute count from it; only starvation does (docs/01 Implementation decisions).
+   */
   hp: number;
   formation: Formation;
   /**
@@ -131,6 +142,8 @@ export interface Squad {
    */
   starvedDays: number;
 }
+
+export const SCRIPT_KINDS = ['cast', 'attack', 'hold', 'retreat'] as const;
 
 export type ScriptSlot =
   /** A null spell casts the best castable one (docs/04-battle.md, "Scripts"). */
@@ -170,7 +183,10 @@ export interface CommanderState {
   /** Null for independent defenders. */
   owner: NationId | null;
   name: string;
-  /** Current province; while in transit always equal to transit.from (a reversal updates both). */
+  /**
+   * The province the commander last stood in. In transit that is transit.from, or transit.to
+   * after a reversal (it turned back before arriving).
+   */
   location: ProvinceId;
   transit: Transit | null;
   /** The province it last left, where routed attackers retreat to. */
@@ -239,6 +255,8 @@ export interface NationState {
   eliminated: boolean;
   /** Provinces ever owned or scouted, whose population and springs are known. */
   explored: ProvinceId[];
+  /** Enemy commanders in sight at the end of the last day; newcomers post a sighting. */
+  inSight: CommanderId[];
   stats: NationStats;
 }
 

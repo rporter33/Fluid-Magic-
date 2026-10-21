@@ -24,6 +24,13 @@ the truth for current values.
 | 2026-10-21 | (new) | Starting tax rate | unspecified | Normal, also for a newly taken province | The neutral rate; the player opts into Low or High |
 | 2026-10-21 | (new) | Minimum construction time | unspecified | 1 day | Artifice 3 times a short build cannot reach 0 days |
 | 2026-10-21 | 01 §4 | Healing when fed | "recover at the same rate" | 2% of max HP a day, battle wounds included | One rate for starvation and healing; no separate wound rule in M1 |
+| 2026-10-21 | 03 | Commander map speed | baseline 2 | 3 for national commanders | With 2, speed-3 troops could never move faster than infantry |
+| 2026-10-21 | 01 §6 | Leg days | moveDays * factor | round(moveDays * factor), at least 1. Speed 1 / 2 / 3: plains and farmland 6 / 4 / 3, forest and hills 9 / 6 / 4, mountains 14 / 9 / 6, swamp 12 / 8 / 6, wasteland 8 / 5 / 4 | Whole days for progress, reversal, and ETAs |
+| 2026-10-21 | 01 §8 | PD cost | (level + 1) * 15 | raising from level L costs (L + 1) * 15; 0 to 30 costs 6975 | The doc's level read as the current one |
+| 2026-10-21 | 01 §9 | Independent pools | troop kinds per terrain | 2 : 1 for two-kind pools; farmland and wasteland use plains; the mountain giant counts toward the strength | The doc gives kinds, not shares |
+| 2026-10-21 | 01 §14 | Strength words | four words | weak < 16 <= moderate < 24 <= strong < 30 <= fortress | 8 + 4d gives weak at d 1, moderate at 2 to 3, strong at 4 to 5, fortress beyond and on Wellsprings |
+| 2026-10-21 | 01 §8 | Recruit time scales | Order, Turmoil | also Wild +15% and Artifice -15% per step (build time) | Section 8 calls recruit time build time |
+| 2026-10-21 | 01 §8 | Recruit cancel refund | unspecified | gold in full; materials up to the fort pool cap | A full refund would bank materials past the cap |
 | 2026-10-21 | 01 §4 vs 09 checklist | Supply pop divisor | pop / 50 | unchanged (pop / 50) | Conflict: Hills supply is 100-160, so the checklist item "armies larger than 60 troops in a Hills province starve within a month" cannot pass. Phase 12 should retune (about pop / 250 fits) or change the checklist |
 
 ## Playtest checklist (run before calling M1 done)

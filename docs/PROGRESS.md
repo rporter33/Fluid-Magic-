@@ -76,6 +76,27 @@
   Medium game (110 provinces, 220 commanders, some pillaging) runs about 0.7 ms per day
   after the review's performance fixes, against the 2 ms budget.
 
+## Phase 3: Commanders, movement, recruitment, independents (in review)
+
+- `src/sim/commands/`: the Command union and `validateCommand` / `applyCommand` for move,
+  reverse, setOrder, setScript, setFormation, transferSquad, build, recruit, cancelRecruit,
+  buyPd, and setTax. Every command names its nation and is refused, changing nothing, for
+  anything that nation does not own.
+- `movement.ts`: map speeds, whole-day legs, Dijkstra paths that cross only friendly
+  provinces, ETAs, and the daily walk in three steps (transits, arrivals, onward legs) so
+  Phase 4 can fight at arrivals. Reversal keeps the commander where it last stood.
+- `recruitment.ts`: costs, Wild beast discount, recruit time with Order, Turmoil, Wild, and
+  Artifice, the daily queue (paused by siege or unrest, waiting for population), garrison
+  holders, and capped refunds. `pd.ts`: PD cost and the force it fields.
+- `independents.ts`: every non-capital province gets an Independent Captain and its terrain
+  pool at game start. `visibility.ts`: vision, explored provinces, visible armies, fogged
+  independent strength, and 'sighted' messages. `hash.ts`: a state hash.
+- Tests: move ETA by terrain at every speed, multi-leg paths, groups, reversal, and Dijkstra
+  against an independent Bellman-Ford; recruitment end to end (pop taken on completion);
+  every command refused against another nation's units; independents per terrain; fog; and
+  acceptance criterion 4: a 365-day command log replays to the same state hash, also through
+  a save and load.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
