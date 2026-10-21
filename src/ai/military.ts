@@ -7,14 +7,13 @@
 import { AI } from '../content/ai';
 import type { ProvinceId } from '../sim/ids';
 import type { CommanderState } from '../sim/types';
-import { armyPower, defenderPower, destinationOf, groups } from './assess';
+import { armyPower, defenderPower, destinationOf, groups, isMoving } from './assess';
 import {
   byProvince,
   createArmyPass,
   distanceFactor,
   eligibleGroups,
   isAssigned,
-  isMoving,
   membersOf,
   provinceValue,
   send,

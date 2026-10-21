@@ -1,9 +1,9 @@
 // The army pass's offensive steps against other nations (docs/08-ai.md priorities 6 "War" and
 // 7 "Pillage"; Phase 7 design "5. Army pass" b, e): the sieges this nation lays, stormed when
-// the odds allow and otherwise held, with each besieging leader's keyed pillage draw; and War,
-// whose targets come in order: sieges to reinforce, an enemy's Wellsprings when it nears a
-// Wellspring win (past the aggression gate), the enemy provinces own armies march on, and a new
-// target only when the nation-wide odds pass.
+// the odds allow and otherwise held, with each besieging leader's keyed pillage draw and no
+// pillage anywhere else; and War, whose targets come in order: sieges to reinforce, an enemy's
+// Wellsprings when it nears a Wellspring win (past the aggression gate), the enemy provinces own
+// armies march on, and a new target only where the odds against that target pass.
 import { AI, DIFFICULTIES } from '../content/ai';
 import { TIME } from '../content/rules';
 import { wellspringsToWin } from '../mapgen/placement';
@@ -20,7 +20,9 @@ import {
   defenderPower,
   destinationOf,
   groups,
+  isBesieging,
   isEnemyProvince,
+  isMoving,
 } from './assess';
 import {
   adjacencyRoute,
@@ -31,7 +33,6 @@ import {
   hopsFrom,
   hold,
   isAssigned,
-  isMoving,
   membersOf,
   provinceValue,
   send,
@@ -64,13 +65,27 @@ function drawPillage(plan: Plan, province: ProvinceId, own: readonly CommanderSt
   }
 }
 
+/** Sets idle those of the commanders that stand pillaging. */
+function stopPillage(plan: Plan, commanders: readonly CommanderState[]): void {
+  for (const c of commanders) {
+    if (c.order.kind !== 'pillage' || c.transit !== null) continue;
+    plan.issue({ type: 'setOrder', nation: plan.nation, commander: c.id, order: 'idle' });
+  }
+}
+
 /**
- * Step b: every siege this nation lays is stormed when the fort has no defenders left, or when
+ * Step b: a pillage held anywhere but at a siege this nation lays ends (a fort that fell to the
+ * nation, or a siege that ended, would otherwise be pillaged on, since holding a group issues no
+ * command). Every siege this nation lays is stormed when the fort has no defenders left, or when
  * its walls are down and every own commander there together has AI.stormRatio times the
  * defenders' power; otherwise it is held. Either way the besiegers are held from other steps.
+ * Storming, they stop pillaging, since a won storm makes the province their own; else each
+ * besieging leader holds its pillage draw.
  */
 export function holdSieges(pass: ArmyPass): void {
   const { plan } = pass;
+  const elsewhere = plan.own().filter((c) => !isBesieging(plan, c.location));
+  stopPillage(plan, elsewhere);
   for (const p of ownSieges(plan)) {
     const siege = p.siege;
     if (!siege) continue;
@@ -80,7 +95,8 @@ export function holdSieges(pass: ArmyPass): void {
       defenders <= 0 || (wallsDown(siege.wallHp) && armyPower(own) >= AI.stormRatio * defenders);
     if (storm && !siege.storm) plan.issue({ type: 'storm', nation: plan.nation, province: p.id });
     hold(plan, own);
-    drawPillage(plan, p.id, own);
+    if (storm || siege.storm) stopPillage(plan, own);
+    else drawPillage(plan, p.id, own);
   }
 }
 
@@ -100,8 +116,11 @@ interface Targets {
   readonly denialHops: ReadonlyMap<ProvinceId, number>;
   /** Enemy provinces an own group marches on. */
   readonly marches: readonly ProvinceId[];
-  /** The nation-wide odds allow a new target. */
-  readonly open: boolean;
+  /**
+   * The odds allow a new target in a province: aggression × the nation's field power is more
+   * than AI.warRatio × the enemy power an attack there would meet (enemyPowerAt).
+   */
+  opens(province: ProvinceId): boolean;
 }
 
 /**
@@ -133,41 +152,43 @@ function denialTargets(plan: Plan): ProvinceId[] {
 }
 
 /**
- * The enemy power near the nation: other nations' commanders within AI.warHops of an own
- * province, and the garrisons and PD of enemy provinces on its border.
+ * The enemy power an attack on a province would meet, for the odds of a new target: the
+ * province's garrison troops and PD, and other nations' commanders within AI.warHops of it,
+ * those standing in it included (hidden commanders and garrison holders count nothing). Each
+ * province is summed once a call.
  */
-function enemyPowerNearby(plan: Plan): number {
+function enemyPowerAt(plan: Plan): (province: ProvinceId) => number {
   const { copy } = plan;
-  const near = new Set<ProvinceId>();
-  const border = new Set<ProvinceId>();
-  for (const p of plan.owned()) {
-    for (const q of withinHops(copy, p.id, AI.warHops)) near.add(q);
-    for (const n of getMapProvince(copy, p.id).neighbors) {
-      if (isEnemyProvince(copy, plan.nation, n)) border.add(n);
-    }
-  }
-  let total = 0;
+  const standing = new Map<ProvinceId, number>();
   for (const c of Object.values(copy.commanders)) {
     if (c.owner === null || c.owner === plan.nation || !takesPart(c)) continue;
-    if (near.has(c.location)) total += commanderPower(c);
+    standing.set(c.location, (standing.get(c.location) ?? 0) + commanderPower(c));
   }
-  for (const p of border) total += fixedDefense(copy, p);
-  return total;
+  const near = new Map<ProvinceId, number>();
+  return (province) => {
+    let power = near.get(province);
+    if (power === undefined) {
+      power = fixedDefense(copy, province);
+      for (const q of withinHops(copy, province, AI.warHops)) power += standing.get(q) ?? 0;
+      near.set(province, power);
+    }
+    return power;
+  };
 }
 
 function warTargets(pass: ArmyPass): Targets {
   const { plan } = pass;
+  const all = groups(plan);
   const marches = new Set<ProvinceId>();
-  for (const g of groups(plan)) {
+  for (const g of all) {
     const to = destinationOf(g.leader);
     if (!g.lone && isMoving(g.leader) && isEnemyProvince(plan.copy, plan.nation, to)) {
       marches.add(to);
     }
   }
-  const fieldPower = groups(plan)
-    .filter((g) => !g.lone)
-    .reduce((sum, g) => sum + armyPower(g.members), 0);
-  const aggression = nationDefOf(plan.copy, plan.nation).ai.aggression;
+  const fieldPower = all.filter((g) => !g.lone).reduce((sum, g) => sum + armyPower(g.members), 0);
+  const odds = nationDefOf(plan.copy, plan.nation).ai.aggression * fieldPower;
+  const enemyPower = enemyPowerAt(plan);
   const denial = denialTargets(plan);
   const land = plan
     .owned()
@@ -180,7 +201,7 @@ function warTargets(pass: ArmyPass): Targets {
     denialStep: first === undefined ? null : (adjacencyRoute(plan.copy, land, first)[0] ?? null),
     denialHops: hopsFrom(plan.copy, denial),
     marches: (Object.keys(plan.copy.map.provinces) as ProvinceId[]).filter((p) => marches.has(p)),
-    open: aggression * fieldPower > AI.warRatio * enemyPowerNearby(plan),
+    opens: (p) => odds > AI.warRatio * enemyPower(p),
   };
 }
 
@@ -226,15 +247,20 @@ function denialTarget(
 }
 
 /**
- * With the odds open, the best enemy province the commanders can reach and take: an enemy
- * capital first (its defenders are then weak enough), else by Expansion's value discounted by
- * path days.
+ * The best enemy province the commanders can reach and take where the odds open a new target:
+ * an enemy capital first (its defenders are then weak enough), else by Expansion's value
+ * discounted by path days.
  */
-function newTarget(plan: Plan, members: readonly CommanderState[]): ProvinceId | null {
+function newTarget(
+  plan: Plan,
+  members: readonly CommanderState[],
+  targets: Targets,
+): ProvinceId | null {
   const strength = armyPower(members);
   const paths = plan.paths(members);
   const options = paths.reached.filter(
-    (p) => isEnemyProvince(plan.copy, plan.nation, p) && canTake(plan, strength, p),
+    (p) =>
+      isEnemyProvince(plan.copy, plan.nation, p) && canTake(plan, strength, p) && targets.opens(p),
   );
   const capital = options.find((p) => isEnemyCapital(plan, p));
   if (capital !== undefined) return capital;
@@ -254,7 +280,7 @@ function newTarget(plan: Plan, members: readonly CommanderState[]): ProvinceId |
  * Where commanders standing together go to war, if anywhere, in target order: a siege the own
  * commanders there and marching there still hold short of the storm odds (joining needs no
  * odds of its own); an enemy Wellspring (denialTarget); an enemy province an own army marches
- * on that they can take; with the odds open, a new target.
+ * on that they can take; a new target where the odds open one.
  */
 function chooseTarget(
   pass: ArmyPass,
@@ -275,7 +301,7 @@ function chooseTarget(
   if (denied !== null) return denied;
   const march = targets.marches.find((p) => reach(p) && canTake(plan, strength, p));
   if (march !== undefined) return march;
-  return targets.open ? newTarget(plan, members) : null;
+  return newTarget(plan, members, targets);
 }
 
 /** War runs from DIFFICULTIES.warFromMonth on (months counted from 1). */

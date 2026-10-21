@@ -10,7 +10,15 @@ import { commanderMapSpeed, pathDays } from '../sim/movement';
 import { pdCost } from '../sim/pd';
 import { getMapProvince } from '../sim/state';
 import type { CommanderState, ProvinceState } from '../sim/types';
-import { armyPower, destinationOf, escortedSprings, groups, threat, type Group } from './assess';
+import {
+  armyPower,
+  destinationOf,
+  escortedSprings,
+  groups,
+  isMoving,
+  threat,
+  type Group,
+} from './assess';
 import {
   byProvince,
   daysTo,
@@ -18,7 +26,6 @@ import {
   fixedDefense,
   hold,
   isAssigned,
-  isMoving,
   membersOf,
   nearest,
   power,
@@ -27,7 +34,7 @@ import {
   strongestFirst,
   type ArmyPass,
 } from './army';
-import type { Plan } from './plan';
+import { fewestDays, type Plan } from './plan';
 
 /** The own forts under another nation's siege: the capital first, then by province index. */
 function besiegedForts(plan: Plan): ProvinceState[] {
@@ -78,15 +85,9 @@ function routeIn(
 function gatherPoint(pass: ArmyPass, fort: ProvinceId, outside: readonly Group[]) {
   const exits = exitsOf(pass, fort);
   const [strongest] = strongestFirst(outside);
-  let best: ProvinceId | null = null;
-  let bestDays = Infinity;
-  for (const exit of strongest ? exits : []) {
-    const days = daysTo(pass.plan, strongest?.members ?? [], exit);
-    if (days !== undefined && days < bestDays) {
-      best = exit;
-      bestDays = days;
-    }
-  }
+  const best = strongest
+    ? fewestDays(exits, (exit) => daysTo(pass.plan, strongest.members, exit))
+    : null;
   return best ?? exits[0] ?? null;
 }
 
@@ -136,9 +137,10 @@ export function relieveForts(pass: ArmyPass): void {
 }
 
 /**
- * Step c: one army for each owned unclaimed Wellspring an own priest walks to or claims. A
- * group standing or marching there is the escort; else the nearest free army is sent. With no
- * free army the priest goes alone.
+ * Step c: one army for each owned unclaimed Wellspring an own priest walks to or claims. First
+ * every such spring keeps a group standing or marching there as its escort, so no spring's
+ * escort is sent to another; then each spring left without one gets the nearest free army. With
+ * no free army the priest goes alone.
  */
 export function escortClaims(pass: ArmyPass): void {
   const { plan } = pass;
@@ -146,14 +148,16 @@ export function escortClaims(pass: ArmyPass): void {
   const springs = (Object.keys(plan.copy.map.provinces) as ProvinceId[]).filter((id) =>
     escorted.has(id),
   );
+  const all = groups(plan);
+  const open: ProvinceId[] = [];
   for (const spring of springs) {
-    const there = groups(plan).find(
+    const there = all.find(
       (g) => !g.lone && !isAssigned(plan, g) && destinationOf(g.leader) === spring,
     );
-    if (there) {
-      for (const m of there.members) pass.escorts.add(m.id);
-      continue;
-    }
+    if (there) for (const m of there.members) pass.escorts.add(m.id);
+    else open.push(spring);
+  }
+  for (const spring of open) {
     const free = eligibleGroups(pass).filter((g) => !isMoving(g.leader));
     const g = nearest(plan, free, spring);
     if (g) send(pass, g.members, spring);
@@ -184,7 +188,8 @@ function buyPd(plan: Plan, p: ProvinceState): void {
  * standing there, and those sent there earlier this call. While the threat around it is no
  * greater, the groups standing there stay, the strongest first, as far as it needs them.
  * Otherwise the nearest group by path days whose power covers the rest is sent and the groups
- * there stay with it; with none, one PD level is bought and the groups there are free to go.
+ * there stay with it. With none, one PD level is bought; in the capital the groups there stay to
+ * fight beside its walls and PD, and in any other province they are free to go (home to refill).
  */
 function defendProvince(pass: ArmyPass, p: ProvinceState): void {
   const { plan } = pass;
@@ -220,6 +225,7 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
     for (const g of here) hold(plan, g.members);
     return;
   }
+  if (p.id === plan.capital.id) for (const g of here) hold(plan, g.members);
   buyPd(plan, p);
 }
 

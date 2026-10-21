@@ -12,7 +12,7 @@ import { getMapProvince } from '../sim/state';
 import type { CommanderState, ProvinceState } from '../sim/types';
 import { borders, destinationOf } from './assess';
 import { planCarriedMana } from './magic';
-import { isGuarded, type Plan } from './plan';
+import { fewestDays, isGuarded, walk, type Plan } from './plan';
 import { splitMages } from './roles';
 
 /** Step 1: sets taxes, buys provincial defense, and starts buildings. */
@@ -32,7 +32,7 @@ export function planResearch(plan: Plan): void {
   if (plan.nationState.research.color !== color) {
     plan.issue({ type: 'setResearchColor', nation: plan.nation, color });
   }
-  const { researchers, battleMages } = splitMages(plan.copy, plan.nation);
+  const { researchers, battleMages } = splitMages(plan);
   for (const researcher of researchers) study(plan, researcher);
   for (const mage of battleMages) {
     if (mage.order.kind !== 'research') continue;
@@ -168,9 +168,7 @@ function startBuilding(plan: Plan): void {
     });
     return;
   }
-  if (walkingTo === site.id) return;
-  const path = plan.paths([scout]).pathTo(site.id);
-  if (path) plan.issue({ type: 'move', nation: plan.nation, commanders: [scout.id], path });
+  walk(plan, scout, site.id);
 }
 
 // ---------------------------------------------------------------- research
@@ -179,23 +177,17 @@ function startBuilding(plan: Plan): void {
  * Where a commander studies: the capital while it is an own lab province, else the own lab
  * province nearest by path days (the one it stands in first), ties by province order.
  */
-export function homeLab(plan: Plan, commander: CommanderState): ProvinceId | null {
+function homeLab(plan: Plan, commander: CommanderState): ProvinceId | null {
   const capital = plan.capital;
   if (capital.owner === plan.nation && capital.buildings.includes('lab')) return capital.id;
-  const labs = plan.owned().filter((p) => p.buildings.includes('lab'));
+  const labs = plan
+    .owned()
+    .filter((p) => p.buildings.includes('lab'))
+    .map((p) => p.id);
   const standing = commander.transit === null ? commander.location : null;
-  if (labs.some((p) => p.id === standing)) return standing;
+  if (standing !== null && labs.includes(standing)) return standing;
   const paths = plan.paths([commander]);
-  let best: ProvinceId | null = null;
-  let bestDays = Infinity;
-  for (const p of labs) {
-    const days = paths.days(p.id);
-    if (days !== undefined && days < bestDays) {
-      best = p.id;
-      bestDays = days;
-    }
-  }
-  return best;
+  return fewestDays(labs, (p) => paths.days(p));
 }
 
 /**
@@ -217,7 +209,5 @@ function study(plan: Plan, researcher: CommanderState): void {
     });
     return;
   }
-  if (destinationOf(researcher) === lab) return;
-  const path = plan.paths([researcher]).pathTo(lab);
-  if (path) plan.issue({ type: 'move', nation: plan.nation, commanders: [researcher.id], path });
+  walk(plan, researcher, lab);
 }

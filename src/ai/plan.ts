@@ -4,11 +4,19 @@
 // commands the copy accepted are returned.
 import { applyCommand, type Command } from '../sim/commands';
 import type { CommanderId, NationId, ProvinceId } from '../sim/ids';
-import { canMove, commanderMapSpeed, pathsFrom, type Paths } from '../sim/movement';
+import {
+  canMove,
+  commanderMapSpeed,
+  hostileProvinces,
+  pathsFrom,
+  pathsWith,
+  type Paths,
+} from '../sim/movement';
 import type { RngState } from '../sim/rng';
 import { commandersByProvince } from '../sim/selectors';
 import { getNation, getProvince } from '../sim/state';
 import type { CommanderState, GameState, NationState, ProvinceState } from '../sim/types';
+import { destinationOf } from './assess';
 import { roleOf, type Role } from './roles';
 import { aiRng } from './rng';
 
@@ -79,6 +87,8 @@ export interface Plan {
   issue(cmd: Command): boolean;
   /** Every path a group could be given now (pathsFrom), searched once per start and pace. */
   paths(group: readonly CommanderState[]): Paths;
+  /** Provinces hostile to the nation (hostileProvinces on the copy), found once per call. */
+  hostile(): ReadonlySet<ProvinceId>;
   /** The nation's commanders on the copy, oldest first. */
   own(): readonly CommanderState[];
   /** The nation's commanders with a role, oldest first. */
@@ -96,8 +106,9 @@ export type Step = (plan: Plan) => void;
 
 /**
  * Starts a planning call. Commands never move a commander, create or remove one, or change a
- * province's owner, so who stands where, who exists, roles, and ownership hold for the whole
- * call and are read once; a group's paths depend only on where it starts and its pace.
+ * province's owner, so who stands where, who exists, roles, ownership, and so the hostile
+ * provinces hold for the whole call and are read once; a group's paths depend only on where it
+ * starts and its pace.
  */
 export function createPlan(state: GameState, nation: NationId): Plan {
   const copy = planningCopy(state);
@@ -116,6 +127,11 @@ export function createPlan(state: GameState, nation: NationId): Plan {
   };
   const owned = Object.values(copy.provinces).filter((p) => p.owner === nation);
   const searches = new Map<string, Paths>();
+  let hostile: ReadonlySet<ProvinceId> | null = null;
+  const hostileSet = (): ReadonlySet<ProvinceId> => {
+    hostile ??= hostileProvinces(copy, nation);
+    return hostile;
+  };
   return {
     copy,
     nation,
@@ -142,15 +158,37 @@ export function createPlan(state: GameState, nation: NationId): Plan {
       const key = `${start} ${String(pace)} ${lead.transit ? 'leg' : 'standing'}`;
       let found = searches.get(key);
       if (!found) {
-        found = pathsFrom(copy, group);
+        found = pathsWith(copy, group, hostileSet());
         searches.set(key, found);
       }
       return found;
     },
+    hostile: hostileSet,
     own: () => own,
     withRole: (r) => own.filter((c) => role(c) === r),
     role,
     at: (province) => byProvince.get(province) ?? [],
     owned: () => owned,
   };
+}
+
+/** Walks one commander to a province unless it stands there or already walks there. */
+export function walk(plan: Plan, commander: CommanderState, to: ProvinceId): void {
+  if (destinationOf(commander) === to) return;
+  const path = plan.paths([commander]).pathTo(to);
+  if (path) plan.issue({ type: 'move', nation: plan.nation, commanders: [commander.id], path });
+}
+
+/** The item with the fewest days, the first of equals; null when none has a number of days. */
+export function fewestDays<T>(items: Iterable<T>, days: (item: T) => number | undefined): T | null {
+  let best: T | null = null;
+  let bestDays = Infinity;
+  for (const item of items) {
+    const d = days(item);
+    if (d !== undefined && d < bestDays) {
+      best = item;
+      bestDays = d;
+    }
+  }
+  return best;
 }

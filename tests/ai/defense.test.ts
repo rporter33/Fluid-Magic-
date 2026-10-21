@@ -1,216 +1,65 @@
-// The army pass's defensive steps (docs/08-ai.md priorities 5 and 9; Phase 7 design "5. Army
-// pass" a, c, d): relief of a besieged capital within bounded days, gathering against a strong
-// besieger, escorts for Wellspring claims, and Defense by the nearest covering group, re-pathed
-// when on the move, else one PD level.
+// Defense of threatened provinces (docs/08-ai.md priority 5 "Defense"; Phase 7 design "5. Army
+// pass" d): the capital first; the groups standing there kept as far as they are needed; else
+// the nearest group (free, an escort, or re-pathed on the move) that covers the threat with the
+// local defense, the groups there staying with it; else one PD level. Besieged forts are
+// relief's. Relief and escorts live in defense.relief and defense.escort.
 import { describe, expect, it } from 'vitest';
 import { AI } from '../../src/content/ai';
-import { createArmyPass } from '../../src/ai/army';
-import { armyPower } from '../../src/ai/assess';
+import { createArmyPass, fixedDefense } from '../../src/ai/army';
+import { armyPower, threat } from '../../src/ai/assess';
 import { defendProvinces, escortClaims, relieveForts } from '../../src/ai/defense';
-import { planPretender, planPriests } from '../../src/ai/faith';
-import { planArmies } from '../../src/ai/military';
+import { expansionTarget, planArmies } from '../../src/ai/military';
 import { createPlan } from '../../src/ai/plan';
-import { createCommander } from '../../src/sim/commanders';
+import { removeCommander } from '../../src/sim/commanders';
 import { applyCommand, type Command } from '../../src/sim/commands';
-import type { NationId, ProvinceId } from '../../src/sim/ids';
+import type { NationId } from '../../src/sim/ids';
 import { findPathFor } from '../../src/sim/movement';
 import { pdCost } from '../../src/sim/pd';
-import { advance } from '../../src/sim/tick';
-import type { CommanderState, GameState } from '../../src/sim/types';
-import { addArmy, annex, commandersIn, redField } from '../sim/fixtures';
+import type { GameState } from '../../src/sim/types';
+import { addArmy, annex, neighbors, redField } from '../sim/fixtures';
+import { besiegeCapital, frontier, home, moveCmd, P, springField } from './armyFixtures';
 
-/** This lane's steps as a player: priests, the army pass, and the pretender. */
-function lane(state: GameState, nation: NationId): Command[] {
-  const plan = createPlan(state, nation);
-  planPriests(plan);
-  planArmies(plan);
-  planPretender(plan);
-  return plan.out;
+function defense(state: GameState, red: NationId) {
+  const pass = createArmyPass(createPlan(state, red));
+  defendProvinces(pass);
+  return pass;
 }
-
-/** Plays days with Red planning every 5 days through `lane`, every command accepted. */
-function play(state: GameState, red: NationId, days: number, until: () => boolean): number {
-  for (let d = 0; d < days; d++) {
-    if (state.day % 5 === 0) {
-      for (const cmd of lane(state, red)) expect(applyCommand(state, cmd)).toEqual({ ok: true });
-    }
-    if (until()) return d;
-    advance(state);
-  }
-  return days;
-}
-
-function moveCmd(red: NationId, members: readonly CommanderState[], path: ProvinceId[]): Command {
-  return { type: 'move', nation: red, commanders: members.map((m) => m.id), path };
-}
-
-/**
- * Seed 1: Red's capital p48 with its neighbors p17, p50, and p57 annexed; p50 and p57 are
- * apart (through p17 or the capital).
- */
-function home() {
-  const f = redField();
-  for (const p of ['p17', 'p50', 'p57'] as ProvinceId[]) annex(f.state, f.red, p);
-  expect(f.capital).toBe('p48');
-  return f;
-}
-
-/** Green lays siege to Red's capital with these besiegers. */
-function besiegeCapital(state: GameState, green: NationId, capital: ProvinceId, troops: number) {
-  const besieger =
-    troops > 0
-      ? addArmy(state, green, capital, 'cinderWarrior', troops, 'wardenCaptain')
-      : createCommander(state, 'wardenCaptain', green, capital);
-  state.provinces[capital]!.siege = { attacker: green, wallHp: 300, storm: false };
-  return besieger;
-}
-
-describe('relief', () => {
-  it('attacks a lone besieger of the capital within bounded days', () => {
-    const { state, red, green, capital, army } = home();
-    army.location = 'p50' as ProvinceId;
-    const besieger = besiegeCapital(state, green, capital, 0);
-    const days = play(state, red, 30, () => state.provinces[capital]!.siege === null);
-    expect(days).toBeLessThanOrEqual(10);
-    expect(state.commanders[besieger.id]?.location).not.toBe(capital);
-    expect(state.provinces[capital]!.owner).toBe(red);
-  });
-
-  it('sallies from inside the fort through an exit when strong enough', () => {
-    const { state, red, green, capital, army } = home();
-    besiegeCapital(state, green, capital, 0);
-    const pass = createArmyPass(createPlan(state, red));
-    relieveForts(pass);
-    expect(pass.plan.out).toEqual([moveCmd(red, [army], ['p17' as ProvinceId, capital])]);
-  });
-
-  it('gathers armies too weak alone next to the fort, then goes in as one', () => {
-    const { state, red, green, capital, army } = home();
-    army.location = 'p50' as ProvinceId;
-    const strong = addArmy(state, red, 'p57' as ProvinceId, 'cinderWarrior', 30);
-    const besieger = besiegeCapital(state, green, capital, 40);
-    const need = AI.reliefRatio * armyPower([besieger]);
-    expect(armyPower([army])).toBeLessThan(need);
-    expect(armyPower([strong])).toBeLessThan(need);
-    expect(armyPower([army, strong])).toBeGreaterThanOrEqual(need);
-    // The gather point is the exit nearest the strongest group: where it stands.
-    let pass = createArmyPass(createPlan(state, red));
-    relieveForts(pass);
-    expect(pass.gather).toBe('p57');
-    expect(pass.plan.out).toEqual([moveCmd(red, [army], ['p17', 'p57'] as ProvinceId[])]);
-    // Once together they go in with one move.
-    army.location = 'p57' as ProvinceId;
-    pass = createArmyPass(createPlan(state, red));
-    relieveForts(pass);
-    expect(pass.plan.out).toEqual([moveCmd(red, [army, strong], [capital])]);
-  });
-
-  it('holds the groups inside and sends the rest home to the gather point', () => {
-    const { state, red, green, capital, army } = home();
-    const inside = addArmy(state, red, capital, 'ashMilitia', 5);
-    const besieger = besiegeCapital(state, green, capital, 60);
-    expect(armyPower([army, inside])).toBeLessThan(AI.reliefRatio * armyPower([besieger]));
-    const far = annex(state, red, 'p45' as ProvinceId).id;
-    const small = addArmy(state, red, far, 'ashMilitia', 5);
-    const plan = createPlan(state, red);
-    planArmies(plan);
-    const moves = plan.out.filter((c) => c.type === 'move');
-    // The exit nearest p45 by days is p50, on the plains.
-    expect(moves).toEqual([moveCmd(red, [small], ['p50' as ProvinceId])]);
-    expect(plan.assigned.has(army.id) && plan.assigned.has(inside.id)).toBe(true);
-  });
-});
-
-describe('the march home while the capital is besieged', () => {
-  it('goes to the gather point, not into the capital', () => {
-    const { state, red, green, capital, army } = home();
-    const besieger = besiegeCapital(state, green, capital, 10);
-    const far = annex(state, red, 'p45' as ProvinceId).id;
-    const small = addArmy(state, red, far, 'ashMilitia', 5);
-    expect(armyPower([small])).toBeLessThan(AI.reliefRatio * armyPower([besieger]));
-    const plan = createPlan(state, red);
-    planArmies(plan);
-    // The army inside sallies; the small one, which relief did not take, gathers at p50.
-    expect(plan.out.filter((c) => c.type === 'move')).toEqual([
-      moveCmd(red, [army], ['p17' as ProvinceId, capital]),
-      moveCmd(red, [small], ['p50' as ProvinceId]),
-    ]);
-  });
-});
-
-describe('escortClaims', () => {
-  /** Seed 1: Red owns the Wellspring p51 and its neighbor p42, where its priest walks from. */
-  function springField() {
-    const f = redField();
-    const spring = annex(f.state, f.red, 'p51' as ProvinceId).id;
-    const next = annex(f.state, f.red, 'p42' as ProvinceId).id;
-    const priest = commandersIn(f.state, f.capital).find((c) => c.unit === 'pyrePriest')!;
-    priest.location = next;
-    expect(applyCommand(f.state, moveCmd(f.red, [priest], [spring]))).toEqual({ ok: true });
-    return { ...f, spring, next, priest };
-  }
-
-  it('sends the nearest free army to stand with a priest walking to claim', () => {
-    const { state, red, army, spring, next } = springField();
-    const far = addArmy(state, red, army.location, 'cinderWarrior', 30);
-    army.location = next;
-    const pass = createArmyPass(createPlan(state, red));
-    escortClaims(pass);
-    expect(pass.plan.out).toEqual([moveCmd(red, [army], [spring])]);
-    expect(pass.plan.assigned.has(far.id)).toBe(false);
-  });
-
-  it('keeps an army already there as the escort, whatever else could take it', () => {
-    const { state, red, army, spring } = springField();
-    army.location = spring;
-    const plan = createPlan(state, red);
-    planArmies(plan);
-    expect(plan.out.filter((c) => c.type === 'move')).toEqual([]);
-  });
-
-  it('lets the priest go alone with no free army', () => {
-    const { state, red, army } = springField();
-    army.squads = [];
-    const pass = createArmyPass(createPlan(state, red));
-    escortClaims(pass);
-    expect(pass.plan.out).toEqual([]);
-  });
-});
 
 describe('defendProvinces', () => {
-  /**
-   * Seed 1: Red owns p45 next to Green's p3, where a Green army stands, and p50 and p17 next to
-   * p45; p3 touches no other Red province, so only p45 is threatened.
-   */
-  function frontier() {
-    const f = redField();
-    for (const p of ['p17', 'p50', 'p45'] as ProvinceId[]) annex(f.state, f.red, p);
-    annex(f.state, f.green, 'p3' as ProvinceId);
-    const enemy = addArmy(
-      f.state,
-      f.green,
-      'p3' as ProvinceId,
-      'cinderWarrior',
-      40,
-      'wardenCaptain',
-    );
-    f.state.nations[f.red]!.gold = 0;
-    return { ...f, enemy, front: 'p45' as ProvinceId };
-  }
-
   it('sends the nearest group whose power covers the threat', () => {
     const { state, red, capital, army, enemy, front } = frontier();
-    const weak = addArmy(state, red, 'p17' as ProvinceId, 'ashMilitia', 20);
-    const near = addArmy(state, red, 'p50' as ProvinceId, 'cinderWarrior', 45);
+    const weak = addArmy(state, red, P('p17'), 'ashMilitia', 20);
+    const near = addArmy(state, red, P('p50'), 'cinderWarrior', 45);
     const far = addArmy(state, red, capital, 'cinderWarrior', 60);
-    const threat = armyPower([enemy]);
-    expect(armyPower([weak])).toBeLessThan(threat);
-    expect(armyPower([army])).toBeLessThan(threat);
-    expect(armyPower([near])).toBeGreaterThan(threat);
-    expect(armyPower([far])).toBeGreaterThan(threat);
-    const pass = createArmyPass(createPlan(state, red));
-    defendProvinces(pass);
-    expect(pass.plan.out).toEqual([moveCmd(red, [near], [front])]);
+    const danger = armyPower([enemy]);
+    expect(armyPower([weak])).toBeLessThan(danger);
+    expect(armyPower([army])).toBeLessThan(danger);
+    expect(armyPower([near])).toBeGreaterThan(danger);
+    expect(armyPower([far])).toBeGreaterThan(danger);
+    expect(defense(state, red).plan.out).toEqual([moveCmd(red, [near], [front])]);
+  });
+
+  it('defends the capital first', () => {
+    // A Green army in p57 threatens the capital and p17 as well; Red's one field army, in p50,
+    // borders all three.
+    const { state, red, green, capital, army } = frontier();
+    annex(state, green, P('p57'));
+    addArmy(state, green, P('p57'), 'cinderWarrior', 40, 'wardenCaptain');
+    army.squads = [];
+    const helper = addArmy(state, red, P('p50'), 'cinderWarrior', 60);
+    for (const p of [capital, P('p17'), P('p45')]) expect(threat(state, red, p)).toBeGreaterThan(0);
+    expect(defense(state, red).plan.out).toEqual([moveCmd(red, [helper], [capital])]);
+  });
+
+  it('counts the PD toward the cover: a group weaker than the threat may cover it', () => {
+    const { state, red, army, front } = frontier();
+    army.squads = [];
+    state.provinces[front]!.pd = 10;
+    const helper = addArmy(state, red, P('p50'), 'cinderWarrior', 22);
+    const danger = threat(state, red, front);
+    expect(armyPower([helper])).toBeLessThan(danger);
+    expect(armyPower([helper]) + fixedDefense(state, front)).toBeGreaterThan(danger);
+    expect(defense(state, red).plan.out).toEqual([moveCmd(red, [helper], [front])]);
   });
 
   it('keeps a covering group standing there, and lets one that cannot cover go', () => {
@@ -234,35 +83,136 @@ describe('defendProvinces', () => {
     ]);
   });
 
+  it('holds only the groups standing there that the threat needs, the strongest first', () => {
+    const { state, red, enemy, front } = frontier();
+    const strong = addArmy(state, red, front, 'cinderWarrior', 45);
+    const spare = addArmy(state, red, front, 'cinderWarrior', 30);
+    expect(armyPower([strong])).toBeGreaterThan(armyPower([enemy]));
+    const pass = defense(state, red);
+    expect(pass.plan.out).toEqual([]);
+    expect(pass.plan.assigned.has(strong.id)).toBe(true);
+    expect(pass.plan.assigned.has(spare.id)).toBe(false);
+  });
+
+  it('sends no help where the groups there match the threat exactly', () => {
+    const { state, red, enemy, front } = frontier();
+    const guard = addArmy(state, red, front, 'cinderWarrior', 40, 'wardenCaptain');
+    const second = addArmy(state, red, P('p50'), 'cinderWarrior', 40);
+    expect(armyPower([guard])).toBe(armyPower([enemy]));
+    expect(fixedDefense(state, front) + armyPower([guard])).toBe(threat(state, red, front));
+    const pass = defense(state, red);
+    expect(pass.plan.out).toEqual([]);
+    expect(pass.plan.assigned.has(guard.id)).toBe(true);
+    expect(pass.plan.assigned.has(second.id)).toBe(false);
+  });
+
+  it('keeps the groups standing there when it sends help', () => {
+    const { state, red, army, front } = frontier();
+    army.squads = [];
+    const there = addArmy(state, red, front, 'ashMilitia', 20);
+    const helper = addArmy(state, red, P('p50'), 'cinderWarrior', 45);
+    const pass = defense(state, red);
+    expect(pass.plan.out).toEqual([moveCmd(red, [helper], [front])]);
+    expect(pass.plan.assigned.has(there.id)).toBe(true);
+  });
+
   it('re-paths a group on the move, or stops it where its leg ends', () => {
     const { state, red, capital, front } = frontier();
     const walker = addArmy(state, red, capital, 'cinderWarrior', 45);
-    expect(applyCommand(state, moveCmd(red, [walker], ['p17' as ProvinceId]))).toEqual({
-      ok: true,
-    });
-    let pass = createArmyPass(createPlan(state, red));
-    defendProvinces(pass);
-    expect(pass.plan.out).toEqual([moveCmd(red, [walker], [front])]);
-    walker.transit = { from: 'p17' as ProvinceId, to: front, progress: 1, totalDays: 3 };
-    walker.location = 'p17' as ProvinceId;
-    walker.order = { kind: 'move', path: ['p50' as ProvinceId], mapSpeed: 2 };
-    pass = createArmyPass(createPlan(state, red));
-    defendProvinces(pass);
-    expect(pass.plan.out).toEqual([
+    expect(applyCommand(state, moveCmd(red, [walker], [P('p17')]))).toEqual({ ok: true });
+    expect(defense(state, red).plan.out).toEqual([moveCmd(red, [walker], [front])]);
+    walker.transit = { from: P('p17'), to: front, progress: 1, totalDays: 3 };
+    walker.location = P('p17');
+    walker.order = { kind: 'move', path: [P('p50')], mapSpeed: 2 };
+    expect(defense(state, red).plan.out).toEqual([
       { type: 'setOrder', nation: red, commander: walker.id, order: 'idle' },
     ]);
+  });
+
+  it("counts a group sent there earlier this call, such as a Wellspring's escort", () => {
+    // A small Green army next to the Wellspring threatens it and p42; the escort sent from p42
+    // covers the spring, so Red's other army defends p42.
+    const { state, red, green, army, spring, next } = springField();
+    const escort = addArmy(state, red, next, 'cinderWarrior', 30);
+    const enemyAt = neighbors(state, spring).find((p) => state.provinces[p]!.owner === null)!;
+    expect(neighbors(state, next)).toContain(enemyAt);
+    annex(state, green, enemyAt);
+    addArmy(state, green, enemyAt, 'cinderWarrior', 10, 'wardenCaptain');
+    state.nations[red]!.gold = 0;
+    const pass = createArmyPass(createPlan(state, red));
+    escortClaims(pass);
+    expect(pass.plan.out).toEqual([moveCmd(red, [escort], [spring])]);
+    defendProvinces(pass);
+    const ends = pass.plan.out.map((c) => (c.type === 'move' ? c.path.at(-1) : null));
+    expect(ends).toEqual([spring, next]);
+    expect(pass.plan.assigned.has(army.id)).toBe(true);
+  });
+
+  it('may take an escort when it is the only group that covers the threat', () => {
+    const { state, red, green, army, capital, spring } = springField();
+    const escort = addArmy(state, red, spring, 'cinderWarrior', 60);
+    army.squads = [];
+    annex(state, green, P('p50'));
+    addArmy(state, green, P('p50'), 'cinderWarrior', 40, 'wardenCaptain');
+    state.nations[red]!.gold = 0;
+    const pass = createArmyPass(createPlan(state, red));
+    escortClaims(pass);
+    expect(pass.escorts.has(escort.id)).toBe(true);
+    defendProvinces(pass);
+    expect(pass.plan.out).toEqual([moveCmd(red, [escort], findPathFor(state, [escort], capital)!)]);
+  });
+
+  it('leaves a besieged fort to relief, whatever its PD would cover', () => {
+    // Green besieges the capital (PD 10) and stands in Red's p17. The army in p50 is short of
+    // relief's odds and cannot reach the gather point, p57; with the fort's PD it would cover
+    // the threat there.
+    const { state, red, green, capital, army } = home();
+    army.location = P('p50');
+    addArmy(state, red, P('p57'), 'cinderWarrior', 40);
+    const besieger = besiegeCapital(state, green, capital, 40);
+    addArmy(state, green, P('p17'), 'cinderWarrior', 5, 'wardenCaptain');
+    state.provinces[capital]!.pd = 10;
+    state.nations[red]!.gold = 0;
+    expect(armyPower([army])).toBeLessThan(AI.reliefRatio * armyPower([besieger]));
+    const danger = threat(state, red, capital);
+    expect(armyPower([army]) + fixedDefense(state, capital)).toBeGreaterThan(danger);
+    const pass = createArmyPass(createPlan(state, red));
+    relieveForts(pass);
+    expect(pass.gather).toBe('p57');
+    expect(pass.plan.assigned.has(army.id)).toBe(false);
+    const before = pass.plan.out.length;
+    defendProvinces(pass);
+    expect(pass.plan.out.slice(before)).toEqual([]);
+  });
+
+  it('keeps an outmatched capital its army when no group covers the threat', () => {
+    // Seed 1: Green's 70 Cinder Warriors stand in p17, next to Red's capital; Red's one army is
+    // home, and the independent p50 is a target Expansion would take it to.
+    const { state, red, green, capital, army } = redField();
+    annex(state, green, P('p17'));
+    const enemy = addArmy(state, green, P('p17'), 'cinderWarrior', 70, 'wardenCaptain');
+    state.nations[red]!.gold = 0;
+    expect(armyPower([enemy])).toBeGreaterThan(armyPower([army]) + fixedDefense(state, capital));
+    let plan = createPlan(state, red);
+    expect(expansionTarget(plan, [army], new Set())).toBe('p50');
+    planArmies(plan);
+    expect(plan.out.filter((c) => c.type === 'move')).toEqual([]);
+    expect(plan.assigned.has(army.id)).toBe(true);
+    // With the threat gone, the army goes: War takes it to the empty p17.
+    removeCommander(state, enemy.id);
+    plan = createPlan(state, red);
+    planArmies(plan);
+    expect(plan.out.filter((c) => c.type === 'move')).toEqual([moveCmd(red, [army], [P('p17')])]);
   });
 
   it('buys one PD level with no covering group, from gold above the reserve', () => {
     const { state, red, front } = frontier();
     const cost = pdCost(0, 1);
     state.nations[red]!.gold = AI.goldReserve + cost - 1;
-    let pass = createArmyPass(createPlan(state, red));
-    defendProvinces(pass);
-    expect(pass.plan.out).toEqual([]);
+    expect(defense(state, red).plan.out).toEqual([]);
     state.nations[red]!.gold = AI.goldReserve + cost;
-    pass = createArmyPass(createPlan(state, red));
-    defendProvinces(pass);
-    expect(pass.plan.out).toEqual([{ type: 'buyPd', nation: red, province: front, levels: 1 }]);
+    expect(defense(state, red).plan.out).toEqual([
+      { type: 'buyPd', nation: red, province: front, levels: 1 },
+    ]);
   });
 });

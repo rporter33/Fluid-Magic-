@@ -6,7 +6,7 @@ import { AI } from '../../src/content/ai';
 import { godlessDanger, planPretender, planPriests } from '../../src/ai/faith';
 import { createPlan } from '../../src/ai/plan';
 import { createCommander } from '../../src/sim/commanders';
-import type { Command } from '../../src/sim/commands';
+import { applyCommand, type Command } from '../../src/sim/commands';
 import type { UnitTypeId } from '../../src/content';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { findPathFor, pathsFrom } from '../../src/sim/movement';
@@ -164,6 +164,20 @@ describe('planPriests claiming Wellsprings', () => {
     late.order = { kind: 'preach' };
     expect(withoutProphet(run(state, red, planPriests)).slice(1)).toEqual([]);
   });
+
+  it('turns home a priest walking to a Wellspring that another priest now claims', () => {
+    const { state, red, capital, priest } = redWorld();
+    // The home priest claims the first Wellspring; every other one is claimed already.
+    const [spring, ...claimed] = state.map.wellsprings as [ProvinceId, ...ProvinceId[]];
+    for (const s of claimed) state.provinces[s]!.wellspringClaimedBy = red;
+    priest.location = spring;
+    priest.order = { kind: 'claimWellspring', daysLeft: 4 };
+    const [walker] = priests(state, red, neighbors(state, spring)[0]!, 1) as [CommanderState];
+    expect(applyCommand(state, moveTo(state, red, walker, spring))).toEqual({ ok: true });
+    expect(withoutProphet(run(state, red, planPriests))).toEqual([
+      moveTo(state, red, walker, capital),
+    ]);
+  });
 });
 
 describe('the prophet', () => {
@@ -196,6 +210,24 @@ describe('planPretender', () => {
     expect(run(state, red, planPretender)).toEqual([order(red, body, 'research')]);
     body.order = { kind: 'research' };
     expect(run(state, red, planPretender)).toEqual([]);
+  });
+
+  it('keeps a body that does not fight at its work after AI.pretenderJoinDay', () => {
+    // An Oracle arriving late (the Ember Oracle wakes on day 330) still studies.
+    const { state, red, body } = withPretender('oracle');
+    state.day = 330;
+    expect(state.day).toBeGreaterThan(AI.pretenderJoinDay);
+    body.pips = { R: 1 };
+    expect(run(state, red, planPretender)).toEqual([order(red, body, 'research')]);
+    // Away from the capital, it and a hidden body are walked home.
+    for (const unit of ['oracle', 'wildSpirit'] as const) {
+      const f = withPretender(unit);
+      f.state.day = 330;
+      f.body.location = annex(f.state, f.red, neighbors(f.state, f.capital)[0]!).id;
+      expect(run(f.state, f.red, planPretender), unit).toEqual([
+        moveTo(f.state, f.red, f.body, f.capital),
+      ]);
+    }
   });
 
   it('brings a hidden body, and a fighter before AI.pretenderJoinDay, home to the capital', () => {

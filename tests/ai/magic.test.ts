@@ -68,10 +68,13 @@ function casters(state: GameState, nation: NationId) {
     (c) => c.unit === 'emberAdept' || c.unit === 'saplingDruid',
   )!;
   const master = ritualCaster(state, nation);
-  while (splitMages(state, nation).researchers.length < 2) {
+  while (splitMages(createPlan(state, nation)).researchers.length < 2) {
     createCommander(state, first.unit, nation, capital);
   }
-  expect(splitMages(state, nation).researchers.map((c) => c.id)).toEqual([first.id, master.id]);
+  expect(splitMages(createPlan(state, nation)).researchers.map((c) => c.id)).toEqual([
+    first.id,
+    master.id,
+  ]);
   return { capital, first, master };
 }
 
@@ -102,6 +105,9 @@ describe('planRituals at peace', () => {
     const { capital, master } = casters(state, green);
     const best = annex(state, green, neighbors(state, capital)[0]!);
     best.pop = state.provinces[capital]!.pop + 1000;
+    // A more populous province in reach that Thornwood does not own is no target.
+    const other = neighbors(state, capital).find((p) => state.provinces[p]!.owner === null)!;
+    state.provinces[other]!.pop = best.pop + 5000;
     expect(casts(planned(state, green, planRituals))).toEqual([
       { commander: master.id, spell: 'fertileSeason', target: best.id },
     ]);
@@ -137,10 +143,15 @@ describe('planRituals at war', () => {
   });
 
   it('strikes the most populous front province free of own commanders when summons cannot', () => {
-    const { state, red, first, master, near, far } = redAtWar();
+    const { state, red, green, capital, first, master, near, far } = redAtWar();
     // Neither caster can lead five more troops.
     first.squads.push(createSquad(state, 'ashMilitia', 10));
     master.squads.push(createSquad(state, 'ashMilitia', 20));
+    // A more populous enemy province deeper in, within the ritual's reach, is no front.
+    const deep = neighbors(state, far.id).find(
+      (p) => p !== capital && !neighbors(state, capital).includes(p),
+    )!;
+    annex(state, green, deep).pop = 20_000;
     expect(casts(planned(state, red, planRituals))).toEqual([
       { commander: master.id, spell: 'burnTheFields', target: far.id },
     ]);
@@ -165,19 +176,50 @@ describe('planRituals casters', () => {
   it('runs one ritual at a time and keeps a researcher studying', () => {
     const { state, red, capital } = redField();
     const { first, master } = casters(state, red);
-    const [rider] = splitMages(state, red).battleMages;
+    const [rider] = splitMages(createPlan(state, red)).battleMages;
     master.order = { kind: 'castRitual', spellId: 'forgeOfCinders', target: null, daysLeft: 4 };
     expect(casts(planned(state, red, planRituals))).toEqual([]);
     // With a single researcher, it studies: no ritual.
     master.order = { kind: 'idle' };
     removeCommander(state, rider!.id);
     removeCommander(state, first.id);
-    expect(splitMages(state, red).researchers.map((c) => c.id)).toEqual([master.id]);
+    expect(splitMages(createPlan(state, red)).researchers.map((c) => c.id)).toEqual([master.id]);
     expect(ritualCasters(createPlan(state, red))).toEqual([]);
     // An immobile pretender, which cannot research, casts alone.
     const monolith = createCommander(state, 'livingMonolith', red, capital);
     monolith.pips = { R: 3 };
     state.nations[red]!.pretenderId = monolith.id;
+    expect(casts(planned(state, red, planRituals))).toEqual([
+      { commander: monolith.id, spell: 'forgeOfCinders', target: null },
+    ]);
+  });
+
+  it('begins no ritual while one is under way, whoever else could cast', () => {
+    // A third researcher, a second master mage: with the first master casting, it could begin
+    // another and leave the first mage studying.
+    const { state, red, capital } = redField();
+    const { master } = casters(state, red);
+    while (splitMages(createPlan(state, red)).researchers.length < 3) {
+      createCommander(state, 'cinderMagus', red, capital).pips = { R: 4 };
+    }
+    const third = state.commanders[splitMages(createPlan(state, red)).researchers[2]!.id]!;
+    third.pips = { R: 4 };
+    master.order = { kind: 'castRitual', spellId: 'forgeOfCinders', target: null, daysLeft: 4 };
+    expect(ritualCasters(createPlan(state, red)).map((c) => c.id)).toContain(third.id);
+    expect(casts(planned(state, red, planRituals))).toEqual([]);
+  });
+
+  it('casts with the Living Monolith before the researchers', () => {
+    const { state, red, capital } = redField();
+    const { first, master } = casters(state, red);
+    const monolith = createCommander(state, 'livingMonolith', red, capital);
+    monolith.pips = { R: 3 };
+    state.nations[red]!.pretenderId = monolith.id;
+    expect(ritualCasters(createPlan(state, red)).map((c) => c.id)).toEqual([
+      monolith.id,
+      first.id,
+      master.id,
+    ]);
     expect(casts(planned(state, red, planRituals))).toEqual([
       { commander: monolith.id, spell: 'forgeOfCinders', target: null },
     ]);

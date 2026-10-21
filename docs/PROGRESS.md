@@ -273,19 +273,60 @@
   Easy's month 12, Expansion's score and the 1.5x rule, the march home and refill, groups
   moving together, summons with research between them, carried mana and Warcry cast with
   it, rituals at war and at peace; `pathsFrom` against `findPath` on several seeds; the AI
-  numbers' validation. 143 tests in `tests/ai`, 1090 in all.
+  numbers' validation. 182 tests in `tests/ai`, 1147 in all (after the review fixes and test
+  gaps below).
 - Behavior (docs/08's required tests, `tests/ai/behavior.test.ts`): one run of the 20 runner
   games from seed 1, to day 720 or the game's end, about 15 s. Both nations own at least 8
-  provinces on day 360 in 20 of 20 games (16 required); on that day Cinder Horde owns 12 to 27
-  and Thornwood 14 to 24. No capital queue stood empty more than 7 days with gold above 200
+  provinces on day 360 in 20 of 20 games (16 required); on that day Cinder Horde owns 13 to 27
+  and Thornwood 13 to 24. No capital queue stood empty more than 8 days with gold above 200
   (limit 60). No held capital had an empty garrison on any day from day 180. No command was
-  refused. The same holds from base seeds 101 and 1001.
+  refused. The same holds from base seeds 101 and 1001. A further test plays one Large
+  three-nation game (seed 8) for up to three years, about 2.5 s: no field army stands in its
+  capital without a task for more than 120 days while an enemy province in reach passes the
+  per-target War odds (review finding cor-3).
 - Runner statistics (`npm run sim:aivai -- --games 20 --seed 1`; repeated runs play identical
-  games): Cinder Horde 11 wins, Thornwood 9. All 20 games ended by Wellsprings, none by
-  elimination or timeout, in a mean of 19.3 months (11.8 to 40.3). No command was refused. The
-  AI takes about 1.4 ms per planning call (4586 calls). The maximum varies from run to run (11
-  to 67 ms) while the games stay the same, which points to garbage collection or warm-up, not
-  the AI's work. 20 games take about 13 s.
+  games), after the review fixes below: Cinder Horde 10 wins, Thornwood 9, and one game without
+  a winner (game 18, below). The 19 others ended by Wellsprings, none by elimination, in a mean
+  of 23.0 months (11.8 to 33.2). No command was refused. The AI took 1.23 ms mean and 9.0 ms
+  maximum per planning call (6404 calls), 20 games 16.3 s, at load about 2 on 4 cores; 1.83 ms
+  and 23.9 s under heavier load. Before the fixes: Cinder Horde
+  11, Thornwood 9, all by Wellsprings, mean 19.3 months, about 1.4 ms per call and 13 s on a
+  quiet machine. The maximum varies from run to run while the games stay the same, which
+  points to garbage collection or warm-up, not the AI's work.
+- Code review (spec, correctness, rules, and tests lenses, each finding re-checked by a
+  skeptic): 49 of 54 findings confirmed, all applied (the 12 behavior findings and 37 test gaps
+  below; 5 refuted). Tests went from 1110 (one timing out) to 1147, 182 of them in `tests/ai`.
+  A final check re-applied 12 of the 37 mutations across eight modules, and each fails its
+  mirrored test file. The review's scripts for the escort, outmatched-capital, stale-pillage,
+  and War-gate findings no longer show the bad behavior; on the review's Large four-nation
+  setup, no sample from day 720 to 1500 has a full army idle at home (23 of 27 did for one
+  nation before). Runner: Cinder Horde 10, Thornwood 9, one timeout, 0 refused, 1.23 ms per
+  call. Five Large three-nation games (a scratch script, since the runner plays two nations on
+  Medium) all ended by Wellsprings in a mean of 49.6 months, 0 refused, 2.26 ms per call.
+- Review fixes (12 confirmed behavior findings, 2026-10-21): escorts are registered for every
+  Wellspring before any free army is sent, so one claim's escort is never sent to another; an
+  outmatched capital keeps the groups standing in it when no helper covers the threat; a
+  pillage held anywhere but at the nation's own siege (a fort that fell to it) is set idle, and
+  besiegers stop pillaging when they storm; War's new-target odds are judged per candidate
+  target (its garrison and PD plus other nations' commanders within 2 hops) instead of one sum
+  over the whole border, which never opened for a large nation. Refactors with identical
+  commands in 1848 compared calls: the plan finds the hostile provinces once a call
+  (`pathsWith` in `movement.ts`), `splitMages` reads the plan's roles, one shared `walk` and
+  `fewestDays`, one `isRanged` and `isMoving`; the dead `freeArmies`, `Borders.independent`,
+  and unused exports were deleted. `planAi` returns a call's whole plan for tests. The two slow
+  tests got explicit timeouts. New tests cover each fix, an Oracle pretender studying after day
+  90, and the escort rule through `escortClaims`.
+- Review test gaps (37 mutations the suite did not catch, 2026-10-21) now fail it, each by a
+  unit test in the file that mirrors its module: Defense's order, cover with PD, exact cover,
+  spare groups, help counted on its way, escorts taken, besieged forts left to relief; relief's
+  ratio, movers, and gather ties; escorts marching and nearest; storm and march odds, the
+  aggression and per-target terms of the War odds, garrison holders, value against days,
+  sieges counting marchers, the pillage draw per fort and for leaders only; Expansion's
+  divisor, enemy provinces, earlier moves, and the combined try; rituals one at a time, the
+  Monolith first, the strike front, Fertile Season on own land; the nearest lab, the besieged
+  PD skip, a priest turned home, the pretender's summons, and a garrison as no threat. Defense
+  and War tests are split by topic (`defense.relief`, `defense.escort`, `war.targets`), with
+  shared setups in `tests/ai/armyFixtures.ts`.
 - A design review (4 lenses, 39 issues, two independent judges) settled the readings recorded
   in `docs/08-ai.md`. The main changes: roles from content, a planning copy that shares what
   commands never write, `pathsFrom` and no hop limits, the capital reserve from day 0, relief
@@ -351,7 +392,7 @@
   `src/mapgen/placement.ts`; Phase 6 victory should reuse it. (Resolved in Phase 3: farmland
   and wasteland use the plains independent pool.)
 - The UI should use `findPathFor` (not `findPath` from a leg's end) so previews match what
-  move validation accepts. The AI does, through `pathsFrom` (Phase 7).
+  move validation accepts. The AI does, through `pathsFrom` and `pathsWith` (Phase 7).
 - Supply conflict: at pop / 50, Hills supply is 100 to 160 a day, so the balance checklist
   item "armies larger than 60 troops in a Hills province starve within a month" cannot pass.
   Phase 12 decides between retuning (about pop / 250) and changing the checklist.
@@ -372,8 +413,9 @@
 - Wellspring victory is immediate on the last claim, with no hold period, and it comes early.
   The random dummy won by Wellsprings in 17 of 20 runner games, in a mean of about 27 months.
   Phase 7's AI holds its Wellsprings (Defense right after the capital, PD 10, escorts) and
-  contests the enemy's (denial past the odds gate), yet all 20 runner games from seed 1 end by
-  Wellsprings, none by elimination, in a mean of 19.3 months (11.8 to 40.3). A claim takes 10
+  contests the enemy's (denial past the odds gate), yet 19 of the 20 runner games from seed 1
+  end by Wellsprings, none by elimination, in a mean of 23.0 months (11.8 to 33.2), and the
+  other reaches the timeout (game 18, below). A claim takes 10
   days and a call comes every 5, so denial seldom lands in time. Phase 12 decides whether
   Wellspring wins need a hold period or tougher guards.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
@@ -402,16 +444,24 @@
   ritual until its third mage (12 provinces). With research 0.7, Thornwood's first three mages
   all research, so its first battle mage comes with the fourth (16 provinces). Phase 12.
 - One enemy army can hold several of the AI's armies in Defense: each own province within a
-  hop of it counts the whole army as its threat, and each draws its own defender.
-- The AI is slow to retake provinces it loses: enemy provinces are War targets only, behind
-  the aggression gate, which Thornwood (0.4) seldom passes. This follows docs/08 (Expansion
-  takes independents only); revisit in playtesting (Phase 8) or Phase 12.
+  hop of it counts the whole army as its threat, and each draws its own defender. Runner game
+  18 (seed 18) shows the cost since War opens per target: by day 600 Cinder Horde holds 35 of
+  60 provinces and Thornwood 5, and from then on all eight Cinder armies stand held in the
+  provinces next to Thornwood's armies. The two independent Wellsprings (guards of 250 to
+  300 power, which one 80-troop army takes) are never attacked, so the game stalls until the
+  timeout. Phase 8 playtesting or Phase 12 should decide how Defense shares one threat.
+- The AI retakes provinces it loses only through War (Expansion takes independents only, as
+  docs/08 says), behind the aggression gate. Since the review (finding cor-3) the gate is
+  judged per target, so a weakly held province opens it even for Thornwood (0.4); before, the
+  gate summed the whole border and seldom opened. On 24 Large three-nation games to day 1500,
+  11 ended without a winner under the old gate and 4 under the new one.
 - The capital queue runs empty for about 4 days between planning calls in most games: each
   call fills it to 2 items and it drains before the next. That is far under the 60-day limit;
   a deeper `AI.queue.max` would close the gap.
 - The behavior tests cover the Normal AI with the runner's two nations and their default
   presets. Easy's cadence and War delay, and the other pretender bodies, are covered by step
   tests only.
-- The AI's slowest call varies from 11 to 67 ms over identical runs (garbage collection or
-  warm-up), against a mean of about 1.4 ms. The browser runs the AI inside a tick, so a long
+- The AI's slowest call varies over identical runs (9 to 67 ms seen; garbage collection or
+  warm-up), against a mean of about 1.2 to 1.8 ms on Medium and 2.3 ms on Large with three
+  nations. The browser runs the AI inside a tick, so a long
   pause could show; no test times the AI.

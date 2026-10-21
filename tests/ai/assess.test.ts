@@ -1,7 +1,7 @@
 // How the AI sizes up armies and provinces (docs/08-ai.md "Expansion": armyPower = sum over
 // troops of (hp + att + def + prot) / 4 * (1 + 0.1 * hasRanged); Phase 7 design "Power",
 // "Groups and free armies"): troop and army power worked by hand, a province's defenders, the
-// threat around it, groups and free armies, and the borders.
+// threat around it, groups, the Wellsprings needing an escort, and the borders.
 import { describe, expect, it } from 'vitest';
 import { unitDef } from '../../src/content';
 import { AI } from '../../src/content/ai';
@@ -12,7 +12,6 @@ import {
   defenderPower,
   destinationOf,
   escortedSprings,
-  freeArmies,
   groups,
   isEnemyProvince,
   threat,
@@ -21,10 +20,10 @@ import {
 } from '../../src/ai/assess';
 import { createPlan } from '../../src/ai/plan';
 import { createCommander, createSquad, removeCommander } from '../../src/sim/commanders';
-import type { CommanderId, NationId, ProvinceId } from '../../src/sim/ids';
+import type { CommanderId, ProvinceId } from '../../src/sim/ids';
 import { independentCount } from '../../src/sim/independents';
-import type { CommanderState, GameState } from '../../src/sim/types';
-import { addArmy, annex, besiege, commandersIn, move, neighbors, redField } from '../sim/fixtures';
+import type { CommanderState } from '../../src/sim/types';
+import { addArmy, annex, commandersIn, move, neighbors, redField } from '../sim/fixtures';
 
 /** Ash Militia: (10 + 9 + 8 + 1) / 4. */
 const MILITIA = 7;
@@ -137,6 +136,19 @@ describe('threat', () => {
     expect(threat(state, red, p)).toBeCloseTo(2 * 85.25, 10);
     expect(AI.threatHops).toBe(1);
   });
+
+  it('counts nothing for the garrison of an enemy fort next door', () => {
+    const { state, red, green } = redField();
+    const fort = state.nations[green]!.capital;
+    const holder = state.commanders[state.provinces[fort]!.garrison!]!;
+    for (const c of Object.values(state.commanders)) {
+      if (c.owner === green && c.id !== holder.id) removeCommander(state, c.id);
+    }
+    holder.squads.push(createSquad(state, 'warden', 20));
+    expect(commanderPower(holder)).toBeGreaterThan(0);
+    const front = annex(state, red, neighbors(state, fort)[0]!).id;
+    expect(threat(state, red, front)).toBe(0);
+  });
 });
 
 /** The ids of a group's members. */
@@ -214,46 +226,6 @@ describe('groups', () => {
   });
 });
 
-describe('freeArmies', () => {
-  /** The ids of the leaders of the nation's free armies. */
-  function free(state: GameState, red: NationId, assign: CommanderId[] = []) {
-    const plan = createPlan(state, red);
-    for (const id of assign) plan.assigned.add(id);
-    return freeArmies(plan).map((g) => g.leader.id);
-  }
-
-  it('are standing leaders with enough troops under a free order, not yet assigned', () => {
-    const { state, red, capital, army } = redField();
-    const small = addArmy(state, red, capital, 'ashMilitia', AI.fieldArmyTroops - 1);
-    const enough = addArmy(state, red, capital, 'ashMilitia', AI.fieldArmyTroops);
-    expect(free(state, red)).toEqual([army.id, enough.id]);
-    expect(free(state, red, [army.id])).toEqual([enough.id]);
-    enough.order = { kind: 'patrol' };
-    army.order = { kind: 'pillage' };
-    expect(free(state, red)).toEqual([army.id, enough.id]);
-    const next = annex(state, red, neighbors(state, capital)[0]!).id;
-    move(state, red, [enough], [next]);
-    expect(free(state, red)).toEqual([army.id]);
-    expect(small.order.kind).toBe('idle');
-  });
-
-  it('leave out besiegers and escorts of a Wellspring claim', () => {
-    const { state, red, green, capital, army } = redField();
-    const siege = besiege(state, red, state.nations[green]!.capital);
-    siege.squads.push(createSquad(state, 'cinderWarrior', 20));
-    expect(free(state, red)).toEqual([army.id]);
-    const spring = annex(state, red, state.map.wellsprings[0]!).id;
-    army.location = spring;
-    expect(free(state, red)).toEqual([army.id]);
-    const priest = commandersIn(state, capital).find((c) => c.unit === 'pyrePriest')!;
-    priest.location = spring;
-    priest.order = { kind: 'claimWellspring', daysLeft: 5 };
-    expect(free(state, red)).toEqual([]);
-    state.provinces[spring]!.wellspringClaimedBy = red;
-    expect(free(state, red)).toEqual([army.id]);
-  });
-});
-
 describe('escortedSprings and destinationOf', () => {
   it('find the owned unclaimed Wellsprings a priest is walking to or claiming', () => {
     const { state, red, capital } = redField();
@@ -279,15 +251,16 @@ describe('escortedSprings and destinationOf', () => {
 });
 
 describe('borders', () => {
-  it('find own provinces next to another nation and next to independents', () => {
+  it('find own provinces next to another nation and next to strong independents', () => {
     const { state, red, green, capital } = redField();
-    const strong = neighbors(state, capital).some(
-      (n) => independentCount(state, n) > AI.independentStrength,
-    );
+    const strongNext = (p: ProvinceId) =>
+      neighbors(state, p).some(
+        (n) =>
+          state.provinces[n]!.owner === null && independentCount(state, n) > AI.independentStrength,
+      );
     let b = borders(state, red);
     expect([...b.enemy]).toEqual([]);
-    expect([...b.independent]).toEqual([capital]);
-    expect([...b.strongIndependent]).toEqual(strong ? [capital] : []);
+    expect([...b.strongIndependent]).toEqual(strongNext(capital) ? [capital] : []);
     const [a, c] = neighbors(state, capital) as [ProvinceId, ProvinceId];
     annex(state, green, a);
     annex(state, red, c);
@@ -296,9 +269,14 @@ describe('borders', () => {
     b = borders(state, red);
     expect(b.enemy.has(capital)).toBe(true);
     expect(b.enemy.has(c)).toBe(neighbors(state, c).includes(a));
-    for (const p of [capital, c]) {
-      const hasIndependent = neighbors(state, p).some((n) => state.provinces[n]!.owner === null);
-      expect(b.independent.has(p)).toBe(hasIndependent);
-    }
+    for (const p of [capital, c]) expect(b.strongIndependent.has(p)).toBe(strongNext(p));
+    // Seed 1: the capital's last independent neighbor holds 12 troops; one more than
+    // AI.independentStrength makes it strong.
+    const last = neighbors(state, capital)[2]!;
+    expect(state.provinces[last]!.owner).toBeNull();
+    expect(b.strongIndependent.has(capital)).toBe(false);
+    const extra = AI.independentStrength + 1 - independentCount(state, last);
+    addArmy(state, null, last, 'lightInfantry', extra, 'independentCaptain');
+    expect(borders(state, red).strongIndependent.has(capital)).toBe(true);
   });
 });

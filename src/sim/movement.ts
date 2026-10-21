@@ -176,8 +176,21 @@ function searchFrom(
 export function pathsFrom(state: GameState, commanders: readonly CommanderState[]): Paths {
   const lead = commanders[0];
   if (!lead || lead.owner === null || !commanders.every(canMove)) return NO_PATHS;
+  return pathsWith(state, commanders, hostileProvinces(state, lead.owner));
+}
+
+/**
+ * pathsFrom with the hostile provinces of the group's nation (hostileProvinces) already found,
+ * for a caller that searches many times while who stands where and who owns what hold.
+ */
+export function pathsWith(
+  state: GameState,
+  commanders: readonly CommanderState[],
+  hostile: ReadonlySet<ProvinceId>,
+): Paths {
+  const lead = commanders[0];
+  if (!lead || lead.owner === null || !commanders.every(canMove)) return NO_PATHS;
   const start = lead.transit ? lead.transit.to : lead.location;
-  const hostile = hostileProvinces(state, lead.owner);
   if (lead.transit && hostile.has(start)) return NO_PATHS;
   return searchFrom(state, hostile, start, Math.min(...commanders.map(commanderMapSpeed)));
 }

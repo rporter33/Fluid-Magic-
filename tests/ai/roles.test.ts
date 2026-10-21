@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { unitDef, type UnitTypeId } from '../../src/content';
 import { CHASSIS } from '../../src/content/pretenders/chassis';
 import { UNITS } from '../../src/content/units';
+import { createPlan } from '../../src/ai/plan';
 import {
   isAdeptTier,
   pretenderRole,
@@ -122,20 +123,23 @@ describe('splitMages', () => {
     const ids = (cs: readonly { id: string }[]) => cs.map((c) => c.id);
     const start = commandersIn(state, capital).find((c) => c.unit === 'emberAdept')!;
     // Cinder Horde researches at 0.4: one mage of one.
-    expect(ids(splitMages(state, red).researchers)).toEqual([start.id]);
+    expect(ids(splitMages(createPlan(state, red)).researchers)).toEqual([start.id]);
     const magus = createCommander(state, 'cinderMagus', red, capital);
     const adept = createCommander(state, 'emberAdept', red, capital);
     // Three: ceil(1.2) = 2 researchers, the oldest first.
-    expect(splitMages(state, red)).toEqual({ researchers: [start, magus], battleMages: [adept] });
+    expect(splitMages(createPlan(state, red))).toEqual({
+      researchers: [start, magus],
+      battleMages: [adept],
+    });
     // Priests, summons, and the other nation's mages are not mages of Red's.
     createCommander(state, 'salamander', red, capital);
     createCommander(state, 'pyrePriest', red, capital);
     createCommander(state, 'saplingDruid', green, capital);
-    expect(ids(splitMages(state, red).battleMages)).toEqual([adept.id]);
+    expect(ids(splitMages(createPlan(state, red)).battleMages)).toEqual([adept.id]);
     // Thornwood researches at 0.7: its starting mage and the one above both study; of four, three.
-    expect(splitMages(state, green).researchers).toHaveLength(2);
+    expect(splitMages(createPlan(state, green)).researchers).toHaveLength(2);
     for (let i = 0; i < 2; i++) createCommander(state, 'saplingDruid', green, capital);
-    expect(splitMages(state, green).researchers).toHaveLength(3);
-    expect(splitMages(state, green).battleMages).toHaveLength(1);
+    expect(splitMages(createPlan(state, green)).researchers).toHaveLength(3);
+    expect(splitMages(createPlan(state, green)).battleMages).toHaveLength(1);
   });
 });

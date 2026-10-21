@@ -5,12 +5,12 @@ import { unitDef } from '../content';
 import { AI } from '../content/ai';
 import type { UnitDef } from '../content/types';
 import { isGarrisonHolder } from '../sim/commanders';
-import type { NationId } from '../sim/ids';
 import { canMove } from '../sim/movement';
 import { hasPips } from '../sim/pips';
 import { isPretender } from '../sim/selectors';
 import type { CommanderState, GameState } from '../sim/types';
 import { nationDefOf } from '../sim/state';
+import type { Plan } from './plan';
 
 export type Role =
   /** The nation's pretender; what it does comes from its body (pretenderRole). */
@@ -87,13 +87,11 @@ export interface MageSplit {
 }
 
 /**
- * Splits a nation's mages by its research personality, oldest first (state order is the order
- * commanders were made in).
+ * Splits the planning nation's mages by its research personality, oldest first (state order is
+ * the order commanders were made in), from the plan's roles.
  */
-export function splitMages(state: GameState, nation: NationId): MageSplit {
-  const mages = Object.values(state.commanders).filter(
-    (c) => c.owner === nation && roleOf(state, c) === 'mage',
-  );
-  const count = Math.ceil(mages.length * nationDefOf(state, nation).ai.research);
+export function splitMages(plan: Plan): MageSplit {
+  const mages = plan.withRole('mage');
+  const count = Math.ceil(mages.length * nationDefOf(plan.copy, plan.nation).ai.research);
   return { researchers: mages.slice(0, count), battleMages: mages.slice(count) };
 }

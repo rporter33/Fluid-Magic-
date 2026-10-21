@@ -4,12 +4,13 @@
 // split into researchers in the home lab and battle mages ready to ride.
 import { describe, expect, it } from 'vitest';
 import { AI } from '../../src/content/ai';
+import { adjacencyRoute } from '../../src/ai/army';
 import { buildChoice, defenseTargets, planEconomy, planResearch } from '../../src/ai/economy';
 import { createPlan, type Plan } from '../../src/ai/plan';
 import { createCommander, createSquad, removeCommander } from '../../src/sim/commanders';
 import { applyCommand, type Command } from '../../src/sim/commands';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
-import { findPathFor } from '../../src/sim/movement';
+import { findPathFor, pathsFrom } from '../../src/sim/movement';
 import type { CommanderState, GameState } from '../../src/sim/types';
 import { annex, commandersIn, move, neighbors, redField } from '../sim/fixtures';
 
@@ -148,6 +149,13 @@ describe('planEconomy: provincial defense', () => {
     state.provinces[w]!.siege = { attacker: green, wallHp: 0, storm: false };
     state.provinces[w]!.pd = 0;
     expect(pdBought(planned(state, red, planEconomy))).toEqual([e, s]);
+    // Besieged first in budget order, at a level dearer than the spare gold, E ends nothing.
+    state.provinces[w]!.siege = null;
+    state.provinces[e]!.siege = { attacker: green, wallHp: 0, storm: false };
+    state.provinces[e]!.pd = 9;
+    state.provinces[s]!.pd = 0;
+    state.nations[red]!.gold = AI.goldReserve + 15 * 2;
+    expect(pdBought(planned(state, red, planEconomy))).toEqual([w, s]);
   });
 });
 
@@ -277,6 +285,27 @@ describe('planResearch', () => {
     adept.order = { kind: 'castRitual', spellId: 'callFireSprites', target: null, daysLeft: 3 };
     plan = planned(state, red, planResearch);
     expect(plan.out).toEqual([]);
+  });
+
+  it('walks a researcher to the nearest own lab while the capital is lost', () => {
+    // Red owns labs in p50 and p51 and the road between; Green holds Red's capital.
+    const { state, red, green, capital } = redField();
+    const road = adjacencyRoute(state, ['p50' as ProvinceId], 'p51' as ProvinceId);
+    for (const p of ['p50' as ProvinceId, ...road]) annex(state, red, p);
+    for (const p of ['p50', 'p51'] as ProvinceId[]) state.provinces[p]!.buildings.push('lab');
+    const adept = unitIn(state, capital, 'emberAdept');
+    adept.location = road[0]!;
+    state.provinces[capital]!.owner = green;
+    const paths = pathsFrom(state, [adept]);
+    expect(paths.days('p50' as ProvinceId)!).toBeLessThan(paths.days('p51' as ProvinceId)!);
+    expect(ofType(planned(state, red, planResearch), 'move')).toEqual([
+      {
+        type: 'move',
+        nation: red,
+        commanders: [adept.id],
+        path: findPathFor(state, [adept], 'p50' as ProvinceId),
+      },
+    ]);
   });
 
   it('researches with the share of mages the personality gives', () => {

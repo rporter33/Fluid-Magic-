@@ -51,7 +51,7 @@ export interface AiNumbers {
   readonly capitalGarrison: number;
   /** Enemy groups within this many hops of an own province threaten it. */
   readonly threatHops: number;
-  /** Enemy groups within this many hops of own provinces count against the war odds. */
+  /** Enemy commanders within this many hops of a new War target count against its odds. */
   readonly warHops: number;
   /** An independent province holding more troops than this calls for border PD. */
   readonly independentStrength: number;

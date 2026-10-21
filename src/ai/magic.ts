@@ -99,7 +99,7 @@ export function carriedColors(plan: Plan, commander: CommanderState): Color[] {
 // ---------------------------------------------------------------- rituals
 
 /** A ritual a caster could begin now, where, and its total mana cost. */
-export interface RitualOption {
+interface RitualOption {
   readonly spell: RitualSpellDef;
   readonly target: ProvinceId | null;
   readonly cost: number;
@@ -117,7 +117,7 @@ export function ritualCasters(plan: Plan): CommanderState[] {
   const pretender = plan
     .withRole('pretender')
     .filter((c) => pretenderRole(c) === 'ritualist' && ready(c));
-  const researchers = splitMages(plan.copy, plan.nation).researchers.filter(ready);
+  const researchers = splitMages(plan).researchers.filter(ready);
   if (researchers.length <= 1) return pretender;
   const rate = (c: CommanderState) => researchRate(plan.copy, c);
   return [...pretender, ...researchers.sort((a, b) => rate(a) - rate(b))];
@@ -148,7 +148,7 @@ function ritualOf(id: SpellId): RitualSpellDef | null {
  * The ritual's total cost when every pool it draws on (by the default split) holds at least
  * AI.ritualCostFactor times what it takes; null otherwise.
  */
-export function affordableCost(plan: Plan, spell: RitualSpellDef): number | null {
+function affordableCost(plan: Plan, spell: RitualSpellDef): number | null {
   const pool = plan.nationState.mana;
   const pay = ritualPayment(pool, spell);
   if (typeof pay === 'string') return null;
@@ -228,7 +228,7 @@ type Aim = (
  * grows, the others get their turn). Only rituals the caster can begin there now (ritualTargets)
  * and the pools can afford by AI.ritualCostFactor are listed.
  */
-export function ritualOptions(plan: Plan, caster: CommanderState, war: boolean): RitualOption[] {
+function ritualOptions(plan: Plan, caster: CommanderState, war: boolean): RitualOption[] {
   const options: RitualOption[] = [];
   const consider = (id: SpellId, aim: Aim) => {
     const spell = ritualOf(id);

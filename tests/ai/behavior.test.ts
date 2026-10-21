@@ -6,18 +6,34 @@
 // never empty for more than 60 days in a row, counting only days with the capital owned, the
 // nation in the game, gold above 200 and recruitment not blocked; any other day ends the run.
 // (c) The capital's garrison has troops on every day from month 6 while the capital is owned.
-// (d) No AI command is ever refused.
+// (d) No AI command is ever refused. (e) Review finding cor-3: on a Large map with three nations,
+// no field army stands in its capital without a task for more than 120 days while an enemy
+// province its paths reach passes the per-target War odds and AI.warRatio times its defenders.
 import { beforeAll, describe, expect, it } from 'vitest';
+import { AI } from '../../src/content/ai';
+import { defaultPreset } from '../../src/content/pretenders/presets';
 import { TIME } from '../../src/content/rules';
-import { runAi } from '../../src/ai/ai';
-import { playDay, type Refusal } from '../../src/ai/driver';
+import { planAi, runAi } from '../../src/ai/ai';
+import { fixedDefense, isAssigned } from '../../src/ai/army';
+import {
+  armyPower,
+  commanderPower,
+  defenderPower,
+  groups,
+  isEnemyProvince,
+  isMoving,
+} from '../../src/ai/assess';
+import { playDay, type Player, type Refusal } from '../../src/ai/driver';
 import { RUNNER_NATIONS, runnerSetup } from '../../src/ai/match';
+import type { Plan } from '../../src/ai/plan';
 import type { NationDefId } from '../../src/content';
-import { troopCount } from '../../src/sim/commanders';
+import { takesPart, troopCount } from '../../src/sim/commanders';
 import { createGame } from '../../src/sim/createGame';
-import type { NationId } from '../../src/sim/ids';
+import type { CommanderId, NationId, ProvinceId } from '../../src/sim/ids';
 import { garrisonOf, recruitBlock } from '../../src/sim/recruitment';
-import type { GameState } from '../../src/sim/types';
+import { withinHops } from '../../src/sim/rituals';
+import { nationDefOf } from '../../src/sim/state';
+import type { GameSetup, GameState } from '../../src/sim/types';
 import { capitalOf, nationIds } from '../sim/fixtures';
 
 const SEED = 1;
@@ -172,4 +188,101 @@ describe('the AI over the headless runner games', () => {
   it('(d) issues no command that is refused', () => {
     expect(runs.flatMap((run) => run.refused)).toEqual([]);
   });
+});
+
+/**
+ * (e): seed 8, Large, Thornwood, Cinder Horde, and Thornwood with their default presets, all
+ * Normal. Under Phase 7's first War gate, one sum over the whole border, a Thornwood army stood
+ * idle in its capital from day 835 to the end of the game with takeable enemy provinces in reach.
+ */
+const LARGE_SETUP: GameSetup = {
+  seed: 8,
+  mapSize: 'large',
+  nations: (['thornwood', 'cinderHorde', 'thornwood'] as const).map((nation) => ({
+    nation,
+    pretender: defaultPreset(nation).design,
+    ai: { difficulty: 'normal' },
+  })),
+};
+/** (e): three years, or the game's end if sooner. */
+const LARGE_HORIZON = 36 * TIME.daysPerMonth;
+/** (e): the longest a field army may stand idle at home while a War target passes. */
+const MAX_IDLE_DAYS = 120;
+
+/**
+ * The enemy power a new War target in the province would meet (docs/08 decisions, War), worked
+ * out apart from war.ts: its garrison troops and PD, and other nations' non-hidden commanders
+ * within AI.warHops of it.
+ */
+function enemyPowerNear(plan: Plan, province: ProvinceId): number {
+  const near = withinHops(plan.copy, province, AI.warHops);
+  let power = fixedDefense(plan.copy, province);
+  for (const c of Object.values(plan.copy.commanders)) {
+    const other = c.owner !== null && c.owner !== plan.nation;
+    if (other && takesPart(c) && near.has(c.location)) power += commanderPower(c);
+  }
+  return power;
+}
+
+/**
+ * The leaders of field armies standing in the capital with no task after the call while an
+ * enemy province their paths reach passes the per-target odds and they could take it.
+ */
+function idleWithTarget(plan: Plan): CommanderId[] {
+  const armies = groups(plan).filter((g) => !g.lone);
+  const field = armies.reduce((sum, g) => sum + armyPower(g.members), 0);
+  const odds = nationDefOf(plan.copy, plan.nation).ai.aggression * field;
+  return armies
+    .filter(
+      (g) =>
+        !isAssigned(plan, g) &&
+        !isMoving(g.leader) &&
+        g.province === plan.capital.id &&
+        troopCount(g.leader) >= AI.fieldArmyTroops,
+    )
+    .filter((g) => {
+      const strength = armyPower(g.members);
+      return plan
+        .paths(g.members)
+        .reached.some(
+          (p) =>
+            isEnemyProvince(plan.copy, plan.nation, p) &&
+            strength >= AI.warRatio * defenderPower(plan.copy, p) &&
+            odds > AI.warRatio * enemyPowerNear(plan, p),
+        );
+    })
+    .map((g) => g.leader.id);
+}
+
+describe('the AI on a Large map with three nations', () => {
+  it(`(e) leaves no field army idle at home over ${String(MAX_IDLE_DAYS)} days with a War target`, () => {
+    const state = createGame(LARGE_SETUP);
+    /** The first planning day of each leader's current idle run. */
+    const since = new Map<CommanderId, number>();
+    let longest = { days: 0, at: '' };
+    const player: Player = (s, nation) => {
+      const plan = planAi(s, nation);
+      if (!plan) return [];
+      const idle = new Set(idleWithTarget(plan));
+      for (const c of plan.own()) {
+        if (!idle.has(c.id)) {
+          since.delete(c.id);
+          continue;
+        }
+        const start = since.get(c.id) ?? s.day;
+        since.set(c.id, start);
+        if (s.day - start > longest.days) {
+          longest = { days: s.day - start, at: `${nation} ${c.id} from day ${String(start)}` };
+        }
+      }
+      return plan.out;
+    };
+    const refused: Refusal[] = [];
+    while (!state.result && state.day < LARGE_HORIZON) {
+      refused.push(...playDay(state, player).refused);
+    }
+    expect(longest.days, longest.at).toBeLessThanOrEqual(MAX_IDLE_DAYS);
+    expect(refused).toEqual([]);
+    // One Large game of up to three years: past vitest's 5 s default on a loaded machine.
+  }, 60_000);
 });

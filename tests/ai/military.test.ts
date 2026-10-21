@@ -71,6 +71,47 @@ describe('expansionTarget', () => {
     defend(bound * 0.999);
     expect(expansionTarget(plan(), [army], others)).toBe(target);
   });
+
+  it('divides by the defenders but at least 1: a lightly held province beats a poorer empty one', () => {
+    // p17 is emptied; p50 is held by a lone independent captain.
+    const { state, red, army } = redField();
+    const [empty, held] = [P('p17'), P('p50')];
+    for (const c of Object.values(state.commanders)) {
+      if (c.owner === null && (c.location === empty || c.location === held)) {
+        removeCommander(state, c.id);
+      }
+    }
+    createCommander(state, 'independentCaptain', null, held);
+    const defenders = defenderPower(state, held);
+    expect(defenders).toBeGreaterThan(1);
+    const plan = createPlan(state, red);
+    const paths = pathsFrom(state, [army]);
+    const factor = (p: ProvinceId) => distanceFactor(plan, paths.days(p)!);
+    const heldScore = (provinceValue(state, held) / defenders) * factor(held);
+    // The empty one scores below the held one, but above it were the divisor defenders + 1.
+    const want = (heldScore + (provinceValue(state, held) / (defenders + 1)) * factor(held)) / 2;
+    const others = provinceValue(state, empty) - state.provinces[empty]!.pop / AI.score.popPer;
+    state.provinces[empty]!.pop = Math.round((want / factor(empty) - others) * AI.score.popPer);
+    const emptyScore = provinceValue(state, empty) * factor(empty);
+    expect(emptyScore).toBeLessThan(heldScore);
+    expect(emptyScore).toBeGreaterThan(
+      (provinceValue(state, held) / (defenders + 1)) * factor(held),
+    );
+    const rest = new Set(paths.reached.filter((p) => p !== empty && p !== held));
+    expect(expansionTarget(createPlan(state, red), [army], rest)).toBe(held);
+  });
+
+  it('takes only independent provinces, never an enemy one in reach', () => {
+    // Green's empty p45, next to Red's army in p50, would outscore every independent.
+    const { state, red, green, army } = redField();
+    annex(state, red, P('p50'));
+    annex(state, green, P('p45'));
+    army.location = P('p50');
+    expect(defenderPower(state, P('p45'))).toBe(0);
+    const target = expansionTarget(createPlan(state, red), [army], new Set());
+    expect(target).not.toBeNull();
+    expect(state.provinces[target!]!.owner).toBeNull();
+  });
 });
 
 describe('planArmies: expansion', () => {
@@ -81,6 +122,29 @@ describe('planArmies: expansion', () => {
     expect(out.map((c) => c.commanders)).toEqual([[army.id], [second.id]]);
     const ends = out.map((c) => c.path.at(-1));
     expect(new Set(ends).size).toBe(2);
+  });
+
+  it('never sends an army where an own move from an earlier call already ends', () => {
+    const { state, red, capital, army } = redField();
+    const best = expansionTarget(createPlan(state, red), [army], new Set())!;
+    const marcher = addArmy(state, red, capital, 'cinderWarrior', 40);
+    expect(applyCommand(state, moveCmd(red, [marcher], [best]))).toEqual({ ok: true });
+    const out = armies(state, red).filter((c) => c.type === 'move');
+    expect(out.map((c) => c.commanders)).toEqual([[army.id]]);
+    expect(out[0]?.path.at(-1)).not.toBe(best);
+  });
+
+  it('sends armies standing together as one when none takes a target alone', () => {
+    // Two field armies at home, each short of the odds on the weakest reached independent.
+    const { state, red, capital, army } = redField();
+    const reached = pathsFrom(state, [army]).reached.filter((p) => !state.provinces[p]!.owner);
+    const weakest = Math.min(...reached.map((p) => defenderPower(state, p)));
+    army.squads = [createSquad(state, 'cinderWarrior', AI.fieldArmyTroops)];
+    const other = addArmy(state, red, capital, 'cinderWarrior', AI.fieldArmyTroops);
+    expect(armyPower([army])).toBeLessThanOrEqual(AI.expansionRatio * weakest);
+    expect(armyPower([army, other])).toBeGreaterThan(AI.expansionRatio * weakest);
+    const out = armies(state, red).filter((c) => c.type === 'move');
+    expect(out.map((c) => c.commanders)).toEqual([[army.id, other.id]]);
   });
 
   it('leaves besiegers to their siege', () => {

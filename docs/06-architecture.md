@@ -394,7 +394,9 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   returns `days(to)`, `pathTo(to)`, and the provinces `reached`, nearest first. `findPathFor`
   is `pathsFrom(...).pathTo(to)`, so its tests pin the two together, and a test checks every
   target on several seeds against `findPath`. The AI ranks targets with one search per group
-  instead of one per target.
+  instead of one per target. `pathsWith(state, commanders, hostile)` is the same search with
+  the hostile provinces given: the AI's plan finds them once a call (who stands where and who
+  owns what hold for the call) and searches with them on every miss of its path cache.
 - **The AI** (Phase 7): `runAi(state, nation)` in `src/ai/ai.ts` is a `Player` for `playDay`.
   It replaces the Phase 6 dummy (`src/ai/dummy.ts`, deleted) in the runner and the tests. The
   module list differs from the sketch's `economy.ts expansion.ts military.ts research.ts`:

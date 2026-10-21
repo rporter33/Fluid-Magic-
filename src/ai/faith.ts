@@ -7,7 +7,7 @@ import type { ProvinceId } from '../sim/ids';
 import { canResearch, inOwnLab } from '../sim/research';
 import type { CommanderState } from '../sim/types';
 import { destinationOf, isOwnUnclaimedSpring } from './assess';
-import type { Plan } from './plan';
+import { fewestDays, walk, type Plan } from './plan';
 import { pretenderRole } from './roles';
 
 /**
@@ -35,13 +35,6 @@ function order(plan: Plan, c: CommanderState, kind: 'preach' | 'research'): void
   if (c.order.kind !== kind) {
     plan.issue({ type: 'setOrder', nation: plan.nation, commander: c.id, order: kind });
   }
-}
-
-/** Walks a commander to a province unless it stands there or already walks there. */
-function walk(plan: Plan, c: CommanderState, to: ProvinceId): void {
-  if (destinationOf(c) === to) return;
-  const path = plan.paths([c]).pathTo(to);
-  if (path) plan.issue({ type: 'move', nation: plan.nation, commanders: [c.id], path });
 }
 
 /**
@@ -98,15 +91,7 @@ function claimSprings(plan: Plan): void {
     .map((p) => p.id);
   for (const c of free) {
     const paths = plan.paths([c]);
-    let best: ProvinceId | null = null;
-    let bestDays = Infinity;
-    for (const s of springs) {
-      const days = paths.days(s);
-      if (!taken.has(s) && days !== undefined && days < bestDays) {
-        best = s;
-        bestDays = days;
-      }
-    }
+    const best = fewestDays(springs, (s) => (taken.has(s) ? undefined : paths.days(s)));
     if (best !== null) {
       taken.add(best);
       walk(plan, c, best);

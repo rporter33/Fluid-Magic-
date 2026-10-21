@@ -1,14 +1,16 @@
 // The AI's planning copy and context (docs/08-ai.md decisions; Phase 7 design "Planning copy",
 // "Paths", "Roles"): the copy deep-copies what commands write and shares the rest; issued
 // commands apply on the copy only, make the ids the real state makes for the same commands, and
-// keep off guarded commanders; paths are searched once per start and pace.
+// keep off guarded commanders; paths are searched once per start and pace, against hostile
+// provinces found once per call; one commander walks by the plan's paths.
 import { describe, expect, it } from 'vitest';
-import { createPlan, isGuarded, planningCopy } from '../../src/ai/plan';
+import { createArmyPass } from '../../src/ai/army';
+import { createPlan, fewestDays, isGuarded, planningCopy, walk } from '../../src/ai/plan';
 import { createCommander, createSquad } from '../../src/sim/commanders';
 import { applyCommand, type Command } from '../../src/sim/commands';
 import { stateHash } from '../../src/sim/hash';
 import type { ProvinceId } from '../../src/sim/ids';
-import { pathsFrom } from '../../src/sim/movement';
+import { hostileProvinces, pathsFrom } from '../../src/sim/movement';
 import { cloneRng } from '../../src/sim/rng';
 import { annex, commandersIn, neighbors, redField } from '../sim/fixtures';
 
@@ -157,6 +159,35 @@ describe('createPlan', () => {
     expect(plan.paths([a!]).days(next)).toBe(0);
     expect(plan.paths([a!]).pathTo(onward)).toEqual(pathsFrom(plan.copy, [a!]).pathTo(onward));
     expect(plan.paths([b!]).days(capital)).toBe(0);
+    // The hostile provinces are found once a call, and the army pass reads the same set.
+    expect(plan.hostile()).toEqual(hostileProvinces(state, red));
+    expect(plan.hostile()).toBe(plan.hostile());
+    expect(createArmyPass(plan).hostile).toBe(plan.hostile());
+  });
+
+  it('walks one commander by the plan, unless it stands or already walks there', () => {
+    const { state, red, capital, next } = rich();
+    const scout = commandersIn(state, capital).find((c) => c.unit === 'cinderScout')!;
+    let plan = createPlan(state, red);
+    walk(plan, plan.copy.commanders[scout.id]!, capital);
+    expect(plan.out).toEqual([]);
+    walk(plan, plan.copy.commanders[scout.id]!, next);
+    const moved: Command = { type: 'move', nation: red, commanders: [scout.id], path: [next] };
+    expect(plan.out).toEqual([moved]);
+    expect(applyCommand(state, moved)).toEqual({ ok: true });
+    plan = createPlan(state, red);
+    walk(plan, plan.copy.commanders[scout.id]!, next);
+    expect(plan.out).toEqual([]);
+  });
+
+  it('picks the item with the fewest days, the first of equals', () => {
+    const days = new Map([
+      ['a', 4],
+      ['b', 2],
+      ['c', 2],
+    ]);
+    expect(fewestDays(['a', 'b', 'c', 'd'], (x) => days.get(x))).toBe('b');
+    expect(fewestDays(['d'], (x) => days.get(x))).toBeNull();
   });
 
   it('reads the nation, its capital, commanders, roles, and provinces on the copy', () => {

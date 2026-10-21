@@ -1,6 +1,7 @@
 // The army pass's shared tools (Phase 7 design "Groups and free armies", "5. Army pass"): which
-// groups a step may take, days to a province including a leg under way, sending a group as one
-// move, the adjacency route, and what defends a province without commanders.
+// groups a step may take (docs/08 "Free field armies": standing under a free order, big enough,
+// not besieging or escorting), days to a province including a leg under way, sending a group as
+// one move, the adjacency route, and what defends a province without commanders.
 import { describe, expect, it } from 'vitest';
 import { unitDef } from '../../src/content';
 import { AI } from '../../src/content/ai';
@@ -15,11 +16,12 @@ import {
   send,
 } from '../../src/ai/army';
 import { troopPower } from '../../src/ai/assess';
+import { escortClaims } from '../../src/ai/defense';
 import { createPlan } from '../../src/ai/plan';
 import { createCommander, createSquad } from '../../src/sim/commanders';
 import type { ProvinceId } from '../../src/sim/ids';
 import { findPathFor, pathDays } from '../../src/sim/movement';
-import { addArmy, annex, besiege, move, neighbors, redField } from '../sim/fixtures';
+import { addArmy, annex, besiege, commandersIn, move, neighbors, redField } from '../sim/fixtures';
 
 /** Red's field with its capital's first two neighbors annexed. */
 function field() {
@@ -65,6 +67,45 @@ describe('eligibleGroups', () => {
     expect(eligibleGroups(pass, { anySize: true, escorts: true }).map((g) => g.leader.id)).toEqual([
       small.id,
     ]);
+  });
+});
+
+describe('eligibleGroups: orders and escorts', () => {
+  it('takes groups under a free order (idle, pillage, patrol) only', () => {
+    const f = field();
+    const { state, red, capital, army } = f;
+    const other = addArmy(state, red, capital, 'ashMilitia', AI.fieldArmyTroops);
+    expect(eligible(f, {})).toEqual([army.id, other.id]);
+    army.order = { kind: 'pillage' };
+    other.order = { kind: 'patrol' };
+    expect(eligible(f, {})).toEqual([army.id, other.id]);
+    other.order = { kind: 'preach' };
+    expect(eligible(f, { anySize: true, escorts: true })).toEqual([army.id]);
+  });
+
+  it('leaves out the one army escorting a Wellspring claim; a second one there stays free', () => {
+    const { state, red, capital, army } = redField();
+    const spring = annex(state, red, state.map.wellsprings[0]!).id;
+    army.location = spring;
+    const second = addArmy(state, red, spring, 'cinderWarrior', 20);
+    const priest = commandersIn(state, capital).find((c) => c.unit === 'pyrePriest')!;
+    priest.location = spring;
+    priest.order = { kind: 'claimWellspring', daysLeft: 5 };
+    const leaders = (options: Parameters<typeof eligibleGroups>[1] = {}) => {
+      const pass = createArmyPass(createPlan(state, red));
+      escortClaims(pass);
+      expect(pass.plan.out).toEqual([]);
+      return {
+        escorts: [...pass.escorts],
+        free: eligibleGroups(pass, options).map((g) => g.leader.id),
+      };
+    };
+    // The oldest group there is the escort.
+    expect(leaders()).toEqual({ escorts: [army.id], free: [second.id] });
+    expect(leaders({ escorts: true }).free).toEqual([army.id, second.id]);
+    // A claimed Wellspring needs no escort.
+    state.provinces[spring]!.wellspringClaimedBy = red;
+    expect(leaders()).toEqual({ escorts: [], free: [army.id, second.id] });
   });
 });
 

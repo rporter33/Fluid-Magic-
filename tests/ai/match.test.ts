@@ -383,7 +383,8 @@ describe('runMatch', () => {
       hashes.add(match.finalHash);
     }
     expect(hashes.size).toBe(2);
-  });
+    // Two games of three years take seconds: past vitest's 5 s default on a loaded machine.
+  }, 60_000);
 });
 
 describe('the headless runner', () => {

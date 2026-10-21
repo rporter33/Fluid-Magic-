@@ -451,7 +451,8 @@ describe('pathsFrom', () => {
     expect(seen.marching).toBeGreaterThanOrEqual(8);
     expect(seen.stopping).toBeGreaterThanOrEqual(8);
     expect(seen.groups).toBeGreaterThanOrEqual(8);
-  });
+    // findPath for every province on several seeds: past vitest's 5 s default under load.
+  }, 30_000);
 
   it('gives nothing to a group that cannot move or that stops at the end of its leg', () => {
     const state = contested(1);

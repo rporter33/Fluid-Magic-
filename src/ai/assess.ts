@@ -1,27 +1,33 @@
 // How the AI sizes up armies and provinces (docs/08-ai.md "Expansion", "Defense", "War"; Phase
 // 7 design "Power", "Groups and free armies"): troop and army power from content stats, what a
 // province would field against an attack, the threat around it, the groups that move together,
-// the armies free for a task, and the borders. The AI reads every commander and province (no
-// fog for the AI in M1).
+// the Wellsprings that need an escort, and the borders. Which groups a step may take is the army
+// pass's (army.ts eligibleGroups). The AI reads every commander and province (no fog for the AI
+// in M1).
 import { unitDef } from '../content';
 import { AI } from '../content/ai';
 import type { UnitDef } from '../content/types';
-import { isGarrisonHolder, isStealthy, takesPart, troopCount } from '../sim/commanders';
+import { isGarrisonHolder, isStealthy, takesPart } from '../sim/commanders';
 import { ownerForces } from '../sim/conflict';
 import type { CommanderId, NationId, ProvinceId } from '../sim/ids';
 import { independentCount } from '../sim/independents';
 import { pdForce } from '../sim/pd';
 import { withinHops } from '../sim/rituals';
 import { getMapProvince, getProvince } from '../sim/state';
-import type { CommanderOrder, CommanderState, GameState } from '../sim/types';
+import type { CommanderState, GameState } from '../sim/types';
 import type { Plan } from './plan';
 import { pretenderRole, splitMages } from './roles';
+
+/** A unit with a ranged weapon. */
+export function isRanged(def: UnitDef): boolean {
+  return def.weapons.some((w) => w.range !== undefined);
+}
 
 /** One troop of a unit: the mean of hp, att, def, and prot; a ranged unit AI.rangedBonus more. */
 export function troopPower(def: UnitDef): number {
   const stats = [def.hp, def.att, def.def, def.prot];
   const mean = stats.reduce((sum, s) => sum + s, 0) / stats.length;
-  return def.weapons.some((w) => w.range !== undefined) ? mean * (1 + AI.rangedBonus) : mean;
+  return isRanged(def) ? mean * (1 + AI.rangedBonus) : mean;
 }
 
 /**
@@ -129,7 +135,8 @@ function byPower(commanders: readonly CommanderState[]): CommanderState[] {
   return [...commanders].sort((a, b) => commanderPower(b) - commanderPower(a));
 }
 
-function moving(c: CommanderState): boolean {
+/** On the move: walking a leg, or holding a move order. */
+export function isMoving(c: CommanderState): boolean {
   return c.transit !== null || c.order.kind === 'move';
 }
 
@@ -155,7 +162,7 @@ function movesWith(c: CommanderState, leader: CommanderState): boolean {
  * the lone ones last.
  */
 export function groups(plan: Plan): Group[] {
-  const battleMages = new Set(splitMages(plan.copy, plan.nation).battleMages.map((c) => c.id));
+  const battleMages = new Set(splitMages(plan).battleMages.map((c) => c.id));
   const rides = (c: CommanderState): boolean => {
     const role = plan.role(c);
     if (role === 'summoned') return true;
@@ -172,11 +179,11 @@ export function groups(plan: Plan): Group[] {
     members.get(leader.id)?.push(c);
     taken.add(c.id);
   };
-  for (const leader of leaders.filter(moving)) {
+  for (const leader of leaders.filter(isMoving)) {
     for (const c of riders) if (!taken.has(c.id) && movesWith(c, leader)) take(leader, c);
   }
   const standing = new Map<ProvinceId, CommanderState[]>();
-  for (const leader of leaders) if (!moving(leader)) addTo(standing, leader.location, leader);
+  for (const leader of leaders) if (!isMoving(leader)) addTo(standing, leader.location, leader);
   for (const [province, here] of standing) {
     const strongest = byPower(here);
     const [first] = strongest;
@@ -213,39 +220,15 @@ export function groups(plan: Plan): Group[] {
   return result;
 }
 
-/** Orders a field army may hold and still take a task. */
-const FREE_ORDERS: ReadonlySet<CommanderOrder['kind']> = new Set(['idle', 'pillage', 'patrol']);
-
 /** Standing in a province whose siege this nation is laying. */
 export function isBesieging(plan: Plan, province: ProvinceId): boolean {
   return getProvince(plan.copy, province).siege?.attacker === plan.nation;
 }
 
-/**
- * Free field armies (Phase 7 design "Free field army"): leader-led groups standing still under
- * a free order, leading at least AI.fieldArmyTroops, neither besieging nor escorting a priest's
- * Wellspring claim, and not yet assigned this call.
- */
-export function freeArmies(plan: Plan): Group[] {
-  const escorted = escortedSprings(plan);
-  return groups(plan).filter(
-    (g) =>
-      !g.lone &&
-      g.leader.transit === null &&
-      FREE_ORDERS.has(g.leader.order.kind) &&
-      troopCount(g.leader) >= AI.fieldArmyTroops &&
-      !isBesieging(plan, g.province) &&
-      !escorted.has(g.province) &&
-      !g.members.some((m) => plan.assigned.has(m.id)),
-  );
-}
-
-/** Where a nation meets others: its provinces next to another nation's or an independent one. */
+/** Where a nation meets others: its provinces next to another nation's or a strong independent. */
 export interface Borders {
   /** Own provinces next to a province another nation owns. */
   readonly enemy: ReadonlySet<ProvinceId>;
-  /** Own provinces next to an independent province. */
-  readonly independent: ReadonlySet<ProvinceId>;
   /** Own provinces next to an independent province holding more than AI.independentStrength. */
   readonly strongIndependent: ReadonlySet<ProvinceId>;
 }
@@ -259,7 +242,6 @@ export function isEnemyProvince(state: GameState, nation: NationId, province: Pr
 /** The nation's border provinces, each set in province order. */
 export function borders(state: GameState, nation: NationId): Borders {
   const enemy = new Set<ProvinceId>();
-  const independent = new Set<ProvinceId>();
   const strongIndependent = new Set<ProvinceId>();
   const strong = new Map<ProvinceId, boolean>();
   const isStrong = (p: ProvinceId): boolean => {
@@ -275,10 +257,8 @@ export function borders(state: GameState, nation: NationId): Borders {
     for (const n of getMapProvince(state, p.id).neighbors) {
       const owner = getProvince(state, n).owner;
       if (owner !== null && owner !== nation) enemy.add(p.id);
-      if (owner !== null) continue;
-      independent.add(p.id);
-      if (isStrong(n)) strongIndependent.add(p.id);
+      if (owner === null && isStrong(n)) strongIndependent.add(p.id);
     }
   }
-  return { enemy, independent, strongIndependent };
+  return { enemy, strongIndependent };
 }

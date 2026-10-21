@@ -6,7 +6,6 @@ import { unitDef } from '../content';
 import { AI } from '../content/ai';
 import { troopCount } from '../sim/commanders';
 import type { CommanderId, ProvinceId } from '../sim/ids';
-import { hostileProvinces } from '../sim/movement';
 import { pdForce } from '../sim/pd';
 import { getMapProvince, getProvince, nationDefOf } from '../sim/state';
 import type { CommanderOrder, CommanderState, GameState } from '../sim/types';
@@ -16,10 +15,11 @@ import {
   destinationOf,
   groups,
   isBesieging,
+  isMoving,
   troopPower,
   type Group,
 } from './assess';
-import type { Plan } from './plan';
+import { fewestDays, type Plan } from './plan';
 
 /** What the steps of one army pass share. */
 export interface ArmyPass {
@@ -40,24 +40,20 @@ export function createArmyPass(plan: Plan): ArmyPass {
     plan,
     escorts: new Set(),
     gather: null,
-    hostile: hostileProvinces(plan.copy, plan.nation),
+    hostile: plan.hostile(),
   };
 }
 
 /** Orders a group may hold and still be given a task. */
 const FREE_ORDERS: ReadonlySet<CommanderOrder['kind']> = new Set(['idle', 'pillage', 'patrol']);
 
-/** On the move: walking a leg, or holding a move order. */
-export function isMoving(c: CommanderState): boolean {
-  return c.transit !== null || c.order.kind === 'move';
-}
-
 /** A member of the group has been given a task this call. */
 export function isAssigned(plan: Plan, group: Group): boolean {
   return group.members.some((m) => plan.assigned.has(m.id));
 }
 
-export function isEscort(pass: ArmyPass, group: Group): boolean {
+/** A member of the group holds an escorted Wellspring. */
+function isEscort(pass: ArmyPass, group: Group): boolean {
   return group.members.some((m) => pass.escorts.has(m.id));
 }
 
@@ -104,7 +100,7 @@ export function eligibleGroups(pass: ArmyPass, options: Eligible = {}): Group[] 
 }
 
 /** A group on the move that may be given a new path: its leg does not end among hostiles. */
-export function canRepath(plan: Plan, group: Group): boolean {
+function canRepath(plan: Plan, group: Group): boolean {
   const lead = group.leader;
   const end = lead.transit ? lead.transit.to : lead.location;
   return plan.paths(group.members).days(end) !== undefined;
@@ -137,15 +133,7 @@ export function nearest(
   to: ProvinceId,
   accept: (g: Group) => boolean = () => true,
 ): Group | null {
-  let best: Group | null = null;
-  let bestDays = Infinity;
-  for (const g of list) {
-    const days = daysTo(plan, g.members, to);
-    if (days === undefined || days >= bestDays || !accept(g)) continue;
-    best = g;
-    bestDays = days;
-  }
-  return best;
+  return fewestDays(list, (g) => (accept(g) ? daysTo(plan, g.members, to) : undefined));
 }
 
 /**

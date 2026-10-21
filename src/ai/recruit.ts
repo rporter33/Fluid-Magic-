@@ -2,14 +2,16 @@
 // transfers"): the capital queue, commander quotas, the troop mix, and garrison transfers. A
 // mage or the pretender holding troops (summons) hands them to the garrison holder, and the
 // capital garrison's troops above AI.capitalGarrison go to the leaders standing there.
-import { nationDef, unitDef, type UnitTypeId } from '../content';
+import { unitDef, type UnitTypeId } from '../content';
 import { AI } from '../content/ai';
-import type { NationDef, UnitDef } from '../content/types';
+import type { NationDef } from '../content/types';
 import { troopCount } from '../sim/commanders';
 import { validateCommand, type Command } from '../sim/commands';
 import { recruitBlock, recruitGold, recruitRequirementError } from '../sim/recruitment';
 import { weightedIndex } from '../sim/rng';
+import { nationDefOf } from '../sim/state';
 import type { CommanderState, RecruitOrder } from '../sim/types';
+import { isRanged } from './assess';
 import type { Plan } from './plan';
 import { isAdeptTier, unitRole, type Role } from './roles';
 
@@ -21,10 +23,6 @@ export function planRecruitment(plan: Plan): void {
 }
 
 type RecruitCommand = Extract<Command, { type: 'recruit' }>;
-
-function nationOf(plan: Plan): NationDef {
-  return nationDef(plan.nationState.def);
-}
 
 function recruitOf(plan: Plan, unit: UnitTypeId, count: number): RecruitCommand {
   return { type: 'recruit', nation: plan.nation, province: plan.capital.id, unit, count };
@@ -116,7 +114,9 @@ export function roleCount(plan: Plan, role: Role): number {
  * while the gold left after it covers AI.goldReserve, and leave it out otherwise.
  */
 function roleUnits(plan: Plan, role: Role): UnitTypeId[] {
-  const units = nationOf(plan).commanders.filter((u) => unitRole(unitDef(u)) === role);
+  const units = nationDefOf(plan.copy, plan.nation).commanders.filter(
+    (u) => unitRole(unitDef(u)) === role,
+  );
   if (role !== 'mage') return units;
   const gold = plan.nationState.gold;
   const adepts = units.filter(
@@ -140,10 +140,6 @@ function wantedCommander(plan: Plan): RecruitCommand | null {
 }
 
 // ---------------------------------------------------------------- troops
-
-function isRanged(def: UnitDef): boolean {
-  return def.weapons.some((w) => w.range !== undefined);
-}
 
 /** Troops by kind: every own squad (field armies and garrisons) and every queued troop item. */
 export function troopMix(plan: Plan): { melee: number; ranged: number } {
@@ -186,14 +182,15 @@ export function troopWeight(nation: NationDef, unit: UnitTypeId): number {
 function wantedTroops(plan: Plan): RecruitCommand | null {
   const ranged = wantsRanged(plan);
   const gold = plan.nationState.gold;
-  const options = nationOf(plan).troops.filter(
+  const nation = nationDefOf(plan.copy, plan.nation);
+  const options = nation.troops.filter(
     (u) =>
       isRanged(unitDef(u)) === ranged &&
       recruitable(plan, u) &&
       recruitGold(plan.copy, plan.capital.id, u, AI.batch.small) <= gold,
   );
   if (options.length === 0) return null;
-  const weights = options.map((u) => troopWeight(nationOf(plan), u));
+  const weights = options.map((u) => troopWeight(nation, u));
   const unit = options[weightedIndex(plan.rng, weights)];
   if (unit === undefined) return null;
   for (const count of [AI.batch.large, AI.batch.small]) {
@@ -207,7 +204,7 @@ function wantedTroops(plan: Plan): RecruitCommand | null {
 function cheapestTroops(plan: Plan): RecruitCommand | null {
   const price = (u: UnitTypeId) => recruitGold(plan.copy, plan.capital.id, u, AI.batch.small);
   const materials = (u: UnitTypeId) => unitDef(u).cost?.materials ?? 0;
-  const [unit] = nationOf(plan)
+  const [unit] = nationDefOf(plan.copy, plan.nation)
     .troops.filter((u) => recruitable(plan, u))
     .sort((a, b) => price(a) - price(b) || materials(a) - materials(b));
   if (unit === undefined) return null;

@@ -311,7 +311,7 @@ describe('transfers', () => {
     expect(ofType(planned(state, red), 'transferSquad')).toEqual([]);
   });
 
-  it("hand a mage's summons to the garrison, from where they flow on to leaders", () => {
+  it("hand a mage's or the pretender's summons to the garrison, then on to leaders", () => {
     const { state, red, capital, army } = redField();
     const holder = holderOf(state, capital);
     holder.squads.push(createSquad(state, 'ashMilitia', AI.capitalGarrison));
@@ -336,6 +336,17 @@ describe('transfers', () => {
     adept.location = away;
     adept.squads.push(createSquad(state, 'fireSprite', 5));
     expect(ofType(planned(state, red), 'transferSquad')).toEqual([]);
+    // A Living Monolith pretender, which summons and never moves, hands its summons on too.
+    const monolith = createCommander(state, 'livingMonolith', red, capital);
+    state.nations[red]!.pretenderId = monolith.id;
+    monolith.squads.push(createSquad(state, 'fireSprite', 8));
+    expect(ofType(planned(state, red), 'transferSquad')[0]).toEqual({
+      type: 'transferSquad',
+      nation: red,
+      from: monolith.id,
+      to: holder.id,
+      squad: monolith.squads[0]!.id,
+    });
   });
 });
 

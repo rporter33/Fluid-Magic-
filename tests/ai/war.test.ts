@@ -1,22 +1,25 @@
-// The army pass's steps against other nations (docs/08-ai.md priorities 6 and 7; Phase 7 design
-// "5. Army pass" b, e): storm odds and holding a siege, the keyed pillage draw, and War's target
-// order (sieges, Wellspring denial past the aggression gate but not before warFromMonth, marches,
-// then new targets behind the odds gate), combining only armies standing together.
+// The army pass's sieges and War's first targets (docs/08-ai.md priorities 6 and 7; Phase 7
+// design "5. Army pass" b, e): storm odds and holding a siege, the keyed pillage draw (leaders
+// only, once per leader and fort) and no pillage anywhere else; sieges reinforced while short of
+// the storm odds, and Wellspring denial past the aggression gate but not before warFromMonth.
+// The odds gate, marches, and new targets live in war.targets.
 import { describe, expect, it } from 'vitest';
 import { AI } from '../../src/content/ai';
 import { adjacencyRoute, createArmyPass } from '../../src/ai/army';
 import { armyPower, defenderPower } from '../../src/ai/assess';
+import { planArmies } from '../../src/ai/military';
 import { createPlan } from '../../src/ai/plan';
+import { keyedRng } from '../../src/ai/rng';
 import { holdSieges, makeWar } from '../../src/ai/war';
 import { createCommander, removeCommander } from '../../src/sim/commanders';
 import { applyCommand, type Command } from '../../src/sim/commands';
-import type { NationId, ProvinceId } from '../../src/sim/ids';
+import type { NationId } from '../../src/sim/ids';
 import { findPathFor } from '../../src/sim/movement';
-import { createRng } from '../../src/sim/rng';
-import type { CommanderState, GameState } from '../../src/sim/types';
+import { chance, createRng } from '../../src/sim/rng';
+import { nationDefOf } from '../../src/sim/state';
+import type { GameState } from '../../src/sim/types';
 import { addArmy, annex, besiege, redField } from '../sim/fixtures';
-
-const P = (id: string) => id as ProvinceId;
+import { moveCmd, P, setTroops, warriorsFor } from './armyFixtures';
 
 function sieges(state: GameState, red: NationId) {
   const pass = createArmyPass(createPlan(state, red));
@@ -30,15 +33,6 @@ function war(state: GameState, red: NationId): Command[] {
   return pass.plan.out;
 }
 
-function moveCmd(red: NationId, members: readonly CommanderState[], path: ProvinceId[]): Command {
-  return { type: 'move', nation: red, commanders: members.map((m) => m.id), path };
-}
-
-/** Troops of Cinder Warriors (8.5 each) that bring an Ash Chieftain (9.5) to at least `power`. */
-function warriorsFor(power: number): number {
-  return Math.max(0, Math.ceil((power - 9.5) / 8.5));
-}
-
 describe('holdSieges', () => {
   /** Red besieges Green's capital, p59, with walls at full strength. */
   function siegeField() {
@@ -50,8 +44,10 @@ describe('holdSieges', () => {
 
   it('storms breached walls only with AI.stormRatio times the defenders, else holds', () => {
     const { state, red, fort, first, defenders } = siegeField();
-    first.squads[0]!.count = warriorsFor(defenders / 2);
-    first.squads[0]!.hp = first.squads[0]!.count * 11;
+    // More than the defenders, but short of the storm odds.
+    setTroops(first, warriorsFor(1.1 * defenders));
+    expect(armyPower([first])).toBeGreaterThan(defenders);
+    expect(armyPower([first])).toBeLessThan(AI.stormRatio * defenders);
     state.provinces[fort]!.siege!.wallHp = 0;
     let pass = sieges(state, red);
     expect(pass.plan.out.filter((c) => c.type === 'storm')).toEqual([]);
@@ -91,8 +87,8 @@ describe('holdSieges', () => {
     });
   });
 
-  it('draws each besieging leader its pillage once, at the nation personality over many', () => {
-    const { state, red, fort, first } = siegeField();
+  it('draws each besieging leader its pillage once per fort, at the nation personality', () => {
+    const { state, red, green, fort, first } = siegeField();
     const leaders = Array.from({ length: 1000 }, () =>
       createCommander(state, 'ashChieftain', red, fort),
     );
@@ -116,54 +112,72 @@ describe('holdSieges', () => {
     expect(sieges(state, red).plan.out.filter((c) => c.type === 'setOrder')).toEqual([
       { type: 'setOrder', nation: red, commander: loser.id, order: 'idle' },
     ]);
-  });
-});
-
-describe('makeWar: the odds gate', () => {
-  /** Seed 1: Red's army in p50, next to Green's undefended p45; a Green army in p3 beyond. */
-  function gate() {
-    const f = redField();
-    annex(f.state, f.red, P('p50'));
-    annex(f.state, f.green, P('p45'));
-    annex(f.state, f.green, P('p3'));
-    f.army.location = P('p50');
-    const enemy = addArmy(f.state, f.green, P('p3'), 'cinderWarrior', 40, 'wardenCaptain');
-    return { ...f, enemy };
-  }
-
-  it('picks a new target only when aggression * own power > AI.warRatio * enemy power near', () => {
-    const { state, red, army, enemy } = gate();
-    // 0.8 * 262 against 1.2 * 350.25: shut.
-    expect(0.8 * armyPower([army])).toBeLessThan(AI.warRatio * armyPower([enemy]));
-    expect(war(state, red)).toEqual([]);
-    removeCommander(state, enemy.id);
-    expect(war(state, red)).toEqual([moveCmd(red, [army], [P('p45')])]);
+    // At another fort the same leaders draw anew: about 2 x 0.6 x 0.4 of them differ.
+    const other = annex(state, green, P('p45')).id;
+    addArmy(state, green, other, 'cinderWarrior', 5, 'wardenCaptain');
+    state.provinces[fort]!.siege = null;
+    state.provinces[other]!.siege = { attacker: red, wallHp: 300, storm: false };
+    for (const c of [first, ...leaders]) {
+      c.location = other;
+      c.order = { kind: 'idle' };
+    }
+    const there = new Set(pillagers(sieges(state, red).plan.out));
+    const differ = [first, ...leaders].filter((c) => drawn.includes(c.id) !== there.has(c.id));
+    expect(differ.length / (leaders.length + 1)).toBeGreaterThan(0.4);
   });
 
-  it('joins a march on an enemy province past the gate when it can take it', () => {
-    const { state, red, army } = gate();
-    const marcher = addArmy(state, red, P('p50'), 'cinderWarrior', 20);
-    expect(applyCommand(state, moveCmd(red, [marcher], [P('p45')]))).toEqual({ ok: true });
-    expect(war(state, red)).toEqual([moveCmd(red, [army], [P('p45')])]);
+  it('draws a pillage for besieging leaders only', () => {
+    const { state, red, fort } = siegeField();
+    const others = [
+      ...Array.from({ length: 6 }, () => createCommander(state, 'salamander', red, fort)),
+      ...Array.from({ length: 6 }, () => createCommander(state, 'emberAdept', red, fort)),
+    ];
+    // Some of them would draw Pillage, were they leaders.
+    const odds = nationDefOf(state, red).ai.pillage;
+    expect(others.some((c) => chance(keyedRng(state, red, c.id, fort), odds))).toBe(true);
+    const ordered = sieges(state, red).plan.out.map((c) =>
+      c.type === 'setOrder' ? c.commander : null,
+    );
+    for (const c of others) expect(ordered).not.toContain(c.id);
   });
 
-  it('combines armies standing together, never armies apart', () => {
-    const { state, red, green, army, enemy } = gate();
-    removeCommander(state, enemy.id);
-    army.squads = [];
-    const defender = addArmy(state, green, P('p45'), 'cinderWarrior', 30, 'wardenCaptain');
-    const e = armyPower([defender]);
-    const n = warriorsFor(0.9 * e);
-    const a = addArmy(state, red, P('p50'), 'cinderWarrior', n);
-    const b = addArmy(state, red, P('p17'), 'cinderWarrior', n);
-    annex(state, red, P('p17'));
-    expect(armyPower([a])).toBeLessThan(AI.warRatio * e);
-    expect(armyPower([a, b])).toBeGreaterThanOrEqual(AI.warRatio * e);
-    expect(war(state, red)).toEqual([]);
-    b.location = P('p50');
-    // The emptied army is no field army: it stays out of it.
-    expect(war(state, red)).toEqual([moveCmd(red, [a, b], [P('p45')])]);
-    expect(army.squads).toEqual([]);
+  it('stops the pillage of besiegers that storm', () => {
+    const { state, red, green, fort, first } = siegeField();
+    // A leader whose draw at this fort is Pillage keeps it while the siege is only held.
+    let pillager = first;
+    const odds = nationDefOf(state, red).ai.pillage;
+    while (!chance(keyedRng(state, red, pillager.id, fort), odds)) {
+      pillager = createCommander(state, 'ashChieftain', red, fort);
+    }
+    pillager.order = { kind: 'pillage' };
+    expect(sieges(state, red).plan.out).toEqual([]);
+    // Storming the emptied fort, it stops: a won storm makes the province Red's own.
+    for (const c of Object.values(state.commanders)) {
+      if (c.owner === green && c.location === fort && c.id !== state.provinces[fort]!.garrison) {
+        removeCommander(state, c.id);
+      }
+    }
+    expect(sieges(state, red).plan.out).toEqual([
+      { type: 'storm', nation: red, province: fort },
+      { type: 'setOrder', nation: red, commander: pillager.id, order: 'idle' },
+    ]);
+  });
+
+  it('ends a pillage held anywhere but at a siege, even where Defense holds the army', () => {
+    // The fort the army pillaged fell: it stands pillaging its own province, p50, with a small
+    // Green army next door, so Defense keeps it there.
+    const { state, red, green, army } = redField();
+    annex(state, red, P('p50'));
+    annex(state, green, P('p45'));
+    army.location = P('p50');
+    army.order = { kind: 'pillage' };
+    addArmy(state, green, P('p45'), 'cinderWarrior', 5, 'wardenCaptain');
+    const idle: Command = { type: 'setOrder', nation: red, commander: army.id, order: 'idle' };
+    expect(sieges(state, red).plan.out).toEqual([idle]);
+    const plan = createPlan(state, red);
+    planArmies(plan);
+    expect(plan.out.filter((c) => JSON.stringify(c).includes(army.id))).toEqual([idle]);
+    expect(plan.assigned.has(army.id)).toBe(true);
   });
 });
 
@@ -180,6 +194,24 @@ describe('makeWar: sieges first', () => {
     // Enough there already: no more join.
     addArmy(f.state, f.red, fort, 'cinderWarrior', warriorsFor(AI.stormRatio * defenders));
     expect(war(f.state, f.red)).toEqual([]);
+  });
+
+  it('counts the armies on the way there toward the storm odds', () => {
+    // Red besieges Green's p45 with a small army, and a second marches there from p50 that
+    // brings the siege past the storm odds; Red's army in p50 cannot take p45 by itself.
+    const { state, red, green, army } = redField();
+    annex(state, red, P('p50'));
+    annex(state, green, P('p45'));
+    addArmy(state, green, P('p45'), 'cinderWarrior', 30, 'wardenCaptain');
+    const besieger = besiege(state, red, P('p45'));
+    const defenders = defenderPower(state, P('p45'));
+    const marcher = addArmy(state, red, P('p50'), 'cinderWarrior', 40);
+    expect(applyCommand(state, moveCmd(red, [marcher], [P('p45')]))).toEqual({ ok: true });
+    army.location = P('p50');
+    expect(armyPower([besieger])).toBeLessThan(AI.stormRatio * defenders);
+    expect(armyPower([besieger, marcher])).toBeGreaterThanOrEqual(AI.stormRatio * defenders);
+    expect(armyPower([army])).toBeLessThan(AI.warRatio * defenders);
+    expect(war(state, red)).toEqual([]);
   });
 });
 
@@ -242,25 +274,5 @@ describe('makeWar: Wellspring denial', () => {
       ok: true,
     });
     expect(war(state, red)).toEqual([]);
-  });
-});
-
-describe('makeWar: new targets', () => {
-  it('takes the enemy capital when its defenders are weak, before richer provinces', () => {
-    const f = redField();
-    const { state, red, green } = f;
-    const fort = state.nations[green]!.capital;
-    for (const c of Object.values(state.commanders)) {
-      if (c.owner === green && c.id !== state.provinces[fort]!.garrison)
-        removeCommander(state, c.id);
-    }
-    annex(state, red, P('p33'));
-    annex(state, green, P('p40')).pop = 50_000;
-    state.provinces[fort]!.pop = 100;
-    f.army.location = P('p33');
-    expect(war(state, red)).toEqual([moveCmd(red, [f.army], [fort])]);
-    // Out of reach of the capital, the richer province.
-    state.provinces[fort]!.owner = null;
-    expect(war(state, red)).toEqual([moveCmd(red, [f.army], [P('p40')])]);
   });
 });
