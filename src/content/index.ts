@@ -1,12 +1,13 @@
 // Content registry: lookups by id and a validation pass over every record
 // (docs/06-architecture.md, "Content validation").
+import { AI, DIFFICULTIES } from './ai';
 import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
 import { isNationDefId, NATIONS, type NationDefId } from './nations';
 import { CHASSIS, isChassisId, type ChassisDef } from './pretenders/chassis';
 import { PRETENDER_COSTS } from './pretenders/costs';
 import { PRESETS } from './pretenders/presets';
-import { MAX_PIPS } from './rules';
+import { DOMINION, MAX_PIPS, PD, RECRUITMENT, UNREST } from './rules';
 import { isSpellId, SPELLS } from './spells';
 import { validateSpell } from './spells/validate';
 import { isTerrainId } from './terrain';
@@ -150,6 +151,85 @@ function validateChassis(key: string, c: ChassisDef): string[] {
   return problems;
 }
 
+/** Every number of a record of numbers, nested records flattened to dotted keys. */
+function numberLeaves(record: object, prefix = ''): [string, unknown][] {
+  return Object.entries(record as Record<string, unknown>).flatMap(
+    ([key, value]): [string, unknown][] =>
+      typeof value === 'object' && value !== null
+        ? numberLeaves(value, `${prefix}${key}.`)
+        : [[`${prefix}${key}`, value]],
+  );
+}
+
+/** AI numbers that count things (troops, levels, days, hops, commanders) are whole. */
+const WHOLE_AI_NUMBERS: ReadonlySet<string> = new Set([
+  'leaderLeadership',
+  'batch.large',
+  'batch.small',
+  'queue.min',
+  'queue.max',
+  'provincesPerLeader',
+  'baseLeaders',
+  'provincesPerMage',
+  'minMages',
+  'provincesPerPriest',
+  'scouts',
+  'fieldArmyTroops',
+  'capitalGarrison',
+  'threatHops',
+  'warHops',
+  'independentStrength',
+  'pd.border',
+  'pd.enemy',
+  'wellspringPd',
+  'pretenderJoinDay',
+  'battleMagesPerArmy',
+  'carriedMana',
+  'godlessAlarm',
+]);
+
+/** The AI's numbers and difficulty levels (docs/08-ai.md): positive, and sane together. */
+function validateAi(): string[] {
+  const problems: string[] = [];
+  for (const [key, value] of numberLeaves(AI)) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+      problems.push(`AI ${key} must be a positive number`);
+    } else if (WHOLE_AI_NUMBERS.has(key) && !Number.isInteger(value)) {
+      problems.push(`AI ${key} must be whole`);
+    }
+  }
+  if (AI.batch.small > AI.batch.large || AI.batch.large > RECRUITMENT.maxBatch) {
+    problems.push('AI batches must be small <= large <= the largest recruit order');
+  }
+  if (AI.queue.min > AI.queue.max) problems.push('AI queue min must not exceed max');
+  if (AI.fieldArmyTroops > AI.leaderLeadership) {
+    problems.push('AI field armies must fit under one leader');
+  }
+  for (const key of ['expansionRatio', 'warRatio', 'reliefRatio', 'stormRatio'] as const) {
+    if (AI[key] < 1) problems.push(`AI ${key} must be at least 1`);
+  }
+  if (AI.ritualCostFactor < 1) problems.push('AI ritualCostFactor must be at least 1');
+  if (AI.rangedBonus >= 1 || AI.distancePenalty >= 1) {
+    problems.push('AI rangedBonus and distancePenalty must be below 1');
+  }
+  if (AI.pd.border > AI.pd.enemy || Math.max(AI.pd.enemy, AI.wellspringPd) > PD.maxLevel) {
+    problems.push('AI PD levels must be border <= enemy, all within the PD maximum');
+  }
+  if (AI.godlessAlarm < DOMINION.min || AI.godlessAlarm > DOMINION.max) {
+    problems.push('AI godlessAlarm must be a dominion strength');
+  }
+  if (AI.taxHighMaxUnrest > UNREST.max) problems.push('AI taxHighMaxUnrest above the unrest cap');
+  for (const [key, d] of Object.entries(DIFFICULTIES)) {
+    if (!(d.incomeFactor > 0) || !Number.isInteger(d.planEveryDays) || d.planEveryDays < 1) {
+      problems.push(`difficulty ${key} bad income or planning interval`);
+    }
+    if (!Number.isInteger(d.warFromMonth) || d.warFromMonth < 0) {
+      problems.push(`difficulty ${key} bad war month`);
+    }
+  }
+  return problems;
+}
+
 /** Every problem found in the content; empty when all records are consistent. */
 export function validateContent(): string[] {
   const problems: string[] = [];
@@ -172,5 +252,6 @@ export function validateContent(): string[] {
     if (!isChassisId(preset.design.chassis)) problems.push(`preset ${preset.id} chassis`);
   }
   if (new Set(PRESETS.map((p) => p.id)).size !== PRESETS.length) problems.push('preset ids repeat');
+  problems.push(...validateAi());
   return problems;
 }

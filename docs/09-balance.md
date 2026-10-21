@@ -57,6 +57,40 @@ the truth for current values.
 | 2026-10-21 | 01 §12 | Spread rolls | unspecified | 40% own province, else a uniform neighbor; d10 ≤ score at the start of the month's spread | Fixed per spread so the shuffle order does not change the odds |
 | 2026-10-21 | 01 §12 | Temple preach bonus | +1 preach (section 7) | one extra check for a priest preaching in a province with a temple its nation owns | Section 7's bonus in section 12's terms |
 | 2026-10-21 | 01 §13 | Wellspring claim | 10 days | 10 days, in tick step 3; any order, move, battle, or loss of the province ends it | Uninterrupted, as the docs say |
+| 2026-10-21 | 08 | AI leader | "field commanders" | a recruitable commander with no pips, holy 0, not stealthy, and leadership ≥ 60 (`AI.leaderLeadership`) | The Ash Chieftain and the Warden Captain (80) lead; priests, mages, scouts, summons, and the pretender do not |
+| 2026-10-21 | 08 | AI recruit batch | 10 to 20 | 20 when gold and fort materials allow, else 10, never fewer (`AI.batch`) | The docs' range, the larger batch first |
+| 2026-10-21 | 08 | AI queue depth | 1 to 2 items | unchanged (`AI.queue` min 1, max 2); the cheapest troop takes a place only below the minimum | The fort always has work, and the second place waits for what is wanted |
+| 2026-10-21 | 08 | AI leader quota | 2 + provinces / 6 | 2 + floor(provinces / 6) (`AI.baseLeaders`, `AI.provincesPerLeader`) | The docs give no rounding |
+| 2026-10-21 | 08 | AI mage quota | 1 per 4 provinces, at least 2 | max(2, floor(provinces / 4)) (`AI.minMages`, `AI.provincesPerMage`); the adept tier while the gold left after it covers the reserve | The docs give no rounding |
+| 2026-10-21 | 08 | AI priest quota | 1 per 5 provinces | floor(provinces / 5) (`AI.provincesPerPriest`) | The docs give no rounding; each nation starts with a priest |
+| 2026-10-21 | 08 | AI scouts | 1, replaced if lost | unchanged (`AI.scouts`) | The scout is also the AI's only builder |
+| 2026-10-21 | 08 | AI melee to ranged | 2 : 1 by troop count | unchanged (`AI.meleeRangedRatio`); ranged wanted while melee > 2 × ranged, garrisons and the queue counted | |
+| 2026-10-21 | 08 | AI unit choice | "weighted by nation personality" | weight 1 + aggression × gold cost / the dearest troop's + pillage if faster than the slowest troop | Aggressive nations favor dear troops, pillagers fast ones; no new number |
+| 2026-10-21 | 08 | AI field army | ≥ 15 troops | unchanged (`AI.fieldArmyTroops`); relief and the march home take any size | |
+| 2026-10-21 | 08 | AI expansion odds | armyPower > 1.5 × defenders | unchanged (`AI.expansionRatio`), defenders' power taken as at least 1 | An empty province would divide by 0 |
+| 2026-10-21 | 08 | AI war odds | aggression × own power > 1.2 × enemy power nearby | unchanged (`AI.warRatio`), checked only for a new target; every attack on an enemy province but joining a siege also needs 1.2 × its defenders | "If a single one is short" read at the same ratio |
+| 2026-10-21 | (new) | AI relief | unspecified | 1.2 × the besiegers' power, armies of any size (`AI.reliefRatio`) | War's margin; with no sally a siege is broken only from outside |
+| 2026-10-21 | 08 | AI storm | "storm when the walls are down" | walls down and 1.3 × the defenders' power, or no defenders at all (`AI.stormRatio`) | Walls fall once besiegers have a little over half the defenders' strength; storming then, into the walls' bonuses, loses the army |
+| 2026-10-21 | 08 | AI capital garrison | ≥ 20 troops after month 6 | 20 kept from day 0 (`AI.capitalGarrison`) | Recruits take 8 to 40 days, so a reserve begun on day 180 left the garrison empty for days after it |
+| 2026-10-21 | 08 | AI threat range | adjacent | the province and its neighbors (`AI.threatHops` 1) | |
+| 2026-10-21 | (new) | AI war range | "enemy power nearby" | other nations' commanders within 2 hops of own provinces, plus the garrisons and PD of enemy border provinces (`AI.warHops`) | |
+| 2026-10-21 | 08 | AI strong independent | strength > 20 | more than 20 independent troops (`AI.independentStrength`) | docs/01 strength is a troop count (8 + 4d); read as power, nearly every province exceeds 20 |
+| 2026-10-21 | 08 | AI ranged bonus | 0.1 | unchanged (`AI.rangedBonus`) | |
+| 2026-10-21 | 08 | AI expansion score | pop / 1000 + springs × 3 + Wellspring × 10 | unchanged (`AI.score`: popPer 1000, spring 3, wellspring 10), over max(defenders, 1) | |
+| 2026-10-21 | 08 | AI expansion reach | adjacent provinces | every province a path reaches; score / (1 + 0.05 × (1 − expansion) × path days) (`AI.distancePenalty`) | Armies refill at home, so a reach limit left full armies there with every target out of reach. Starting value kept: the behavior tests pass with 12 or more provinces at day 360 in every game from base seeds 1, 101, and 1001 |
+| 2026-10-21 | 08 | AI PD | 5 next to an enemy or a strong independent, 10 next to an enemy nation | unchanged (`AI.pd`: border 5, enemy 10); one level per province per call, from gold above the reserve | |
+| 2026-10-21 | (new) | AI Wellspring PD | unspecified | 10 in owned Wellsprings, after the enemy border (`AI.wellspringPd`) | A Wellspring win is immediate, so the province must hold |
+| 2026-10-21 | (new) | AI gold reserve | unspecified | 150 gold that PD and buildings leave for recruitment (`AI.goldReserve`) | Starting value kept: no capital queue stood empty more than 7 days with gold above 200 |
+| 2026-10-21 | 08 | AI Lab | gold > 500, in the second-best province | unchanged (`AI.labGold`); the most populous owned province but the capital, built by the scout | |
+| 2026-10-21 | 08 | AI Temple | pop > 8000 and gold > 300 | unchanged (`AI.templePop`, `AI.templeGold`) | |
+| 2026-10-21 | 08 | AI High tax | gold < 50 and unrest < 20 | unchanged (`AI.taxHighBelowGold`, `AI.taxHighMaxUnrest`), the capital only | |
+| 2026-10-21 | 08 | AI ritual mana | mana ≥ 2x its cost | every pool the ritual draws on holds twice its share (`AI.ritualCostFactor`); a carried-mana gift takes at most half a pool | |
+| 2026-10-21 | 08 | AI pretender joins an army | after month 3 | day 90 (`AI.pretenderJoinDay`) | 30-day months |
+| 2026-10-21 | (new) | AI battle mages | unspecified | at most 1 per army (`AI.battleMagesPerArmy`) | One caster spreads the mages over the armies |
+| 2026-10-21 | (new) | AI carried mana | unspecified | up to 2 in all per battle mage (`AI.carriedMana`) | Warcry, Pyre Storm, Swarm, and Regrowth take 1 each: two casts |
+| 2026-10-21 | (new) | AI Godless alarm | unspecified | danger while no owned capital or temple province holds own dominion ≥ 2 (`AI.godlessAlarm`) | At 1, a single enemy push leaves a province without dominion |
+| 2026-10-21 | 08 | Easy War delay | no War step until month 12 | War from month 12, day 330 (`warFromMonth`); Wellspring denial waits too | 30-day months |
+| 2026-10-21 | 08 | Easy income | gold × 0.8 | unchanged | Conflict: fort materials, not gold, limit AI recruitment, so AI gold piles up and the factor barely bites. Phase 12 decides |
 
 ## Playtest checklist (run before calling M1 done)
 

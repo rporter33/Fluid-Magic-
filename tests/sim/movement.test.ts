@@ -1,25 +1,33 @@
 // Movement (docs/01-core-rules.md section 6). Expected days come from the terrain table in
-// section 2 and the speed factors 1.5 / 1.0 / 0.7, rounded to whole days.
+// section 2 and the speed factors 1.5 / 1.0 / 0.7, rounded to whole days. pathsFrom (Phase 7)
+// gives every target the path findPath finds, in one search.
 import { describe, expect, it } from 'vitest';
+import type { UnitTypeId } from '../../src/content';
 import { TERRAIN_IDS, type TerrainId } from '../../src/content/terrain';
 import { applyCommand } from '../../src/sim/commands';
-import type { ProvinceId } from '../../src/sim/ids';
+import type { NationId, ProvinceId } from '../../src/sim/ids';
 import {
   advanceTransits,
+  canMove,
   commanderMapSpeed,
   etaDays,
+  findPath,
+  findPathFor,
   hostileProvinces,
   isHostile,
   legDays,
   pathDays,
   pathEta,
+  pathsFrom,
 } from '../../src/sim/movement';
-import type { GameState } from '../../src/sim/types';
+import { withinHops } from '../../src/sim/rituals';
+import type { CommanderState, GameState } from '../../src/sim/types';
 import {
   addArmy,
   annex,
   commandersIn,
   move,
+  nationIds,
   neighbors,
   redField,
   runDays,
@@ -341,5 +349,126 @@ describe('reverse', () => {
     expect(applyCommand(state, { type: 'reverse', nation: red, commander: army.id }).ok).toBe(
       false,
     );
+  });
+});
+
+describe('pathsFrom', () => {
+  /**
+   * A game in play: each nation owns what lies within 2 hops of its capital, the rest stays
+   * independent; each nation has an army standing in the other's land, a fast army, and two
+   * armies on the move, one of them into an independent province.
+   */
+  function contested(seed: number): GameState {
+    const state = twoNationGame(seed);
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const kits: Record<string, Record<'troop' | 'fast' | 'leader', UnitTypeId>> = {
+      [red]: { troop: 'ashMilitia', fast: 'ashRider', leader: 'ashChieftain' },
+      [green]: { troop: 'thornMilitia', fast: 'wolfRider', leader: 'wardenCaptain' },
+    };
+    for (const n of [red, green]) {
+      for (const p of withinHops(state, state.nations[n]!.capital, 2)) {
+        if (state.provinces[p]!.owner === null) annex(state, n, p);
+      }
+    }
+    for (const [n, other] of [
+      [red, green],
+      [green, red],
+    ] as const) {
+      const { troop, fast, leader } = kits[n]!;
+      const capital = state.nations[n]!.capital;
+      const owned = (p: ProvinceId) => state.provinces[p]!.owner === n;
+      const theirs = Object.values(state.provinces).find(
+        (p) => p.owner === other && p.id !== state.nations[other]!.capital,
+      )!;
+      addArmy(state, n, theirs.id, troop, 5, leader);
+      addArmy(state, n, capital, fast, 5, leader);
+      const home = addArmy(state, n, capital, troop, 5, leader);
+      move(state, n, [home], [neighbors(state, capital).find(owned)!]);
+      const border = Object.keys(state.provinces).find(
+        (p) =>
+          owned(p as ProvinceId) &&
+          neighbors(state, p as ProvinceId).some((q) => state.provinces[q]!.owner === null),
+      ) as ProvinceId;
+      const out = addArmy(state, n, border, troop, 5, leader);
+      move(state, n, [out], [neighbors(state, border).find((q) => !owned(q))!]);
+    }
+    return state;
+  }
+
+  /** findPathFor as it was before pathsFrom: findPath from where the leg ends. */
+  function oldFindPathFor(
+    state: GameState,
+    group: readonly CommanderState[],
+    to: ProvinceId,
+  ): ProvinceId[] | null {
+    const lead = group[0]!;
+    const start = lead.transit ? lead.transit.to : lead.location;
+    if (lead.transit && isHostile(state, lead.owner!, start)) return null;
+    return findPath(state, lead.owner!, start, to, Math.min(...group.map(commanderMapSpeed)));
+  }
+
+  it('gives every target the path findPath finds, and its days, on several seeds', () => {
+    const seen = { standing: 0, marching: 0, stopping: 0, groups: 0 };
+    for (const seed of [1, 2, 3, 4]) {
+      for (const state of [twoNationGame(seed), contested(seed)]) {
+        const ids = Object.keys(state.map.provinces) as ProvinceId[];
+        const movers = Object.values(state.commanders).filter(
+          (c) => c.owner !== null && canMove(c),
+        );
+        const groups = movers.map((c) => [c]);
+        // Commanders standing together also move as one group, at the slowest one's pace.
+        for (const c of movers) {
+          const mates = movers.filter((m) => m.location === c.location && !m.transit && !c.transit);
+          if (mates.length > 1 && mates[0] === c) groups.push(mates);
+        }
+        for (const group of groups) {
+          const lead = group[0]!;
+          const start = lead.transit ? lead.transit.to : lead.location;
+          const stops = lead.transit !== null && isHostile(state, lead.owner!, start);
+          const speed = Math.min(...group.map(commanderMapSpeed));
+          seen.groups += group.length > 1 ? 1 : 0;
+          if (stops) seen.stopping++;
+          else if (lead.transit) seen.marching++;
+          else seen.standing++;
+          const paths = pathsFrom(state, group);
+          for (const to of ids) {
+            const old = oldFindPathFor(state, group, to);
+            expect(paths.pathTo(to)).toEqual(old);
+            expect(findPathFor(state, group, to)).toEqual(old);
+            const days = old ? pathDays(state, old, speed) : to === start && !stops ? 0 : undefined;
+            expect(paths.days(to)).toBe(days);
+          }
+          // Every province a path leads to, nearest first, ties to the lower index.
+          const reachable = ids.filter((to) => paths.pathTo(to) !== null);
+          const order = (a: ProvinceId, b: ProvinceId) =>
+            paths.days(a)! - paths.days(b)! || ids.indexOf(a) - ids.indexOf(b);
+          expect(paths.reached).toEqual([...reachable].sort(order));
+        }
+      }
+    }
+    // The sample covers standing groups, legs ending in friendly and in hostile provinces.
+    expect(seen.standing).toBeGreaterThan(20);
+    expect(seen.marching).toBeGreaterThanOrEqual(8);
+    expect(seen.stopping).toBeGreaterThanOrEqual(8);
+    expect(seen.groups).toBeGreaterThanOrEqual(8);
+  });
+
+  it('gives nothing to a group that cannot move or that stops at the end of its leg', () => {
+    const state = contested(1);
+    const [red] = nationIds(state) as [NationId];
+    const capital = state.nations[red]!.capital;
+    const garrison = state.commanders[state.provinces[capital]!.garrison!]!;
+    const army = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;
+    const stopping = Object.values(state.commanders).find(
+      (c) => c.owner === red && c.transit && isHostile(state, red, c.transit.to),
+    )!;
+    for (const group of [[garrison], [army, garrison], [stopping], []]) {
+      const paths = pathsFrom(state, group);
+      expect(paths.reached).toEqual([]);
+      for (const to of [capital, ...neighbors(state, capital)]) {
+        expect(paths.days(to)).toBeUndefined();
+        expect(paths.pathTo(to)).toBeNull();
+      }
+    }
   });
 });

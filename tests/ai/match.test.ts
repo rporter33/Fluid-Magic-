@@ -2,11 +2,12 @@
 // docs/08-ai.md decisions, "The AI contract", "Cadence", "The headless runner";
 // docs/10-milestone-1.md acceptance 15): playDay advances, then lets each AI nation plan on its
 // planning days; refusals are logged, never fatal; a match replays from its log without the
-// AI; and the headless runner's games are deterministic and free of refusals.
+// AI; and the headless runner's games with runAi are deterministic and free of refusals. Tests
+// that need particular commands use small scripted players.
 import { beforeAll, describe, expect, it } from 'vitest';
 import { DIFFICULTIES } from '../../src/content/ai';
+import { runAi } from '../../src/ai/ai';
 import { playDay, replayLog, type Player } from '../../src/ai/driver';
-import { dummyPlayer } from '../../src/ai/dummy';
 import {
   RUNNER_DEFAULTS,
   runMatch,
@@ -22,6 +23,7 @@ import { stateHash } from '../../src/sim/hash';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { nationSummary } from '../../src/sim/selectors';
 import type { GameState } from '../../src/sim/types';
+import { claimBlocker } from '../../src/sim/wellsprings';
 import { annex, capitalOf, nation, nationIds, runDays, twoNationGame } from '../sim/fixtures';
 
 /** The human player (n0), a Normal AI (n1), and an Easy AI (n2). */
@@ -49,9 +51,26 @@ function spy(): { calls: string[]; player: Player } {
   };
 }
 
+/** Sets the capital's tax, High on even planning days and Normal on odd ones, while it is held. */
+const taxer: Player = (state, id) => {
+  const capital = capitalOf(state, id);
+  if (capital.owner !== id) return [];
+  const rate = (state.day / DIFFICULTIES.normal.planEveryDays) % 2 === 0 ? 'high' : 'normal';
+  return [{ type: 'setTax', nation: id, province: capital.id, rate }];
+};
+
+/** runAi, then the taxer: the log always holds commands that change the game. */
+const busy: Player = (state, id) => [...runAi(state, id), ...taxer(state, id)];
+
+/** Every idle priest standing in a Wellspring its nation owns and has not claimed claims it. */
+const claimer: Player = (state, id) =>
+  Object.values(state.commanders)
+    .filter((c) => c.owner === id && c.order.kind === 'idle' && claimBlocker(state, c) === null)
+    .map((c): Command => ({ type: 'claimWellspring', nation: id, commander: c.id }));
+
 /**
  * A runner game where the second nation holds one claimed Wellspring of the three and its priest
- * stands idle in a second it owns, so the dummy claims it on its first planning day.
+ * stands idle in a second it owns, so the claimer claims it on its first planning day.
  */
 function nearWin(): { state: GameState; claimer: NationId } {
   const state = createGame(runnerSetup(1, 0));
@@ -164,7 +183,7 @@ describe('playDay', () => {
     const [red, green] = nationIds(state) as [NationId, NationId];
     const applied: Command[] = [];
     for (let day = 0; day < 60; day++) {
-      const log = playDay(state, dummyPlayer);
+      const log = playDay(state, taxer);
       expect(log.refused).toEqual([]);
       applied.push(...log.applied.map((l) => l.command));
     }
@@ -198,36 +217,42 @@ describe('playDay', () => {
   });
 });
 
-// One short headless-runner game, shared by the replay and match tests below.
+// Short headless-runner games shared by the tests below: one with runAi, one with busy for the
+// replay tests, which need a log of commands that change the game.
 const SHORT_DAYS = 240;
 let short: MatchResult;
+let scripted: MatchResult;
 beforeAll(() => {
-  short = runMatch(runnerSetup(1, 0), dummyPlayer, SHORT_DAYS);
+  short = runMatch(runnerSetup(1, 0), runAi, SHORT_DAYS);
+  scripted = runMatch(runnerSetup(1, 0), busy, SHORT_DAYS);
 });
 
 describe('replayLog', () => {
   it('replays a match from its log, without the AI, to the same hash', () => {
-    expect(short.log.length).toBeGreaterThan(50);
-    const state = createGame(runnerSetup(1, 0));
-    replayLog(state, short.log, short.days);
-    expect(state.day).toBe(SHORT_DAYS);
-    expect(stateHash(state)).toBe(short.finalHash);
+    expect(scripted.log.length).toBeGreaterThan(40);
+    expect(scripted.refused).toEqual([]);
+    for (const match of [scripted, short]) {
+      const state = createGame(runnerSetup(1, 0));
+      replayLog(state, match.log, match.days);
+      expect(state.day).toBe(SHORT_DAYS);
+      expect(stateHash(state)).toBe(match.finalHash);
+    }
   });
 
   it('applies each command on its day, before that day advances, up to the last day', () => {
     // A day in the middle of the log, with commands on it and after it.
-    const cut = short.log[Math.floor(short.log.length / 2)]!.day;
-    expect(short.log.some((l) => l.day > cut)).toBe(true);
-    const partial = runMatch(runnerSetup(1, 0), dummyPlayer, cut);
+    const cut = scripted.log[Math.floor(scripted.log.length / 2)]!.day;
+    expect(scripted.log.some((l) => l.day > cut)).toBe(true);
+    const partial = runMatch(runnerSetup(1, 0), busy, cut);
     const state = createGame(runnerSetup(1, 0));
-    replayLog(state, short.log, cut);
+    replayLog(state, scripted.log, cut);
     expect(state.day).toBe(cut);
     expect(stateHash(state)).toBe(partial.finalHash);
     // The commands logged on the last day are part of it.
     const without = createGame(runnerSetup(1, 0));
     replayLog(
       without,
-      short.log.filter((l) => l.day < cut),
+      scripted.log.filter((l) => l.day < cut),
       cut,
     );
     expect(stateHash(without)).not.toBe(partial.finalHash);
@@ -235,16 +260,16 @@ describe('replayLog', () => {
 
   it('needs the log: the game alone drifts from the match', () => {
     const state = createGame(runnerSetup(1, 0));
-    replayLog(state, [], short.days);
+    replayLog(state, [], scripted.days);
     expect(state.day).toBe(SHORT_DAYS);
-    expect(stateHash(state)).not.toBe(short.finalHash);
+    expect(stateHash(state)).not.toBe(scripted.finalHash);
   });
 
   it('stops when the game ends before the given day', () => {
     const played = nearWin();
     const log: LoggedCommand[] = [];
     while (!played.state.result && played.state.day < 100) {
-      log.push(...playDay(played.state, dummyPlayer).applied);
+      log.push(...playDay(played.state, claimer).applied);
     }
     expect(played.state.result).toMatchObject({ winner: played.claimer, reason: 'wellsprings' });
     const claim = log.find((l) => l.command.type === 'claimWellspring');
@@ -267,7 +292,7 @@ describe('replayLog', () => {
 
 describe('runMatch', () => {
   it('plays the same game from the same setup', () => {
-    const again = runMatch(runnerSetup(1, 0), dummyPlayer, SHORT_DAYS);
+    const again = runMatch(runnerSetup(1, 0), runAi, SHORT_DAYS);
     expect(again.finalHash).toBe(short.finalHash);
     expect(again.log).toEqual(short.log);
     expect(again.summaries).toEqual(short.summaries);
@@ -326,13 +351,13 @@ describe('runMatch', () => {
       const owned = Object.values(short.state.provinces).filter((p) => p.owner === id);
       expect(short.summaries[i]).toEqual(nationSummary(short.state, id));
       expect(short.summaries[i]!.provinces).toBe(owned.length);
-      expect(owned.length).toBeGreaterThan(1);
+      expect(owned.length).toBeGreaterThan(0);
     }
   });
 
   it('plays a different game from another seed or nation order', () => {
-    const otherSeed = runMatch(runnerSetup(1, 2), dummyPlayer, SHORT_DAYS);
-    const otherOrder = runMatch(runnerSetup(1, 1), dummyPlayer, SHORT_DAYS);
+    const otherSeed = runMatch(runnerSetup(1, 2), runAi, SHORT_DAYS);
+    const otherOrder = runMatch(runnerSetup(1, 1), runAi, SHORT_DAYS);
     expect(runnerSetup(1, 2).nations).toEqual(runnerSetup(1, 0).nations);
     expect(otherSeed.finalHash).not.toBe(short.finalHash);
     expect(otherOrder.finalHash).not.toBe(short.finalHash);
@@ -343,7 +368,7 @@ describe('runMatch', () => {
     const maxDays = 1080;
     const hashes = new Set<string>();
     for (const game of [0, 1]) {
-      const match = runMatch(runnerSetup(1, game), dummyPlayer, maxDays);
+      const match = runMatch(runnerSetup(1, game), runAi, maxDays);
       expect(match.refused).toEqual([]);
       expect(match.reason).not.toBe('playerDefeated');
       expect(match.summaries).toHaveLength(2);

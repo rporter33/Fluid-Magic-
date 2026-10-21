@@ -56,7 +56,7 @@ fluid-magic/
       pips.ts             # pips against spell requirements
       bless.ts            # the bless of sacred units
       recruitment.ts      # recruit cost and time, queues, garrison holders
-      movement.ts         # speeds, leg days, paths and ETAs, transit and arrival
+      movement.ts         # speeds, leg days, paths (pathsFrom) and ETAs, transit and arrival
       independents.ts     # independent forces at game start, strength words
       pd.ts               # PD cost and the defenders it fields
       hash.ts             # state hash for determinism checks
@@ -86,7 +86,7 @@ fluid-magic/
     content/              # DATA ONLY. Plain objects, typed.
       types.ts            # shapes of unit, nation, building records
       rules.ts            # rule numbers: time, tax, economy, materials, supply, unrest, mana, pillage
-      ai.ts               # difficulty levels
+      ai.ts               # difficulty levels and every number the AI plays by (AI)
       independents.ts     # independent troop pools by terrain, strength words
       colors.ts           # the five colors, palettes, enemy/ally pairs, nation banners, map keylines
       terrain.ts
@@ -131,12 +131,21 @@ fluid-magic/
       size.ts             # province count, Wellspring count, map dimensions
       validate.ts         # validateMap: the rules a generated map must satisfy
     ai/                   # PURE, like sim
-      rng.ts              # each AI call's private random stream
+      ai.ts               # runAi(state, nationId): Command[]; the order of the steps
+      plan.ts             # the planning copy, issuing commands on it, the order guard, paths
+      roles.ts            # each commander's role from content; the pretender's; the mage split
+      assess.ts           # troop, army, and defender power; threat; groups; borders
+      economy.ts          # tax, PD, buildings, research
+      recruit.ts          # the capital queue, quotas, the troop mix, garrison transfers
+      faith.ts            # priests (Godless, Wellsprings, the prophet); the pretender's work
+      military.ts         # the army pass in its order; Expansion; the march home
+      army.ts             # the army pass's tools: which groups a step may take, sending one
+      defense.ts          # relief of besieged forts, Wellspring escorts, Defense
+      war.ts              # sieges, storms, pillage; War and Wellspring denial
+      magic.ts            # rituals and carried mana
+      rng.ts              # each AI call's private random stream; keyed streams
       driver.ts           # playDay: advance, then the AI nations' commands; replayLog
-      dummy.ts            # the Phase 6 random dummy
       match.ts            # runMatch: a whole AI game, for the runner and tests
-      ai.ts               # runAi(state, nationId): Command[] (Phase 7)
-      economy.ts expansion.ts military.ts research.ts
     render/
       MapRenderer.ts      # Pixi app for the strategic map
       ProvinceLayer.ts ArmyLayer.ts LabelLayer.ts
@@ -379,3 +388,24 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   order through `applyCommand`. A refused command is recorded and skipped, never fatal.
   Applied commands are logged with their day, and `replayLog` plays such a log back on a new
   game without the AI, reaching the same state hash.
+- **Paths for every target at once** (Phase 7): `pathsFrom(state, commanders)` in
+  `src/sim/movement.ts` runs `findPath`'s search to the end, with the same lowest-index ties
+  and the same stop at the first hostile province, and finds the hostile provinces once. It
+  returns `days(to)`, `pathTo(to)`, and the provinces `reached`, nearest first. `findPathFor`
+  is `pathsFrom(...).pathTo(to)`, so its tests pin the two together, and a test checks every
+  target on several seeds against `findPath`. The AI ranks targets with one search per group
+  instead of one per target.
+- **The AI** (Phase 7): `runAi(state, nation)` in `src/ai/ai.ts` is a `Player` for `playDay`.
+  It replaces the Phase 6 dummy (`src/ai/dummy.ts`, deleted) in the runner and the tests. The
+  module list differs from the sketch's `economy.ts expansion.ts military.ts research.ts`:
+  research lives in `economy.ts` and Expansion in `military.ts`, and the planning copy, roles,
+  power, recruitment, priests, the army pass's tools and steps, and magic have their own
+  modules (the layout above). Each call plans on a copy of the state (`plan.ts`; docs/08
+  decisions) and returns only the commands the copy accepted. `src/ai` stays under the purity
+  guard, and the AI's randomness comes only from `src/ai/rng.ts`: `aiRng` per call, and
+  `keyedRng(state, nation, ...keys)`, fixed by the seed, the nation's slot, and the keys, for
+  a draw made once (the pillage draw).
+- **AI numbers** (Phase 7): every number the AI plays by is in `AI` (`src/content/ai.ts`), and
+  `validateContent` checks them: each positive, whole where it counts something, batches no
+  larger than the largest recruit order, the four odds ratios at least 1, PD levels within the
+  PD maximum, the Godless alarm a dominion strength, and each difficulty level's numbers.

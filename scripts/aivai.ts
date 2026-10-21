@@ -6,7 +6,8 @@ import { parseArgs } from 'node:util';
 import { nationDef } from '../src/content';
 import { defaultPreset } from '../src/content/pretenders/presets';
 import { TIME } from '../src/content/rules';
-import { dummyPlayer } from '../src/ai/dummy';
+import { runAi } from '../src/ai/ai';
+import type { Player } from '../src/ai/driver';
 import {
   runMatch,
   RUNNER_DEFAULTS,
@@ -44,8 +45,17 @@ let totalMonths = 0;
 let totalRefused = 0;
 const started = performance.now();
 
+/** Milliseconds of every runAi call. */
+const callMs: number[] = [];
+const timedAi: Player = (state, nation) => {
+  const start = performance.now();
+  const commands = runAi(state, nation);
+  callMs.push(performance.now() - start);
+  return commands;
+};
+
 for (const [game, setup] of runnerSetups(seed, games).entries()) {
-  const match = runMatch(setup, dummyPlayer, months * TIME.daysPerMonth);
+  const match = runMatch(setup, timedAi, months * TIME.daysPerMonth);
   const winner = match.result?.winner;
   const winnerName = winner ? (match.state.nations[winner]?.name ?? winner) : 'no winner';
   results.push(match);
@@ -75,7 +85,12 @@ const { wins, noWinner } = tallyWins(results);
 const tally = Object.entries(wins)
   .map(([name, n]) => `${name} ${String(n)}`)
   .join(', ');
+const meanMs = callMs.reduce((sum, ms) => sum + ms, 0) / Math.max(callMs.length, 1);
+const maxMs = callMs.reduce((max, ms) => Math.max(max, ms), 0);
 console.log(
-  `${String(games)} games: ${tally}, no winner ${String(noWinner)}; mean ${(totalMonths / games).toFixed(1)} months; ` +
-    `${String(totalRefused)} refused commands; ${seconds.toFixed(1)} s`,
+  `${String(games)} games: ${tally}, no winner ${String(noWinner)}; ` +
+    `mean ${(totalMonths / games).toFixed(1)} months; ` +
+    `${String(totalRefused)} refused commands; ${seconds.toFixed(1)} s; AI ` +
+    `${meanMs.toFixed(2)} ms mean, ${maxMs.toFixed(2)} ms max per call ` +
+    `(${String(callMs.length)} calls)`,
 );

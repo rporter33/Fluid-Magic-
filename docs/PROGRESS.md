@@ -234,6 +234,66 @@
   the march, Godless after the spread, an unsacred pretender, the fire shield on the dead, the
   prophet's script, the runner's setup and defaults, a repeated chassis) now fail it.
 
+## Phase 7: AI (done)
+
+- `src/ai/ai.ts`: `runAi(state, nation)` is the AI of `docs/08-ai.md`. It replaces the dummy in
+  the headless runner and the tests; `src/ai/dummy.ts` and its tests are deleted. Each call
+  plans on a copy of the state (`plan.ts`) that deep-copies only what commands write, in seven
+  steps: economy, recruitment and transfers, research, priests, the army pass, rituals, and
+  the pretender's work. Each command is applied on the copy as it is issued, and only the
+  accepted ones are returned. The AI uses only the player's commands, reads the whole map (no
+  fog for the AI in M1), writes no `aiMemory`, and draws only from its own streams (`aiRng`,
+  and `keyedRng` for the pillage draw).
+- Roles come from content (`roles.ts`): leader, mage (researcher or battle mage, split by the
+  research personality), priest, scout, summoned, and the pretender by its body; `src/ai`
+  names no unit or chassis. `assess.ts` sizes up armies and provinces. `economy.ts` sets taxes,
+  PD, buildings, and research. `recruit.ts` keeps the capital queue, the quotas, and the 2:1
+  troop mix, and holds 20 troops in the capital from day 0. `faith.ts` claims Wellsprings, one
+  priest each, and guards against Godless. `magic.ts` casts rituals at war and at peace and
+  gives battle mages carried mana.
+- The army pass (`military.ts`, `army.ts`, `defense.ts`, `war.ts`) gives each group one task a
+  call, in order: relief of own besieged forts; the sieges the nation lays (stormed with 1.3
+  times the defenders once the walls are down, else held, with a keyed pillage draw);
+  Wellspring escorts; Defense (the capital, then Wellsprings, then the rest); War (sieges,
+  Wellspring denial past the odds gate, marches, new targets); Expansion with no hop limit;
+  and the march home to refill. A group moves as one with the fighter pretender, summoned
+  commanders, and one battle mage.
+- Every AI number is in `src/content/ai.ts` (`AI`), checked by content validation, with a row
+  in `docs/09-balance.md`. `src/sim/movement.ts` gained `pathsFrom`, every path of a group
+  from one search; `findPathFor` is built on it. `scripts/aivai.ts` plays `runAi` and prints
+  the AI's milliseconds per planning call.
+- Tests: the contract (state and `state.rng` untouched, the same commands for the same state,
+  every command valid in order, nothing after the end), `aiRng` and `keyedRng`; the planning
+  copy and its ids; roles; power, threat, groups, and borders; and one file per step module:
+  tax, the PD order, the scout's buildings, quotas rounded down, the queue and its fallbacks,
+  the adept tier, batches, the troop mix and weights, transfers above the reserve from day 0,
+  researchers and the ritual guard, Godless and the priests, Wellspring claims and escorts,
+  relief of a lone besieger within bounded days, gathering, the sally, storm odds, the pillage
+  draw at the personality's rate, the War gate, Wellspring denial past it but not before
+  Easy's month 12, Expansion's score and the 1.5x rule, the march home and refill, groups
+  moving together, summons with research between them, carried mana and Warcry cast with
+  it, rituals at war and at peace; `pathsFrom` against `findPath` on several seeds; the AI
+  numbers' validation. 143 tests in `tests/ai`, 1090 in all.
+- Behavior (docs/08's required tests, `tests/ai/behavior.test.ts`): one run of the 20 runner
+  games from seed 1, to day 720 or the game's end, about 15 s. Both nations own at least 8
+  provinces on day 360 in 20 of 20 games (16 required); on that day Cinder Horde owns 12 to 27
+  and Thornwood 14 to 24. No capital queue stood empty more than 7 days with gold above 200
+  (limit 60). No held capital had an empty garrison on any day from day 180. No command was
+  refused. The same holds from base seeds 101 and 1001.
+- Runner statistics (`npm run sim:aivai -- --games 20 --seed 1`; repeated runs play identical
+  games): Cinder Horde 11 wins, Thornwood 9. All 20 games ended by Wellsprings, none by
+  elimination or timeout, in a mean of 19.3 months (11.8 to 40.3). No command was refused. The
+  AI takes about 1.4 ms per planning call (4586 calls). The maximum varies from run to run (11
+  to 67 ms) while the games stay the same, which points to garbage collection or warm-up, not
+  the AI's work. 20 games take about 13 s.
+- A design review (4 lenses, 39 issues, two independent judges) settled the readings recorded
+  in `docs/08-ai.md`. The main changes: roles from content, a planning copy that shares what
+  commands never write, `pathsFrom` and no hop limits, the capital reserve from day 0, relief
+  of every siege of an own fort, the march home to refill, storms only with the odds, a pillage
+  draw made once per besieger and fort, Wellspring denial and escorts, battle mages with
+  carried mana, summons handed to the garrison, no `aiMemory`, and the dummy deleted. No
+  tuning was needed: the behavior tests passed on the first run with wide margins.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -243,6 +303,13 @@
   `docs/01-core-rules.md` and `docs/05-pretender.md`; the AI contract, cadence, dummy, and
   runner at the end of `docs/08-ai.md`; numbers in `docs/09-balance.md`. The Deep Root preset
   uses dominion 7 (8 is over budget).
+- AI readings settled in Phase 7 (roles from content, groups and free armies, the step order
+  and the army pass, the planning copy, no `aiMemory`, the reserve from day 0, relief, storms,
+  pillage only at besieged forts, Wellspring denial and escorts, Godless defense, the research
+  split and battle mages, rituals at war and at peace, Expansion with no hop limit, the march
+  home, the behavior test horizons) are at the end of `docs/08-ai.md`; `pathsFrom` and the
+  AI's modules at the end of `docs/06-architecture.md`; every AI number in
+  `docs/09-balance.md`.
 - Map rules settled in Phase 1 (province count by size and nation count, capital terrain
   from the nation, Wellspring separation and fairness, even spring colors, and more) are
   listed at the end of `docs/01-core-rules.md`. Their numbers are in `docs/09-balance.md`.
@@ -283,8 +350,8 @@
 - For later phases: `wellspringsToWin` (majority of Wellsprings) lives in
   `src/mapgen/placement.ts`; Phase 6 victory should reuse it. (Resolved in Phase 3: farmland
   and wasteland use the plains independent pool.)
-- The UI and AI should use `findPathFor` (not `findPath` from a leg's end) so previews match
-  what move validation accepts.
+- The UI should use `findPathFor` (not `findPath` from a leg's end) so previews match what
+  move validation accepts. The AI does, through `pathsFrom` (Phase 7).
 - Supply conflict: at pop / 50, Hills supply is 100 to 160 a day, so the balance checklist
   item "armies larger than 60 troops in a Hills province starve within a month" cannot pass.
   Phase 12 decides between retuning (about pop / 250) and changing the checklist.
@@ -302,11 +369,13 @@
 - Sleeping builds are strong: the bless comes from the design's pips at game start
   (docs/02 section 8), so an imprisoned design spends 750 points with the bless in force from
   day 1 and only the body waiting until month 36. Phase 12 balance.
-- Wellspring victory is immediate on the last claim, with no hold period, and it comes early:
-  even the random dummy wins by Wellsprings in most runner games, in a mean of about 27
-  months (20 games from seed 1: 17 Wellspring wins, 2 last-capital wins, 1 timeout at 100
-  months). Phase 7's AI must defend its Wellsprings and contest the enemy's; Phase 12 decides
-  whether Wellspring wins need a hold period or tougher guards.
+- Wellspring victory is immediate on the last claim, with no hold period, and it comes early.
+  The random dummy won by Wellsprings in 17 of 20 runner games, in a mean of about 27 months.
+  Phase 7's AI holds its Wellsprings (Defense right after the capital, PD 10, escorts) and
+  contests the enemy's (denial past the odds gate), yet all 20 runner games from seed 1 end by
+  Wellsprings, none by elimination, in a mean of 19.3 months (11.8 to 40.3). A claim takes 10
+  days and a call comes every 5, so denial seldom lands in time. Phase 12 decides whether
+  Wellspring wins need a hold period or tougher guards.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
   are grouped by province and then nation; legs use the move order's frozen `mapSpeed`.
 - A commander in transit is present at its location for battles: it defends there and is
@@ -315,20 +384,34 @@
 - Research conflict: four apprentices reach level 4 by month 24 only at neutral or better
   Lore; at capital Fury −2 (the Warlord and Wildfire presets) they take until day 825.
   Phase 12 decides (see `docs/09-balance.md`).
-- For Phase 7 (AI): Godless is now reachable, so the AI should preach at home (or name a
-  prophet there) when an enemy's dominion threatens its capital and temples.
-- For Phase 7 (AI): `aiMemory` may change only through a command (docs/08 decisions); add
-  one when the AI first writes memory. A new prophet keeps its script, so the AI sets a
-  caster script itself if it wants one.
-- For Phase 7 (AI): Warcry, Pyre Storm, Swarm, and Regrowth need carried mana, so the AI
-  needs a `giveMana` step; its research step must not replace a `castRitual` order, which
-  would throw away the mana already paid.
-- For Phase 7 (AI): there is no sally; a besieged fort is relieved only by an army arriving
-  from outside, which fights the besiegers alone (the garrison and PD stay inside). A siege
-  whose defenders repair at least as fast as the besiegers batter never breaches (defenders
-  with twice the besiegers' strength stall it for good), so the AI must storm when the walls
-  are down or the siege cannot progress, or relieve its own forts. `siegeRates` gives the
-  numbers.
+- Resolved in Phase 7 (docs/08 decisions): the AI's priests come home to preach when no
+  capital or temple of its own holds its dominion at 2 or more, so Godless is guarded. It
+  writes no `aiMemory`, so no memory command was added. It names priests prophets, whose Bless
+  script suits them, and sets no scripts. Battle mages take carried mana in an own lab, and
+  the order guard keeps research from replacing a ritual under way. It relieves every siege of
+  its forts from outside (a group inside steps out and back in), holds a siege that cannot
+  progress so that more armies join, and storms breached walls only with 1.3 times the
+  defenders.
 - Forts start with an empty materials pool, so the capital's first batch of 10 Cinder
   Warriors (80 materials at about 60 a month) waits about 40 days. Revisit in playtesting
   (Phase 8) or balance (Phase 12).
+- The AI's gold piles up while fort materials bind its recruitment, and it has no rule for
+  spending a surplus. So Easy's gold income factor (x0.8) barely bites (docs/09). Phase 12.
+- With research 0.4, Cinder Horde's first two mages are one researcher and one battle mage, and
+  a researcher casts a ritual only while another keeps studying, so Cinder Horde casts no
+  ritual until its third mage (12 provinces). With research 0.7, Thornwood's first three mages
+  all research, so its first battle mage comes with the fourth (16 provinces). Phase 12.
+- One enemy army can hold several of the AI's armies in Defense: each own province within a
+  hop of it counts the whole army as its threat, and each draws its own defender.
+- The AI is slow to retake provinces it loses: enemy provinces are War targets only, behind
+  the aggression gate, which Thornwood (0.4) seldom passes. This follows docs/08 (Expansion
+  takes independents only); revisit in playtesting (Phase 8) or Phase 12.
+- The capital queue runs empty for about 4 days between planning calls in most games: each
+  call fills it to 2 items and it drains before the next. That is far under the 60-day limit;
+  a deeper `AI.queue.max` would close the gap.
+- The behavior tests cover the Normal AI with the runner's two nations and their default
+  presets. Easy's cadence and War delay, and the other pretender bodies, are covered by step
+  tests only.
+- The AI's slowest call varies from 11 to 67 ms over identical runs (garbage collection or
+  warm-up), against a mean of about 1.4 ms. The browser runs the AI inside a tick, so a long
+  pause could show; no test times the AI.

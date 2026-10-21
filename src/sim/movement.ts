@@ -86,22 +86,112 @@ export function findPath(
   return path.reverse();
 }
 
+/** Every path a group could be given right now, from one search (see pathsFrom). */
+export interface Paths {
+  /**
+   * Days to walk to a province from where the group's current leg ends (or where it stands):
+   * 0 there, undefined where no path leads or when the group can be given no path at all.
+   */
+  days(to: ProvinceId): number | undefined;
+  /** The path findPathFor gives to `to`; null for the start itself or out of reach. */
+  pathTo(to: ProvinceId): ProvinceId[] | null;
+  /** The provinces a path leads to, nearest first (ties by province index), start excluded. */
+  readonly reached: readonly ProvinceId[];
+}
+
+const NO_PATHS: Paths = { days: () => undefined, pathTo: () => null, reached: [] };
+
 /**
- * The path a group would be given to `to` right now, exactly as move validation sees it: from
- * where the current leg ends (or where the group stands), at the slowest member's speed. Null
- * when there is none, including for a group whose leg ends among hostiles, since it stops
- * there. The group is assumed to stand together, as a move requires.
+ * findPath's search run to the end: the same lowest-index ties and the same stop at the first
+ * hostile province, so pathTo(to) is exactly findPath(..., to) for every province at once.
+ */
+function searchFrom(
+  state: GameState,
+  hostile: ReadonlySet<ProvinceId>,
+  from: ProvinceId,
+  mapSpeed: number,
+): Paths {
+  const index = new Map<ProvinceId, number>();
+  for (const id of Object.keys(state.map.provinces) as ProvinceId[]) index.set(id, index.size);
+  const dist = new Map<ProvinceId, number>([[from, 0]]);
+  const prev = new Map<ProvinceId, ProvinceId>();
+  const done = new Set<ProvinceId>();
+  /** Provinces with a known distance that are not done yet. */
+  let open: ProvinceId[] = [from];
+  const reached: ProvinceId[] = [];
+  while (open.length > 0) {
+    // The nearest open province, the lowest index among equals, as findPath's scan takes it.
+    let best = from;
+    let bestDist = Infinity;
+    let bestIndex = Infinity;
+    for (const id of open) {
+      const d = dist.get(id) ?? Infinity;
+      const i = index.get(id) ?? Infinity;
+      if (d < bestDist || (d === bestDist && i < bestIndex)) {
+        best = id;
+        bestDist = d;
+        bestIndex = i;
+      }
+    }
+    open = open.filter((id) => id !== best);
+    done.add(best);
+    if (best !== from) reached.push(best);
+    // A move ends at the first hostile province, so a path may only end in one.
+    if (hostile.has(best) && best !== from) continue;
+    for (const n of getMapProvince(state, best).neighbors) {
+      if (done.has(n)) continue;
+      const d = bestDist + legDays(state, n, mapSpeed);
+      const known = dist.get(n);
+      if (known === undefined) open.push(n);
+      if (known === undefined || d < known) {
+        dist.set(n, d);
+        prev.set(n, best);
+      }
+    }
+  }
+  return {
+    days: (to) => dist.get(to),
+    pathTo: (to) => {
+      if (to === from || !dist.has(to)) return null;
+      const path: ProvinceId[] = [];
+      for (
+        let at: ProvinceId | undefined = to;
+        at !== undefined && at !== from;
+        at = prev.get(at)
+      ) {
+        path.push(at);
+      }
+      return path.reverse();
+    },
+    reached,
+  };
+}
+
+/**
+ * Every path a group could be given right now, exactly as move validation sees it: from where
+ * the current leg ends (or where the group stands), at the slowest member's speed, in one
+ * search with the hostile provinces found once. Empty for a group that cannot move or whose leg
+ * ends among hostiles, since it stops there. The group is assumed to stand together.
+ */
+export function pathsFrom(state: GameState, commanders: readonly CommanderState[]): Paths {
+  const lead = commanders[0];
+  if (!lead || lead.owner === null || !commanders.every(canMove)) return NO_PATHS;
+  const start = lead.transit ? lead.transit.to : lead.location;
+  const hostile = hostileProvinces(state, lead.owner);
+  if (lead.transit && hostile.has(start)) return NO_PATHS;
+  return searchFrom(state, hostile, start, Math.min(...commanders.map(commanderMapSpeed)));
+}
+
+/**
+ * The path a group would be given to `to` right now, exactly as move validation sees it (see
+ * pathsFrom). Null when there is none, including for a group whose leg ends among hostiles.
  */
 export function findPathFor(
   state: GameState,
   commanders: readonly CommanderState[],
   to: ProvinceId,
 ): ProvinceId[] | null {
-  const lead = commanders[0];
-  if (!lead || lead.owner === null || !commanders.every(canMove)) return null;
-  const start = lead.transit ? lead.transit.to : lead.location;
-  if (lead.transit && isHostile(state, lead.owner, start)) return null;
-  return findPath(state, lead.owner, start, to, Math.min(...commanders.map(commanderMapSpeed)));
+  return pathsFrom(state, commanders).pathTo(to);
 }
 
 /** Days until a commander finishes its current move; 0 when it is not moving. */

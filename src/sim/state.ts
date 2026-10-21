@@ -8,6 +8,8 @@ import type {
   ProvinceEffect,
   ProvinceState,
 } from './types';
+import { nationDef } from '../content';
+import type { NationDef } from '../content/types';
 import type { MapProvince } from '../mapgen/types';
 
 export function getProvince(state: GameState, id: ProvinceId): ProvinceState {
@@ -26,6 +28,11 @@ export function getNation(state: GameState, id: NationId): NationState {
   const n = state.nations[id];
   if (!n) throw new Error(`no nation ${id}`);
   return n;
+}
+
+/** The content definition of a nation in the game (its units, personality, colors). */
+export function nationDefOf(state: GameState, id: NationId): NationDef {
+  return nationDef(getNation(state, id).def);
 }
 
 export function getCommander(state: GameState, id: CommanderId): CommanderState {
