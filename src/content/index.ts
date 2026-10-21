@@ -4,7 +4,9 @@ import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
 import { isNationDefId, NATIONS, type NationDefId } from './nations';
 import { CHASSIS, isChassisId, type ChassisDef } from './pretenders/chassis';
+import { PRETENDER_COSTS } from './pretenders/costs';
 import { PRESETS } from './pretenders/presets';
+import { MAX_PIPS } from './rules';
 import { isSpellId, SPELLS } from './spells';
 import { validateSpell } from './spells/validate';
 import { isTerrainId } from './terrain';
@@ -56,7 +58,7 @@ function validateUnit(key: string, u: UnitDef): string[] {
   if (u.commander) {
     if (!(u.commander.leadership >= 0)) problems.push(`${where} bad leadership`);
     for (const [color, pips] of Object.entries(u.commander.pips)) {
-      if (!isColor(color) || !Number.isInteger(pips) || pips < 1 || pips > 6) {
+      if (!isColor(color) || !Number.isInteger(pips) || pips < 1 || pips > MAX_PIPS) {
         problems.push(`${where} bad pips ${color}${String(pips)}`);
       }
     }
@@ -162,6 +164,9 @@ export function validateContent(): string[] {
   }
   for (const [key, spell] of Object.entries(SPELLS)) problems.push(...validateSpell(key, spell));
   for (const [key, c] of Object.entries(CHASSIS)) problems.push(...validateChassis(key, c));
+  if (PRETENDER_COSTS.pipLevel.length !== MAX_PIPS) {
+    problems.push(`pip level costs must price levels 1 to ${String(MAX_PIPS)}`);
+  }
   for (const preset of PRESETS) {
     if (!isNationDefId(preset.nation)) problems.push(`preset ${preset.id} nation`);
     if (!isChassisId(preset.design.chassis)) problems.push(`preset ${preset.id} chassis`);

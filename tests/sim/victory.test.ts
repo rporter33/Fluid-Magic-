@@ -15,6 +15,7 @@ import type * as Wellsprings from '../../src/sim/wellsprings';
 import {
   addArmy,
   annex,
+  besiege,
   capitalOf,
   independentProvince,
   nation,
@@ -245,6 +246,40 @@ describe('elimination', () => {
     expect(Object.values(state.provinces).some((p) => p.owner === red)).toBe(false);
     expect(infoTo(state, red)).toContain('Cinder Horde has fallen.');
     expect(infoTo(state, green)).toContain('Cinder Horde has fallen.');
+  });
+
+  it('ends the sieges the fallen nation lays, so the fort’s owner may recruit at once', () => {
+    const state = threeNationGame([true, true, true]);
+    const [, fallen, besieged] = nationIds(state) as [NationId, NationId, NationId];
+    const fort = capitalOf(state, besieged);
+    fort.materials = 100;
+    besiege(state, fallen, fort.id);
+    strip(state, fallen);
+    const recruit = {
+      type: 'recruit',
+      nation: besieged,
+      province: fort.id,
+      unit: 'ashMilitia',
+      count: 1,
+    } as const;
+    expect(validateCommand(state, recruit)).toBe('Cannot recruit: the fort is besieged');
+    advance(state);
+    expect(state.nations[fallen]!.eliminated).toBe(true);
+    expect(state.result).toBeNull();
+    expect(fort.siege).toBeNull();
+    expect(validateCommand(state, recruit)).toBeNull();
+    const buyPd = { type: 'buyPd', nation: besieged, province: fort.id, levels: 1 } as const;
+    expect(validateCommand(state, buyPd)).toBeNull();
+  });
+
+  it('leaves no siege of the fallen nation in the final state of a game it ends', () => {
+    const state = twoNationGame();
+    const [red, green] = ids2(state);
+    besiege(state, red, capitalOf(state, green).id);
+    strip(state, red);
+    advance(state);
+    expect(state.result).toMatchObject({ winner: green, reason: 'lastCapital' });
+    expect(Object.values(state.provinces).filter((p) => p.siege?.attacker === red)).toEqual([]);
   });
 
   it('spares a nation that lost its capital but holds another fort, which becomes its capital', () => {

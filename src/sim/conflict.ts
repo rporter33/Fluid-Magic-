@@ -3,7 +3,6 @@
 // Hidden commanders (stealthy, leading only stealthy troops) take no part in any of it: they
 // never fight, besiege, or take a province, on either side. Each step of an arrival reads who
 // stands in the province once.
-import { unitDef } from '../content';
 import { SIEGE } from '../content/rules';
 import { applyBattle } from './battle/apply';
 import type { BattleSide } from './battle/events';
@@ -12,7 +11,7 @@ import { buildBattle, type SideForces, type StormState } from './battle/setup';
 import { captureProvince } from './capture';
 import { commanderDies, takesPart } from './commanders';
 import type { NationId, ProvinceId } from './ids';
-import { hostileWith, presence, type Arrival, type Presence } from './movement';
+import { canMove, hostileWith, presence, type Arrival, type Presence } from './movement';
 import { pdForce } from './pd';
 import { pick } from './rng';
 import { getMapProvince, getProvince } from './state';
@@ -88,7 +87,7 @@ function retreat(state: GameState, provinceId: ProvinceId, forces: SideForces): 
   for (const c of forces.commanders) {
     if (!state.commanders[c.id]) continue;
     // A commander that cannot move (the Living Monolith) cannot flee either.
-    if (unitDef(c.unit).mapSpeed === 0) {
+    if (!canMove(c)) {
       commanderDies(state, c.id);
       continue;
     }

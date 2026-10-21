@@ -1,12 +1,13 @@
 // Arrival battles, capture, and retreat (docs/01-core-rules.md sections 6, 9-11).
 import { describe, expect, it } from 'vitest';
+import { unitDef } from '../../src/content';
 import { applyCommand } from '../../src/sim/commands';
 import { removeCommander } from '../../src/sim/commanders';
 import { captureIfHeld, engage } from '../../src/sim/conflict';
 import { createGame } from '../../src/sim/createGame';
 import { createRng } from '../../src/sim/rng';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
-import { legDays } from '../../src/sim/movement';
+import { canMove, legDays } from '../../src/sim/movement';
 import type { CommanderState, GameState } from '../../src/sim/types';
 import {
   addArmy,
@@ -300,6 +301,26 @@ describe('retreats', () => {
     engage(state, red, far.id);
     expect(state.commanders[prophet.id]).toBeUndefined();
     expect(state.nations[red]).toMatchObject({ prophetId: null, prophetAvailableDay: 820 });
+  });
+
+  it('end in death for a commander its troops cannot carry, whatever its own legs', () => {
+    // No M1 troop stands still, so the militia's map speed is set to 0 for this test only.
+    const militia = unitDef('ashMilitia');
+    const speed = militia.mapSpeed;
+    militia.mapSpeed = 0;
+    try {
+      const { state, red, capital, target, loser } = ringed();
+      loser.cameFrom = capital;
+      expect(canMove(loser)).toBe(false);
+      engage(state, red, target);
+      const record = state.battles.at(-1)!;
+      expect(record).toMatchObject({ province: target, attacker: red, winner: 'defender' });
+      // It did not fall in the battle: it could not flee to its friendly capital.
+      expect(record.replay.filter((e) => e.kind === 'death')).toEqual([]);
+      expect(state.commanders[loser.id]).toBeUndefined();
+    } finally {
+      militia.mapSpeed = speed;
+    }
   });
 });
 

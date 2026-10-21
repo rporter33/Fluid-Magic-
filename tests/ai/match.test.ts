@@ -7,7 +7,15 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { DIFFICULTIES } from '../../src/content/ai';
 import { playDay, replayLog, type Player } from '../../src/ai/driver';
 import { dummyPlayer } from '../../src/ai/dummy';
-import { runMatch, runnerSetup, type MatchResult } from '../../src/ai/match';
+import {
+  RUNNER_DEFAULTS,
+  runMatch,
+  runnerSetup,
+  runnerSetups,
+  tallyWins,
+  type MatchResult,
+} from '../../src/ai/match';
+import { defaultPreset } from '../../src/content/pretenders/presets';
 import type { Command, LoggedCommand } from '../../src/sim/commands';
 import { createGame } from '../../src/sim/createGame';
 import { stateHash } from '../../src/sim/hash';
@@ -350,5 +358,51 @@ describe('runMatch', () => {
       hashes.add(match.finalHash);
     }
     expect(hashes.size).toBe(2);
+  });
+});
+
+describe('the headless runner', () => {
+  it('plays Cinder Horde against Thornwood on Medium, seeds from the base, order alternating', () => {
+    expect(RUNNER_DEFAULTS).toEqual({ games: 20, seed: 1, months: 100 });
+    const setups = runnerSetups(7, 3);
+    expect(setups).toHaveLength(3);
+    expect(setups.map((s) => s.seed)).toEqual([7, 8, 9]);
+    expect(setups.map((s) => s.nations.map((n) => n.nation))).toEqual([
+      ['cinderHorde', 'thornwood'],
+      ['thornwood', 'cinderHorde'],
+      ['cinderHorde', 'thornwood'],
+    ]);
+    for (const setup of setups) {
+      expect(setup.mapSize).toBe('medium');
+      for (const n of setup.nations) {
+        expect(n.ai).toEqual({ difficulty: 'normal' });
+        expect(n.pretender).toEqual(defaultPreset(n.nation).design);
+      }
+    }
+    expect(runnerSetup(7, 1)).toEqual(setups[1]);
+  });
+
+  it('tallies wins for every nation, and games without a winner apart', () => {
+    const timeout = runMatch(runnerSetup(1, 0), () => [], 1);
+    const [red] = nationIds(timeout.state);
+    const won: MatchResult = {
+      ...timeout,
+      result: { day: 1, winner: red!, reason: 'wellsprings' },
+    };
+    expect(tallyWins([])).toEqual({ wins: { 'Cinder Horde': 0, Thornwood: 0 }, noWinner: 0 });
+    expect(tallyWins([won, timeout, won])).toEqual({
+      wins: { 'Cinder Horde': 2, Thornwood: 0 },
+      noWinner: 1,
+    });
+  });
+
+  it('reports mana spent per color, as the victory screen shows it (docs/07)', () => {
+    const state = createGame(runnerSetup(1, 0));
+    const [red] = nationIds(state);
+    state.nations[red!]!.stats.manaSpent = { W: 0, U: 0, B: 0, R: 7, G: 3 };
+    const summary = nationSummary(state, red!);
+    expect(summary.manaSpent).toEqual({ W: 0, U: 0, B: 0, R: 7, G: 3 });
+    state.nations[red!]!.stats.manaSpent.R = 9;
+    expect(summary.manaSpent.R).toBe(7);
   });
 });

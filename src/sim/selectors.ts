@@ -20,6 +20,7 @@ import { commanderSupply, commanderUpkeep } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { nationScales, provinceScales, scaleEffect } from './scales';
 import { activeEffects, getMapProvince, getNation, getProvince } from './state';
+import { claimedBy } from './wellsprings';
 import type { ColorAmounts, CommanderState, GameState } from './types';
 
 export function zeroMana(): ColorAmounts {
@@ -256,11 +257,12 @@ export function nationEconomy(
   return totals;
 }
 
-/** Dominion score: the pretender's, plus one per claimed Wellspring, at most DOMINION.max. */
+/**
+ * Dominion score: the pretender's, plus one per Wellspring claimed in a province the nation
+ * still owns, at most DOMINION.max.
+ */
 export function dominionScore(state: GameState, nationId: NationId): number {
-  const claimed = Object.values(state.provinces).filter(
-    (p) => p.wellspringClaimedBy === nationId,
-  ).length;
+  const claimed = claimedBy(state, nationId);
   return Math.min(DOMINION.max, getNation(state, nationId).pretender.dominion + claimed);
 }
 
@@ -295,7 +297,8 @@ export interface NationSummary {
   battlesWon: number;
   battlesLost: number;
   provincesTaken: number;
-  manaSpent: number;
+  /** Mana spent per color over the game (docs/07 victory screen). */
+  manaSpent: ColorAmounts;
   wellsprings: number;
   eliminated: boolean;
 }
@@ -303,7 +306,6 @@ export interface NationSummary {
 export function nationSummary(state: GameState, nationId: NationId): NationSummary {
   const nation = getNation(state, nationId);
   const owned = Object.values(state.provinces).filter((p) => p.owner === nationId);
-  const spent = Object.values(nation.stats.manaSpent).reduce((a, b) => a + b, 0);
   return {
     nation: nationId,
     name: nation.name,
@@ -312,8 +314,8 @@ export function nationSummary(state: GameState, nationId: NationId): NationSumma
     battlesWon: nation.stats.battlesWon,
     battlesLost: nation.stats.battlesLost,
     provincesTaken: nation.stats.provincesTaken,
-    manaSpent: spent,
-    wellsprings: owned.filter((p) => p.wellspringClaimedBy === nationId).length,
+    manaSpent: { ...nation.stats.manaSpent },
+    wellsprings: claimedBy(state, nationId),
     eliminated: nation.eliminated,
   };
 }

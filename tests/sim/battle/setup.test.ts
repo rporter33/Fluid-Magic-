@@ -1,6 +1,7 @@
 // Battle setups from the game, with every modifier folded in (docs/04-battle.md, "Province
 // modifiers"; Phase 2 morale penalties; the Ash Colossus's fire shield, docs/05-pretender.md).
 import { describe, expect, it } from 'vitest';
+import { unitDef } from '../../../src/content';
 import { NEUTRAL_SCALES } from '../../../src/content/pretenders/scales';
 import type { TerrainId } from '../../../src/content/terrain';
 import { buildBattle, type SideForces } from '../../../src/sim/battle/setup';
@@ -148,6 +149,27 @@ describe('buildBattle', () => {
     state.nations[red]!.pretender.pips = { R: 6, B: 4 };
     expect(flamebrand()).toMatchObject({ att: base.att + 5, str: base.str + 4, lifeDrain: 2 });
     expect(warrior().lifeDrain).toBe(0);
+  });
+
+  it('leaves the pretender unblessed: an R4 Titan fights with its body’s att and str', () => {
+    const state = twoNationGame(1, {
+      pretender: pretender({ chassis: 'titan', pips: { R: 4 }, dominion: 2, awakening: 'awake' }),
+    });
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const capital = capitalOf(state, red).id;
+    const god = state.commanders[state.nations[red]!.pretenderId!]!;
+    expect(god.unit).toBe('titan');
+    const guards = addArmy(state, red, capital, 'flamebrand', 5);
+    const raiders = addArmy(state, green, capital, 'warden', 10, 'wardenCaptain');
+    const setup = buildBattle(state, capital, forces(green, [raiders]), forces(red, [god, guards]));
+    // The R4 bless reaches the sacred Flamebrands (+2 att, +2 str), not the pretender.
+    const flamebrand = unitDef('flamebrand');
+    expect(setup.defender.squads.find((s) => s.unit === 'flamebrand')!.stats).toMatchObject({
+      att: flamebrand.att + 2,
+      str: flamebrand.str + 2,
+    });
+    expect(setup.defender.commanders[0]!.unit).toBe('titan');
+    expect(setup.defender.commanders[0]!.stats).toMatchObject({ att: 14, str: 20 });
   });
 
   it('gives commanders the spells their pips and research allow, and summons local stats', () => {

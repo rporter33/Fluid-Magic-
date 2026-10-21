@@ -1,7 +1,7 @@
 // The pretender (docs/05-pretender.md): what a design costs, whether it is valid, and when the
 // pretender stands on the map. Prices take the nation's definition, so the pretender screen can
 // use them before a game exists.
-import { nationDef, unitDef } from '../content';
+import { unitDef } from '../content';
 import { COLORS, isColor, type Color } from '../content/colors';
 import { CHASSIS, isChassisId, type ChassisDef } from '../content/pretenders/chassis';
 import { AWAKENING, PRETENDER_COSTS } from '../content/pretenders/costs';
@@ -13,7 +13,7 @@ import {
   type ScaleAxis,
 } from '../content/pretenders/scales';
 import { AWAKENINGS, type Awakening, type PretenderDesign } from '../content/pretenders/types';
-import { DOMINION } from '../content/rules';
+import { DOMINION, MAX_PIPS } from '../content/rules';
 import type { NationDef } from '../content/types';
 import {
   addSquad,
@@ -34,7 +34,7 @@ export function basePips(def: NationDef, chassis: ChassisDef): Pips {
   return { [base.color === 'nation' ? def.colors[0] : base.color]: base.count };
 }
 
-/** Design points for reaching pip `level` (1 to 6) in a color. */
+/** Design points for reaching pip `level` (1 to MAX_PIPS) in a color. */
 export function pipStepCost(
   def: NationDef,
   chassis: ChassisDef,
@@ -91,8 +91,8 @@ export function validatePretender(def: NationDef, design: PretenderDesign): stri
   if (!AWAKENINGS.includes(design.awakening)) return 'Unknown awakening';
   const free = basePips(def, chassis);
   for (const [color, count] of Object.entries(design.pips)) {
-    if (!isColor(color) || !Number.isInteger(count) || count < 0 || count > 6) {
-      return `Pips must be 0 to 6 per color`;
+    if (!isColor(color) || !Number.isInteger(count) || count < 0 || count > MAX_PIPS) {
+      return `Pips must be 0 to ${String(MAX_PIPS)} per color`;
     }
   }
   for (const color of COLORS) {
@@ -171,9 +171,4 @@ export function settlePretender(state: GameState, nationId: NationId): void {
 export function chassisOf(state: GameState, nationId: NationId): ChassisDef | null {
   const id = getNation(state, nationId).pretender.chassis;
   return isChassisId(id) ? CHASSIS[id] : null;
-}
-
-/** The nation's definition, for pricing a design inside a game. */
-export function nationDefOf(state: GameState, nationId: NationId): NationDef {
-  return nationDef(getNation(state, nationId).def);
 }

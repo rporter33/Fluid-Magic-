@@ -7,13 +7,19 @@ import { nationDef } from '../src/content';
 import { defaultPreset } from '../src/content/pretenders/presets';
 import { TIME } from '../src/content/rules';
 import { dummyPlayer } from '../src/ai/dummy';
-import { runMatch, runnerSetup } from '../src/ai/match';
+import {
+  runMatch,
+  RUNNER_DEFAULTS,
+  runnerSetups,
+  tallyWins,
+  type MatchResult,
+} from '../src/ai/match';
 
 const { values } = parseArgs({
   options: {
-    games: { type: 'string', default: '20' },
-    seed: { type: 'string', default: '1' },
-    months: { type: 'string', default: '100' },
+    games: { type: 'string', default: String(RUNNER_DEFAULTS.games) },
+    seed: { type: 'string', default: String(RUNNER_DEFAULTS.seed) },
+    months: { type: 'string', default: String(RUNNER_DEFAULTS.months) },
   },
 });
 
@@ -33,17 +39,16 @@ if (
   process.exit(1);
 }
 
-const wins = new Map<string, number>();
+const results: MatchResult[] = [];
 let totalMonths = 0;
 let totalRefused = 0;
 const started = performance.now();
 
-for (let game = 0; game < games; game++) {
-  const setup = runnerSetup(seed, game);
+for (const [game, setup] of runnerSetups(seed, games).entries()) {
   const match = runMatch(setup, dummyPlayer, months * TIME.daysPerMonth);
   const winner = match.result?.winner;
-  const winnerName = winner ? (match.state.nations[winner]?.name ?? winner) : 'none';
-  wins.set(winnerName, (wins.get(winnerName) ?? 0) + 1);
+  const winnerName = winner ? (match.state.nations[winner]?.name ?? winner) : 'no winner';
+  results.push(match);
   const played = match.days / TIME.daysPerMonth;
   totalMonths += played;
   totalRefused += match.refused.length;
@@ -66,8 +71,11 @@ for (let game = 0; game < games; game++) {
 }
 
 const seconds = (performance.now() - started) / 1000;
-const tally = [...wins.entries()].map(([name, n]) => `${name} ${String(n)}`).join(', ');
+const { wins, noWinner } = tallyWins(results);
+const tally = Object.entries(wins)
+  .map(([name, n]) => `${name} ${String(n)}`)
+  .join(', ');
 console.log(
-  `${String(games)} games: ${tally}; mean ${(totalMonths / games).toFixed(1)} months; ` +
+  `${String(games)} games: ${tally}, no winner ${String(noWinner)}; mean ${(totalMonths / games).toFixed(1)} months; ` +
     `${String(totalRefused)} refused commands; ${seconds.toFixed(1)} s`,
 );

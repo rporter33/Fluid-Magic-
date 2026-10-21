@@ -220,6 +220,9 @@ export const PROPHET = {
 /** docs/04-battle.md, "Scripts": script slots per commander. */
 export const SCRIPT_SLOTS = 5;
 
+/** docs/02-magic.md section 2: a mage's pips run from 0 to this per color in M1. */
+export const MAX_PIPS = 6;
+
 export const CONSTRUCTION = {
   /** No construction finishes in fewer days, however fast the scales make it. */
   minDays: 1,

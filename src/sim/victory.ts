@@ -24,8 +24,8 @@ function relocateCapitals(state: GameState): void {
 }
 
 /**
- * Eliminates a nation: every commander of it dies, every province it owns passes to no one,
- * and every nation still playing hears of it.
+ * Eliminates a nation: every commander of it dies, the sieges it lays end, every province it
+ * owns passes to no one, and every nation still playing hears of it.
  */
 function eliminate(state: GameState, nationId: NationId): void {
   const nation = getNation(state, nationId);
@@ -34,6 +34,8 @@ function eliminate(state: GameState, nationId: NationId): void {
   }
   for (const p of Object.values(state.provinces)) {
     if (p.owner === nationId) captureProvince(state, p.id, null);
+    // Its sieges elsewhere end with its besiegers.
+    else if (p.siege?.attacker === nationId) p.siege = null;
   }
   nation.eliminated = true;
   nation.pretenderDead = true;

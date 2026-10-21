@@ -209,8 +209,30 @@
   log without the AI; `runMatch` plays a whole game; the dummy AI makes random valid choices
   with its own random stream. `npm run sim:aivai -- --games 20 --seed 1` plays Cinder Horde
   against Thornwood and prints winner, reason, months, and stats per game.
-TESTS_PLACEHOLDER
-REVIEW_PLACEHOLDER
+- Tests: design costs and every validation refusal; the six presets with pinned costs (385,
+  280, 415, 385, 395, 375); arrival on days 0, 330, and 1050; recall and return; Oracle-only
+  research; the Living Monolith's immobility, death in retreat, and Call of the Wild; the fire
+  shield per hit; the prophet's rules, bless, and morale; every dominion source counted
+  exactly; the spread's die, order, neighbors, cap, and messages; Godless, its monthly settle,
+  and the recall; Wellspring claims and every interruption; victory by Wellsprings, last
+  capital, and player defeat; elimination and capital moves; the AI driver's cadence and
+  refusals, replay from the log, and the runner's setup, tally, and determinism. 994 tests.
+- Godless: the docs' trigger ("holds no temple anywhere") could never happen in M1. By the
+  project owner's decision it now reads "no temple under its own dominion".
+- A design review (4 lenses, 36 issues, two independent judges) settled the rules recorded in
+  `docs/01-core-rules.md`, `docs/05-pretender.md`, and `docs/08-ai.md`. The main changes: Deep
+  Root at dominion 7, Monolith leadership 20 and death instead of retreat, the temple preach
+  bonus, the month's checks shuffled across nations, a `pretenderDead` flag instead of a
+  pretender state machine, Godless settled monthly, the victory order with player defeat only
+  when there is a human, one AI driver for the browser and the runner, a private AI random
+  stream, and the purity guard extended to `src/ai`.
+- A code review (4 lenses, each finding re-checked by a skeptic) confirmed 24 of 34 findings:
+  an eliminated nation's sieges stayed and locked the besieged owner out of recruiting; the
+  victory summary lost mana spent per color; the runner's tally hid nations without a win;
+  the pip cap moved to content; one count of claimed Wellsprings; retreat asks `canMove`. 16
+  mutations the suite did not catch (the spread die, the shuffle, random neighbors, checks on
+  the march, Godless after the spread, an unsacred pretender, the fire shield on the dead, the
+  prophet's script, the runner's setup and defaults, a repeated chassis) now fail it.
 
 ## Deviations from the docs
 

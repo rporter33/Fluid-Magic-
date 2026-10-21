@@ -3,7 +3,7 @@
 // prophet's dominion check, and its holy pips, morale, and bless in battle.
 import { describe, expect, it } from 'vitest';
 import { unitDef } from '../../../src/content';
-import { PROPHET } from '../../../src/content/rules';
+import { PROPHET, SCRIPT_SLOTS } from '../../../src/content/rules';
 import { buildBattle, type SideForces } from '../../../src/sim/battle/setup';
 import { commanderDies } from '../../../src/sim/commanders';
 import { applyCommand, validateCommand } from '../../../src/sim/commands';
@@ -66,6 +66,16 @@ describe('makeProphet', () => {
     expect(makeProphet(state, red, chieftain)).toEqual({ ok: true });
     expect(state.nations[red]!.prophetId).toBe(chieftain.id);
     expect(chieftain.holy).toBe(3);
+  });
+
+  it('keeps the script the player set', () => {
+    const { state, red, priest } = setup();
+    const slots = Array.from({ length: SCRIPT_SLOTS }, () => ({ kind: 'attack' as const }));
+    const cmd = { type: 'setScript', nation: red, commander: priest.id, slots } as const;
+    expect(applyCommand(state, cmd)).toEqual({ ok: true });
+    expect(priest.script).toEqual(slots);
+    expect(makeProphet(state, red, priest)).toEqual({ ok: true });
+    expect(priest.script).toEqual(slots);
   });
 
   it('refuses another nation’s commander, or one that does not exist', () => {

@@ -266,6 +266,32 @@ describe('the fire shield', () => {
     ]);
   });
 
+  it('spares a striker the Colossus kills in the same phase: it dies once, unburned', () => {
+    // A rested Colossus strikes back: the warrior's wounding blow and the Colossus's fatal one
+    // land together, and the burn after the phase finds the warrior already dead.
+    const field = buildField(
+      setup(
+        side([squad('a', 'cinderWarrior', 1, { hp: 1, stats: { att: 50, str: 30 } })]),
+        side(
+          [],
+          [
+            commander('c', 'ashColossus', {
+              row: 'front',
+              stats: { hp: 1000, prot: 0, att: 50 },
+            }),
+          ],
+        ),
+      ),
+    );
+    const striker = field.sides.attacker[0]!;
+    const log = melee(field);
+    expect(damageTo(log, 'c', 'physical')).toHaveLength(1);
+    expect(log).toContainEqual({ kind: 'melee', squad: 'c', target: 'a', hits: 1, kills: 1 });
+    expect(striker.members[0]).toMatchObject({ alive: false, hp: 0 });
+    expect(striker.deathsThisRound).toBe(1);
+    expect(damageTo(log, 'a', 'fire')).toEqual([]);
+  });
+
   it('does not burn for misses or blows that do no damage', () => {
     const harmless = colossusField(
       [squad('a', 'cinderWarrior', 5, { stats: { att: 50, str: 0 } })],

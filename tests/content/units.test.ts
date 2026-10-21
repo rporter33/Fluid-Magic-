@@ -5,6 +5,7 @@ import { nationDef, unitDef, validateContent, type UnitTypeId } from '../../src/
 import { NATIONS } from '../../src/content/nations';
 import { BATTLE } from '../../src/content/rules';
 import { UNITS } from '../../src/content/units';
+import { PRETENDER_UNITS } from '../../src/content/units/pretenders';
 import { createGame } from '../../src/sim/createGame';
 import { recruitRequirementError } from '../../src/sim/recruitment';
 import { nation } from '../sim/fixtures';
@@ -128,6 +129,10 @@ describe('pretender bodies', () => {
       expect(u.tags.includes('immobile'), id).toBe(id === 'livingMonolith');
       expect(u.tags.includes('stealthy'), id).toBe(id === 'wildSpirit');
     }
+  });
+
+  it('are none of them sacred, so the bless never reaches the pretender (docs/05 decisions)', () => {
+    for (const u of Object.values(PRETENDER_UNITS)) expect(u.tags, u.id).not.toContain('sacred');
   });
 });
 

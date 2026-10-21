@@ -472,14 +472,14 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   still playing hears when one completes.
 - **The end of the day** (tick step 7): first, a nation that lost its capital but owns
   another fort moves its capital to the first such fort in map order. Then a nation that owns
-  no province, or no fort, is eliminated: its commanders die (the pretender with them), its
-  provinces pass to no one (Normal tax, PD 0, siege and claim cleared; they hold no fort, so
-  no garrison), its dominion stays, and every nation hears of it. Then the game may end: a
-  nation with `wellspringsToWin` claimed Wellsprings wins (the first in nation order if two
-  reach it the same day); else, with at most one nation left, that nation wins as the last
-  with a capital (`lastCapital`; no winner if none is left); else, if the game has a human
-  player and every human is eliminated, it ends with `playerDefeated` and no winner. Once
-  there is a result, `advance` does nothing, so AI-only games end only by Wellsprings or last
-  capital.
+  no province, or no fort, is eliminated: its commanders die (the pretender with them), the
+  sieges it lays end, its provinces pass to no one (Normal tax, PD 0, siege and claim cleared;
+  they hold no fort, so no garrison), its dominion stays, and every nation hears of it. Then
+  the game may end: a nation with `wellspringsToWin` claimed Wellsprings wins (the first in
+  nation order if two reach it the same day); else, with at most one nation left, that nation
+  wins as the last with a capital (`lastCapital`; no winner if none is left); else, if the
+  game has a human player and every human is eliminated, it ends with `playerDefeated` and no
+  winner. Once there is a result, `advance` does nothing, so AI-only games end only by
+  Wellsprings or last capital.
 - **"The last nation with a capital"** is the last nation not eliminated: a nation still in
   the game owns a fort, and every M1 fort was a capital.
