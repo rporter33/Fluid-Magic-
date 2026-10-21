@@ -187,10 +187,40 @@
   reach and stacking, labs, scry, remoteDamage, tick order) now fail it, each re-run to prove
   it. 765 tests.
 
+## Phase 6: Pretender, dominion, Wellsprings, victory, headless runner (done)
+
+- Content: the six chassis (`src/content/pretenders/chassis.ts`) with one commander body each
+  (`src/content/units/pretenders.ts`), design point costs and awakening
+  (`pretenders/costs.ts`), and the six presets (`pretenders/presets.ts`); each nation names
+  its two fitting chassis. Content validation checks chassis, bodies, and presets.
+- `pretender.ts`: design costs, `validatePretender` (the one rule; `createGame` refuses bad
+  designs), and `settlePretender`: the pretender arrives in its capital on day 0, 330, or
+  1050, leaves the map while its nation is Godless, returns after, and never returns once
+  dead. Only the Oracle researches; the Living Monolith cannot move and dies rather than
+  retreat; the Ash Colossus burns melee strikers (fire shield).
+- `dominion.ts`: the monthly spread from capitals, temples (with Sanctity), the pretender (x2
+  for the Monolith), the prophet, and preaching priests, shuffled together each month;
+  Godless. `commands/pretender.ts`: `makeProphet` (holy 3, +1 morale and the bless in
+  battle, one check) and `claimWellspring`. `wellsprings.ts`: 10-day claims that any order,
+  move, battle, or loss interrupts, announced to everyone. `victory.ts`: capital moves,
+  elimination, and the result (Wellsprings, last capital, player defeated).
+- `src/ai/` (pure, guarded like the sim): `playDay` advances a day and applies each AI
+  nation's commands in order on its planning days, logging refusals; `replayLog` replays a
+  log without the AI; `runMatch` plays a whole game; the dummy AI makes random valid choices
+  with its own random stream. `npm run sim:aivai -- --games 20 --seed 1` plays Cinder Horde
+  against Thornwood and prints winner, reason, months, and stats per game.
+TESTS_PLACEHOLDER
+REVIEW_PLACEHOLDER
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
-- `sim:aivai` is a stub that validates its arguments; the runner arrives in Phase 6.
+- Pretender, dominion, Wellspring, and victory rules settled in Phase 6 (spread order and
+  sources, the temple preach bonus, Godless, claims, capital moves, elimination, the order of
+  victory checks, the prophet, arrival days, bodies) are at the end of
+  `docs/01-core-rules.md` and `docs/05-pretender.md`; the AI contract, cadence, dummy, and
+  runner at the end of `docs/08-ai.md`; numbers in `docs/09-balance.md`. The Deep Root preset
+  uses dominion 7 (8 is over budget).
 - Map rules settled in Phase 1 (province count by size and nation count, capital terrain
   from the nation, Wellspring separation and fairness, even spring colors, and more) are
   listed at the end of `docs/01-core-rules.md`. Their numbers are in `docs/09-balance.md`.
@@ -238,7 +268,23 @@
   Phase 12 decides between retuning (about pop / 250) and changing the checklist.
 - Tax rate changes cost nothing yet, and High tax at the capital is free income until
   unrest bites; Phase 12 balance.
-- `NationState.capital` never changes; Phase 6 decides what happens when a capital falls.
+- Resolved in Phase 6: the docs' Godless trigger ("holds no temple anywhere") could never
+  happen in M1, since every fort is a capital with a temple. By the project owner's
+  decision it now reads "no temple under its own dominion" (docs/01 section 12), so a
+  nation whose capital and temples fall under an enemy's dominion becomes Godless. It is
+  rare: none of 20 runner games saw it, since capitals stand 6 or more provinces apart and
+  each pushes its own dominion with at least 4 checks a month.
+- A hidden commander (a Wild Spirit pretender, or a prophet leading only stealthy troops)
+  makes its dominion checks wherever it stands, unseen, even deep in enemy land. The docs
+  give the checks without condition; Phase 12 or the design decides whether to limit them.
+- Sleeping builds are strong: the bless comes from the design's pips at game start
+  (docs/02 section 8), so an imprisoned design spends 750 points with the bless in force from
+  day 1 and only the body waiting until month 36. Phase 12 balance.
+- Wellspring victory is immediate on the last claim, with no hold period, and it comes early:
+  even the random dummy wins by Wellsprings in most runner games, in a mean of about 27
+  months (20 games from seed 1: 17 Wellspring wins, 2 last-capital wins, 1 timeout at 100
+  months). Phase 7's AI must defend its Wellsprings and contest the enemy's; Phase 12 decides
+  whether Wellspring wins need a hold period or tougher guards.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
   are grouped by province and then nation; legs use the move order's frozen `mapSpeed`.
 - A commander in transit is present at its location for battles: it defends there and is
@@ -247,14 +293,14 @@
 - Research conflict: four apprentices reach level 4 by month 24 only at neutral or better
   Lore; at capital Fury −2 (the Warlord and Wildfire presets) they take until day 825.
   Phase 12 decides (see `docs/09-balance.md`).
-- For Phase 6: whether pretenders other than the Oracle research is one predicate,
-  `canResearch` in `research.ts`. A new prophet keeps its script; Phase 6 decides whether it
-  gets a caster script. Godless already blocks rituals.
+- For Phase 7 (AI): Godless is now reachable, so the AI should preach at home (or name a
+  prophet there) when an enemy's dominion threatens its capital and temples.
+- For Phase 7 (AI): `aiMemory` may change only through a command (docs/08 decisions); add
+  one when the AI first writes memory. A new prophet keeps its script, so the AI sets a
+  caster script itself if it wants one.
 - For Phase 7 (AI): Warcry, Pyre Storm, Swarm, and Regrowth need carried mana, so the AI
   needs a `giveMana` step; its research step must not replace a `castRitual` order, which
   would throw away the mana already paid.
-- For Phase 6: `pretenderId` is null both before the pretender arrives and after it dies, so
-  awakening must track the arrival separately.
 - For Phase 7 (AI): there is no sally; a besieged fort is relieved only by an army arriving
   from outside, which fights the besiegers alone (the garrison and PD stay inside). A siege
   whose defenders repair at least as fast as the besiegers batter never breaches (defenders

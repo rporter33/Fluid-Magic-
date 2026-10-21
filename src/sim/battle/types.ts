@@ -24,6 +24,8 @@ export interface CombatStats {
   regeneration: number;
   /** HP a troop regains per damaging hit it lands (the Black bless). */
   lifeDrain: number;
+  /** Fire damage each melee hit on it deals back to the striker. */
+  fireShield: number;
 }
 
 export interface BattleSquadSetup {

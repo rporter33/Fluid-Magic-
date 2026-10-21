@@ -1,12 +1,21 @@
 // Battle setups from the game, with every modifier folded in (docs/04-battle.md, "Province
-// modifiers"; Phase 2 morale penalties).
+// modifiers"; Phase 2 morale penalties; the Ash Colossus's fire shield, docs/05-pretender.md).
 import { describe, expect, it } from 'vitest';
 import { NEUTRAL_SCALES } from '../../../src/content/pretenders/scales';
 import type { TerrainId } from '../../../src/content/terrain';
 import { buildBattle, type SideForces } from '../../../src/sim/battle/setup';
 import type { NationId, ProvinceId } from '../../../src/sim/ids';
 import type { CommanderState, GameState } from '../../../src/sim/types';
-import { addArmy, independentProvince, redField } from '../fixtures';
+import {
+  addArmy,
+  capitalOf,
+  commandersIn,
+  independentProvince,
+  nationIds,
+  pretender,
+  redField,
+  twoNationGame,
+} from '../fixtures';
 
 function forces(nation: NationId | null, commanders: CommanderState[], pd = false): SideForces {
   return { nation, commanders, garrison: null, pd };
@@ -222,5 +231,40 @@ describe('buildBattle', () => {
       ['thornMilitia', 10],
       ['longbowHunter', 10],
     ]);
+  });
+
+  it('gives an Ash Colossus pretender its fire shield of 5 and every other unit none', () => {
+    const state = twoNationGame(1, {
+      pretender: pretender({
+        chassis: 'ashColossus',
+        pips: { R: 1 },
+        dominion: 1,
+        awakening: 'awake',
+      }),
+    });
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const capital = capitalOf(state, red).id;
+    const god = state.commanders[state.nations[red]!.pretenderId!]!;
+    expect(god.unit).toBe('ashColossus');
+    const chieftain = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;
+    const raiders = addArmy(state, green, capital, 'warden', 10, 'wardenCaptain');
+    const setup = buildBattle(
+      state,
+      capital,
+      forces(green, [raiders]),
+      forces(red, [god, chieftain]),
+    );
+    expect(setup.defender.commanders.map((c) => [c.unit, c.stats.fireShield])).toEqual([
+      ['ashColossus', 5],
+      ['ashChieftain', 0],
+    ]);
+    expect(setup.defender.commanders[0]!.stats).toMatchObject({ hp: 80, str: 22 });
+    const others = [
+      ...setup.defender.squads,
+      ...setup.attacker.squads,
+      ...setup.attacker.commanders,
+    ];
+    expect(others.length).toBeGreaterThan(2);
+    for (const u of others) expect(u.stats.fireShield, u.unit).toBe(0);
   });
 });

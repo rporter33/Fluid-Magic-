@@ -5,7 +5,7 @@ import type { NationDefId, UnitTypeId } from '../content';
 import type { Difficulty } from '../content/ai';
 import type { Color } from '../content/colors';
 import type { MapSizeId } from '../content/mapgen';
-import type { Scales } from '../content/pretenders/scales';
+import type { PretenderDesign } from '../content/pretenders/types';
 import type { TaxRate } from '../content/rules';
 import type { BuildingId } from '../content/types';
 import type { MapData } from '../mapgen/types';
@@ -32,17 +32,7 @@ export type Pips = Partial<Record<Color, number>>;
 
 // ---------------------------------------------------------------- setup
 
-export type Awakening = 'awake' | 'dormant' | 'imprisoned';
-
-/** The pre-game pretender design (docs/05-pretender.md). Budget validation is Phase 6. */
-export interface PretenderDesign {
-  chassis: string;
-  pips: Pips;
-  /** Dominion score, 1 to 10, before Wellspring bonuses. */
-  dominion: number;
-  scales: Scales;
-  awakening: Awakening;
-}
+export type { Awakening, PretenderDesign } from '../content/pretenders/types';
 
 export interface NationSetup {
   nation: NationDefId;
@@ -245,10 +235,12 @@ export interface NationState {
   research: ResearchState;
   pretender: PretenderDesign;
   /**
-   * The pretender's commander; the only record of who it is. Null before the pretender arrives
-   * and after it dies.
+   * The pretender's commander; the only record of who it is. Null before the pretender arrives,
+   * while it is recalled (Godless), and after it dies.
    */
   pretenderId: CommanderId | null;
+  /** The pretender died; it never returns in M1. */
+  pretenderDead: boolean;
   /** The prophet's commander; the only record of who it is. */
   prophetId: CommanderId | null;
   /** First day a new prophet may be named. */

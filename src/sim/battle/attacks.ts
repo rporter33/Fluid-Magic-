@@ -90,6 +90,40 @@ function drainLife(hits: Hit[], log: BattleEvent[]): void {
   for (const [g, amount] of healed) log.push({ kind: 'heal', target: g.ref, amount });
 }
 
+/**
+ * Fire shields burn every melee striker that hit them, once all of the phase's hits have
+ * landed: fire damage per hit, no armor.
+ */
+function burnStrikers(hits: Hit[], log: BattleEvent[]): void {
+  const owed = new Map<Fighter, number>();
+  for (const h of hits) {
+    const shield = h.target.group.base.fireShield;
+    if (shield > 0 && h.amount !== null && h.amount > 0) {
+      owed.set(h.from, (owed.get(h.from) ?? 0) + shield);
+    }
+  }
+  const tally = new Map<Group, { amount: number; kills: number }>();
+  for (const [f, amount] of owed) {
+    if (!f.alive) continue;
+    let t = tally.get(f.group);
+    if (!t) {
+      t = { amount: 0, kills: 0 };
+      tally.set(f.group, t);
+    }
+    t.amount += Math.min(amount, f.hp);
+    f.hp -= amount;
+    if (f.hp <= 0) {
+      f.hp = 0;
+      f.alive = false;
+      f.group.deathsThisRound += 1;
+      t.kills += 1;
+    }
+  }
+  for (const [g, { amount, kills }] of tally) {
+    log.push({ kind: 'damage', target: g.ref, amount, element: 'fire', kills });
+  }
+}
+
 /** Lands the phase's hits in order and logs one event per attacking and target group. */
 function land(hits: Hit[], kind: 'volley' | 'melee', log: BattleEvent[]): void {
   const tally = new Map<string, { by: Group; target: Group; hits: number; kills: number }>();
@@ -125,6 +159,7 @@ function land(hits: Hit[], kind: 'volley' | 'melee', log: BattleEvent[]): void {
     log.push({ kind, squad: t.by.ref, target: t.target.ref, hits: t.hits, kills: t.kills });
   }
   drainLife(hits, log);
+  if (kind === 'melee') burnStrikers(hits, log);
 }
 
 /** A ranged weapon reaches a row this deep: the rear needs BATTLE.rearReach, else the middle. */

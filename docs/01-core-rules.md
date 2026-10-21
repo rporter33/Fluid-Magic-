@@ -213,8 +213,9 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
   d10; if the roll ≤ the nation's `dominionScore`, push +1 toward the nation. If the
   province is dominated by another nation, that nation's strength decreases by 1 instead,
   and it flips when it reaches 0. Strength caps at the nation's `dominionScore`.
-- A nation whose capital dominion reaches 0 and that holds no temple anywhere suffers
-  **Godless**: no rituals, pretender recall. A nation with no provinces is eliminated.
+- A nation whose capital dominion reaches 0 and that holds no temple under its own
+  dominion suffers **Godless**: no rituals, pretender recall. A nation with no provinces is
+  eliminated.
 - Scales in a province are the scales of the dominating nation, scaled by strength:
   `effectiveScale = round(nationScale * strength / 10)`. Independents have scales of 0.
   Enemy scales therefore apply inside your provinces when their dominion overtakes yours.
@@ -401,16 +402,18 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   nation's commander present, hidden ones aside); else to a random adjacent friendly province
   (`state.rng`); else the commander dies with its troops. Independents never move, so beaten
   independents die. A fort's garrison troops are lost when its defenders lose. Retreating
-  commanders arrive at once, idle.
+  commanders arrive at once, idle. A commander that cannot move (map speed 0: the Living
+  Monolith) never retreats; when its side loses, it dies with its troops (Phase 6).
 - **Heirs at a fort**: the fort's garrison holder takes in a fallen defender's troops even when
   it kept none of its own (docs/04 "After the battle").
 - **After a battle**, every surviving commander that fought, on either side, ends its transit
   and its move order (idle) where it fought; the losers then retreat. A winning side's routed
   squads and commanders stay in the province with their side: section 10's "return to the
   province they came from" would need a squad to travel without a commander.
-- **Deaths**: every commander death (battle, nowhere to retreat, later spells) goes through
-  one path, `commanderDies`, which clears the nation's `pretenderId` and, for a prophet,
-  `prophetId`, starting the 24-month wait for a new prophet.
+- **Deaths**: every commander death (battle, nowhere to retreat, elimination) goes through
+  one path, `commanderDies`, which clears the nation's `pretenderId` and sets `pretenderDead`
+  (a dead pretender never returns in M1) and, for a prophet, clears `prophetId`, starting the
+  24-month wait for a new prophet.
 - **Population and unrest** (sections 3 and 5): a battle costs the province
   `pop * 0.005 * casualties / 100`, counting every troop and commander killed on both sides
   (summoned units aside). "Lost battle in province +10 once" applies when the province's owner
@@ -434,3 +437,49 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   old one's troops are lost). The old owner's recruitment queue drops by the Phase 3 rule
   and construction is abandoned by the Phase 2 rule. Dominion is unchanged.
 
+**Dominion, Wellsprings, victory (Phase 6)**
+- **Spread** (section 12) runs on the last day of each month, in tick step 5. Each nation's
+  checks are listed in a fixed order (capital, temples in province order, pretender, prophet,
+  preaching priests), and all nations' lists are shuffled together once with `state.rng`, so
+  no nation always pushes last. Each check then draws its own province (40%) or a random
+  neighbor and rolls 1d10 against the nation's dominion score as it stood when the spread
+  began.
+- **Sources**: the capital's 3 checks need the nation to own it. Each temple the nation owns
+  makes 1 check plus one per step of the nation's Sanctity (Wellspring steps included). A
+  pretender or prophet checks from its location, in transit or not (the Phase 3 location
+  rule); the Living Monolith's x2 doubles its own pretender checks only. A preaching priest
+  is standing by definition (a move replaces Preach) and makes one check per holy pip, plus
+  one in a province with a temple its nation owns (section 7's temple preach bonus).
+- **A push** raises an empty or own province by 1 up to the nation's dominion score and never
+  lowers it (a province above a score that has since fallen keeps its strength). Against
+  another nation's dominion it lowers that by 1; at 0 the province has no dominion, and the
+  next push makes it the pusher's. A province's owner hears when its dominating nation
+  changes.
+- **Godless** (section 12): a nation is Godless while its capital's dominion is not its own
+  (another nation's, or none) and no temple it owns is under its own dominion either; a
+  temple standing under another nation's dominion keeps no faith. The trigger first read
+  "holds no temple anywhere", which M1 could never meet (every fort is a capital with a
+  temple, and buildings are never removed); it was changed to this wording in Phase 6 by
+  the project owner's decision. Godless is settled monthly, right after the spread. While
+  Godless the nation casts no rituals (Phase 5) and its pretender leaves the map: the
+  pretender's troops join another of the nation's commanders in the province, else the
+  fort's garrison holder, else are lost. The pretender returns to the capital, as a new
+  commander, in the first tick after Godless ends in which the nation holds its capital.
+- **Claiming a Wellspring** (section 13): a priest (holy pips) standing in a Wellspring
+  province its nation owns, not yet claimed by that nation, may take the claim order. Its 10
+  days count down in tick step 3. Any other order or a move, a battle the priest fights,
+  losing the province, or the priest's death ends the claim. Claims are public: every nation
+  still playing hears when one completes.
+- **The end of the day** (tick step 7): first, a nation that lost its capital but owns
+  another fort moves its capital to the first such fort in map order. Then a nation that owns
+  no province, or no fort, is eliminated: its commanders die (the pretender with them), its
+  provinces pass to no one (Normal tax, PD 0, siege and claim cleared; they hold no fort, so
+  no garrison), its dominion stays, and every nation hears of it. Then the game may end: a
+  nation with `wellspringsToWin` claimed Wellsprings wins (the first in nation order if two
+  reach it the same day); else, with at most one nation left, that nation wins as the last
+  with a capital (`lastCapital`; no winner if none is left); else, if the game has a human
+  player and every human is eliminated, it ends with `playerDefeated` and no winner. Once
+  there is a result, `advance` does nothing, so AI-only games end only by Wellsprings or last
+  capital.
+- **"The last nation with a capital"** is the last nation not eliminated: a nation still in
+  the game owns a fort, and every M1 fort was a capital.

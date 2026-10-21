@@ -1,5 +1,6 @@
 // Research (docs/02-magic.md section 4): mages with the Research order in a lab earn research
 // points each day for the nation's chosen color; levels unlock spells.
+import { unitDef } from '../content';
 import { COLOR_DEFS, COLORS, type Color } from '../content/colors';
 import { RESEARCH, RESEARCH_LEVEL_POINTS, TIME } from '../content/rules';
 import { SPELLS } from '../content/spells';
@@ -36,11 +37,16 @@ export function researchLevels(state: GameState, nation: NationId): Record<Color
 }
 
 /**
- * Who may research: a nation's commander with a color pip (holy pips do not count). Phase 6
- * decides which pretenders join them; this is the one place that says so.
+ * Who may research: a nation's commander with a color pip (holy pips do not count), unless its
+ * body may not (every pretender but the Oracle).
  */
 export function canResearch(commander: CommanderState): boolean {
-  return commander.owner !== null && !isGarrisonHolder(commander) && colorPips(commander.pips) > 0;
+  return (
+    commander.owner !== null &&
+    !isGarrisonHolder(commander) &&
+    unitDef(commander.unit).commander?.research !== false &&
+    colorPips(commander.pips) > 0
+  );
 }
 
 /**

@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 // Modules that must stay deterministic and host-free: they run headless and, from M4, on a
 // server. tests/sim/purity.test.ts enforces the same rules with a source scan.
-const PURE_DIRS = ['src/sim/**', 'src/mapgen/**', 'src/content/**'];
+const PURE_DIRS = ['src/sim/**', 'src/mapgen/**', 'src/content/**', 'src/ai/**'];
 
 export default tseslint.config(
   { ignores: ['dist/', 'coverage/', 'node_modules/'] },

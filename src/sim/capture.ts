@@ -7,12 +7,17 @@ import { getMapProvince, getNation, getProvince } from './state';
 import type { GameState } from './types';
 
 /**
- * A nation takes a province: the tax rate returns to the default, PD falls to 0, a siege ends, a claimed Wellspring is unclaimed,
- * and a fort gets a garrison holder for its new owner (the old one goes with any troops it
- * still kept). The old owner's queue and construction lapse by their own rules. Dominion
- * stays as it is.
+ * A province changes hands, to a nation or (when its nation is eliminated) back to no one: the
+ * tax rate returns to the default, PD falls to 0, a siege ends, a claimed Wellspring is
+ * unclaimed, and a fort gets a garrison holder for its new owner (the old one goes with any
+ * troops it still kept). The old owner's queue and construction lapse by their own rules.
+ * Dominion stays as it is.
  */
-export function captureProvince(state: GameState, provinceId: ProvinceId, nation: NationId): void {
+export function captureProvince(
+  state: GameState,
+  provinceId: ProvinceId,
+  nation: NationId | null,
+): void {
   const p = getProvince(state, provinceId);
   const previous = p.owner;
   p.owner = nation;
@@ -20,7 +25,8 @@ export function captureProvince(state: GameState, provinceId: ProvinceId, nation
   p.pd = 0;
   p.siege = null;
   p.wellspringClaimedBy = null;
-  if (p.buildings.includes('fort')) replaceGarrison(state, provinceId);
+  if (p.buildings.includes('fort') || p.garrison !== null) replaceGarrison(state, provinceId);
+  if (nation === null) return;
   const taker = getNation(state, nation);
   taker.stats.provincesTaken += 1;
   const name = getMapProvince(state, provinceId).name;

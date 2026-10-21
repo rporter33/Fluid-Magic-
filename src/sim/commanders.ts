@@ -63,9 +63,8 @@ export function removeCommander(state: GameState, id: CommanderId): void {
 }
 
 /**
- * A commander dies, wherever it happens (battle, a retreat with nowhere to go, later spells).
- * A dead prophet frees the post after the cooldown; a dead pretender clears the nation's id
- * (Phase 6 decides what that means for the nation).
+ * A commander dies, wherever it happens (battle, a retreat with nowhere to go, elimination). A
+ * dead prophet frees the post after the cooldown; a dead pretender is gone for good.
  */
 export function commanderDies(state: GameState, id: CommanderId): void {
   const c = state.commanders[id];
@@ -74,7 +73,10 @@ export function commanderDies(state: GameState, id: CommanderId): void {
     nation.prophetId = null;
     nation.prophetAvailableDay = state.day + PROPHET.cooldownDays;
   }
-  if (nation?.pretenderId === id) nation.pretenderId = null;
+  if (nation?.pretenderId === id) {
+    nation.pretenderId = null;
+    nation.pretenderDead = true;
+  }
   removeCommander(state, id);
 }
 

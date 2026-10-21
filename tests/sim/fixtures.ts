@@ -15,13 +15,17 @@ import type {
   ProvinceState,
 } from '../../src/sim/types';
 
+/**
+ * A test pretender: an imprisoned Oracle, cheap enough for any test's scales and absent from the
+ * map until day 1050, so tests see only the nation's starting army.
+ */
 export function pretender(overrides: Partial<PretenderDesign> = {}): PretenderDesign {
   return {
-    chassis: 'titan',
+    chassis: 'oracle',
     pips: {},
     dominion: 5,
     scales: { ...NEUTRAL_SCALES },
-    awakening: 'awake',
+    awakening: 'imprisoned',
     ...overrides,
   };
 }

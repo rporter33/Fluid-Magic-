@@ -36,10 +36,16 @@ import {
   validateGiveMana,
   validateSetResearchColor,
 } from './magic';
+import {
+  applyClaimWellspring,
+  applyMakeProphet,
+  validateClaimWellspring,
+  validateMakeProphet,
+} from './pretender';
 import type { GameState } from '../types';
 import type { Command, CommandResult } from './types';
 
-export type { Command, CommandResult, CommandType, SimpleOrder } from './types';
+export type { Command, CommandResult, CommandType, LoggedCommand, SimpleOrder } from './types';
 
 /** Why a command cannot be applied now, or null when it can. */
 export function validateCommand(state: GameState, cmd: Command): string | null {
@@ -77,6 +83,10 @@ export function validateCommand(state: GameState, cmd: Command): string | null {
       return validateCastRitual(state, cmd);
     case 'giveMana':
       return validateGiveMana(state, cmd);
+    case 'makeProphet':
+      return validateMakeProphet(state, cmd);
+    case 'claimWellspring':
+      return validateClaimWellspring(state, cmd);
     default:
       return 'Unknown command';
   }
@@ -131,6 +141,12 @@ export function applyCommand(state: GameState, cmd: Command): CommandResult {
       break;
     case 'giveMana':
       applyGiveMana(state, cmd);
+      break;
+    case 'makeProphet':
+      applyMakeProphet(state, cmd);
+      break;
+    case 'claimWellspring':
+      applyClaimWellspring(state, cmd);
       break;
   }
   return { ok: true };

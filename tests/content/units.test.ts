@@ -56,13 +56,93 @@ const NOT_RECRUITABLE = [
   'garrison',
 ];
 
+/** Pretender bodies per docs/05: [hp, str, att, def, prot, mor, size, mapSpeed, leadership]. */
+const BODIES: Record<string, readonly number[]> = {
+  oracle: [12, 10, 10, 10, 2, 14, 2, 2, 20],
+  titan: [60, 20, 14, 12, 10, 18, 4, 2, 100],
+  greatWyrm: [120, 24, 15, 10, 16, 20, 6, 2, 20],
+  livingMonolith: [200, 10, 10, 10, 25, 50, 1, 0, 20],
+  wildSpirit: [30, 10, 10, 16, 4, 10, 2, 2, 20],
+  ashColossus: [80, 22, 10, 10, 14, 10, 5, 2, 20],
+};
+
+describe('pretender bodies', () => {
+  it.each(Object.entries(BODIES))('%s matches docs/05 and cannot be recruited', (id, stats) => {
+    const u = unitDef(id as UnitTypeId);
+    expect([u.hp, u.str, u.att, u.def, u.prot, u.mor, u.size, u.mapSpeed]).toEqual(
+      stats.slice(0, 8),
+    );
+    expect(u.commander?.leadership).toBe(stats[8]);
+    expect(u.cost).toBeNull();
+    // Only the Oracle researches.
+    expect(u.commander?.research === false).toBe(id !== 'oracle');
+    for (const n of Object.values(NATIONS))
+      expect(n.commanders as readonly string[]).not.toContain(id);
+  });
+
+  it('give each body its listed traits', () => {
+    expect(unitDef('greatWyrm').tags).toContain('flying');
+    expect(unitDef('greatWyrm').weapons.find((w) => w.range !== undefined)).toMatchObject({
+      dmg: 12,
+      range: 3,
+      ammo: 5,
+    });
+    expect(unitDef('livingMonolith').tags).toContain('immobile');
+    expect(unitDef('wildSpirit').tags).toContain('stealthy');
+    expect(unitDef('wildSpirit').regeneration).toBe(0.1);
+    expect(unitDef('ashColossus').fireShield).toBe(5);
+  });
+
+  it('bring no pips or holy of their own and carry the docs/09 weapons', () => {
+    // A pretender's pips come from its design, and its holy pips are 0 (docs/05 decisions).
+    for (const id of Object.keys(BODIES)) {
+      expect(unitDef(id as UnitTypeId).commander, id).toMatchObject({ pips: {}, holy: 0 });
+    }
+    // Every body but the Monolith has a melee weapon; only the Wyrm has a ranged one.
+    const arms = Object.keys(BODIES).map((id) => [
+      id,
+      unitDef(id as UnitTypeId).weapons.map((w) => [w.name, w.dmg, w.range ?? null]),
+    ]);
+    expect(arms).toEqual([
+      ['oracle', [['Staff', 2, null]]],
+      ['titan', [['Great Sword', 8, null]]],
+      [
+        'greatWyrm',
+        [
+          ['Breath', 12, 3],
+          ['Bite', 10, null],
+        ],
+      ],
+      ['livingMonolith', []],
+      ['wildSpirit', [['Claws', 5, null]]],
+      ['ashColossus', [['Burning Fists', 6, null]]],
+    ]);
+  });
+
+  it('keep each special trait to the one body docs/05 gives it', () => {
+    for (const id of Object.keys(BODIES)) {
+      const u = unitDef(id as UnitTypeId);
+      expect(u.fireShield ?? 0, id).toBe(id === 'ashColossus' ? 5 : 0);
+      expect(u.regeneration ?? 0, id).toBe(id === 'wildSpirit' ? 0.1 : 0);
+      expect(u.tags.includes('flying'), id).toBe(id === 'greatWyrm');
+      expect(u.tags.includes('immobile'), id).toBe(id === 'livingMonolith');
+      expect(u.tags.includes('stealthy'), id).toBe(id === 'wildSpirit');
+    }
+  });
+});
+
 describe('content registry', () => {
   it('validates with no problems', () => {
     expect(validateContent()).toEqual([]);
   });
 
   it('holds exactly the fixture units', () => {
-    const fixture = [...Object.keys(TROOPS), ...Object.keys(COMMANDERS), ...NOT_RECRUITABLE];
+    const fixture = [
+      ...Object.keys(TROOPS),
+      ...Object.keys(COMMANDERS),
+      ...NOT_RECRUITABLE,
+      ...Object.keys(BODIES),
+    ];
     expect(Object.keys(UNITS).sort()).toEqual([...fixture].sort());
   });
 });

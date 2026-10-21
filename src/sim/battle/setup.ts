@@ -1,7 +1,7 @@
 // Builds a BattleSetup from the game (docs/04-battle.md, "Province modifiers"). Every modifier
 // is folded into each unit's stats here, so the resolver stays a pure function of its input.
 import { nationDef, unitDef, type UnitTypeId } from '../../content';
-import { STORM } from '../../content/rules';
+import { PROPHET, STORM } from '../../content/rules';
 import { BATTLE_SPELLS } from '../../content/spells';
 import type { BattleSpellDef } from '../../content/spells/types';
 import { TERRAIN } from '../../content/terrain';
@@ -11,7 +11,7 @@ import { pdForce } from '../pd';
 import { meetsRequirement } from '../pips';
 import { researchLevels } from '../research';
 import { provinceScales, scaleEffect } from '../scales';
-import { starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
+import { isProphet, starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
 import { activeEffects, getMapProvince, getNation, getProvince } from '../state';
 import type { CommanderId, NationId, ProvinceId } from '../ids';
 import type { CommanderState, GameState, Pips, Squad } from '../types';
@@ -52,8 +52,17 @@ interface Context {
   storm: StormState | null;
 }
 
-/** A unit's stats with every modifier; `upkeep` is false for PD, which draws no pay. */
-function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = true): CombatStats {
+/**
+ * A unit's stats with every modifier. `upkeep` is false for units that draw no pay (PD,
+ * summons); `prophet` marks the nation's prophet, which fights blessed and braver.
+ */
+function statsFor(
+  ctx: Context,
+  unit: UnitTypeId,
+  starvedDays: number,
+  upkeep = true,
+  prophet = false,
+): CombatStats {
   const { state, province, side, nation } = ctx;
   const def = unitDef(unit);
   const p = getProvince(state, province);
@@ -78,11 +87,12 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = 
     if (upkeep) mor -= unpaidMoralePenalty(getNation(state, nation).unpaidDays);
   }
   mor -= starvationMoralePenalty(starvedDays);
-  // docs/02 section 8: sacred units carry their nation's bless.
+  // docs/02 section 8: sacred units carry their nation's bless, and so does the prophet.
   const bless =
-    nation !== null && def.tags.includes('sacred')
+    nation !== null && (def.tags.includes('sacred') || prophet)
       ? blessOf(getNation(state, nation).pretender.pips)
       : NO_BLESS;
+  if (prophet) mor += PROPHET.morale;
   att += bless.att;
   defense += bless.def;
   prot += bless.prot;
@@ -122,6 +132,7 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number, upkeep = 
     tags: def.tags,
     regeneration: (def.regeneration ?? 0) + bless.regeneration,
     lifeDrain: bless.lifeDrain,
+    fireShield: def.fireShield ?? 0,
   };
 }
 
@@ -150,7 +161,7 @@ function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
     name: c.name,
     hp: c.hp,
     row: 'rear',
-    stats: statsFor(ctx, c.unit, c.starvedDays),
+    stats: statsFor(ctx, c.unit, c.starvedDays, true, isProphet(ctx.state, c)),
     script: c.script.map((s) => ({ ...s })),
     pips: { ...c.pips },
     holy: c.holy,

@@ -285,3 +285,35 @@ export function isProphet(state: GameState, commander: CommanderState): boolean 
 export function isPretender(state: GameState, commander: CommanderState): boolean {
   return commander.owner !== null && getNation(state, commander.owner).pretenderId === commander.id;
 }
+
+/** A nation's standing, for the victory screen and the headless runner (docs/07). */
+export interface NationSummary {
+  nation: NationId;
+  name: string;
+  provinces: number;
+  population: number;
+  battlesWon: number;
+  battlesLost: number;
+  provincesTaken: number;
+  manaSpent: number;
+  wellsprings: number;
+  eliminated: boolean;
+}
+
+export function nationSummary(state: GameState, nationId: NationId): NationSummary {
+  const nation = getNation(state, nationId);
+  const owned = Object.values(state.provinces).filter((p) => p.owner === nationId);
+  const spent = Object.values(nation.stats.manaSpent).reduce((a, b) => a + b, 0);
+  return {
+    nation: nationId,
+    name: nation.name,
+    provinces: owned.length,
+    population: owned.reduce((n, p) => n + p.pop, 0),
+    battlesWon: nation.stats.battlesWon,
+    battlesLost: nation.stats.battlesLost,
+    provincesTaken: nation.stats.provincesTaken,
+    manaSpent: spent,
+    wellsprings: owned.filter((p) => p.wellspringClaimedBy === nationId).length,
+    eliminated: nation.eliminated,
+  };
+}

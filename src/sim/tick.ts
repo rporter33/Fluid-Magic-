@@ -6,15 +6,21 @@ import { resolveArrivals } from './conflict';
 import { advanceTransits, continueMoves } from './movement';
 import { applyPillage } from './pillage';
 import { growPopulation } from './population';
+import { spreadDominion, updateGodless } from './dominion';
+import { settlePretender } from './pretender';
 import { progressRecruitment } from './recruitment';
 import { progressResearch } from './research';
 import { progressRituals } from './rituals';
 import { progressSieges } from './siege';
 import { allProvinceEconomies } from './selectors';
 import { applySupply } from './supply';
+import { TIME } from '../content/rules';
+import type { NationId } from './ids';
 import type { GameState } from './types';
 import { updateUnrest } from './unrest';
+import { settleVictory } from './victory';
 import { updateExplored, updateSightings } from './visibility';
+import { progressClaims } from './wellsprings';
 
 export function advance(state: GameState): void {
   if (state.result) return;
@@ -25,11 +31,14 @@ export function advance(state: GameState): void {
   progressSieges(state);
   continueMoves(state);
 
-  // 3. Queues: recruitment, construction, rituals, research.
+  // 3. Queues: recruitment, construction, rituals, research, Wellspring claims; the pretender
+  // arrives, returns, or is recalled.
   progressRecruitment(state);
   progressConstruction(state);
   progressRituals(state);
   progressResearch(state);
+  progressClaims(state);
+  for (const id of Object.keys(state.nations) as NationId[]) settlePretender(state, id);
 
   // 4. Economy, pillage, population, unrest, supply. Rates come from one snapshot of the day.
   const economies = allProvinceEconomies(state);
@@ -40,11 +49,16 @@ export function advance(state: GameState): void {
   updateUnrest(state, economies);
   applySupply(state, economies);
 
-  // 5. Last day of a month (day % 30 === 29): dominion spread, monthly effects (Phase 6).
+  // 5. Last day of a month: dominion spreads, then Godless is settled.
+  if (state.day % TIME.daysPerMonth === TIME.daysPerMonth - 1) {
+    spreadDominion(state);
+    updateGodless(state);
+  }
   // 6. Visibility: only the explored lists are stored; armies newly in view are reported.
   updateExplored(state);
   updateSightings(state);
-  // 7. Victory check (Phase 6).
+  // 7. Capitals move, nations fall, and the game may end.
+  settleVictory(state);
 
   state.day += 1;
   // Drop effects that end today, so the state never holds an expired one between ticks.

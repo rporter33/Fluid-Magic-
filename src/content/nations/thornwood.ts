@@ -29,5 +29,6 @@ export const THORNWOOD: NationDef = {
     { commander: 'grovePriest', squads: [] },
   ],
   startingResearch: { color: 'G', level: 1 },
+  chassis: ['wildSpirit', 'livingMonolith'],
   ai: { aggression: 0.4, expansion: 0.6, research: 0.7, pillage: 0.1 },
 };

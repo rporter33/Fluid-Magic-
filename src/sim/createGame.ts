@@ -2,15 +2,15 @@
 // capital, then places nations, capital buildings, garrisons, and starting armies.
 import { isNationDefId, nationDef } from '../content';
 import { CAPITAL_BUILDINGS } from '../content/buildings';
-import { isColor, NATION_BANNERS } from '../content/colors';
+import { NATION_BANNERS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
-import { SCALE_AXES, SCALE_MAX, SCALE_MIN } from '../content/pretenders/scales';
-import { DEFAULT_TAX_RATE, DOMINION, ECONOMY, RESEARCH_LEVEL_POINTS } from '../content/rules';
+import { DEFAULT_TAX_RATE, ECONOMY, RESEARCH_LEVEL_POINTS } from '../content/rules';
 import { generateMap } from '../mapgen/generate';
 import { numbered } from '../mapgen/names';
 import { createCommander, createSquad } from './commanders';
-import { newId, type ProvinceId } from './ids';
+import { newId, type NationId, type ProvinceId } from './ids';
 import { placeIndependents } from './independents';
+import { settlePretender, validatePretender } from './pretender';
 import { createRng } from './rng';
 import { zeroMana } from './selectors';
 import { getProvince } from './state';
@@ -27,21 +27,8 @@ function checkSetup(setup: GameSetup): void {
   }
   for (const { nation, pretender } of setup.nations) {
     if (!isNationDefId(nation)) throw new RangeError(`unknown nation ${String(nation)}`);
-    const { dominion, scales, pips } = pretender;
-    if (!Number.isInteger(dominion) || dominion < DOMINION.min || dominion > DOMINION.max) {
-      throw new RangeError(`dominion must be ${DOMINION.min} to ${DOMINION.max}`);
-    }
-    for (const axis of SCALE_AXES) {
-      const v = scales[axis];
-      if (!Number.isInteger(v) || v < SCALE_MIN || v > SCALE_MAX) {
-        throw new RangeError(`scale ${axis} must be an integer ${SCALE_MIN} to ${SCALE_MAX}`);
-      }
-    }
-    for (const [color, count] of Object.entries(pips)) {
-      if (!isColor(color) || !Number.isInteger(count) || count < 0) {
-        throw new RangeError(`bad pretender pips ${color}`);
-      }
-    }
+    const problem = validatePretender(nationDef(nation), pretender);
+    if (problem !== null) throw new RangeError(problem);
   }
 }
 
@@ -132,6 +119,7 @@ export function createGame(setup: GameSetup): GameState {
         scales: { ...nationSetup.pretender.scales },
       },
       pretenderId: null,
+      pretenderDead: false,
       prophetId: null,
       prophetAvailableDay: 0,
       unpaidDays: 0,
@@ -157,6 +145,8 @@ export function createGame(setup: GameSetup): GameState {
       }
     }
   }
+  // An awake pretender stands in its capital from day 0.
+  for (const id of Object.keys(state.nations) as NationId[]) settlePretender(state, id);
   placeIndependents(state);
   updateExplored(state);
   updateSightings(state);

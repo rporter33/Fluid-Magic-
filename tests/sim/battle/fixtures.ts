@@ -30,6 +30,7 @@ export function statsOf(unit: UnitTypeId, overrides: Partial<CombatStats> = {}):
     tags: d.tags,
     regeneration: d.regeneration ?? 0,
     lifeDrain: 0,
+    fireShield: d.fireShield ?? 0,
     ...overrides,
   };
 }

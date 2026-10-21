@@ -49,9 +49,9 @@ function writeSide(state: GameState, forces: SideForces, result: BattleResult): 
   }
   for (const c of living) {
     const o = result.commanders.get(c.id);
-    // Fighting ends a march through the province; the player orders it again.
     c.transit = null;
-    if (c.order.kind === 'move') c.order = { kind: 'idle' };
+    // A battle ends a march and interrupts a Wellspring claim.
+    if (c.order.kind === 'move' || c.order.kind === 'claimWellspring') c.order = { kind: 'idle' };
     if (!o) continue;
     c.hp = o.hp;
     c.carriedMana = { ...o.carriedMana };

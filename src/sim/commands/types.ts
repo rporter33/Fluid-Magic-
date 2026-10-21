@@ -1,6 +1,6 @@
 // Commands (docs/06-architecture.md, "Commands"): the only way the player and the AI change a
 // game. Each names the nation issuing it; validation rejects anything that nation does not
-// own. Later phases add Wellspring claims and prophets.
+// own.
 import type { UnitTypeId } from '../../content';
 import type { Color } from '../../content/colors';
 import type { ManaAmounts } from '../../content/spells/types';
@@ -10,8 +10,8 @@ import type { CommanderId, NationId, ProvinceId, RecruitId, SquadId } from '../i
 import type { CommanderOrder, Formation, ScriptSlot } from '../types';
 
 /**
- * Orders set by kind alone. Orders that carry progress or targets (move, build, castRitual, and
- * later claimWellspring) come only from their own commands, which compute that state.
+ * Orders set by kind alone. Orders that carry progress or targets (move, build, castRitual,
+ * claimWellspring) come only from their own commands, which compute that state.
  */
 export type SimpleOrder = Extract<
   CommanderOrder['kind'],
@@ -56,7 +56,17 @@ export type Command = { nation: NationId } & (
     }
   /** Hand mana from the national pool to a commander standing in an own lab province. */
   | { type: 'giveMana'; commander: CommanderId; color: Color; amount: number }
+  /** Name the nation's prophet (one at a time; a new one only after the cooldown). */
+  | { type: 'makeProphet'; commander: CommanderId }
+  /** A priest begins the 10-day claim of the Wellspring where it stands. */
+  | { type: 'claimWellspring'; commander: CommanderId }
 );
+
+/** A command as applied on a day, for replaying a game from its log. */
+export interface LoggedCommand {
+  day: number;
+  command: Command;
+}
 
 export type CommandType = Command['type'];
 export type CommandOf<T extends CommandType> = Extract<Command, { type: T }>;

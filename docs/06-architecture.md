@@ -40,6 +40,7 @@ fluid-magic/
         army.ts           # move, reverse, orders, scripts, formations, squads, build
         province.ts       # recruit, cancel, PD, tax, storm
         magic.ts          # research color, rituals, giving mana
+        pretender.ts      # naming a prophet, claiming a Wellspring
         check.ts          # ownership lookups shared by validators
       economy.ts          # gold, mana, upkeep, fort materials (daily accrual)
       supply.ts           # starvation and healing
@@ -48,7 +49,8 @@ fluid-magic/
       buildings.ts        # construction cost, time, and progress
       population.ts
       unrest.ts
-      dominion.ts         # dominion pushes (rituals now, monthly spread in Phase 6)
+      dominion.ts         # dominion pushes, the monthly spread, Godless
+      pretender.ts        # design costs and validation; the pretender's arrival and recall
       scales.ts           # effective scales of a province
       research.ts         # research points, levels, the daily research step
       pips.ts             # pips against spell requirements
@@ -63,8 +65,8 @@ fluid-magic/
       capture.ts          # a province changing hands
       rituals.ts          # who may cast what where, payment, the daily ritual step
       ritualEffects.ts    # the ritual primitives
-      wellsprings.ts
-      victory.ts
+      wellsprings.ts      # Wellspring claims
+      victory.ts          # capital moves, elimination, the game's result
       visibility.ts       # fog of war
       battle/
         types.ts          # BattleSetup, CombatStats, BattleResult
@@ -95,6 +97,7 @@ fluid-magic/
         common.ts         # independents, summons shared across nations, the garrison holder
         cinderHorde.ts
         thornwood.ts
+        pretenders.ts     # one body per chassis
       nations/
         cinderHorde.ts
         thornwood.ts
@@ -109,8 +112,10 @@ fluid-magic/
                           # white.ts blue.ts black.ts are M2 (docs/02 decisions)
       pretenders/
         chassis.ts
+        costs.ts          # design points: budget, pips, dominion, scales, awakening
         scales.ts         # the five axes with per-pole effects
         presets.ts
+        types.ts          # PretenderDesign, awakenings
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
     mapgen/
@@ -125,8 +130,12 @@ fluid-magic/
       names.ts            # unique province names
       size.ts             # province count, Wellspring count, map dimensions
       validate.ts         # validateMap: the rules a generated map must satisfy
-    ai/
-      ai.ts               # runAi(state, nationId): Command[]  called every 5 days per AI nation
+    ai/                   # PURE, like sim
+      rng.ts              # each AI call's private random stream
+      driver.ts           # playDay: advance, then the AI nations' commands; replayLog
+      dummy.ts            # the Phase 6 random dummy
+      match.ts            # runMatch: a whole AI game, for the runner and tests
+      ai.ts               # runAi(state, nationId): Command[] (Phase 7)
       economy.ts expansion.ts military.ts research.ts
     render/
       MapRenderer.ts      # Pixi app for the strategic map
@@ -153,6 +162,9 @@ fluid-magic/
     mapgen/*.test.ts      # one file per mapgen module; fixtures.ts holds shared helpers
     battle/*.test.ts
     content/validate.test.ts
+    ai/*.test.ts
+  scripts/
+    aivai.ts              # headless AI vs AI runner (npm run sim:aivai)
   docs/
 ```
 
@@ -276,7 +288,8 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
 - **Ids**: one counter (`GameState.nextId`) shared by every kind; an id is a kind prefix
   plus the counter value (`c12`, `sq13`, `p0`). Ids are branded string types
   (`CommanderId`, `SquadId`, ...) so kinds cannot be mixed up at compile time.
-- **Purity guard**: `src/sim`, `src/mapgen`, and `src/content` are checked three ways:
+- **Purity guard**: `src/sim`, `src/mapgen`, `src/content`, and (Phase 6) `src/ai` are checked
+  three ways:
   ESLint restrictions (no `Math.random`, `Date`, `performance`, `crypto`, no render/ui or
   framework imports), a source-scan test (`tests/sim/purity.test.ts`), and a second
   `tsc` pass (`tsconfig.sim.json`) without DOM or Node typings. Content is included
@@ -352,4 +365,17 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
 - **Content validation** checks every spell: its requirement parses and holds its color,
   levels and numbers are in range, every unit it names exists, and every primitive is one of
   docs/02 section 5 with valid fields.
-
+- **Pretender and victory** (Phase 6): commands `{ type: 'makeProphet', nation, commander }`
+  and `{ type: 'claimWellspring', nation, commander }`. `NationState` gained `pretenderDead`;
+  the pretender is on the map exactly when `pretenderId` is set, and its arrival day comes
+  from its design's awakening. `CombatStats` gained `fireShield`. Tick step 3 now ends with
+  Wellspring claims and then each nation's pretender (arrival, recall, return); step 5, on a
+  month's last day, spreads dominion and settles Godless; step 7 moves capitals, eliminates
+  nations, and sets `state.result`.
+- **The AI driver** (Phase 6): `playDay(state, player)` in `src/ai/driver.ts` is the game
+  loop's AI step for the browser and the headless runner alike. It advances one day; then,
+  unless the game has ended, each AI nation still in the game whose planning day it is
+  (`state.day % planEveryDays === 0`, counted after the advance) has its commands applied in
+  order through `applyCommand`. A refused command is recorded and skipped, never fatal.
+  Applied commands are logged with their day, and `replayLog` plays such a log back on a new
+  game without the AI, reaching the same state hash.

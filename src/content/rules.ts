@@ -97,6 +97,22 @@ export const MANA = {
 export const DOMINION = {
   min: 1,
   max: 10,
+  /** Monthly spread checks (docs/01 section 12). */
+  capitalChecks: 3,
+  templeChecks: 1,
+  pretenderChecks: 2,
+  prophetChecks: 1,
+  /** A priest preaching where its nation owns a temple makes one more check. */
+  templePreachBonus: 1,
+  /** A check lands on its own province this often, else on a random neighbor. */
+  sameProvinceChance: 0.4,
+  /** A check succeeds when 1dcheckDie is at most the nation's dominion score. */
+  checkDie: 10,
+} as const;
+
+/** docs/01 section 13. */
+export const WELLSPRING = {
+  claimDays: 10,
 } as const;
 
 export const MESSAGES = {
@@ -196,6 +212,9 @@ export const STORM = {
 /** docs/05-pretender.md, "Prophet": a new prophet may be named this long after one dies. */
 export const PROPHET = {
   cooldownDays: 24 * TIME.daysPerMonth,
+  /** The prophet's holy pips are raised to this, and it fights with this much more morale. */
+  holy: 3,
+  morale: 1,
 } as const;
 
 /** docs/04-battle.md, "Scripts": script slots per commander. */

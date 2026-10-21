@@ -6,7 +6,7 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const ROOT = resolve(import.meta.dirname, '../..');
-const PURE_DIRS = ['src/sim', 'src/mapgen', 'src/content'];
+const PURE_DIRS = ['src/sim', 'src/mapgen', 'src/content', 'src/ai'];
 const FORBIDDEN_DIRS = ['src/render', 'src/ui'].map((d) => join(ROOT, d));
 const FORBIDDEN_PACKAGES = ['react', 'react-dom', 'pixi.js', 'zustand', 'idb-keyval'];
 

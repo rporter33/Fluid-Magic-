@@ -1,5 +1,5 @@
 {
-  // Pure code (sim, mapgen, content) checked without DOM or Node typings, so any
+  // Pure code (sim, mapgen, content, ai) checked without DOM or Node typings, so any
   // browser or host API used there fails to compile. See CLAUDE.md non-negotiables.
   "extends": "./tsconfig.json",
   "compilerOptions": {
@@ -7,5 +7,5 @@
     "types": [],
     "jsx": "preserve"
   },
-  "include": ["src/sim", "src/mapgen", "src/content"]
+  "include": ["src/sim", "src/mapgen", "src/content", "src/ai"]
 }

@@ -148,4 +148,5 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Default spells** (Phase 5): Pyre and Grove Priests carry `defaultSpell: 'bless'`, so their
   default script casts Bless. Whether a commander gets a caster script follows its own pips
   and holy pips, not only its unit's.
-
+- **Chassis that fit** (Phase 6, for the pretender screen to highlight): Cinder Horde, Titan
+  and Ash Colossus; Thornwood, Wild Spirit and Living Monolith (`NationDef.chassis`).

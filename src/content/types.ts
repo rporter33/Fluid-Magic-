@@ -64,6 +64,8 @@ export interface CommanderTraits {
   garrison?: boolean;
   /** The battle spell its default script casts (a spell id); else its best castable spell. */
   defaultSpell?: string;
+  /** False for bodies that may not research despite their pips (pretenders but the Oracle). */
+  research?: false;
 }
 
 export interface UnitDef {
@@ -87,6 +89,8 @@ export interface UnitDef {
   tags: readonly UnitTag[];
   /** Fraction of max HP regained per battle round. */
   regeneration?: number;
+  /** Fire damage dealt to each melee striker per hit landed on this unit (Ash Colossus). */
+  fireShield?: number;
   /** Null for units that cannot be recruited (summons, independents). */
   cost: UnitCost | null;
   /** Troops: days per batch of 10. Commanders: days per unit. 0 when not recruitable. */
@@ -127,6 +131,8 @@ export interface NationDef {
   homeTerrain: { terrain: TerrainId; def: number } | null;
   startingArmy: readonly StartingCommander[];
   startingResearch: { color: Color; level: number };
+  /** The two chassis that fit the nation, highlighted on the pretender screen (docs/05). */
+  chassis: readonly [string, string];
   ai: AiPersonality;
 }
 

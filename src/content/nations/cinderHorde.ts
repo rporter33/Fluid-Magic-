@@ -37,5 +37,6 @@ export const CINDER_HORDE: NationDef = {
     { commander: 'pyrePriest', squads: [] },
   ],
   startingResearch: { color: 'R', level: 1 },
+  chassis: ['titan', 'ashColossus'],
   ai: { aggression: 0.8, expansion: 0.8, research: 0.4, pillage: 0.6 },
 };

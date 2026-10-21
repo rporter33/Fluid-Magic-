@@ -48,6 +48,15 @@ the truth for current values.
 | 2026-10-21 | 02 §3 | Fatigue thresholds | cannot act at 100, unconscious at 200 | no action at 100 or more; 200 the same in M1 | Only drains can reach 200 and no M1 spell drains |
 | 2026-10-21 | 02 §4 vs 09 checklist | Research to level 4 | "level 4 by month 24 with 4 mages" | unchanged formula | Conflict: four apprentices from level 1 reach level 4 on day 660 at neutral scales but on day 825 at capital Fury −2 (the Warlord and Wildfire presets); adepts make it. Phase 12 decides between retuning and changing the checklist |
 | 2026-10-21 | 04 | Armor piercing | halves protection | floor(prot * 0.5), in content | The doc gives no rounding |
+| 2026-10-21 | 05 Presets | Deep Root dominion | 8 | 7 | Dominion 8 costs 425 of the 400 budget (awake, no refund); 7 costs 395 |
+| 2026-10-21 | 05 | Pretender leadership | Titan 100, others unlisted | 20 for Oracle, Great Wyrm, Living Monolith, Wild Spirit, Ash Colossus | An escort, and room for the summon rituals the Monolith is built to cast |
+| 2026-10-21 | 05 | Pretender weapons | unlisted | Titan Great Sword 8; Great Wyrm Bite 10 plus breath 12 (range 3, ammo 5); Ash Colossus Burning Fists 6; Wild Spirit Claws 5; Oracle Staff 2; Monolith none | Every fighting body needs a melee weapon; the Monolith only casts |
+| 2026-10-21 | 05 | Wild Spirit regeneration | "regeneration" | 10% of max HP per round | The docs give no amount |
+| 2026-10-21 | 05 | Fire shield | 5 fire damage to melee attackers | 5 per melee hit that deals damage, no protection, after the phase | Per hit, like life drain |
+| 2026-10-21 | 05 | Awakening arrival | Month 12 / Month 36 | day 330 / day 1050 (the first day of those months) | 30-day months |
+| 2026-10-21 | 01 §12 | Spread rolls | unspecified | 40% own province, else a uniform neighbor; d10 ≤ score at the start of the month's spread | Fixed per spread so the shuffle order does not change the odds |
+| 2026-10-21 | 01 §12 | Temple preach bonus | +1 preach (section 7) | one extra check for a priest preaching in a province with a temple its nation owns | Section 7's bonus in section 12's terms |
+| 2026-10-21 | 01 §13 | Wellspring claim | 10 days | 10 days, in tick step 3; any order, move, battle, or loss of the province ends it | Uninterrupted, as the docs say |
 
 ## Playtest checklist (run before calling M1 done)
 
