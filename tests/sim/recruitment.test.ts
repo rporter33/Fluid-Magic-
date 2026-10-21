@@ -28,12 +28,12 @@ function recruit(
 
 /** Red's capital with gold in the treasury and materials in its fort pool. */
 function setup(state = twoNationGame()) {
-  const red = nationIds(state)[0]!;
+  const [red, green] = nationIds(state) as [NationId, NationId];
   const capital = capitalOf(state, red);
   capital.materials = 1000;
   state.nations[red]!.gold = 5000;
   const garrison = state.commanders[capital.garrison!]!;
-  return { state, red, capital, garrison };
+  return { state, red, green, capital, garrison };
 }
 
 describe('recruiting troops', () => {
@@ -170,6 +170,18 @@ describe('recruit time and cost', () => {
     state.nations[green]!.pretender.scales.wild = 3;
     expect(recruitGold(state, deepmoss.id, 'wolfRider', 10)).toBeCloseTo(260 * 0.7, 9);
     expect(recruitGold(state, deepmoss.id, 'warden', 10)).toBe(140);
+    deepmoss.materials = 1000;
+    state.nations[green]!.gold = 1000;
+    expect(
+      applyCommand(state, {
+        type: 'recruit',
+        nation: green,
+        province: deepmoss.id,
+        unit: 'wolfRider',
+        count: 10,
+      }),
+    ).toEqual({ ok: true });
+    expect(state.nations[green]!.gold).toBeCloseTo(1000 - 260 * 0.7, 9);
   });
 });
 
@@ -212,6 +224,33 @@ describe('recruit validation', () => {
     expect(recruit(state, red, capital.id, 'cinderWarrior', 1).ok).toBe(false);
   });
 
+  it('pauses the queue while unrest is above 50', () => {
+    const { state, red, capital, garrison } = setup();
+    recruit(state, red, capital.id, 'ashMilitia', 10);
+    for (let day = 0; day < 5; day++) {
+      capital.unrest = 51;
+      runDays(state, 1);
+    }
+    expect(capital.recruitQueue[0]!.daysLeft).toBe(8);
+    expect(garrison.squads).toEqual([]);
+  });
+
+  it('refuses to cancel while the fort is besieged', () => {
+    const { state, red, green, capital } = setup();
+    recruit(state, red, capital.id, 'ashMilitia', 10);
+    capital.siege = { attacker: green, wallHp: 300 };
+    const cancel = () =>
+      applyCommand(state, {
+        type: 'cancelRecruit',
+        nation: red,
+        province: capital.id,
+        recruit: capital.recruitQueue[0]!.id,
+      });
+    expect(cancel()).toEqual({ ok: false, error: 'Cannot change the queue during a siege' });
+    capital.siege = null;
+    expect(cancel()).toEqual({ ok: true });
+  });
+
   it('is blocked by a siege and by unrest above 50, which also pause the queue', () => {
     const { state, red, capital, garrison } = setup();
     const green = nationIds(state)[1]!;
@@ -237,8 +276,8 @@ describe('cancelling and losing the fort', () => {
     recruit(state, red, capital.id, 'cinderWarrior', 10);
     const [first, second] = capital.recruitQueue;
     const gold = state.nations[red]!.gold;
-    const cancel = (order: RecruitId) =>
-      applyCommand(state, { type: 'cancelRecruit', nation: red, province: capital.id, order });
+    const cancel = (recruit: RecruitId) =>
+      applyCommand(state, { type: 'cancelRecruit', nation: red, province: capital.id, recruit });
     // Below the cap by 110: the warriors' 80 materials come back in full.
     expect(capital.materials).toBeCloseTo(cap - 110, 9);
     expect(cancel(second!.id)).toEqual({ ok: true });
@@ -263,9 +302,14 @@ describe('cancelling and losing the fort', () => {
     const green = nationIds(state)[1]!;
     recruit(state, red, capital.id, 'ashMilitia', 10);
     capital.owner = green;
-    const order = capital.recruitQueue[0]!.id;
+    const item = capital.recruitQueue[0]!.id;
     expect(
-      applyCommand(state, { type: 'cancelRecruit', nation: green, province: capital.id, order }).ok,
+      applyCommand(state, {
+        type: 'cancelRecruit',
+        nation: green,
+        province: capital.id,
+        recruit: item,
+      }).ok,
     ).toBe(false);
   });
 

@@ -4,8 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { applyCommand, validateCommand, type Command } from '../../../src/sim/commands';
 import type { NationId, RecruitId } from '../../../src/sim/ids';
 import { stateHash } from '../../../src/sim/hash';
+import { advance } from '../../../src/sim/tick';
 import type { GameState } from '../../../src/sim/types';
-import { capitalOf, commandersIn, nationIds, twoNationGame } from '../fixtures';
+import { addArmy, capitalOf, commandersIn, nationIds, twoNationGame } from '../fixtures';
 
 /** One of each command, issued by `nation` against `target`'s commanders and capital. */
 function commandsAgainst(state: GameState, nation: NationId, target: NationId): Command[] {
@@ -25,7 +26,7 @@ function commandsAgainst(state: GameState, nation: NationId, target: NationId): 
     { type: 'transferSquad', nation, from: army.id, to: other.id, squad },
     { type: 'build', nation, province: capital.id, commander: army.id, building: 'temple' },
     { type: 'recruit', nation, province: capital.id, unit: 'ashMilitia', count: 1 },
-    { type: 'cancelRecruit', nation, province: capital.id, order: 'rq0' as RecruitId },
+    { type: 'cancelRecruit', nation, province: capital.id, recruit: 'rq0' as RecruitId },
     { type: 'buyPd', nation, province: capital.id, levels: 1 },
     { type: 'setTax', nation, province: capital.id, rate: 'high' },
   ];
@@ -44,6 +45,55 @@ describe('validateCommand', () => {
       if (!result.ok) expect(result.error, cmd.type).toMatch(/not yours$/);
       expect(JSON.stringify(state)).toBe(before);
     }
+  });
+
+  it('checks every commander and province named, not just the first', () => {
+    const state = twoNationGame();
+    const [red, green] = nationIds(state) as [NationId, NationId];
+    const capital = capitalOf(state, red).id;
+    const own = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;
+    const adept = commandersIn(state, capital).find((c) => c.unit === 'emberAdept')!;
+    const visitor = addArmy(state, green, capital, 'warden', 5, 'wardenCaptain');
+    const next = state.map.provinces[capital]!.neighbors[0]!;
+    const before = JSON.stringify(state);
+    const tries: Command[] = [
+      { type: 'move', nation: red, commanders: [own.id, visitor.id], path: [next] },
+      {
+        type: 'transferSquad',
+        nation: red,
+        from: own.id,
+        to: visitor.id,
+        squad: own.squads[0]!.id,
+        count: 1,
+      },
+    ];
+    for (const cmd of tries) {
+      expect(applyCommand(state, cmd)).toEqual({ ok: false, error: 'That commander is not yours' });
+    }
+    expect(JSON.stringify(state)).toBe(before);
+    // A Thornwood province with no temple, with Red's commanders standing in it.
+    const theirs = state.provinces[next]!;
+    theirs.owner = green;
+    theirs.buildings = ['lab'];
+    own.location = theirs.id;
+    adept.location = theirs.id;
+    expect(
+      applyCommand(state, {
+        type: 'build',
+        nation: red,
+        province: theirs.id,
+        commander: own.id,
+        building: 'temple',
+      }),
+    ).toEqual({ ok: false, error: 'That province is not yours' });
+    expect(
+      applyCommand(state, {
+        type: 'setOrder',
+        nation: red,
+        commander: adept.id,
+        order: 'research',
+      }),
+    ).toEqual({ ok: false, error: 'Research needs a lab in a province you own' });
   });
 
   it('rejects independents as targets too', () => {
@@ -117,9 +167,14 @@ describe('applyCommand', () => {
     const script: Command = { type: 'setScript', nation: red, commander: army.id, slots };
     expect(applyCommand(state, move)).toEqual({ ok: true });
     expect(applyCommand(state, script)).toEqual({ ok: true });
+    // A second move given on the march keeps its whole path: it must be a copy too.
+    advance(state);
+    const onTheWay: Command = { type: 'move', nation: red, commanders: [army.id], path: [b] };
+    expect(applyCommand(state, onTheWay)).toEqual({ ok: true });
     const hash = stateHash(state);
     move.path.push(a);
     move.commanders.length = 0;
+    onTheWay.path.push(a);
     slots[0] = { kind: 'retreat' };
     slots.pop();
     expect(stateHash(state)).toBe(hash);

@@ -2,7 +2,7 @@
 import { unitDef, type UnitTypeId } from '../content';
 import { ECONOMY, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
-import { newId, type NationId, type ProvinceId } from './ids';
+import { newId, type CommanderId, type NationId, type ProvinceId } from './ids';
 import { chance } from './rng';
 import type { CommanderState, Formation, GameState, ScriptSlot, Squad } from './types';
 
@@ -48,6 +48,14 @@ export function addSquad(commander: CommanderState, squad: Squad): void {
   match.count += squad.count;
   match.hp += squad.hp;
   match.starvedDays = Math.max(match.starvedDays, squad.starvedDays);
+}
+
+/**
+ * Takes a commander out of the game. Deleting the key keeps the record's identity and the
+ * order of the other commanders, so saves and hashes stay stable.
+ */
+export function removeCommander(state: GameState, id: CommanderId): void {
+  Reflect.deleteProperty(state.commanders, id);
 }
 
 /** Adds a commander to the game; adept-tier mages roll their extra pip here. */

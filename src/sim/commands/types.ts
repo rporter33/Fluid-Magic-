@@ -33,7 +33,7 @@ export type Command = { nation: NationId } & (
   | { type: 'build'; province: ProvinceId; commander: CommanderId; building: BuildingId }
   | { type: 'recruit'; province: ProvinceId; unit: UnitTypeId; count: number }
   /** By id, so an item finishing between a render and a click cannot shift the target. */
-  | { type: 'cancelRecruit'; province: ProvinceId; order: RecruitId }
+  | { type: 'cancelRecruit'; province: ProvinceId; recruit: RecruitId }
   | { type: 'buyPd'; province: ProvinceId; levels: number }
   | { type: 'setTax'; province: ProvinceId; rate: TaxRate }
 );

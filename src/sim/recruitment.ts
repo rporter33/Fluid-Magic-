@@ -3,7 +3,7 @@
 // Completed troops join the fort's garrison holder; completed commanders stand in the fort.
 import { nationDef, unitDef, type UnitTypeId } from '../content';
 import { RECRUITMENT, UNREST } from '../content/rules';
-import { addSquad, createCommander, createSquad } from './commanders';
+import { addSquad, createCommander, createSquad, removeCommander } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
 import { provinceScales, scaleEffect } from './scales';
@@ -56,7 +56,9 @@ export function recruitDays(
 /** Why a fort cannot recruit or progress its queue right now, or null. */
 export function recruitBlock(province: ProvinceState): string | null {
   if (province.siege !== null) return 'the fort is besieged';
-  if (province.unrest > UNREST.recruitBlockAbove) return 'unrest is above 50';
+  if (province.unrest > UNREST.recruitBlockAbove) {
+    return `unrest is above ${UNREST.recruitBlockAbove}`;
+  }
   return null;
 }
 
@@ -101,12 +103,7 @@ export function garrisonOf(state: GameState, provinceId: ProvinceId): CommanderS
  */
 export function replaceGarrison(state: GameState, provinceId: ProvinceId): void {
   const p = getProvince(state, provinceId);
-  const old = p.garrison;
-  if (old !== null) {
-    state.commanders = Object.fromEntries(
-      Object.entries(state.commanders).filter(([id]) => id !== old),
-    );
-  }
+  if (p.garrison !== null) removeCommander(state, p.garrison);
   p.garrison =
     p.owner !== null && p.buildings.includes('fort')
       ? createCommander(state, 'garrison', p.owner, provinceId).id

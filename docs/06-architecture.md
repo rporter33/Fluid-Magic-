@@ -285,9 +285,11 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   start of step 4, so the UI and the simulation cannot disagree. Pure helpers that apply
   rules read their numbers from `src/content`; the sim hard-codes none.
 - **Commands** (Phase 3): every command carries the issuing `nation`, and validation checks
-  every commander and province it names against that nation, so "rejects commands against
-  units the nation does not own" has a subject. Fields are named for what they hold
-  (`commanders`, `commander`, `squad`, `from`, `to`, `province`, `unit`, `building`).
+  every commander it names, and every province except the steps of a move path, against
+  that nation, so "rejects commands against units the nation does not own" has a subject.
+  Fields are named for what they hold (`commanders`, `commander`, `squad`, `from`, `to`,
+  `province`, `unit`, `count`, `building`, `levels`, `rate`, `recruit` for a queue item id,
+  and `order` for an order kind).
   `validateCommand(state, cmd)` returns an error string or null; `applyCommand(state, cmd)`
   validates, then applies, and returns `{ ok: true }` or `{ ok: false, error }`. Applying
   copies every array it stores, so state never shares objects with a command. `setOrder`

@@ -21,8 +21,12 @@ function addWithin(
 ): void {
   into.add(origin);
   if (radius <= 0) return;
-  if (radius === 1) {
-    for (const n of getMapProvince(state, origin).neighbors) into.add(n);
+  // Sights of 1 and 2 (every commander and scout in M1) expand directly; `into` dedupes.
+  if (radius <= 2) {
+    for (const n of getMapProvince(state, origin).neighbors) {
+      into.add(n);
+      if (radius === 2) for (const m of getMapProvince(state, n).neighbors) into.add(m);
+    }
     return;
   }
   let frontier = [origin];

@@ -321,16 +321,19 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Hostile provinces**: a province is hostile to a nation if it does not own it, or if a
   commander of another owner is present in it (in transit or not; garrison holders never
   count, and neither do commanders hidden by stealth, since a refused path would give them
-  away; a besieged fort is hostile to its owner's arrivals). A move ends on arrival in a hostile province; Phase 4 fights there.
-  Paths may cross only friendly provinces, so only the last province of a path may be
-  hostile; the pathfinder and move validation both enforce this. A stealthy scout that
-  enters a hostile province stops there like any army.
+  away). A besieged fort is hostile to its owner's arrivals because its besiegers stand in
+  it. A move ends on arrival in a hostile province; Phase 4 fights there. Paths may cross
+  only friendly provinces, so only the last province of a path may be hostile; the
+  pathfinder and move validation both enforce this, and `findPathFor` gives a group exactly
+  the path validation accepts (none while its leg ends among hostiles). A stealthy scout
+  that enters a hostile province stops there like any army.
 - **Movement within a day** (step 2): every transit advances; arrivals settle (Phase 4
   battles go here); then commanders with a move order start their next leg the same day.
   Commanders passing through therefore stand in the province while arrivals are resolved.
 - **Location** is always the last province a commander stood in, and a commander is present
-  there for every purpose, in transit or not: supply, vision, hostility, and (Phase 4)
-  battles. A reversal swaps the leg's ends and turns the days walked into the days back
+  there in transit or not for supply, vision, hostility, and (Phase 4) battles. Acting there
+  needs it to stand still: squad transfers, Build orders, and research are refused on the
+  march, priests calm unrest and armies pillage only while standing. A reversal swaps the leg's ends and turns the days walked into the days back
   (section 6), but the commander never reached the far end, so its location, supply,
   vision, and `cameFrom` stay those of the province it left. Reversing a leg not yet begun cancels it. A reversed commander stops when
   it gets back. A new path for a commander in transit starts where its current leg ends.
@@ -349,9 +352,11 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   gold per Wild step. The queue pauses while the fort is besieged or its unrest is above 50,
   and queueing is refused then. A finished item waits until the province has the population
   it costs. Completed troops join the fort's garrison holder; commanders stand in the fort.
-  Items queued by a nation that no longer owns the fort are dropped. Cancelling returns the
-  gold in full and the materials only up to the fort's pool cap, so the queue cannot bank
-  materials past the cap.
+  Items queued by a nation that no longer owns the fort are dropped without refund. The
+  recruit and build time percentages are summed into one factor, `max(0, 1 + sum)`.
+  Cancelling returns the gold in full and the materials only up to the fort's pool cap, so
+  the queue cannot bank materials past the cap; a besieged fort's queue is frozen and cannot
+  be cancelled from.
 - **Garrison holder**: exactly one per fort, owned by the fort's owner and standing there;
   createGame sets this up. A fort that changes hands (Phase 4 capture) gets a new holder, and
   the old one is removed with any troops it still keeps.

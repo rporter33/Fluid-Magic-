@@ -58,7 +58,9 @@ export function validateCancelRecruit(
 ): string | null {
   const p = ownProvince(state, cmd.nation, cmd.province);
   if (!p) return NOT_YOURS;
-  if (!p.recruitQueue.some((r) => r.id === cmd.order && r.nation === cmd.nation)) {
+  // A besieged fort's queue is frozen, and its pool has no cap to refund into.
+  if (p.siege !== null) return 'Cannot change the queue during a siege';
+  if (!p.recruitQueue.some((r) => r.id === cmd.recruit && r.nation === cmd.nation)) {
     return 'No such queue item';
   }
   return null;
@@ -70,7 +72,7 @@ export function validateCancelRecruit(
  */
 export function applyCancelRecruit(state: GameState, cmd: CommandOf<'cancelRecruit'>): void {
   const p = getProvince(state, cmd.province);
-  const index = p.recruitQueue.findIndex((r) => r.id === cmd.order);
+  const index = p.recruitQueue.findIndex((r) => r.id === cmd.recruit);
   if (index < 0) return;
   const [item] = p.recruitQueue.splice(index, 1);
   if (!item) return;

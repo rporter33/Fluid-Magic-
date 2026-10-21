@@ -76,7 +76,7 @@
   Medium game (110 provinces, 220 commanders, some pillaging) runs about 0.7 ms per day
   after the review's performance fixes, against the 2 ms budget.
 
-## Phase 3: Commanders, movement, recruitment, independents (in review)
+## Phase 3: Commanders, movement, recruitment, independents (done)
 
 - `src/sim/commands/`: the Command union and `validateCommand` / `applyCommand` for move,
   reverse, setOrder, setScript, setFormation, transferSquad, build, recruit, cancelRecruit,
@@ -96,6 +96,16 @@
   every command refused against another nation's units; independents per terrain; fog; and
   acceptance criterion 4: a 365-day command log replays to the same state hash, also through
   a save and load.
+- A design review (4 lenses, 31 issues, two independent judges) settled the rules recorded in
+  the docs; the main changes were keeping a reversing commander where it last stood,
+  commander speed 3, Wild and Artifice on recruit time, one squad per unit and row, paths only
+  through friendly provinces, and garrison holders that take no orders. A code review (4
+  lenses, each finding re-checked by a skeptic) found one rules gap (cancelling during a
+  siege lost the materials; now refused), a pathfinder that could offer a path validation
+  refuses (now `findPathFor`), arrival handling over budget under heavy marching, and 28
+  ways to break the code that no test caught. Each of those 28 mutations now fails the suite.
+- Speed: a 4-nation Medium game (110 provinces) with 326 commanders runs about 1.6 ms per
+  day; with 200 armies all marching on long paths, about 1.9 ms (docs/06 budget: 2 ms).
 
 ## Deviations from the docs
 
@@ -104,6 +114,12 @@
 - Map rules settled in Phase 1 (province count by size and nation count, capital terrain
   from the nation, Wellspring separation and fairness, even spring colors, and more) are
   listed at the end of `docs/01-core-rules.md`. Their numbers are in `docs/09-balance.md`.
+- Rules settled in Phase 3 (commander speed 3, whole-day legs, hostile provinces, paths only
+  through friendly provinces, location kept on reversal, squad merging, recruit time and
+  refunds, garrison holders, independents' pools, fog and sightings) are listed at the end of
+  `docs/01-core-rules.md`; the command API's departures from the `docs/06` sketch (explicit
+  `nation`, field names, `setOrder` by kind, `cancelRecruit` by id, the `commands/` folder)
+  at the end of `docs/06-architecture.md`; numbers in `docs/09-balance.md`.
 - Economy rules settled in Phase 2 (daily application of monthly rates, upkeep shortfall
   and recovery, materials cap, supply in transit, pillage order, construction) are listed
   at the end of `docs/01-core-rules.md`. `GameState` differs from the
@@ -122,9 +138,12 @@
   exact shares and clustering. Pinning one seed's terrain would catch it but would churn on
   every deliberate generator change.
 - For later phases: `wellspringsToWin` (majority of Wellsprings) lives in
-  `src/mapgen/placement.ts`; Phase 6 victory should reuse it. The docs give independent
-  troop pools for plains, forest, hills, mountains, and swamp but not for farmland or
-  wasteland (Phase 3).
+  `src/mapgen/placement.ts`; Phase 6 victory should reuse it. (Resolved in Phase 3: farmland
+  and wasteland use the plains independent pool.)
+- Until Phase 4 brings battles, an army that marches into an independent or enemy province
+  simply stops there, stands beside the defenders, and can pillage.
+- The UI and AI should use `findPathFor` (not `findPath` from a leg's end) so previews match
+  what move validation accepts.
 - Supply conflict: at pop / 50, Hills supply is 100 to 160 a day, so the balance checklist
   item "armies larger than 60 troops in a Hills province starve within a month" cannot pass.
   Phase 12 decides between retuning (about pop / 250) and changing the checklist.

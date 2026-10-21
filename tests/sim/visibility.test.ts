@@ -69,6 +69,47 @@ describe('vision', () => {
   });
 });
 
+describe('vision of ordinary commanders and garrisons', () => {
+  it('lets any commander see its neighbors, from where it last stood while marching', () => {
+    const { state, red, capital } = setup();
+    const chief = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;
+    const far = Object.keys(state.map.provinces).find(
+      (p) => !ball(state, capital, 4).has(p as ProvinceId),
+    ) as ProvinceId;
+    chief.location = far;
+    for (const p of ball(state, far, 1)) expect(visionOf(state, red).has(p)).toBe(true);
+    const beyond = state.map.provinces[far]!.neighbors.find(
+      (n) => !ball(state, capital, 3).has(n),
+    )!;
+    chief.transit = { from: far, to: beyond, progress: 3, totalDays: 4 };
+    const ahead = state.map.provinces[beyond]!.neighbors.filter((n) => !ball(state, far, 1).has(n));
+    const vision = visionOf(state, red);
+    for (const p of ahead) {
+      if (!ball(state, capital, 2).has(p)) expect(vision.has(p)).toBe(false);
+    }
+  });
+
+  it('hides an empty garrison and shows one that keeps troops', () => {
+    const { state, red, green } = setup();
+    const deepmoss = capitalOf(state, green).id;
+    const holder = state.commanders[state.provinces[deepmoss]!.garrison!]!;
+    addArmy(state, red, deepmoss, 'cinderWarrior', 1);
+    expect(holder.squads).toEqual([]);
+    expect(visibleCommanders(state, red)).not.toContain(holder);
+    holder.squads.push(...addArmy(state, green, deepmoss, 'warden', 3, 'wardenCaptain').squads);
+    expect(visibleCommanders(state, red)).toContain(holder);
+  });
+
+  it('still shows an enemy army marching out of a province in sight', () => {
+    const { state, red, green, capital } = setup();
+    const next = state.map.provinces[capital]!.neighbors[0]!;
+    const out = state.map.provinces[next]!.neighbors.find((n) => !ball(state, capital, 2).has(n))!;
+    const foe = addArmy(state, green, next, 'warden', 5, 'wardenCaptain');
+    foe.transit = { from: next, to: out, progress: 3, totalDays: 4 };
+    expect(visibleCommanders(state, red)).toContain(foe);
+  });
+});
+
 describe('explored', () => {
   it('starts with the capital and what the scout sees, and grows as scouts and borders move', () => {
     const { state, red, capital, scout } = setup();
@@ -115,6 +156,27 @@ describe('independent strength', () => {
       (p) => !ball(state, near, 2).has(p as ProvinceId),
     ) as ProvinceId;
     expect(independentStrengthView(state, red, near)).toEqual({ word: 'weak', exact: null });
+    // Two steps away is not next to it.
+    const twoAway = Object.keys(state.map.provinces).find(
+      (p) =>
+        ball(state, near, 2).has(p as ProvinceId) && !ball(state, near, 1).has(p as ProvinceId),
+    ) as ProvinceId;
+    scout.location = twoAway;
+    expect(independentStrengthView(state, red, near).exact).toBeNull();
+  });
+
+  it("is not revealed by another nation's scout", () => {
+    const { state, red, green, capital, scout } = setup();
+    const near = state.map.provinces[capital]!.neighbors[0]!;
+    scout.location = Object.keys(state.map.provinces).find(
+      (p) => !ball(state, near, 2).has(p as ProvinceId),
+    ) as ProvinceId;
+    const theirs = addArmy(state, green, near, 'warden', 1, 'thornScout');
+    theirs.squads = [];
+    expect(independentStrengthView(state, red, near).exact).toBeNull();
+    expect(independentStrengthView(state, green, near).exact).toBe(
+      8 + 4 * state.map.provinces[near]!.capitalDistance,
+    );
   });
 });
 

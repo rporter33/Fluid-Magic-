@@ -85,6 +85,24 @@ export function findPath(
   return path.reverse();
 }
 
+/**
+ * The path a group would be given to `to` right now, exactly as move validation sees it: from
+ * where the current leg ends (or where the group stands), at the slowest member's speed. Null
+ * when there is none, including for a group whose leg ends among hostiles, since it stops
+ * there. The group is assumed to stand together, as a move requires.
+ */
+export function findPathFor(
+  state: GameState,
+  commanders: readonly CommanderState[],
+  to: ProvinceId,
+): ProvinceId[] | null {
+  const lead = commanders[0];
+  if (!lead || lead.owner === null || !commanders.every(canMove)) return null;
+  const start = lead.transit ? lead.transit.to : lead.location;
+  if (lead.transit && isHostile(state, lead.owner, start)) return null;
+  return findPath(state, lead.owner, start, to, Math.min(...commanders.map(commanderMapSpeed)));
+}
+
 /** Days until a commander finishes its current move; 0 when it is not moving. */
 export function etaDays(state: GameState, commander: CommanderState): number {
   const leg = commander.transit ? commander.transit.totalDays - commander.transit.progress : 0;
@@ -132,34 +150,49 @@ export interface Arrival {
   commanders: CommanderState[];
 }
 
+/** The owners of the commanders present in each province, as far as hostility goes. */
+type Presence = Map<ProvinceId, Set<NationId | null>>;
+
 /**
- * A commander that makes a province hostile to other nations' arrivals. A commander is present
- * at its location in transit or not. Garrison holders never fight, and a stealthy commander
- * is hidden: counting it would give it away through refused paths.
+ * Who is present where for hostility. A commander is present at its location in transit or
+ * not. Garrison holders never fight, and a stealthy commander is hidden: counting it would
+ * give it away through refused paths.
  */
-function blocks(c: CommanderState, nation: NationId): boolean {
-  return c.owner !== nation && !isGarrisonHolder(c) && !isStealthy(c);
+function presence(state: GameState): Presence {
+  const present: Presence = new Map();
+  for (const c of Object.values(state.commanders)) {
+    if (isGarrisonHolder(c) || isStealthy(c)) continue;
+    const owners = present.get(c.location);
+    if (owners) owners.add(c.owner);
+    else present.set(c.location, new Set([c.owner]));
+  }
+  return present;
+}
+
+function hostileWith(
+  state: GameState,
+  present: Presence,
+  nation: NationId,
+  province: ProvinceId,
+): boolean {
+  if (getProvince(state, province).owner !== nation) return true;
+  for (const owner of present.get(province) ?? []) if (owner !== nation) return true;
+  return false;
 }
 
 /**
  * Provinces where a nation's commanders meet hostiles on arrival: every province it does not
- * own, and its own provinces where another owner's commander stands (a besieged fort is
- * one). Phase 4 fights, besieges, or captures there.
+ * own, and its own provinces where another owner's commander is present (a besieged fort is
+ * one, through its besiegers). Phase 4 fights, besieges, or captures there.
  */
 export function hostileProvinces(state: GameState, nation: NationId): Set<ProvinceId> {
-  const hostile = new Set<ProvinceId>();
-  for (const p of Object.values(state.provinces)) {
-    if (p.owner !== nation) hostile.add(p.id);
-  }
-  for (const c of Object.values(state.commanders)) {
-    if (blocks(c, nation)) hostile.add(c.location);
-  }
-  return hostile;
+  const present = presence(state);
+  const ids = Object.keys(state.provinces) as ProvinceId[];
+  return new Set(ids.filter((p) => hostileWith(state, present, nation, p)));
 }
 
 export function isHostile(state: GameState, nation: NationId, province: ProvinceId): boolean {
-  if (getProvince(state, province).owner !== nation) return true;
-  return Object.values(state.commanders).some((c) => c.location === province && blocks(c, nation));
+  return hostileWith(state, presence(state), nation, province);
 }
 
 /**
@@ -200,8 +233,10 @@ export function advanceTransits(state: GameState): Arrival[] {
  * sieges, and captures here. Orders other than move (set while marching) stay.
  */
 export function resolveArrivals(state: GameState, arrivals: readonly Arrival[]): void {
+  if (arrivals.length === 0) return;
+  const present = presence(state);
   for (const arrival of arrivals) {
-    if (!isHostile(state, arrival.nation, arrival.province)) continue;
+    if (!hostileWith(state, present, arrival.nation, arrival.province)) continue;
     for (const c of arrival.commanders) {
       if (c.order.kind === 'move') c.order = { kind: 'idle' };
     }

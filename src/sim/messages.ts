@@ -21,7 +21,9 @@ export function postMessage(
     battle,
   });
   // Each nation keeps its own most recent messages, so AI chatter never pushes out the player's.
-  if (state.messages.filter((m) => m.nation === nation).length > MESSAGES.keep) {
+  let count = 0;
+  for (const m of state.messages) if (m.nation === nation) count++;
+  if (count > MESSAGES.keep) {
     state.messages.splice(
       state.messages.findIndex((m) => m.nation === nation),
       1,

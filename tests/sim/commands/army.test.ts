@@ -70,7 +70,16 @@ describe('setOrder', () => {
     for (const kind of ['move', 'build', 'castRitual', 'claimWellspring', 'nonsense']) {
       expect(order(state, red, chieftain, kind).ok).toBe(false);
     }
-    expect(order(state, red, garrison, 'patrol').ok).toBe(false);
+    const refused = { ok: false, error: 'The garrison takes no orders' };
+    expect(order(state, red, garrison, 'patrol')).toEqual(refused);
+    expect(
+      applyCommand(state, {
+        type: 'setScript',
+        nation: red,
+        commander: garrison.id,
+        slots: Array.from({ length: 5 }, () => ({ kind: 'hold' as const })),
+      }),
+    ).toEqual(refused);
   });
 });
 
@@ -177,9 +186,11 @@ describe('transferSquad', () => {
     expect(garrison.squads.map((s) => [s.unit, s.count, s.hp, s.starvedDays])).toEqual([
       ['cinderWarrior', 10, 110, 4],
     ]);
+    // A hungrier newcomer raises the counter too.
+    warriors.starvedDays = 9;
     expect(move(10)).toEqual({ ok: true });
     expect(chieftain.squads.map((s) => s.unit)).toEqual(['flameArcher']);
-    expect(garrison.squads.map((s) => s.count)).toEqual([20]);
+    expect(garrison.squads.map((s) => [s.count, s.starvedDays])).toEqual([[20, 9]]);
   });
 
   it('respects leadership and needs both commanders in one place and standing still', () => {
@@ -317,7 +328,11 @@ describe('build', () => {
     chieftain.location = p.id;
     expect(build(chieftain, 'fort').ok).toBe(false);
     expect(build(chieftain, 'palace').ok).toBe(false);
-    expect(build(garrison, 'lab', capital.id).ok).toBe(false);
+    capital.buildings = ['fort'];
+    expect(build(garrison, 'lab', capital.id)).toEqual({
+      ok: false,
+      error: 'The garrison takes no orders',
+    });
     state.nations[red]!.gold = 299;
     expect(build(chieftain, 'lab').ok).toBe(false);
     state.nations[red]!.gold = 300;

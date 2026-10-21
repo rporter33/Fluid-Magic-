@@ -6,7 +6,7 @@ built on the Magic: The Gathering color pie.
 
 ## Status
 
-Milestone 1 in progress. See [docs/PROGRESS.md](docs/PROGRESS.md) for completed phases.
+Milestone 1 in progress: Phases 0 to 3 are done. See [docs/PROGRESS.md](docs/PROGRESS.md).
 
 ```
 npm install

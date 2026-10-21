@@ -1,7 +1,8 @@
 // Shared helpers for sim tests.
 import type { NationDefId, UnitTypeId } from '../../src/content';
 import { NEUTRAL_SCALES, type Scales } from '../../src/content/pretenders/scales';
-import { createCommander, createSquad } from '../../src/sim/commanders';
+import { createCommander, createSquad, removeCommander } from '../../src/sim/commanders';
+import { applyCommand } from '../../src/sim/commands';
 import { createGame } from '../../src/sim/createGame';
 import { advance } from '../../src/sim/tick';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
@@ -104,10 +105,37 @@ export function runDays(state: GameState, days: number): void {
 
 /** Gives a province to a nation and removes the independent defenders standing in it. */
 export function annex(state: GameState, nation: NationId, province: ProvinceId): ProvinceState {
-  state.commanders = Object.fromEntries(
-    Object.entries(state.commanders).filter(([, c]) => c.owner !== null || c.location !== province),
-  );
+  for (const c of Object.values(state.commanders)) {
+    if (c.owner === null && c.location === province) removeCommander(state, c.id);
+  }
   const p = state.provinces[province]!;
   p.owner = nation;
   return p;
+}
+
+export function neighbors(state: GameState, id: ProvinceId): ProvinceId[] {
+  return state.map.provinces[id]!.neighbors;
+}
+
+/** Red's Ash Chieftain army standing in Red's capital. */
+export function redField(seed = 1) {
+  const state = twoNationGame(seed);
+  const [red, green] = nationIds(state) as [NationId, NationId];
+  const capital = capitalOf(state, red).id;
+  const army = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;
+  return { state, red, green, capital, army };
+}
+
+export function move(
+  state: GameState,
+  nation: NationId,
+  commanders: readonly CommanderState[],
+  path: ProvinceId[],
+) {
+  return applyCommand(state, {
+    type: 'move',
+    nation,
+    commanders: commanders.map((c) => c.id),
+    path,
+  });
 }
