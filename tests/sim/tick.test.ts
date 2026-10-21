@@ -1,6 +1,7 @@
-// advance(): day counting, effect expiry, and determinism (acceptance criterion 4).
+// advance(): day counting, step order, effect expiry, and determinism (acceptance criterion 4).
 import { describe, expect, it } from 'vitest';
 import { startConstruction } from '../../src/sim/buildings';
+import { createCommander } from '../../src/sim/commanders';
 import { createGame } from '../../src/sim/createGame';
 import { newId, type NationId } from '../../src/sim/ids';
 import { findPath } from '../../src/sim/movement';
@@ -11,10 +12,13 @@ import {
   addArmy,
   annex,
   capitalOf,
+  castRitual,
   independentProvince,
   move,
   nation,
   nationIds,
+  redField,
+  ritualCaster,
   runDays,
   twoNationGame,
 } from './fixtures';
@@ -52,6 +56,23 @@ describe('advance', () => {
     state.day = 2;
     runDays(state, 1);
     expect(state.provinceEffects).toHaveLength(0);
+  });
+
+  it('runs step 3’s rituals before research, so a ritual lands first on a shared day', () => {
+    const { state, red, capital } = redField();
+    const r = ritualCaster(state, red);
+    createCommander(state, 'emberAdept', red, capital).order = { kind: 'research' };
+    state.nations[red]!.research.color = 'R';
+    expect(castRitual(state, red, r, 'callFireSprites')).toEqual({ ok: true });
+    runDays(state, 4);
+    // Level 2 is 150 points: one more day of research reaches it as the ritual completes.
+    state.nations[red]!.research.points.R = 150 - 1e-6;
+    const day = state.day;
+    advance(state);
+    const today = state.messages.filter(
+      (m) => m.day === day && m.nation === red && (m.kind === 'ritual' || m.kind === 'research'),
+    );
+    expect(today.map((m) => m.kind)).toEqual(['ritual', 'research']);
   });
 
   it('stops once the game has a result', () => {

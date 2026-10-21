@@ -3,6 +3,7 @@
 // always give the same result and log.
 import { BATTLE, CASTING } from '../../content/rules';
 import { meleePhase, rangedPhase } from './attacks';
+import { dropMods } from './effects';
 import type { BattleEvent, BattleRoster, BattleSide } from './events';
 import {
   active,
@@ -116,13 +117,7 @@ function endOfRound(field: Field, round: number, log: BattleEvent[]): void {
       g.checked = false;
       g.shock = 0;
       g.fatigue = Math.max(0, g.fatigue - CASTING.recoveryPerRound);
-      const ending = g.mods.filter((m) => m.untilRound !== null && m.untilRound <= round);
-      if (ending.length > 0) {
-        g.mods = g.mods.filter((m) => !ending.includes(m));
-        for (const source of new Set(ending.map((m) => m.source))) {
-          log.push({ kind: 'expire', target: g.ref, source });
-        }
-      }
+      dropMods(g, (m) => m.untilRound !== null && m.untilRound <= round, log);
       if (g.gone || g.base.regeneration <= 0) continue;
       let healed = 0;
       for (const m of g.members) {

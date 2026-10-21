@@ -52,6 +52,37 @@ describe('supply', () => {
     state.provinces[p.id]!.siege = { attacker: red!, wallHp: 300, storm: false };
     expect(provinceEconomy(state, p.id).supply).toBeCloseTo(full / 2, 9);
   });
+
+  it('takes ritual changes as their own factor: Burn the Fields halves, Bounty doubles', () => {
+    const state = twoNationGame();
+    const green = nationIds(state)[1]!;
+    const home = capitalOf(state, green);
+    // Growth 3 and Wild 3 at full strength: +30% and +45% supply from the scales.
+    state.nations[green]!.pretender.scales = {
+      ...state.nations[green]!.pretender.scales,
+      growth: 3,
+      wild: 3,
+    };
+    home.dominion = { nation: green, strength: 10 };
+    const scaled = provinceEconomy(state, home.id).supply;
+    expect(scaled).toBeCloseTo(550 * 1.75, 9);
+    const effect = (deltaPct: number) => {
+      state.provinceEffects = [
+        {
+          id: 'fx99' as never,
+          province: home.id,
+          nation: green,
+          source: 'test',
+          untilDay: 90,
+          kind: 'supply',
+          deltaPct,
+        },
+      ];
+      return provinceEconomy(state, home.id).supply;
+    };
+    expect(effect(-0.5)).toBeCloseTo(scaled * 0.5, 9);
+    expect(effect(1)).toBeCloseTo(scaled * 2, 9);
+  });
 });
 
 describe('starvation', () => {

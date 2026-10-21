@@ -200,6 +200,8 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
   a caster killed by an earlier cast neither casts nor acts that round. The rest of the
   casting rules are in the `docs/02-magic.md` decisions.
 - **Replay additions**: `cast` lists the target groups; spell damage logs one `damage` per
-  target group; `buff` carries `debuff`; `field` and `fieldEnd` mark field effects;
-  `fatigue` logs a drain. `expire` is logged once per group and source.
+  target group; `buff` carries `debuff` and `untilRound`, the last round it holds (null for
+  the battle); `field` and `fieldEnd` mark field effects and stand for their stat changes,
+  which log no `buff` or `expire` of their own; `fatigue` logs a drain. `expire` is logged
+  once per group and source, for changes a `buff` announced.
 

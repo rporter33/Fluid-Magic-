@@ -1,5 +1,6 @@
 // The replay log is self-sufficient: folding it over the roster gives the battle's outcome.
 import { describe, expect, it } from 'vitest';
+import { unitDef } from '../../../src/content';
 import { SPELLS } from '../../../src/content/spells';
 import type { BattleSpellDef } from '../../../src/content/spells/types';
 import { foldReplay } from '../../../src/sim/battle/replay';
@@ -101,6 +102,20 @@ describe('foldReplay', () => {
         if (!o.dead) expect(u?.hp ?? 0, `seed ${seed} ${ref}`).toBeCloseTo(o.hp, 9);
       }
     }
+  });
+
+  it('starts a summoned squad with its full HP pool', () => {
+    const druid = commander('m', 'elderDruid', {
+      spells: [SPELLS.swarm],
+      pips: { G: 3 },
+      carriedMana: { G: 1 },
+      script: Array.from({ length: 5 }, () => ({ kind: 'cast' as const, spellId: 'swarm' })),
+    });
+    const result = fightOnce(side([], [druid]), side([squad('d', 'ashMilitia', 5)]));
+    const at = result.replay.findIndex((e) => e.kind === 'summon');
+    expect(at).toBeGreaterThanOrEqual(0);
+    const folded = foldReplay(result.roster, result.replay.slice(0, at + 1));
+    expect(folded.get('su0')).toMatchObject({ count: 20, hp: 20 * unitDef('hornetSwarm').hp });
   });
 
   it('logs a commander moving up to its front and units leaving the field', () => {

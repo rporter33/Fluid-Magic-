@@ -12,6 +12,11 @@ export function colorPips(pips: Pips): number {
   return total;
 }
 
+/** Any color or holy pip: a commander with one casts in battle (docs/04-battle.md). */
+export function hasPips(pips: Pips, holy: number): boolean {
+  return Object.values(pips).some((n) => n > 0) || holy > 0;
+}
+
 /** Fills hybrid slots one by one, trying each of their colors (an exact search). */
 function fill(slots: readonly (readonly Color[])[], i: number, left: Pips): boolean {
   const slot = slots[i];

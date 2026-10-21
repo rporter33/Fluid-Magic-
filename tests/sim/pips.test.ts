@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { SPELLS } from '../../src/content/spells';
 import type { BattleSpellDef } from '../../src/content/spells/types';
-import { extraPips, meetsRequirement } from '../../src/sim/pips';
+import { colorPips, extraPips, hasPips, meetsRequirement } from '../../src/sim/pips';
 
 const spell = (requirement: string, holy = 0): BattleSpellDef => ({
   ...SPELLS.emberDart,
@@ -40,5 +40,16 @@ describe('extraPips', () => {
     expect(extraPips({ R: 1, G: 2 }, 0, spell('R/G'))).toBe(2);
     expect(extraPips({ R: 2 }, 0, SPELLS.pyreStorm)).toBe(0);
     expect(extraPips({}, 3, SPELLS.bless)).toBe(2);
+  });
+});
+
+describe('colorPips and hasPips', () => {
+  it('count color pips alone, and any color or holy pip makes a caster', () => {
+    expect(colorPips({ R: 2, G: 1 })).toBe(3);
+    expect(colorPips({})).toBe(0);
+    expect(hasPips({ R: 1 }, 0)).toBe(true);
+    expect(hasPips({}, 1)).toBe(true);
+    expect(hasPips({ R: 0 }, 0)).toBe(false);
+    expect(hasPips({}, 0)).toBe(false);
   });
 });

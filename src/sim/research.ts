@@ -8,7 +8,7 @@ import type { NationId } from './ids';
 import { postMessage } from './messages';
 import { colorPips } from './pips';
 import { provinceScales, scaleEffect } from './scales';
-import { getNation, getProvince, wholeDays } from './state';
+import { getNation, wholeDays } from './state';
 import type { CommanderState, GameState } from './types';
 
 /** Points are compared with this slack, so floating-point sums of daily points reach a level on time. */
@@ -43,13 +43,21 @@ export function canResearch(commander: CommanderState): boolean {
   return commander.owner !== null && !isGarrisonHolder(commander) && colorPips(commander.pips) > 0;
 }
 
+/**
+ * Not in transit, standing in a lab province its nation owns: where research, rituals, and
+ * handing over mana happen. Each caller names its own refusal.
+ */
+export function inOwnLab(state: GameState, commander: CommanderState): boolean {
+  if (commander.owner === null || commander.transit) return false;
+  const p = state.provinces[commander.location];
+  return p?.owner === commander.owner && p.buildings.includes('lab');
+}
+
 /** Researching now: able to, ordered to, standing still in an own province with a lab. */
 export function isResearching(state: GameState, commander: CommanderState): boolean {
-  if (!canResearch(commander) || commander.order.kind !== 'research' || commander.transit) {
-    return false;
-  }
-  const p = getProvince(state, commander.location);
-  return p.owner === commander.owner && p.buildings.includes('lab');
+  return (
+    canResearch(commander) && commander.order.kind === 'research' && inOwnLab(state, commander)
+  );
 }
 
 /**

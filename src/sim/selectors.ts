@@ -128,10 +128,12 @@ export function provinceEconomy(
       bonus;
   }
 
-  const supplyPct = effects.reduce((sum, e) => sum + (e.kind === 'supply' ? e.deltaPct : 0), 0);
+  // Ritual supply changes are their own factor: Burn the Fields halves whatever the scales give.
+  const ritualPct = effects.reduce((sum, e) => sum + (e.kind === 'supply' ? e.deltaPct : 0), 0);
   const supply =
     (terrain.supplyBase + p.pop / SUPPLY.popDivisor) *
-    Math.max(0, 1 + scaleEffect(scales, 'supplyPct') + supplyPct) *
+    Math.max(0, 1 + scaleEffect(scales, 'supplyPct')) *
+    Math.max(0, 1 + ritualPct) *
     (besieged ? SUPPLY.besiegedFactor : 1);
   // Independents never eat (they are always fed); everyone else shares the province.
   const supplyUsed = present.reduce(

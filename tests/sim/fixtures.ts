@@ -7,6 +7,7 @@ import { createGame } from '../../src/sim/createGame';
 import { advance } from '../../src/sim/tick';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import type {
+  ColorAmounts,
   CommanderState,
   GameState,
   NationSetup,
@@ -145,4 +146,33 @@ export function besiege(state: GameState, nation: NationId, province: ProvinceId
   const army = addArmy(state, nation, province, 'cinderWarrior', 5);
   state.provinces[province]!.siege = { attacker: nation, wallHp: 300, storm: false };
   return army;
+}
+
+/** Mana pools full enough for any ritual. */
+export const RICH_POOLS: ColorAmounts = { W: 50, U: 50, B: 50, R: 50, G: 50 };
+
+/** A nation's master mage in its capital lab, with every level researched and full pools. */
+export function ritualCaster(state: GameState, nation: NationId): CommanderState {
+  const n = state.nations[nation]!;
+  n.mana = { ...RICH_POOLS };
+  n.research.points = { W: 1050, U: 1050, B: 1050, R: 1050, G: 1050 };
+  const color = n.colors[0];
+  const mage = createCommander(
+    state,
+    color === 'R' ? 'cinderMagus' : 'elderDruid',
+    nation,
+    n.capital,
+  );
+  mage.pips = { [color]: 4 };
+  return mage;
+}
+
+export function castRitual(
+  state: GameState,
+  nation: NationId,
+  c: CommanderState,
+  spell: string,
+  target: ProvinceId | null = null,
+) {
+  return applyCommand(state, { type: 'castRitual', nation, commander: c.id, spell, target });
 }

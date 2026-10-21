@@ -1,15 +1,17 @@
 // Rituals (docs/02-magic.md sections 3, 5, 6): cast on the map by a mage standing in a lab
 // province, paid from the national mana pool when begun, finished after castDays. One
-// predicate says why a ritual cannot be cast, so the command, the daily check at completion,
-// the Ritual panel, and the AI agree.
+// predicate says why a ritual cannot be begun (castBlocker), so the command, the Ritual panel,
+// and the AI agree; the check at completion runs its place, pips, research, and target part
+// (ritualBlocker) again.
+import { unitDef } from '../content';
 import { COLORS, type Color } from '../content/colors';
 import { isSpellId, spellDef } from '../content/spells';
 import type { ManaAmounts, RitualEffect, RitualSpellDef } from '../content/spells/types';
-import { isGarrisonHolder } from './commanders';
+import { isGarrisonHolder, troopCount } from './commanders';
 import type { ProvinceId } from './ids';
 import { postMessage } from './messages';
 import { meetsRequirement } from './pips';
-import { researchLevel } from './research';
+import { inOwnLab, researchLevel } from './research';
 import { applyRitualEffect } from './ritualEffects';
 import { activeEffects, getMapProvince, getNation, getProvince } from './state';
 import type { ColorAmounts, CommanderState, GameState } from './types';
@@ -77,9 +79,10 @@ function targetBlocker(
 }
 
 /**
- * Why this commander cannot cast this ritual on this target now, or null: a godless nation, a
- * caster that is not standing in a lab province of its own, pips, research, the target, and a
- * timed effect of the same spell still on the target.
+ * Why this commander cannot cast this ritual on this target now, mana and leadership aside, or
+ * null: a godless nation, a caster that is not standing in a lab province of its own, pips,
+ * research, the target, and a timed effect of the same spell still on the target. A finished
+ * ritual is checked with this alone.
  */
 export function ritualBlocker(
   state: GameState,
@@ -91,10 +94,7 @@ export function ritualBlocker(
   const nation = getNation(state, caster.owner);
   if (nation.godless) return `${nation.name} is godless and cannot cast rituals`;
   if (caster.transit) return `${caster.name} is on the move`;
-  const here = getProvince(state, caster.location);
-  if (here.owner !== caster.owner || !here.buildings.includes('lab')) {
-    return 'Rituals need a lab in a province you own';
-  }
+  if (!inOwnLab(state, caster)) return 'Rituals need a lab in a province you own';
   if (!meetsRequirement(caster.pips, caster.holy, spell)) {
     return `${caster.name} cannot cast ${spell.name}`;
   }
@@ -113,7 +113,39 @@ export function ritualBlocker(
   return null;
 }
 
-/** Every province this commander could cast the ritual on now. */
+/**
+ * Why this commander cannot begin this ritual on this target now, or null: ritualBlocker, then
+ * the summoned troops against the caster's leadership, then the mana, split as `generic` says
+ * or by default.
+ */
+export function castBlocker(
+  state: GameState,
+  caster: CommanderState,
+  spell: RitualSpellDef,
+  target: ProvinceId | null,
+  generic?: ManaAmounts,
+): string | null {
+  const blocked = ritualBlocker(state, caster, spell, target);
+  // ritualBlocker already refuses a caster with no nation; the second test tells the compiler.
+  if (blocked !== null || caster.owner === null) return blocked;
+  // Summoned troops must fit under the caster when it begins; when they arrive they join
+  // whatever it leads by then.
+  const troops = spell.effects.reduce(
+    (n, e) => n + (e.kind === 'summonToProvince' && !e.commander ? e.count : 0),
+    0,
+  );
+  const leadership = unitDef(caster.unit).commander?.leadership ?? 0;
+  if (troops > 0 && troopCount(caster) + troops > leadership) {
+    return `${caster.name} can lead only ${String(leadership)} troops`;
+  }
+  const pay = ritualPayment(getNation(state, caster.owner).mana, spell, generic);
+  return typeof pay === 'string' ? pay : null;
+}
+
+/**
+ * Every province this commander could begin the ritual on now, paying by default. The default
+ * split pays whenever any split can, so these are the targets the castRitual command accepts.
+ */
 export function ritualTargets(
   state: GameState,
   caster: CommanderState,
@@ -124,7 +156,7 @@ export function ritualTargets(
     t.kind === 'caster' || t.kind === 'casterFort'
       ? [null]
       : [...withinHops(state, caster.location, t.hops)];
-  return options.filter((p) => ritualBlocker(state, caster, spell, p) === null);
+  return options.filter((p) => castBlocker(state, caster, spell, p) === null);
 }
 
 /**

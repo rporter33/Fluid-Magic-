@@ -29,6 +29,11 @@ export interface StatMod {
   /** Last round it holds, or null for the whole battle. */
   untilRound: number | null;
   debuff: boolean;
+  /**
+   * Announced by a 'buff' event, so its end is logged too. A field effect's changes are not:
+   * its 'field' and 'fieldEnd' events report them.
+   */
+  logged: boolean;
 }
 
 /** A squad, or a commander standing alone. */
@@ -70,7 +75,6 @@ export interface Group {
 /** A field effect in force (wall, fog, storm) until the end of untilRound. */
 export interface FieldEffect {
   kind: FieldEffectKind;
-  source: string;
   untilRound: number;
 }
 

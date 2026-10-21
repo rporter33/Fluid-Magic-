@@ -7,7 +7,16 @@ import { defaultFormation } from '../commanders';
 import type { RngState } from '../rng';
 import { rollDamage } from './attacks';
 import type { BattleEvent, StatKey } from './events';
-import { group, present, SIDES, statOf, type Field, type Fighter, type Group } from './field';
+import {
+  group,
+  present,
+  SIDES,
+  statOf,
+  type Field,
+  type Fighter,
+  type Group,
+  type StatMod,
+} from './field';
 import { debuffSources } from './targets';
 
 /** What one effect of a cast lands on. */
@@ -19,17 +28,31 @@ export interface Plan {
 }
 
 /** Last round a change lasts, or null for the whole battle. */
+export function untilRound(duration: { kind: 'rounds'; rounds: number }, round: number): number;
+export function untilRound(duration: Duration, round: number): number | null;
 export function untilRound(duration: Duration, round: number): number | null {
   return duration.kind === 'battle' ? null : round + duration.rounds - 1;
 }
 
-/** Takes away every change a source made on a group; logs it once. */
-export function removeSource(g: Group, source: string, log: BattleEvent[]): void {
-  if (!g.mods.some((m) => m.source === source)) return;
-  g.mods = g.mods.filter((m) => m.source !== source);
-  log.push({ kind: 'expire', target: g.ref, source });
+/**
+ * Takes away a group's changes that pass the test; logs one 'expire' per source of logged
+ * changes, in the order they were made (a field effect's end is its 'fieldEnd').
+ */
+export function dropMods(g: Group, test: (m: StatMod) => boolean, log: BattleEvent[]): void {
+  const dropped = g.mods.filter(test);
+  if (dropped.length === 0) return;
+  g.mods = g.mods.filter((m) => !dropped.includes(m));
+  for (const source of new Set(dropped.filter((m) => m.logged).map((m) => m.source))) {
+    log.push({ kind: 'expire', target: g.ref, source });
+  }
 }
 
+/** Takes away every change a source made on a group; one 'expire' if a 'buff' announced them. */
+export function removeSource(g: Group, source: string, log: BattleEvent[]): void {
+  dropMods(g, (m) => m.source === source, log);
+}
+
+/** Adds a change and logs it; with no log (a field effect's change) its end goes unlogged too. */
 function addMod(
   g: Group,
   stat: StatKey,
@@ -39,16 +62,8 @@ function addMod(
   debuff: boolean,
   log: BattleEvent[] | null,
 ): void {
-  g.mods.push({ stat, delta, source, untilRound: until, debuff });
-  log?.push({
-    kind: 'buff',
-    target: g.ref,
-    stat,
-    delta,
-    source,
-    rounds: until,
-    debuff,
-  });
+  g.mods.push({ stat, delta, source, untilRound: until, debuff, logged: log !== null });
+  log?.push({ kind: 'buff', target: g.ref, stat, delta, source, untilRound: until, debuff });
 }
 
 function damage(
@@ -96,8 +111,7 @@ function heal(g: Group, amount: number, removeDebuffs: number, log: BattleEvent[
   }
   if (healed > 0) log.push({ kind: 'heal', target: g.ref, amount: healed });
   for (const source of debuffSources(g).slice(0, removeDebuffs)) {
-    g.mods = g.mods.filter((m) => !(m.debuff && m.source === source));
-    log.push({ kind: 'expire', target: g.ref, source });
+    dropMods(g, (m) => m.debuff && m.source === source, log);
   }
 }
 
@@ -119,6 +133,7 @@ function summon(
     side: caster.side,
     unit: e.unit,
     count: e.count,
+    hp: e.count * stats.hp,
     squad: ref,
     row,
     commander: caster.ref,
@@ -133,10 +148,11 @@ function fieldEffect(
   round: number,
   log: BattleEvent[],
 ): void {
-  const until = round + e.rounds - 1;
-  field.effects.push({ kind: e.effect, source: spell.id, untilRound: until });
+  const until = untilRound({ kind: 'rounds', rounds: e.rounds }, round);
+  field.effects.push({ kind: e.effect, untilRound: until });
   log.push({ kind: 'field', effect: e.effect, caster: caster.ref, untilRound: until });
-  // Its stat changes fall on everyone on the field now; later summons arrive unaffected.
+  // Its stat changes fall on everyone on the field now; later summons arrive unaffected. The
+  // 'field' and 'fieldEnd' events report them, so they log nothing of their own.
   const rules = FIELD_EFFECTS[e.effect];
   for (const side of SIDES) {
     for (const g of field.sides[side]) {

@@ -77,10 +77,12 @@ export const GREEN_SPELLS = {
     name: 'Regrowth',
     level: 5,
     requirement: 'GGG',
-    description: 'Every friendly unit heals 10 and sheds one curse. Uses 1 carried Green mana.',
+    description: 'Every friendly squad heals 10 and sheds one curse. Uses 1 carried Green mana.',
     fatigue: 50,
     carriedMana: { G: 1 },
-    effects: [{ kind: 'heal', amount: 10, targets: { kind: 'allFriendly' }, removeDebuffs: 1 }],
+    effects: [
+      { kind: 'heal', amount: 10, targets: { kind: 'allFriendlySquads' }, removeDebuffs: 1 },
+    ],
   },
 
   callOfTheWild: {

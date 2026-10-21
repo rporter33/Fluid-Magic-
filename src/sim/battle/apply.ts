@@ -30,6 +30,16 @@ function writeSquads(commander: CommanderState, result: BattleResult): void {
 function writeSide(state: GameState, forces: SideForces, result: BattleResult): void {
   for (const c of forces.commanders) writeSquads(c, result);
   if (forces.garrison) writeSquads(forces.garrison, result);
+  // Mana the battle's spells used up counts as spent, also for casters who then died.
+  const spent = forces.nation === null ? null : state.nations[forces.nation]?.stats.manaSpent;
+  for (const c of forces.commanders) {
+    const o = result.commanders.get(c.id);
+    if (!spent || !o) continue;
+    for (const color of COLORS) {
+      const used = (c.carriedMana[color] ?? 0) - (o.carriedMana[color] ?? 0);
+      if (used > 0) spent[color] += used;
+    }
+  }
   const dead = forces.commanders.filter((c) => result.commanders.get(c.id)?.dead === true);
   const living = forces.commanders.filter((c) => !dead.includes(c));
   const heir = living[0] ?? forces.garrison;
@@ -44,12 +54,6 @@ function writeSide(state: GameState, forces: SideForces, result: BattleResult): 
     if (c.order.kind === 'move') c.order = { kind: 'idle' };
     if (!o) continue;
     c.hp = o.hp;
-    // Mana the battle's spells used up counts as spent.
-    const spent = forces.nation === null ? null : state.nations[forces.nation]?.stats.manaSpent;
-    for (const color of COLORS) {
-      const used = (c.carriedMana[color] ?? 0) - (o.carriedMana[color] ?? 0);
-      if (spent && used > 0) spent[color] += used;
-    }
     c.carriedMana = { ...o.carriedMana };
   }
 }

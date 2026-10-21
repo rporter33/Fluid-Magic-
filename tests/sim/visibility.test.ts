@@ -1,6 +1,6 @@
-// Fog of war (docs/01-core-rules.md section 14).
+// Fog of war (docs/01-core-rules.md section 14), and what a scry adds (docs/02-magic.md, Rituals).
 import { describe, expect, it } from 'vitest';
-import type { NationId, ProvinceId } from '../../src/sim/ids';
+import { newId, type NationId, type ProvinceId } from '../../src/sim/ids';
 import { isStealthy } from '../../src/sim/commanders';
 import {
   independentStrengthView,
@@ -177,6 +177,26 @@ describe('independent strength', () => {
     expect(independentStrengthView(state, green, near).exact).toBe(
       8 + 4 * state.map.provinces[near]!.capitalDistance,
     );
+  });
+});
+
+describe('scry', () => {
+  it('adds the scried province alone to vision, none of its neighbors', () => {
+    const { state, red } = setup();
+    const seen = visionOf(state, red);
+    const far = Object.values(state.map.provinces).find(
+      (p) => !seen.has(p.id) && p.neighbors.every((n) => !seen.has(n)),
+    )!.id;
+    state.provinceEffects.push({
+      id: newId(state, 'effect'),
+      province: far,
+      nation: red,
+      source: 'test',
+      untilDay: state.day + 30,
+      kind: 'scry',
+    });
+    const now = visionOf(state, red);
+    expect([...now].filter((p) => !seen.has(p))).toEqual([far]);
   });
 });
 

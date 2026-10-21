@@ -142,11 +142,13 @@ function armed(g: Group, enemyFront: Formation): boolean {
 /**
  * Who fights hand to hand this phase, fixed when the phase begins. A group in its side's front
  * closes on the enemy front from its closing round, unless it can still shoot: archers hold
- * back and keep firing. A group the enemy has closed on is in contact and fights back.
+ * back and keep firing. In a storm nobody can shoot, so archers close too. A group the enemy
+ * has closed on is in contact and fights back.
  */
 function engaged(field: Field, round: number): Set<Group> {
   // A wall between the armies keeps them apart.
   if (fieldHas(field, (e) => FIELD_EFFECTS[e.kind].noMelee)) return new Set();
+  const grounded = fieldHas(field, (e) => FIELD_EFFECTS[e.kind].noRanged);
   const fronts = { attacker: frontRow(field, 'attacker'), defender: frontRow(field, 'defender') };
   const closing = new Set<Group>();
   for (const side of SIDES) {
@@ -157,7 +159,7 @@ function engaged(field: Field, round: number): Set<Group> {
         active(g) &&
         !exhausted(g) &&
         g.row === fronts[side] &&
-        !armed(g, enemyFront) &&
+        (grounded || !armed(g, enemyFront)) &&
         round >= closingRound(g.base)
       ) {
         closing.add(g);

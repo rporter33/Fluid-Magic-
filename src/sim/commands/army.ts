@@ -4,10 +4,10 @@ import { SCRIPT_SLOTS } from '../../content/rules';
 import { isSpellId, spellDef } from '../../content/spells';
 import { constructionCost, startConstruction } from '../buildings';
 import { newId } from '../ids';
-import { addSquad, isGarrisonHolder } from '../commanders';
+import { addSquad, isGarrisonHolder, troopCount } from '../commanders';
 import { canMove, commanderMapSpeed, hostileProvinces, startLeg } from '../movement';
 import { meetsRequirement } from '../pips';
-import { canResearch } from '../research';
+import { canResearch, inOwnLab } from '../research';
 import { getCommander, getMapProvince, getNation } from '../state';
 import {
   FORMATIONS,
@@ -16,7 +16,7 @@ import {
   type GameState,
   type Transit,
 } from '../types';
-import { isIntegerIn, ownCommander, ownProvince, troopCount } from './check';
+import { isIntegerIn, ownCommander, ownProvince } from './check';
 import type { CommandOf } from './types';
 
 const NOT_YOURS = 'That commander is not yours';
@@ -127,12 +127,10 @@ export function validateSetOrder(state: GameState, cmd: CommandOf<'setOrder'>): 
       return null;
     case 'preach':
       return c.holy > 0 ? null : `${c.name} is not a priest`;
-    case 'research': {
+    case 'research':
       if (!canResearch(c)) return `${c.name} is not a mage`;
       if (c.transit) return `${c.name} is on the move`;
-      const p = ownProvince(state, cmd.nation, c.location);
-      return p?.buildings.includes('lab') ? null : 'Research needs a lab in a province you own';
-    }
+      return inOwnLab(state, c) ? null : 'Research needs a lab in a province you own';
     default:
       return 'That order is not available';
   }

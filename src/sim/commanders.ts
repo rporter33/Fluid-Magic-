@@ -3,6 +3,7 @@ import { unitDef, type UnitTypeId } from '../content';
 import { ECONOMY, PROPHET, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
 import { newId, type CommanderId, type NationId, type ProvinceId } from './ids';
+import { hasPips } from './pips';
 import { chance } from './rng';
 import type { CommanderState, Formation, GameState, Pips, ScriptSlot, Squad } from './types';
 
@@ -16,9 +17,8 @@ export function defaultFormation(def: UnitDef): Formation {
  * its best castable one); others hold. Priests default to Bless (docs/08-ai.md).
  */
 export function defaultScript(def: UnitDef, pips: Pips, holy: number): ScriptSlot[] {
-  const caster = Object.values(pips).some((n) => n > 0) || holy > 0;
   const spellId = def.commander?.defaultSpell ?? null;
-  const slot: ScriptSlot = caster ? { kind: 'cast', spellId } : { kind: 'hold' };
+  const slot: ScriptSlot = hasPips(pips, holy) ? { kind: 'cast', spellId } : { kind: 'hold' };
   return Array.from({ length: SCRIPT_SLOTS }, () => ({ ...slot }));
 }
 
@@ -109,6 +109,11 @@ export function createCommander(
   };
   state.commanders[commander.id] = commander;
   return commander;
+}
+
+/** Troops a commander leads, counted against its leadership. */
+export function troopCount(commander: CommanderState): number {
+  return commander.squads.reduce((sum, s) => sum + s.count, 0);
 }
 
 /** A fort's garrison holder: keeps the fort's troops, never moves, fights, or eats itself. */

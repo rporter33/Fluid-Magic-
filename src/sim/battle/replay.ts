@@ -94,7 +94,7 @@ export function stepReplay(state: ReplayState, e: BattleEvent): void {
         side: e.side,
         isCommander: false,
         count: e.count,
-        hp: 0,
+        hp: e.hp,
         row: e.row,
         routing: false,
         gone: false,

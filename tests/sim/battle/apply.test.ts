@@ -71,6 +71,69 @@ describe('applyBattle', () => {
     expect(a.squads.map((s) => [s.count, s.hp])).toEqual([[9, 75]]);
   });
 
+  it('counts carried mana a battle used as spent, also for a caster that then died', () => {
+    const { state, red } = redField();
+    const p = independentProvince(state);
+    const living = addArmy(state, red, p.id, 'cinderWarrior', 5, 'cinderMagus');
+    const fallen = addArmy(state, red, p.id, 'cinderWarrior', 5, 'cinderMagus');
+    living.carriedMana = { R: 3 };
+    fallen.carriedMana = { R: 2, G: 1 };
+    const forces: SideForces = {
+      nation: red,
+      commanders: [living, fallen],
+      garrison: null,
+      pd: false,
+    };
+    applyBattle(
+      state,
+      p.id,
+      forces,
+      { nation: null, commanders: [], garrison: null, pd: false },
+      result({
+        commanders: new Map([
+          [living.id, { hp: 10, dead: false, routed: false, carriedMana: { R: 2 } }],
+          [fallen.id, { hp: 0, dead: true, routed: false, carriedMana: { R: 0, G: 1 } }],
+        ]),
+      }),
+    );
+    // One R from the survivor and two from the fallen; the fallen's unused G is lost, not spent.
+    expect(state.nations[red]!.stats.manaSpent).toMatchObject({ R: 3, G: 0 });
+    expect(living.carriedMana).toEqual({ R: 2 });
+  });
+
+  it('writes no summons back: hornets that outlive the battle leave with it', () => {
+    const { state, green } = redField();
+    const p = independentProvince(state);
+    const druid = addArmy(state, green, p.id, 'warden', 10, 'elderDruid');
+    const before = druid.squads.map((s) => [s.unit, s.count]);
+    applyBattle(
+      state,
+      p.id,
+      { nation: green, commanders: [druid], garrison: null, pd: false },
+      { nation: null, commanders: [], garrison: null, pd: false },
+      result({
+        squads: new Map([
+          [druid.squads[0]!.id, { count: 10, hp: druid.squads[0]!.hp, routed: false }],
+          ['su0', { count: 12, hp: 72, routed: false }],
+        ]),
+        commanders: new Map([[druid.id, { hp: 12, dead: false, routed: false, carriedMana: {} }]]),
+        replay: [
+          {
+            kind: 'summon',
+            side: 'attacker',
+            unit: 'hornetSwarm',
+            count: 20,
+            hp: 120,
+            squad: 'su0',
+            row: 'front',
+            commander: druid.id,
+          },
+        ],
+      }),
+    );
+    expect(druid.squads.map((s) => [s.unit, s.count])).toEqual(before);
+  });
+
   it('hands a dead commander’s troops to a beaten side’s heir, the fort’s garrison, or nobody', () => {
     const { state, red, capital } = redField();
     const dead = (...cs: CommanderState[]) =>

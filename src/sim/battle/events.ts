@@ -70,24 +70,32 @@ export type BattleEvent =
       side: BattleSide;
       unit: UnitTypeId;
       count: number;
+      /** The summoned squad's starting HP pool. */
+      hp: number;
       squad: BattleUnitRef;
       row: Formation;
       /** The caster leading the summoned squad, if any. */
       commander: BattleUnitRef | null;
     }
-  /** A stat change; rounds null lasts the whole battle. Debuffs come from enemy spells. */
+  /**
+   * A stat change from a spell, lasting through untilRound (null: the whole battle). Debuffs
+   * come from enemy spells. Field effects' changes are not logged: see 'field'.
+   */
   | {
       kind: 'buff';
       target: BattleUnitRef;
       stat: StatKey;
       delta: number;
       source: string;
-      rounds: number | null;
+      untilRound: number | null;
       debuff: boolean;
     }
-  /** A group's changes from one source ran out or were removed. */
+  /** A group's changes from one source, each logged by a 'buff', ran out or were removed. */
   | { kind: 'expire'; target: BattleUnitRef; source: string }
-  /** A field effect began; it lasts through untilRound. */
+  /**
+   * A field effect began; it lasts through untilRound. Its stat changes (FIELD_EFFECTS) fall
+   * on every unit present now and end with its 'fieldEnd'.
+   */
   | { kind: 'field'; effect: FieldEffectKind; caster: BattleUnitRef; untilRound: number }
   | { kind: 'fieldEnd'; effect: FieldEffectKind }
   /** Fatigue forced on a caster by an enemy spell. */

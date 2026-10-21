@@ -24,7 +24,3 @@ export function ownProvince(
 export function isIntegerIn(value: number, min: number, max: number): boolean {
   return Number.isInteger(value) && value >= min && value <= max;
 }
-
-export function troopCount(commander: CommanderState): number {
-  return commander.squads.reduce((sum, s) => sum + s.count, 0);
-}

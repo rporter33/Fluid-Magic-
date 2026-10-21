@@ -18,7 +18,12 @@ export type Duration = { kind: 'battle' } | { kind: 'rounds'; rounds: number };
  * target group's row (the only area shape in M1).
  */
 export type DamageTarget = { kind: 'single' } | { kind: 'squad' } | { kind: 'area'; count: number };
-export type FriendlyTarget = { kind: 'self' } | { kind: 'friendlySquad' } | { kind: 'allFriendly' };
+/** allFriendly includes commanders; allFriendlySquads does not. */
+export type FriendlyTarget =
+  | { kind: 'self' }
+  | { kind: 'friendlySquad' }
+  | { kind: 'allFriendly' }
+  | { kind: 'allFriendlySquads' };
 export type EnemyTarget =
   { kind: 'enemySquad' } | { kind: 'allEnemy' } | { kind: 'area'; count: number };
 /** Targets for effects on whole groups or casters, which have no area form. */

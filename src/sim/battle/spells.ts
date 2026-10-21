@@ -3,7 +3,7 @@
 // later caster sees the field after earlier casts.
 import { CASTING } from '../../content/rules';
 import type { BattleEffect, BattleSpellDef } from '../../content/spells/types';
-import { extraPips } from '../pips';
+import { colorPips, extraPips } from '../pips';
 import type { RngState } from '../rng';
 import { applyEffect, removeSource, type Plan } from './effects';
 import type { BattleEvent } from './events';
@@ -19,7 +19,6 @@ import {
   isDamageSpell,
   largestGroup,
   oneTroop,
-  pipCount,
   presentGroups,
   troopsInRow,
   wounded,
@@ -54,6 +53,12 @@ function effectGroups(
   const enemy = OTHER[caster.side];
   const lacks = (g: Group) => present(g) && !hasSource(g, spell.id);
   const one = (g: Group | null) => (g ? [g] : []);
+  // An all-groups target takes every group, or none when no group needs the effect.
+  const allIf = (all: Group[], needs: (g: Group) => boolean) => (all.some(needs) ? all : []);
+  const friends = (kind: string) => {
+    const all = presentGroups(field, caster.side);
+    return kind === 'allFriendlySquads' ? all.filter((g) => !g.isCommander) : all;
+  };
   switch (e.kind) {
     case 'damage':
       return one(enemyTarget(field, caster));
@@ -62,24 +67,21 @@ function effectGroups(
       if (e.targets.kind === 'friendlySquad') {
         return one(friendlySquad(field, caster, (g) => !hasSource(g, spell.id)));
       }
-      return presentGroups(field, caster.side).some(lacks) ? presentGroups(field, caster.side) : [];
+      return allIf(friends(e.targets.kind), lacks);
     case 'debuff':
-      if (e.targets.kind === 'allEnemy') {
-        return presentGroups(field, enemy).some(lacks) ? presentGroups(field, enemy) : [];
-      }
+      if (e.targets.kind === 'allEnemy') return allIf(presentGroups(field, enemy), lacks);
       return one(largestGroup(field, enemy, lacks));
     case 'heal': {
       const needs = (g: Group) => needsHeal(g, e);
       if (e.targets.kind === 'self') return needs(caster) ? [caster] : [];
       if (e.targets.kind === 'friendlySquad') return one(friendlySquad(field, caster, needs));
-      const all = presentGroups(field, caster.side);
-      return all.some(needs) ? all : [];
+      return allIf(friends(e.targets.kind), needs);
     }
     case 'fatigueDrain': {
       const casters = presentGroups(field, enemy).filter(isCaster);
       if (e.targets.kind === 'allEnemy') return casters;
       let best: Group | null = null;
-      for (const g of casters) if (!best || pipCount(g) > pipCount(best)) best = g;
+      for (const g of casters) if (!best || colorPips(g.pips) > colorPips(best.pips)) best = g;
       return one(best);
     }
     case 'moraleShock': {
@@ -135,11 +137,15 @@ export function chooseSpell(
   return ranked.find(({ spell }) => castable(field, caster, spell))?.spell ?? null;
 }
 
-/** Chooses every effect's targets, one choice per target kind, so effects share them. */
+/**
+ * Chooses every effect's targets once per cast: area effects share one draw of troops, and
+ * other effects share the targets of an earlier effect of the same kind and target kind.
+ */
 function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState): Plan[] {
   const chosen = new Map<string, Plan>();
   return spell.effects.map((effect) => {
-    const key = `${effect.kind}:${'targets' in effect ? effect.targets.kind : ''}`;
+    const targets = 'targets' in effect ? effect.targets.kind : '';
+    const key = targets === 'area' ? 'area' : `${effect.kind}:${targets}`;
     const earlier = chosen.get(key);
     if (earlier) return { ...earlier, effect };
     const groups = effectGroups(field, caster, spell, effect);
@@ -156,11 +162,8 @@ function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState)
         }
       }
     }
-    // An area curse lands on every group it touches.
-    const landed =
-      effect.kind === 'debuff' && effect.targets.kind === 'area'
-        ? [...new Set(troops.map((t) => t.group))]
-        : groups;
+    // An area effect lands on every group its troops belong to.
+    const landed = targets === 'area' ? [...new Set(troops.map((t) => t.group))] : groups;
     const result: Plan = { effect, groups: landed, troops };
     chosen.set(key, result);
     return result;

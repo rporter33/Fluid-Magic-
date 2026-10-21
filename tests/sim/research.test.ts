@@ -5,6 +5,7 @@ import { createCommander } from '../../src/sim/commanders';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import {
   daysToNextLevel,
+  inOwnLab,
   isResearching,
   levelFor,
   nationResearchRate,
@@ -13,7 +14,7 @@ import {
   researchRate,
 } from '../../src/sim/research';
 import type { CommanderState, GameState } from '../../src/sim/types';
-import { neighbors, redField, redGame, runDays } from './fixtures';
+import { annex, neighbors, redField, redGame, runDays } from './fixtures';
 
 /** Ember Adepts researching in Red's capital lab. */
 function researchers(state: GameState, red: NationId, at: ProvinceId, n: number): CommanderState[] {
@@ -79,6 +80,32 @@ describe('research points', () => {
     chief.order = { kind: 'research' };
     expect(isResearching(state, chief)).toBe(false);
     expect(nationResearchRate(state, red)).toBe(0);
+  });
+
+  it('need both the lab and the province: none in an own province without one or a foreign lab', () => {
+    const { state, red, capital } = quietRed();
+    const [adept] = researchers(state, red, capital, 1);
+    const near = annex(state, red, neighbors(state, capital)[0]!);
+    near.buildings = [];
+    adept!.location = near.id;
+    expect(isResearching(state, adept!)).toBe(false);
+    const green = Object.keys(state.nations)[1] as NationId;
+    const foreign = state.provinces[state.nations[green]!.capital]!;
+    expect(foreign.buildings).toContain('lab');
+    adept!.location = foreign.id;
+    expect(isResearching(state, adept!)).toBe(false);
+    expect(nationResearchRate(state, red)).toBe(0);
+  });
+
+  it('share the own-lab test with rituals and handing over mana', () => {
+    const { state, red, capital } = quietRed();
+    const chief = createCommander(state, 'ashChieftain', red, capital);
+    expect(inOwnLab(state, chief)).toBe(true);
+    chief.transit = { from: capital, to: neighbors(state, capital)[0]!, progress: 1, totalDays: 3 };
+    expect(inOwnLab(state, chief)).toBe(false);
+    chief.transit = null;
+    state.provinces[capital]!.owner = Object.keys(state.nations)[1] as NationId;
+    expect(inOwnLab(state, chief)).toBe(false);
   });
 });
 

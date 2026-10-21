@@ -1,13 +1,16 @@
 // The battlefield's rows, targets, and per-troop stats (docs/04-battle.md and its decisions).
 import { describe, expect, it } from 'vitest';
+import { SPELLS } from '../../../src/content/spells';
 import {
   buildField,
   frontRow,
   statOf,
   targetsUpTo,
+  troopsLost,
   type Group,
 } from '../../../src/sim/battle/field';
 import { setup, side, squad } from './fixtures';
+import { mage, staged } from './spellFixtures';
 
 /** A defender with a squad in front and another in the middle. */
 function twoRows() {
@@ -54,5 +57,25 @@ describe('berserk troops', () => {
     half.hp = 6.5;
     expect([statOf(low, 'att'), statOf(low, 'str')]).toEqual([14, 15]);
     expect([statOf(half, 'att'), statOf(half, 'str')]).toEqual([12, 13]);
+  });
+});
+
+describe('troops lost', () => {
+  it('count the starting squads only: summons that join later do not make up the losses', () => {
+    const { field, find, castBy } = staged(
+      side(
+        [squad('a', 'ashMilitia', 10, { leader: 'm' })],
+        [mage('m', [SPELLS.swarm], { carried: { G: 1 } })],
+      ),
+      side([squad('d', 'ashMilitia', 10)]),
+    );
+    for (const t of find('a').members.slice(0, 6)) {
+      t.alive = false;
+      t.hp = 0;
+    }
+    castBy('m', SPELLS.swarm);
+    expect(find('su0').members.filter((t) => t.alive)).toHaveLength(20);
+    // 6 of 10 gone: over half, whatever the twenty hornets.
+    expect(troopsLost(field, 'attacker')).toBe(6);
   });
 });

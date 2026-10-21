@@ -1,7 +1,8 @@
-// Who a battle spell lands on (docs/02-magic.md section 5). Each target kind is chosen once per
-// cast, so every effect of one spell lands on the same group. Groups are compared by living
-// troops; ties go to setup order.
+// Who a battle spell lands on (docs/02-magic.md section 5). A cast chooses its targets once
+// (spells.ts, plan), so a spell's effects share them. Groups are compared by living troops;
+// ties go to setup order.
 import type { BattleSpellDef } from '../../content/spells/types';
+import { hasPips } from '../pips';
 import { randBelow, type RngState } from '../rng';
 import {
   active,
@@ -67,13 +68,7 @@ export function canBeShaken(g: Group, fearless: (g: Group) => boolean): boolean 
 
 /** A caster an enemy can tire: a present commander with color or holy pips. */
 export function isCaster(g: Group): boolean {
-  return g.isCommander && present(g) && (Object.values(g.pips).some((n) => n > 0) || g.holy > 0);
-}
-
-export function pipCount(g: Group): number {
-  let n = 0;
-  for (const v of Object.values(g.pips)) n += v;
-  return n;
+  return g.isCommander && present(g) && hasPips(g.pips, g.holy);
 }
 
 /** Up to n distinct living troops at random among every present group of a row. */

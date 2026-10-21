@@ -131,3 +131,6 @@ export function byRound(result: BattleResult) {
     return { round, event: e };
   });
 }
+
+/** Stats that keep a squad or commander standing and steady through a whole battle. */
+export const IMMORTAL = { mor: 50, prot: 99, hp: 50 } satisfies Partial<CombatStats>;

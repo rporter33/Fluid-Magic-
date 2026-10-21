@@ -193,16 +193,19 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
 
 **Battle spells** (section 3, docs/04 round step 1)
 - **Fatigue** at 100 or more stops a commander from acting at all: no spell, no Attack or
-  Retreat slot, no melee or ranged attack. It can still be hit and recovers 5 a round. M1
-  treats 200 ("unconscious") the same: only a fatigue drain can reach it and no M1 spell
-  drains. A cast costs `max(fatigue * 0.2, fatigue − 5 * extra)`, `extra` being the caster's
-  pips in the requirement's colors beyond its slots (holy pips beyond for holy spells).
+  Retreat slot, no melee or ranged attack, and no closing on the enemy, so it draws no enemy
+  archers into melee. It can still be hit and recovers 5 a round. M1 treats 200
+  ("unconscious") the same: only a fatigue drain can reach it and no M1 spell drains. A cast
+  costs `max(fatigue * 0.2, fatigue − 5 * extra)`, `extra` being the caster's pips in the
+  requirement's colors beyond its slots (holy pips beyond for holy spells).
 - **The spells a commander knows** are fixed at battle setup: those its pips meet and its
   nation has researched. A Cast slot casts the named spell if it is known and has a target,
   else the best castable one: against 10 or more active enemy troops damage spells first,
   otherwise the rest first, then the highest level, then content order. A spell is castable
   with its carried mana in hand and a target for every effect.
-- **Targets** are chosen once per cast and target kind, so a spell's effects share them.
+- **Targets** are chosen once per cast: a spell's area effects share one draw of troops and
+  land on every group those troops belong to; its other effects share the targets of an
+  earlier effect of the same kind and target kind.
   Enemy groups: the largest present group in the enemy's front row, then the rows behind it.
   Friendly squads: the largest active squad lacking the spell's effect (or, for heals,
   wounded or cursed), front row first. A buff or curse is cast only on a target without it;
@@ -218,11 +221,14 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   check in the morale step even without losses; a squad still rolls once a round.
   **fatigueDrain** tires the enemy caster with the most pips (or all of them).
 - **Field effects**: storm stops all ranged fire and gives everyone −2 attack (Tempest's
-  text); fog gives everyone −4 precision; wall stops melee between the fronts. One of each
+  text), so front-row archers, unable to shoot, close like other troops; fog gives everyone
+  −4 precision; wall stops melee between the fronts. One of each
   kind at a time. Their stat parts fall on every unit present when cast; later summons
   arrive unaffected. Fog and wall numbers are this milestone's own (no spell defines them).
 - **Carried mana** a battle spell uses is spent from the caster's carried pool and counted in
-  the nation's mana spent.
+  the nation's mana spent, also when the caster dies later in the battle.
+- **"All friendly squads"** (Regrowth) leaves commanders out; "all friendly" (Warcry) takes
+  them in.
 - **Life drain** (the Black bless) heals each striker 2 per damaging hit, paid after every hit
   of the phase has landed and only to strikers still alive.
 
@@ -237,6 +243,8 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   needs a fort there; ranged rituals reach provinces within their hops (by adjacency), and
   "owned" ones only provinces the nation owns. A ritual with timed effects cannot be cast on
   a province that holds an effect of the same spell from anyone.
+- **Targets offered** (Ritual panel, AI) are those the command accepts with the default split,
+  leadership and mana included; the default split pays whenever any whole split could.
 - **At completion** the same checks run again (mana and leadership aside); if one fails, it fails
   with a message naming why, and nothing is refunded.
 - **Summoned troops** must fit the caster's leadership when the ritual begins; when they
@@ -250,6 +258,10 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   docs/01 section 12 steps through the same function Phase 6's spread will use (own or
   empty: +1 up to the dominion score; another nation's: −1, leaving no dominion at 0).
   `manaConvert` turns the nation's whole `from` pool into `to`, `ratio` to one.
+  `provinceSupply` is a factor of its own, `1 + sum of deltaPct`, after the scales' supply
+  change, so Burn the Fields halves supply and Bounty of the Loam doubles it whatever the
+  province's scales. `provinceGrowth` adds to the province's Growth scale, which stays within
+  −3..+3 and moves supply with it (docs/01 sections 3 and 4).
 - **giveMana** moves whole mana from the pool to a commander standing in a lab province its
   nation owns; nothing moves back in M1. Mana carried is lost with its commander.
 

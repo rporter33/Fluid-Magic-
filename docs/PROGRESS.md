@@ -175,6 +175,17 @@
   replace instead of stack, rituals that cannot be stacked on one province, leadership for
   summoned troops, Ash Rain on troops only and without armor, and one dominion push for
   rituals and Phase 6's spread.
+- A code review (4 lenses, each finding re-checked by a skeptic) confirmed 55 of 61 findings.
+  Rule bugs: mana a caster spent in battle went uncounted when it died; ritual supply changes
+  added to the scales instead of multiplying (Burn the Fields did not halve supply on
+  Growth/Wild land); front-row archers stood idle through a storm; Regrowth healed
+  commanders; two area effects of one spell hit different troops; summons replayed with no HP.
+  Quality: ritualTargets now offers exactly what the castRitual command accepts (one shared
+  castBlocker); one inOwnLab check; the buff event's untilRound; field effects no longer log
+  unmatched expires; duplicated helpers merged; the spell tests split to mirror src. 43
+  mutations the suite did not catch (targets, morale, exhaustion, summons, life drain, ritual
+  reach and stacking, labs, scry, remoteDamage, tick order) now fail it, each re-run to prove
+  it. 765 tests.
 
 ## Deviations from the docs
 
