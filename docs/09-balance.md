@@ -32,6 +32,14 @@ the truth for current values.
 | 2026-10-21 | 01 §8 | Recruit time scales | Order, Turmoil | also Wild +15% and Artifice -15% per step (build time), summed into one factor max(0, 1 + sum); Turmoil 3 with Artifice 3 gives x0.25 (tune in Phase 12) | Section 8 calls recruit time build time |
 | 2026-10-21 | 01 §8 | Recruit cancel refund | unspecified | gold in full; materials up to the fort pool cap; no cancelling during a siege; items dropped when the fort changes hands are not refunded | A full refund would bank materials past the cap |
 | 2026-10-21 | 01 §4 vs 09 checklist | Supply pop divisor | pop / 50 | unchanged (pop / 50) | Conflict: Hills supply is 100-160, so the checklist item "armies larger than 60 troops in a Hills province starve within a month" cannot pass. Phase 12 should retune (about pop / 250 fits) or change the checklist |
+| 2026-10-21 | 04 | Ranged damage | "damage as melee" | weaponDmg + DRN − prot − DRN, without the shooter's str | Strength is a melee stat; a shot's force is the weapon's. Archers with 3 free volleys kill 2.7 of 20 militia (required: at least 2) |
+| 2026-10-21 | 04 | Closing round at map speed 0 | unspecified | 4, as speed 1 | Immobile units (Living Monolith) need one |
+| 2026-10-21 | 04 | Winner of a mutual rout | unspecified | the side with more living units still on the field, routing ones included; a tie goes to the defender | Giving every mutual rout to the defender let 20 attacking Cinder Warriors beat 10 Ash Militia in only 89% of seeds (required 95%); now 98.5%, equal armies 49% |
+| 2026-10-21 | 05 | Dread battle morale | −1 to enemies per 3 dominion strength | −1 per step of the province's effective Dread scale (−3 at Dread 3 and full strength) | The effective scale already grows with dominion strength |
+| 2026-10-21 | 05 | Prophet wait | 24 months | 720 days | 30-day months |
+| 2026-10-21 | 01 §11 | Walls down | wall HP reaches 0 | below 1 HP (shown as 0) | Fractional damage and repair would otherwise leave walls at 0.4 that count as standing |
+| 2026-10-21 | 01 §8 | PD after a battle | unspecified | min(pd, ceil(militia left / 2)); archers ignored | 2 militia per level |
+| 2026-10-21 | 06 | Battle records kept | last 20 | last 20 battles in which a player's nation fought | AI battles would push the player's replays out |
 
 ## Playtest checklist (run before calling M1 done)
 

@@ -22,6 +22,20 @@ describe('required tests (docs/04-battle.md)', () => {
     expect(resolveBattle(make(), createRng(6)).replay).not.toEqual(a.replay);
   });
 
+  it('never changes its setup: one setup object fought twice gives the same battle', () => {
+    const once = setup(
+      side(
+        [squad('a0', 'cinderWarrior', 20, { leader: 'ac' }), squad('a1', 'flameArcher', 10)],
+        [commander('ac', 'ashChieftain', { script: [{ kind: 'attack' }] })],
+      ),
+      side([squad('d0', 'ashRider', 10, { hp: 80 }), squad('d1', 'longbowHunter', 10)]),
+    );
+    const copy = structuredClone(once);
+    const a = resolveBattle(once, createRng(9));
+    expect(once).toEqual(copy);
+    expect(resolveBattle(once, createRng(9))).toEqual(a);
+  });
+
   it('20 Cinder Warriors beat 10 Ash Militia in at least 95% of 200 seeds', () => {
     const rate = attackerWinRate(
       () => [side([squad('a', 'cinderWarrior', 20)]), side([squad('d', 'ashMilitia', 10)])],
@@ -150,6 +164,17 @@ describe('damage', () => {
     const bonus = cloneRng(rng);
     const expected = Math.max(0, 11 + 4 + 3 + drn(bonus) - 7 - drn(bonus));
     expect(weaponDamage(rng, 11, sword, 7, 3)).toBe(expected);
+  });
+
+  it('gives the field to the defender when two lone commanders kill each other', () => {
+    const deadly = { att: 100, def: -100, str: 100, hp: 1 };
+    const result = fightOnce(
+      side([], [commander('a', 'ashChieftain', { stats: deadly })]),
+      side([], [commander('d', 'wardenCaptain', { stats: deadly })]),
+    );
+    expect(result.commanders.get('a')?.dead).toBe(true);
+    expect(result.commanders.get('d')?.dead).toBe(true);
+    expect(result.winner).toBe('defender');
   });
 
   it('lands simultaneously: two who strike each other dead both fall', () => {

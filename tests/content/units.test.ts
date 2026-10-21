@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef, validateContent, type UnitTypeId } from '../../src/content';
 import { NATIONS } from '../../src/content/nations';
+import { BATTLE } from '../../src/content/rules';
 import { UNITS } from '../../src/content/units';
 import { createGame } from '../../src/sim/createGame';
 import { recruitRequirementError } from '../../src/sim/recruitment';
@@ -164,5 +165,13 @@ describe('map speeds', () => {
     }
     expect(unitDef('ashRider').mapSpeed).toBe(3);
     expect(unitDef('warden').mapSpeed).toBe(1);
+  });
+
+  it('each have a closing round in battle, flyers as the fastest', () => {
+    for (const u of Object.values(UNITS)) {
+      expect(BATTLE.closingRound[u.mapSpeed], u.id).toBeDefined();
+    }
+    expect(BATTLE.closingRound[BATTLE.flyingSpeed]).toBeDefined();
+    expect(BATTLE.closingRound[0]).toBe(BATTLE.closingRound[1]);
   });
 });

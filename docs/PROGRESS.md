@@ -107,6 +107,37 @@
 - Speed: a 4-nation Medium game (110 provinces) with 326 commanders runs about 1.6 ms per
   day; with 200 armies all marching on long paths, about 1.9 ms (docs/06 budget: 2 ms).
 
+## Phase 4: Battles, sieges, capture (done)
+
+- `src/sim/battle/`: `resolveBattle(setup, rng)` is pure. It splits squads into troops in
+  three rows, then runs each round: scripts, ranged fire, melee (both simultaneous within the
+  phase), commander deaths, morale, and end of round (exits, regeneration). It returns
+  survivors, the winner, and a full replay log; `foldReplay` rebuilds the viewer's state from
+  a record. `setup.ts` builds a setup from game state with terrain, scales, Dread, storm,
+  starvation, and unpaid-upkeep modifiers folded in; `apply.ts` writes the result back
+  (wounds, deaths through `commanderDies`, a dead commander's troops to an heir, PD losses,
+  population, unrest, records, messages, stats).
+- `conflict.ts`: what an arrival among hostiles does (fight a third nation first, besiege a
+  fort, take an undefended province, or fight for it, capturing only if someone is left), and
+  the one retreat rule. `siege.ts`: daily walls, `siegeRates` for the UI and AI, empty forts
+  falling, and storms. `capture.ts`: a province changing hands. The `storm` command.
+- Tests: the docs/04 required tests except Pyre Storm (Phase 5 brings spells), plus closing
+  and reach by speed and range, ammunition, damage rules, simultaneous kills, morale
+  thresholds, pressure and commander deaths, fearless and berserk units, scripts, the winner
+  when both sides break, replay folding over many battles, every modifier, arrival battles to
+  capture, retreats and deaths, PD and garrison troops fighting, sieges from start to storm,
+  heirs, records, and timing (300 against 300 in about 1 ms; a day with 175 armies marching
+  about 1.8 ms).
+- A design review (4 lenses, 35 issues, two independent judges) settled the rules recorded at
+  the end of `docs/04-battle.md` and `docs/01-core-rules.md`. The main changes: archers keep
+  shooting until they are reached, slow units fight back once reached, ranged damage leaves
+  out strength, forts are always besieged, hidden commanders take no part, a capture needs
+  someone left standing, every death goes through one function, and replays are kept only
+  for the player's battles. Where the judges ruled that the defender wins every mutual rout,
+  the required "20 Cinder Warriors beat 10 Ash Militia in 95%" test failed (89%), so the side
+  holding the field wins instead (recorded in `docs/04-battle.md` and `docs/09-balance.md`).
+  Starvation now kills troops in proportion to the HP lost, closing the Phase 3 known issue.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -120,6 +151,12 @@
   `docs/01-core-rules.md`; the command API's departures from the `docs/06` sketch (explicit
   `nation`, field names, `setOrder` by kind, `cancelRecruit` by id, the `commands/` folder)
   at the end of `docs/06-architecture.md`; numbers in `docs/09-balance.md`.
+- Battle rules settled in Phase 4 (closing and contact, ranged damage without strength, the
+  winner when both sides break, a commander routing with its last squad, heirs, berserk,
+  winners staying where they fought, capture only if held, one retreat rule, sieges and
+  storms, battle records only for the player's battles) are listed at the end of
+  `docs/04-battle.md` and `docs/01-core-rules.md`; numbers in `docs/09-balance.md`. Dread's
+  battle morale follows the effective scale (`docs/05-pretender.md`).
 - Economy rules settled in Phase 2 (daily application of monthly rates, upkeep shortfall
   and recovery, materials cap, supply in transit, pillage order, construction) are listed
   at the end of `docs/01-core-rules.md`. `GameState` differs from the
@@ -140,8 +177,6 @@
 - For later phases: `wellspringsToWin` (majority of Wellsprings) lives in
   `src/mapgen/placement.ts`; Phase 6 victory should reuse it. (Resolved in Phase 3: farmland
   and wasteland use the plains independent pool.)
-- Until Phase 4 brings battles, an army that marches into an independent or enemy province
-  simply stops there, stands beside the defenders, and can pillage.
 - The UI and AI should use `findPathFor` (not `findPath` from a leg's end) so previews match
   what move validation accepts.
 - Supply conflict: at pop / 50, Hills supply is 100 to 160 a day, so the balance checklist
@@ -150,16 +185,22 @@
 - Tax rate changes cost nothing yet, and High tax at the capital is free income until
   unrest bites; Phase 12 balance.
 - `NationState.capital` never changes; Phase 6 decides what happens when a capital falls.
-- Starving wounded squads lose troops by the rounded-up HP pool, so a squad at half HP
-  loses troops sooner than a healthy one. Kept as the simplest consistent model.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
   are grouped by province and then nation; legs use the move order's frozen `mapSpeed`.
-- For Phase 4: resolve battles, captures, and sieges in `resolveArrivals` (movement.ts), which
-  runs before `continueMoves`, so commanders passing through stand in the province. A
-  commander in transit is present at its location for battles: it defends there and is caught
-  by arrivals there, and a battle there ends its transit; change this only together with
-  `isHostile`. Capture calls `replaceGarrison`, sets PD to 0, and leaves the old owner's
-  queue to the drop rule. A stealthy scout entering a hostile province stops there and fights.
+- A commander in transit is present at its location for battles: it defends there and is
+  caught by arrivals there, and a battle there ends its transit. Change this only together
+  with `isHostile`.
+- For Phase 5: the Pyre Storm required test ("kills at least 8 of a 30-militia front row on
+  average") arrives with battle spells; Cast slots hold until then. Timed modifiers and their
+  `expire` events are already in the resolver for spells to use.
+- For Phase 6: `pretenderId` is null both before the pretender arrives and after it dies, so
+  awakening must track the arrival separately.
+- For Phase 7 (AI): there is no sally; a besieged fort is relieved only by an army arriving
+  from outside, which fights the besiegers alone (the garrison and PD stay inside). A siege
+  whose defenders repair at least as fast as the besiegers batter never breaches (defenders
+  with twice the besiegers' strength stall it for good), so the AI must storm when the walls
+  are down or the siege cannot progress, or relieve its own forts. `siegeRates` gives the
+  numbers.
 - Forts start with an empty materials pool, so the capital's first batch of 10 Cinder
   Warriors (80 materials at about 60 a month) waits about 40 days. Revisit in playtesting
   (Phase 8) or balance (Phase 12).

@@ -36,8 +36,11 @@ export interface ScaleEffects {
   /** Unrest per month in other nations' provinces your dominion touches. */
   enemyUnrestPerMonth?: number;
   undeadUpkeepPct?: number;
-  /** Battle: enemy morale per 3 points of your dominion strength. */
-  enemyMoralePer3Dominion?: number;
+  /**
+   * Battle: morale of your enemies in a province you dominate, per step of the province's
+   * effective scale, which already grows with your dominion strength there.
+   */
+  enemyMorale?: number;
 }
 export type ScaleEffectKey = keyof ScaleEffects;
 
@@ -113,7 +116,7 @@ export const SCALE_DEFS: Readonly<Record<ScaleAxis, ScaleAxisDef>> = {
     negative: {
       name: 'Dread',
       color: 'B',
-      effects: { enemyUnrestPerMonth: 2, undeadUpkeepPct: -0.25, enemyMoralePer3Dominion: -1 },
+      effects: { enemyUnrestPerMonth: 2, undeadUpkeepPct: -0.25, enemyMorale: -1 },
     },
   },
 };

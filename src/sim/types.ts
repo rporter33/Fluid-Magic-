@@ -244,7 +244,10 @@ export interface NationState {
   mana: ColorAmounts;
   research: ResearchState;
   pretender: PretenderDesign;
-  /** The pretender's commander once it has arrived; the only record of who it is. */
+  /**
+   * The pretender's commander; the only record of who it is. Null before the pretender arrives
+   * and after it dies.
+   */
   pretenderId: CommanderId | null;
   /** The prophet's commander; the only record of who it is. */
   prophetId: CommanderId | null;

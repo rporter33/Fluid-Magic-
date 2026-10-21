@@ -68,7 +68,7 @@ function statsFor(ctx: Context, unit: UnitTypeId, starvedDays: number): CombatSt
     prec += scaleEffect(scales, 'precision');
     if (def.tags.includes('sacred')) mor += scaleEffect(scales, 'sacredMorale');
   } else if (dominator !== null) {
-    mor += scaleEffect(scales, 'enemyMoralePer3Dominion');
+    mor += scaleEffect(scales, 'enemyMorale');
   }
   if (defending) {
     for (const e of activeEffects(state, province)) {

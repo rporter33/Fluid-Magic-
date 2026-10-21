@@ -55,15 +55,23 @@ fluid-magic/
       independents.ts     # independent forces at game start, strength words
       pd.ts               # PD cost and the defenders it fields
       hash.ts             # state hash for determinism checks
-      siege.ts
+      conflict.ts         # what a hostile arrival does: battles, sieges, captures, retreats
+      siege.ts            # daily wall damage and repair, storms
+      capture.ts          # a province changing hands
       rituals.ts
       wellsprings.ts
       victory.ts
       visibility.ts       # fog of war
       battle/
-        resolve.ts        # resolveBattle(setup, rng)
-        formation.ts
-        spells.ts         # battle effect primitives
+        types.ts          # BattleSetup, CombatStats, BattleResult
+        resolve.ts        # resolveBattle(setup, rng): the round loop, scripts, the winner
+        field.ts          # rows, troops, stat modifiers inside one battle
+        attacks.ts        # ranged fire, melee, damage
+        morale.ts         # morale checks, routs, commander deaths
+        setup.ts          # a BattleSetup from game state, every modifier folded in
+        apply.ts          # a result written back: survivors, deaths, PD, records, messages
+        replay.ts         # folding a replay log into the state the viewer shows
+        spells.ts         # battle effect primitives (Phase 5)
         events.ts         # BattleEvent types
       selectors.ts        # every economic rate, read by the UI, the AI, and the tick alike
       serialize.ts        # save/load JSON, version field, migrations
@@ -308,3 +316,18 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   and visible armies are otherwise computed on demand.
 - **State hash**: `stateHash(state)` (`src/sim/hash.ts`) is a 53-bit hash of the JSON form,
   used by the determinism tests and later by save verification.
+- **Battles** (Phase 4): `resolveBattle` takes a `BattleSetup` that `battle/setup.ts` builds
+  with every modifier already folded into each squad's stats, so the resolver reads no game
+  state. Tick step 2 runs `advanceTransits`, `resolveArrivals` (now in `conflict.ts`),
+  `progressSieges`, and `continueMoves`. `resolveArrivals` builds one presence index for the
+  day and rebuilds it only after an arrival that fought, besieged, or captured.
+- **Battle records** ("keep last 20"): a `BattleRecord` is stored only for battles in which a
+  player's nation (`ai === null`) fought, and the newest `BATTLE.keep` (20) of those are kept.
+  Battles between AI nations and independents still apply every consequence and post
+  'battle' messages, with `battle: null`; the UI shows "replay no longer kept" for a message
+  whose record is gone.
+- **Storm** command: `{ type: 'storm', nation, province }`. It is valid for the nation
+  besieging the province while one of its commanders (not a hidden one) stands there, and
+  sets `siege.storm`; the storm is fought in the next tick's siege step. `SiegeState` gained
+  `storm: boolean`.
+

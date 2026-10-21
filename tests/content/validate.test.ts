@@ -167,7 +167,7 @@ describe('scale effects', () => {
       Wild: { supplyPct: 0.15, beastCostPct: -0.1, buildTimePct: 0.15, materialsPct: -0.1 },
       Artifice: { materialsPct: 0.1, buildTimePct: -0.15, supplyPct: -0.1 },
       Sanctity: { templeChecks: 1, sacredMorale: 1, templeCostPct: -0.25 },
-      Dread: { enemyUnrestPerMonth: 2, undeadUpkeepPct: -0.25, enemyMoralePer3Dominion: -1 },
+      Dread: { enemyUnrestPerMonth: 2, undeadUpkeepPct: -0.25, enemyMorale: -1 },
     });
   });
 });

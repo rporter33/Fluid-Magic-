@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { applyBattle } from '../../../src/sim/battle/apply';
 import type { SideForces } from '../../../src/sim/battle/setup';
 import type { BattleResult } from '../../../src/sim/battle/types';
+import type { CommanderState } from '../../../src/sim/types';
 import { addArmy, annex, independentProvince, redField } from '../fixtures';
 
 function result(overrides: Partial<BattleResult> = {}): BattleResult {
@@ -34,6 +35,9 @@ describe('applyBattle', () => {
     expect(p.unrest).toBe(15);
     applyBattle(state, p.id, none, owner, result({ winner: 'defender' }));
     expect(p.unrest).toBe(15);
+    // The owner lost a battle it started there.
+    applyBattle(state, p.id, owner, none, result({ winner: 'defender' }));
+    expect(p.unrest).toBe(25);
   });
 
   it('writes survivors and wounds back, and hands a dead commander’s troops to a living one', () => {
@@ -63,6 +67,51 @@ describe('applyBattle', () => {
     expect(state.commanders[b.id]).toBeUndefined();
     expect(a).toMatchObject({ hp: 9, transit: null, carriedMana: { R: 2 } });
     expect(a.squads.map((s) => [s.count, s.hp])).toEqual([[9, 75]]);
+  });
+
+  it('hands a dead commander’s troops to a beaten side’s heir, the fort’s garrison, or nobody', () => {
+    const { state, red, capital } = redField();
+    const dead = (...cs: CommanderState[]) =>
+      new Map(cs.map((c) => [c.id, { hp: 0, dead: true, routed: false, carriedMana: {} }]));
+    const nobody: SideForces = { nation: null, commanders: [], garrison: null, pd: false };
+    const p = independentProvince(state);
+    const fallen = addArmy(state, red, p.id, 'ashMilitia', 6);
+    const heir = addArmy(state, red, p.id, 'cinderWarrior', 1);
+    heir.squads = [];
+    const beaten: SideForces = {
+      nation: red,
+      commanders: [fallen, heir],
+      garrison: null,
+      pd: false,
+    };
+    applyBattle(
+      state,
+      p.id,
+      beaten,
+      nobody,
+      result({ winner: 'defender', commanders: dead(fallen) }),
+    );
+    expect(heir.squads.map((s) => [s.unit, s.count])).toEqual([['ashMilitia', 6]]);
+
+    const holder = state.commanders[state.provinces[capital]!.garrison!]!;
+    const guard = addArmy(state, red, capital, 'ashMilitia', 4);
+    const held = holder.squads.reduce((n, s) => n + (s.unit === 'ashMilitia' ? s.count : 0), 0);
+    const fort: SideForces = { nation: red, commanders: [guard], garrison: holder, pd: false };
+    applyBattle(
+      state,
+      capital,
+      nobody,
+      fort,
+      result({ winner: 'defender', commanders: dead(guard) }),
+    );
+    expect(holder.squads.find((s) => s.unit === 'ashMilitia')?.count).toBe(held + 4);
+
+    const lone = addArmy(state, red, p.id, 'cinderWarrior', 3);
+    const squad = lone.squads[0]!.id;
+    const alone: SideForces = { nation: red, commanders: [lone], garrison: null, pd: false };
+    applyBattle(state, p.id, alone, nobody, result({ winner: 'defender', commanders: dead(lone) }));
+    const all = Object.values(state.commanders).flatMap((c) => c.squads.map((s) => s.id));
+    expect(all).not.toContain(squad);
   });
 
   it('keeps the last 20 battle records and tells each nation', () => {

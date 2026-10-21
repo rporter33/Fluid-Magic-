@@ -66,7 +66,9 @@ export function applyBattle(
     if (militia) p.pd = Math.min(p.pd, Math.ceil(militia.count / PD.militiaPerLevel));
   }
   p.pop = Math.max(0, p.pop * (1 - (BATTLE.popLossPer100 * result.casualties) / 100));
-  if (result.winner === 'attacker' && defender.nation !== null && defender.nation === p.owner) {
+  // The owner lost a battle in its own province, whichever side it fought on.
+  const loser = result.winner === 'attacker' ? defender : attacker;
+  if (loser.nation !== null && loser.nation === p.owner) {
     p.unrest = Math.min(UNREST.max, p.unrest + BATTLE.lostBattleUnrest);
   }
 

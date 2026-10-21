@@ -3,13 +3,16 @@ import { describe, expect, it } from 'vitest';
 import { startConstruction } from '../../src/sim/buildings';
 import { createGame } from '../../src/sim/createGame';
 import { newId, type NationId } from '../../src/sim/ids';
+import { findPath } from '../../src/sim/movement';
 import { provinceEconomy } from '../../src/sim/selectors';
 import { advance } from '../../src/sim/tick';
 import type { GameState } from '../../src/sim/types';
 import {
   addArmy,
+  annex,
   capitalOf,
   independentProvince,
+  move,
   nation,
   nationIds,
   runDays,
@@ -90,6 +93,20 @@ describe('advance', () => {
     expect(JSON.stringify(b)).toBe(JSON.stringify(a));
   });
 
+  it('keeps a heavy marching day near the 2 ms budget (docs/06)', () => {
+    const state = marchingGame();
+    const marching = () =>
+      Object.values(state.commanders).filter((c) => c.order.kind === 'move').length;
+    runDays(state, 5);
+    expect(marching()).toBeGreaterThan(150);
+    const start = performance.now();
+    runDays(state, 60);
+    const perDay = (performance.now() - start) / 60;
+    // A loose bound against regressions; the measured target is docs/06's 2 ms.
+    expect(perDay).toBeLessThan(10);
+    expect(state.battles).toEqual([]);
+  });
+
   it('continues identically after a save and load', () => {
     const a = twoNationGame(12);
     runDays(a, 100);
@@ -138,5 +155,49 @@ function busyGame(): GameState {
     kind: 'growth',
     deltaScale: 1,
   });
+  return state;
+}
+
+/**
+ * Four nations that split the whole map between them, with 200 commanders marching long paths
+ * through their own land and no battles to fight.
+ */
+function marchingGame(): GameState {
+  const state = createGame({
+    seed: 7,
+    mapSize: 'medium',
+    nations: [
+      nation('cinderHorde'),
+      nation('thornwood'),
+      nation('cinderHorde'),
+      nation('thornwood'),
+    ],
+  });
+  const nations = nationIds(state);
+  const queue = nations.map((n) => [state.nations[n]!.capital, n] as const);
+  const owner = new Map(queue);
+  for (const [p, n] of queue) {
+    for (const q of state.map.provinces[p]!.neighbors) {
+      if (owner.has(q)) continue;
+      owner.set(q, n);
+      queue.push([q, n]);
+    }
+  }
+  for (const [p, n] of owner) annex(state, n, p);
+  const provinces = [...owner.keys()];
+  for (let k = 0; Object.keys(state.commanders).length < 200; k++) {
+    const n = nations[k % nations.length]!;
+    const mine = provinces.filter((p) => owner.get(p) === n);
+    const troops = state.nations[n]!.def === 'cinderHorde' ? 'ashMilitia' : 'thornMilitia';
+    addArmy(state, n, mine[k % mine.length]!, troops, 20);
+  }
+  let k = 0;
+  for (const c of Object.values(state.commanders)) {
+    if (c.owner === null || c.unit === 'garrison') continue;
+    const mine = provinces.filter((p) => owner.get(p) === c.owner);
+    const to = mine[(k++ * 7) % mine.length]!;
+    const path = findPath(state, c.owner, c.location, to, 2);
+    if (path && path.length > 0) move(state, c.owner, [c], path);
+  }
   return state;
 }

@@ -111,3 +111,8 @@ The implementer validates that each preset costs ≤ budget; if not, adjust the 
 - **Prophet and pretender identity** is stored once, as ids on the nation
   (`prophetId`, `pretenderId`), not as flags on commanders.
 - **Wellspring scale steps** add to the owner's national scales while it holds the province.
+- **Dread in battle** ("−1 mor to enemies per 3 strength"): units fighting against the
+  dominating nation in a province lose 1 morale per step of the province's effective Dread
+  scale. The effective scale already grows with dominion strength (`scale * strength / 10`,
+  rounded), so Dread 3 at full strength costs enemies 3 morale and at strength 3 costs 1.
+  Independents count as enemies.

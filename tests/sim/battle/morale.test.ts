@@ -142,7 +142,7 @@ describe('commander checks', () => {
     expect(routs / 400).toBeGreaterThan(0.6);
   });
 
-  it('make a commander roll once, when its last standing squad breaks', () => {
+  it('take a commander along once, when its last standing squad breaks', () => {
     let routed = 0;
     for (let seed = 0; seed < 200; seed++) {
       const { field, g, c } = staged(-100);

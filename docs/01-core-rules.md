@@ -294,8 +294,10 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Province effects** (timed ritual effects) are in force while the day is before their
   `untilDay` and are dropped at the end of the day before it.
 - **Supply**: commanders eat where they stand, also while in transit (at the province they
-  left). Independents never eat and never starve. Starving troops die as their squad's HP
-  pool stops covering them at full health; commanders cannot starve below 1 HP. The
+  left). Independents never eat and never starve. A starving squad loses HP from its pool,
+  with wounds spread evenly as in the resolver, so troops die in proportion:
+  `count = ceil(count * newHp / oldHp)` (0 once the pool is empty), which for a healthy squad
+  is the pool rounded up to whole troops. Commanders cannot starve below 1 HP. The
   starvation counter is capped so morale returns at the rate it was lost. Fed units heal
   2% of max HP per day, which also heals battle wounds. The squad `moraleMod` of section 6
   is derived from the starvation counter and the unpaid-days counter, not stored.
@@ -376,3 +378,56 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   fortress, and exactly where one of the nation's scouts is in or next to the province.
   Each day a nation is told, once per province and enemy nation, of armies that came into
   sight; it remembers which enemy commanders it saw at the end of the last day.
+
+**Battles, sieges, capture (Phase 4)**
+- **Who fights** (sections 6 and 10): when a nation's commanders arrive in a province hostile
+  to it, their moves end and, while it still has commanders there: (1) it first fights any
+  third nation with commanders present (the first in nation order), and stops if it loses;
+  (2) in its own province it stops there (a relief is done); (3) a nation's fort is besieged,
+  defended or not, with no battle on arrival; (4) any other province is taken at once if
+  nobody defends it, or fought for. The defenders are the owner's commanders present, the
+  fort's garrison troops (never the holder itself), and PD; in an independent province, the
+  independents. All of a day's arrivals stand in their provinces before any is resolved, and
+  they are resolved in arrival order, so a later same-day arrival is already there to defend
+  when an earlier one fights.
+- **Hidden commanders** (stealthy, leading only stealthy troops) take no part on either side:
+  they never fight, besiege, storm, or take a province, and are never attacked. An arrival
+  of hidden commanders only ends its move.
+- **Capture only if held**: a won battle or storm takes the province only if the winning nation
+  still has a commander (not hidden, not a garrison holder) standing there. Otherwise the
+  owner keeps it, with whatever PD and garrison troops the battle left.
+- **Retreat** (section 10, one rule for every loser): back to the province it came from if
+  that is not the battle's province and is friendly (owned by its nation, with no other
+  nation's commander present, hidden ones aside); else to a random adjacent friendly province
+  (`state.rng`); else the commander dies with its troops. Independents never move, so beaten
+  independents die. A fort's garrison troops are lost when its defenders lose. Retreating
+  commanders arrive at once, idle.
+- **After a battle**, every surviving commander that fought, on either side, ends its transit
+  and its move order (idle) where it fought; the losers then retreat. A winning side's routed
+  squads and commanders stay in the province with their side: section 10's "return to the
+  province they came from" would need a squad to travel without a commander.
+- **Deaths**: every commander death (battle, nowhere to retreat, later spells) goes through
+  one path, `commanderDies`, which clears the nation's `pretenderId` and, for a prophet,
+  `prophetId`, starting the 24-month wait for a new prophet.
+- **Population and unrest** (sections 3 and 5): a battle costs the province
+  `pop * 0.005 * casualties / 100`, counting every troop and commander killed on both sides
+  (summoned units aside). "Lost battle in province +10 once" applies when the province's owner
+  loses a battle there, whether it attacked or defended.
+- **PD after a battle**: PD that fought is set to `min(pd, ceil(militia left / 2))`; archers do
+  not count.
+- **Sieges** (section 11), each day after arrivals: a siege ends when no commander of the
+  besieger (hidden ones aside) is present. Otherwise the walls take `attackers' str / 10`
+  and are repaired by `defenders' str / 20`, clamped to 0..300, where str sums every troop
+  and commander present on that side (garrison troops and PD defend; the holder does not).
+  Walls are down below 1 HP, shown as 0. An undefended fort falls once its walls are down.
+  Reinforcements of the besieger join the siege as it stands; a nation that beats the
+  besiegers in the province takes over the siege and its battered walls.
+- **Storm**: the besieger may order a storm at any time while it has a commander there. It is
+  fought in the next day's siege step: an undefended fort falls at once; otherwise the
+  defenders get +2 morale and +6 protection while the walls stand, +3 once they are down.
+  The siege ends with the storm, whoever wins.
+- **Capture** (sections 8, 9, 13): the new owner gets the province at Normal tax with PD 0;
+  any siege ends, a Wellspring claim is cleared, and a fort gets a new garrison holder (the
+  old one's troops are lost). The old owner's recruitment queue drops by the Phase 3 rule
+  and construction is abandoned by the Phase 2 rule. Dominion is unchanged.
+

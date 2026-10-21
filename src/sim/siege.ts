@@ -74,11 +74,10 @@ export function progressSieges(state: GameState): void {
         continue;
       }
       const storm = { wallsStanding: !wallsDown(siege.wallHp) };
-      if (fight(state, p.id, attackers, defenders, storm) === 'attacker') {
-        captureIfHeld(state, p.id, siege.attacker);
-      } else {
-        p.siege = null;
-      }
+      const won = fight(state, p.id, attackers, defenders, storm) === 'attacker';
+      // A storm ends the siege either way: the fort falls, or the besiegers are beaten or gone.
+      p.siege = null;
+      if (won) captureIfHeld(state, p.id, siege.attacker);
       continue;
     }
     const { damage, repair } = siegeRates(state, p.id);

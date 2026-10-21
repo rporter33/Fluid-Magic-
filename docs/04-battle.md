@@ -124,3 +124,70 @@ drawn as sprite blocks in their rows, numbers floating up for damage, and a rout
   starving days) and up to 3 from unpaid upkeep (one per 30 days).
 - **Scripts**: a Cast slot may name no spell, meaning the best castable one. This is the
   default for mages and priests.
+
+**Resolver (Phase 4)**
+- **Closing and contact**: a unit's closing round is 2 for flyers and map speed 3, 3 for speed
+  2, and 4 for speed 1 or 0 (`BATTLE.closingRound`). A unit can shoot while it has a ranged
+  weapon with ammunition that reaches the enemy's current front (range 5 or more reaches the
+  rear, shorter ranges the front and middle rows). An active unit in its side's front row
+  that cannot shoot closes on the enemy from its own closing round. A side's front row is in
+  contact when the enemy front holds an active closer past its closing round, and then all of
+  it fights back, however slow. So archers never charge while they can shoot: they get one
+  free volley against speed-3 melee, two against speed 2, and three against speed 1, and
+  join the melee once out of arrows. Contact is fixed when each phase begins.
+- **Ranged damage** ("damage as melee"): the same formula without the shooter's strength,
+  `weaponDmg + DRN − prot − DRN`, at least 0, with armor piercing and negating as in melee.
+  Strength bonuses such as berserk count only in melee.
+- **Rows**: a side's front is its first row with an active (alive, not routing) unit. Attacks
+  draw targets from every unit still on the field, routing ones included, in the enemy front
+  and any row before it, so stragglers can be cut down in their exit round. Ranged reach is
+  measured to that front.
+- **Simultaneous resolution**: within a phase every attack is rolled against the field as the
+  phase began, then all damage lands, so two units that kill each other both fall. Rolls go
+  attacker side first, in setup order, so the rng stream is fixed. A unit with no melee
+  weapon attacks once unarmed (damage 0, in content).
+- **Morale details**: both loss shares count against the squad's starting size. A side has
+  lost over half when its starting troops minus the living troops of its starting squads
+  still on the field exceed half its starting troops (commanders and summons do not count).
+  A squad rolls at most once a round. A commander's death is checked right after the phase
+  that killed it: it is logged and its squads roll at once with pressure +4, and do not roll
+  again that round.
+- **A commander's rout** (deviation from "checks morale too"): when a commander's last
+  standing squad routs, the commander routs with it without a roll, unless it has morale 50
+  or is berserk. A commander that brought no squads, or whose squads all died, fights on and
+  never routs by morale. A brave commander that stayed behind alone would leave its routed
+  troops without a commander, and squads cannot travel without one (docs/01 section 10).
+- **Berserk**: a berserk troop below half its HP attacks at +2 att and +2 str
+  (`BATTLE.berserk`). Berserk squads never rout: not by morale, not with their commander, not
+  on a Retreat slot. Only the round-50 retreat takes them off the field.
+- **Scripts** run in caster order: attacker 0, defender 0, attacker 1, and so on. Attack moves
+  the commander into its side's current front row (the front row if its side has none
+  active) and logs an `advance`; it stays there. Retreat starts the rout of the commander and
+  its squads as if it had begun the round before, so they leave at the end of this round.
+  Cast slots hold until Phase 5 brings battle spells.
+- **Winner**: the attacker wins only if the defender has no active units and it has some. When
+  both sides break in the same round (mutual rout or both wiped out), the side with more
+  living units still on the field, routing ones included, holds it; a tie goes to the
+  defender. The design review proposed giving every mutual rout to the defender. Measured
+  over the required tests, 20 attacking Cinder Warriors then beat 10 Ash Militia in only 89%
+  of seeds (required: 95%), because small squads often break together. With the field-holding
+  rule it is 98.5%, and equal armies split 49%. At round 50 the attacker leaves the field and
+  the defender wins; round 75 stays only as a safety constant.
+- **After the battle**: a dead commander's surviving squads join the first living commander of
+  its side in setup order (leadership notwithstanding until the next transfer), else the
+  fort's garrison holder when that side is defending its fort, else they are lost. Survivors
+  keep their wounds. The rest is in the Phase 4 rules at the end of `docs/01-core-rules.md`.
+- **Read-only setup**: `battle/setup.ts` folds every modifier into each squad's stats. The
+  resolver keeps those as read-only bases and puts everything that changes in a battle
+  (rows, routs, ammunition, timed modifiers) on its own groups, reading stats through one
+  accessor. The same setup object fought twice with equal rng states gives the same result.
+- **Modifiers**: attackers lose terrain attack (swamp −1) unless swamp walkers; Thornwood's
+  forest defense applies on either side; starvation and unpaid upkeep lower morale; Dread
+  is in the `docs/05-pretender.md` decisions. Carried mana passes through battle unchanged
+  until Phase 5.
+- **Replay additions**: `advance(unit, row)` when a script moves a commander and
+  `leave(unit)` when a living unit leaves the field (rout exit, Retreat, the round-50
+  retreat). `damage` carries the weapon's element, physical when it has none.
+  `foldReplay(roster, events)` (`battle/replay.ts`) rebuilds each unit's count, commander HP,
+  row, and rout state from a record, and a test checks that it ends where the result ends.
+
