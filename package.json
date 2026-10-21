@@ -16,7 +16,8 @@
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.sim.json",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "sim:aivai": "tsx scripts/aivai.ts"
+    "sim:aivai": "tsx scripts/aivai.ts",
+    "golden:battle": "tsx scripts/golden-battle.ts"
   },
   "dependencies": {
     "d3-delaunay": "^6.0.4",
