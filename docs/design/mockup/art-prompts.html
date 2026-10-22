@@ -87,15 +87,15 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--fain
   <section aria-labelledby="now-h">
     <div class="section-head">
       <h2 id="now-h">Make these now</h2>
-      <p>Three images. P0 sets the look of every portrait, so it is worth a few tries.</p>
+      <p>Two images for the table and the room. P0, the portrait anchor, is approved and stays here for reference.</p>
     </div>
     <div id="now"></div>
   </section>
 
   <section aria-labelledby="sets-h">
     <div class="section-head">
-      <h2 id="sets-h">Portrait sets, after P0 is approved</h2>
-      <p>Eight faces per leader type. In ChatGPT, attach your approved P0 image first (it becomes "Image 1"), then paste the prompt. Pick the type and the face number; the prompt below updates. Tick each one as you send it.</p>
+      <h2 id="sets-h">Portrait sets</h2>
+      <p>Eight faces per leader type. In ChatGPT, attach the approved P0 anchor (the rim-light Ash Chieftain) first, so it becomes "Image 1", then paste the prompt. Pick the type and the face number; the prompt below updates. Tick each one as you send it.</p>
     </div>
     <div class="card" id="setCard">
       <div class="row">
@@ -143,9 +143,9 @@ footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--fain
 
 <script>
 (() => {
-  const STYLE = `Head-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 66% from the top, the image cut at mid-chest. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.
-Lighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.
-Medium: painterly oil on a wood panel, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the contrast between the face and the background must still read when the image is shrunk to 64 pixels.
+  const STYLE = `Head-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.
+Lighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.
+Medium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the light face against the dark background must still read when the image is shrunk to 48 pixels.
 Colors: muted and earthy. Nothing in the image glows, except where the subject below says a mage's eyes glow. No saturated red, orange, green or blue area larger than a small clasp or trim.`;
 
   const NATION = {
@@ -171,13 +171,13 @@ Summer: the window patch is bright and slightly warm.
 Painterly realism with a gouache and oil feel, matte, muted natural colors: oak browns (near #5E4630 and #8C6A47), warm grey stone, pewter greys, undyed wool. Keep the firelight small. No saturated red, orange, green, blue or violet anywhere except the small glow at the left edge. No people, no faces, no text, no signs, no banners, no weapons, nothing in the empty center.`,
     },
     {
-      code: 'P0', title: 'Portrait style anchor: the Ash Chieftain', size: 'square · 1024 × 1024',
-      use: 'Sets the look of every portrait. Your approved P0 is attached to every later portrait request.',
-      check: 'One leader, head and shoulders, face turned to the right, eyes about 40% down from the top, candlelight from the upper left, a plain very dark brown background, and still readable when shrunk to a thumbnail.',
+      code: 'P0', title: 'Portrait style anchor: approved', size: 'square · 1024 × 1024',
+      use: 'Approved on 22 October: the rim-light Ash Chieftain in the Figma file “Fluid Magic art references” (figma.com/design/g31i2MTgVkg06p4f8w6ZNZ). In Figma, select that image and use Export → PNG, then attach it as Image 1 to every portrait prompt.',
+      check: 'Nothing left to do. The prompt below is the one behind the anchor, kept so the look can be made again.',
       prompt: `${STYLE}
 
 Subject: ${NATION.cinder}
-An Ash Chieftain: a horned helm of blackened iron, a braided beard, scale-plate pauldrons.
+An Ash Chieftain: a horned helm of blackened iron with large curled horns, a braided beard, scale-plate pauldrons.
 Traits: a braided beard, a grim expression, a scar through the left eyebrow.`,
     },
   ];

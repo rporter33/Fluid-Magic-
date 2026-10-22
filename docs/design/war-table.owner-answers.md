@@ -12,3 +12,10 @@ The owner replied "go with your defaults, continue". Record as owner decisions:
 
 Also on 2026-10-22 the owner wrote, while making art: "i need the game map to be more interesting and detailed,
 a hand drawn feel - so far looking good". This starts the hand-drawn map pass (scratchpad/handdrawn-design/).
+
+Portrait style anchor (P0), 2026-10-22: the owner chose the rim-light version ("go with the rim light
+version"), made with gpt-image-2.5 in Figma (art-source/portraits/anchor-style.webp). The portrait style
+lock gains a thin warm rim light along the back of the head, hair and shoulders, the chin at about 62%,
+visible brushwork, and readability at 48 px. Production portraits use Gemini through its API once a
+GEMINI_API_KEY is set, with the anchor as the reference image; OpenAI's API is the fallback (owner, same day:
+"use option 3 as a solid reference point and then 2, we'll go with 1 if things are needed that way").
