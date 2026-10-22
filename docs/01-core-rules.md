@@ -349,7 +349,9 @@ as the default on 2026-10-22.
   `count = ceil(count * newHp / oldHp)` (0 once the pool is empty), which for a healthy squad
   is the pool rounded up to whole troops. Commanders cannot starve below 1 HP. The
   starvation counter is capped so morale returns at the rate it was lost. Fed units heal
-  2% of max HP per day, which also heals battle wounds. The squad `moraleMod` of section 6
+  2% of max HP per day, which also heals battle wounds. Units that eat nothing (constructs and
+  undead, such as Fire Sprites) never starve and count as fed, so they heal too (QA sweep
+  2026-10-22, finding BM-1: they used to skip healing as well). The squad `moraleMod` of section 6
   is derived from the starvation counter and the unpaid-days counter, not stored.
 - **Unrest** (section 5): priests calm only their own nation's provinces and only while
   standing there. "Enemy dominion present" means another nation dominates the province.

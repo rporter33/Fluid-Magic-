@@ -1,5 +1,6 @@
 // Supply, starvation, and healing (docs/01-core-rules.md section 4, Supply).
 import { describe, expect, it } from 'vitest';
+import { unitDef } from '../../src/content';
 import { provinceEconomy, starvationMoralePenalty } from '../../src/sim/selectors';
 import { STARVED_DAYS_CAP } from '../../src/sim/supply';
 import {
@@ -265,5 +266,31 @@ describe('starvation', () => {
     runDays(state, 10);
     expect(sprites.squads[0]!.count).toBe(20);
     expect(sprites.squads[0]!.starvedDays).toBe(0);
+  });
+
+  // QA sweep BM-1: units that eat nothing used to skip healing too, so a wounded Fire Sprite
+  // squad stayed wounded for good. docs/01 (Supply): fed units heal 2% of max HP a day.
+  it('heals wounded units that eat nothing at 2% of max HP a day, fed or not', () => {
+    const state = twoNationGame();
+    const [red] = nationIds(state);
+    const max = 20 * unitDef('fireSprite').hp;
+    const home = addArmy(state, red!, state.nations[red!]!.capital, 'fireSprite', 20);
+    const p = independentProvince(state, 'mountains');
+    addArmy(state, red!, p.id, 'cinderWarrior', 200);
+    const away = addArmy(state, red!, p.id, 'fireSprite', 20);
+    expect(provinceEconomy(state, p.id).supplyUsed).toBeGreaterThan(
+      provinceEconomy(state, p.id).supply,
+    );
+    for (const army of [home, away]) army.squads[0]!.hp = max / 2;
+    runDays(state, 1);
+    for (const army of [home, away]) {
+      expect(army.squads[0]!.hp).toBeCloseTo(max / 2 + max * 0.02, 9);
+    }
+    runDays(state, 30);
+    for (const army of [home, away]) {
+      expect(army.squads[0]!.hp).toBe(max);
+      expect(army.squads[0]!.count).toBe(20);
+      expect(army.squads[0]!.starvedDays).toBe(0);
+    }
   });
 });

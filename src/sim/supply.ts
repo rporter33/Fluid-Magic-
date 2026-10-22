@@ -2,7 +2,7 @@
 // eat more than a province supplies, every unit that eats loses part of its max HP each day
 // and its starvation counter rises; where they are fed they heal at the same rate and the
 // counter falls. A starving squad loses troops in proportion to the HP it loses.
-// Independents never eat and are always fed.
+// Independents, and units that eat nothing, never starve and are always fed.
 import { unitDef } from '../content';
 import { SUPPLY } from '../content/rules';
 import { commanderMaxHp, troopSupply } from './commanders';
@@ -16,12 +16,14 @@ import type { CommanderState, GameState, Squad } from './types';
 export const STARVED_DAYS_CAP =
   (SUPPLY.starvationMoraleCap + 1) * SUPPLY.starvationDaysPerMorale - 1;
 
-/** Starves or feeds one squad; returns true if it began starving today. */
+/**
+ * Starves or feeds one squad; returns true if it began starving today. Units that eat nothing
+ * (constructs, undead) never starve and heal as fed units do, battle wounds included.
+ */
 function feedSquad(squad: Squad, starving: boolean): boolean {
   const def = unitDef(squad.unit);
-  if (troopSupply(def) === 0) return false;
   const max = squad.count * def.hp;
-  if (starving) {
+  if (starving && troopSupply(def) > 0) {
     const before = squad.hp;
     squad.hp = Math.max(0, squad.hp - max * SUPPLY.starvationHpPerDay);
     // Troops die in proportion to the pool lost, wounds spread evenly as in battle; for a
