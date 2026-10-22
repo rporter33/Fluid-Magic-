@@ -26,6 +26,8 @@ fluid-magic/
   tsconfig.json
   index.html
   public/                 # static assets (favicons)
+  art-inbox/              # owner raster drops for the intake script (gitignored)
+  art-source/             # owner raster masters, outside the bundle
   src/
     sim/                  # PURE. No DOM, no Pixi, no React imports. Deterministic.
       types.ts            # GameState and all nested types
@@ -129,6 +131,12 @@ fluid-magic/
         types.ts          # PretenderDesign, awakenings
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
+      presentation/       # presentation data; never imported by sim, mapgen or ai
+                          # the battle presentation's data is in docs/12 S2.1 and S3
+        map/              # textures, stamps, kits, LAND_LOOKS, COLOR_LAND_LOOKS, POLE_MOTIFS, caps
+        table.ts          # table, props, light and ambience numbers
+        portraits.ts      # PORTRAIT_POOLS, ramps, PORTRAIT_RANK, overlays
+        names.ts          # COMMANDER_NAMES per color and for independents
     mapgen/
       types.ts            # MapGenParams, CapitalSpec, MapData, MapProvince, MapWild
       generate.ts         # seed -> MapData (provinces, adjacency, terrain, springs, capitals, wellsprings)
@@ -160,12 +168,32 @@ fluid-magic/
       driver.ts           # playDay: advance, then the AI nations' commands; replayLog
       match.ts            # runMatch: a whole AI game, for the runner and tests
       matrix.ts           # the runner's chosen presets and the preset matrix (Phase 6b.3)
+    present/              # PURE presentation derivations, guarded like sim
+      rand.ts battle/ sound/ # the battle presentation's modules (docs/12 S2.1 and S3)
+      map/
+        look.ts           # mapLook: slow and fast look keys from the viewer's fogged view
+        scatter.ts        # scatterProvince: seeded stamp slots per province and layer
+        anchors.ts        # provinceAnchors: label, token, seat
+        settlement.ts     # tiers, the house spiral, walls, landmarks
+        land.ts           # land looks and pole motifs by dominion and scales
+        wilds.ts          # wild stamps, rims, barrierOnLine
+        fx.ts             # map cues and marks (pretender design C.4)
+      portrait/
+        spec.ts           # portraitSpec: parts, frame, overlays, badges from commander and view
+        svg.ts            # portraitSvg: a pure SVG string builder
+      names.ts            # assignNames: personal names dealt from per-nation decks
     render/
       MapRenderer.ts      # Pixi app for the strategic map
-      ProvinceLayer.ts ArmyLayer.ts LabelLayer.ts
+      camera.ts           # start zoom, lean back, detent, clamp, fit
+      map/
+        table/            # room.ts table.ts props.ts light.ts ambience.ts
+        FillLayer.ts      # live fills, noise, washes and mode tints
+        DecorationBake.ts # per-band baked tiles; lazy Near tiles; dirty re-bakes; cross-fades
+        AlwaysOnLayer.ts  # wilds, borders, bands, ritual, siege, pillage and Wellspring marks
+        LabelLayer.ts TokenLayer.ts
+      portraits.ts        # portrait SVG to cached textures for the replay and map tooltips
       BattleRenderer.ts   # replay viewer
       sprites.ts          # texture loading, tinting, procedural animation helpers
-      camera.ts
     ui/
       App.tsx
       store.ts            # Zustand store: GameState ref, selection, panel state, speed
@@ -180,6 +208,7 @@ fluid-magic/
     assets/
       sprites/            # SVG placeholder art (see art direction)
       icons/
+      raster/             # owner art taken in by scripts/art-intake.ts, with manifest.ts
   tests/
     sim/*.test.ts
     mapgen/*.test.ts      # one file per mapgen module; fixtures.ts, playable.ts, wildChecks.ts hold shared helpers
@@ -187,7 +216,8 @@ fluid-magic/
     content/validate.test.ts
     ai/*.test.ts
   scripts/
-    aivai.ts              # headless AI vs AI runner (npm run sim:aivai; --presets, --matrix)
+    aivai.ts              # headless AI vs AI runner (npm run sim:aivai; --presets, --matrix, --wilds)
+    art-intake.ts         # owner raster intake and checks (npm run art:intake)
     duel.ts               # staged pretender duels and AI power (npm run sim:duel; --calibrate)
     golden-battle.ts      # the battle golden pin (npm run golden:battle)
   docs/
@@ -305,12 +335,18 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
 - `STATE_VERSION` 4 (Phase 1b) adds `map.wilds`, the impassable wild ranges; the migration
   sets it to `[]`, so an older map has none. The key goes last in the map, where
   `generateMap` puts it, so a lifted save hashes like the same game created on version 4.
+- The save file's UI block (never `GameState`) also holds presentation state: the map's slow
+  look keys with their month index, so a reload shows the same map, and commanders' personal
+  names. The sim never reads it.
 
 ## Performance targets
 
 - 60 provinces, 4 nations, 200 commanders: `advance` under 2 ms on a laptop.
 - Battle of 300 vs 300 troops: resolve under 50 ms.
-- Map render: 60 fps at 1080p with all provinces and 100 army markers.
+- Map render: 60 fps at 1080p with all provinces, 100 army markers, the Full table and full map
+  detail; at most 4 draw calls and no filters for the table and room; the decoration layer baked
+  per zoom band (Near lazily in 512² tiles); GPU memory for table and map at most 96 MB on a
+  Large 4-nation map at device pixel ratio 2.
 
 ## Content validation
 
@@ -399,6 +435,13 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   Battles between AI nations and independents still apply every consequence and post
   'battle' messages, with `battle: null`; the UI shows "replay no longer kept" for a message
   whose record is gone.
+- **Breakdowns** (Phase 8): selectors take an optional trace sink and an optional
+  `ProvinceOverride`. Calls use `opts?.trace?.term(...)`, so the tick path allocates nothing.
+  `src/sim/explain/*` folds traces into `Breakdown`s, and a property test keeps each total
+  equal to its selector. Previews never clone `GameState`.
+- **Battle summaries** (Phase 9): the UI stores `summarizeBattle(record)` in the save file's
+  UI block when a record first appears. The report card renders from the summary after the
+  record is evicted.
 - **Storm** command: `{ type: 'storm', nation, province }`. It is valid for the nation
   besieging the province while one of its commanders (not a hidden one) stands there, and
   sets `siege.storm`; the storm is fought in the next tick's siege step. `SiegeState` gained
@@ -453,3 +496,13 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   `validateContent` checks them: each positive, whole where it counts something, batches no
   larger than the largest recruit order, the four odds ratios at least 1, PD levels within the
   PD maximum, the Godless alarm a dominion strength, and each difficulty level's numbers.
+- **Map presentation** (Phases 8 and 11): everything the map shows beyond the sim's numbers is
+  derived by pure functions in `src/present/**` from state, the viewer's fogged view and the save
+  file's UI block, never stored in `GameState`. Random choices hash the game seed with a stable id
+  through `src/present/rand.ts`; `state.rng`, `Math.random` and wall time are forbidden there by
+  the purity guard. Slow looks change only at month boundaries and are saved in the UI block;
+  information events change the look the day they happen.
+- **Portraits and names** (Phases 8, 9 and 11): `portraitSpec` keys every part by seed, commander
+  and slot and picks by rendezvous over append-only part tables; state picks overlays and frames
+  only. Personal names are dealt from per-nation decks after each simulated day and kept in the
+  UI block.

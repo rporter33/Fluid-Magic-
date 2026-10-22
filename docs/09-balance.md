@@ -106,6 +106,16 @@ the truth for current values.
 | 2026-10-21 | 04 decisions | Multi-strike weapon limits (6b.2) | none | `strikes` 1 to 4; `maxTargetSize` 1 to 6; melee weapons only | Build spec N2. The Trample of Phase 6b.3 is dmg 2, strikes 2, size 2 or less |
 | 2026-10-21 | 02 decisions | Spell power (6b.2) | none | adds to every damage and heal amount a caster's spells land; abilities add none; content a whole number ≥ 0 on commanders | Build spec N3. The Ember Hierophant's 3 arrives in Phase 6b.3 |
 | 2026-10-21 | 04 decisions | Ability one line (6b.2) | none | at most 120 characters (`UI.unitCard.oneLineMax`) | Units-and-items build spec B.1, so the card and the hover read one catalog |
+| 2026-10-21 | 01 §14, 07 | Incursion end | none | `APPROACH.quietDays` 10: an incursion closes after 10 days with no visible leg into the nation's land | One warning per incursion instead of one per leg (docs/07 rewrite) |
+| 2026-10-21 | 07 | Unrest glyph on labels | none | `UI.unrestShowAt` 25 | docs/07 rewrite |
+| 2026-10-21 | 07 | Capital dominion alert | none | `UI.capitalDominionWarn` 2 (own dominion at most 2) | docs/07 rewrite |
+| 2026-10-21 | 07 | Treasury alert | none | `UI.treasuryWarnDays` 30 (the treasury empties within 30 days) | docs/07 rewrite |
+| 2026-10-21 | 07 | Idle commander alert | none | `UI.idleAlertDays` 5 (just arrived or finished within 5 days) | docs/07 rewrite |
+| 2026-10-21 | 07 | Battle marker | none | `UI.battleMarkerDays` 30 | docs/07 rewrite |
+| 2026-10-21 | 07 | Message merging | none | `UI.mergeDays` 5 (repeats within 5 game days merge) | docs/07 rewrite |
+| 2026-10-21 | 07 | Zoom bands | none | Far under 70 px, Mid 70 to 180, Near above 180 (the median province's on-screen diameter) | docs/07 rewrite |
+| 2026-10-21 | 07 | Mid label box | none | 96 × 30 px | docs/07 rewrite |
+| 2026-10-21 | 07 | Tooltip lock | none | 0.8 s rest | docs/07 rewrite |
 | 2026-10-22 | 05 Step 1 | Chassis realms (6b.3) | five per M1 nation | eleven: generic Oracle of the Flux, Titan, Great Wyrm, Living Monolith, Ascended Hero, Primordial; R Ash Colossus, Ash Phoenix, Pyre Lord, Cinder Idol, Ember Hierophant; G Wild Spirit, World Tree, Horned Hunter, Elder Wyrm, Mother of Beasts | Build spec A.2 (ten chassis moved from M2 into M1 at the owner's direction; owner decision 1) |
 | 2026-10-22 | 05 Step 1 | Ascended Hero (6b.3) | M2 | generic leader; cost 100, base 1 nation pip, base dominion 1, new color 50, Avatar built in; hp 32, str 15, att 15, def 15, prot 8, mor 20, size 2, speed 3, leadership 100, Hero's Blade 7 | Build spec A.4 and R8a: a cheaper, weaker, faster general than the Titan; parity body value 20 |
 | 2026-10-22 | 05 Step 1 | Primordial (6b.3) | M2 | generic monster; cost 220, base 2 nation pips, base dominion 3, new color 80, at least dormant; hp 150, str 22, att 12, def 6, prot 14, mor 30, size 6, speed 1, leadership 20, Crushing Blow 11 and Trample; Fear at battle start | Build spec A.4 and R8b (trimmed from hp 160, prot 15, blow 12); Great Wyrm level, parity body value 100 |
@@ -132,6 +142,27 @@ the truth for current values.
 | 2026-10-22 | 08, 09 checklist | Headless runner and New Game maps (Phase 1b) | no wilds | wilds on (`--wilds off`, `GameSetup.wilds: false` for none) | `npm run sim:aivai -- --games 20 --seed 1`: Cinder Horde 17, Thornwood 3, no winner 0, mean 23.6 months, 0 refused (no wilds: 10, 9, 1, 26.8 months, 0); rebuilt on Phase 6b.3 both runs replay game for game. The same 100 seeds (3000 days, measured before the rebuild on Phase 6b.3) side by side: wilds on 77 / 20 / 3, mean 28.0 months; off 70 / 28 / 2, mean 24.9; 0 refused either way. Thornwood takes 21% of decided games against 29% (Fisher exact p = 0.24, not significant), so the lean to Cinder Horde is older than wilds. Nation commanders dying with no friendly province to retreat to: 13 against 7 in 100 games |
 | 2026-10-22 | 09 checklist | Preset matrix with wilds (Phase 1b) | the 6b.3 row above, without wilds | `npm run sim:aivai -- --matrix` on the default maps with wilds, seeds 1 to 20 in both nation orders (40 games a row): baseline Warlord 34, Elder Oak 6, none without a winner (mean 25.6 months; without wilds 24, 13, 3, 30.2); Ember Oracle 60% (57% without wilds), Wildfire 70% (83%), Deep Root 10% (10%), Wyrm of the Loam 23% (43%), Undying Flame 80% (80%), Pyre Host 80% (80%), Dread Idol 73% (75%), Heartwood 20% (18%), Hunt Lord 20% (30%), Mother of the Pack 23% (23%); 0 refused commands in 440 games; 400 s | Measured on the commit that turned wilds on; no number changed. Only Ember Oracle is within 35% to 65% (without wilds, Ember Oracle and Wyrm of the Loam). The baseline leans further to Red with wilds over both orders (85% to 15%, against 60% to 33%), as the runner does (17 to 3 against 10 to 9), so against its own baseline every Red preset now trails Warlord and the Green ones sit within 8 points of Elder Oak; the 6b.3 row's advice (remove the order and nation lean first, or score against the same-order default) holds with more force |
 
+### Map presentation
+
+| Date | Doc | Field | From | To | Reason |
+|------|-----|-------|------|----|--------|
+| 2026-10-22 | 09 | Wild grounds | — | granite #2A292C (peaks), water #24222A (meres), rim #E9E4D8 | Darkest grounds; against the nearest fill 21.7 / 18.6 / 16.5 / 14.1 and 25.4 / 22.5 / 20.3 / 15.5 (normal / protan / deutan / tritan); every M1 banner and mode color directly, Umbra's banner by the rim |
+| 2026-10-22 | 07 | Mode base | desaturated fill | desaturated 80% and lifted to L* 50 with linen (Forest 33%, Swamp 19%, Hills 12%) | Every M1 mode color passes 20 / 12 against both wild grounds |
+| 2026-10-22 | 07 | Data ramp | #181E3C … #FAE6A0 | #4C5E96 #8170AC #C4808E #E6AC6E #F8E6A6 | L* 41 to 91; 24.6 / 23.9 from the wild grounds; adjacent steps at least 13 apart for normal vision |
+| 2026-10-22 | 09 | Land-look wash caps | — | Cinder Horde ash #8F8C88 ≤ 10%, Thornwood moss #5E7F45 ≤ 6%, × strength / 10 | Largest that keep every pair type at 20 / 12 (12% and 8% fail: 19.8, 11.8) |
+| 2026-10-22 | 07 | Fog fills | "parchment haze" | unexplored: 4% linen haze, no land look; out of sight: desaturated 10%, wash hidden | Largest that keep every terrain pair in every combination of states and land looks at 20 / 12 (20.5 / 12.2); a 35% haze gives 12.7 / 3.8 |
+| 2026-10-22 | 07 | Start zoom; lean back | fit the map with a 14 px pad | the cloth fits with a 32 px oak band; lean back to 0.75 × the table's fit; a ±8% detent | The table frames the map; Medium at 1280x720 stays in the Mid band (about 95 px per province) |
+| 2026-10-22 | 09 | Settlement tiers | — | `UI.popSteps` 2,000 / 5,000 / 10,000 / 20,000; houses 1–2 / 3–5 / 6–9 / 10–15 / 16–22 | One source with Population mode |
+| 2026-10-22 | 09 | Thriving and declining | — | population ≥ 1.25 × start / ≤ 0.80 × start | Growth over 70 months is +15% at neutral scales, so the marks need the ratio |
+| 2026-10-22 | 09 | Walls by PD | — | watchtower at 1, palisade at 5, stone wall at 15, towers and gatehouse at 25 | Four readable steps over 0 to 30 |
+| 2026-10-22 | 09 | Land motifs | — | dominion 1–3 / 4–6 / 7–10 take 8% / 15% / 22% of a province's slots; a landmark from 7; pole motifs 1 per step at Mid, 2 at Near, at most 6 per axis and 30% of slots | Strength reads as reach around the settlement |
+| 2026-10-22 | 09 | Stamp caps | — | per average province: Far 2 to 4 masses, Mid ≤ 30, Near ≤ 60; coverage ≤ 60% / 75% | The density budget of docs/07 |
+| 2026-10-22 | 09 | Battle scars | — | churned ground for 90 days, then cairns (1 per 50 casualties, at most 4) until day 360 | A year of memory |
+| 2026-10-22 | 09 | Repaint | — | 600 ms cross-fade; at most 8 animated per month end; slow looks at most monthly | A calm map |
+| 2026-10-22 | 09 | Footpath on passable Mountains | — | #2B2620 at 75%, 1.5 px, dash 4 / 3 | 3.65:1 on Mountains |
+| 2026-10-22 | 07 | Commander panel portrait | 64 px | 96 px | Leaders need faces (owner direction 2026-10-21: "leaders certainly need portraits") |
+| 2026-10-22 | 09 | Raster art | — | at most 2 MB in the bundle; a portrait set needs 8 images; 256 px WebP ≤ 24 KB and 64 px ≤ 4 KB each | Keeps criterion 1's 5 MB bundle |
+
 ## Playtest checklist (run before calling M1 done)
 
 - [ ] A new player can start Cinder Horde with the Warlord preset and take 4 provinces by month 6 without reading docs.
@@ -144,5 +175,6 @@ the truth for current values.
 - [ ] Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3.
 - [ ] Research reaches level 4 in the nation color by month 24 with 4 mages.
 - [ ] A match against one Normal AI ends by month 70 in most games (victory or defeat).
+- [ ] On maps with wilds, a new player finds the way around a range without reading docs (the path preview bends and the label names the range), and a match against one Normal AI still ends by month 70 in most games.
 - [ ] No battle takes more than 100 ms to resolve.
 - [ ] Save, reload, and continue produce the same state as not reloading (hash check).

@@ -245,6 +245,12 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
 - Enemy armies are visible in provinces adjacent to any owned province or any own army
   and anywhere a scout can see (scouts see 2 provinces). Population and springs of a
   province are visible once it has been owned or scouted.
+- **Incursions.** An incursion of nation E into nation N opens when a commander of E visible
+  to N has a current leg that ends in N's land or where N's army stands. It closes after
+  `APPROACH.quietDays` (10) days with none. N gets one `approaching` message when it opens.
+  N also gets one `threatened` message per target province, the first time such a leg ends
+  where N has troops, a fort, or its capital. Commanders of E reaching one target on one day
+  share a message. `NationState.incursions` holds the open incursions.
 
 ## Implementation decisions
 

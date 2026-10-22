@@ -846,6 +846,22 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   matrix games on the default wild maps, and their year played twice on maps with wilds).
   Built on Phase 6b.2 the commit went from 2076 to 2077.
 
+## Docs: layered UI spec and war table art direction (docs only)
+
+- The layered UI spec (2026-10-21, staged as `ce9bfb2`) and the war table design's remaining
+  docs text landed ahead of the phases that build them: docs/07 (the rewrite, with the war
+  table's map, modes, fog, table and camera, portraits, settings and `Z`), docs/09-art (Icons,
+  UI chrome with the oak and brass tokens, and five new sections), docs/10 (Phases 8 to 12,
+  criteria 3, 4 and 14, new criterion 17, the out-of-scope sound line), docs/06 (layout,
+  saves, performance, decisions), docs/01 §14 (Incursions), docs/09-balance (the UI rows, the
+  "Map presentation" table, a playtest line) and docs/12 (two portrait lines). Where the two
+  designs overlap, the war table's text is the later decision. No code changed.
+- Open: docs/07's replay keys and settings (Space, 1 to 4, ← →, Home and End, `[` `]`, D, C, H)
+  differ from docs/12 S4.7 and S4.8 (N, B, S, M, L, Tab; Beats mode), and docs/07's Pretender
+  Design section still describes three columns while criterion 16 and Phase 9 describe the
+  six-step designer (the pretender design's section D comes through the UI track). Phase 10
+  and Phase 9 settle them.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.

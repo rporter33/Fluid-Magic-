@@ -2725,8 +2725,9 @@ export function proceduralPartSet(renderer: Renderer): PartSet;   // S4
   layer, and the ground fill. Props are scattered by seed: grass tufts, rocks, reeds, dead
   trees, crop rows, a windmill. The storm variant has a fort wall polygon with crenellations,
   or a rubble gap.
-- **Portraits** for name cards and docks are the rig in its idle pose at 2×, on the banner
-  color.
+- **Portraits** for name cards and docks are the commander's portrait (docs/09 "Leader
+  portraits"); pretenders and summoned commanders keep their rig in its portrait pose, on the
+  banner color.
 - **Procedural glyph font:** digits, `+`, `−`, skull, shield, flame, leaf, snowflake, sun,
   drop, chevrons, and flag, as stroked paths in a `BitmapFont`. No font files, and the same
   pixels on every machine.
@@ -3072,8 +3073,9 @@ interface LabApi {
 - `src/assets/sprites/manifest.ts` maps unit ids to part names per rig.
   `tests/content/presentation.test.ts` checks that every unit's parts exist in the manifest,
   or are listed as procedural fallbacks.
-- Portraits for name cards and docks come from the same SVG at 2×, and chassis portraits
-  from the 128×128 SVGs.
+- Portraits for name cards and docks come from the commander's portrait (docs/09 "Leader
+  portraits"); pretenders and summoned commanders use their rig's portrait pose (docs/05
+  "Summary card").
 - The spell particle palettes are final.
 - The six screenshot baselines are refreshed in this commit only.
 
