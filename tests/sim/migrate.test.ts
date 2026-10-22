@@ -144,6 +144,25 @@ describe('migrateState', () => {
     expect(matchesRecord(rerunBattle(b.rerun!), b)).toBe(true);
   });
 
+  // QA sweep sim-3: a save from a newer build, or with no whole-number version, came back as if
+  // current (a string "3" even became version "31") and failed later in unrelated code.
+  it('refuses a version it cannot read: newer than this build, missing, or not a whole number', () => {
+    const saved = savedWithBattle(true);
+    const withVersion = (version: unknown): GameState => {
+      const state = structuredClone(saved);
+      (state as { version: unknown }).version = version;
+      return state;
+    };
+    expect(() => migrateState(withVersion(STATE_VERSION + 1))).toThrow(/newer than this build/);
+    expect(() => migrateState(withVersion(99))).toThrow(/newer than this build/);
+    for (const version of [undefined, null, '3', 2.5, 0, -1, Number.NaN]) {
+      expect(() => migrateState(withVersion(version)), String(version)).toThrow(
+        /no migration from save version/,
+      );
+    }
+    expect(migrateState(withVersion(STATE_VERSION)).version).toBe(STATE_VERSION);
+  });
+
   it('loads a malformed re-run as null rather than failing, and keeps a sound one', () => {
     const saved = savedWithBattle();
     const good = saved.battles[0]!.rerun;

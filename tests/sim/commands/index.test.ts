@@ -139,6 +139,19 @@ describe('validateCommand', () => {
     ).toBe('The game is over');
   });
 
+  // QA sweep sim-1: the nation lookup went through the prototype chain, so a crafted log's
+  // "constructor" passed as a nation and setResearchColor then threw in apply.
+  it('rejects names of Object.prototype members as nations instead of throwing', () => {
+    const state = twoNationGame();
+    const before = JSON.stringify(state);
+    for (const name of ['constructor', 'toString', '__proto__', 'hasOwnProperty']) {
+      const cmd = { type: 'setResearchColor', nation: name as NationId, color: 'R' } as const;
+      expect(validateCommand(state, cmd), name).toBe('No such nation');
+      expect(applyCommand(state, cmd), name).toEqual({ ok: false, error: 'No such nation' });
+    }
+    expect(JSON.stringify(state)).toBe(before);
+  });
+
   it('accepts a valid command and reports ok', () => {
     const state = twoNationGame();
     const red = nationIds(state)[0]!;

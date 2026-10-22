@@ -183,6 +183,18 @@ describe('createGame', () => {
         ],
       }),
     ).toThrow(RangeError);
+    // QA sweep sim-2: an unknown AI difficulty (from JSON) used to pass and crash the first day.
+    for (const difficulty of ['hard', 'constructor']) {
+      expect(() =>
+        createGame({
+          ...base,
+          nations: [
+            nation('thornwood'),
+            { ...nation('cinderHorde'), ai: { difficulty: difficulty as never } },
+          ],
+        }),
+      ).toThrow(RangeError);
+    }
   });
 });
 

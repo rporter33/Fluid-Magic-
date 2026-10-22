@@ -36,13 +36,22 @@ export const MIGRATIONS: Readonly<Record<number, Migration>> = {
 };
 
 /**
- * Lifts a parsed save to STATE_VERSION in place and returns it. Loading is lenient about
+ * Lifts a parsed save to STATE_VERSION in place and returns it. A version this build cannot
+ * read (missing, not a whole number, older than the first, or newer than STATE_VERSION) throws,
+ * so the loader can tell the player instead of the game failing later. Loading is lenient about
  * replays: a malformed re-run setup, or one recorded under other battle rules, loads as null
  * rather than failing the save; the battle then replays from its log alone.
  */
 export function migrateState(state: GameState): GameState {
+  const version: unknown = state.version;
+  if (typeof version !== 'number' || !Number.isInteger(version)) {
+    throw new Error(`no migration from save version ${String(version)}`);
+  }
+  if (version > STATE_VERSION) {
+    throw new Error(`save version ${version} is newer than this build (${STATE_VERSION})`);
+  }
   while (state.version < STATE_VERSION) {
-    const step = MIGRATIONS[state.version];
+    const step = Object.hasOwn(MIGRATIONS, state.version) ? MIGRATIONS[state.version] : undefined;
     if (!step) throw new Error(`no migration from save version ${String(state.version)}`);
     step(state);
     state.version += 1;

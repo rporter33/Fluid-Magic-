@@ -1,6 +1,7 @@
 // GameSetup -> GameState (docs/06-architecture.md). Generates the map with each nation's
 // capital, then places nations, capital buildings, garrisons, and starting armies.
 import { isNationDefId, nationDef } from '../content';
+import { DIFFICULTIES } from '../content/ai';
 import { CAPITAL_BUILDINGS } from '../content/buildings';
 import { NATION_BANNERS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
@@ -36,8 +37,11 @@ function checkSetup(setup: GameSetup): void {
   if (n < MAPGEN.minNations || n > MAPGEN.maxNations) {
     throw new RangeError(`need ${MAPGEN.minNations} to ${MAPGEN.maxNations} nations, got ${n}`);
   }
-  for (const { nation, pretender, pretenderName } of setup.nations) {
+  for (const { nation, pretender, pretenderName, ai } of setup.nations) {
     if (!isNationDefId(nation)) throw new RangeError(`unknown nation ${String(nation)}`);
+    if (ai && !Object.hasOwn(DIFFICULTIES, ai.difficulty)) {
+      throw new RangeError(`unknown AI difficulty ${ai.difficulty}`);
+    }
     const problem =
       validatePretender(nationDef(nation), pretender) ??
       (pretenderName === undefined ? null : validatePretenderName(pretenderName));

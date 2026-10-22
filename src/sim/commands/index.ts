@@ -50,7 +50,8 @@ export type { Command, CommandResult, CommandType, LoggedCommand, SimpleOrder } 
 /** Why a command cannot be applied now, or null when it can. */
 export function validateCommand(state: GameState, cmd: Command): string | null {
   if (state.result) return 'The game is over';
-  const nation = state.nations[cmd.nation];
+  // An own-property lookup: a crafted log's "constructor" or "__proto__" is not a nation.
+  const nation = Object.hasOwn(state.nations, cmd.nation) ? state.nations[cmd.nation] : undefined;
   if (!nation || nation.eliminated) return 'No such nation';
   switch (cmd.type) {
     case 'move':
