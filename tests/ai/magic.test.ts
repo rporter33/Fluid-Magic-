@@ -26,6 +26,7 @@ import {
   annex,
   castRitual,
   commandersIn,
+  makePretender,
   move,
   neighbors,
   redField,
@@ -188,7 +189,7 @@ describe('planRituals casters', () => {
     // An immobile pretender, which cannot research, casts alone.
     const monolith = createCommander(state, 'livingMonolith', red, capital);
     monolith.pips = { R: 3 };
-    state.nations[red]!.pretenderId = monolith.id;
+    makePretender(state, red, monolith);
     expect(casts(planned(state, red, planRituals))).toEqual([
       { commander: monolith.id, spell: 'forgeOfCinders', target: null },
     ]);
@@ -209,12 +210,31 @@ describe('planRituals casters', () => {
     expect(casts(planned(state, red, planRituals))).toEqual([]);
   });
 
+  it('casts with any idol pretender, by its role: the Cinder Idol too', () => {
+    const { state, red, capital } = redField();
+    const { first, master } = casters(state, red);
+    const idol = createCommander(state, 'cinderIdol', red, capital);
+    idol.pips = { R: 3 };
+    makePretender(state, red, idol);
+    expect(ritualCasters(createPlan(state, red)).map((c) => c.id)).toEqual([
+      idol.id,
+      first.id,
+      master.id,
+    ]);
+    // A pretender that rides is no ritual caster, whatever its pips.
+    removeCommander(state, idol.id);
+    const pyre = createCommander(state, 'pyreLord', red, capital);
+    pyre.pips = { R: 3 };
+    makePretender(state, red, pyre);
+    expect(ritualCasters(createPlan(state, red)).map((c) => c.id)).toEqual([first.id, master.id]);
+  });
+
   it('casts with the Living Monolith before the researchers', () => {
     const { state, red, capital } = redField();
     const { first, master } = casters(state, red);
     const monolith = createCommander(state, 'livingMonolith', red, capital);
     monolith.pips = { R: 3 };
-    state.nations[red]!.pretenderId = monolith.id;
+    makePretender(state, red, monolith);
     expect(ritualCasters(createPlan(state, red)).map((c) => c.id)).toEqual([
       monolith.id,
       first.id,

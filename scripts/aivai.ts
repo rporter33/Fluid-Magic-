@@ -1,10 +1,13 @@
 // Headless AI vs AI runner (docs/10-milestone-1.md acceptance 15):
-// `npm run sim:aivai -- --games 20 --seed 1 [--months 100]`. Each game is Cinder Horde against
-// Thornwood on a Medium map with both nations' default presets, the nation order alternating
-// by game. It prints one line per game (winner, reason, months, end-of-game stats) and a summary.
+// `npm run sim:aivai -- --games 20 --seed 1 [--months 100] [--presets <list>]`. Each game is
+// Cinder Horde against Thornwood on a Medium map with both nations' default presets, or those
+// `--presets cinderHorde:<id>,thornwood:<id>` names, the nation order alternating by game. It
+// prints one line per game (winner, reason, months, end-of-game stats) and a summary.
+// `npm run sim:aivai -- --matrix [--games 20] [--seed 1]` plays the preset matrix instead (the
+// 2026-10-21 pretender build spec, A.10): every preset against the opposing default, seeds
+// `seed` to `seed + games - 1` in both nation orders, and prints its win table.
 import { parseArgs } from 'node:util';
 import { nationDef } from '../src/content';
-import { defaultPreset } from '../src/content/pretenders/presets';
 import { TIME } from '../src/content/rules';
 import { runAi } from '../src/ai/ai';
 import type { Player } from '../src/ai/driver';
@@ -15,15 +18,31 @@ import {
   tallyWins,
   type MatchResult,
 } from '../src/ai/match';
+import {
+  matrixPairings,
+  matrixSetups,
+  matrixTable,
+  pairingLabel,
+  pairingResult,
+  parsePresets,
+  type PairingResult,
+} from '../src/ai/matrix';
+import { defaultPreset, type PresetDef } from '../src/content/pretenders/presets';
+import type { GameSetup } from '../src/sim/types';
 
 const { values } = parseArgs({
   options: {
     games: { type: 'string', default: String(RUNNER_DEFAULTS.games) },
     seed: { type: 'string', default: String(RUNNER_DEFAULTS.seed) },
     months: { type: 'string', default: String(RUNNER_DEFAULTS.months) },
+    presets: { type: 'string' },
+    matrix: { type: 'boolean', default: false },
   },
 });
 
+const usage =
+  'usage: npm run sim:aivai -- --games <n >= 1> --seed <integer> [--months <n >= 1>] ' +
+  '[--presets cinderHorde:<preset>,thornwood:<preset> | --matrix]';
 const games = Number(values.games);
 const seed = Number(values.seed);
 const months = Number(values.months);
@@ -32,16 +51,22 @@ if (
   games < 1 ||
   !Number.isInteger(seed) ||
   !Number.isInteger(months) ||
-  months < 1
+  months < 1 ||
+  (values.matrix && values.presets !== undefined)
 ) {
-  console.error(
-    'usage: npm run sim:aivai -- --games <n >= 1> --seed <integer> [--months <n >= 1>]',
-  );
+  console.error(usage);
   process.exit(1);
 }
 
-const results: MatchResult[] = [];
-let totalMonths = 0;
+let presets: PresetDef[] = [];
+try {
+  presets = values.presets === undefined ? [] : parsePresets(values.presets);
+} catch (e) {
+  console.error(e instanceof Error ? e.message : String(e));
+  console.error(usage);
+  process.exit(1);
+}
+
 let totalRefused = 0;
 const started = performance.now();
 
@@ -54,16 +79,17 @@ const timedAi: Player = (state, nation) => {
   return commands;
 };
 
-for (const [game, setup] of runnerSetups(seed, games).entries()) {
+/** Plays one game and prints its line. */
+function play(label: string, setup: GameSetup, chosen: readonly PresetDef[]): MatchResult {
   const match = runMatch(setup, timedAi, months * TIME.daysPerMonth);
   const winner = match.result?.winner;
   const winnerName = winner ? (match.state.nations[winner]?.name ?? winner) : 'no winner';
-  results.push(match);
-  const played = match.days / TIME.daysPerMonth;
-  totalMonths += played;
   totalRefused += match.refused.length;
-  const presets = setup.nations
-    .map((n) => `${nationDef(n.nation).name} (${defaultPreset(n.nation).name})`)
+  const names = setup.nations
+    .map((n) => {
+      const preset = chosen.find((p) => p.nation === n.nation) ?? defaultPreset(n.nation);
+      return `${nationDef(n.nation).name} (${preset.name})`;
+    })
     .join(' vs ');
   const stats = match.summaries
     .map(
@@ -74,23 +100,64 @@ for (const [game, setup] of runnerSetups(seed, games).entries()) {
     )
     .join('; ');
   console.log(
-    `game ${String(game + 1)} seed ${String(setup.seed)}: ${presets} -> ${winnerName} ` +
-      `(${match.reason}) after ${played.toFixed(1)} months; ${stats}; ` +
+    `${label} seed ${String(setup.seed)}: ${names} -> ${winnerName} ` +
+      `(${match.reason}) after ${(match.days / TIME.daysPerMonth).toFixed(1)} months; ${stats}; ` +
       `${String(match.refused.length)} refused`,
+  );
+  return match;
+}
+
+/** The session's refusals, wall time and AI call times. */
+function timing(): string {
+  const seconds = (performance.now() - started) / 1000;
+  const meanMs = callMs.reduce((sum, ms) => sum + ms, 0) / Math.max(callMs.length, 1);
+  const maxMs = callMs.reduce((max, ms) => Math.max(max, ms), 0);
+  return (
+    `${String(totalRefused)} refused commands; ${seconds.toFixed(1)} s; AI ` +
+    `${meanMs.toFixed(2)} ms mean, ${maxMs.toFixed(2)} ms max per call ` +
+    `(${String(callMs.length)} calls)`
   );
 }
 
-const seconds = (performance.now() - started) / 1000;
-const { wins, noWinner } = tallyWins(results);
-const tally = Object.entries(wins)
-  .map(([name, n]) => `${name} ${String(n)}`)
-  .join(', ');
-const meanMs = callMs.reduce((sum, ms) => sum + ms, 0) / Math.max(callMs.length, 1);
-const maxMs = callMs.reduce((max, ms) => Math.max(max, ms), 0);
-console.log(
-  `${String(games)} games: ${tally}, no winner ${String(noWinner)}; ` +
-    `mean ${(totalMonths / games).toFixed(1)} months; ` +
-    `${String(totalRefused)} refused commands; ${seconds.toFixed(1)} s; AI ` +
-    `${meanMs.toFixed(2)} ms mean, ${maxMs.toFixed(2)} ms max per call ` +
-    `(${String(callMs.length)} calls)`,
-);
+function runner(): void {
+  const results: MatchResult[] = [];
+  for (const [game, setup] of runnerSetups(seed, games, presets).entries()) {
+    results.push(play(`game ${String(game + 1)}`, setup, presets));
+  }
+  const { wins, noWinner } = tallyWins(results);
+  const tally = Object.entries(wins)
+    .map(([name, n]) => `${name} ${String(n)}`)
+    .join(', ');
+  const totalMonths = results.reduce((sum, m) => sum + m.days, 0) / TIME.daysPerMonth;
+  console.log(
+    `${String(games)} games: ${tally}, no winner ${String(noWinner)}; ` +
+      `mean ${(totalMonths / games).toFixed(1)} months; ${timing()}`,
+  );
+}
+
+function matrix(): void {
+  const rows: PairingResult[] = [];
+  for (const pairing of matrixPairings()) {
+    const label = pairingLabel(pairing);
+    const results = matrixSetups(pairing, seed, games).map((setup, i) =>
+      play(`${label}, game ${String(i + 1)}`, setup, pairing.presets),
+    );
+    rows.push(pairingResult(pairing, results));
+  }
+  console.log('');
+  console.log(
+    `Preset matrix: seeds ${String(seed)} to ${String(seed + games - 1)}, each in both nation ` +
+      `orders, up to ${String(months)} months a game.`,
+  );
+  for (const line of matrixTable(rows)) console.log(line);
+  const out = rows.filter((r) => r.inBand === false).map((r) => pairingLabel(r.pairing));
+  console.log(
+    out.length === 0
+      ? 'Every preset is within 35% to 65% against the opposing default.'
+      : `Outside 35% to 65%: ${out.join('; ')}.`,
+  );
+  console.log(timing());
+}
+
+if (values.matrix) matrix();
+else runner();

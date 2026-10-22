@@ -1,7 +1,7 @@
 // A whole game played by AI players, for the headless runner (docs/10-milestone-1.md acceptance
 // 15) and tests.
 import { nationDef, type NationDefId } from '../content';
-import { defaultPreset } from '../content/pretenders/presets';
+import { defaultPreset, type PresetDef } from '../content/pretenders/presets';
 import { stateHash } from '../sim/hash';
 import { createGame } from '../sim/createGame';
 import type { LoggedCommand } from '../sim/commands';
@@ -29,26 +29,50 @@ export const RUNNER_DEFAULTS = { games: 20, seed: 1, months: 100 } as const;
 export const RUNNER_NATIONS: readonly NationDefId[] = ['cinderHorde', 'thornwood'];
 
 /**
- * The headless runner's game number `game` from base seed `seed` (docs/08 decisions): Cinder
- * Horde against Thornwood on Medium with their default presets, both Normal AI, the nation
- * order alternating by game.
+ * A runner game's setup: the runner nations in this order on Medium, both Normal AI, each with
+ * the preset listed for it in `presets` (`sim:aivai --presets`, Phase 6b.3) or else its default.
  */
-export function runnerSetup(seed: number, game: number): GameSetup {
-  const order = game % 2 === 0 ? RUNNER_NATIONS : [...RUNNER_NATIONS].reverse();
+export function playedSetup(
+  seed: number,
+  order: readonly NationDefId[],
+  presets: readonly PresetDef[] = [],
+): GameSetup {
   return {
-    seed: seed + game,
+    seed,
     mapSize: 'medium',
     nations: order.map((nation) => ({
       nation,
-      pretender: defaultPreset(nation).design,
+      pretender: (presets.find((p) => p.nation === nation) ?? defaultPreset(nation)).design,
       ai: { difficulty: 'normal' },
     })),
   };
 }
 
+/** The runner nations in the order of game `game`: alternating, Cinder Horde first in game 0. */
+export function runnerOrder(game: number): readonly NationDefId[] {
+  return game % 2 === 0 ? RUNNER_NATIONS : [...RUNNER_NATIONS].reverse();
+}
+
+/**
+ * The headless runner's game number `game` from base seed `seed` (docs/08 decisions): Cinder
+ * Horde against Thornwood on Medium with their default presets (or those `presets` names), both
+ * Normal AI, the nation order alternating by game.
+ */
+export function runnerSetup(
+  seed: number,
+  game: number,
+  presets: readonly PresetDef[] = [],
+): GameSetup {
+  return playedSetup(seed + game, runnerOrder(game), presets);
+}
+
 /** The setups of a runner session: games 0 to games - 1 from base seed `seed`. */
-export function runnerSetups(seed: number, games: number): GameSetup[] {
-  return Array.from({ length: games }, (_, game) => runnerSetup(seed, game));
+export function runnerSetups(
+  seed: number,
+  games: number,
+  presets: readonly PresetDef[] = [],
+): GameSetup[] {
+  return Array.from({ length: games }, (_, game) => runnerSetup(seed, game, presets));
 }
 
 /** Plays a game with every AI nation driven by `player` until it ends or `maxDays` pass. */

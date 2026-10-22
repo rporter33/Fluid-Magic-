@@ -6,6 +6,7 @@ import { captureProvince } from './capture';
 import { commanderDies } from './commanders';
 import type { NationId, ProvinceId } from './ids';
 import { postMessage } from './messages';
+import { godName } from './pretender';
 import { getNation, getProvince } from './state';
 import type { GameResult, GameState } from './types';
 import { claimedBy } from './wellsprings';
@@ -29,6 +30,13 @@ function relocateCapitals(state: GameState): void {
  */
 function eliminate(state: GameState, nationId: NationId): void {
   const nation = getNation(state, nationId);
+  // The god dies with its nation, for good: a reform (N8) promised earlier, in this same tick
+  // included (a Phoenix falling in the storm of its last fort), is cancelled with a message,
+  // and a god still standing dies here without any promise.
+  const promised = nation.pretenderReturnDay !== null;
+  nation.pretenderId = null;
+  nation.pretenderDead = true;
+  nation.pretenderReturnDay = null;
   for (const c of Object.values(state.commanders)) {
     if (c.owner === nationId) commanderDies(state, c.id);
   }
@@ -38,7 +46,9 @@ function eliminate(state: GameState, nationId: NationId): void {
     else if (p.siege?.attacker === nationId) p.siege = null;
   }
   nation.eliminated = true;
-  nation.pretenderDead = true;
+  if (promised) {
+    postMessage(state, nationId, 'info', `${godName(state, nationId)} will not rise again.`);
+  }
   for (const n of Object.values(state.nations)) {
     if (!n.eliminated || n.id === nationId) {
       postMessage(state, n.id, 'info', `${nation.name} has fallen.`);

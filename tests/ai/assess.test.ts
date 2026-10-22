@@ -23,7 +23,15 @@ import { createCommander, createSquad, removeCommander } from '../../src/sim/com
 import type { CommanderId, ProvinceId } from '../../src/sim/ids';
 import { independentCount } from '../../src/sim/independents';
 import type { CommanderState } from '../../src/sim/types';
-import { addArmy, annex, commandersIn, move, neighbors, redField } from '../sim/fixtures';
+import {
+  addArmy,
+  annex,
+  commandersIn,
+  makePretender,
+  move,
+  neighbors,
+  redField,
+} from '../sim/fixtures';
 
 /** Ash Militia: (10 + 9 + 8 + 1) / 4. */
 const MILITIA = 7;
@@ -186,7 +194,7 @@ describe('groups', () => {
   it('take a fighter pretender along from AI.pretenderJoinDay', () => {
     const { state, red, capital, army } = redField();
     const titan = createCommander(state, 'titan', red, capital);
-    state.nations[red]!.pretenderId = titan.id;
+    makePretender(state, red, titan);
     state.day = AI.pretenderJoinDay - 1;
     let all = groups(createPlan(state, red));
     expect(memberIds(led(all, army))).toEqual([army.id]);
@@ -196,9 +204,21 @@ describe('groups', () => {
     // A body that does not fight never rides.
     removeCommander(state, titan.id);
     const spirit = createCommander(state, 'wildSpirit', red, capital);
-    state.nations[red]!.pretenderId = spirit.id;
+    makePretender(state, red, spirit);
     all = groups(createPlan(state, red));
     expect(memberIds(led(all, army))).toEqual([army.id]);
+    // By the chassis's role (Phase 6b.3): summoners, monsters, a visible raider and a mage that
+    // does not research ride; idols never do.
+    removeCommander(state, spirit.id);
+    for (const unit of ['motherOfBeasts', 'primordial', 'ashPhoenix', 'emberHierophant'] as const) {
+      const god = createCommander(state, unit, red, capital);
+      makePretender(state, red, god);
+      expect(memberIds(led(groups(createPlan(state, red)), army)), unit).toEqual([army.id, god.id]);
+      removeCommander(state, god.id);
+    }
+    const idol = createCommander(state, 'cinderIdol', red, capital);
+    makePretender(state, red, idol);
+    expect(memberIds(led(groups(createPlan(state, red)), army))).toEqual([army.id]);
   });
 
   it('keep a marching leader with the riders marching beside it', () => {

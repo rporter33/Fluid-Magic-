@@ -156,7 +156,7 @@ function movesWith(c: CommanderState, leader: CommanderState): boolean {
 /**
  * The nation's groups (Phase 7 design "Groups"). A leader on the move keeps the riders moving
  * with it. Standing leaders take the riders standing idle in their province, the strongest
- * leader first: summoned commanders and the fighter pretender (from AI.pretenderJoinDay) go to
+ * leader first: summoned commanders and the riding pretender (from AI.pretenderJoinDay) go to
  * the strongest, battle mages AI.battleMagesPerArmy to a leader. Riders standing idle where no
  * leader stands form one lone group per province. Groups come in leader order, oldest first;
  * the lone ones last.
@@ -167,7 +167,7 @@ export function groups(plan: Plan): Group[] {
     const role = plan.role(c);
     if (role === 'summoned') return true;
     if (role === 'mage') return battleMages.has(c.id);
-    return role === 'pretender' && pretenderRole(c) === 'fighter';
+    return role === 'pretender' && pretenderRole(plan.copy, c) === 'rider';
   };
   const joins = (c: CommanderState): boolean =>
     plan.role(c) !== 'pretender' || plan.copy.day >= AI.pretenderJoinDay;

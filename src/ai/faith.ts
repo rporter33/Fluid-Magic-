@@ -120,18 +120,19 @@ export function planPriests(plan: Plan): void {
 }
 
 /**
- * Step 7: a pretender that does not fight goes to its body's work in the capital: one that may
- * research studies there (and stands idle when it has no color pip to research with); a hidden
- * one, or a fighter before AI.pretenderJoinDay, stays there. One that cannot move casts rituals
- * where it stands (magic.ts); after AI.pretenderJoinDay a fighter rides with an army.
+ * Step 7 (docs/08 step 10, by the chassis's role): a pretender that does not ride goes to its
+ * work in the capital: a researcher studies there (and stands idle when it has no color pip to
+ * research with); a hidden one, or a rider before AI.pretenderJoinDay, stays there. An idol
+ * casts rituals where it stands (magic.ts); after AI.pretenderJoinDay a rider rides with an
+ * army.
  */
 export function planPretender(plan: Plan): void {
   const id = plan.nationState.pretenderId;
   const pretender = id === null ? undefined : plan.copy.commanders[id];
   if (!pretender) return;
-  const role = pretenderRole(pretender);
+  const role = pretenderRole(plan.copy, pretender);
   if (role === 'ritualist') return;
-  if (role === 'fighter' && plan.copy.day >= AI.pretenderJoinDay) return;
+  if (role === 'rider' && plan.copy.day >= AI.pretenderJoinDay) return;
   if (pretender.transit !== null || pretender.location !== plan.capital.id) {
     if (capitalOpen(plan) && pretender.order.kind === 'idle')
       walk(plan, pretender, plan.capital.id);

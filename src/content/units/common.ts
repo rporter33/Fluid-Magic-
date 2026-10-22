@@ -48,6 +48,7 @@ export const COMMON_UNITS = {
     ...BASELINE,
     id: 'wolf',
     name: 'Wolf',
+    plural: 'Wolves',
     hp: 9,
     str: 9,
     att: 10,

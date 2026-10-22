@@ -94,17 +94,35 @@ describe('the abilities catalog', () => {
     expect(abilitySource(copy).id).toBe('swarm');
   });
 
-  it('passes content validation, and no shipped unit lists an ability or the new fields yet', () => {
+  it('passes content validation, each ability on the one body A.4 gives it (Phase 6b.3)', () => {
     expect(validateContent()).toEqual([]);
-    for (const u of Object.values(UNITS)) {
-      const def = unitDef(u.id as keyof typeof UNITS);
-      expect(def.abilities, u.id).toBeUndefined();
-      expect(def.spellPower, u.id).toBeUndefined();
-      for (const w of def.weapons) {
-        expect([w.strikes, w.maxTargetSize], `${u.id} ${w.name}`).toEqual([undefined, undefined]);
+    const carriers = ABILITY_LIST.map((a) => [
+      a.id,
+      Object.values(UNITS)
+        .filter((u) => unitDef(u.id as keyof typeof UNITS).abilities?.includes(a.id as never))
+        .map((u) => u.id),
+    ]);
+    expect(carriers).toEqual([
+      ['primordialFear', ['primordial']],
+      ['kindleTheHost', ['pyreLord']],
+      ['callTheHunt', ['hornedHunter']],
+    ]);
+    // Every carrier is a pretender body, and what it summons is a troop that exists.
+    for (const [, ids] of carriers) {
+      for (const id of ids as (keyof typeof UNITS)[]) {
+        const body = unitDef(id);
+        expect(body.commander, id).toBeDefined();
+        expect(
+          Object.values(CHASSIS).some((c) => c.body === id),
+          id,
+        ).toBe(true);
+        for (const a of (body.abilities ?? []).map(triggerDef)) {
+          for (const e of a.effects) {
+            if (e.kind === 'summon') expect(unitDef(e.unit).commander, e.unit).toBeUndefined();
+          }
+        }
       }
     }
-    for (const c of Object.values(CHASSIS)) expect(c, c.id).not.toHaveProperty('monthlySummon');
   });
 });
 

@@ -3,7 +3,7 @@
 // researchers and battle mages by the research personality, oldest first.
 import { describe, expect, it } from 'vitest';
 import { unitDef, type UnitTypeId } from '../../src/content';
-import { CHASSIS } from '../../src/content/pretenders/chassis';
+import { CHASSIS, type ChassisDef } from '../../src/content/pretenders/chassis';
 import { UNITS } from '../../src/content/units';
 import { createPlan } from '../../src/ai/plan';
 import {
@@ -17,6 +17,7 @@ import {
 } from '../../src/ai/roles';
 import { createCommander } from '../../src/sim/commanders';
 import { applyCommand } from '../../src/sim/commands';
+import { patched } from '../content/patched';
 import { commandersIn, redField } from '../sim/fixtures';
 
 /** The role of every commander unit in content when a nation fields it. */
@@ -41,16 +42,40 @@ const ROLES: Record<string, Role> = {
   livingMonolith: 'summoned',
   wildSpirit: 'summoned',
   ashColossus: 'summoned',
+  ascendedHero: 'summoned',
+  primordial: 'summoned',
+  ashPhoenix: 'summoned',
+  pyreLord: 'summoned',
+  cinderIdol: 'summoned',
+  emberHierophant: 'summoned',
+  worldTree: 'summoned',
+  hornedHunter: 'summoned',
+  elderWyrm: 'summoned',
+  motherOfBeasts: 'summoned',
 };
 
-/** What each chassis body does as the pretender (docs/05-pretender.md, docs/08 priority 10). */
+/**
+ * What each chassis does as the pretender, by its role tag (docs/05-pretender.md Step 1,
+ * docs/08 step 10): idols cast rituals, the researching mage studies, the stealthy raider
+ * hides, every other rides with an army after month 3.
+ */
 const PRETENDER_ROLES: Record<string, PretenderRole> = {
   oracle: 'researcher',
-  titan: 'fighter',
-  greatWyrm: 'fighter',
+  titan: 'rider',
+  greatWyrm: 'rider',
   livingMonolith: 'ritualist',
+  ascendedHero: 'rider',
+  primordial: 'rider',
+  ashColossus: 'rider',
+  ashPhoenix: 'rider',
+  pyreLord: 'rider',
+  cinderIdol: 'ritualist',
+  emberHierophant: 'rider',
   wildSpirit: 'hidden',
-  ashColossus: 'fighter',
+  worldTree: 'ritualist',
+  hornedHunter: 'rider',
+  elderWyrm: 'rider',
+  motherOfBeasts: 'rider',
 };
 
 const commanderUnits = (Object.keys(UNITS) as UnitTypeId[]).filter((u) => unitDef(u).commander);
@@ -81,13 +106,36 @@ describe('roleOf', () => {
 
   it("calls the nation's pretender a pretender, whatever its body", () => {
     const { state, red, capital } = redField();
-    for (const body of Object.keys(CHASSIS) as UnitTypeId[]) {
+    for (const id of Object.keys(CHASSIS) as (keyof typeof CHASSIS)[]) {
+      const body = CHASSIS[id].body;
       const c = createCommander(state, body, red, capital);
       expect(roleOf(state, c), body).toBe('summoned');
       state.nations[red]!.pretenderId = c.id;
+      state.nations[red]!.pretender = { ...state.nations[red]!.pretender, chassis: id };
       expect(roleOf(state, c), body).toBe('pretender');
-      expect(pretenderRole(c), body).toBe(PRETENDER_ROLES[body]);
+      expect(pretenderRole(state, c), body).toBe(PRETENDER_ROLES[id]);
     }
+  });
+
+  it('reads the chassis’s role tag, not the body: a patched role changes the work', () => {
+    const { state, red, capital } = redField();
+    const titan = createCommander(state, 'titan', red, capital);
+    state.nations[red]!.pretenderId = titan.id;
+    state.nations[red]!.pretender = { ...state.nations[red]!.pretender, chassis: 'titan' };
+    const chassis: ChassisDef = CHASSIS.titan;
+    expect(pretenderRole(state, titan)).toBe('rider');
+    for (const role of ['leader', 'fighter', 'monster', 'summoner', 'raider'] as const) {
+      patched(chassis, 'role', role, () => {
+        expect(pretenderRole(state, titan), role).toBe('rider');
+      });
+    }
+    patched(chassis, 'role', 'idol', () => {
+      expect(pretenderRole(state, titan)).toBe('ritualist');
+    });
+    // A mage researches only if its body may: the Titan's may not.
+    patched(chassis, 'role', 'mage', () => {
+      expect(pretenderRole(state, titan)).toBe('rider');
+    });
   });
 
   it('keeps a prophet a priest', () => {

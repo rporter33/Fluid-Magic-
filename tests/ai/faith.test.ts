@@ -11,7 +11,7 @@ import type { UnitTypeId } from '../../src/content';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { findPathFor, pathsFrom } from '../../src/sim/movement';
 import type { CommanderState, GameState } from '../../src/sim/types';
-import { annex, besiege, commandersIn, neighbors, redField } from '../sim/fixtures';
+import { annex, besiege, commandersIn, makePretender, neighbors, redField } from '../sim/fixtures';
 
 /** Red owns every province that is not Green's, so every path is open and every spring is Red's. */
 function redWorld() {
@@ -198,7 +198,7 @@ describe('planPretender', () => {
   function withPretender(unit: UnitTypeId) {
     const f = redField();
     const body = createCommander(f.state, unit, f.red, f.capital);
-    f.state.nations[f.red]!.pretenderId = body.id;
+    makePretender(f.state, f.red, body);
     return { ...f, body };
   }
 
@@ -247,5 +247,36 @@ describe('planPretender', () => {
   it('leaves a Monolith to its rituals', () => {
     const { state, red } = withPretender('livingMonolith');
     expect(run(state, red, planPretender)).toEqual([]);
+  });
+
+  it('reads the Phase 6b.3 chassis by role: idols stay, every other new body rides', () => {
+    // Idols cast rituals and are never walked, before or after the join day.
+    for (const unit of ['cinderIdol', 'worldTree'] as const) {
+      const { state, red } = withPretender(unit);
+      expect(run(state, red, planPretender), unit).toEqual([]);
+      state.day = AI.pretenderJoinDay;
+      expect(run(state, red, planPretender), unit).toEqual([]);
+    }
+    // A Hierophant does not research: as a mage that cannot, it rides like the others.
+    const riders = [
+      'ascendedHero',
+      'primordial',
+      'ashPhoenix',
+      'pyreLord',
+      'emberHierophant',
+      'hornedHunter',
+      'elderWyrm',
+      'motherOfBeasts',
+    ] as const;
+    for (const unit of riders) {
+      const { state, red, capital, body } = withPretender(unit);
+      body.pips = { R: 2 };
+      // At home before the join day it stands idle: no research order for a non-researcher.
+      expect(run(state, red, planPretender), unit).toEqual([]);
+      body.location = annex(state, red, neighbors(state, capital)[0]!).id;
+      expect(run(state, red, planPretender), unit).toEqual([moveTo(state, red, body, capital)]);
+      state.day = AI.pretenderJoinDay;
+      expect(run(state, red, planPretender), unit).toEqual([]);
+    }
   });
 });

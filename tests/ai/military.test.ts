@@ -15,7 +15,7 @@ import type { NationId, ProvinceId } from '../../src/sim/ids';
 import { findPathFor, pathsFrom } from '../../src/sim/movement';
 import { advance } from '../../src/sim/tick';
 import type { CommanderState, GameState } from '../../src/sim/types';
-import { addArmy, annex, besiege, redField } from '../sim/fixtures';
+import { addArmy, annex, besiege, makePretender, redField } from '../sim/fixtures';
 
 const P = (id: string) => id as ProvinceId;
 
@@ -208,7 +208,7 @@ describe('planArmies: groups', () => {
     const { state, red, capital, army } = redField();
     state.day = AI.pretenderJoinDay;
     const titan = createCommander(state, 'titan', red, capital);
-    state.nations[red]!.pretenderId = titan.id;
+    makePretender(state, red, titan);
     // With the starting adept, four mages: Cinder researches at 0.4, so the newest two ride.
     createCommander(state, 'emberAdept', red, capital);
     const rider = createCommander(state, 'emberAdept', red, capital);

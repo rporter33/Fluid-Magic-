@@ -64,6 +64,18 @@ export function validateChassis(key: string, c: ChassisDef): string[] {
     if (!Number.isInteger(count) || count < 1 || !Number.isInteger(cap) || cap < count) {
       problems.push(`${where} bad monthly summon numbers`);
     }
+    // N7: leadership bounds each month's summons, so a body that could never lead one is wrong.
+    if (body?.commander && count > body.commander.leadership) {
+      problems.push(`${where} monthly summon exceeds its body's leadership`);
+    }
+  }
+  if (c.reform && (!Number.isInteger(c.reform.days) || c.reform.days < 1)) {
+    problems.push(`${where} bad reform days`);
+  }
+  // The AI reads the role (docs/08 step 10): an idol stays where it stands, so it must be the
+  // immobile kind, and every immobile body is an idol.
+  if (body && (c.role === 'idol') !== body.tags.includes('immobile')) {
+    problems.push(`${where} is an idol exactly when its body is immobile`);
   }
   if (!(c.aiPower >= 0)) problems.push(`${where} bad AI power`);
   return problems;

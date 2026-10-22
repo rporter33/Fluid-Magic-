@@ -41,10 +41,10 @@ Capital: **Kharnath**, Plains. Palette: ember orange, charcoal, hot white.
 
 Identity levers: Turmoil-friendly, Fury-friendly. Berserkers. Pillage is strong.
 
-Pretender chassis (`docs/05-pretender.md`): the generic chassis (Oracle of the Flux, Titan,
-Great Wyrm, Living Monolith) and the Red realm, today the Ash Colossus. Fits: Titan and Ash
-Colossus. Phase 6b.3 adds the generic Ascended Hero and Primordial and the Red Ash Phoenix,
-Pyre Lord, Cinder Idol and Ember Hierophant, for eleven.
+Pretender chassis (`docs/05-pretender.md`): the six generic chassis (Oracle of the Flux,
+Titan, Great Wyrm, Living Monolith, Ascended Hero, Primordial) and the Red realm: Ash
+Colossus, Ash Phoenix, Pyre Lord, Cinder Idol, Ember Hierophant. Fits: Titan and Ash
+Colossus. Fire Sprites also join the Pyre Lord at battle start and the Cinder Idol each month.
 
 ### Troops (recruit at fort)
 | Unit | hp | str | att | def | prot | mor | mapSpd | Weapons | Cost (g/m/pop) | Days/10 | Tags |
@@ -84,10 +84,10 @@ Capital: **Deepmoss**, Forest. Palette: moss green, bark brown, pale blossom.
 Identity levers: Growth-friendly, Wild-friendly. Regeneration bless. Forests are home
 turf (+1 def in forests for Thornwood units).
 
-Pretender chassis (`docs/05-pretender.md`): the generic chassis and the Green realm, today
-the Wild Spirit. Fits: Wild Spirit and Living Monolith. Phase 6b.3 adds the generic Ascended
-Hero and Primordial and the Green World Tree, Horned Hunter, Elder Wyrm and Mother of Beasts,
-for eleven.
+Pretender chassis (`docs/05-pretender.md`): the six generic chassis and the Green realm: Wild
+Spirit, World Tree, Horned Hunter, Elder Wyrm, Mother of Beasts. Fits: Wild Spirit and Living
+Monolith. Wolves also join the Horned Hunter at battle start and the Mother of Beasts each
+month.
 
 ### Troops
 | Unit | hp | str | att | def | prot | mor | mapSpd | Weapons | Cost (g/m/pop) | Days/10 | Tags |
@@ -141,7 +141,10 @@ Independent Captain (hp 12, leadership 60).
 Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Unit ids**: camelCase names (`cinderWarrior`, `wardenCaptain`). The two Scouts are
   `cinderScout` and `thornScout`. The Wolf is one shared unit used by Thornwood summons and
-  independents.
+  independents, and since Phase 6b.3 by the Horned Hunter's Call the Hunt and the Mother of
+  Beasts' monthly pack; messages call more than one "Wolves" (`UnitDef.plural`, for names
+  where adding "s" is wrong). The Fire Sprite likewise serves Call Fire Sprites, the Pyre
+  Lord's Kindle the Host and the Cinder Idol's monthly sprites.
 - **Stats the tables leave out** take the baseline (`hp 10, str 10, att 10, def 10, prot 0,
   mr 10, mor 10, prec 10`), size 1, and map speed 2. This applies to every commander
   (including Scouts) and to mounted troops, whose size is not listed, except for map speed
@@ -165,7 +168,7 @@ Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
 - **Chassis** (Phase 6, revised in Phase 6b at the owner's direction for "good options for
   pretenders like Dominions has"): a nation may take the generic chassis and those of its own
   colors' realms (`availableChassis`, `docs/05`); the owner chose realms over every chassis
-  for every nation on 2026-10-21. That is five for each M1 nation after Phase 6b.1 and eleven
-  after Phase 6b.3. `NationDef.chassis` names the two the pretender screen marks as fitting:
-  Cinder Horde, Titan and Ash Colossus; Thornwood, Wild Spirit and Living Monolith. Content
-  validation refuses a fitting chassis outside the nation's realm.
+  for every nation on 2026-10-21. That is eleven for each M1 nation since Phase 6b.3 (five
+  between Phase 6b.1 and 6b.3). `NationDef.chassis` names the two the pretender screen marks
+  as fitting: Cinder Horde, Titan and Ash Colossus; Thornwood, Wild Spirit and Living
+  Monolith. Content validation refuses a fitting chassis outside the nation's realm.

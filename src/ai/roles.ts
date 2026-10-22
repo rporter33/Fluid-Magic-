@@ -5,8 +5,8 @@ import { unitDef } from '../content';
 import { AI } from '../content/ai';
 import type { UnitDef } from '../content/types';
 import { isGarrisonHolder } from '../sim/commanders';
-import { canMove } from '../sim/movement';
 import { hasPips } from '../sim/pips';
+import { chassisOf } from '../sim/pretender';
 import { isPretender } from '../sim/selectors';
 import type { CommanderState, GameState } from '../sim/types';
 import { nationDefOf } from '../sim/state';
@@ -30,16 +30,23 @@ export type Role =
   /** An independent's commander, or a recruitable commander that fits no role. */
   | 'other';
 
-/** What a pretender body is for (docs/05-pretender.md chassis; Phase 7 design "Roles"). */
+/**
+ * What the pretender does (docs/08-ai.md step 10), from its chassis's role (docs/05 Step 1, D8)
+ * and, within a role, its body.
+ */
 export type PretenderRole =
-  /** It may research (the Oracle): it studies in the capital lab. */
+  /** A mage that may research (the Oracle): it studies in the capital lab. */
   | 'researcher'
-  /** It cannot move (the Living Monolith): it casts rituals in the capital. */
+  /** An idol (the Living Monolith, Cinder Idol, World Tree): it casts rituals in the capital. */
   | 'ritualist'
-  /** It is stealthy (the Wild Spirit): hidden, it would add nothing to a battle; it stays home. */
+  /** A stealthy raider (the Wild Spirit): hidden, it would add nothing to a battle; it stays home. */
   | 'hidden'
-  /** Any other body: it stays home until AI.pretenderJoinDay, then rides with an army. */
-  | 'fighter';
+  /**
+   * A leader, fighter, monster or summoner, a raider that can be seen, or a mage that does not
+   * research (the Ember Hierophant): it stays home until AI.pretenderJoinDay, then rides with
+   * an army.
+   */
+  | 'rider';
 
 /** The role a unit gives a nation's commander, from content alone; null for a troop. */
 export function unitRole(def: UnitDef): Role | null {
@@ -69,13 +76,25 @@ export function isAdeptTier(def: UnitDef): boolean {
   return unitRole(def) === 'mage' && def.requires.includes('capital');
 }
 
-/** What the pretender does, from its body: research allowed, immobile, stealthy, or a fighter. */
-export function pretenderRole(pretender: CommanderState): PretenderRole {
+/**
+ * What a nation's pretender does, read from its chassis's role tag (docs/08 step 10): idols cast
+ * rituals; mages research if their body may, else ride; raiders ride unless their body is
+ * stealthy; leaders, fighters, monsters and summoners ride. Content validation keeps every idol
+ * immobile and every immobile body an idol.
+ */
+export function pretenderRole(state: GameState, pretender: CommanderState): PretenderRole {
+  const chassis = pretender.owner === null ? null : chassisOf(state, pretender.owner);
   const def = unitDef(pretender.unit);
-  if (def.commander?.research !== false) return 'researcher';
-  if (!canMove(pretender)) return 'ritualist';
-  if (def.tags.includes('stealthy')) return 'hidden';
-  return 'fighter';
+  switch (chassis?.role) {
+    case 'idol':
+      return 'ritualist';
+    case 'mage':
+      return def.commander?.research !== false ? 'researcher' : 'rider';
+    case 'raider':
+      return def.tags.includes('stealthy') ? 'hidden' : 'rider';
+    default:
+      return 'rider';
+  }
 }
 
 /** The nation's mages, split into researchers and battle mages. */

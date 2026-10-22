@@ -7,7 +7,7 @@ import { advanceTransits, continueMoves } from './movement';
 import { applyPillage } from './pillage';
 import { growPopulation } from './population';
 import { spreadDominion, updateGodless } from './dominion';
-import { settlePretender } from './pretender';
+import { monthlySummons, settlePretender } from './pretender';
 import { progressRecruitment } from './recruitment';
 import { progressResearch } from './research';
 import { progressRituals } from './rituals';
@@ -32,13 +32,14 @@ export function advance(state: GameState): void {
   continueMoves(state);
 
   // 3. Queues: recruitment, construction, rituals, research, Wellspring claims; the pretender
-  // arrives, returns, or is recalled.
+  // arrives, returns, reforms, or is recalled; on a month's first day, monthly summons (N7).
   progressRecruitment(state);
   progressConstruction(state);
   progressRituals(state);
   progressResearch(state);
   progressClaims(state);
   for (const id of Object.keys(state.nations) as NationId[]) settlePretender(state, id);
+  monthlySummons(state);
 
   // 4. Economy, pillage, population, unrest, supply. Rates come from one snapshot of the day.
   const economies = allProvinceEconomies(state);

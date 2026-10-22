@@ -4,8 +4,9 @@ import { nationDef, unitDef } from '../../src/content';
 import { NATION_BANNERS } from '../../src/content/colors';
 import { CHASSIS, type ChassisDef } from '../../src/content/pretenders/chassis';
 import { NEUTRAL_SCALES } from '../../src/content/pretenders/scales';
-import { ECONOMY } from '../../src/content/rules';
+import { ECONOMY, MANA } from '../../src/content/rules';
 import { createGame } from '../../src/sim/createGame';
+import { provinceEconomy } from '../../src/sim/selectors';
 import type { GameState } from '../../src/sim/types';
 import { patched } from '../content/patched';
 import { commandersIn, nation, nationIds, pretender, twoNationGame } from './fixtures';
@@ -206,6 +207,24 @@ describe('createGame and the design of Phase 6b.1', () => {
       const red = nationIds(state)[0]!;
       expect(state.provinces[state.nations[red]!.capital]!.extraSprings).toEqual(['R', 'G']);
     });
+  });
+
+  it('gives the World Tree’s capital one more Green spring, which pays like a map spring', () => {
+    const tree = pretender({
+      chassis: 'worldTree',
+      pips: { G: 4 },
+      dominion: 4,
+      awakening: 'awake',
+    });
+    const state = twoNationGame(7, {}, { pretender: tree });
+    const green = nationIds(state)[1]!;
+    const capital = state.nations[green]!.capital;
+    expect(state.provinces[capital]!.extraSprings).toEqual(['G']);
+    const withTree = provinceEconomy(state, capital).mana.G;
+    state.provinces[capital]!.extraSprings = [];
+    expect(withTree - provinceEconomy(state, capital).mana.G).toBe(MANA.perSpring);
+    // The map's springs are untouched.
+    expect(state.map).toEqual(twoNationGame(7).map);
   });
 
   it('copies the design, so the setup’s lists never alias the game’s', () => {

@@ -1,4 +1,5 @@
 // Shared helpers for sim tests.
+import { CHASSIS } from '../../src/content/pretenders/chassis';
 import type { NationDefId, UnitTypeId } from '../../src/content';
 import { NEUTRAL_SCALES, type Scales } from '../../src/content/pretenders/scales';
 import { createCommander, createSquad, removeCommander } from '../../src/sim/commanders';
@@ -179,4 +180,16 @@ export function castRitual(
   target: ProvinceId | null = null,
 ) {
   return applyCommand(state, { type: 'castRitual', nation, commander: c.id, spell, target });
+}
+
+/**
+ * Makes a commander its nation's pretender, the design's chassis the one whose body it is, as a
+ * game always has them (the AI reads the chassis's role, docs/08 step 10).
+ */
+export function makePretender(state: GameState, nation: NationId, c: CommanderState): void {
+  const n = state.nations[nation]!;
+  const chassis = Object.values(CHASSIS).find((x) => x.body === c.unit);
+  if (!chassis) throw new Error(`${c.unit} is no chassis body`);
+  n.pretenderId = c.id;
+  n.pretender = { ...n.pretender, chassis: chassis.id };
 }

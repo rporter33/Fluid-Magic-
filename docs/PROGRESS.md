@@ -508,6 +508,132 @@ of the units-and-items build spec (section B; E.6 items 1, 2 and 8).
   yet; `docs/12` records what each must do with `ability`. Choices where the specs are silent
   are in `docs/04` ("Choices the Phase 6b.2 build spec left open").
 
+## Phase 6b.3: Ten new chassis, monthly summons, the Phoenix's reform, presets, duels, the matrix (done)
+
+The last of three Phase 6b steps (the 2026-10-21 pretender build spec, E.1; at the owner's
+direction, "good options for pretenders like Dominions has", with the owner's answers of
+2026-10-21: scope approved, realms, Avatar only by boon, no Iron Will, Latin names, the name in
+the sim).
+- Content: the ten chassis of A.2 and A.4 with their bodies, in `docs/05` Step 1's order
+  (generic, Red, Green): Ascended Hero (Avatar built in), Primordial (at least dormant; Fear),
+  Ash Phoenix (flying, fire shield 5, Growth attunement, reform 90 days), Pyre Lord (Kindle the
+  Host), Cinder Idol (immobile, unarmed, Dread attunement, 2 Fire Sprites a month to 20), Ember
+  Hierophant (spell power 3, no research), World Tree (immobile, regeneration, Sanctity
+  attunement, one G spring), Horned Hunter (Call the Hunt, Fury attunement), Elder Wyrm
+  (wingless, regeneration) and Mother of Beasts (2 Wolves a month to 24); A.4's prices, stats,
+  weapons (one `Trample` record, dmg 2, 2 strikes, size 2 or less, on the Primordial and the
+  Elder Wyrm) and A.11's `aiPower`. The six presets of A.8 after the old six
+  (`PRESETS_PER_NATION` 6, `findPreset`). `UnitDef.plural` ("Wolves") for messages. Validation:
+  a chassis is an idol exactly when its body is immobile (the AI reads the role), a monthly
+  summon's count is at most its body's leadership, reform days are a whole number ≥ 1, a plural
+  is not empty.
+- Sim: N7 `monthlySummons` (`src/sim/pretender.ts`, with `nationStock`) in tick step 3 after the
+  pretenders settle; N8 in `commanderDies` (`reformDays`) and `settlePretender` (the return
+  day, "rises again"); `eliminate` clears a reforming god for good before its commanders die,
+  and cancels a return already promised, in the same tick included (a Phoenix falling in the
+  storm of its last fort), with "Ysolde will not rise again." before the fall.
+  `NationState.pretenderReturnDay` came with 6b.1's save step, so no `STATE_VERSION` step.
+- AI (`src/ai`, step 10 only): `pretenderRole(state, c)` reads `ChassisDef.role` (idol:
+  ritualist; mage: researcher if its body may research, else rider; raider: hidden if
+  stealthy, else rider; the rest: rider; Phase 7's `fighter` is now `rider`); in
+  `handOffSquads` the pretender keeps troops of its monthly-summon unit up to that summon's cap,
+  whatever their source, so they stay bound to it (N5), and splits off the rest for the
+  garrison (the Cinder Idol's own Call Fire Sprites rituals above 20). With the six chassis of
+  Phase 6 each role gives Phase 7's reading, so the defaults play as before.
+- Scripts: `sim:aivai --presets cinderHorde:<id>,thornwood:<id>` (`parsePresets`; `playedSetup`
+  and `runnerOrder` in `match.ts`, `runnerSetup(s)` take the chosen presets) and `--matrix`
+  (`src/ai/matrix.ts`: the defaults, then every other preset against the opposing default,
+  seeds 1 to 20 in both nation orders, a win table with the 35% to 65% band); `sim:duel`
+  (`scripts/duel.ts` on `tests/sim/battle/fixtures/duel.ts`): A.10's table on the real
+  resolver over 400 seeds, and `--calibrate`, which measures each chassis's Light Infantry
+  equivalent over 200 seeds and rewrites `aiPower`.
+- Tests: `tests/sim/pretender.summon.test.ts` (N7's list: day 30 at strength 1, foreign and
+  neutral dominion, day 0, transit, Godless and asleep, the nation-wide cap with handed-off
+  wolves, Call of the Wild and the garrison holder's wolves, leadership, the Idol's supply,
+  binding in battle, tick step 3 after the settle (a dormant Mother's arrival day) and the
+  365-day hash, no effect without a summon), `tests/sim/pretender.reform.test.ts` (N8's list:
+  day + 90 with a fresh commander, the name and the capital link, foreign, neutral and
+  strength-0 deaths, only the Phoenix, a lost battle, Godless and a lost capital, a second
+  death, incarnate blessings away, elimination standing, reforming, and in the storm of its
+  last fort, the save), `tests/sim/battle/duel.test.ts` (every duel cell within 15 points of
+  its measured value, the spec's named targets, what binding is worth, the Avatar rows' god
+  stats equal to the sim's Avatar, and every chassis's `aiPower` equal to what `--calibrate`
+  writes), `tests/ai/matrix.test.ts` (`--presets` parsing and refusals, whole preset ids only,
+  the default runner unchanged, pairings, setups, the tally with the band's inclusive edges
+  and summed refusals, the table with an out-of-band row, each new preset's first matrix games
+  for a year with no refusal); the Mother's wolves and the Idol's split above the cap in
+  `recruit.transfers.test.ts`, the transfer half of `recruit.test.ts`, split off with the
+  shared helpers in `recruitFixtures.ts` when the file passed 400 lines; the empty plural in
+  `units.test.ts`; the new
+  presets' designs, costs, blessings and 365-day determinism in `presets.test.ts`; every new
+  body, weapon, trait and ability in `units.test.ts` and `abilities.test.ts`; every new chassis
+  record, the parity snapshot and the new checks in `validate.chassis.test.ts`, whose preset
+  half moved to the new `validate.presets.test.ts` (the file had passed 400 lines); realms,
+  prices, attunement, the Primordial's sleep, the Tree's spring and the Hero's Avatar in
+  `pretender.design.test.ts`, `createGame.test.ts` and `setup.bless.test.ts`; the role step in
+  `roles`, `faith`, `magic`, `assess`, `recruit` and `military` tests (`makePretender` in
+  `tests/sim/fixtures.ts` sets the design's chassis with the commander). 1662 tests in 106
+  files before, 1778 in 112 after (1770 in 111 before the review fixes below).
+- Behavior guard: `tests/sim/battle/golden.json` is byte for byte unchanged and its test
+  passes; the six Phase 6 presets' pins (`presets.test.ts`) pass; `npm run sim:aivai -- --games
+  20 --seed 1` gives Cinder Horde 10, Thornwood 9, no winner 1, mean 26.8 months, 0 refused
+  commands, as before.
+- Measured duel bands (`npm run sim:duel`, seeds 0 to 399; win % against weak plains / plains /
+  hills / forest / mountain; immobile bodies defend): Oracle 0/0/0/0/0, Titan 40/2/0/11/0,
+  Great Wyrm 100/100/75/100/5, Living Monolith 100/100/100/100/31, Ascended Hero 15/0/0/3/0,
+  Primordial 100/100/73/100/14, Ash Colossus 92/60/2/68/0, Ash Phoenix 56/12/3/27/0, Pyre Lord
+  65/22/18/43/5, Cinder Idol 100/100/51/100/0, Ember Hierophant 0/0/0/0/0, Wild Spirit
+  1/0/0/0/0, World Tree 100/100/100/100/100, Horned Hunter 78/49/18/56/5, Elder Wyrm
+  100/100/56/100/14, Mother alone 8/0/0/1/0; Hero with Avatar and R4 16/0/0/3/0; Mother with 6,
+  12 and 24 bound wolves 60/29/2/34/2, 92/72/16/72/6, 98/89/66/90/38, with 12 led wolves
+  32/14/7/17/2; Titan + 20 Cinder Warriors 65/43/53/57/21; Hero + 20 Cinder Warriors
+  42/19/23/57/9; Titan + 20 Wardens 96/82/75/87/38; Mother + 12 bound wolves + 20 Wardens
+  100/95/81/99/52. The spec's targets, all met: Great Wyrm hills 75 (60 to 90); Primordial
+  hills 73 (58 to 88) and mountain 14 (at most 32), never more than 15 ahead of the Great Wyrm
+  (at most 9); Elder Wyrm hills 56 (42 to 72); Mother with 12 bound wolves plains 72 (57 to
+  87); Horned Hunter plains 49 (32 to 62); Ash Phoenix weak plains 56 (41 to 71). Against the
+  spec's approximated table, every shared cell is within 3 points (the Primordial's mountain
+  falls from 17 to 14 with the real size limit) but one: the Mother with 12 bound wolves and
+  20 Wardens wins 52% on the mountain, not 42%, with the wolves led and bound rather than
+  staged leaderless. `--calibrate` reproduces A.11's n for all sixteen chassis, so no `aiPower`
+  moved.
+- Preset matrix (`npm run sim:aivai -- --matrix`, seeds 1 to 20 in both orders, 40 games a
+  row, 440 games, 0 refused commands, 379 s): baseline Warlord against Elder Oak 24 to 13, 3
+  without a winner; each preset's share against the opposing default: Ember Oracle 57%,
+  Wildfire 83%, Deep Root 10%, Wyrm of the Loam 43%, Undying Flame 80%, Pyre Host 80%, Dread
+  Idol 75%, Heartwood 18%, Hunt Lord 30%, Mother of the Pack 23%. Only Ember Oracle and Wyrm of
+  the Loam are within 35% to 65% (below, under known issues). Dread Idol stood at 80% (32 to
+  8, mean 24.7 months) before review finding F3 had the Idol hand on its sprites above 20;
+  it is now 30 to 8, 2 without a winner, mean 31.3 months, and no other row moved.
+- Deviations from the build spec: the matrix plays every non-default preset (ten rows, the
+  spec names the six new ones) plus the defaults as a baseline row, each seed in both nation
+  orders; `docs/08`'s "raiders ... or take weak provinces alone" is not built (a god never leads
+  a group until `aiPower` joins `armyPower` in Phase 8, so the Ash Phoenix rides with an army
+  and the stealthy Wild Spirit stays home as in Phase 7); the AI keeps troops of the
+  monthly-summon unit with the pretender up to the summon's cap, whatever their source, and
+  hands on the rest (the spec is silent, and handing them to the garrison would unbind them);
+  an eliminated nation's reforming god is gone for good, a promised return cancelled with a
+  message; `UnitDef.plural` is new; the duel fixtures use the real N1 abilities and N2 size
+  limit, stage immobile bodies defending with Hold, and add a body-alone row for every
+  chassis. The cut lines (E.3) were not applied:
+  every duel band is met, and the matrix band, missed by two Phase 6 presets and by Pyre Host
+  (on no cut line) as much as by the N7 and N8 bodies, is Phase 12's tuning target, not a
+  measured band that cutting would meet.
+- Review fixes (the 6b.3 review's confirmed findings): F3, the AI's pretender kept every squad
+  of its monthly-summon unit, so the Cinder Idol hoarded 35 to 40 of its own ritual sprites
+  in the capital; it now keeps that unit up to the summon's cap and splits off the rest for
+  the garrison (Dread Idol's matrix share 80% to 75%; no other row, no default game moved).
+  N8, a Phoenix dying in the storm of its last fort was promised a return in the tick that
+  eliminated its nation; `eliminate` now cancels a promised return with "Ysolde will not rise
+  again." (`godName` in `src/sim/pretender.ts` names a god no commander carries). F6, the
+  matrix miss, stays for Phase 12 (known issues). New tests for the gaps the mutation run
+  found: N7's place after the settle (a dormant Mother's arrival day), the garrison holder's
+  wolves in the cap, the Mother keeping her wolves, the Idol's split above the cap, the rising
+  message's capital link, the storm and reforming eliminations, the band's inclusive edges,
+  summed refusals and the NO cell, whole preset ids only, the Avatar rows' stats against the
+  sim's, and the empty plural. Each of their 17 mutants (the 11 survivors and 6 of the two
+  fixes) now fails a test.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -558,6 +684,13 @@ of the units-and-items build spec (section B; E.6 items 1, 2 and 8).
   after it): `CombatStats.fireShield` is now `shields`; a summoned squad that breaks below
   morale 50 (Swarm's hornets under Dread or Fear) no longer drags its caster; the trigger id
   list is written out; burn ties keep S1's rule.
+- Phase 6b.3 (`docs/05-pretender.md` decisions, `docs/08-ai.md` decisions): the Ash Phoenix
+  reforms (the one exception to "gone for good"), but not for an eliminated nation, whose
+  promised return is cancelled with "will not rise again"; monthly summons keep to the spec,
+  with `UnitDef.plural` for their message; the AI's pretender step reads the chassis role (its
+  `fighter` is now `rider`), keeps troops of the monthly-summon unit with the god up to the
+  summon's cap and hands on the rest, and does not yet send a raider alone; the preset matrix
+  covers every non-default preset in both nation orders.
 - Phase 10 S1 (`docs/12-battle-presentation.md`, "Implementation decisions"): landing the hits
   lives in `battle/landing.ts` and the migration map in `src/sim/migrate.ts`, files the spec's
   S1.1 table does not list; the migration test is `tests/sim/migrate.test.ts`, mirroring the
@@ -683,6 +816,25 @@ of the units-and-items build spec (section B; E.6 items 1, 2 and 8).
   S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
 - The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin) can fail when the
   machine is loaded by other processes; they pass when run alone.
+- Preset matrix (Phase 6b.3, for Phase 12): 8 of 10 presets miss the 35% to 65% band against
+  the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%, Dread Idol 75%; Deep
+  Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The default pairing itself leans
+  Red when each seed is played in both orders: Warlord 24, Elder Oak 13, 3 without a winner,
+  of 40. The runner's 20 games, one order per seed, split 10 to 9; the other order of the same
+  seeds went 14 to 4, 2 without a winner, so the nation's slot matters as much as the preset.
+  Read against that baseline, the three new Red presets add 15 to 20 points to Warlord's 60%,
+  Hunt Lord matches Elder Oak's 33%, and Heartwood and Mother of the Pack trail it by 10 to 15
+  (idols never fight in the field; the pack grows slowly). Phase 12 decides between prices,
+  AI use of the new bodies, and the matrix's band, and should first remove the nation-order
+  effect or score each preset against the same-order (or an order-balanced) default baseline:
+  a 35% to 65% band against a 60% to 33% baseline cannot be met by presets of both nations
+  (review finding F6; the cut lines would not meet it either).
+- Phase 6b.3 leaves for later: `aiPower` is still unread (Phase 8 moves `armyPower` into the
+  sim), so the AI cannot see a god's battle-start summons or Fear and never sends a raider god
+  alone; A.10's expansion pace report and the nightly double run of the matrix are Phase 12;
+  the presets' looks and identities are Phase 9. No preset uses the Ascended Hero, Primordial,
+  Ember Hierophant or Elder Wyrm, so the AI plays them only in step tests. A full matrix run
+  takes about 6 minutes.
 - Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a
   rule or spell change that left the log as it was went unnoticed (in a test that raised the
   morale base by 1, about 80% of random records still matched and showed morale rolls against

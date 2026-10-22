@@ -251,16 +251,16 @@ export interface NationState {
   pretender: PretenderDesign;
   /**
    * The pretender's commander; the only record of who it is. Null before the pretender arrives,
-   * while it is recalled (Godless), and after it dies.
+   * while it is recalled (Godless) or reforming, and after it dies.
    */
   pretenderId: CommanderId | null;
-  /** The pretender died; it never returns in M1. */
+  /** The pretender died for good; it never returns (a reforming Ash Phoenix is not dead). */
   pretenderDead: boolean;
   /** The god's name from the setup, given to its commander on every arrival; null: the body's. */
   pretenderName: string | null;
   /**
-   * The day a pretender that reforms after death returns (the Ash Phoenix, Phase 6b.3); null
-   * otherwise. Nothing sets it yet.
+   * N8: the day a pretender that died in its own dominion and reforms (the Ash Phoenix) rises
+   * again at the capital; null otherwise, and again once it has risen.
    */
   pretenderReturnDay: number | null;
   /** The prophet's commander; the only record of who it is. */

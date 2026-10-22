@@ -7,6 +7,7 @@ import { AI } from '../content/ai';
 import type { NationDef } from '../content/types';
 import { troopCount } from '../sim/commanders';
 import { validateCommand, type Command } from '../sim/commands';
+import { chassisOf } from '../sim/pretender';
 import { recruitBlock, recruitGold, recruitRequirementError } from '../sim/recruitment';
 import { weightedIndex } from '../sim/rng';
 import { nationDefOf } from '../sim/state';
@@ -224,21 +225,31 @@ function holderWith(plan: Plan, commander: CommanderState): CommanderState | nul
 
 /**
  * Mages and the pretender lead no troops: one standing with its nation's garrison holder gives
- * it every squad (summons), which then counts toward the reserve and flows to leaders.
+ * it every squad (summons), which then counts toward the reserve and flows to leaders. The
+ * pretender keeps troops of its chassis's monthly-summon unit up to that summon's cap (the Mother
+ * of Beasts' 24 wolves, the Cinder Idol's 20 sprites), whatever their source: they are bound to
+ * it in battle (N5) only while it leads them. Those above the cap (a ritual's summons of the
+ * same unit cast by the pretender itself) are split off and handed on like any other squad.
  */
 function handOffSquads(plan: Plan): void {
+  const summon = chassisOf(plan.copy, plan.nation)?.monthlySummon;
   for (const c of plan.own()) {
     const role = plan.role(c);
     if ((role !== 'mage' && role !== 'pretender') || c.transit || c.squads.length === 0) continue;
     const holder = holderWith(plan, c);
     if (!holder) continue;
+    let keep = role === 'pretender' && summon ? summon.cap : 0;
     for (const squad of [...c.squads]) {
+      const kept = squad.unit === summon?.unit ? Math.min(keep, squad.count) : 0;
+      keep -= kept;
+      if (kept >= squad.count) continue;
       plan.issue({
         type: 'transferSquad',
         nation: plan.nation,
         from: c.id,
         to: holder.id,
         squad: squad.id,
+        ...(kept > 0 ? { count: squad.count - kept } : {}),
       });
     }
   }

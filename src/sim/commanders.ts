@@ -1,11 +1,21 @@
 // Creating commanders and squads, and per-unit numbers the economy needs.
 import { unitDef, type UnitTypeId } from '../content';
+import { chassisDef, isChassisId } from '../content/pretenders/chassis';
 import { ECONOMY, PROPHET, SCRIPT_SLOTS, SUPPLY } from '../content/rules';
 import type { UnitDef } from '../content/types';
 import { newId, type CommanderId, type NationId, type ProvinceId } from './ids';
+import { postMessage } from './messages';
 import { hasPips } from './pips';
 import { chance } from './rng';
-import type { CommanderState, Formation, GameState, Pips, ScriptSlot, Squad } from './types';
+import type {
+  CommanderState,
+  Formation,
+  GameState,
+  NationState,
+  Pips,
+  ScriptSlot,
+  Squad,
+} from './types';
 
 /** Squads with a ranged weapon stand in the middle row, everyone else in front. */
 export function defaultFormation(def: UnitDef): Formation {
@@ -63,8 +73,23 @@ export function removeCommander(state: GameState, id: CommanderId): void {
 }
 
 /**
+ * N8: the days until a dying pretender reforms, or null when it dies for good: its chassis must
+ * reform (the Ash Phoenix), and the province it dies in must hold its nation's dominion at
+ * strength 1 or more.
+ */
+function reformDays(state: GameState, nation: NationState, c: CommanderState): number | null {
+  const id = nation.pretender.chassis;
+  const reform = isChassisId(id) ? chassisDef(id).reform : undefined;
+  const dominion = state.provinces[c.location]?.dominion;
+  if (!reform || dominion?.nation !== nation.id || dominion.strength < 1) return null;
+  return reform.days;
+}
+
+/**
  * A commander dies, wherever it happens (battle, a retreat with nowhere to go, elimination). A
- * dead prophet frees the post after the cooldown; a dead pretender is gone for good.
+ * dead prophet frees the post after the cooldown; a dead pretender is gone for good, unless its
+ * chassis reforms and it died in its own dominion (N8): then it returns to the capital on
+ * `pretenderReturnDay` (settlePretender).
  */
 export function commanderDies(state: GameState, id: CommanderId): void {
   const c = state.commanders[id];
@@ -73,9 +98,15 @@ export function commanderDies(state: GameState, id: CommanderId): void {
     nation.prophetId = null;
     nation.prophetAvailableDay = state.day + PROPHET.cooldownDays;
   }
-  if (nation?.pretenderId === id) {
+  if (c && nation?.pretenderId === id) {
     nation.pretenderId = null;
-    nation.pretenderDead = true;
+    const days = reformDays(state, nation, c);
+    if (days === null) {
+      nation.pretenderDead = true;
+    } else {
+      nation.pretenderReturnDay = state.day + days;
+      postMessage(state, nation.id, 'info', `${c.name} will rise again in ${days} days.`);
+    }
   }
   removeCommander(state, id);
 }

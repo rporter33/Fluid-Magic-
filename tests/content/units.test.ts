@@ -4,11 +4,13 @@ import { describe, expect, it } from 'vitest';
 import { nationDef, unitDef, validateContent, type UnitTypeId } from '../../src/content';
 import { NATIONS } from '../../src/content/nations';
 import { BATTLE } from '../../src/content/rules';
+import type { UnitDef } from '../../src/content/types';
 import { UNITS } from '../../src/content/units';
 import { PRETENDER_UNITS } from '../../src/content/units/pretenders';
 import { createGame } from '../../src/sim/createGame';
 import { recruitRequirementError } from '../../src/sim/recruitment';
 import { nation } from '../sim/fixtures';
+import { patched } from './patched';
 
 /** [hp, str, att, def, prot, mor, mapSpeed, gold, materials, pop, recruitDays] per docs/03. */
 const TROOPS: Record<string, readonly number[]> = {
@@ -57,7 +59,10 @@ const NOT_RECRUITABLE = [
   'garrison',
 ];
 
-/** Pretender bodies per docs/05: [hp, str, att, def, prot, mor, size, mapSpeed, leadership]. */
+/**
+ * Pretender bodies per docs/05 (the ten after the Ash Colossus per the build spec's A.4, Phase
+ * 6b.3): [hp, str, att, def, prot, mor, size, mapSpeed, leadership].
+ */
 const BODIES: Record<string, readonly number[]> = {
   oracle: [12, 10, 10, 10, 2, 14, 2, 2, 20],
   titan: [60, 20, 14, 12, 10, 18, 4, 2, 100],
@@ -65,7 +70,20 @@ const BODIES: Record<string, readonly number[]> = {
   livingMonolith: [200, 10, 10, 10, 25, 50, 1, 0, 20],
   wildSpirit: [30, 10, 10, 16, 4, 10, 2, 2, 20],
   ashColossus: [80, 22, 10, 10, 14, 10, 5, 2, 20],
+  ascendedHero: [32, 15, 15, 15, 8, 20, 2, 3, 100],
+  primordial: [150, 22, 12, 6, 14, 30, 6, 1, 20],
+  ashPhoenix: [50, 14, 15, 16, 8, 18, 3, 3, 40],
+  pyreLord: [55, 18, 13, 12, 8, 18, 4, 2, 80],
+  cinderIdol: [180, 14, 10, 6, 22, 50, 6, 0, 40],
+  emberHierophant: [14, 10, 10, 11, 2, 14, 2, 2, 30],
+  worldTree: [250, 20, 10, 4, 20, 50, 6, 0, 40],
+  hornedHunter: [60, 18, 14, 13, 6, 18, 4, 3, 60],
+  elderWyrm: [130, 21, 12, 8, 12, 22, 6, 1, 20],
+  motherOfBeasts: [70, 18, 12, 11, 8, 20, 4, 2, 60],
 };
+
+/** N2's trample, on the Primordial and the Elder Wyrm. */
+const TRAMPLE = { name: 'Trample', dmg: 2, strikes: 2, maxTargetSize: 2 };
 
 describe('pretender bodies', () => {
   it.each(Object.entries(BODIES))('%s matches docs/05 and cannot be recruited', (id, stats) => {
@@ -92,6 +110,28 @@ describe('pretender bodies', () => {
     expect(unitDef('wildSpirit').tags).toContain('stealthy');
     expect(unitDef('wildSpirit').regeneration).toBe(0.1);
     expect(unitDef('ashColossus').fireShield).toBe(5);
+    // Phase 6b.3's bodies (A.4).
+    expect(unitDef('ashPhoenix').tags).toEqual(['flying']);
+    expect(unitDef('ashPhoenix').fireShield).toBe(5);
+    expect(unitDef('cinderIdol').tags).toEqual(['immobile']);
+    expect(unitDef('worldTree').tags).toEqual(['immobile']);
+    expect(unitDef('worldTree').regeneration).toBe(0.1);
+    expect(unitDef('elderWyrm').regeneration).toBe(0.1);
+    expect(unitDef('emberHierophant').spellPower).toBe(3);
+  });
+
+  it('give each new body the abilities of A.4, and no other unit any', () => {
+    const all: readonly UnitDef[] = Object.values(UNITS);
+    const listing = all
+      .filter((u) => (u.abilities ?? []).length > 0)
+      .map((u) => [u.id, u.abilities]);
+    expect(listing).toEqual([
+      ['primordial', ['primordialFear']],
+      ['pyreLord', ['kindleTheHost']],
+      ['hornedHunter', ['callTheHunt']],
+    ]);
+    const spellPower = all.filter((u) => u.spellPower !== undefined);
+    expect(spellPower.map((u) => u.id)).toEqual(['emberHierophant']);
   });
 
   it('bring no pips or holy of their own and carry the docs/09 weapons', () => {
@@ -117,17 +157,66 @@ describe('pretender bodies', () => {
       ['livingMonolith', []],
       ['wildSpirit', [['Claws', 5, null]]],
       ['ashColossus', [['Burning Fists', 6, null]]],
+      ['ascendedHero', [["Hero's Blade", 7, null]]],
+      [
+        'primordial',
+        [
+          ['Crushing Blow', 11, null],
+          ['Trample', 2, null],
+        ],
+      ],
+      ['ashPhoenix', [['Burning Talons', 8, null]]],
+      ['pyreLord', [['Flaming Glaive', 7, null]]],
+      ['cinderIdol', []],
+      ['emberHierophant', [['Staff', 2, null]]],
+      ['worldTree', [['Lashing Boughs', 8, null]]],
+      ['hornedHunter', [['Hunting Spear', 7, null]]],
+      [
+        'elderWyrm',
+        [
+          ['Bite', 10, null],
+          ['Trample', 2, null],
+        ],
+      ],
+      ['motherOfBeasts', [['Maul', 9, null]]],
     ]);
+    // The weapons' properties: fire, armor piercing, and trample's strikes and size limit.
+    expect(unitDef('primordial').weapons[1]).toEqual(TRAMPLE);
+    expect(unitDef('elderWyrm').weapons[1]).toEqual(TRAMPLE);
+    expect(unitDef('ashPhoenix').weapons[0]).toEqual({
+      name: 'Burning Talons',
+      dmg: 8,
+      element: 'fire',
+      armorPiercing: true,
+    });
+    expect(unitDef('pyreLord').weapons[0]).toEqual({
+      name: 'Flaming Glaive',
+      dmg: 7,
+      element: 'fire',
+    });
+    const units: readonly UnitDef[] = Object.values(UNITS);
+    const multi = units.filter((u) =>
+      u.weapons.some((w) => w.strikes !== undefined || w.maxTargetSize !== undefined),
+    );
+    expect(multi.map((u) => u.id)).toEqual(['primordial', 'elderWyrm']);
   });
 
-  it('keep each special trait to the one body docs/05 gives it', () => {
+  it('keep each special trait to the bodies docs/05 gives it', () => {
+    const has = (id: string, list: readonly string[]) => list.includes(id);
     for (const id of Object.keys(BODIES)) {
       const u = unitDef(id as UnitTypeId);
-      expect(u.fireShield ?? 0, id).toBe(id === 'ashColossus' ? 5 : 0);
-      expect(u.regeneration ?? 0, id).toBe(id === 'wildSpirit' ? 0.1 : 0);
-      expect(u.tags.includes('flying'), id).toBe(id === 'greatWyrm');
-      expect(u.tags.includes('immobile'), id).toBe(id === 'livingMonolith');
+      expect(u.fireShield ?? 0, id).toBe(has(id, ['ashColossus', 'ashPhoenix']) ? 5 : 0);
+      expect(u.regeneration ?? 0, id).toBe(
+        has(id, ['wildSpirit', 'worldTree', 'elderWyrm']) ? 0.1 : 0,
+      );
+      // The color pie (docs/02 section 1): Green never flies, so the Elder Wyrm is wingless.
+      expect(u.tags.includes('flying'), id).toBe(has(id, ['greatWyrm', 'ashPhoenix']));
+      expect(u.tags.includes('immobile'), id).toBe(
+        has(id, ['livingMonolith', 'cinderIdol', 'worldTree']),
+      );
       expect(u.tags.includes('stealthy'), id).toBe(id === 'wildSpirit');
+      // Immobile bodies have map speed 0, and only they.
+      expect(u.mapSpeed === 0, id).toBe(u.tags.includes('immobile'));
     }
   });
 
@@ -149,6 +238,15 @@ describe('content registry', () => {
       ...Object.keys(BODIES),
     ];
     expect(Object.keys(UNITS).sort()).toEqual([...fixture].sort());
+  });
+
+  it('refuses an empty or blank plural (messages name more than one troop with it)', () => {
+    expect(unitDef('wolf').plural).toBe('Wolves');
+    for (const blank of ['', '  ']) {
+      patched(UNITS.wolf, 'plural', blank, () => {
+        expect(validateContent(), JSON.stringify(blank)).toEqual(['unit wolf has an empty plural']);
+      });
+    }
   });
 });
 

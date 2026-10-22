@@ -89,6 +89,8 @@ export interface CommanderTraits {
 export interface UnitDef {
   id: string;
   name: string;
+  /** The name of more than one, where adding "s" is wrong ("Wolves"); messages read it. */
+  plural?: string;
   hp: number;
   str: number;
   att: number;

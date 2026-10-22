@@ -1,7 +1,7 @@
 // The pretender (docs/05-pretender.md): which chassis a nation may take, what a design costs,
 // whether it is valid, and when the pretender stands on the map. Prices take the nation's
 // definition, so the pretender screen can use them before a game exists.
-import { unitDef } from '../content';
+import { unitDef, type UnitTypeId } from '../content';
 import { COLORS, isColor, type Color } from '../content/colors';
 import { BOONS, isBoonId } from '../content/pretenders/boons';
 import { CHASSIS, chassisDef, isChassisId, type ChassisDef } from '../content/pretenders/chassis';
@@ -14,15 +14,17 @@ import {
   type ScaleAxis,
 } from '../content/pretenders/scales';
 import { AWAKENINGS, type Awakening, type PretenderDesign } from '../content/pretenders/types';
-import { DOMINION, MAX_PIPS, PRETENDER_NAME } from '../content/rules';
+import { DOMINION, MAX_PIPS, PRETENDER_NAME, TIME } from '../content/rules';
 import type { NationDef } from '../content/types';
 import { blessingProblem } from './bless';
 import {
   addSquad,
   createCommander,
+  createSquad,
   defaultScript,
   isGarrisonHolder,
   removeCommander,
+  troopCount,
 } from './commanders';
 import type { NationId } from './ids';
 import { postMessage } from './messages';
@@ -252,7 +254,9 @@ function recall(state: GameState, nationId: NationId): void {
 /**
  * Puts the pretender where it belongs today (tick step 3, and createGame): it arrives at the
  * capital on its awakening day and returns there after Godless ends, if the nation holds its
- * capital; it leaves the map while the nation is Godless; a dead pretender never returns.
+ * capital; it leaves the map while the nation is Godless; a dead pretender never returns. A
+ * reforming one (N8) waits until its return day, then rises at the capital by the same rules:
+ * a fresh commander with full HP, the design's pips, the default script and the god's name.
  */
 export function settlePretender(state: GameState, nationId: NationId): void {
   const nation = getNation(state, nationId);
@@ -262,6 +266,8 @@ export function settlePretender(state: GameState, nationId: NationId): void {
     return;
   }
   if (nation.pretenderId !== null) return;
+  const returning = nation.pretenderReturnDay;
+  if (returning !== null && state.day < returning) return;
   const design = nation.pretender;
   if (state.day < AWAKENING[design.awakening].arrivalDay) return;
   if (getProvince(state, nation.capital).owner !== nationId || !isChassisId(design.chassis)) return;
@@ -272,11 +278,79 @@ export function settlePretender(state: GameState, nationId: NationId): void {
   pretender.script = defaultScript(unitDef(body), pretender.pips, pretender.holy);
   nation.pretenderId = pretender.id;
   const where = getMapProvince(state, nation.capital).name;
-  postMessage(state, nationId, 'info', `${pretender.name} stands in ${where}.`, nation.capital);
+  if (returning === null) {
+    postMessage(state, nationId, 'info', `${pretender.name} stands in ${where}.`, nation.capital);
+    return;
+  }
+  nation.pretenderReturnDay = null;
+  postMessage(
+    state,
+    nationId,
+    'info',
+    `${pretender.name} rises again in ${where}.`,
+    nation.capital,
+  );
+}
+
+/** The nation's living troops of a unit, under every commander it owns, garrisons included. */
+export function nationStock(state: GameState, nationId: NationId, unit: UnitTypeId): number {
+  let stock = 0;
+  for (const c of Object.values(state.commanders)) {
+    if (c.owner !== nationId) continue;
+    for (const s of c.squads) if (s.unit === unit) stock += s.count;
+  }
+  return stock;
+}
+
+/** What one troop of a unit is called in a message about more than one. */
+function pluralName(unit: UnitTypeId): string {
+  const def = unitDef(unit);
+  return def.plural ?? `${def.name}s`;
+}
+
+/**
+ * N7, tick step 3 on the first day of each month (day 30, 60, ...; never day 0): a pretender
+ * whose chassis summons monthly gains its troops, in nation id order. It must stand (not in
+ * transit) in a province its nation dominates at strength 1 or more. The count is bounded by the
+ * nation's cap less its living troops of the unit from every source, and by the pretender's free
+ * leadership. No rng is drawn: createSquad draws only an id.
+ */
+export function monthlySummons(state: GameState): void {
+  if (state.day === 0 || state.day % TIME.daysPerMonth !== 0) return;
+  for (const nationId of Object.keys(state.nations) as NationId[]) {
+    const nation = getNation(state, nationId);
+    const id = nation.pretenderId;
+    const p = id === null ? undefined : state.commanders[id];
+    const summon = chassisOf(state, nationId)?.monthlySummon;
+    if (nation.eliminated || !p || !summon || p.transit !== null) continue;
+    const dominion = getProvince(state, p.location).dominion;
+    if (dominion.nation !== nationId || dominion.strength < 1) continue;
+    const leadership = unitDef(p.unit).commander?.leadership ?? 0;
+    const n = Math.min(
+      summon.count,
+      summon.cap - nationStock(state, nationId, summon.unit),
+      leadership - troopCount(p),
+    );
+    if (n <= 0) continue;
+    addSquad(p, createSquad(state, summon.unit, n));
+    const what = n === 1 ? unitDef(summon.unit).name : pluralName(summon.unit);
+    const verb = n === 1 ? 'joins' : 'join';
+    postMessage(state, nationId, 'info', `${n} ${what} ${verb} ${p.name}.`, p.location);
+  }
 }
 
 /** The chassis of a nation's pretender. */
 export function chassisOf(state: GameState, nationId: NationId): ChassisDef | null {
   const id = getNation(state, nationId).pretender.chassis;
   return isChassisId(id) ? chassisDef(id) : null;
+}
+
+/**
+ * What a nation's god is called while no commander carries the name (reforming, or gone): the
+ * name its player gave it (D7), else its chassis body's, as settlePretender names it.
+ */
+export function godName(state: GameState, nationId: NationId): string {
+  const nation = getNation(state, nationId);
+  const chassis = chassisOf(state, nationId);
+  return nation.pretenderName ?? (chassis ? unitDef(chassis.body).name : nation.pretender.chassis);
 }

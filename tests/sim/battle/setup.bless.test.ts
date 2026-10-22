@@ -181,6 +181,25 @@ describe('Avatar', () => {
   });
 });
 
+describe('the Ascended Hero’s built-in Avatar (Phase 6b.3)', () => {
+  it('blesses the Hero in its own dominion without the boon, and nowhere else', () => {
+    const hero = pretender({
+      chassis: 'ascendedHero',
+      pips: { R: 4 },
+      dominion: 1,
+      awakening: 'awake',
+    });
+    const { state, nation, capital } = gameWith(0, hero);
+    const body = unitDef('ascendedHero');
+    expect(godStats(state, nation, capital)).toMatchObject({
+      att: body.att + 2,
+      str: body.str + 2,
+    });
+    const wild = independentProvince(state);
+    expect(godStats(state, nation, wild.id)).toMatchObject({ att: body.att, str: body.str });
+  });
+});
+
 describe('the prophet and an Avatar god', () => {
   const avatar = { boons: [{ id: 'avatar' as const }] };
 

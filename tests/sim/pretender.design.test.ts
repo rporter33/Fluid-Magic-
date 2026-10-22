@@ -39,22 +39,48 @@ const TITAN_R4 = design({ chassis: 'titan', pips: { R: 4 }, dominion: 2 });
 
 describe('realms (D1)', () => {
   it('offer each nation the generic chassis and those of its color, in content order', () => {
-    expect(availableChassis(RED).map((c) => c.id)).toEqual([
+    const generic = [
       'oracle',
       'titan',
       'greatWyrm',
       'livingMonolith',
+      'ascendedHero',
+      'primordial',
+    ];
+    expect(availableChassis(RED).map((c) => c.id)).toEqual([
+      ...generic,
       'ashColossus',
+      'ashPhoenix',
+      'pyreLord',
+      'cinderIdol',
+      'emberHierophant',
     ]);
     expect(availableChassis(GREEN).map((c) => c.id)).toEqual([
-      'oracle',
-      'titan',
-      'greatWyrm',
-      'livingMonolith',
+      ...generic,
       'wildSpirit',
+      'worldTree',
+      'hornedHunter',
+      'elderWyrm',
+      'motherOfBeasts',
     ]);
+    // Eleven each (build spec D1).
+    expect(availableChassis(RED)).toHaveLength(11);
+    expect(availableChassis(GREEN)).toHaveLength(11);
     expect(offersChassis(RED, CHASSIS.wildSpirit)).toBe(false);
     expect(offersChassis(GREEN, CHASSIS.ashColossus)).toBe(false);
+  });
+
+  it('refuse the new chassis of the other realm by name (Phase 6b.3)', () => {
+    const pyre = design({ chassis: 'pyreLord', pips: { R: 2 }, dominion: 2 });
+    expect(validatePretender(GREEN, pyre)).toBe('Pyre Lord is not offered to Thornwood');
+    expect(validatePretender(RED, pyre)).toBeNull();
+    const mother = design({ chassis: 'motherOfBeasts', pips: { G: 1 }, dominion: 2 });
+    expect(validatePretender(RED, mother)).toBe('Mother of Beasts is not offered to Cinder Horde');
+    expect(validatePretender(GREEN, mother)).toBeNull();
+    // The generic ones go to both.
+    const hero = design({ chassis: 'ascendedHero', pips: { R: 1 }, dominion: 1 });
+    expect(validatePretender(RED, hero)).toBeNull();
+    expect(validatePretender(GREEN, { ...hero, pips: { G: 1 } })).toBeNull();
   });
 
   it('refuse a chassis of another realm by name, before anything else is checked', () => {
@@ -108,6 +134,93 @@ describe('new-color prices (D2)', () => {
     // Living Monolith with a Red pip for Thornwood: 60 + 50.
     const monolith = design({ chassis: 'livingMonolith', pips: { R: 1 }, dominion: 4 });
     expect(designCost(GREEN, monolith)).toBe(110);
+  });
+});
+
+describe('the new chassis records (Phase 6b.3, build spec A.3 and A.4)', () => {
+  it('price a new color per chassis: 40, 50, 60 or 80 before the discount', () => {
+    const firsts = (Object.keys(CHASSIS) as (keyof typeof CHASSIS)[]).map((id) => [
+      id,
+      pipStepCost(CHASSIS[id].realm === 'G' ? GREEN : RED, CHASSIS[id], 'U', 1),
+    ]);
+    expect(Object.fromEntries(firsts)).toEqual({
+      oracle: 30,
+      titan: 60,
+      greatWyrm: 80,
+      livingMonolith: 50,
+      ascendedHero: 50,
+      primordial: 80,
+      ashColossus: 60,
+      ashPhoenix: 80,
+      pyreLord: 60,
+      cinderIdol: 50,
+      emberHierophant: 40,
+      wildSpirit: 80,
+      worldTree: 50,
+      hornedHunter: 60,
+      elderWyrm: 80,
+      motherOfBeasts: 60,
+    });
+  });
+
+  it('attune the Phoenix to Growth, the Idol to Dread, the Tree to Sanctity, the Hunter to Fury', () => {
+    expect(scaleStepCost(RED, CHASSIS.ashPhoenix, 'growth', 'positive')).toBe(20);
+    // A Phoenix's Rot step still costs 40.
+    expect(scaleStepCost(RED, CHASSIS.ashPhoenix, 'growth', 'negative')).toBe(40);
+    expect(scaleStepCost(RED, CHASSIS.cinderIdol, 'sanctity', 'negative')).toBe(20);
+    expect(scaleStepCost(RED, CHASSIS.cinderIdol, 'sanctity', 'positive')).toBe(40);
+    expect(scaleStepCost(GREEN, CHASSIS.worldTree, 'sanctity', 'positive')).toBe(20);
+    expect(scaleStepCost(GREEN, CHASSIS.worldTree, 'sanctity', 'negative')).toBe(40);
+    expect(scaleStepCost(GREEN, CHASSIS.hornedHunter, 'lore', 'negative')).toBe(20);
+    expect(scaleStepCost(GREEN, CHASSIS.hornedHunter, 'lore', 'positive')).toBe(40);
+    // Without the attunement the same steps cost 40.
+    expect(scaleStepCost(RED, CHASSIS.pyreLord, 'growth', 'positive')).toBe(40);
+    expect(scaleStepCost(GREEN, CHASSIS.motherOfBeasts, 'lore', 'negative')).toBe(40);
+  });
+
+  it('make the Primordial sleep: refused awake, valid dormant or imprisoned', () => {
+    const primordial = design({ chassis: 'primordial', pips: { R: 2 }, dominion: 3 });
+    expect(validatePretender(RED, primordial)).toBe('Primordial must start at least dormant');
+    expect(validatePretender(RED, { ...primordial, awakening: 'dormant' })).toBeNull();
+    expect(validatePretender(RED, { ...primordial, awakening: 'imprisoned' })).toBeNull();
+    expect(designCost(RED, primordial)).toBe(220);
+  });
+
+  it('give the World Tree one Green spring at the capital, before any Sacred Spring', () => {
+    const tree = design({ chassis: 'worldTree', pips: { G: 2 }, dominion: 4 });
+    expect(startingSprings(GREEN, tree)).toEqual(['G']);
+    const both = { ...tree, boons: [{ id: 'sacredSpring', color: 'G' }] } as const;
+    expect(startingSprings(GREEN, both)).toEqual(['G', 'G']);
+    expect(designCost(GREEN, both)).toBe(190);
+  });
+
+  it('build Avatar into the Ascended Hero, which refuses the boon', () => {
+    const hero = design({ chassis: 'ascendedHero', pips: { R: 1 }, dominion: 1 });
+    expect(hasAvatar(hero)).toBe(true);
+    expect(designCost(RED, hero)).toBe(100);
+    expect(validatePretender(RED, { ...hero, boons: [{ id: 'avatar' }] })).toBe(
+      'Ascended Hero already has Avatar',
+    );
+    expect(hasAvatar(design({ chassis: 'titan', pips: { R: 1 }, dominion: 2 }))).toBe(false);
+  });
+
+  it('price the base pips and dominion of each new chassis into its cost', () => {
+    // Base pips are free and dominion at the base costs nothing, so each bare design costs
+    // exactly its chassis.
+    const bare = (Object.keys(CHASSIS) as (keyof typeof CHASSIS)[]).map((id) => {
+      const c = CHASSIS[id];
+      const def = c.realm === 'G' ? GREEN : RED;
+      const count = c.basePips?.count ?? 0;
+      const d = design({
+        chassis: id,
+        pips: count > 0 ? { [def.colors[0]]: count } : {},
+        dominion: c.baseDominion,
+        awakening: c.id === 'primordial' ? 'dormant' : 'awake',
+      });
+      expect(validatePretender(def, d), id).toBeNull();
+      return designCost(def, d) === c.cost;
+    });
+    expect(bare.every(Boolean)).toBe(true);
   });
 });
 

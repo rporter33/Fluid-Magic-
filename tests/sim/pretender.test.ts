@@ -152,6 +152,12 @@ describe('design costs', () => {
       ['elderOak', 385],
       ['deepRoot', 395],
       ['wyrmOfTheLoam', 375],
+      ['undyingFlame', 385],
+      ['pyreHost', 385],
+      ['dreadIdol', 395],
+      ['heartwood', 395],
+      ['huntLord', 395],
+      ['motherOfThePack', 395],
     ]);
     for (const p of PRESETS) {
       expect(validatePretender(nationDef(p.nation), p.design), p.id).toBeNull();

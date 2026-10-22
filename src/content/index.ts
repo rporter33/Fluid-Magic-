@@ -8,7 +8,7 @@ import { isNationDefId, NATIONS, type NationDefId } from './nations';
 import { BLESSINGS } from './pretenders/blessings';
 import { CHASSIS, isChassisId } from './pretenders/chassis';
 import { PRETENDER_COSTS } from './pretenders/costs';
-import { PRESETS } from './pretenders/presets';
+import { PRESETS, PRESETS_PER_NATION } from './pretenders/presets';
 import {
   validateBlessing,
   validateBlessingTiers,
@@ -50,6 +50,7 @@ function validateUnit(key: string, u: UnitDef): string[] {
   const problems: string[] = [];
   const where = `unit ${key}`;
   if (u.id !== key) problems.push(`${where} has id ${u.id}`);
+  if (u.plural?.trim() === '') problems.push(`${where} has an empty plural`);
   for (const stat of ['hp', 'str', 'att', 'def', 'mr', 'mor', 'prec'] as const) {
     if (!(u[stat] > 0)) problems.push(`${where} ${stat} must be positive`);
   }
@@ -151,8 +152,8 @@ function validateNation(key: string, n: NationDef): string[] {
       problems.push(`${where} fits chassis ${id} outside its realm`);
     }
   }
-  if (PRESETS.filter((p) => p.nation === key).length !== 3) {
-    problems.push(`${where} needs three presets`);
+  if (PRESETS.filter((p) => p.nation === key).length !== PRESETS_PER_NATION) {
+    problems.push(`${where} needs ${String(PRESETS_PER_NATION)} presets`);
   }
   const { color, level } = n.startingResearch;
   if (!isColor(color) || !Number.isInteger(level) || level < 0 || level > 6) {

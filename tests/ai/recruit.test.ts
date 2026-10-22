@@ -6,49 +6,18 @@ import { describe, expect, it } from 'vitest';
 import { nationDef, type UnitTypeId } from '../../src/content';
 import { AI } from '../../src/content/ai';
 import { createPlan, type Plan } from '../../src/ai/plan';
-import {
-  planRecruitment,
-  quota,
-  roleCount,
-  shareOut,
-  troopMix,
-  troopWeight,
-  wantsRanged,
-} from '../../src/ai/recruit';
+import { quota, roleCount, troopMix, troopWeight, wantsRanged } from '../../src/ai/recruit';
 import { unitRole } from '../../src/ai/roles';
 import { unitDef } from '../../src/content';
 import { createCommander, createSquad, removeCommander } from '../../src/sim/commanders';
 import { applyCommand, type Command } from '../../src/sim/commands';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
-import type { CommanderState, GameState } from '../../src/sim/types';
-import { annex, commandersIn, move, neighbors, redField } from '../sim/fixtures';
-
-function planned(state: GameState, nation: NationId): Plan {
-  const plan = createPlan(state, nation);
-  planRecruitment(plan);
-  return plan;
-}
-
-function ofType<T extends Command['type']>(plan: Plan, type: T): Extract<Command, { type: T }>[] {
-  return plan.out.filter((c): c is Extract<Command, { type: T }> => c.type === type);
-}
+import type { GameState } from '../../src/sim/types';
+import { annex, redField } from '../sim/fixtures';
+import { applyAll, holderOf, ofType, planned } from './recruitFixtures';
 
 function recruits(plan: Plan): [UnitTypeId, number][] {
   return ofType(plan, 'recruit').map((c) => [c.unit, c.count]);
-}
-
-function applyAll(state: GameState, plan: Plan): void {
-  for (const c of plan.out) expect(applyCommand(state, c)).toEqual({ ok: true });
-}
-
-function unitIn(state: GameState, province: ProvinceId, unit: string): CommanderState {
-  const found = commandersIn(state, province).find((c) => c.unit === unit);
-  if (!found) throw new Error(`no ${unit} in ${province}`);
-  return found;
-}
-
-function holderOf(state: GameState, province: ProvinceId): CommanderState {
-  return state.commanders[state.provinces[province]!.garrison!]!;
 }
 
 const isRanged = (u: UnitTypeId) => unitDef(u).weapons.some((w) => w.range !== undefined);
@@ -253,110 +222,5 @@ describe('the troop mix', () => {
     melee.forEach((u, i) => {
       expect((seen.get(u) ?? 0) / days).toBeCloseTo(weights[i]! / total, 1);
     });
-  });
-});
-
-describe('transfers', () => {
-  it('give leaders in the capital the garrison above the reserve, from day 0', () => {
-    const { state, red, capital, army } = redField();
-    const holder = holderOf(state, capital);
-    holder.squads.push(createSquad(state, 'ashMilitia', 30), createSquad(state, 'flameArcher', 15));
-    const fresh = createCommander(state, 'ashChieftain', red, capital);
-    expect(state.day).toBe(0);
-    let plan = planned(state, red);
-    // 25 above the reserve, shared 30:15; the leader leading most takes them first.
-    const [militia, archers] = holder.squads;
-    expect(ofType(plan, 'transferSquad')).toEqual([
-      {
-        type: 'transferSquad',
-        nation: red,
-        from: holder.id,
-        to: army.id,
-        squad: militia!.id,
-        count: 17,
-      },
-      {
-        type: 'transferSquad',
-        nation: red,
-        from: holder.id,
-        to: army.id,
-        squad: archers!.id,
-        count: 8,
-      },
-    ]);
-    applyAll(state, plan);
-    expect(holder.squads.reduce((n, s) => n + s.count, 0)).toBe(AI.capitalGarrison);
-    expect(fresh.squads).toEqual([]);
-    expect(planned(state, red).out).toEqual([]);
-    // Up to each leader's leadership, then the next leader.
-    holder.squads[0]!.count += 70;
-    plan = planned(state, red);
-    const given = (to: CommanderState) =>
-      ofType(plan, 'transferSquad')
-        .filter((c) => c.to === to.id)
-        .reduce((n, c) => n + (c.count ?? 0), 0);
-    expect(given(army)).toBe(80 - 55);
-    expect(given(fresh)).toBe(70 - 25);
-  });
-
-  it('skip leaders on the move, the pretender, and summoned commanders', () => {
-    const { state, red, capital, army } = redField();
-    const holder = holderOf(state, capital);
-    holder.squads.push(createSquad(state, 'ashMilitia', 60));
-    const next = annex(state, red, neighbors(state, capital)[0]!).id;
-    expect(move(state, red, [army], [next])).toEqual({ ok: true });
-    const titan = createCommander(state, 'titan', red, capital);
-    state.nations[red]!.pretenderId = titan.id;
-    createCommander(state, 'salamander', red, capital);
-    expect(ofType(planned(state, red), 'transferSquad')).toEqual([]);
-  });
-
-  it("hand a mage's or the pretender's summons to the garrison, then on to leaders", () => {
-    const { state, red, capital, army } = redField();
-    const holder = holderOf(state, capital);
-    holder.squads.push(createSquad(state, 'ashMilitia', AI.capitalGarrison));
-    const adept = unitIn(state, capital, 'emberAdept');
-    adept.squads.push(createSquad(state, 'fireSprite', 5));
-    const sprites = adept.squads[0]!;
-    const plan = planned(state, red);
-    const transfers = ofType(plan, 'transferSquad');
-    expect(transfers[0]).toEqual({
-      type: 'transferSquad',
-      nation: red,
-      from: adept.id,
-      to: holder.id,
-      squad: sprites.id,
-    });
-    expect(transfers.slice(1).every((c) => c.from === holder.id && c.to === army.id)).toBe(true);
-    expect(transfers.slice(1).reduce((n, c) => n + (c.count ?? 0), 0)).toBe(5);
-    applyAll(state, plan);
-    expect(adept.squads).toEqual([]);
-    // Away from a fort, a mage keeps what it leads.
-    const away = annex(state, red, neighbors(state, capital)[0]!).id;
-    adept.location = away;
-    adept.squads.push(createSquad(state, 'fireSprite', 5));
-    expect(ofType(planned(state, red), 'transferSquad')).toEqual([]);
-    // A Living Monolith pretender, which summons and never moves, hands its summons on too.
-    const monolith = createCommander(state, 'livingMonolith', red, capital);
-    state.nations[red]!.pretenderId = monolith.id;
-    monolith.squads.push(createSquad(state, 'fireSprite', 8));
-    expect(ofType(planned(state, red), 'transferSquad')[0]).toEqual({
-      type: 'transferSquad',
-      nation: red,
-      from: monolith.id,
-      to: holder.id,
-      squad: monolith.squads[0]!.id,
-    });
-  });
-});
-
-describe('shareOut', () => {
-  it('splits by largest remainder into whole shares that add up', () => {
-    expect(shareOut(25, [30, 15])).toEqual([17, 8]);
-    expect(shareOut(5, [20, 5])).toEqual([4, 1]);
-    expect(shareOut(3, [1, 1, 1, 1])).toEqual([1, 1, 1, 0]);
-    expect(shareOut(10, [4, 2])).toEqual([4, 2]);
-    expect(shareOut(0, [4, 2])).toEqual([0, 0]);
-    expect(shareOut(5, [])).toEqual([]);
   });
 });

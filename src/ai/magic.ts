@@ -106,7 +106,7 @@ interface RitualOption {
 }
 
 /**
- * Who may begin a ritual, in turn: an immobile (Living Monolith) pretender, which does nothing
+ * Who may begin a ritual, in turn: an idol pretender (the Living Monolith), which does nothing
  * else, then the researchers, the one studying least first (research rate, then age), but only
  * while another researcher stays in the lab, so research never stops. Each stands in the
  * capital while it is an own lab province and is not busy with a guarded order.
@@ -116,7 +116,7 @@ export function ritualCasters(plan: Plan): CommanderState[] {
     c.transit === null && c.location === plan.capital.id && !isGuarded(c) && inOwnLab(plan.copy, c);
   const pretender = plan
     .withRole('pretender')
-    .filter((c) => pretenderRole(c) === 'ritualist' && ready(c));
+    .filter((c) => pretenderRole(plan.copy, c) === 'ritualist' && ready(c));
   const researchers = splitMages(plan).researchers.filter(ready);
   if (researchers.length <= 1) return pretender;
   const rate = (c: CommanderState) => researchRate(plan.copy, c);

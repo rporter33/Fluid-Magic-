@@ -1,9 +1,8 @@
 // Content validation of the pretender (docs/06-architecture.md, "Content validation";
-// docs/05-pretender.md steps 1 to 5 and "Presets"): the chassis, design point costs, the presets
-// (every preset fits its budget), and validateContent's chassis and preset checks.
+// docs/05-pretender.md steps 1 to 5): the chassis, design point costs, and validateContent's
+// chassis checks. The presets are in validate.presets.test.ts.
 import { describe, expect, it } from 'vitest';
-import { nationDef, unitDef, validateContent, type NationDefId } from '../../src/content';
-import { NATIONS } from '../../src/content/nations';
+import { nationDef, unitDef, validateContent } from '../../src/content';
 import {
   CHASSIS,
   CHASSIS_ROLES,
@@ -11,31 +10,47 @@ import {
   type ChassisDef,
 } from '../../src/content/pretenders/chassis';
 import { AWAKENING, PRETENDER_COSTS } from '../../src/content/pretenders/costs';
-import { defaultPreset, PRESETS, type PresetDef } from '../../src/content/pretenders/presets';
-import { NEUTRAL_SCALES, type Scales } from '../../src/content/pretenders/scales';
-import type { PretenderDesign } from '../../src/content/pretenders/types';
-import { designBudget, designCost, validatePretender } from '../../src/sim/pretender';
 import { patched } from './patched';
 
 describe('pretender chassis', () => {
   const chassis: ChassisDef[] = Object.values(CHASSIS);
 
-  it('lists the six chassis of docs/05 step 1 in order, keyed by their own ids', () => {
+  it('lists the sixteen chassis of docs/05 step 1 in order, keyed by their own ids', () => {
     expect(Object.keys(CHASSIS)).toEqual([
       'oracle',
       'titan',
       'greatWyrm',
       'livingMonolith',
-      'wildSpirit',
+      'ascendedHero',
+      'primordial',
       'ashColossus',
+      'ashPhoenix',
+      'pyreLord',
+      'cinderIdol',
+      'emberHierophant',
+      'wildSpirit',
+      'worldTree',
+      'hornedHunter',
+      'elderWyrm',
+      'motherOfBeasts',
     ]);
     expect(chassis.map((c) => c.name)).toEqual([
       'Oracle of the Flux',
       'Titan',
       'Great Wyrm',
       'Living Monolith',
-      'Wild Spirit',
+      'Ascended Hero',
+      'Primordial',
       'Ash Colossus',
+      'Ash Phoenix',
+      'Pyre Lord',
+      'Cinder Idol',
+      'Ember Hierophant',
+      'Wild Spirit',
+      'World Tree',
+      'Horned Hunter',
+      'Elder Wyrm',
+      'Mother of Beasts',
     ]);
     for (const [key, c] of Object.entries(CHASSIS)) {
       expect(c.id).toBe(key);
@@ -52,20 +67,28 @@ describe('pretender chassis', () => {
       ['titan', 120, { color: 'nation', count: 1 }, 2],
       ['greatWyrm', 220, { color: 'nation', count: 2 }, 2],
       ['livingMonolith', 60, null, 4],
-      ['wildSpirit', 80, { color: 'G', count: 1 }, 2],
+      ['ascendedHero', 100, { color: 'nation', count: 1 }, 1],
+      ['primordial', 220, { color: 'nation', count: 2 }, 3],
       ['ashColossus', 100, { color: 'R', count: 1 }, 1],
+      ['ashPhoenix', 120, { color: 'R', count: 1 }, 2],
+      ['pyreLord', 140, { color: 'R', count: 2 }, 2],
+      ['cinderIdol', 110, { color: 'R', count: 2 }, 4],
+      ['emberHierophant', 60, { color: 'R', count: 2 }, 1],
+      ['wildSpirit', 80, { color: 'G', count: 1 }, 2],
+      ['worldTree', 150, { color: 'G', count: 2 }, 4],
+      ['hornedHunter', 140, { color: 'G', count: 2 }, 2],
+      ['elderWyrm', 190, { color: 'G', count: 1 }, 2],
+      ['motherOfBeasts', 130, { color: 'G', count: 1 }, 2],
     ]);
   });
 
   it('give only the Oracle a pip discount and only the Monolith doubled dominion checks', () => {
-    expect(chassis.map((c) => [c.id, c.pipDiscount, c.dominionFactor])).toEqual([
-      ['oracle', 10, 1],
-      ['titan', 0, 1],
-      ['greatWyrm', 0, 1],
-      ['livingMonolith', 0, 2],
-      ['wildSpirit', 0, 1],
-      ['ashColossus', 0, 1],
-    ]);
+    for (const c of chassis) {
+      expect([c.pipDiscount, c.dominionFactor], c.id).toEqual([
+        c.id === 'oracle' ? 10 : 0,
+        c.id === 'livingMonolith' ? 2 : 1,
+      ]);
+    }
   });
 
   it('carry the realm, role, new-color price and AI power of the build spec (A.2, A.4, A.11)', () => {
@@ -74,17 +97,85 @@ describe('pretender chassis', () => {
       ['titan', 'generic', 'leader', 60, 94],
       ['greatWyrm', 'generic', 'monster', 80, 247],
       ['livingMonolith', 'generic', 'idol', 50, 595],
-      ['wildSpirit', 'G', 'raider', 80, 65],
+      ['ascendedHero', 'generic', 'leader', 50, 80],
+      ['primordial', 'generic', 'monster', 80, 218],
       ['ashColossus', 'R', 'fighter', 60, 160],
+      ['ashPhoenix', 'R', 'raider', 80, 138],
+      ['pyreLord', 'R', 'summoner', 60, 189],
+      ['cinderIdol', 'R', 'idol', 50, 305],
+      ['emberHierophant', 'R', 'mage', 40, 0],
+      ['wildSpirit', 'G', 'raider', 80, 65],
+      ['worldTree', 'G', 'idol', 50, 645],
+      ['hornedHunter', 'G', 'summoner', 60, 210],
+      ['elderWyrm', 'G', 'monster', 80, 210],
+      ['motherOfBeasts', 'G', 'summoner', 60, 65],
     ]);
-    for (const c of chassis) {
-      expect(CHASSIS_ROLES, c.id).toContain(c.role);
-      // None of the six has an attunement, a minimum awakening, springs, or Avatar built in.
-      expect(c.attunement, c.id).toBeUndefined();
-      expect(c.minAwakening, c.id).toBeUndefined();
-      expect(c.startSprings, c.id).toBeUndefined();
-      expect(c.avatar, c.id).toBeUndefined();
-    }
+    for (const c of chassis) expect(CHASSIS_ROLES, c.id).toContain(c.role);
+  });
+
+  it('carry the optional fields only where A.4 gives them', () => {
+    const optional = chassis
+      .map((c) => {
+        const { attunement, minAwakening, startSprings, monthlySummon, reform, avatar } = c;
+        const extra = { attunement, minAwakening, startSprings, monthlySummon, reform, avatar };
+        const set = Object.entries(extra).filter(([, v]) => v !== undefined);
+        return [c.id, Object.fromEntries(set)] as const;
+      })
+      .filter(([, extra]) => Object.keys(extra).length > 0);
+    expect(optional).toEqual([
+      ['ascendedHero', { avatar: true }],
+      ['primordial', { minAwakening: 'dormant' }],
+      [
+        'ashPhoenix',
+        { attunement: [{ axis: 'growth', toward: 'positive' }], reform: { days: 90 } },
+      ],
+      [
+        'cinderIdol',
+        {
+          attunement: [{ axis: 'sanctity', toward: 'negative' }],
+          monthlySummon: { unit: 'fireSprite', count: 2, cap: 20 },
+        },
+      ],
+      [
+        'worldTree',
+        {
+          attunement: [{ axis: 'sanctity', toward: 'positive' }],
+          startSprings: { color: 'G', count: 1 },
+        },
+      ],
+      ['hornedHunter', { attunement: [{ axis: 'lore', toward: 'negative' }] }],
+      ['motherOfBeasts', { monthlySummon: { unit: 'wolf', count: 2, cap: 24 } }],
+    ]);
+  });
+
+  it('match the A.10 cost-parity snapshot: body value = cost - pips - dominion - built-ins', () => {
+    // Base pips at own-color prices (40 for the first, 20 for the second), 30 per base dominion
+    // above 1, and built-in options at their boon prices (Avatar 40, a spring 40).
+    const pipValue = [0, 40, 60];
+    const parity = chassis.map((c) => {
+      const pips = pipValue[c.basePips?.count ?? 0] ?? NaN;
+      const dominion = 30 * (c.baseDominion - 1);
+      const builtIn = (c.avatar ? 40 : 0) + 40 * (c.startSprings?.count ?? 0);
+      return [c.id, c.cost - pips - dominion - builtIn];
+    });
+    expect(parity).toEqual([
+      ['oracle', 20],
+      ['titan', 50],
+      ['greatWyrm', 130],
+      ['livingMonolith', -30],
+      ['ascendedHero', 20],
+      ['primordial', 100],
+      ['ashColossus', 60],
+      ['ashPhoenix', 50],
+      ['pyreLord', 50],
+      ['cinderIdol', -40],
+      ['emberHierophant', 0],
+      ['wildSpirit', 10],
+      ['worldTree', -40],
+      ['hornedHunter', 50],
+      ['elderWyrm', 120],
+      ['motherOfBeasts', 60],
+    ]);
   });
 
   it('each walk the map as their own body: a commander nobody can recruit', () => {
@@ -125,139 +216,7 @@ describe('design point costs', () => {
   });
 });
 
-/** A design with the given scale steps and neutral elsewhere. */
-function preset(
-  chassis: string,
-  pips: PretenderDesign['pips'],
-  dominion: number,
-  scales: Partial<Scales>,
-  awakening: PretenderDesign['awakening'],
-): PretenderDesign {
-  return { chassis, pips, dominion, scales: { ...NEUTRAL_SCALES, ...scales }, awakening };
-}
-
-/**
- * docs/05 "Presets", with the scale poles as signed steps: Fury is lore −, Turmoil order −,
- * Growth growth +, Wild wild +, Sanctity sanctity +. Deep Root is the one deviation: dominion
- * 7, not 8 (docs/09-balance.md).
- */
-const DOCS_PRESETS: readonly [NationDefId, string, string, PretenderDesign][] = [
-  [
-    'cinderHorde',
-    'warlord',
-    'Warlord',
-    preset('titan', { R: 4 }, 5, { lore: -3, order: -2 }, 'awake'),
-  ],
-  [
-    'cinderHorde',
-    'emberOracle',
-    'Ember Oracle',
-    preset('oracle', { R: 6 }, 4, { lore: -2 }, 'dormant'),
-  ],
-  [
-    'cinderHorde',
-    'wildfire',
-    'Wildfire',
-    preset('ashColossus', { R: 3 }, 6, { order: -3, lore: -3 }, 'imprisoned'),
-  ],
-  [
-    'thornwood',
-    'elderOak',
-    'Elder Oak',
-    preset('titan', { G: 4 }, 5, { growth: 3, wild: 2 }, 'awake'),
-  ],
-  [
-    'thornwood',
-    'deepRoot',
-    'Deep Root',
-    preset('livingMonolith', { G: 3 }, 7, { growth: 3, wild: 3, sanctity: 1 }, 'awake'),
-  ],
-  [
-    'thornwood',
-    'wyrmOfTheLoam',
-    'Wyrm of the Loam',
-    preset('greatWyrm', { G: 4 }, 4, { growth: 2 }, 'dormant'),
-  ],
-];
-
-function presetById(id: string): PresetDef {
-  const found = PRESETS.find((p) => p.id === id);
-  if (!found) throw new Error(`no preset ${id}`);
-  return found;
-}
-
-describe('pretender presets', () => {
-  it('are three per nation with unique ids', () => {
-    expect(new Set(PRESETS.map((p) => p.id)).size).toBe(PRESETS.length);
-    for (const key of Object.keys(NATIONS)) {
-      expect(
-        PRESETS.filter((p) => p.nation === key),
-        key,
-      ).toHaveLength(3);
-    }
-  });
-
-  it('match the docs/05 descriptions: chassis, pips, dominion, scales, awakening', () => {
-    expect(PRESETS.map((p) => [p.nation, p.id, p.name, p.design])).toEqual(DOCS_PRESETS);
-  });
-
-  it('use one of the six chassis and a color of their own nation', () => {
-    for (const p of PRESETS) {
-      expect(isChassisId(p.design.chassis), p.id).toBe(true);
-      expect(Object.keys(p.design.pips), p.id).toEqual([...nationDef(p.nation).colors]);
-    }
-  });
-
-  it('each pass validatePretender and cost what docs/05 prices them at', () => {
-    // Worked by hand from docs/05 (Red's own poles are Fury and Turmoil, Green's Growth and
-    // Wild; Sanctity is White, so 40 a step for Thornwood):
-    //   Warlord        Titan 120 + R2..R4 (20+25+30) + 3 dominion (90) + 5 own steps (100)
-    //   Ember Oracle   Oracle 20 + R1..R6 (190 - 6 x 10) + 3 dominion (90) + 2 own steps (40)
-    //   Wildfire       Colossus 100 + R2..R3 (45) + 5 dominion (150) + 6 own steps (120)
-    //   Elder Oak      Titan 120 + G2..G4 (75) + 3 dominion (90) + 5 own steps (100)
-    //   Deep Root      Monolith 60 + G1..G3 (85) + 3 dominion (90) + 6 own (120) + Sanctity 40
-    //   Wyrm of Loam   Wyrm 220 + G3..G4 (55) + 2 dominion (60) + 2 own steps (40)
-    const priced = PRESETS.map((p) => {
-      const def = nationDef(p.nation);
-      expect(validatePretender(def, p.design), p.id).toBeNull();
-      return [p.id, designCost(def, p.design), designBudget(p.design.awakening)];
-    });
-    expect(priced).toEqual([
-      ['warlord', 385, 400],
-      ['emberOracle', 280, 550],
-      ['wildfire', 415, 750],
-      ['elderOak', 385, 400],
-      ['deepRoot', 395, 400],
-      ['wyrmOfTheLoam', 375, 550],
-    ]);
-  });
-
-  it('give Deep Root dominion 7, because the docs’ 8 costs 425 of its 400 points', () => {
-    const deepRoot = presetById('deepRoot').design;
-    expect(deepRoot.dominion).toBe(7);
-    const asDocumented = { ...deepRoot, dominion: 8 };
-    const green = nationDef('thornwood');
-    expect(designCost(green, asDocumented)).toBe(425);
-    expect(validatePretender(green, asDocumented)).toBe('The design costs 425 of 400 points');
-  });
-
-  it('fit Wildfire only through its imprisonment refund', () => {
-    const wildfire = presetById('wildfire').design;
-    expect(validatePretender(nationDef('cinderHorde'), { ...wildfire, awakening: 'awake' })).toBe(
-      'The design costs 415 of 400 points',
-    );
-  });
-
-  it('make each nation’s first preset its default', () => {
-    expect(defaultPreset('cinderHorde')).toBe(presetById('warlord'));
-    expect(defaultPreset('thornwood')).toBe(presetById('elderOak'));
-    for (const key of Object.keys(NATIONS) as NationDefId[]) {
-      expect(defaultPreset(key)).toBe(PRESETS.find((p) => p.nation === key));
-    }
-  });
-});
-
-describe('content validation of chassis and presets', () => {
+describe('content validation of chassis', () => {
   const titan: ChassisDef = CHASSIS.titan;
 
   it('finds nothing wrong with the shipped content', () => {
@@ -333,22 +292,32 @@ describe('content validation of chassis and presets', () => {
     });
   });
 
-  it('reports presets with a repeated id or an unknown chassis', () => {
-    const warlord = presetById('warlord');
-    patched(warlord, 'id', 'elderOak', () => {
-      expect(validateContent()).toEqual(['preset ids repeat']);
-    });
-    patched(warlord.design, 'chassis', 'dragon', () => {
-      expect(validateContent()).toEqual(['preset warlord chassis']);
-    });
-  });
-
-  it('reports a nation without exactly three presets', () => {
-    patched(presetById('warlord'), 'nation', 'thornwood', () => {
+  it('reports bad reform days, a monthly summon past leadership, or a mobile idol', () => {
+    const check = <K extends keyof ChassisDef>(key: K, value: ChassisDef[K], problem: string) => {
+      patched(titan, key, value, () => {
+        expect(validateContent(), `${key} ${JSON.stringify(value)}`).toEqual([problem]);
+      });
+    };
+    check('reform', { days: 0 }, 'chassis titan bad reform days');
+    check('reform', { days: 1.5 }, 'chassis titan bad reform days');
+    // The Titan leads 100; the Mother of Beasts leads 60.
+    check(
+      'monthlySummon',
+      { unit: 'wolf', count: 101, cap: 200 },
+      "chassis titan monthly summon exceeds its body's leadership",
+    );
+    check('role', 'idol', 'chassis titan is an idol exactly when its body is immobile');
+    patched(CHASSIS.cinderIdol as ChassisDef, 'role', 'summoner', () => {
       expect(validateContent()).toEqual([
-        'nation cinderHorde needs three presets',
-        'nation thornwood needs three presets',
+        'chassis cinderIdol is an idol exactly when its body is immobile',
       ]);
+    });
+    // The edges pass: a day, and a monthly summon of exactly the leadership.
+    patched(titan, 'reform', { days: 1 }, () => {
+      expect(validateContent()).toEqual([]);
+    });
+    patched(titan, 'monthlySummon', { unit: 'wolf', count: 100, cap: 100 }, () => {
+      expect(validateContent()).toEqual([]);
     });
   });
 });

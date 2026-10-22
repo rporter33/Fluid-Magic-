@@ -157,6 +157,7 @@ fluid-magic/
       rng.ts              # each AI call's private random stream; keyed streams
       driver.ts           # playDay: advance, then the AI nations' commands; replayLog
       match.ts            # runMatch: a whole AI game, for the runner and tests
+      matrix.ts           # the runner's chosen presets and the preset matrix (Phase 6b.3)
     render/
       MapRenderer.ts      # Pixi app for the strategic map
       ProvinceLayer.ts ArmyLayer.ts LabelLayer.ts
@@ -184,7 +185,9 @@ fluid-magic/
     content/validate.test.ts
     ai/*.test.ts
   scripts/
-    aivai.ts              # headless AI vs AI runner (npm run sim:aivai)
+    aivai.ts              # headless AI vs AI runner (npm run sim:aivai; --presets, --matrix)
+    duel.ts               # staged pretender duels and AI power (npm run sim:duel; --calibrate)
+    golden-battle.ts      # the battle golden pin (npm run golden:battle)
   docs/
 ```
 

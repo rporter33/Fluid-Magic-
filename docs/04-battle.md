@@ -308,9 +308,11 @@ has"). Each rule is tested alone; none adds a randomness source.
 - **Shields at setup** merge the body's `fireShield` with the blessings' shields, by element,
   in `ELEMENTS` order; a unit with none has an empty list.
 - **Bound at setup**: `sideSetup` marks a squad bound when its commander is its owner's
-  pretender and its unit is that pretender's chassis's `ChassisDef.monthlySummon.unit`. The
-  type lands in Phase 6b.2 so the battle rule can read it; the monthly rule itself and the
-  chassis that use it arrive in Phase 6b.3. Battle summons are bound when they join.
+  pretender and its unit is that pretender's chassis's `ChassisDef.monthlySummon.unit` (the
+  Mother of Beasts' Wolves, the Cinder Idol's Fire Sprites, whatever their source). The type
+  landed in Phase 6b.2 so the battle rule could read it; the monthly rule and the chassis that
+  use it arrived in Phase 6b.3 (`docs/05`, monthly summons). Battle summons are bound when they
+  join.
 - **Records**: a commander's setup record holds its abilities by id; `fromSetupRecord` throws
   on an unknown id and `validRerun` asks for the list, so a Phase 6b.1 record (no
   `abilities`, `fireShield` in its stats) loads as a log-only replay. `battleRulesHash()`
@@ -318,5 +320,7 @@ has"). Each rule is tested alone; none adds a randomness source.
 - **Fixtures**: the named battles `primordialFear`, `pyreLordKindle`, `hunterCall`, `trample`,
   `twoShields`, `spellPower` and `boundWolves` (`tests/sim/battle/fixtures/named6b.ts`) join the
   detail-sink equivalence and re-run tests, not the golden pin, whose 30 battles hold none of
-  the new rules and still match byte for byte. Their abilities ride on existing bodies until
-  the new chassis arrive in Phase 6b.3.
+  the new rules and still match byte for byte. Their abilities ride on existing bodies, as
+  they were written before the new chassis arrived in Phase 6b.3; the staged duels of
+  `npm run sim:duel` (`tests/sim/battle/fixtures/duel.ts`, Phase 6b.3) fight the real bodies
+  with their own abilities, and the golden pin still matches byte for byte.
