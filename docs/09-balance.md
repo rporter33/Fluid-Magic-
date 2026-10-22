@@ -165,7 +165,7 @@ presentation" table (Phases 8 to 11).
 | 2026-10-22 | 09 | Repaint | — | 600 ms cross-fade; at most 8 animated per month end; slow looks at most monthly | A calm map |
 | 2026-10-22 | 09 | Footpath on passable Mountains | — | #2B2620 at 75%, 1.5 px, dash 4 / 3 | 3.65:1 on Mountains |
 | 2026-10-22 | 07 | Commander panel portrait | 64 px | 96 px | Leaders need faces (owner direction 2026-10-21: "leaders certainly need portraits") |
-| 2026-10-22 | 09 | Raster art | — | at most 2 MB in the bundle; a portrait set needs 8 images; 256 px WebP ≤ 24 KB and 64 px ≤ 4 KB each | Keeps criterion 1's 5 MB bundle |
+| 2026-10-22 | 09 | Raster art | — | at most 2 MB (2,000,000 bytes) in the bundle; a portrait set needs 8 images, 4 for a summoned commander (QA sweep 2026-10-22); 256 px WebP ≤ 24 KB and 64 px ≤ 4 KB each | Keeps criterion 1's 5 MB bundle. The WebP rasters total 1,987,716 bytes (2026-10-22), 12 KB under the cap, so the next raster must displace one; `tests/assets/portraits.test.ts` checks all of it |
 
 ## Playtest checklist (run before calling M1 done)
 

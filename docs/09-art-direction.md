@@ -79,7 +79,7 @@ the fills:
   axes, scale armor, ash-grey skin; Thornwood: bark armor, bows, leaf cloaks) so a Warden
   and a Cinder Warrior are not just recolors.
 - Commanders have portraits of their own; see "Leader portraits". Pretenders and summoned
-  commanders use their rig in its portrait pose.
+  commanders use their rig in its portrait pose, unless a complete raster set replaces it.
 
 ## Animation
 
@@ -294,7 +294,11 @@ Added on 2026-10-21 at the owner's direction: "leaders certainly need portraits"
   replay docks), 48 (tooltips), 40 (report cards, Forces), 24 (outliner), 16 (links). Below 48
   px only the silhouette, the frame and one badge are drawn.
 - **Owner-made raster portraits** replace a type's procedural busts only as a complete set of 8 or
-  more approved images, picked by the same seed; state then shows on the frame only.
+  more approved images, picked by the same seed; state then shows on the frame only. A summoned
+  commander (the Salamander, the Treant) has one body and few on the map at once, so its set is
+  complete at 4 faces and replaces its rig's portrait pose, which stays the fallback (QA sweep
+  2026-10-22, finding DOC-4: the shipped summon sets have 4 faces, which the 8-face rule would
+  never draw).
 
 ## Pretender chassis art
 
@@ -311,4 +315,5 @@ Raster art made by the project owner (the oak tile, the tavern floor, portraits)
 arrives in `art-inbox/`, passes `scripts/art-intake.ts` (crop, sizes, checks, a provenance
 sidecar per image, a contact sheet for approval) and lands in `src/assets/raster/` with a
 manifest entry; masters stay outside the bundle in `art-source/`. Rasters in the bundle total at
-most 2 MB. A portrait set is used only when complete; the procedural art is always the fallback.
+most 2 MB. A portrait set is used only when complete (8 faces or more, 4 for a summoned
+commander); the procedural art is always the fallback.

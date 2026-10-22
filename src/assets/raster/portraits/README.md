@@ -9,7 +9,8 @@ Approved painted portraits, one folder per nation and unit type, eight faces eac
   owner's approval and pick.
 
 The 512 px masters are in `art-source/portraits/`. The procedural SVG bust is always the fallback; the game
-uses a raster set only when all eight faces of a type are approved. The style anchor is
+uses a raster set only when all faces of a type are approved: eight (twelve for each Independent Captain
+outfit), four for a summoned commander (`docs/09-art-direction.md`, "Leader portraits"). The style anchor is
 `art-source/portraits/anchor-style.webp` (the rim-light Ash Chieftain, owner-approved 2026-10-22).
 
 The first four sets (Ash Chieftain, Warden Captain, Pyre Priest, Grove Priest) were made with Gemini
