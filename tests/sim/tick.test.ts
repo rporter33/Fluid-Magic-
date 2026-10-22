@@ -115,17 +115,23 @@ describe('advance', () => {
   });
 
   it('keeps a heavy marching day near the 2 ms budget (docs/06)', () => {
-    const state = marchingGame();
-    const marching = () =>
+    const base = marchingGame();
+    const marching = (state: GameState) =>
       Object.values(state.commanders).filter((c) => c.order.kind === 'move').length;
-    runDays(state, 5);
-    expect(marching()).toBeGreaterThan(150);
-    const start = performance.now();
-    runDays(state, 60);
-    const perDay = (performance.now() - start) / 60;
+    runDays(base, 5);
+    expect(marching(base)).toBeGreaterThan(150);
+    // The fastest of three runs of the same 60 days, each from a copy of the same game, so a
+    // burst of load from other processes does not fail the test (QA sweep H2).
+    let perDay = Number.POSITIVE_INFINITY;
+    for (let run = 0; run < 3; run++) {
+      const state = structuredClone(base);
+      const start = performance.now();
+      runDays(state, 60);
+      perDay = Math.min(perDay, (performance.now() - start) / 60);
+      expect(state.battles).toEqual([]);
+    }
     // A loose bound against regressions; the measured target is docs/06's 2 ms.
     expect(perDay).toBeLessThan(10);
-    expect(state.battles).toEqual([]);
   });
 
   it('continues identically after a save and load', () => {

@@ -5,6 +5,7 @@ import { SPELLS } from '../../../src/content/spells';
 import type { BattleSpellDef } from '../../../src/content/spells/types';
 import { weaponDamage } from '../../../src/sim/battle/attacks';
 import { resolveBattle } from '../../../src/sim/battle/resolve';
+import type { BattleSetup } from '../../../src/sim/battle/types';
 import { drn } from '../../../src/sim/drn';
 import { cloneRng, createRng } from '../../../src/sim/rng';
 import {
@@ -327,9 +328,7 @@ describe('the log and the result', () => {
         side([squad('d0', 'warden', 200), squad('d1', 'longbowHunter', 100)]),
       );
     resolveBattle(big(), createRng(1));
-    const start = performance.now();
-    for (let i = 0; i < 5; i++) resolveBattle(big(), createRng(i));
-    expect((performance.now() - start) / 5).toBeLessThan(50);
+    expect(fastestMean(() => big())).toBeLessThan(50);
   });
 
   it('stays well under 50 ms with four mages casting on each side', () => {
@@ -354,8 +353,20 @@ describe('the log and the result', () => {
         ),
       );
     resolveBattle(big(), createRng(1));
-    const start = performance.now();
-    for (let i = 0; i < 5; i++) resolveBattle(big(), createRng(i));
-    expect((performance.now() - start) / 5).toBeLessThan(50);
+    expect(fastestMean(() => big())).toBeLessThan(50);
   });
 });
+
+/**
+ * The mean time of the battles on rng seeds 0 to 4, taking the fastest of three rounds of them,
+ * so a burst of load from other processes does not fail a budget (QA sweep H2).
+ */
+function fastestMean(build: () => BattleSetup): number {
+  let best = Number.POSITIVE_INFINITY;
+  for (let round = 0; round < 3; round++) {
+    const start = performance.now();
+    for (let i = 0; i < 5; i++) resolveBattle(build(), createRng(i));
+    best = Math.min(best, (performance.now() - start) / 5);
+  }
+  return best;
+}

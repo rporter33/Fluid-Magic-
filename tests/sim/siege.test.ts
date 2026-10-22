@@ -214,7 +214,9 @@ describe('storm', () => {
       expect(holder.squads).toEqual([]);
     }
     expect(pyrrhic).toBeGreaterThan(0);
-  });
+    // 60 games: 1.8 s alone with wilds, and it has timed out at vitest's 5 s default in loaded
+    // full runs; 10 s is about 4x its time alone (QA sweep H1).
+  }, 10_000);
 
   it('is fought in the next tick, with the walls in the defenders’ favor', () => {
     const { state, red, fort } = siege(40);

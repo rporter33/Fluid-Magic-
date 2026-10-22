@@ -11,13 +11,19 @@ describe('Large maps with wilds', () => {
     Array.from({ length: 30 }, (_, i) => ({ nations, seed: i + 1 })),
   );
 
-  it.each(cases)('$nations nations, seed $seed', ({ nations, seed }) => {
-    const params = {
-      seed,
-      size: 'large' as const,
-      capitals: FOUR_CAPITALS.slice(0, nations),
-      wilds: true,
-    };
-    expectWilds(generateMap(params), params, seed <= 2);
-  });
+  // The slowest cases (4 nations, seeds 1 and 2) take 1.9 to 2.3 s alone and have timed out at
+  // vitest's 5 s default in loaded full runs: 10 s is about 4x their time alone (QA sweep H1).
+  it.each(cases)(
+    '$nations nations, seed $seed',
+    ({ nations, seed }) => {
+      const params = {
+        seed,
+        size: 'large' as const,
+        capitals: FOUR_CAPITALS.slice(0, nations),
+        wilds: true,
+      };
+      expectWilds(generateMap(params), params, seed <= 2);
+    },
+    10_000,
+  );
 });

@@ -106,12 +106,18 @@ describe('other sizes and nation counts', () => {
     ['small', [KHARNATH, DEEPMOSS, R2, G2]],
   ];
 
-  it.each(cases)('%s with %#: playable across seeds', (size, capitals) => {
-    for (let seed = 1; seed <= 5; seed++) {
-      const params = { seed, size, capitals };
-      expectPlayable(generateMap(params), params);
-    }
-  });
+  // The Medium sweep with 4 nations ("medium with 3") takes 2.3 to 2.9 s alone and has timed
+  // out at vitest's 5 s default in loaded full runs: 12 s is about 4x its time alone (QA sweep H1).
+  it.each(cases)(
+    '%s with %#: playable across seeds',
+    (size, capitals) => {
+      for (let seed = 1; seed <= 5; seed++) {
+        const params = { seed, size, capitals };
+        expectPlayable(generateMap(params), params);
+      }
+    },
+    12_000,
+  );
 
   it('numbers repeated capital names', () => {
     const map = generateMap({ seed: 3, size: 'medium', capitals: [KHARNATH, KHARNATH] });

@@ -11,13 +11,20 @@ describe('Medium maps with wilds', () => {
     Array.from({ length: 30 }, (_, i) => ({ nations, seed: i + 1 })),
   );
 
-  it.each(cases)('$nations nations, seed $seed', ({ nations, seed }) => {
-    const params = {
-      seed,
-      size: 'medium' as const,
-      capitals: FOUR_CAPITALS.slice(0, nations),
-      wilds: true,
-    };
-    expectWilds(generateMap(params), params, seed <= 2);
-  });
+  // The slowest cases (4 nations, seeds 1 and 2) take about 1.7 s alone; 4 nations, seed 4 timed
+  // out at vitest's 5 s default in a full run at a load average near 10 (QA sweep, 2026-10-22).
+  // 10 s, about 4x the slowest time alone, as for the Large sweep (QA sweep H1).
+  it.each(cases)(
+    '$nations nations, seed $seed',
+    ({ nations, seed }) => {
+      const params = {
+        seed,
+        size: 'medium' as const,
+        capitals: FOUR_CAPITALS.slice(0, nations),
+        wilds: true,
+      };
+      expectWilds(generateMap(params), params, seed <= 2);
+    },
+    10_000,
+  );
 });

@@ -92,7 +92,10 @@ describe('determinism with commands', () => {
     const loaded = JSON.parse(JSON.stringify(saved)) as GameState;
     play(loaded, log);
     expect(stateHash(loaded)).toBe(stateHash(original));
-  });
+    // 0.9 to 1.1 s alone, yet it has timed out at vitest's 5 s default in full runs at load
+    // averages of 6 to 9; 4x its time alone would be under that default, so 10 s, as for the
+    // other slow sweeps (QA sweep H1).
+  }, 10_000);
 
   it('hashes different states differently', () => {
     const a = twoNationGame(31);
