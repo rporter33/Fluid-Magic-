@@ -73,12 +73,13 @@ describe('planEconomy: taxes', () => {
 
 /**
  * Red owns its capital, E next to a Thornwood province, a Wellspring W, and S next to a strong
- * independent; every other independent is weak.
+ * independent; every other independent is weak. Seed 1: the capital's neighbors are p15, p19
+ * and p29; S is p15, beside the strong p10, and E is p29, beside Thornwood's p40.
  */
 function defenseField() {
   const field = redField();
   const { state, red, green, capital } = field;
-  const [e, s] = neighbors(state, capital) as [ProvinceId, ProvinceId];
+  const [s, , e] = neighbors(state, capital) as [ProvinceId, ProvinceId, ProvinceId];
   annex(state, red, e);
   annex(state, red, s);
   const near = new Set([capital, ...neighbors(state, capital), ...neighbors(state, s)]);

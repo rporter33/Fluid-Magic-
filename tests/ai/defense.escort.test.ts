@@ -59,7 +59,7 @@ describe('escortClaims', () => {
 
   /**
    * Seed 1: Red owns all but Green's capital and its neighbors. A priest claims the Wellspring
-   * p51 with an army standing there; a second priest walks from p4 to the Wellspring p1, which
+   * p43 with an army standing there; a second priest walks from p2 to the Wellspring p3, which
    * comes first in province order.
    */
   function twoSprings() {
@@ -71,11 +71,11 @@ describe('escortClaims', () => {
       if (!near.has(id)) annex(state, red, id);
     }
     const claimer = commandersIn(state, capital).find((c) => c.unit === 'pyrePriest')!;
-    claimer.location = P('p51');
+    claimer.location = P('p43');
     claimer.order = { kind: 'claimWellspring', daysLeft: 8 };
-    const escort = addArmy(state, red, P('p51'), 'cinderWarrior', 30);
-    const walker = createCommander(state, 'pyrePriest', red, P('p4'));
-    expect(applyCommand(state, moveCmd(red, [walker], [P('p1')]))).toEqual({ ok: true });
+    const escort = addArmy(state, red, P('p43'), 'cinderWarrior', 30);
+    const walker = createCommander(state, 'pyrePriest', red, P('p2'));
+    expect(applyCommand(state, moveCmd(red, [walker], [P('p3')]))).toEqual({ ok: true });
     return { ...f, escort };
   }
 
@@ -96,7 +96,7 @@ describe('escortClaims', () => {
   it('sends the nearest free army to the spring without one, the escort staying', () => {
     const { state, red, army, escort } = twoSprings();
     const pass = escorts(state, red);
-    expect(pass.plan.out).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p1'))!)]);
+    expect(pass.plan.out).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p3'))!)]);
     expect([...pass.escorts]).toEqual([escort.id]);
   });
 });

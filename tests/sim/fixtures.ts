@@ -10,6 +10,7 @@ import type { NationId, ProvinceId } from '../../src/sim/ids';
 import type {
   ColorAmounts,
   CommanderState,
+  GameSetup,
   GameState,
   NationSetup,
   PretenderDesign,
@@ -44,20 +45,26 @@ export function nation(
   };
 }
 
-/** A Medium two-nation game: Cinder Horde (player) against Thornwood (AI). */
+/**
+ * A Medium two-nation game: Cinder Horde (player) against Thornwood (AI), on a map with wilds as
+ * New Game makes it, or without them when `wilds` is false (GameSetup.wilds).
+ */
 export function twoNationGame(
   seed = 1,
   red: Partial<NationSetup> = {},
   green: Partial<NationSetup> = {},
+  wilds?: boolean,
 ): GameState {
-  return createGame({
+  const setup: GameSetup = {
     seed,
     mapSize: 'medium',
     nations: [
       nation('cinderHorde', red),
       nation('thornwood', { ai: { difficulty: 'normal' }, ...green }),
     ],
-  });
+  };
+  if (wilds !== undefined) setup.wilds = wilds;
+  return createGame(setup);
 }
 
 /** A two-nation game where Cinder Horde's pretender has the given dominion and scales. */
@@ -123,9 +130,9 @@ export function neighbors(state: GameState, id: ProvinceId): ProvinceId[] {
   return state.map.provinces[id]!.neighbors;
 }
 
-/** Red's Ash Chieftain army standing in Red's capital. */
-export function redField(seed = 1) {
-  const state = twoNationGame(seed);
+/** Red's Ash Chieftain army standing in Red's capital (on a map without wilds if `wilds` is false). */
+export function redField(seed = 1, wilds?: boolean) {
+  const state = twoNationGame(seed, {}, {}, wilds);
   const [red, green] = nationIds(state) as [NationId, NationId];
   const capital = capitalOf(state, red).id;
   const army = commandersIn(state, capital).find((c) => c.unit === 'ashChieftain')!;

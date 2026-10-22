@@ -346,9 +346,11 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   from a counter local to mapgen. They are never in `neighbors`, so movement, retreat, sight,
   dominion, rituals, fort materials and the AI needed no code to respect them. A source scan
   (`tests/sim/adjacency.guard.test.ts`) keeps `src/sim` and `src/ai` from reading map geometry
-  or the wilds, so nothing can reach across one. `MapGenParams.wilds` (and `GameSetup.wilds`)
-  is off everywhere until the owner's decision commit; while it is off `MapData.wilds` is `[]`
-  and every map is bit-identical to the generator's before wilds (a hash test pins 30 maps).
+  or the wilds, so nothing can reach across one. `GameSetup.wilds` is on unless a setup sets it
+  false (New Game and the headless runner keep it on, since the owner's decision of
+  2026-10-21); `MapGenParams.wilds` is off unless set. While it is off `MapData.wilds` is `[]`
+  and every map is bit-identical to the generator's before wilds with the same balance search (a
+  hash test pins 30 maps, recorded from `ec9a907` with `MAPGEN.balanceCandidates` at 10).
 - **Pure-module conventions**: `src/mapgen/voronoi.ts`, `geometry.ts`, `noise.ts`, and
   `graph.ts` are generic and take every parameter explicitly; modules that apply game rules
   (`placement.ts`, `size.ts`, `generate.ts`) read their numbers from `src/content`.

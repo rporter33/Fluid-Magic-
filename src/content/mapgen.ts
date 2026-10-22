@@ -63,8 +63,11 @@ export const MAPGEN = {
   capitalRingRadius: 2,
   /** A map is balanced when the richest neighborhood's population is at most this times the poorest's. */
   capitalBalanceRatio: 1.5,
-  /** Valid maps generated in search of a balanced one before the most balanced is taken. */
-  balanceCandidates: 6,
+  /**
+   * Valid maps generated in search of a balanced one before the most balanced is taken. 10 since
+   * Phase 1b (was 6): with wilds, 6 left fewer 3- and 4-nation maps balanced (docs/09-balance).
+   */
+  balanceCandidates: 10,
 
   // Wellsprings.
   /** Wellsprings with up to baseNations nations. */

@@ -32,8 +32,10 @@ const PHOENIX: PretenderDesign = pretender({
   blessings: ['flamingWeapons'],
 });
 
-function phoenixGame(name: string | null = 'Ysolde') {
-  const state = twoNationGame(4, { pretender: PHOENIX, ...(name ? { pretenderName: name } : {}) });
+/** The Phoenix's game, seed 4: on the default map with wilds unless `wilds` is false. */
+function phoenixGame(name: string | null = 'Ysolde', wilds?: boolean) {
+  const named = name ? { pretenderName: name } : {};
+  const state = twoNationGame(4, { pretender: PHOENIX, ...named }, {}, wilds);
   const [red, green] = nationIds(state) as [NationId, NationId];
   const nation = state.nations[red]!;
   return { state, red, green, nation, capital: nation.capital };
@@ -270,13 +272,22 @@ describe('reform after death (N8)', () => {
     // leaves the return day as it was.
     expect(STATE_VERSION).toBe(4);
     expect(Object.keys(MIGRATIONS)).toEqual(['1', '2', '3']);
-    const v3 = JSON.parse(JSON.stringify(state)) as GameState;
+    // Saves of versions 2 and 3 predate wilds, so they come from the same game on a map without
+    // them (as in migrate.test.ts).
+    const plain = phoenixGame('Ysolde', false);
+    expect(plain.state.map.wilds).toEqual([]);
+    commanderDies(plain.state, godOf(plain.state, plain.red)!.id);
+    const v3 = JSON.parse(JSON.stringify(plain.state)) as GameState;
     v3.version = 3;
     const v3map: Partial<typeof v3.map> = v3.map;
     delete v3map.wilds;
-    expect(migrateState(v3).nations[red]!.pretenderReturnDay).toBe(90);
-    const old = JSON.parse(JSON.stringify(phoenixGame().state)) as GameState;
+    const lifted = migrateState(v3);
+    expect(lifted.nations[plain.red]!.pretenderReturnDay).toBe(90);
+    expect(stateHash(lifted)).toBe(stateHash(plain.state));
+    const old = JSON.parse(JSON.stringify(phoenixGame('Ysolde', false).state)) as GameState;
     old.version = 2;
+    const oldMap: Partial<typeof old.map> = old.map;
+    delete oldMap.wilds;
     for (const n of Object.values(old.nations)) {
       const o: Partial<typeof n> = n;
       delete o.pretenderReturnDay;

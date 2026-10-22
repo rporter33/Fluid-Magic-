@@ -1,8 +1,9 @@
 // The AI on maps with impassable wild ranges (Phase 1b; war-table design 1.7 and 1.9): the AI
 // reads adjacency only through MapProvince.neighbors, so it needs no code for wilds. The
 // headless runner's games on wild maps play for three years without a refused command, the
-// same setup plays the same game, and the runner passes the switch through to the map, beside
-// the presets it was asked for (Phase 6b.3's --presets and --matrix).
+// same setup plays the same game, and the runner passes the switch through to the map, on by
+// default since the owner's decision (commit B) and off on request, beside the presets it was
+// asked for (Phase 6b.3's --presets and --matrix).
 import { describe, expect, it } from 'vitest';
 import { runAi } from '../../src/ai/ai';
 import { RUNNER_DEFAULTS, runMatch, runnerSetup, runnerSetups } from '../../src/ai/match';
@@ -11,12 +12,16 @@ import { defaultPreset, findPreset } from '../../src/content/pretenders/presets'
 import { createGame } from '../../src/sim/createGame';
 
 describe('the headless runner with wilds', () => {
-  it('passes the switch to the map, off by default until the owner turns it on', () => {
-    expect(RUNNER_DEFAULTS.wilds).toBe(false);
-    expect(runnerSetup(1, 0).wilds).toBe(false);
-    expect(runnerSetups(1, 2, [], true).map((s) => s.wilds)).toEqual([true, true]);
-    expect(createGame(runnerSetup(1, 0)).map.wilds).toEqual([]);
-    const map = createGame(runnerSetup(1, 0, [], true)).map;
+  it('passes the switch to the map, on by default as in New Game, off on request', () => {
+    expect(RUNNER_DEFAULTS.wilds).toBe(true);
+    expect(runnerSetup(1, 0).wilds).toBe(true);
+    expect(runnerSetups(1, 2, [], false).map((s) => s.wilds)).toEqual([false, false]);
+    expect(createGame(runnerSetup(1, 0, [], false)).map.wilds).toEqual([]);
+    // createGame's default, with no switch in the setup, is New Game's: wilds on.
+    const { wilds, ...unset } = runnerSetup(1, 0);
+    expect(wilds).toBe(true);
+    expect(createGame(unset)).toEqual(createGame(runnerSetup(1, 0)));
+    const map = createGame(runnerSetup(1, 0)).map;
     expect(map.wilds.length).toBeGreaterThan(0);
     const wildIds = new Set<string>(map.wilds.map((w) => w.id));
     for (const p of Object.values(map.provinces)) {
@@ -56,7 +61,7 @@ describe('the headless runner with wilds', () => {
     const b = runMatch(runnerSetup(1, 0, [], true), runAi, 240);
     expect(a.finalHash).toBe(b.finalHash);
     expect(a.log).toEqual(b.log);
-    expect(a.finalHash).not.toBe(runMatch(runnerSetup(1, 0), runAi, 240).finalHash);
+    expect(a.finalHash).not.toBe(runMatch(runnerSetup(1, 0, [], false), runAi, 240).finalHash);
   }, 60_000);
 
   it('plays the runner games on wild maps for three years without a refusal', () => {

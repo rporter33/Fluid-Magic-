@@ -73,9 +73,9 @@ describe('expansionTarget', () => {
   });
 
   it('divides by the defenders but at least 1: a lightly held province beats a poorer empty one', () => {
-    // p17 is emptied; p50 is held by a lone independent captain.
+    // p19 is emptied; p15 is held by a lone independent captain.
     const { state, red, army } = redField();
-    const [empty, held] = [P('p17'), P('p50')];
+    const [empty, held] = [P('p19'), P('p15')];
     for (const c of Object.values(state.commanders)) {
       if (c.owner === null && (c.location === empty || c.location === held)) {
         removeCommander(state, c.id);
@@ -102,12 +102,12 @@ describe('expansionTarget', () => {
   });
 
   it('takes only independent provinces, never an enemy one in reach', () => {
-    // Green's empty p45, next to Red's army in p50, would outscore every independent.
+    // Green's empty p10, next to Red's army in p15, would outscore every independent.
     const { state, red, green, army } = redField();
-    annex(state, red, P('p50'));
-    annex(state, green, P('p45'));
-    army.location = P('p50');
-    expect(defenderPower(state, P('p45'))).toBe(0);
+    annex(state, red, P('p15'));
+    annex(state, green, P('p10'));
+    army.location = P('p15');
+    expect(defenderPower(state, P('p10'))).toBe(0);
     const target = expansionTarget(createPlan(state, red), [army], new Set());
     expect(target).not.toBeNull();
     expect(state.provinces[target!]!.owner).toBeNull();
@@ -160,7 +160,7 @@ describe('planArmies: expansion', () => {
 describe('planArmies: the march home', () => {
   it('walks a depleted army home, where it refills and leaves again', () => {
     const { state, red, capital, army } = redField();
-    const out = annex(state, red, P('p50')).id;
+    const out = annex(state, red, P('p15')).id;
     army.location = out;
     army.squads = [createSquad(state, 'cinderWarrior', AI.fieldArmyTroops - 1)];
     expect(armies(state, red)).toContainEqual(moveCmd(red, [army], [capital]));
@@ -188,12 +188,12 @@ describe('planArmies: the march home', () => {
 
   it('walks home a field army no task takes, and riders left without a leader', () => {
     const { state, red, capital, army } = redField();
-    const out = annex(state, red, P('p50')).id;
-    // Every neighbor of p50 but the capital is far too strong for it.
+    const out = annex(state, red, P('p15')).id;
+    // Every neighbor of p15 but the capital is far too strong for it.
     army.location = out;
     army.squads = [createSquad(state, 'ashMilitia', AI.fieldArmyTroops)];
-    const salamander = createCommander(state, 'salamander', red, P('p50'));
-    const lone = annex(state, red, P('p57')).id;
+    const salamander = createCommander(state, 'salamander', red, P('p15'));
+    const lone = annex(state, red, P('p29')).id;
     const rider = createCommander(state, 'salamander', red, lone);
     const moves = armies(state, red).filter((c) => c.type === 'move');
     expect(moves).toEqual([

@@ -33,6 +33,12 @@ value; the implementer may tune, but must record tuned values in `docs/09-balanc
 | Wasteland | 15 | 10 | 5 | 500 to 2000 | 0 |
 
 - Seas are out of scope for M1. The generator produces a landlocked map.
+- **Impassable terrain (wilds).** Some of the map is wild: named mountain massifs (peaks) and
+  dark lakes (meres). A wild is not a province. No one owns, enters, crosses or targets it. Two
+  provinces are neighbors only where their own borders meet, so a wild between them blocks
+  movement, retreat, sight, dominion spread and ritual reach alike, and everything counted in
+  provinces is counted around it. Every province can still reach every other, no single province
+  is the only way through, and no wild lies within 2 provinces of a capital.
 - Capitals start at 25000 population on Farmland or Plains, with a fort, a temple, and a lab.
 
 ## 3. Population
@@ -256,10 +262,12 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   which nation gets which capital is shuffled. Maps whose capitals' starting neighborhoods
   (provinces within 2 hops) differ in population by more than 1.5x are passed over: the
   generator takes the first map within the ratio, or the most even of several valid maps.
-- **Terrain** is assigned by rank from simplex-noise elevation and moisture, so every map has
-  exactly the terrain shares in `TERRAIN_SHARES`, capitals included.
+- **Terrain** is assigned by rank from simplex-noise elevation and moisture over the provinces
+  (wilds are not provinces and take no terrain), so every map has exactly the terrain shares in
+  `TERRAIN_SHARES`, capitals included.
 - **Adjacency**: two provinces are neighbors exactly when their borders share a segment;
-  cells that meet at a single point are not. The drawn map and the graph always agree.
+  cells that meet at a single point are not, and a border with a wild makes no neighbor. The
+  drawn map and the graph always agree.
 - **Wellsprings** are never adjacent to each other and at least 3 from every capital. They
   are chosen so every nation is equally far, in total, from the Wellsprings it needs to win
   (2 of 3, 3 of 5), and then spread as far apart as that allows.
@@ -273,6 +281,41 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Independents** (section 9): each province stores its starting defender strength
   (`8 + 4d`, 30 on Wellsprings) at generation. Troop composition by terrain comes in Phase 3.
 - **Starting population** is uniform in the terrain's range, rounded to 100.
+
+**Wilds (Phase 1b)**
+
+Added by the project owner's direction of 2026-10-21: "i want to make sure the maps have some
+impassible terrain that is noticeable". The form below (named peak massifs and dark meres that
+are map cells but not provinces, with ridges and chasms waiting for M2) was offered to the owner
+as the default on 2026-10-22.
+- **Count and kinds.** A map has `round(provinces / 20)` wild ranges (Small 2, Medium 3, Large 4;
+  6 on Medium with 4 nations). Their kinds cycle peaks, mere, peaks. A peak range has 1, 2 or 3
+  cells (weights 25, 50, 25), a mere 1 or 2 (weights 60, 40). Wild cells are extra Voronoi cells
+  beyond the province count, so the count stays exact and the map grows to keep each province's
+  area.
+- **Placement.** Capitals are placed first, on every cell. Peak ranges then start at the
+  highest-elevation eligible cell and grow into their highest eligible neighbors; meres do the
+  same by moisture minus elevation. A range that cannot reach its size tries the next seed, up to
+  12; an attempt that cannot place a range is retried like any failed attempt.
+- **Eligible cells.** A wild cell has no vertex on the map's edge, is at least 3 cells from every
+  capital, and is at least 3 cells from every other range, so no province borders two ranges.
+  Removing it must leave the provinces connected, each with at least 2 neighbors, with no single
+  province as the only way between two parts of the map, and with the provinces around every
+  range at most 6 steps apart.
+- **Everything else on the provinces.** Terrain, Wellsprings and their fairness, springs, names,
+  starting population, capital distance and independent strength are placed and checked on the
+  provinces that remain, as before. Each capital's 2-hop neighborhood keeps the provinces it would
+  have without wilds. The balance search takes up to 10 valid maps.
+- **Data.** Wilds live in `MapData.wilds` with their own ids (`w0`, `w1`, ...), never from the
+  game's counter. They are never provinces and never in `neighbors`, so movement, retreat, sight,
+  dominion spread, ritual reach, fort materials and the AI respect them with no rule of their
+  own. Wilds are terrain: every nation sees them, with their names.
+- **On by default.** New Game and the headless runner make maps with wilds. `GameSetup.wilds:
+  false` (`MapGenParams.wilds: false`) draws none and makes every map step for step as the
+  generator did before wilds; only the balance search's 10 candidates (6 before) can pick a more
+  even map where none of the first 6 was within the ratio.
+- **Not in M1:** impassable borders between provinces (ridges) with passes that open or close,
+  fliers, chasms, roads and tunnels.
 
 **Economy and population (Phase 2)**
 - **Daily application**: every monthly rate (gold, materials, mana, growth, unrest) is

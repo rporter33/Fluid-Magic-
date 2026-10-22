@@ -34,7 +34,7 @@ function war(state: GameState, red: NationId): Command[] {
 }
 
 describe('holdSieges', () => {
-  /** Red besieges Green's capital, p59, with walls at full strength. */
+  /** Red besieges Green's capital, p57, with walls at full strength. */
   function siegeField() {
     const f = redField();
     const fort = f.state.nations[f.green]!.capital;
@@ -113,7 +113,7 @@ describe('holdSieges', () => {
       { type: 'setOrder', nation: red, commander: loser.id, order: 'idle' },
     ]);
     // At another fort the same leaders draw anew: about 2 x 0.6 x 0.4 of them differ.
-    const other = annex(state, green, P('p45')).id;
+    const other = annex(state, green, P('p10')).id;
     addArmy(state, green, other, 'cinderWarrior', 5, 'wardenCaptain');
     state.provinces[fort]!.siege = null;
     state.provinces[other]!.siege = { attacker: red, wallHp: 300, storm: false };
@@ -164,14 +164,14 @@ describe('holdSieges', () => {
   });
 
   it('ends a pillage held anywhere but at a siege, even where Defense holds the army', () => {
-    // The fort the army pillaged fell: it stands pillaging its own province, p50, with a small
+    // The fort the army pillaged fell: it stands pillaging its own province, p15, with a small
     // Green army next door, so Defense keeps it there.
     const { state, red, green, army } = redField();
-    annex(state, red, P('p50'));
-    annex(state, green, P('p45'));
-    army.location = P('p50');
+    annex(state, red, P('p15'));
+    annex(state, green, P('p10'));
+    army.location = P('p15');
     army.order = { kind: 'pillage' };
-    addArmy(state, green, P('p45'), 'cinderWarrior', 5, 'wardenCaptain');
+    addArmy(state, green, P('p10'), 'cinderWarrior', 5, 'wardenCaptain');
     const idle: Command = { type: 'setOrder', nation: red, commander: army.id, order: 'idle' };
     expect(sieges(state, red).plan.out).toEqual([idle]);
     const plan = createPlan(state, red);
@@ -185,9 +185,9 @@ describe('makeWar: sieges first', () => {
   it('reinforces a siege short of the storm odds, without odds of its own', () => {
     const f = redField();
     const fort = f.state.nations[f.green]!.capital;
-    annex(f.state, f.red, P('p33'));
+    annex(f.state, f.red, P('p58'));
     besiege(f.state, f.red, fort);
-    f.army.location = P('p33');
+    f.army.location = P('p58');
     const defenders = defenderPower(f.state, fort);
     expect(armyPower([f.army])).toBeLessThan(AI.warRatio * defenders);
     expect(war(f.state, f.red)).toEqual([moveCmd(f.red, [f.army], [fort])]);
@@ -197,17 +197,17 @@ describe('makeWar: sieges first', () => {
   });
 
   it('counts the armies on the way there toward the storm odds', () => {
-    // Red besieges Green's p45 with a small army, and a second marches there from p50 that
-    // brings the siege past the storm odds; Red's army in p50 cannot take p45 by itself.
+    // Red besieges Green's p10 with a small army, and a second marches there from p15 that
+    // brings the siege past the storm odds; Red's army in p15 cannot take p10 by itself.
     const { state, red, green, army } = redField();
-    annex(state, red, P('p50'));
-    annex(state, green, P('p45'));
-    addArmy(state, green, P('p45'), 'cinderWarrior', 30, 'wardenCaptain');
-    const besieger = besiege(state, red, P('p45'));
-    const defenders = defenderPower(state, P('p45'));
-    const marcher = addArmy(state, red, P('p50'), 'cinderWarrior', 40);
-    expect(applyCommand(state, moveCmd(red, [marcher], [P('p45')]))).toEqual({ ok: true });
-    army.location = P('p50');
+    annex(state, red, P('p15'));
+    annex(state, green, P('p10'));
+    addArmy(state, green, P('p10'), 'cinderWarrior', 30, 'wardenCaptain');
+    const besieger = besiege(state, red, P('p10'));
+    const defenders = defenderPower(state, P('p10'));
+    const marcher = addArmy(state, red, P('p15'), 'cinderWarrior', 40);
+    expect(applyCommand(state, moveCmd(red, [marcher], [P('p10')]))).toEqual({ ok: true });
+    army.location = P('p15');
     expect(armyPower([besieger])).toBeLessThan(AI.stormRatio * defenders);
     expect(armyPower([besieger, marcher])).toBeGreaterThanOrEqual(AI.stormRatio * defenders);
     expect(armyPower([army])).toBeLessThan(AI.warRatio * defenders);
@@ -217,28 +217,28 @@ describe('makeWar: sieges first', () => {
 
 describe('makeWar: Wellspring denial', () => {
   /**
-   * Red owns every province but Green's capital and the Wellsprings p51 and p55, which Green
+   * Red owns every province but Green's capital and the Wellsprings p3 and p43, which Green
    * owns: two of three, enough to win once claimed. A Green army at home shuts the odds gate.
    */
   function denial() {
     const f = redField();
     const { state, red, green } = f;
     for (const p of Object.values(state.provinces)) if (p.owner === null) annex(state, red, p.id);
-    annex(state, green, P('p51'));
-    annex(state, green, P('p55'));
+    annex(state, green, P('p3'));
+    annex(state, green, P('p43'));
     addArmy(state, green, state.nations[green]!.capital, 'warden', 60, 'wardenCaptain');
-    const priest = createCommander(state, 'grovePriest', green, P('p55'));
+    const priest = createCommander(state, 'grovePriest', green, P('p43'));
     return { ...f, priest };
   }
 
   it('targets the enemy Wellsprings past the gate, a claim under way first', () => {
     const { state, red, army, priest } = denial();
     priest.order = { kind: 'claimWellspring', daysLeft: 5 };
-    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p55'))!)]);
+    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p43'))!)]);
     // No claim: unclaimed before claimed.
     priest.order = { kind: 'idle' };
-    state.provinces[P('p55')]!.wellspringClaimedBy = state.provinces[P('p55')]!.owner;
-    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p51'))!)]);
+    state.provinces[P('p43')]!.wellspringClaimedBy = state.provinces[P('p43')]!.owner;
+    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p3'))!)]);
   });
 
   it('turns a field army on the move to deny the Wellspring', () => {
@@ -247,7 +247,7 @@ describe('makeWar: Wellspring denial', () => {
     expect(applyCommand(state, moveCmd(red, [army], elsewhere))).toEqual({ ok: true });
     const legEnd = army.transit!.to;
     const out = war(state, red);
-    expect(out).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p51'))!)]);
+    expect(out).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p3'))!)]);
     expect(legEnd).not.toBe(capital);
   });
 
@@ -257,16 +257,16 @@ describe('makeWar: Wellspring denial', () => {
     expect(war(state, red)).toEqual([]);
     // Month 12 begins on day 330.
     state.day = 11 * 30;
-    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p51'))!)]);
+    expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], P('p3'))!)]);
   });
 
   it('attacks the first hostile province on the way when no Wellspring is in reach', () => {
     const f = redField();
     const { state, red, green, army, capital } = f;
-    annex(state, green, P('p51'));
-    annex(state, green, P('p55'));
+    annex(state, green, P('p3'));
+    annex(state, green, P('p43'));
     // From Red's land (its capital alone), the route toward the first Wellspring.
-    const [first] = adjacencyRoute(state, [capital], P('p51'));
+    const [first] = adjacencyRoute(state, [capital], P('p3'));
     expect(state.provinces[first!]!.owner).toBeNull();
     expect(war(state, red)).toEqual([moveCmd(red, [army], findPathFor(state, [army], first!)!)]);
     // The step is the nation's, not the army's: marching there, the army keeps its aim.

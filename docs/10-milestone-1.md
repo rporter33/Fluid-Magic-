@@ -133,6 +133,19 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
 ### Phase 7: AI
 - Per `docs/08-ai.md`. Replace the dummy AI in the headless runner. Behavior tests.
 
+### Phase 1b: Impassable terrain (owner decision 2026-10-21)
+- The owner's direction: "i want to make sure the maps have some impassible terrain that is
+  noticeable". Rules in `docs/01-core-rules.md` §2 and its Implementation decisions ("Wilds").
+- Commit A (any time): `mapgen/wilds.ts` behind `MapGenParams.wilds` (default false),
+  `MapData.wilds` with the next `STATE_VERSION` and its migration (`wilds: []`), the new
+  `validateMap` checks and tests; a hash recorded from the earlier generator proves that maps
+  with wilds off are unchanged.
+- Commit B (the owner's decision, after A): wilds on in New Game and `sim:aivai`; `MAPGEN.balanceCandidates`
+  10; seed-pinned fixtures re-pinned; 20 AI games re-measured and the matchup recorded.
+- Tests: exact province count and terrain shares with wilds; interior wilds at least 3 cells
+  from capitals and from each other; no cut vertex; detours of at most 6; capital rings
+  unchanged; paths, sight, rituals and spread go around wilds; generation time.
+
 ### Phase 8: Map rendering and core UI
 - Pixi map with province polygons, labels, overlays, army markers, camera. React shell,
   store, loop, top bar, speed controls, province panel, commander panel, recruit panel,

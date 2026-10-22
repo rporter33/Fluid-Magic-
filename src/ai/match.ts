@@ -24,14 +24,15 @@ export interface MatchResult {
 
 /**
  * The headless runner's defaults (docs/08 decisions, "The headless runner"). `wilds`: whether
- * its maps have impassable wild ranges (Phase 1b; on from the owner's decision commit).
+ * its maps have impassable wild ranges (Phase 1b; on since the owner's decision of 2026-10-21,
+ * like New Game).
  */
 export const RUNNER_DEFAULTS: {
   readonly games: number;
   readonly seed: number;
   readonly months: number;
   readonly wilds: boolean;
-} = { games: 20, seed: 1, months: 100, wilds: false };
+} = { games: 20, seed: 1, months: 100, wilds: true };
 
 /** The headless runner's two nations, in the order of its even-numbered games. */
 export const RUNNER_NATIONS: readonly NationDefId[] = ['cinderHorde', 'thornwood'];

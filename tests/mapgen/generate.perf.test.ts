@@ -1,8 +1,8 @@
 // Generation time with wilds on (Phase 1b; war-table design 1.9 and R30): the median over seeds
 // 1 to 10 stays under 150 ms on Medium with 2 nations and under 1,000 ms with 4. The design
 // measured means of 26 and 420 ms with the balance search at 10 candidates; the test runs at
-// MAPGEN.balanceCandidates (6 until the owner's decision commit makes it 10). A timing test: on
-// a loaded machine run this file alone.
+// MAPGEN.balanceCandidates (10 since the owner's decision commit). A timing test: on a loaded
+// machine run this file alone.
 import { describe, expect, it } from 'vitest';
 import { generateMap } from '../../src/mapgen/generate';
 import type { CapitalSpec } from '../../src/mapgen/types';

@@ -145,6 +145,17 @@ describe('createGame', () => {
     expect(twoNationGame(8).map).not.toEqual(state.map);
   });
 
+  it('makes the map with wilds unless the setup turns them off (New Game, Phase 1b)', () => {
+    expect(state.map.wilds.length).toBeGreaterThan(0);
+    expect(twoNationGame(7, {}, {}, true)).toEqual(state);
+    const without = twoNationGame(7, {}, {}, false);
+    expect(without.map.wilds).toEqual([]);
+    expect(Object.keys(without.map.provinces)).toHaveLength(
+      Object.keys(state.map.provinces).length,
+    );
+    expect(without.map).not.toEqual(state.map);
+  });
+
   it('rejects bad setups', () => {
     const base = { seed: 1, mapSize: 'medium' as const };
     expect(() => createGame({ ...base, nations: [nation('thornwood')] })).toThrow(RangeError);

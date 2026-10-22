@@ -16,7 +16,8 @@ import type { CommanderState, GameSetup, GameState, PretenderDesign } from '../.
 
 /**
  * Removes what Phase 6b.1 and Phase 1b added to the saved shape, so older and newer states
- * compare. The pinned games have no wilds; a map with any would not compare.
+ * compare. The pinned games have no wilds (their setups turn them off, as the pins were computed
+ * before wilds existed); a map with any would not compare.
  */
 export function stripped(state: GameState): string {
   if (state.map.wilds.length > 0) throw new Error('a pinned game has wilds');
@@ -63,6 +64,10 @@ function inPhase6Shape(value: unknown): string {
   });
 }
 
+/**
+ * The pinned games' setup: on a map without wilds, since New Game's default (wilds on, Phase 1b)
+ * makes a different map from the one the pins were computed on.
+ */
 function setupWith(nation: NationDefId, design: PretenderDesign, seed: number): GameSetup {
   const red = nation === 'cinderHorde' ? design : defaultPreset('cinderHorde').design;
   const green = nation === 'thornwood' ? design : defaultPreset('thornwood').design;
@@ -73,6 +78,7 @@ function setupWith(nation: NationDefId, design: PretenderDesign, seed: number): 
       { nation: 'cinderHorde', pretender: red, ai: null },
       { nation: 'thornwood', pretender: green, ai: null },
     ],
+    wilds: false,
   };
 }
 

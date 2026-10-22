@@ -27,8 +27,8 @@ export interface MapGenParams {
   /** One entry per nation, 2 to 4. */
   capitals: readonly CapitalSpec[];
   /**
-   * Impassable wild ranges (Phase 1b). Absent or false: none, and the map is exactly the one
-   * the generator made before wilds existed.
+   * Impassable wild ranges (Phase 1b). Absent or false: none, and every step and draw is the
+   * generator's from before wilds existed. New Game turns them on (GameSetup.wilds).
    */
   wilds?: boolean;
 }

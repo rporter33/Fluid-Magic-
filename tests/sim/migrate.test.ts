@@ -37,9 +37,12 @@ function asVersion(saved: GameState, version: 1 | 2 | 3): GameState {
   return old;
 }
 
-/** A saved game with one recorded battle, as JSON would bring it back. */
-function savedWithBattle(): GameState {
-  const { state, red, capital, army } = redField();
+/**
+ * A saved game with one recorded battle, as JSON would bring it back. Its map has no wilds unless
+ * `wilds`: the saves of versions 1 to 3 it stands for were made before wilds existed.
+ */
+function savedWithBattle(wilds = false): GameState {
+  const { state, red, capital, army } = redField(1, wilds);
   army.squads[0]!.count = 60;
   army.squads[0]!.hp = 60 * 11;
   const target = neighbors(state, capital)[0]!;
@@ -132,8 +135,9 @@ describe('migrateState', () => {
     );
   });
 
-  it('leaves a current save as it is, re-runs and all', () => {
-    const saved = savedWithBattle();
+  it('leaves a current save as it is, wilds, re-runs and all', () => {
+    const saved = savedWithBattle(true);
+    expect(saved.map.wilds.length).toBeGreaterThan(0);
     const copy = structuredClone(saved);
     expect(migrateState(saved)).toEqual(copy);
     const b = saved.battles[0]!;

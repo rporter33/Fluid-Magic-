@@ -1,5 +1,6 @@
-// Shared setups for the army pass's tests (defense*.test.ts, war*.test.ts), all on seed 1, where
-// Red's capital is p48 with the neighbors p17, p50, and p57.
+// Shared setups for the army pass's tests (defense*.test.ts, war*.test.ts), all on seed 1's map
+// with wilds (re-pinned in Phase 1b's commit B from the map without them), where Red's capital is
+// p42 with the neighbors p15, p19, and p29.
 import { expect } from 'vitest';
 import { adjacencyRoute } from '../../src/ai/army';
 import { createCommander } from '../../src/sim/commanders';
@@ -30,11 +31,14 @@ export function setTroops(commander: CommanderState, count: number, hp = 11): vo
   squad.hp = count * hp;
 }
 
-/** Red's capital p48 with its neighbors p17, p50, and p57 annexed; p50 and p57 are apart. */
+/**
+ * Red's capital p42 with its neighbors p15, p19, and p29 annexed; p15 and p29 are apart, and p19
+ * borders both.
+ */
 export function home() {
   const f = redField();
-  for (const p of ['p17', 'p50', 'p57']) annex(f.state, f.red, P(p));
-  expect(f.capital).toBe('p48');
+  for (const p of ['p15', 'p19', 'p29']) annex(f.state, f.red, P(p));
+  expect(f.capital).toBe('p42');
   return f;
 }
 
@@ -54,13 +58,13 @@ export function besiegeCapital(
 }
 
 /**
- * Red owns the Wellspring p51, its neighbor p42, and the land between p42 and the capital; Red's
- * priest walks from p42 to claim p51, and Red's army stands at home.
+ * Red owns the Wellspring p3, its neighbor p2, and the land between p2 and the capital (p15 and
+ * p10); Red's priest walks from p2 to claim p3, and Red's army stands at home.
  */
 export function springField() {
   const f = redField();
-  const spring = annex(f.state, f.red, P('p51')).id;
-  const next = annex(f.state, f.red, P('p42')).id;
+  const spring = annex(f.state, f.red, P('p3')).id;
+  const next = annex(f.state, f.red, P('p2')).id;
   for (const p of adjacencyRoute(f.state, [f.capital], next)) annex(f.state, f.red, p);
   const priest = commandersIn(f.state, f.capital).find((c) => c.unit === 'pyrePriest')!;
   priest.location = next;
@@ -69,14 +73,14 @@ export function springField() {
 }
 
 /**
- * Red owns p45 next to Green's p3, where a Green army of 40 Cinder Warriors stands, and p50 and
- * p17 next to p45; p3 touches no other Red province, so only p45 is threatened. Red has no gold.
+ * Red owns p10 next to Green's p2, where a Green army of 40 Cinder Warriors stands, and p15 and
+ * p19 next to p10; p2 touches no other Red province, so only p10 is threatened. Red has no gold.
  */
 export function frontier() {
   const f = redField();
-  for (const p of ['p17', 'p50', 'p45']) annex(f.state, f.red, P(p));
-  annex(f.state, f.green, P('p3'));
-  const enemy = addArmy(f.state, f.green, P('p3'), 'cinderWarrior', 40, 'wardenCaptain');
+  for (const p of ['p19', 'p15', 'p10']) annex(f.state, f.red, P(p));
+  annex(f.state, f.green, P('p2'));
+  const enemy = addArmy(f.state, f.green, P('p2'), 'cinderWarrior', 40, 'wardenCaptain');
   f.state.nations[f.red]!.gold = 0;
-  return { ...f, enemy, front: P('p45') };
+  return { ...f, enemy, front: P('p10') };
 }

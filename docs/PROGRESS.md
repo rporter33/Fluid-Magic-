@@ -577,7 +577,9 @@ the sim).
 - Behavior guard: `tests/sim/battle/golden.json` is byte for byte unchanged and its test
   passes; the six Phase 6 presets' pins (`presets.test.ts`) pass; `npm run sim:aivai -- --games
   20 --seed 1` gives Cinder Horde 10, Thornwood 9, no winner 1, mean 26.8 months, 0 refused
-  commands, as before.
+  commands, as before. Measured without wilds, before Phase 1b made them the default; since
+  then `--wilds off` plays these same games, and the default runner's, with wilds, are under
+  Phase 1b below.
 - Measured duel bands (`npm run sim:duel`, seeds 0 to 399; win % against weak plains / plains /
   hills / forest / mountain; immobile bodies defend): Oracle 0/0/0/0/0, Titan 40/2/0/11/0,
   Great Wyrm 100/100/75/100/5, Living Monolith 100/100/100/100/31, Ascended Hero 15/0/0/3/0,
@@ -597,7 +599,8 @@ the sim).
   20 Wardens wins 52% on the mountain, not 42%, with the wolves led and bound rather than
   staged leaderless. `--calibrate` reproduces A.11's n for all sixteen chassis, so no `aiPower`
   moved.
-- Preset matrix (`npm run sim:aivai -- --matrix`, seeds 1 to 20 in both orders, 40 games a
+- Preset matrix without wilds (`npm run sim:aivai -- --matrix`, measured before Phase 1b made
+  wilds the default; with wilds under Phase 1b below; seeds 1 to 20 in both orders, 40 games a
   row, 440 games, 0 refused commands, 379 s): baseline Warlord against Elder Oak 24 to 13, 3
   without a winner; each preset's share against the opposing default: Ember Oracle 57%,
   Wildfire 83%, Deep Root 10%, Wyrm of the Loam 43%, Undying Flame 80%, Pyre Host 80%, Dread
@@ -622,7 +625,8 @@ the sim).
 - Review fixes (the 6b.3 review's confirmed findings): F3, the AI's pretender kept every squad
   of its monthly-summon unit, so the Cinder Idol hoarded 35 to 40 of its own ritual sprites
   in the capital; it now keeps that unit up to the summon's cap and splits off the rest for
-  the garrison (Dread Idol's matrix share 80% to 75%; no other row, no default game moved).
+  the garrison (measured without wilds: Dread Idol's matrix share 80% to 75%; no other row,
+  and no game of the runner without wilds, moved).
   N8, a Phoenix dying in the storm of its last fort was promised a return in the tick that
   eliminated its nation; `eliminate` now cancels a promised return with "Ysolde will not rise
   again." (`godName` in `src/sim/pretender.ts` names a god no commander carries). F6, the
@@ -634,13 +638,15 @@ the sim).
   sim's, and the empty plural. Each of their 17 mutants (the 11 survivors and 6 of the two
   fixes) now fails a test.
 
-## Phase 1b: Impassable terrain (wilds built behind a switch)
+## Phase 1b: Impassable terrain (done)
 
-Commit A of two (war-table design, section 1, 1.3 to 1.9; the owner's direction of 2026-10-21:
-"i want to make sure the maps have some impassible terrain that is noticeable"). Wilds are
-named mountain massifs (peaks) and dark lakes (meres): map cells that are not provinces. Here
-they are built, validated and tested, but off everywhere; commit B, the owner-decision commit,
-turns them on.
+Two commits (war-table design, section 1, 1.3 to 1.9; the owner's direction of 2026-10-21:
+"i want to make sure the maps have some impassible terrain that is noticeable"; the form was
+offered to the owner as the default on 2026-10-22). Wilds are named mountain massifs (peaks)
+and dark lakes (meres): map cells that are not provinces. Commit A built, validated and tested
+them behind a switch, off everywhere; commit B, the owner-decision commit, turns them on.
+
+### Commit A: wilds behind a switch
 - Content: `WILD_KINDS` (`peaks`, `mere`), `WildKind` and `WILDS` (ranges per 20 provinces,
   the kind cycle, cell weights, the capital and separation guards, the detour, seed tries) in
   `content/mapgen.ts`; `WILD_NAME_PARTS` in `content/names.ts`. `MAPGEN.balanceCandidates`
@@ -721,6 +727,124 @@ turns them on.
   docs/01, docs/09-balance and docs/10 text, any re-pins (`wilds.pins.test.ts` must be
   re-pinned, since 10 candidates pick other wild maps), and the matchup row. Rendering,
   tooltips, the Codex page, labels and the palette tests come with Phase 8 (1.10).
+
+### Commit B: impassable terrain on (owner decision 2026-10-21)
+
+- Defaults: `createGame` makes the map with wilds unless `GameSetup.wilds` is false (it was
+  on only when true), so New Game, which builds its setup without the switch (Phase 9), gets
+  them; `RUNNER_DEFAULTS.wilds` is true, so `npm run sim:aivai` has them unless `--wilds off`.
+  `MapGenParams.wilds` stays off unless set: the generator's own default does not change.
+  `MAPGEN.balanceCandidates` 6 to 10.
+- Re-pins, file by file, each for what a wild map or the balance search changes and nothing
+  else:
+  - `tests/mapgen/generate.identity.test.ts`: the wilds-off hashes are now those of a clean
+    export of `ec9a907` with `balanceCandidates` set to 10; all 30 match it. 27 equal the hashes
+    recorded at 6; small-4-4, medium-4-5 and large-4-1 had no map within 1.5 among their first
+    6 valid candidates and now keep a more even one (ratio 1.784 to 1.412, 1.556 to 1.139,
+    2.157 to 1.647); the file's header keeps the start of their 6-candidate hashes. `ec9a907` at 6
+    still reproduces all 30 recorded hashes.
+  - `tests/mapgen/wilds.pins.test.ts`: 7 of 20 re-recorded (small-4-2 to 4-5, medium-4-1, 4-2
+    and 4-4); each new map is more even than the one picked at 6 (for example small-4-3 2.294
+    to 1.674). The 13 others, all the 2-nation pins among them, are unchanged.
+  - `tests/content/presetPins.ts`: the pinned setups set `wilds: false`. The pins were computed
+    before wilds, so they compare only on the map without them; with it they still match, so
+    the presets play exactly as before (the runner's Medium maps without wilds did not move
+    with 10 candidates: 0 of 200).
+  - `tests/sim/migrate.test.ts`: the saves of versions 1 to 3 come from a game without wilds
+    (`redField(1, false)`), since those versions predate wilds; the current-save test now uses
+    a wild map.
+  - `tests/sim/pretender.play.test.ts`: the Monolith's lost battle moved from seed 1 to seed 3.
+    On seed 1 with wilds the capital's guarded neighbors are plains, wasteland and forest, where
+    it routs the guards and wins; seed 3's first is mountains, where they hold for 50 rounds as
+    seed 1's swamp did. The test now asserts the terrain.
+  - `tests/ai/armyFixtures.ts` and the tests built on seed 1's provinces
+    (`defense.test.ts`, `defense.relief.test.ts`, `defense.escort.test.ts`, `war.test.ts`,
+    `war.targets.test.ts`, `military.test.ts`, `economy.test.ts`): moved to seed 1's map with
+    wilds by role. Red's capital is p42 (was p48); p19 borders the capital and both other
+    neighbors (was p17), p15 the plains neighbor (p50), p29 the other (p57); the front is p10
+    beside Green's p2 (p45 and p3); the spring field is the Wellspring p3 with p2 and the road
+    p15, p10 (p51, p42); the denial Wellsprings p3 and p43 (p51, p55); p58 stands next to
+    Green's capital p57 (p33 next to p59). Where the role reads the index order the expectation
+    moved with it: the first exit, the sally's way out, is now p15. Three scenarios needed more
+    than a new id: no province within 2 hops of the new capital is as near two exits, so the
+    gather tie uses p6 with all but Green's corner annexed (21 days to p15 and to p19); the
+    "value against path days" test's far province is p56 behind a 24-day road with the near
+    p10 set to 19,000 people (p10 has 6,400, below the far one's 21,000 by more than the
+    discount); and `economy.test.ts` takes E and S as the capital's third and first neighbors
+    (p29 beside Thornwood's p40, p15 beside the strong p10), since its first neighbor now has
+    no province beyond the capital's ring. The lab test in `economy.test.ts` (p50, p51) and the
+    comment in `assess.test.ts` (12 troops) still hold on the new map, so they are unchanged.
+  - `tests/ai/match.test.ts`, `match.wilds.test.ts`: the runner defaults to wilds; createGame's
+    default with no switch equals the runner's setup; the wilds-off comparison asks for off.
+  - New: `tests/sim/createGame.test.ts` checks the default and `wilds: false`;
+    `tests/sim/fixtures.ts` gained an optional `wilds` for `twoNationGame` and `redField`.
+- Runner (`npm run sim:aivai -- --games 20 --seed 1`): before (commit A, no wilds) Cinder Horde
+  10, Thornwood 9, no winner 1, mean 26.8 months, 0 refused; after (wilds) Cinder Horde 17,
+  Thornwood 3, no winner 0, mean 23.6 months, 0 refused, 15.5 s, AI 1.28 ms mean and 46.6 ms
+  max per call (a re-run gave the same games with 8.8 ms max, so the 46.6 was the shared
+  machine; 11.1 and 12.2 ms without wilds). With `--wilds off` commit B plays the before games
+  exactly (10, 9, 1, 26.8 months). Rebuilt on Phase 6b.3 (below), both runs replay game for
+  game: with wilds 17, 3, 0, 23.6 months, 0 refused (18.6 s, AI 1.55 ms mean, 21.0 ms max per
+  call); with `--wilds off` Phase 6b.3's 20 games (10, 9, 1, 26.8 months). The same 100 seeds
+  (3000 days, measured before the rebuild on Phase 6b.3) side by side, from an instrumented
+  copy outside the repo: wilds on 77 / 20 / 3, mean 28.0
+  months; off 70 / 28 / 2, mean 24.9; 0 refused either way; Thornwood's share of decided games
+  21% against 29% (Fisher exact p = 0.24). Nation commanders that died with no friendly
+  province to retreat to: 13 with wilds, 7 without (independents, which never retreat, about
+  2,870 and 2,810). docs/09-balance has the rows.
+- Docs: docs/01 §2's rule and the Adjacency and Terrain bullets, and its "Wilds (Phase 1b)"
+  decisions, which quote the owner and record the default offered on 2026-10-22 (with one
+  sentence changed from the design's block: wilds off reproduces the earlier maps step for
+  step, but the balance search now has 10 candidates); docs/09-balance rows dated 2026-10-22
+  and the matchup under the checklist; docs/10's Phase 1b section; docs/06 and docs/08 lines
+  that said the default was off. The design's other docs blocks (docs/10's Phase 8 to 12
+  additions and acceptance criteria, docs/09-balance's map presentation table and its
+  playtest line, docs/06's present/ and render/ layout, docs/07, docs/09-art, docs/12) land
+  with the phases that build them.
+- Joined with Phase 6b.3 (built first on Phase 6b.2, then rebuilt on Phase 6b.3, whose numbers
+  were all measured without wilds): the 6b.3 tests were read against the new default by the
+  rule above (pins and replays computed before wilds turn wilds off; scenarios move by role).
+  None names a province or a seed's layout: its provinces come from roles (the capital, its
+  neighbors, the first independent province), so they hold on the wild maps. Four changed:
+  - `tests/ai/matrix.test.ts`, "leave the default runner exactly as it was without them": the
+    written-out Phase 7 setup is a runner replay pinned before wilds, so it is compared with
+    `runnerSetups(1, 20, [], false)`; the default now differs from it only by `wilds: true`,
+    which the test also checks.
+  - `tests/ai/matrix.test.ts`, "plays each Phase 6b.3 preset’s first matrix games for a year
+    with no refused command": with wilds four of seed 1's twelve games end by Wellsprings on
+    days 300 to 350 (seeds 2 and 3 have five and two such games; without wilds all 36 last the
+    year), so a year cannot be played on the wild maps of the first seed. The test keeps seed 1
+    without wilds, and a new test plays the same games on the default maps with wilds: no
+    refused command, and the full 360 days unless a nation wins.
+  - `tests/content/presets.test.ts`: the six 6b.3 presets' 365-day determinism plays through
+    `gamePin`, now on the pins' map without wilds (`presetPins.ts`); a comment says so. After
+    the join's review, a new test plays the same games (seed 11, each preset against the
+    opposing default) twice on maps with wilds and compares their hashes and logs, so the AI's
+    play of the new presets is checked on the default maps too.
+  - `tests/sim/pretender.reform.test.ts`, the save test (after the join's review): its saves of
+    versions 2 and 3 predate wilds, so they come from the same game on a map without them
+    (`phoenixGame` takes the switch), and the version-3 save lifts to that game's return day
+    and hash; the save of the current version stays on the default map with wilds.
+  - Checked and unchanged on the new default: `duel.test.ts` (battles only; its Avatar row reads
+    a god at its capital), `pretender.summon.test.ts` and the rest of `pretender.reform.test.ts`
+    (the god at its capital, an independent province, a guarded neighbor, all by role), the
+    role, recruit, faith, magic and assess tests, and `createGame.test.ts`'s World Tree spring.
+    The 6b.3 review's 17 mutants and the 77 of its first mutation run were run again on this
+    commit and on Phase 6b.3 itself: all 17 and the same 66 of the 77 are killed on both (the
+    other 11 survive or no longer apply on both, as in that run).
+  - Re-measured on the new default: the preset matrix with wilds (`npm run sim:aivai --
+    --matrix`, 440 games, 0 refused, 400 s on a shared machine): baseline Warlord 34, Elder
+    Oak 6, none without a winner; Ember Oracle 60%, Wildfire 70%, Deep Root 10%, Wyrm of the
+    Loam 23%, Undying Flame 80%, Pyre Host 80%, Dread Idol 73%, Heartwood 20%, Hunt Lord 20%,
+    Mother of the Pack 23%, so only Ember Oracle is within 35% to 65% (two without wilds).
+    `npm run sim:duel` is battle-only and prints exactly Phase 6b.3's table.
+  - Docs: Phase 6b.3's runner and matrix numbers, here and in docs/09-balance, say they were
+    measured without wilds; docs/08's sentence on the runner without `--presets` now says it
+    plays the setups of before Phase 6b.3 but for the map (with wilds by default, exactly as
+    before with `--wilds off`).
+- Tests: 2193 before, 2196 after (three new: the createGame default, the 6b.3 presets' first
+  matrix games on the default wild maps, and their year played twice on maps with wilds).
+  Built on Phase 6b.2 the commit went from 2076 to 2077.
 
 ## Deviations from the docs
 
@@ -904,9 +1028,17 @@ turns them on.
   S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
 - The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin, and Phase 1b's
   `generate.perf.test.ts`) can fail when the machine is loaded by other processes; they pass
-  when run alone.
-- Preset matrix (Phase 6b.3, for Phase 12): 8 of 10 presets miss the 35% to 65% band against
-  the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%, Dread Idol 75%; Deep
+  when run alone. So can `siege.test.ts`'s storm test that builds 60 games, under vitest's 5 s
+  default: with wilds on by default it took 1.8 s alone against 0.9 s without them, and timed
+  out once in a full run at a load average near 9 (measured while Phase 1b joined Phase 6b.3).
+  Tests in three more files timed out at 5 s in full runs at load averages of 6 to 9 during that
+  join and its review, and pass alone: `generate.test.ts`'s Medium sweep with 4 nations
+  ("medium with 3", 2.9 s alone at a load average near 1), `wilds.large.test.ts`'s 4-nation
+  seeds (seeds 1 and 2 take 2.0 and 2.3 s alone, the others about 1 s; seeds 1, 2 and 14 have
+  timed out) and `determinism.test.ts`'s 365-day replay through a save and load (1.1 s alone). A
+  full run that fails one of these and passes it alone has met load, not a regression.
+- Preset matrix (Phase 6b.3, for Phase 12), measured without wilds: 8 of 10 presets miss the
+  35% to 65% band against the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%, Dread Idol 75%; Deep
   Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The default pairing itself leans
   Red when each seed is played in both orders: Warlord 24, Elder Oak 13, 3 without a winner,
   of 40. The runner's 20 games, one order per seed, split 10 to 9; the other order of the same
@@ -917,25 +1049,29 @@ turns them on.
   AI use of the new bodies, and the matrix's band, and should first remove the nation-order
   effect or score each preset against the same-order (or an order-balanced) default baseline:
   a 35% to 65% band against a 60% to 33% baseline cannot be met by presets of both nations
-  (review finding F6; the cut lines would not meet it either).
+  (review finding F6; the cut lines would not meet it either). With wilds, the default since
+  Phase 1b, 9 of 10 miss (only Ember Oracle, 60%, is in the band) and the baseline leans
+  further, Warlord 34 to Elder Oak's 6 over both orders, so against its own baseline every Red
+  preset trails Warlord and every Green one is within 8 points of Elder Oak (docs/09-balance).
 - Phase 6b.3 leaves for later: `aiPower` is still unread (Phase 8 moves `armyPower` into the
   sim), so the AI cannot see a god's battle-start summons or Fear and never sends a raider god
   alone; A.10's expansion pace report and the nightly double run of the matrix are Phase 12;
   the presets' looks and identities are Phase 9. No preset uses the Ascended Hero, Primordial,
   Ember Hierophant or Elder Wyrm, so the AI plays them only in step tests. A full matrix run
-  takes about 6 minutes.
-- Phase 1b (for commit B): the runner's matchup leans to Cinder Horde with or without wilds.
-  Over 100 games from seed 1 (3000 days each), wilds off give Cinder Horde 70, Thornwood 28 and
-  2 with no winner; wilds on give 77, 20 and 3. Thornwood takes 29% of decided games off and
-  21% on, a gap that is not significant (Fisher exact p = 0.245); neither run refused a
-  command. The first 20 games (with wilds off 10, 9 and a timeout; with wilds on 17 and 3, the
-  same at 6 and at 10 balance candidates) are a lucky sample for wilds off, whose games 20 to
-  99 go 60 to 19, so the lean is older than wilds. Commit B records the matchup over at least
-  100 seeds, with wilds on and off on the same seeds side by side, and the retreat-death count.
+  takes about 6 to 7 minutes (379 s without wilds; 400 s with them, on a shared machine).
+- Phase 1b: the runner's matchup leans to Cinder Horde with or without wilds. Over 100 games
+  from seed 1 (3000 days each, re-measured in commit B), wilds off give Cinder Horde 70,
+  Thornwood 28 and 2 with no winner; wilds on give 77, 20 and 3. Thornwood takes 29% of decided
+  games off and 21% on, a gap that is not significant (Fisher exact p = 0.245); neither run
+  refused a command. The first 20 games (with wilds off 10, 9 and a timeout; with wilds on 17
+  and 3) are a lucky sample for wilds off, whose games 20 to 99 go 60 to 19, so the lean is
+  older than wilds. With wilds on by default, the 20 default games now fail the docs/09-balance
+  check (3 of 20 for Thornwood).
 - Balance, older than Phase 1b: the docs/09-balance checklist's "Thornwood beats Cinder Horde
-  in roughly half of AI vs AI games" passes on its 20 default games (seed 1, 10 to 9) only by
-  sample. Over 100 seeds with wilds off Thornwood wins 28 to Cinder Horde's 70 (an even split
-  has binomial p = 3e-5). Not addressed here; the owner or a balance pass should weigh it.
+  in roughly half of AI vs AI games" passed on its 20 default games without wilds (seed 1, 10
+  to 9) only by sample, and fails with them (17 to 3). Over 100 seeds Thornwood wins 28 to
+  Cinder Horde's 70 without wilds and 20 to 77 with them (an even split has binomial p = 3e-5
+  and 5e-9). Not addressed here; the owner or a balance pass should weigh it.
 - For merging later tracks over Phase 1b: `MapData` literals need `wilds` (`[]`), and a later
   `STATE_VERSION` step takes 5 and chains after the 3-to-4 migration. Code in `src/sim` and
   `src/ai` must not read map geometry or `map.wilds` (the adjacency guard test fails).

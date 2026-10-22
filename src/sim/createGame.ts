@@ -89,7 +89,8 @@ export function createGame(setup: GameSetup): GameState {
       terrain: d.capitalTerrain,
       name: d.capitalName,
     })),
-    wilds: setup.wilds === true,
+    // Wilds are on unless the setup turns them off (Phase 1b, the owner's decision 2026-10-21).
+    wilds: setup.wilds !== false,
   });
 
   const state: GameState = {

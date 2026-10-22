@@ -79,8 +79,9 @@ describe('--presets', () => {
   });
 
   it('leave the default runner exactly as it was without them', () => {
-    // The Phase 7 runner's setup, written out: what `npm run sim:aivai` played before 6b.3. Phase
-    // 1b's switch rides in every runner setup; off, createGame makes the map it made without it.
+    // The Phase 7 runner's setup, written out: what `npm run sim:aivai` played before 6b.3, on
+    // maps without wilds (Phase 1b's switch rides in every runner setup; off, createGame makes
+    // the map it made without it, and `--wilds off` plays these games).
     const before = (seed: number, game: number) => {
       const order = game % 2 === 0 ? ['cinderHorde', 'thornwood'] : ['thornwood', 'cinderHorde'];
       return {
@@ -94,7 +95,13 @@ describe('--presets', () => {
         wilds: false,
       };
     };
-    expect(runnerSetups(1, 20)).toEqual(Array.from({ length: 20 }, (_, g) => before(1, g)));
+    expect(runnerSetups(1, 20, [], false)).toEqual(
+      Array.from({ length: 20 }, (_, g) => before(1, g)),
+    );
+    // The default runner differs from it only by the switch, on since the owner's decision.
+    expect(runnerSetups(1, 20)).toEqual(
+      Array.from({ length: 20 }, (_, g) => ({ ...before(1, g), wilds: true })),
+    );
     // Naming the defaults is the same as naming nothing.
     expect(runnerSetups(1, 20, parsePresets('cinderHorde:warlord,thornwood:elderOak'))).toEqual(
       runnerSetups(1, 20),
@@ -220,11 +227,29 @@ describe('--matrix', () => {
       'huntLord',
       'motherOfThePack',
     ]);
+    // On seed 1's maps without wilds, where every one of these games lasts the year. With wilds
+    // (the matrix's default since Phase 1b) four of the twelve end by Wellsprings on days 300 to
+    // 350, so the year is played there in the next test, up to a win.
     for (const pairing of fresh) {
-      for (const setup of matrixSetups(pairing, 1, 1)) {
+      for (const setup of matrixSetups(pairing, 1, 1, false)) {
         const match = runMatch(setup, runAi, 360);
         expect(match.refused, pairingLabel(pairing)).toEqual([]);
         expect(match.days, pairingLabel(pairing)).toBe(360);
+      }
+    }
+  }, 240_000);
+
+  it('plays the same games on the default maps, with wilds, with no refused command', () => {
+    const fresh = matrixPairings().filter(
+      (p) => p.challenger !== null && p.challenger.design.blessings !== undefined,
+    );
+    for (const pairing of fresh) {
+      for (const setup of matrixSetups(pairing, 1, 1)) {
+        const match = runMatch(setup, runAi, 360);
+        expect(match.state.map.wilds.length, pairingLabel(pairing)).toBeGreaterThan(0);
+        expect(match.refused, pairingLabel(pairing)).toEqual([]);
+        if (match.result === null) expect(match.days, pairingLabel(pairing)).toBe(360);
+        else expect(match.result.winner, pairingLabel(pairing)).not.toBeNull();
       }
     }
   }, 240_000);

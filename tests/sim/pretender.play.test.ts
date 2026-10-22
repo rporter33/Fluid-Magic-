@@ -323,11 +323,15 @@ describe('the Living Monolith', () => {
   });
 
   it('dies instead of retreating from a lost battle, and never returns', () => {
-    const { state, red, capital } = redWith(MONOLITH);
+    // Seed 3: the capital's first guarded neighbor is mountains, whose guards the Monolith cannot
+    // break in 50 rounds. (Seed 1's was swamp before wilds; with wilds its neighbors are plains,
+    // wasteland and forest, where it routs them.)
+    const { state, red, capital } = redWith(MONOLITH, 3);
     const god = godOf(state, red)!;
     const target = neighbors(state, capital).find(
       (n) => state.provinces[n]!.owner === null && guards(state, n).length > 0,
     )!;
+    expect(state.map.provinces[target]!.terrain).toBe('mountains');
     // It stands among independents it cannot hurt, beside a runner; both came from the capital,
     // which is a friendly refuge.
     god.location = target;

@@ -2,8 +2,10 @@
 // pretender build spec, A.8): byte for byte, in cost, in bless, and in behavior. The behavior
 // pins were computed on the Phase 6 code before Phase 6b.1 (presetPins.ts says how). The six
 // presets Phase 6b.3 added follow them: each validates, costs what A.8 says, picks its blessing,
-// and plays a year deterministically.
+// and plays a year deterministically, on the pins' map without wilds and on one with them.
 import { describe, expect, it } from 'vitest';
+import { runAi } from '../../src/ai/ai';
+import { playedSetup, RUNNER_NATIONS, runMatch } from '../../src/ai/match';
 import { nationDef, type NationDefId } from '../../src/content';
 import { NATIONS } from '../../src/content/nations';
 import { defaultPreset, PRESETS } from '../../src/content/pretenders/presets';
@@ -274,6 +276,20 @@ describe('the Phase 6b.3 presets (build spec A.8)', () => {
   });
 
   it('play 365 days of the AI deterministically, each against the opposing default', () => {
+    // gamePin plays the pins' setup, on a map without wilds (presetPins.ts, since the six pins
+    // above were computed before Phase 1b), as this check did when Phase 6b.3 wrote it; the next
+    // test plays the same games on maps with wilds.
     for (const p of NEW) expect(gamePin(p.id, 365), p.id).toBe(gamePin(p.id, 365));
+  }, 240_000);
+
+  it('play the same 365 days deterministically on maps with wilds, as New Game makes them', () => {
+    // gamePin's setup (seed 11, Cinder Horde first, both Normal AI) with the switch on.
+    for (const p of NEW) {
+      const play = () => runMatch(playedSetup(11, RUNNER_NATIONS, [p], true), runAi, 365);
+      const [a, b] = [play(), play()];
+      expect(a.state.map.wilds.length, p.id).toBeGreaterThan(0);
+      expect(a.finalHash, p.id).toBe(b.finalHash);
+      expect(a.log, p.id).toEqual(b.log);
+    }
   }, 240_000);
 });

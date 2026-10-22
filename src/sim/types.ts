@@ -57,7 +57,10 @@ export interface GameSetup {
   mapSize: MapSizeId;
   /** 2 to 4 nations; the order fixes nation ids and capital slots. */
   nations: NationSetup[];
-  /** Impassable wild ranges on the map (Phase 1b; MapGenParams.wilds). Absent or false: none. */
+  /**
+   * Impassable wild ranges on the map (Phase 1b; MapGenParams.wilds). Absent or true: the map
+   * has them, as New Game does since the owner's decision of 2026-10-21; false: none.
+   */
   wilds?: boolean;
 }
 
