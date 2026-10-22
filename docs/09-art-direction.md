@@ -27,13 +27,16 @@ opacity is multiplied over every fill. Borders #2B2620 at 2px. The map is painte
 cloth (#E8DCC2) that lies on an oak war table (see "The war table"). No light, grade or
 vignette ever falls on the cloth, so the colors tested below are the colors drawn.
 
-**Distinct colors.** Every pair of terrain fills (the wild grounds included), and every pair of
-mana primaries (independents included), differs by at least CIEDE2000 20 for normal vision and
-12 under simulated protanopia, deuteranopia, and tritanopia. Lightness and the blue-yellow axis,
-which those players still see, carry most of the difference. `tests/content/palette.test.ts`
-enforces this. The original fills failed it (Hills and Wasteland differed by 5.7, about 3 for
-color blind players), as did Red and Green, the two M1 nations (6.9 under deuteranopia). Those
-values were replaced: Red is brighter and more orange, Green deeper and closer to emerald.
+**Distinct colors.** Every pair of terrain fills, each wild ground against every terrain fill, and
+every pair of mana primaries (independents included), differs by at least CIEDE2000 20 for normal
+vision and 12 under simulated protanopia, deuteranopia, and tritanopia. The two wild grounds are
+not compared with each other (they differ by about 4): they never touch, since every range is one
+kind and ranges stand at least 3 cells apart. Lightness and the blue-yellow axis, which those
+players still see, carry most of the difference. `tests/content/palette.test.ts` enforces this
+(the wild grounds from Phase 8). The original fills failed it (Hills and Wasteland differed by
+5.7, about 3 for color blind players), as did Red and Green, the two M1 nations (6.9 under
+deuteranopia). Those values were replaced: Red is brighter and more orange, Green deeper and
+closer to emerald.
 
 **Nation banners.** Ownership bands, dominion candles, and army badges use the nation's
 banner, not its mana color. The first nation of a color in a game takes that color's
@@ -50,7 +53,8 @@ if either the banner differs from the fill, or the keyline differs from both the
 the banner, at the minimums above. Bare bands fail: Thornwood green on Forest is 8.8 under
 deuteranopia. `tests/content/palette.test.ts` checks every banner on every fill.
 
-**Map states.** `tests/content/palette.test.ts` also covers what the map draws over the fills:
+**Map states.** From Phase 8, `tests/content/palette.test.ts` also covers what the map draws over
+the fills:
 - each nation's land-look wash at its cap, against every other terrain unwashed, washed by the
   same nation and washed by another (Cinder Horde ash #8F8C88 at most 10%, Thornwood moss
   #5E7F45 at most 6%);

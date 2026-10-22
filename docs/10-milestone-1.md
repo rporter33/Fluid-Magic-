@@ -233,7 +233,8 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   frame's contract (the stage is the clock and answers seek requests), with the animation table
   of `docs/09-art-direction.md`; the `BattleReplay` modal from battle messages, the replay and
   sound sections of the settings screen, gzipped saves with the `STATE_VERSION` migrations (2
-  from S1, 3 from Phase 6b.1, 4 from Phase 1b), `replay-modal.spec.ts`.
+  from S1, 3 from Phase 6b.1, 4 from Phase 1b, and Phase 8's step for incursions),
+  `replay-modal.spec.ts`.
 - Spell and ability looks for every spell and ability; the eleven storyboards with their
   layers, sound and reduced-motion detail; blessing rings, the god's aura and first-cast
   flourish; placeholder parts for every chassis and slot family.

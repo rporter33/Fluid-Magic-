@@ -96,12 +96,13 @@ fluid-magic/
       abilities.ts        # the abilities catalog (battle-start triggers in M1's Phase 6b.2)
       validateAbilities.ts # ability checks and units' ability lists for content validation
       rules.ts            # rule numbers: time, tax, economy, materials, supply, unrest, mana, pillage
+      ui.ts               # UI thresholds (Phase 8, docs/07); until then `UI` lives in rules.ts
       ai.ts               # difficulty levels and every number the AI plays by (AI)
       independents.ts     # independent troop pools by terrain, strength words
       colors.ts           # the five colors, palettes, enemy/ally pairs, nation banners, map keylines
       terrain.ts
       mapgen.ts           # map sizes and every map generation number (shares, springs, placement)
-      names.ts            # province name syllables per terrain
+      names.ts            # province name syllables per terrain; wild name parts per kind
       units/
         base.ts           # baseline stats and commander weapons
         common.ts         # independents, summons shared across nations, the garrison holder
@@ -139,7 +140,7 @@ fluid-magic/
         names.ts          # COMMANDER_NAMES per color and for independents
     mapgen/
       types.ts            # MapGenParams, CapitalSpec, MapData, MapProvince, MapWild
-      generate.ts         # seed -> MapData (provinces, adjacency, terrain, springs, capitals, wellsprings)
+      generate.ts         # seed -> MapData (provinces, adjacency, terrain, springs, capitals, wellsprings, wilds)
       voronoi.ts          # Poisson disc + Delaunay/Voronoi (use d3-delaunay), Lloyd, adjacency
       geometry.ts         # polygon area, centroid, rounded rectangle, convex clipping, wildOutline
       noise.ts            # seeded simplex noise
@@ -212,7 +213,7 @@ fluid-magic/
   tests/
     sim/*.test.ts
     mapgen/*.test.ts      # one file per mapgen module; fixtures.ts, playable.ts, wildChecks.ts hold shared helpers
-    battle/*.test.ts
+    sim/battle/*.test.ts
     content/validate.test.ts
     ai/*.test.ts
   scripts/

@@ -799,8 +799,9 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   and the matchup under the checklist; docs/10's Phase 1b section; docs/06 and docs/08 lines
   that said the default was off. The design's other docs blocks (docs/10's Phase 8 to 12
   additions and acceptance criteria, docs/09-balance's map presentation table and its
-  playtest line, docs/06's present/ and render/ layout, docs/07, docs/09-art, docs/12) land
-  with the phases that build them.
+  playtest line, docs/06's present/ and render/ layout, docs/07, docs/09-art, docs/12) were
+  left for the phases that build them; they landed early instead, in the docs-only commit
+  below.
 - Joined with Phase 6b.3 (built first on Phase 6b.2, then rebuilt on Phase 6b.3, whose numbers
   were all measured without wilds): the 6b.3 tests were read against the new default by the
   rule above (pins and replays computed before wilds turn wilds off; scenarios move by role).
@@ -861,6 +862,27 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   Design section still describes three columns while criterion 16 and Phase 9 describe the
   six-step designer (the pretender design's section D comes through the UI track). Phase 10
   and Phase 9 settle them.
+
+## Docs: reconcile after Phase 1b (docs only)
+
+- Read docs/01, 06, 07, 09-art, 09-balance, 10 and this file against each other and the code
+  (`STATE_VERSION` 4, `balanceCandidates` 10, wilds on in the runner and New Game). Fixed: the
+  palette rule no longer asks the two wild grounds (about 4 apart, never touching) to differ by
+  20, and its wild checks are marked as Phase 8's; Phase 10's migration list names Phase 8's
+  step; docs/06's layout names `content/ui.ts`, the wild name parts, `generate.ts`'s wilds and
+  `tests/sim/battle/`; docs/09-balance says which rows run ahead of their code and which runner
+  maps moved; the known issues here give the 10-candidate search, the runner with wilds (20 of
+  20 by Wellsprings, mean 23.6 months), game 18 without wilds, and 5 as the next save version.
+  The two open conflicts above stay open. Runner from seed 1: Cinder Horde 17, Thornwood 3, 0
+  refused. Rebuilt on Phase 6b.3 the same reading holds (the runner replays game for game);
+  the known issues also say how Phase 6b.3 was joined.
+- After the join's review: docs/09-balance's AI expansion reach and gold reserve rows (Phase 7)
+  say they were measured without wilds and give the readings on the default maps with wilds,
+  re-measured by the behavior tests' rules over the 20 runner games from base seeds 1, 101 and
+  1001: at day 360 each nation owns at least 12, 12 and 10 provinces with wilds (13, 12 and 13
+  without), and the longest run of an empty capital queue with gold above 200 is 10, 7 and 10
+  days with wilds (8, 5 and 6 without). The reserve row's 7 days came from before Phase 7's
+  review fixes; it now gives the 8 measured after them, as Phase 7 above has it.
 
 ## Deviations from the docs
 
@@ -930,8 +952,10 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
 - Resolved: Thornwood's capital Deepmoss is Forest. Capitals take their terrain from the
   nation, overriding the core rules' "Farmland or Plains" (see `docs/01-core-rules.md`).
 - Capital neighborhoods are balanced to within 1.5x starting population on about 99% of
-  2-nation maps. With 3-4 nations the most even of 6 valid maps is often 1.5x to 2.5x.
-  Revisit in Phase 12 if playtests show lopsided starts.
+  2-nation maps. With 3-4 nations the generator keeps the most even of 10 valid maps (6 before
+  Phase 1b), which with wilds is within 1.5x on 93% of 3-nation and 56% of 4-nation Medium maps
+  (docs/09-balance); the others are above it. Revisit in Phase 12 if playtests show lopsided
+  starts.
 - Wellspring fairness is exact on 2- and 3-nation maps and within 1 hop on 4-nation maps.
 - A dead elevation noise field would not fail any test; terrain wiring is covered only by
   exact shares and clustering. Pinning one seed's terrain would catch it but would churn on
@@ -961,9 +985,10 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
 - Wellspring victory is immediate on the last claim, with no hold period, and it comes early.
   The random dummy won by Wellsprings in 17 of 20 runner games, in a mean of about 27 months.
   Phase 7's AI holds its Wellsprings (Defense right after the capital, PD 10, escorts) and
-  contests the enemy's (denial past the odds gate), yet 19 of the 20 runner games from seed 1
-  end by Wellsprings, none by elimination, in a mean of 23.0 months (11.8 to 33.2), and the
-  other reaches the timeout (game 18, below). A claim takes 10
+  contests the enemy's (denial past the odds gate), yet all 20 runner games from seed 1 end by
+  Wellsprings, none by elimination, in a mean of 23.6 months (11.3 to 43.0) on the default maps
+  with wilds; without wilds 19 did, in a mean of 23.0 months (11.8 to 33.2), and the other
+  reached the timeout (game 18, below). A claim takes 10
   days and a call comes every 5, so denial seldom lands in time. Phase 12 decides whether
   Wellspring wins need a hold period or tougher guards.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
@@ -993,11 +1018,13 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   all research, so its first battle mage comes with the fourth (16 provinces). Phase 12.
 - One enemy army can hold several of the AI's armies in Defense: each own province within a
   hop of it counts the whole army as its threat, and each draws its own defender. Runner game
-  18 (seed 18) shows the cost since War opens per target: by day 600 Cinder Horde holds 35 of
-  60 provinces and Thornwood 5, and from then on all eight Cinder armies stand held in the
-  provinces next to Thornwood's armies. The two independent Wellsprings (guards of 250 to
-  300 power, which one 80-troop army takes) are never attacked, so the game stalls until the
-  timeout. Phase 8 playtesting or Phase 12 should decide how Defense shares one threat.
+  18 without wilds (seed 18, `--wilds off`) shows the cost since War opens per target: by day
+  600 Cinder Horde holds 35 of 60 provinces and Thornwood 5, and from then on all eight Cinder
+  armies stand held in the provinces next to Thornwood's armies. The two independent
+  Wellsprings (guards of 250 to 300 power, which one 80-troop army takes) are never attacked,
+  so the game stalls until the timeout. With wilds, the default since Phase 1b, game 18 ends by
+  Wellsprings in 26.0 months. Phase 8 playtesting or Phase 12 should decide how Defense shares
+  one threat.
 - The AI retakes provinces it loses only through War (Expansion takes independents only, as
   docs/08 says), behind the aggression gate. Since the review (finding cor-3) the gate is
   judged per target, so a weakly held province opens it even for Thornwood (0.4); before, the
@@ -1025,9 +1052,9 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   `ChassisDef.newColorFirstPip`), `blessOf` takes the design and whether the god is on the
   map (`nationBless` for a nation in play), and new `ProvinceState`/`NationState` literals
   need `extraSprings`, `pretenderName` and `pretenderReturnDay`. A later `STATE_VERSION`
-  step takes 4 and chains after the 2-to-3 migration; a field it adds goes last in the
-  `createGame` literal too, where the migration appends it, so lifted saves hash like new
-  ones.
+  step chains after the last migration (Phase 1b's 3-to-4 took 4, so the next takes 5); a
+  field it adds goes last in the `createGame` literal too, where the migration appends it, so
+  lifted saves hash like new ones.
 - Phase 6b.1 leaves for later: `aiPower` is unread until `armyPower` moves into the sim
   (Phase 8); no AI picks blessings or boons (AI nations keep their default presets); the
   designer's "Recommended" blessings and the unspent-points display are Phase 9 UI (Thornhide
@@ -1054,11 +1081,12 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   timed out) and `determinism.test.ts`'s 365-day replay through a save and load (1.1 s alone). A
   full run that fails one of these and passes it alone has met load, not a regression.
 - Preset matrix (Phase 6b.3, for Phase 12), measured without wilds: 8 of 10 presets miss the
-  35% to 65% band against the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%, Dread Idol 75%; Deep
-  Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The default pairing itself leans
-  Red when each seed is played in both orders: Warlord 24, Elder Oak 13, 3 without a winner,
-  of 40. The runner's 20 games, one order per seed, split 10 to 9; the other order of the same
-  seeds went 14 to 4, 2 without a winner, so the nation's slot matters as much as the preset.
+  35% to 65% band against the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%,
+  Dread Idol 75%; Deep Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The
+  default pairing itself leans Red when each seed is played in both orders: Warlord 24, Elder
+  Oak 13, 3 without a winner, of 40. The runner's 20 games, one order per seed, split 10 to 9;
+  the other order of the same seeds went 14 to 4, 2 without a winner, so the nation's slot
+  matters as much as the preset.
   Read against that baseline, the three new Red presets add 15 to 20 points to Warlord's 60%,
   Hunt Lord matches Elder Oak's 33%, and Heartwood and Mother of the Pack trail it by 10 to 15
   (idols never fight in the field; the pack grows slowly). Phase 12 decides between prices,
@@ -1090,7 +1118,14 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   and 5e-9). Not addressed here; the owner or a balance pass should weigh it.
 - For merging later tracks over Phase 1b: `MapData` literals need `wilds` (`[]`), and a later
   `STATE_VERSION` step takes 5 and chains after the 3-to-4 migration. Code in `src/sim` and
-  `src/ai` must not read map geometry or `map.wilds` (the adjacency guard test fails).
+  `src/ai` must not read map geometry or `map.wilds` (the adjacency guard test fails). Phase
+  6b.3, built beside Phase 1b on Phase 6b.2, was joined by rebuilding Phase 1b's four commits
+  on it: `playedSetup`, `runnerSetup(s)` and `matrixSetups` take `wilds` after the chosen
+  presets, so `--presets` and `--matrix` runs carry the switch; 6b.3 needed no `MapData`
+  literal and no save step; its tests were checked against the wild default by the rule of
+  commit B (the ones that changed are listed under commits A and B); its runner and matrix
+  numbers stay in the docs labeled as measured without wilds, beside those re-measured with
+  them, and its duel bands are battle-only and unchanged.
 - Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a
   rule or spell change that left the log as it was went unnoticed (in a test that raised the
   morale base by 1, about 80% of random records still matched and showed morale rolls against
