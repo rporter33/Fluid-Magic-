@@ -120,8 +120,10 @@ export function placeWellsprings(
   );
   if (candidates.length < count) return null;
 
-  const fromCandidate = new Map(candidates.map((c) => [c, bfsDistances(adjacency, [c])]));
-  const gap = (a: number, b: number) => fromCandidate.get(a)?.[b] ?? 0;
+  // Distances from each candidate, indexed by province: the search reads them in its hot loop.
+  const fromCandidate: (readonly number[] | undefined)[] = [];
+  for (const c of candidates) fromCandidate[c] = bfsDistances(adjacency, [c]);
+  const gap = (a: number, b: number) => fromCandidate[a]?.[b] ?? 0;
   const closestPair = (set: readonly number[]) => {
     let closest = Number.POSITIVE_INFINITY;
     for (let a = 0; a < set.length; a++) {
@@ -132,18 +134,25 @@ export function placeWellsprings(
     return closest;
   };
   const need = wellspringsToWin(count);
+  const sorted: number[] = [];
+  /** The spread between capitals in summed distance to their `need` nearest of the set. */
   const unfairness = (set: readonly number[]) => {
-    const reach = perCapital.map((d) =>
-      set
-        .map((w) => d[w] ?? 0)
-        .sort((a, b) => a - b)
-        .slice(0, need)
-        .reduce((sum, x) => sum + x, 0),
-    );
-    return Math.max(...reach) - Math.min(...reach);
+    let low = Number.POSITIVE_INFINITY;
+    let high = Number.NEGATIVE_INFINITY;
+    for (const d of perCapital) {
+      sorted.length = 0;
+      for (const w of set) sorted.push(d[w] ?? 0);
+      sorted.sort((a, b) => a - b);
+      let reach = 0;
+      for (let i = 0; i < need && i < sorted.length; i++) reach += sorted[i] ?? 0;
+      low = Math.min(low, reach);
+      high = Math.max(high, reach);
+    }
+    return high - low;
   };
-  const cost = (set: readonly number[]) =>
-    MAPGEN.wellspringFairnessWeight * unfairness(set) - closestPair(set);
+  const costWith = (set: readonly number[], closest: number) =>
+    MAPGEN.wellspringFairnessWeight * unfairness(set) - closest;
+  const cost = (set: readonly number[]) => costWith(set, closestPair(set));
 
   const search = (start: number, ties: RngState | null): number[] | null => {
     const chosen = [start];
@@ -162,8 +171,9 @@ export function placeWellsprings(
         for (const c of candidates) {
           if (chosen.includes(c)) continue;
           const trial = chosen.with(k, c);
-          if (closestPair(trial) < minSeparation) continue;
-          const trialCost = cost(trial);
+          const closest = closestPair(trial);
+          if (closest < minSeparation) continue;
+          const trialCost = costWith(trial, closest);
           if (trialCost < current) {
             chosen[k] = c;
             current = trialCost;
