@@ -19,5 +19,7 @@ per-face description of the person and their kit, and picked by the owner on 202
 The second round (2026-10-22) adds every other leader: Cinder Scout, Ember Adept, Cinder Magus and the summoned
 Salamander; Thorn Scout, Sapling Druid, Elder Druid and the summoned Treant; and Independent Captains in four outfits
 (`independent/independentCaptain-levy`, `-hunter`, `-mountaineer`, `-reedman`, twelve each, keyed by the terrain the
-captain guards). Summoned commanders have four faces each. Faces the owner sent back for a redo are added when the
-owner picks a replacement.
+captain guards). Summoned commanders have four faces each.
+
+Seven faces the owner sent back were made again with two alternatives each, and the owner picked one; their
+sidecars record the pick as `redo-A` or `redo-B`. Every set is complete: 136 faces.
