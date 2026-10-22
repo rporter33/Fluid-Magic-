@@ -15,3 +15,9 @@ uses a raster set only when all eight faces of a type are approved. The style an
 The first four sets (Ash Chieftain, Warden Captain, Pyre Priest, Grove Priest) were made with Gemini
 (`gemini-nano-banana-2.1`) through `tools/art/gemini_gen.py`, with the anchor as the style reference and a
 per-face description of the person and their kit, and picked by the owner on 2026-10-22.
+
+The second round (2026-10-22) adds every other leader: Cinder Scout, Ember Adept, Cinder Magus and the summoned
+Salamander; Thorn Scout, Sapling Druid, Elder Druid and the summoned Treant; and Independent Captains in four outfits
+(`independent/independentCaptain-levy`, `-hunter`, `-mountaineer`, `-reedman`, twelve each, keyed by the terrain the
+captain guards). Summoned commanders have four faces each. Faces the owner sent back for a redo are added when the
+owner picks a replacement.
