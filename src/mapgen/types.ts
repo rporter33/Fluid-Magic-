@@ -1,10 +1,10 @@
 // The generated map: static geometry and adjacency plus the starting values each province
 // begins the game with. createGame (Phase 2) copies the starting values into ProvinceState.
 import type { Color } from '../content/colors';
-import type { MapSizeId } from '../content/mapgen';
+import type { MapSizeId, WildKind } from '../content/mapgen';
 import type { ScaleStep } from '../content/pretenders/scales';
 import type { TerrainId } from '../content/terrain';
-import type { ProvinceId } from '../sim/ids';
+import type { ProvinceId, WildId } from '../sim/ids';
 
 export interface Point {
   x: number;
@@ -26,6 +26,11 @@ export interface MapGenParams {
   size: MapSizeId;
   /** One entry per nation, 2 to 4. */
   capitals: readonly CapitalSpec[];
+  /**
+   * Impassable wild ranges (Phase 1b). Absent or false: none, and the map is exactly the one
+   * the generator made before wilds existed.
+   */
+  wilds?: boolean;
 }
 
 export interface MapProvince {
@@ -56,6 +61,23 @@ export interface MapProvince {
   independentStrength: number;
 }
 
+/**
+ * An impassable wild range (Phase 1b): map cells that are not provinces. No one owns, enters,
+ * crosses or targets it; it is never in MapProvince.neighbors.
+ */
+export interface MapWild {
+  id: WildId;
+  kind: WildKind;
+  /** The bare name ("Ashspine"); text gives it "the". Unique against every province name. */
+  name: string;
+  /** The range's cells, each convex and positively oriented like MapProvince.polygon. */
+  cells: Point[][];
+  /** Label anchor: the centroid of the largest cell. */
+  center: Point;
+  /** Provinces that share a border segment with any of its cells, sorted by id number. */
+  borders: ProvinceId[];
+}
+
 export interface MapData {
   seed: number;
   size: MapSizeId;
@@ -68,4 +90,6 @@ export interface MapData {
   /** Capital province per nation slot, in the order of MapGenParams.capitals. */
   capitals: ProvinceId[];
   wellsprings: ProvinceId[];
+  /** Impassable wild ranges, w0, w1, ...; [] when MapGenParams.wilds is off. Always last. */
+  wilds: MapWild[];
 }

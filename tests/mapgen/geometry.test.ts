@@ -6,7 +6,11 @@ import {
   insideConvex,
   orientPositive,
   roundedRect,
+  segmentDistance,
+  sharedEdgeLength,
   signedArea,
+  touchesOutline,
+  wildOutline,
 } from '../../src/mapgen/geometry';
 import type { Point } from '../../src/mapgen/types';
 
@@ -124,5 +128,52 @@ describe('dedupeVertices', () => {
     const q = { x: 1, y: 0 };
     const r = { x: 1, y: 1 };
     expect(dedupeVertices([p, q, q, r, { x: 0, y: 0 }])).toEqual([p, q, r]);
+  });
+});
+
+describe('borders and edges (Phase 1b)', () => {
+  it('measures the distance to a segment, at its ends and along it', () => {
+    const a = { x: 0, y: 0 };
+    const b = { x: 4, y: 0 };
+    expect(segmentDistance({ x: 2, y: 3 }, a, b)).toBe(3);
+    expect(segmentDistance({ x: 7, y: 4 }, a, b)).toBe(5);
+    expect(segmentDistance({ x: -3, y: 0 }, a, b)).toBe(3);
+    expect(segmentDistance({ x: 1, y: 1 }, a, a)).toBeCloseTo(Math.SQRT2, 12);
+  });
+
+  it('finds polygons with a vertex on the outline', () => {
+    const outline = square(0, 0, 10);
+    expect(touchesOutline(square(2, 2, 3), outline, 1e-6)).toBe(false);
+    expect(touchesOutline(square(0, 2, 3), outline, 1e-6)).toBe(true);
+    expect(touchesOutline(square(7, 7, 3), outline, 1e-6)).toBe(true);
+    expect(touchesOutline(square(1e-3, 2, 3), outline, 1e-6)).toBe(false);
+  });
+
+  it('measures the border two polygons share, and nothing for a corner', () => {
+    expect(sharedEdgeLength(square(0, 0, 2), square(2, 0, 2), 1e-9)).toBe(2);
+    expect(sharedEdgeLength(square(0, 0, 2), square(2, 1, 2), 1e-9)).toBe(1);
+    expect(sharedEdgeLength(square(0, 0, 2), square(2, 2, 2), 1e-9)).toBe(0);
+    expect(sharedEdgeLength(square(0, 0, 2), square(5, 0, 2), 1e-9)).toBe(0);
+  });
+});
+
+describe('wildOutline', () => {
+  it('is the cell itself for one cell', () => {
+    expect(wildOutline({ cells: [square(0, 0, 1)] })).toEqual([square(0, 0, 1)]);
+  });
+
+  it('drops the edges cells share and chains the rest into one positive loop', () => {
+    const loops = wildOutline({ cells: [square(0, 0, 1), square(1, 0, 1), square(0, 1, 1)] });
+    expect(loops).toHaveLength(1);
+    const loop = loops[0]!;
+    expect(loop).toHaveLength(8);
+    expect(signedArea(loop)).toBeCloseTo(3, 12);
+    expect(loop).toContainEqual({ x: 2, y: 0 });
+    expect(loop).not.toContainEqual({ x: 1, y: 1 + 1e-3 });
+  });
+
+  it('gives a loop per part when cells do not touch', () => {
+    const loops = wildOutline({ cells: [square(0, 0, 1), square(3, 0, 1)] });
+    expect(loops.map((l) => signedArea(l))).toEqual([1, 1]);
   });
 });

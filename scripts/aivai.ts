@@ -1,11 +1,12 @@
 // Headless AI vs AI runner (docs/10-milestone-1.md acceptance 15):
-// `npm run sim:aivai -- --games 20 --seed 1 [--months 100] [--presets <list>]`. Each game is
-// Cinder Horde against Thornwood on a Medium map with both nations' default presets, or those
-// `--presets cinderHorde:<id>,thornwood:<id>` names, the nation order alternating by game. It
+// `npm run sim:aivai -- --games 20 --seed 1 [--months 100] [--presets <list>] [--wilds on|off]`.
+// Each game is Cinder Horde against Thornwood on a Medium map with both nations' default presets,
+// or those `--presets cinderHorde:<id>,thornwood:<id>` names, the nation order alternating by
+// game, with impassable wild ranges when --wilds is on (default: RUNNER_DEFAULTS.wilds). It
 // prints one line per game (winner, reason, months, end-of-game stats) and a summary.
-// `npm run sim:aivai -- --matrix [--games 20] [--seed 1]` plays the preset matrix instead (the
-// 2026-10-21 pretender build spec, A.10): every preset against the opposing default, seeds
-// `seed` to `seed + games - 1` in both nation orders, and prints its win table.
+// `npm run sim:aivai -- --matrix [--games 20] [--seed 1] [--wilds on|off]` plays the preset
+// matrix instead (the 2026-10-21 pretender build spec, A.10): every preset against the opposing
+// default, seeds `seed` to `seed + games - 1` in both nation orders, and prints its win table.
 import { parseArgs } from 'node:util';
 import { nationDef } from '../src/content';
 import { TIME } from '../src/content/rules';
@@ -37,12 +38,13 @@ const { values } = parseArgs({
     months: { type: 'string', default: String(RUNNER_DEFAULTS.months) },
     presets: { type: 'string' },
     matrix: { type: 'boolean', default: false },
+    wilds: { type: 'string', default: RUNNER_DEFAULTS.wilds ? 'on' : 'off' },
   },
 });
 
 const usage =
   'usage: npm run sim:aivai -- --games <n >= 1> --seed <integer> [--months <n >= 1>] ' +
-  '[--presets cinderHorde:<preset>,thornwood:<preset> | --matrix]';
+  '[--presets cinderHorde:<preset>,thornwood:<preset> | --matrix] [--wilds on|off]';
 const games = Number(values.games);
 const seed = Number(values.seed);
 const months = Number(values.months);
@@ -52,11 +54,13 @@ if (
   !Number.isInteger(seed) ||
   !Number.isInteger(months) ||
   months < 1 ||
-  (values.matrix && values.presets !== undefined)
+  (values.matrix && values.presets !== undefined) ||
+  (values.wilds !== 'on' && values.wilds !== 'off')
 ) {
   console.error(usage);
   process.exit(1);
 }
+const wilds = values.wilds === 'on';
 
 let presets: PresetDef[] = [];
 try {
@@ -121,7 +125,7 @@ function timing(): string {
 
 function runner(): void {
   const results: MatchResult[] = [];
-  for (const [game, setup] of runnerSetups(seed, games, presets).entries()) {
+  for (const [game, setup] of runnerSetups(seed, games, presets, wilds).entries()) {
     results.push(play(`game ${String(game + 1)}`, setup, presets));
   }
   const { wins, noWinner } = tallyWins(results);
@@ -130,7 +134,7 @@ function runner(): void {
     .join(', ');
   const totalMonths = results.reduce((sum, m) => sum + m.days, 0) / TIME.daysPerMonth;
   console.log(
-    `${String(games)} games: ${tally}, no winner ${String(noWinner)}; ` +
+    `${String(games)} games${wilds ? ' with wilds' : ''}: ${tally}, no winner ${String(noWinner)}; ` +
       `mean ${(totalMonths / games).toFixed(1)} months; ${timing()}`,
   );
 }
@@ -139,7 +143,7 @@ function matrix(): void {
   const rows: PairingResult[] = [];
   for (const pairing of matrixPairings()) {
     const label = pairingLabel(pairing);
-    const results = matrixSetups(pairing, seed, games).map((setup, i) =>
+    const results = matrixSetups(pairing, seed, games, wilds).map((setup, i) =>
       play(`${label}, game ${String(i + 1)}`, setup, pairing.presets),
     );
     rows.push(pairingResult(pairing, results));
@@ -147,7 +151,7 @@ function matrix(): void {
   console.log('');
   console.log(
     `Preset matrix: seeds ${String(seed)} to ${String(seed + games - 1)}, each in both nation ` +
-      `orders, up to ${String(months)} months a game.`,
+      `orders, up to ${String(months)} months a game${wilds ? ', with wilds' : ''}.`,
   );
   for (const line of matrixTable(rows)) console.log(line);
   const out = rows.filter((r) => r.inBand === false).map((r) => pairingLabel(r.pairing));

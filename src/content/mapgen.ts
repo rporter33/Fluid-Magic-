@@ -98,6 +98,40 @@ export const MAPGEN = {
 } as const;
 
 /**
+ * Impassable terrain (Phase 1b, war-table design section 1; owner direction 2026-10-21: "i want
+ * to make sure the maps have some impassible terrain that is noticeable"). A wild is a map cell
+ * that is not a province: named mountain massifs (peaks) and dark lakes (meres). Chasms arrive
+ * in M2.
+ */
+export const WILD_KINDS = ['peaks', 'mere'] as const;
+export type WildKind = (typeof WILD_KINDS)[number];
+
+export const WILDS = {
+  /** Ranges per map: round(provinces / provincesPerRange). Medium 3, Small 2, Large 4. */
+  provincesPerRange: 20,
+  /** Range r has kind kindCycle[r % kindCycle.length]: Medium gets peaks, a mere, peaks. */
+  kindCycle: ['peaks', 'mere', 'peaks'],
+  /** Weights for a range of 1, 2 or 3 cells, by kind. */
+  cellWeights: { peaks: [25, 50, 25], mere: [60, 40] },
+  /** Cell hops from every capital, on the full cell graph. */
+  minCapitalCells: 3,
+  /** Cell hops between cells of two different ranges, so no province borders two. */
+  separation: 3,
+  /** The provinces bordering one range stay this many passable steps apart. */
+  maxDetour: 6,
+  /** Seeds tried per range before the attempt fails. */
+  seedTries: 12,
+} as const satisfies {
+  provincesPerRange: number;
+  kindCycle: readonly WildKind[];
+  cellWeights: Readonly<Record<WildKind, readonly number[]>>;
+  minCapitalCells: number;
+  separation: number;
+  maxDetour: number;
+  seedTries: number;
+};
+
+/**
  * Share of provinces per terrain, assigned by rank: highest elevation becomes mountains
  * then hills; wet lowlands swamp; the wettest of the rest forest, the driest wasteland;
  * then farmland; plains take what remains. Shares sum to 1.

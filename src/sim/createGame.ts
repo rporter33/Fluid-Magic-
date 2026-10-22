@@ -89,6 +89,7 @@ export function createGame(setup: GameSetup): GameState {
       terrain: d.capitalTerrain,
       name: d.capitalName,
     })),
+    wilds: setup.wilds === true,
   });
 
   const state: GameState = {

@@ -79,7 +79,8 @@ describe('--presets', () => {
   });
 
   it('leave the default runner exactly as it was without them', () => {
-    // The Phase 7 runner's setup, written out: what `npm run sim:aivai` played before 6b.3.
+    // The Phase 7 runner's setup, written out: what `npm run sim:aivai` played before 6b.3. Phase
+    // 1b's switch rides in every runner setup; off, createGame makes the map it made without it.
     const before = (seed: number, game: number) => {
       const order = game % 2 === 0 ? ['cinderHorde', 'thornwood'] : ['thornwood', 'cinderHorde'];
       return {
@@ -90,6 +91,7 @@ describe('--presets', () => {
           pretender: defaultPreset(nation as 'cinderHorde' | 'thornwood').design,
           ai: { difficulty: 'normal' },
         })),
+        wilds: false,
       };
     };
     expect(runnerSetups(1, 20)).toEqual(Array.from({ length: 20 }, (_, g) => before(1, g)));

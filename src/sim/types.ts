@@ -28,9 +28,10 @@ export type { Difficulty };
 /**
  * Bumped whenever the saved shape changes; migrate.ts lifts older saves. 2: battle records gained
  * scene and rerun (Phase 10 S1). 3: nations gained pretenderName and pretenderReturnDay,
- * provinces extraSprings (Phase 6b.1).
+ * provinces extraSprings (Phase 6b.1). 4: the map gained wilds, its impassable wild ranges
+ * (Phase 1b).
  */
-export const STATE_VERSION = 3;
+export const STATE_VERSION = 4;
 
 export type ColorAmounts = Record<Color, number>;
 export type Pips = Partial<Record<Color, number>>;
@@ -56,6 +57,8 @@ export interface GameSetup {
   mapSize: MapSizeId;
   /** 2 to 4 nations; the order fixes nation ids and capital slots. */
   nations: NationSetup[];
+  /** Impassable wild ranges on the map (Phase 1b; MapGenParams.wilds). Absent or false: none. */
+  wilds?: boolean;
 }
 
 // ---------------------------------------------------------------- provinces

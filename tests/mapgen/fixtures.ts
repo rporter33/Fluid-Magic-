@@ -5,6 +5,10 @@ import type { ProvinceId } from '../../src/sim/ids';
 
 export const KHARNATH: CapitalSpec = { color: 'R', terrain: 'plains', name: 'Kharnath' };
 export const DEEPMOSS: CapitalSpec = { color: 'G', terrain: 'forest', name: 'Deepmoss' };
+export const LUMENHOLD: CapitalSpec = { color: 'W', terrain: 'hills', name: 'Lumenhold' };
+export const TIDEMARK: CapitalSpec = { color: 'U', terrain: 'farmland', name: 'Tidemark' };
+export const TWO_CAPITALS: readonly CapitalSpec[] = [KHARNATH, DEEPMOSS];
+export const FOUR_CAPITALS: readonly CapitalSpec[] = [KHARNATH, DEEPMOSS, LUMENHOLD, TIDEMARK];
 
 /** Index adjacency lists for a generated map, in province order. */
 export function indexAdjacency(map: MapData): number[][] {

@@ -1,5 +1,6 @@
 // Checks a generated map against the rules it must satisfy. generateMap retries until this
-// returns no problems; tests use it as a broad property check across many seeds.
+// returns no problems; tests use it as a broad property check across many seeds. The checks on
+// wild ranges (Phase 1b) are in validateWilds.ts.
 import { COLORS } from '../content/colors';
 import { MAPGEN } from '../content/mapgen';
 import { SCALE_AXES } from '../content/pretenders/scales';
@@ -10,6 +11,7 @@ import { bfsDistances, isConnected } from './graph';
 import { independentStrength } from './placement';
 import { provinceCount, wellspringCount } from './size';
 import type { MapData, MapGenParams, MapProvince } from './types';
+import { wildProblems } from './validateWilds';
 
 /** Problems found in `map`, as readable strings; empty when the map is valid. */
 export function validateMap(map: MapData, params: MapGenParams): string[] {
@@ -146,5 +148,6 @@ export function validateMap(map: MapData, params: MapGenParams): string[] {
   const names = new Set(provinces.map((p) => p.name));
   if (names.size !== provinces.length) problems.push('province names repeat');
 
+  problems.push(...wildProblems(map, params, adjacency));
   return problems;
 }

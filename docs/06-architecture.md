@@ -130,17 +130,19 @@ fluid-magic/
       buildings.ts
       index.ts            # registry: lookups by id, validated on load
     mapgen/
-      types.ts            # MapGenParams, CapitalSpec, MapData, MapProvince
+      types.ts            # MapGenParams, CapitalSpec, MapData, MapProvince, MapWild
       generate.ts         # seed -> MapData (provinces, adjacency, terrain, springs, capitals, wellsprings)
       voronoi.ts          # Poisson disc + Delaunay/Voronoi (use d3-delaunay), Lloyd, adjacency
-      geometry.ts         # polygon area, centroid, rounded rectangle, convex clipping
+      geometry.ts         # polygon area, centroid, rounded rectangle, convex clipping, wildOutline
       noise.ts            # seeded simplex noise
       terrain.ts          # terrain by rank from elevation and moisture
-      graph.ts            # BFS distances, connectivity
+      graph.ts            # BFS distances, connectivity, cut vertices
       placement.ts        # capitals, wellsprings, springs, independents
       names.ts            # unique province names
       size.ts             # province count, Wellspring count, map dimensions
       validate.ts         # validateMap: the rules a generated map must satisfy
+      wilds.ts            # impassable wild ranges: plan, placement, names, records (Phase 1b)
+      validateWilds.ts    # validateMap's checks on wild ranges (Phase 1b)
     ai/                   # PURE, like sim
       ai.ts               # runAi(state, nationId): Command[]; the order of the steps
       plan.ts             # the planning copy, issuing commands on it, the order guard, paths
@@ -180,7 +182,7 @@ fluid-magic/
       icons/
   tests/
     sim/*.test.ts
-    mapgen/*.test.ts      # one file per mapgen module; fixtures.ts holds shared helpers
+    mapgen/*.test.ts      # one file per mapgen module; fixtures.ts, playable.ts, wildChecks.ts hold shared helpers
     battle/*.test.ts
     content/validate.test.ts
     ai/*.test.ts
@@ -300,6 +302,9 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
   new keys, and `createGame` puts them in the same place (last in the nation and the province
   record), so a lifted save hashes like the same game created on version 3 (`stateHash`
   hashes the JSON text, so key order counts).
+- `STATE_VERSION` 4 (Phase 1b) adds `map.wilds`, the impassable wild ranges; the migration
+  sets it to `[]`, so an older map has none. The key goes last in the map, where
+  `generateMap` puts it, so a lifted save hashes like the same game created on version 4.
 
 ## Performance targets
 
@@ -337,6 +342,13 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   `capitalDistance`) for `createGame` to copy into `ProvinceState`. Province ids are
   `p0`..`pN-1` from a counter local to mapgen; the prefix keeps them distinct from ids drawn
   from `GameState.nextId`. Coordinates are stored at full precision.
+- **Wilds** (Phase 1b): `MapData.wilds` holds impassable regions that are not provinces, with ids
+  from a counter local to mapgen. They are never in `neighbors`, so movement, retreat, sight,
+  dominion, rituals, fort materials and the AI needed no code to respect them. A source scan
+  (`tests/sim/adjacency.guard.test.ts`) keeps `src/sim` and `src/ai` from reading map geometry
+  or the wilds, so nothing can reach across one. `MapGenParams.wilds` (and `GameSetup.wilds`)
+  is off everywhere until the owner's decision commit; while it is off `MapData.wilds` is `[]`
+  and every map is bit-identical to the generator's before wilds (a hash test pins 30 maps).
 - **Pure-module conventions**: `src/mapgen/voronoi.ts`, `geometry.ts`, `noise.ts`, and
   `graph.ts` are generic and take every parameter explicitly; modules that apply game rules
   (`placement.ts`, `size.ts`, `generate.ts`) read their numbers from `src/content`.

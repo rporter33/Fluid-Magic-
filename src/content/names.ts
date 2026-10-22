@@ -1,5 +1,6 @@
 // Syllables for province names, per terrain. A name is an onset, an optional middle, and
 // a terrain suffix: "Har" + "wood" = "Harwood", "Sel" + "en" + "holt" = "Selenholt".
+import type { WildKind } from './mapgen';
 import type { TerrainId } from './terrain';
 
 export interface NameSyllables {
@@ -106,5 +107,21 @@ export const NAME_SYLLABLES: Readonly<Record<TerrainId, NameSyllables>> = {
       'Ves',
     ],
     suffixes: ['waste', 'scar', 'reach', 'flats', 'pan', 'barrow', 'drift', 'heath'],
+  },
+};
+
+/**
+ * Names for wild ranges (Phase 1b): a first part and an ending, joined as written ("Ash" +
+ * "spine" = "Ashspine", "Still" + " Mere" = "Still Mere"). The map stores the bare name; text
+ * always gives it "the" ("the Ashspine", "around the Still Mere").
+ */
+export const WILD_NAME_PARTS: Readonly<Record<WildKind, NameSyllables>> = {
+  peaks: {
+    onsets: ['Ash', 'Grey', 'Iron', 'Cold', 'Crag', 'Wolf', 'Storm', 'Raven', 'Frost', 'Black'],
+    suffixes: ['spine', 'teeth', 'crown', 'horns', 'fells', 'spires', 'fangs'],
+  },
+  mere: {
+    onsets: ['Still', 'Black', 'Dead', 'Hollow', 'Grey', 'Mirror', 'Silent'],
+    suffixes: [' Mere', 'water', ' Tarn', 'mere'],
   },
 };

@@ -28,8 +28,10 @@ import {
   MAPGEN,
   TERRAIN_SHARES,
   TERRAIN_SPRING_COLORS,
+  WILD_KINDS,
+  WILDS,
 } from '../../src/content/mapgen';
-import { NAME_MIDDLES, NAME_SYLLABLES } from '../../src/content/names';
+import { NAME_MIDDLES, NAME_SYLLABLES, WILD_NAME_PARTS } from '../../src/content/names';
 import { SCALE_AXES, SCALE_DEFS } from '../../src/content/pretenders/scales';
 import { isTerrainId, TERRAIN, TERRAIN_IDS } from '../../src/content/terrain';
 
@@ -237,6 +239,42 @@ describe('map generation content', () => {
     expect(MAPGEN.wellspringSearchStarts).toBeGreaterThanOrEqual(1);
     expect(MAPGEN.wellspringMinSeparation).toBeGreaterThanOrEqual(2);
     expect(MAPGEN.capitalPop % MAPGEN.popRounding).toBe(0);
+  });
+});
+
+describe('wilds (Phase 1b)', () => {
+  it('has the two M1 kinds, each with cell weights, cycled from the first', () => {
+    expect([...WILD_KINDS]).toEqual(['peaks', 'mere']);
+    expect(WILDS.kindCycle[0]).toBe('peaks');
+    for (const kind of WILDS.kindCycle) expect(WILD_KINDS).toContain(kind);
+    for (const kind of WILD_KINDS) {
+      const weights = WILDS.cellWeights[kind];
+      expect(weights.length).toBeGreaterThanOrEqual(1);
+      expect(weights.every((w) => w >= 0)).toBe(true);
+      expect(weights.some((w) => w > 0)).toBe(true);
+    }
+  });
+
+  it('has guards that keep wilds out of capital rings and give every range a way around', () => {
+    expect(WILDS.provincesPerRange).toBeGreaterThan(0);
+    // More than the ring radius, so each capital's starting ring stays as it was.
+    expect(WILDS.minCapitalCells).toBeGreaterThan(MAPGEN.capitalRingRadius);
+    // 3 cell hops apart, so no province borders two ranges.
+    expect(WILDS.separation).toBeGreaterThanOrEqual(3);
+    expect(WILDS.maxDetour).toBeGreaterThanOrEqual(2);
+    expect(Number.isInteger(WILDS.seedTries)).toBe(true);
+    expect(WILDS.seedTries).toBeGreaterThanOrEqual(1);
+  });
+
+  it('names every kind from parts, enough to name every range on the largest map', () => {
+    for (const kind of WILD_KINDS) {
+      const { onsets, suffixes } = WILD_NAME_PARTS[kind];
+      expect(new Set(onsets).size).toBe(onsets.length);
+      expect(new Set(suffixes).size).toBe(suffixes.length);
+      for (const o of onsets) expect(o).toMatch(/^[A-Z][a-z]+$/);
+      for (const x of suffixes) expect(x).toMatch(/^( [A-Z])?[a-z]+$/);
+      expect(onsets.length * suffixes.length).toBeGreaterThanOrEqual(20);
+    }
   });
 });
 

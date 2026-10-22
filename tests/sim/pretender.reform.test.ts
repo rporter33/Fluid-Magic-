@@ -259,15 +259,22 @@ describe('reform after death (N8)', () => {
     expect(godOf(state, red)).toBeUndefined();
   });
 
-  it('keeps its return day through a save and load, with no new save version', () => {
+  it('keeps its return day through a save and load, with no save step of its own', () => {
     const { state, red } = phoenixGame();
     commanderDies(state, godOf(state, red)!.id);
     const loaded = migrateState(JSON.parse(JSON.stringify(state)) as GameState);
     expect(loaded.nations[red]!.pretenderReturnDay).toBe(90);
     expect(stateHash(loaded)).toBe(stateHash(state));
-    // The field came with Phase 6b.1's step to version 3, which gives older saves null.
-    expect(STATE_VERSION).toBe(3);
-    expect(MIGRATIONS[3]).toBeUndefined();
+    // The field came with Phase 6b.1's step to version 3, which gives older saves null. Phase
+    // 6b.3 added no step: the only later one, Phase 1b's 3 to 4, gives the map its wilds and
+    // leaves the return day as it was.
+    expect(STATE_VERSION).toBe(4);
+    expect(Object.keys(MIGRATIONS)).toEqual(['1', '2', '3']);
+    const v3 = JSON.parse(JSON.stringify(state)) as GameState;
+    v3.version = 3;
+    const v3map: Partial<typeof v3.map> = v3.map;
+    delete v3map.wilds;
+    expect(migrateState(v3).nations[red]!.pretenderReturnDay).toBe(90);
     const old = JSON.parse(JSON.stringify(phoenixGame().state)) as GameState;
     old.version = 2;
     for (const n of Object.values(old.nations)) {

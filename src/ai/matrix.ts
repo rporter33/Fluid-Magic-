@@ -7,7 +7,7 @@ import { nationDef, type NationDefId } from '../content';
 import { defaultPreset, findPreset, PRESETS, type PresetDef } from '../content/pretenders/presets';
 import { TIME } from '../content/rules';
 import type { GameSetup } from '../sim/types';
-import { playedSetup, RUNNER_NATIONS, tallyWins, type MatchResult } from './match';
+import { playedSetup, RUNNER_DEFAULTS, RUNNER_NATIONS, tallyWins, type MatchResult } from './match';
 
 /** The share of games a preset must win against the opposing default (A.10). */
 export const MATRIX_BAND = { min: 0.35, max: 0.65 } as const;
@@ -75,14 +75,22 @@ export function pairingLabel(pairing: Pairing): string {
   return `${challenger.name} (${nationDef(challenger.nation).name}) vs ${opponents.join(', ')}`;
 }
 
-/** A pairing's games: seeds `seed` to `seed + seeds - 1`, each in both nation orders. */
-export function matrixSetups(pairing: Pairing, seed: number, seeds: number): GameSetup[] {
+/**
+ * A pairing's games: seeds `seed` to `seed + seeds - 1`, each in both nation orders, with or
+ * without wilds (Phase 1b).
+ */
+export function matrixSetups(
+  pairing: Pairing,
+  seed: number,
+  seeds: number,
+  wilds = RUNNER_DEFAULTS.wilds,
+): GameSetup[] {
   const orders: readonly (readonly NationDefId[])[] = [
     RUNNER_NATIONS,
     [...RUNNER_NATIONS].reverse(),
   ];
   return Array.from({ length: seeds }, (_, i) =>
-    orders.map((order) => playedSetup(seed + i, order, pairing.presets)),
+    orders.map((order) => playedSetup(seed + i, order, pairing.presets, wilds)),
   ).flat();
 }
 

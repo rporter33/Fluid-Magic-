@@ -634,6 +634,94 @@ the sim).
   sim's, and the empty plural. Each of their 17 mutants (the 11 survivors and 6 of the two
   fixes) now fails a test.
 
+## Phase 1b: Impassable terrain (wilds built behind a switch)
+
+Commit A of two (war-table design, section 1, 1.3 to 1.9; the owner's direction of 2026-10-21:
+"i want to make sure the maps have some impassible terrain that is noticeable"). Wilds are
+named mountain massifs (peaks) and dark lakes (meres): map cells that are not provinces. Here
+they are built, validated and tested, but off everywhere; commit B, the owner-decision commit,
+turns them on.
+- Content: `WILD_KINDS` (`peaks`, `mere`), `WildKind` and `WILDS` (ranges per 20 provinces,
+  the kind cycle, cell weights, the capital and separation guards, the detour, seed tries) in
+  `content/mapgen.ts`; `WILD_NAME_PARTS` in `content/names.ts`. `MAPGEN.balanceCandidates`
+  stays 6 (10 in commit B).
+- Mapgen: `MapGenParams.wilds` (optional, false everywhere); `MapData.wilds: MapWild[]`, the
+  map's last key, always `[]` while off; `WildId` (`w0`, `w1`, ... from a counter local to
+  mapgen; `ID_PREFIXES.wild`). New `wilds.ts` (`planWilds`, `placeWilds`, `nameWilds`,
+  `buildWilds`) and `validateWilds.ts` (called by `validateMap` when wilds are on). With wilds
+  on, `generate.ts` plans the ranges first, sizes the map for every cell, places capitals on the
+  full cell graph, samples the noise at every site, places the ranges, and builds the provinces
+  from the remaining cells in site order. `geometry.ts` gained `segmentDistance`,
+  `touchesOutline`, `sharedEdgeLength` and `wildOutline`; `graph.ts` blocked-node searches,
+  `connectedWithout`, `cutVertices` (Tarjan, iterative) and `maxPairDistance`.
+- Sim and AI: `GameSetup.wilds` goes through `createGame` to the generator. `STATE_VERSION` 4,
+  whose migration (`src/sim/migrate.ts`, 3 to 4) sets `state.map.wilds ??= []`. No rule code
+  changed: every reader of adjacency walks `MapProvince.neighbors`, which never holds a wild,
+  and `tests/sim/adjacency.guard.test.ts` keeps `src/sim` and `src/ai` from reading map geometry
+  or the wilds. `playedSetup`, `runnerSetup`, `runnerSetups` and `matrixSetups` take `wilds`
+  after Phase 6b.3's chosen presets, so a runner setup carries both; `RUNNER_DEFAULTS.wilds` is
+  false, and `npm run sim:aivai` gained `--wilds on|off`, which applies to `--presets` and
+  `--matrix` runs too.
+- Bit identity: the 30 map hashes (seeds 1 to 5 x Small, Medium, Large x 2 and 4 nations) were
+  recorded from the generator at `ec9a907` before the first line of the change, and checked
+  again against a clean export of `ec9a907`. `tests/mapgen/generate.identity.test.ts` matches
+  them with `wilds` absent and false. The six presets' game pins (`presetPins.ts`, which now
+  also strips the empty `map.wilds`) still match, so the AI plays exactly as before.
+- Tests: `tests/mapgen/wilds.test.ts` (plan, names, records, and Small maps),
+  `wilds.medium.test.ts` and `wilds.large.test.ts` (seeds 1 to 30 with 2, 3 and 4 nations,
+  wilds on, through `wildChecks.ts`: `validateMap` empty, exact count and terrain shares via
+  `playable.ts`, interior cells 3 cell hops from capitals and other ranges, borders from the
+  drawn polygons, one outline loop, no cut province, detours of at most 6, unchanged capital
+  rings, each province's site inside its own polygon, determinism), `wilds.place.test.ts`
+  (`placeWilds` called directly, with no `validateMap` behind it: scores, ties, peaks before
+  meres, each guard including a later range stretching an earlier one's way around, the
+  fallbacks to the next neighbor and the next seed, `WILDS.seedTries`, and every guard checked
+  by plain BFS on 12 real province graphs), `wilds.pins.test.ts` (sha256 of 20 wild maps,
+  re-pinned in commit B), `validateWilds.test.ts` (each new check fires on a hand-broken map;
+  a way around of exactly 7 is rejected and one of exactly 6 accepted), `generate.perf.test.ts`, `geometry.test.ts` and `graph.test.ts` additions (cut vertices
+  against brute force), `tests/sim/movement.wilds.test.ts`, `visibility.wilds.test.ts`,
+  `rituals.wilds.test.ts`, `dominion.wilds.test.ts` (on a Medium map with wilds: paths, sight,
+  `withinHops`, ritual targets and spread go around a wild, never across), the version 3
+  migration in `migrate.test.ts` (plays 40 days on to the same hash),
+  `tests/ai/match.wilds.test.ts` (runner games on wild maps for three years, no refusal,
+  deterministic; with chosen presets and in the matrix, the setups carry both) and content
+  checks. 1778 tests in 112 files before, 2193 in 126 after (built first on Phase 6b.2: 1662
+  before, 2076 after).
+- Joined with Phase 6b.3 (built on Phase 6b.2, then rebuilt on Phase 6b.3): no 6b.3 test pinned
+  a hash of a whole state (the preset pins strip `map.wilds`, and the summon, reform and
+  determinism tests compare two runs of one build), and `tests/sim/battle/golden.json` is
+  unchanged. Two 6b.3 tests named what this commit changes: `matrix.test.ts`'s written-out
+  Phase 7 runner setup now carries `wilds: false`, which plays the map it played without the
+  key, and `pretender.reform.test.ts`'s save test expects `STATE_VERSION` 4, the 3-to-4 step
+  as the only one after 6b.1's, and the return day kept through it (its name said "with no
+  new save version"; it now says "with no save step of its own", as Phase 6b.3 added none).
+- Mutation review: the 30-seed sweeps cannot catch a placement bug, because `generateMap`
+  throws away any attempt `validateMap` rejects and tries again; 31 of 68 hand-made mutants
+  of `wilds.ts`, `validateWilds.ts`, `generate.ts`, `graph.ts` and `migrate.ts` passed the
+  first suite. With `wilds.place.test.ts`, `wilds.pins.test.ts`, the new validation cases and
+  the site check, 65 are caught. The other three are equivalent: the `minNeighbors` check in
+  `keepsMapWhole` off by one (while `minNeighbors` is 2 the cut-vertex test refuses the same
+  cells; a comment says so), wild names checked against no province names (the two name sets
+  share only "Stormcrown", and `validateMap` rejects that clash), and the 3-to-4 migration
+  with `=` for `??=` (a version 3 map has no wilds).
+- Measured (seeds 1 to 10, wilds off then on, balance search at 6; mean, median in ms): Medium
+  2 nations 18, 19 then 36, 19; Medium 4 nations 209, 238 then 262, 363; Small 2 15, 16 then
+  26, 18; Large 4 306, 338 then 538, 534. At 10 candidates (commit B), Medium 4 nations is 409
+  mean, 599 median, 707 max, within the 1,000 ms test. Wild cells are 8 to 10% of the province
+  count and 33 to 41% of provinces border a wild; no map failed.
+- Deviations from the design: `wildOutline` lives in `geometry.ts` (1.3) although the docs/06
+  layout block lists the outline under `wilds.ts`, and the wild checks have their own module,
+  `validateWilds.ts`, so `validate.ts` stays small; the layout lists both. The tests of 1.9 sit
+  in their own files beside the module tests (`*.wilds.test.ts`, `validateWilds.test.ts`), and
+  the 30-seed sweeps are split per size. A range's cell count is checked against its kind's
+  weights (peaks 1 to 3, meres 1 or 2). `WILDS.seedTries` counts seeds that pass every
+  eligibility test, the whole-map test included. docs/06 also gained the Wilds implementation
+  decision, and docs/08 the runner's `--wilds` flag.
+- Left for commit B: New Game and `sim:aivai` default to wilds on, `balanceCandidates` 10, the
+  docs/01, docs/09-balance and docs/10 text, any re-pins (`wilds.pins.test.ts` must be
+  re-pinned, since 10 candidates pick other wild maps), and the matchup row. Rendering,
+  tooltips, the Codex page, labels and the palette tests come with Phase 8 (1.10).
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -814,8 +902,9 @@ the sim).
   spell power, and no chassis a monthly summon, until the new bodies of Phase 6b.3; the
   battle presentation's handling of `ability` (script beat, sound, ticker, report) lands with
   S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
-- The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin) can fail when the
-  machine is loaded by other processes; they pass when run alone.
+- The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin, and Phase 1b's
+  `generate.perf.test.ts`) can fail when the machine is loaded by other processes; they pass
+  when run alone.
 - Preset matrix (Phase 6b.3, for Phase 12): 8 of 10 presets miss the 35% to 65% band against
   the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%, Dread Idol 75%; Deep
   Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The default pairing itself leans
@@ -835,6 +924,21 @@ the sim).
   the presets' looks and identities are Phase 9. No preset uses the Ascended Hero, Primordial,
   Ember Hierophant or Elder Wyrm, so the AI plays them only in step tests. A full matrix run
   takes about 6 minutes.
+- Phase 1b (for commit B): the runner's matchup leans to Cinder Horde with or without wilds.
+  Over 100 games from seed 1 (3000 days each), wilds off give Cinder Horde 70, Thornwood 28 and
+  2 with no winner; wilds on give 77, 20 and 3. Thornwood takes 29% of decided games off and
+  21% on, a gap that is not significant (Fisher exact p = 0.245); neither run refused a
+  command. The first 20 games (with wilds off 10, 9 and a timeout; with wilds on 17 and 3, the
+  same at 6 and at 10 balance candidates) are a lucky sample for wilds off, whose games 20 to
+  99 go 60 to 19, so the lean is older than wilds. Commit B records the matchup over at least
+  100 seeds, with wilds on and off on the same seeds side by side, and the retreat-death count.
+- Balance, older than Phase 1b: the docs/09-balance checklist's "Thornwood beats Cinder Horde
+  in roughly half of AI vs AI games" passes on its 20 default games (seed 1, 10 to 9) only by
+  sample. Over 100 seeds with wilds off Thornwood wins 28 to Cinder Horde's 70 (an even split
+  has binomial p = 3e-5). Not addressed here; the owner or a balance pass should weigh it.
+- For merging later tracks over Phase 1b: `MapData` literals need `wilds` (`[]`), and a later
+  `STATE_VERSION` step takes 5 and chains after the 3-to-4 migration. Code in `src/sim` and
+  `src/ai` must not read map geometry or `map.wilds` (the adjacency guard test fails).
 - Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a
   rule or spell change that left the log as it was went unnoticed (in a test that raised the
   morale base by 1, about 80% of random records still matched and showed morale rolls against

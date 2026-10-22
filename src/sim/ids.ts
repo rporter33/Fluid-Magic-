@@ -11,6 +11,8 @@ export const ID_PREFIXES = {
   message: 'm',
   effect: 'fx',
   recruit: 'rq',
+  /** Wild ranges (Phase 1b), from a scratch counter local to mapgen, never GameState.nextId. */
+  wild: 'w',
 } as const;
 
 export type IdKind = keyof typeof ID_PREFIXES;
@@ -24,6 +26,7 @@ export type BattleId = Id<'battle'>;
 export type MessageId = Id<'message'>;
 export type EffectId = Id<'effect'>;
 export type RecruitId = Id<'recruit'>;
+export type WildId = Id<'wild'>;
 
 /** Anything that owns the id counter: GameState, or a scratch counter in mapgen. */
 export interface IdCounter {

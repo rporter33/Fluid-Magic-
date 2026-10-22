@@ -123,3 +123,90 @@ export function dedupeVertices(polygon: readonly Point[], eps = 1e-9): Point[] {
 export function distance(a: Point, b: Point): number {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
+
+/** Distance from `p` to the segment a-b. */
+export function segmentDistance(p: Point, a: Point, b: Point): number {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const length2 = dx * dx + dy * dy;
+  const t = length2 === 0 ? 0 : ((p.x - a.x) * dx + (p.y - a.y) * dy) / length2;
+  const clamped = Math.min(1, Math.max(0, t));
+  return Math.hypot(p.x - (a.x + clamped * dx), p.y - (a.y + clamped * dy));
+}
+
+/** True when a vertex of `polygon` lies within `tolerance` of the closed `outline`. */
+export function touchesOutline(
+  polygon: readonly Point[],
+  outline: readonly Point[],
+  tolerance: number,
+): boolean {
+  return polygon.some((p) =>
+    outline.some(
+      (a, k) => segmentDistance(p, a, outline[(k + 1) % outline.length] as Point) <= tolerance,
+    ),
+  );
+}
+
+/**
+ * Length of boundary two polygons share: the overlap of their collinear edges, within
+ * `tolerance`. Measures the drawn border, so it needs no Voronoi sites.
+ */
+export function sharedEdgeLength(
+  a: readonly Point[],
+  b: readonly Point[],
+  tolerance: number,
+): number {
+  let total = 0;
+  a.forEach((p, i) => {
+    const q = a[(i + 1) % a.length] as Point;
+    const length = distance(p, q);
+    if (length === 0) return;
+    const ux = (q.x - p.x) / length;
+    const uy = (q.y - p.y) / length;
+    const offLine = (r: Point) => Math.abs((r.x - p.x) * uy - (r.y - p.y) * ux);
+    const along = (r: Point) => (r.x - p.x) * ux + (r.y - p.y) * uy;
+    b.forEach((r, j) => {
+      const s = b[(j + 1) % b.length] as Point;
+      if (offLine(r) > tolerance || offLine(s) > tolerance) return;
+      const lo = Math.max(0, Math.min(along(r), along(s)));
+      const hi = Math.min(length, Math.max(along(r), along(s)));
+      if (hi > lo) total += hi - lo;
+    });
+  });
+  return total;
+}
+
+/** Points closer than this, in map units, are one point to wildOutline. */
+const OUTLINE_EPS = 1e-6;
+
+/**
+ * The boundary loops of a wild range (Phase 1b): its cells' edges that no other cell of the
+ * same range shares, chained end to start. Each loop is open (last != first) and runs with
+ * positive area, like the cells. The renderer draws the contour and hit-tests along them.
+ */
+export function wildOutline(wild: { readonly cells: readonly (readonly Point[])[] }): Point[][] {
+  const same = (p: Point, q: Point) => distance(p, q) <= OUTLINE_EPS;
+  const edges: { from: Point; to: Point; cell: number }[] = [];
+  wild.cells.forEach((polygon, cell) => {
+    polygon.forEach((from, k) => {
+      edges.push({ from, to: polygon[(k + 1) % polygon.length] as Point, cell });
+    });
+  });
+  // An edge two cells of the range share runs once each way.
+  const outer = edges.filter(
+    (e) => !edges.some((f) => f.cell !== e.cell && same(e.from, f.to) && same(e.to, f.from)),
+  );
+  const used = new Array<boolean>(outer.length).fill(false);
+  const loops: Point[][] = [];
+  for (let first = 0; first < outer.length; first++) {
+    const loop: Point[] = [];
+    for (let at = first; at >= 0 && !used[at];) {
+      used[at] = true;
+      const edge = outer[at] as (typeof outer)[number];
+      loop.push(edge.from);
+      at = outer.findIndex((f, k) => !used[k] && same(edge.to, f.from));
+    }
+    if (loop.length > 0) loops.push(loop);
+  }
+  return loops;
+}

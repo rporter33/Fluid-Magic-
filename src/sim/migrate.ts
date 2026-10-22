@@ -1,6 +1,7 @@
 // Lifting older saves to STATE_VERSION (docs/06-architecture.md, "Save and load"). Each entry of
 // the migration map takes a parsed save from its version to the next; serialize.ts (Phase 9)
 // runs them on load. No save exists before Phase 9, so for now they run only on test fixtures.
+import type { MapData } from '../mapgen/types';
 import { rerunCurrent, validRerun } from './battle/rerun';
 import { getMapProvince } from './state';
 import { STATE_VERSION, type GameState } from './types';
@@ -25,6 +26,12 @@ export const MIGRATIONS: Readonly<Record<number, Migration>> = {
       n.pretenderReturnDay = null;
     }
     for (const p of Object.values(state.provinces)) p.extraSprings = [];
+  },
+  // 3 to 4 (Phase 1b): the map gained its impassable wild ranges. An older map has none; the
+  // key goes last, where the generator puts it, so a lifted save hashes like a new one.
+  3: (state) => {
+    const map: Omit<MapData, 'wilds'> & Partial<Pick<MapData, 'wilds'>> = state.map;
+    map.wilds ??= [];
   },
 };
 

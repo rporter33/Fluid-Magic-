@@ -389,7 +389,7 @@ describe('runMatch', () => {
 
 describe('the headless runner', () => {
   it('plays Cinder Horde against Thornwood on Medium, seeds from the base, order alternating', () => {
-    expect(RUNNER_DEFAULTS).toEqual({ games: 20, seed: 1, months: 100 });
+    expect(RUNNER_DEFAULTS).toEqual({ games: 20, seed: 1, months: 100, wilds: false });
     const setups = runnerSetups(7, 3);
     expect(setups).toHaveLength(3);
     expect(setups.map((s) => s.seed)).toEqual([7, 8, 9]);
@@ -400,6 +400,7 @@ describe('the headless runner', () => {
     ]);
     for (const setup of setups) {
       expect(setup.mapSize).toBe('medium');
+      expect(setup.wilds).toBe(false);
       for (const n of setup.nations) {
         expect(n.ai).toEqual({ difficulty: 'normal' });
         expect(n.pretender).toEqual(defaultPreset(n.nation).design);

@@ -1,18 +1,23 @@
 // Lifting older saves (docs/06-architecture.md, "Save and load"): version 1 battle records gain
 // their scene and a null re-run; version 2 nations gain a null god's name and reform day and
-// provinces no added springs; a malformed re-run loads as null instead of failing the save.
+// provinces no added springs; version 3 maps gain no wilds; a malformed re-run loads as null
+// instead of failing the save.
 import { describe, expect, it } from 'vitest';
 import { attackersAt, fight, ownerForces } from '../../src/sim/conflict';
 import { matchesRecord, rerunBattle } from '../../src/sim/battle/rerun';
 import { stateHash } from '../../src/sim/hash';
 import { MIGRATIONS, migrateState } from '../../src/sim/migrate';
+import { advance } from '../../src/sim/tick';
 import { STATE_VERSION, type GameState, type NationState } from '../../src/sim/types';
 import { neighbors, redField } from './fixtures';
 
 /** Removes from a save what the given version and later ones added, as an older save lacks it. */
-function asVersion(saved: GameState, version: 1 | 2): GameState {
+function asVersion(saved: GameState, version: 1 | 2 | 3): GameState {
   const old = structuredClone(saved);
   old.version = version;
+  const map: Partial<typeof old.map> = old.map;
+  delete map.wilds;
+  if (version === 3) return old;
   for (const n of Object.values(old.nations)) {
     const o: Partial<NationState> = n;
     delete o.pretenderName;
@@ -45,7 +50,7 @@ function savedWithBattle(): GameState {
 
 describe('migrateState', () => {
   it('has a step for every older version', () => {
-    expect(STATE_VERSION).toBe(3);
+    expect(STATE_VERSION).toBe(4);
     for (let v = 1; v < STATE_VERSION; v++) expect(MIGRATIONS[v]).toBeDefined();
   });
 
@@ -60,7 +65,8 @@ describe('migrateState', () => {
     // hash like the same game created on this version.
     expect(JSON.stringify(state)).toBe(JSON.stringify(current));
     expect(stateHash(state)).toBe(stateHash(current));
-    expect(state.version).toBe(3);
+    expect(state.version).toBe(STATE_VERSION);
+    expect(state.map.wilds).toEqual([]);
     for (const n of Object.values(state.nations)) {
       expect([n.pretenderName, n.pretenderReturnDay]).toEqual([null, null]);
     }
@@ -70,7 +76,26 @@ describe('migrateState', () => {
     expect(matchesRecord(rerunBattle(b.rerun!), b)).toBe(true);
   });
 
-  it('chains the steps: a version 1 save gains the version 2 and 3 fields alike', () => {
+  it('lifts a version 3 save: the map has no wilds, and the game plays on identically', () => {
+    const current = savedWithBattle();
+    const v3 = asVersion(current, 3);
+    expect(Object.keys(v3.map)).not.toContain('wilds');
+    const state = migrateState(v3);
+    expect(state.version).toBe(STATE_VERSION);
+    expect(state.map.wilds).toEqual([]);
+    expect(Object.keys(state.map).at(-1)).toBe('wilds');
+    expect(JSON.stringify(state)).toBe(JSON.stringify(current));
+    expect(stateHash(state)).toBe(stateHash(current));
+    // The lifted save and the save it came from play the same days to the same hash.
+    const fresh = JSON.parse(JSON.stringify(current)) as GameState;
+    for (let day = 0; day < 40; day++) {
+      advance(state);
+      advance(fresh);
+    }
+    expect(stateHash(state)).toBe(stateHash(fresh));
+  });
+
+  it('chains the steps: a version 1 save gains the version 2, 3 and 4 fields alike', () => {
     const current = savedWithBattle();
     const state = migrateState(asVersion(current, 1));
     expect(state.version).toBe(STATE_VERSION);

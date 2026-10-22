@@ -22,20 +22,30 @@ export interface MatchResult {
   state: GameState;
 }
 
-/** The headless runner's defaults (docs/08 decisions, "The headless runner"). */
-export const RUNNER_DEFAULTS = { games: 20, seed: 1, months: 100 } as const;
+/**
+ * The headless runner's defaults (docs/08 decisions, "The headless runner"). `wilds`: whether
+ * its maps have impassable wild ranges (Phase 1b; on from the owner's decision commit).
+ */
+export const RUNNER_DEFAULTS: {
+  readonly games: number;
+  readonly seed: number;
+  readonly months: number;
+  readonly wilds: boolean;
+} = { games: 20, seed: 1, months: 100, wilds: false };
 
 /** The headless runner's two nations, in the order of its even-numbered games. */
 export const RUNNER_NATIONS: readonly NationDefId[] = ['cinderHorde', 'thornwood'];
 
 /**
  * A runner game's setup: the runner nations in this order on Medium, both Normal AI, each with
- * the preset listed for it in `presets` (`sim:aivai --presets`, Phase 6b.3) or else its default.
+ * the preset listed for it in `presets` (`sim:aivai --presets`, Phase 6b.3) or else its default,
+ * with or without wilds (Phase 1b).
  */
 export function playedSetup(
   seed: number,
   order: readonly NationDefId[],
   presets: readonly PresetDef[] = [],
+  wilds = RUNNER_DEFAULTS.wilds,
 ): GameSetup {
   return {
     seed,
@@ -45,6 +55,7 @@ export function playedSetup(
       pretender: (presets.find((p) => p.nation === nation) ?? defaultPreset(nation)).design,
       ai: { difficulty: 'normal' },
     })),
+    wilds,
   };
 }
 
@@ -56,14 +67,15 @@ export function runnerOrder(game: number): readonly NationDefId[] {
 /**
  * The headless runner's game number `game` from base seed `seed` (docs/08 decisions): Cinder
  * Horde against Thornwood on Medium with their default presets (or those `presets` names), both
- * Normal AI, the nation order alternating by game.
+ * Normal AI, the nation order alternating by game, with or without wilds.
  */
 export function runnerSetup(
   seed: number,
   game: number,
   presets: readonly PresetDef[] = [],
+  wilds = RUNNER_DEFAULTS.wilds,
 ): GameSetup {
-  return playedSetup(seed + game, runnerOrder(game), presets);
+  return playedSetup(seed + game, runnerOrder(game), presets, wilds);
 }
 
 /** The setups of a runner session: games 0 to games - 1 from base seed `seed`. */
@@ -71,8 +83,9 @@ export function runnerSetups(
   seed: number,
   games: number,
   presets: readonly PresetDef[] = [],
+  wilds = RUNNER_DEFAULTS.wilds,
 ): GameSetup[] {
-  return Array.from({ length: games }, (_, game) => runnerSetup(seed, game, presets));
+  return Array.from({ length: games }, (_, game) => runnerSetup(seed, game, presets, wilds));
 }
 
 /** Plays a game with every AI nation driven by `player` until it ends or `maxDays` pass. */

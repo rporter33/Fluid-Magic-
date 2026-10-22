@@ -129,6 +129,7 @@ the truth for current values.
 
 - [ ] A new player can start Cinder Horde with the Warlord preset and take 4 provinces by month 6 without reading docs.
 - [ ] Thornwood beats Cinder Horde in roughly half of AI vs AI games on Medium maps (run 20 headless games with `npm run sim:aivai`).
+  - Measured 2026-10-22 (Phase 1b review, wilds off): the 20 default games from seed 1 go 10 to 9 with one timeout, but 100 games go Cinder Horde 70, Thornwood 28, 2 with no winner, so the 20-game check passes by sample. See the Known issues in `docs/PROGRESS.md`.
 - [ ] Each preset wins 35% to 65% of its games against the opposing default (`npm run sim:aivai -- --matrix`, 20 seeds in both nation orders).
 - [ ] Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3.
 - [ ] Research reaches level 4 in the nation color by month 24 with 4 mages.

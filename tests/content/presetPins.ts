@@ -1,7 +1,7 @@
 // Behavior pins for the six presets of Phase 6, computed on the code before Phase 6b.1 and
 // checked by presets.test.ts after it: every battle setup the bless reaches, and whole games
-// played by the Phase 7 AI. Fields Phase 6b.1 added to the state (and the save version) are
-// stripped first, and battle setups are put back in the Phase 6 shape (Phase 6b.2 changed the
+// played by the Phase 7 AI. Fields Phase 6b.1 and Phase 1b added to the state (and the save
+// version) are stripped first, and battle setups are put back in the Phase 6 shape (Phase 6b.2 changed the
 // shield field and added others), so equal pins mean equal behavior.
 import { runAi } from '../../src/ai/ai';
 import { runMatch } from '../../src/ai/match';
@@ -14,10 +14,15 @@ import { cyrb53 } from '../../src/sim/hash';
 import type { NationId, ProvinceId } from '../../src/sim/ids';
 import type { CommanderState, GameSetup, GameState, PretenderDesign } from '../../src/sim/types';
 
-/** Removes what Phase 6b.1 added to the saved shape, so older and newer states compare. */
+/**
+ * Removes what Phase 6b.1 and Phase 1b added to the saved shape, so older and newer states
+ * compare. The pinned games have no wilds; a map with any would not compare.
+ */
 export function stripped(state: GameState): string {
+  if (state.map.wilds.length > 0) throw new Error('a pinned game has wilds');
   const copy = JSON.parse(JSON.stringify(state)) as Record<string, unknown>;
   delete copy.version;
+  delete (copy.map as Record<string, unknown>).wilds;
   const nations = copy.nations as Record<string, Record<string, unknown>>;
   for (const n of Object.values(nations)) {
     delete n.pretenderName;
