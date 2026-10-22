@@ -13,6 +13,11 @@ and in which phase.
 | `pretender-and-magic.md` | Sixteen pretender chassis, the blessing menu, boons, appearance and identity, share codes, the magic effects grammar | `docs/05`, Phase 6b (6b.1 and 6b.2 are done), Phases 8 to 12 |
 | `units-and-items.md` | Size ladder, mounts, gear pieces, reach, resistances, the abilities catalog, forged magic items | Phase 7b, Phases 8 to 12 |
 | `war-table.md` | The oak war table in a tavern, impassable wilds, painted map detail, growth by alignment, leader portraits, the art prompt pack | Phase 1b, Phases 8 to 11 |
+| `battle-overhead.md` | Proposed: the overhead three-quarter battle stage with massed formations, monsters at true size, the card bar and hover cards, replacing `docs/12`'s side view (S2.4, S2.5, S4.3, S4.4, S4.6) | Phase 10 S2 and S4, after owner review |
+| `map-relief.md` | Proposed: the clean relief-terrain map, a terrain model on the war table, thin owner rails, miniatures on bases, labels by zoom | `docs/07`, `docs/09`, Phase 8, after owner review |
+
+`visual-references.analysis.md` and `visual-references.tech.md` are the reference analysis and the measured Pixi research
+behind the two proposed records.
 
 The `*.owner-direction.md` and `*.owner-answers.md` files hold the project owner's words and the
 answers to each record's open questions; the docs quote them as owner decisions.
