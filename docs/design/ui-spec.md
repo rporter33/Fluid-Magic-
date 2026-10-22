@@ -814,7 +814,8 @@ Battle Plan sheet, 640 x 556 at 1280x720 (top bar above, strip below)
 
 **Script timeline** (for the focused commander):
 `[R1][R2][R3][R4][R5] [Round 6+: repeats slot 5]`. The greyed sixth cell states docs/04's rule
-on screen.
+on screen: when slot 5 is Retreat it reads `Round 6+: default` instead, since Retreat is not
+repeated.
 - Each slot is a picker: Cast (a spell, or "Best available"), Attack, Hold, Retreat.
 - The spell list shows only spells this commander can cast. Each shows its fatigue cost *for
   this caster* (extra pips reduce it; docs/02 §3), its requirement as symbols, and a carried-mana
@@ -2956,7 +2957,8 @@ A foreign or independent province shows read-only tabs. Unexplored values read "
     refused with the reason.
   - **Whole army here:** shows every own commander in the province. It is on when more than one
     is present.
-  - **Script timeline** for the focused commander: `[R1]…[R5] [Round 6+: repeats slot 5]`. Each
+  - **Script timeline** for the focused commander: `[R1]…[R5] [Round 6+: repeats slot 5]` (when
+    slot 5 is Retreat the cell reads `Round 6+: default`, per docs/04). Each
     slot is Cast (a spell, or Best available), Attack, Hold or Retreat. Spells show their fatigue
     for this caster. Locked spells are listed with their reasons.
   - **Warnings:** a slot that cannot cast turns amber with the reason, and a one-click fix where

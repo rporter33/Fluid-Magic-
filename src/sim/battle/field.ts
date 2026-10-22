@@ -3,10 +3,11 @@
 // that changes during the battle is a timed modifier on the group, so the caller's setup is
 // never touched. Nothing here outlives a battle. The field also carries the optional detail
 // sink and the round and step being resolved, which detail events record.
-import type { UnitTypeId } from '../../content';
+import { unitDef, type UnitTypeId } from '../../content';
 import type { UnitAbility } from '../../content/abilities';
 import { BATTLE, CASTING } from '../../content/rules';
 import type { BattleSpellDef, FieldEffectKind } from '../../content/spells/types';
+import { defaultSlot } from '../commanders';
 import type { Formation, Pips, ScriptSlot } from '../types';
 import type { DetailEvent } from './detail';
 import type { BattleEvent, BattlePhase, BattleSide, BattleUnitRef, StatKey } from './events';
@@ -75,6 +76,8 @@ export interface Group {
    * and mana carried.
    */
   script: readonly ScriptSlot[];
+  /** Commanders only: the default action, taken after the last slot when that is Retreat. */
+  fallback: ScriptSlot;
   pips: Pips;
   holy: number;
   spells: readonly BattleSpellDef[];
@@ -106,6 +109,8 @@ export interface Field {
 /** What only commanders bring to a group. */
 interface CommanderParts {
   script: readonly ScriptSlot[];
+  /** The default action after the last slot when that is Retreat; Hold if not given. */
+  fallback?: ScriptSlot;
   pips: Pips;
   holy: number;
   spells: readonly BattleSpellDef[];
@@ -153,6 +158,7 @@ export function group(
     checked: false,
     shock: 0,
     script: parts.script,
+    fallback: parts.fallback ?? { kind: 'hold' },
     pips: parts.pips,
     holy: parts.holy,
     spells: parts.spells,
@@ -177,6 +183,7 @@ function sideGroups(side: BattleSide, setup: BattleSideSetup): Group[] {
   const commanders = setup.commanders.map((c) =>
     group(side, c.ref, null, c.stats, c.row, 1, c.hp, {
       script: c.script,
+      fallback: defaultSlot(unitDef(c.unit), c.pips, c.holy),
       pips: c.pips,
       holy: c.holy,
       spells: c.spells,

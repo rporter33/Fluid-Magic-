@@ -77,7 +77,8 @@ DRN: roll 1d6 twice; each die that shows 6 is rerolled and the new value added, 
 ## Scripts
 
 Each commander has 5 script slots, each `Cast(spellId) | Attack | Hold | Retreat`. After
-slot 5 the commander repeats slot 5 unless it is Retreat. If a Cast slot cannot be cast
+slot 5 the commander repeats slot 5 unless it is Retreat; then it takes its default action
+(see "Commanders in battle"). If a Cast slot cannot be cast
 (fatigue, no valid target), the AI caster picks the best castable spell by a simple
 heuristic: damage spells when enemies ≥ 10 troops, buffs otherwise.
 
@@ -326,6 +327,12 @@ has"). Each rule is tested alone; none adds a randomness source.
   with their own abilities, and the golden pin still matches byte for byte.
 
 **QA sweep (2026-10-22)**
+- **After a Retreat in slot 5** (finding BM-3): from round 6 on, a commander whose slot 5 is
+  Retreat takes its default action, the one its default script holds (`defaultSlot`): Cast its
+  unit's default spell, or the best castable one, when it has color or holy pips; Hold
+  otherwise. This shows only for a commander too tired to act in round 5, since one that
+  retreats in round 5 has left by round 6. Before the fix it retreated in the first later round
+  it could act.
 - **Damaging hits** (finding BM-2): retaliation shields burn, and life drain heals, only for a
   hit that dealt damage: the target was still alive when it landed and the roll was above 0. A
   hit on a troop already felled in the same phase (`onFallen`) deals none, so it neither burns

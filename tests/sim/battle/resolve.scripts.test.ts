@@ -2,6 +2,7 @@
 // Hold, and Retreat slots, and what a commander's death does. Casting is in spells.test.ts, the
 // rest of the resolver in resolve.test.ts.
 import { describe, expect, it } from 'vitest';
+import { SPELLS } from '../../../src/content/spells';
 import type { ScriptSlot } from '../../../src/sim/types';
 import { byRound, commander, fightOnce, IMMORTAL, side, squad } from './fixtures';
 
@@ -97,6 +98,37 @@ describe('commanders and scripts', () => {
     expect(result.winner).toBe('defender');
     expect(result.squads.get('s')).toMatchObject({ count: 10, routed: true });
     expect(result.commanders.get('c')).toMatchObject({ dead: false, routed: true });
+  });
+
+  // QA sweep BM-3: docs/04 "Scripts", after slot 5 the commander repeats slot 5 unless it is
+  // Retreat. Before the fix a mage exhausted through round 5 retreated in round 6.
+  it('does not repeat a Retreat in slot 5: after round 5 the commander takes its default', () => {
+    // Casts Pyre Storm in rounds 1 and 2 and is too tired to act in rounds 3 to 5.
+    const mage = commander('m', 'cinderMagus', {
+      pips: { R: 3 },
+      spells: [SPELLS.pyreStorm],
+      carriedMana: { R: 3 },
+      stats: IMMORTAL,
+      script: [
+        { kind: 'cast', spellId: 'pyreStorm' },
+        { kind: 'cast', spellId: 'pyreStorm' },
+        { kind: 'cast', spellId: 'pyreStorm' },
+        { kind: 'hold' },
+        { kind: 'retreat' },
+      ],
+    });
+    const result = fightOnce(
+      side([squad('a1', 'cinderWarrior', 5, { leader: 'm', stats: IMMORTAL })], [mage]),
+      side([squad('d1', 'warden', 30, { stats: IMMORTAL })]),
+    );
+    const rounds = byRound(result);
+    const casts = rounds.flatMap(({ round, event }) => (event.kind === 'cast' ? [round] : []));
+    expect(casts.slice(0, 2)).toEqual([1, 2]);
+    expect(casts.slice(2).every((r) => r > 5)).toBe(true);
+    // Its default action is Cast: it casts again once rested, and nobody routs.
+    expect(casts.length).toBeGreaterThan(2);
+    expect(rounds.filter(({ event }) => event.kind === 'rout')).toEqual([]);
+    expect(result.rounds).toBe(50);
   });
 
   it('a dead commander is logged and its squads must check morale', () => {

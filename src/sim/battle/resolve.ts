@@ -54,8 +54,8 @@ function roster(side: BattleSideSetup): BattleRoster {
 }
 
 /**
- * Round step 1: each commander follows its script slot for the round (slot 5 repeats), one
- * after another in caster order. Cast casts the named spell, or the best castable one, and
+ * Round step 1: each commander follows its script slot for the round (slot 5 repeats, unless it
+ * is Retreat: then the commander takes its default action), one after another in caster order. Cast casts the named spell, or the best castable one, and
  * the effects land before the next commander acts. Attack moves the commander into its side's
  * front row. Retreat takes it and its squads off the field this round; berserkers stay. A
  * commander too tired to act does nothing.
@@ -63,7 +63,10 @@ function roster(side: BattleSideSetup): BattleRoster {
 function scriptsPhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
   for (const c of interleaved(field)) {
     if (!active(c) || exhausted(c)) continue;
-    const slot = c.script[Math.min(round, c.script.length) - 1];
+    const slot =
+      round > c.script.length && c.script.at(-1)?.kind === 'retreat'
+        ? c.fallback
+        : c.script[Math.min(round, c.script.length) - 1];
     if (slot?.kind === 'cast') {
       const spell = chooseSpell(field, c, slot.spellId);
       if (spell) cast(field, c, spell, round, rng, log);

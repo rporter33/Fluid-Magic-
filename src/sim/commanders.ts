@@ -23,12 +23,18 @@ export function defaultFormation(def: UnitDef): Formation {
 }
 
 /**
- * docs/04-battle.md: a commander with color or holy pips casts (its unit's default spell, else
- * its best castable one); others hold. Priests default to Bless (docs/08-ai.md).
+ * docs/04-battle.md: a commander's default action. One with color or holy pips casts (its
+ * unit's default spell, else its best castable one); others hold. Priests default to Bless
+ * (docs/08-ai.md).
  */
-export function defaultScript(def: UnitDef, pips: Pips, holy: number): ScriptSlot[] {
+export function defaultSlot(def: UnitDef, pips: Pips, holy: number): ScriptSlot {
   const spellId = def.commander?.defaultSpell ?? null;
-  const slot: ScriptSlot = hasPips(pips, holy) ? { kind: 'cast', spellId } : { kind: 'hold' };
+  return hasPips(pips, holy) ? { kind: 'cast', spellId } : { kind: 'hold' };
+}
+
+/** The default script: the default action in every slot. */
+export function defaultScript(def: UnitDef, pips: Pips, holy: number): ScriptSlot[] {
+  const slot = defaultSlot(def, pips, holy);
   return Array.from({ length: SCRIPT_SLOTS }, () => ({ ...slot }));
 }
 
