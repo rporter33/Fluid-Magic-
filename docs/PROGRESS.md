@@ -884,6 +884,76 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   days with wilds (8, 5 and 6 without). The reserve row's 7 days came from before Phase 7's
   review fixes; it now gives the 8 measured after them, as Phase 7 above has it.
 
+## QA sweep (2026-10-22)
+
+The owner asked for any further issues and QA. A sweep for real defects (wrong results,
+crashes, broken invariants, nondeterminism, validate/apply mismatches, rules against the docs,
+saves that do not round-trip, AI refusals, perf cliffs) confirmed nine findings; all are fixed,
+each with a test that fails without its fix (DOC-4, a docs fix, with a test of the assets).
+Tests: 2196 in 126 files before, 2207 in 130 files after.
+- **Sim inputs.** sim-1: `validateCommand` found the nation through the prototype chain, so a
+  crafted log's `"constructor"` or `"__proto__"` passed as a nation and `setResearchColor`
+  threw in apply; it now takes an own property only. sim-2: `createGame` accepted an unknown
+  AI difficulty from JSON and the first day crashed; it now throws a `RangeError`. sim-3:
+  `migrateState` returned a save from a newer build, or with no whole-number version, as if
+  current; it now throws, so Phase 9's loader can say so.
+- **Supply.** BM-1 and DOC-1: units that eat nothing (constructs and undead: the Fire Sprites)
+  skipped healing along with starvation, so a wounded sprite squad stayed wounded for good.
+  They now heal like fed units, as docs/01 says fed units do. This is the one fix that moved
+  the runner's games (below).
+- **Battle.** BM-2: retaliation shields burned, and life drain healed, for hits on a troop
+  already felled that phase (`onFallen`), which deal no damage; now only hits that dealt
+  damage count (docs/05, docs/02). The golden pin was regenerated for it: 9 of 150 entries
+  (`fireShield` and `lifeDrain`) change their burns, heals and HP, not their draws, winners or
+  rounds. BM-3: a Retreat in slot 5 was repeated after round 5; from round 6 the commander now
+  takes its default action (docs/04 "Scripts"). docs/04 records both under "QA sweep".
+- **Map generation.** map-1: the 8-start Wellspring search could stop 2 hops unfair on Small
+  4-nation maps where fair sets existed (seed 6 with wilds, 16 without). It now searches again
+  from every candidate while its result is unfair, drawing nothing from the rng, so maps whose
+  first result was fair are unchanged (the 30 bit-identity hashes without wilds all hold). Two
+  wild pins moved (small-4-3 and medium-4-3, from 1 hop unfair to fair), re-pinned in
+  `wilds.pins.test.ts`. With 4 nations: 0 or 1 hop on Small seeds 1 to 120 with wilds (3 at 1)
+  and on all sizes, seeds 1 to 60, without; 0 on Medium and Large seeds 1 to 60 with wilds.
+  The retry runs in 6 of the 65 placements behind Medium 4-nation seeds 1 to 10 and none with
+  2 nations; a follow-up made the search's cost evaluation cheaper with the same results, so a
+  retry takes about 110 ms (145 before it), some 12% of those maps' generation time.
+- **Docs and assets.** DOC-4: docs/09-balance and docs/09-art-direction asked 8 faces of every
+  portrait set and the rig's pose for summoned commanders, while the shipped Salamander and
+  Treant sets (owner-approved, round 2) have 4. The docs now take a summoned commander's set as
+  complete at 4 faces, replacing its rig pose, which stays the fallback; the portraits README
+  agrees. `tests/assets/portraits.test.ts` checks every set's faces, sizes and sidecars and the
+  2 MB raster total (1,987,716 bytes, 12 KB to spare).
+- **Test hygiene.** H1: the tests that time out at vitest's 5 s default under load and pass
+  alone have explicit timeouts, each documented beside it: `generate.test.ts`'s sweeps 12 s
+  ("medium with 3", 2.3 to 2.9 s alone), `wilds.large.test.ts` and `wilds.medium.test.ts` 10 s
+  (their 4-nation seeds 1 and 2 take 1.7 to 2.3 s alone; Medium's seed 4 timed out once in this
+  sweep's first full run, at a load average near 10), `determinism.test.ts`'s 365-day replay
+  10 s (0.9 to 1.1 s alone; 4x would be under the default it has exceeded) and `siege.test.ts`'s
+  storm test 10 s (1.8 s alone). H2: the tick budget now takes the fastest of three runs of
+  the same 60 days (from copies of one game) and the two resolver budgets the fastest of three
+  rounds of their five battles; no budget changed. The re-run pin already took the best of
+  five, and `generate.perf.test.ts` takes the median of ten seeds; doubling its 4-nation work
+  would bring it near its own 30 s timeout under load, so it is unchanged. H3:
+  `tests/ai/match.test.ts` (435 lines) is split by topic into `driver.test.ts` (playDay),
+  `driver.replay.test.ts` (replayLog) and `match.test.ts` (runMatch, the headless runner), with
+  their helpers in `matchFixtures.ts`; the same 19 tests and assertions.
+- **Runner**, `npm run sim:aivai -- --games 20 --seed 1`: before, Cinder Horde 17, Thornwood 3,
+  no winner 0, mean 23.6 months (`--wilds off`: 10, 9, 1, 26.8); after, 16, 4, 0, mean 21.6
+  months, 11.3 to 39.3 (`--wilds off`: 11, 9, 0, mean 23.5 months, 11.8 to 42.8); 0 refused
+  commands in every run, and all 40 games end by Wellsprings. Only BM-1 moved a game: BM-2,
+  BM-3 and map-1 each left all 40 games as they were. Over 100 games from seed 1 (3000 days),
+  wilds on go 76, 23, 1 (before: 77, 20, 3) and wilds off 69, 30, 1 (before: 70, 28, 2), 0
+  refused.
+- **Preset matrix** with wilds (`--matrix`, 440 games), after the sweep: baseline Warlord 33,
+  Elder Oak 7 (before 34, 6); Ember Oracle 50% (60%), Wildfire 75% (70%), Deep Root 5% (10%),
+  Wyrm of the Loam 25% (23%), Undying Flame 88% (80%), Pyre Host 75% (80%), Dread Idol 80%
+  (73%), Heartwood 15% (20%), Hunt Lord 23% (20%), Mother of the Pack 18% (23%); still only
+  Ember Oracle within 35% to 65%; 0 refused commands. The matrix known issue below stands.
+- **Known issues** below: resolved, the slow tests' timeouts (H1) and the 2-hop Wellspring maps;
+  game 18 without wilds no longer stalls, though the Defense issue it showed stays; updated, the
+  runner, lean, timing, fairness and `migrateState` items; added, the raster headroom with the
+  summon-portrait choice for the owner, and the Wellspring retry's cost.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -956,7 +1026,11 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   Phase 1b), which with wilds is within 1.5x on 93% of 3-nation and 56% of 4-nation Medium maps
   (docs/09-balance); the others are above it. Revisit in Phase 12 if playtests show lopsided
   starts.
-- Wellspring fairness is exact on 2- and 3-nation maps and within 1 hop on 4-nation maps.
+- Wellspring fairness is exact on 2- and 3-nation maps and within 1 hop on 4-nation maps. Before
+  the QA sweep (finding map-1) the search could stop at 2 hops on about 1 in 100 Small 4-nation
+  maps; it now retries from every candidate while unfair, and the measured 4-nation maps are at 0
+  or 1 (QA sweep above). A 1-hop map may still have no fair set at all (Small seed 6 has none);
+  nothing proves 1 hop is always reachable.
 - A dead elevation noise field would not fail any test; terrain wiring is covered only by
   exact shares and clustering. Pinning one seed's terrain would catch it but would churn on
   every deliberate generator change.
@@ -986,9 +1060,11 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   The random dummy won by Wellsprings in 17 of 20 runner games, in a mean of about 27 months.
   Phase 7's AI holds its Wellsprings (Defense right after the capital, PD 10, escorts) and
   contests the enemy's (denial past the odds gate), yet all 20 runner games from seed 1 end by
-  Wellsprings, none by elimination, in a mean of 23.6 months (11.3 to 43.0) on the default maps
-  with wilds; without wilds 19 did, in a mean of 23.0 months (11.8 to 33.2), and the other
-  reached the timeout (game 18, below). A claim takes 10
+  Wellsprings, none by elimination, in a mean of 21.6 months (11.3 to 39.3) on the default maps
+  with wilds, and all 20 without wilds too, in a mean of 23.5 months (11.8 to 42.8), since the
+  QA sweep's Fire Sprite healing (finding BM-1). Before it: 23.6 months (11.3 to 43.0) with
+  wilds; without, 19 in a mean of 23.0 months (11.8 to 33.2) and game 18 (below) reached the
+  timeout. A claim takes 10
   days and a call comes every 5, so denial seldom lands in time. Phase 12 decides whether
   Wellspring wins need a hold period or tougher guards.
 - Resolved in Phase 3: Wild and Artifice "build time" scales recruitment time too; arrivals
@@ -1023,8 +1099,10 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   armies stand held in the provinces next to Thornwood's armies. The two independent
   Wellsprings (guards of 250 to 300 power, which one 80-troop army takes) are never attacked,
   so the game stalls until the timeout. With wilds, the default since Phase 1b, game 18 ends by
-  Wellsprings in 26.0 months. Phase 8 playtesting or Phase 12 should decide how Defense shares
-  one threat.
+  Wellsprings in 26.0 months. Since the QA sweep's Fire Sprite healing (finding BM-1) game 18
+  without wilds ends too (Cinder Horde by Wellsprings in 28.5 months), so no runner game shows
+  the stall now; the Defense rule is unchanged. Phase 8 playtesting or Phase 12 should decide how
+  Defense shares one threat.
 - The AI retakes provinces it loses only through War (Expansion takes independents only, as
   docs/08 says), behind the aggression gate. Since the review (finding cor-3) the gate is
   judged per target, so a weakly held province opens it even for Thornwood (0.4); before, the
@@ -1046,7 +1124,9 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   `armies.ts`, and `golden.ts` beside it, `tests/sim/battle/golden.test.ts`, `golden.json`),
   which is green on the Phase 6 resolver and regenerates byte for byte there; then the rest.
 - Serialize (Phase 9) must call `migrateState` on load; until then nothing runs the
-  migration outside its test.
+  migration outside its test. Since the QA sweep (finding sim-3) it throws for a save it cannot
+  read (newer than `STATE_VERSION`, or no whole-number version), which the loader should catch
+  and show the player.
 - For merging Phase 7 (AI) and later tracks over Phase 6b.1: `scaleStepCost` takes the
   chassis as its second argument, `PRETENDER_COSTS.newColorFirstPip` is gone (use
   `ChassisDef.newColorFirstPip`), `blessOf` takes the design and whether the god is on the
@@ -1071,15 +1151,16 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
 - The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin, and Phase 1b's
   `generate.perf.test.ts`) can fail when the machine is loaded by other processes; they pass
-  when run alone. So can `siege.test.ts`'s storm test that builds 60 games, under vitest's 5 s
-  default: with wilds on by default it took 1.8 s alone against 0.9 s without them, and timed
-  out once in a full run at a load average near 9 (measured while Phase 1b joined Phase 6b.3).
-  Tests in three more files timed out at 5 s in full runs at load averages of 6 to 9 during that
-  join and its review, and pass alone: `generate.test.ts`'s Medium sweep with 4 nations
-  ("medium with 3", 2.9 s alone at a load average near 1), `wilds.large.test.ts`'s 4-nation
-  seeds (seeds 1 and 2 take 2.0 and 2.3 s alone, the others about 1 s; seeds 1, 2 and 14 have
-  timed out) and `determinism.test.ts`'s 365-day replay through a save and load (1.1 s alone). A
-  full run that fails one of these and passes it alone has met load, not a regression.
+  when run alone. Since the QA sweep (H2) the tick and resolver budgets take the fastest of
+  three runs, as the re-run pin takes the best of five, so a burst of load seldom fails them;
+  sustained load still can, `generate.perf.test.ts` most (its 4-nation median is about 600 ms
+  alone against 1,000 ms). Resolved in the QA sweep (H1): the tests that timed out at
+  vitest's 5 s default in loaded full runs and passed alone (`siege.test.ts`'s 60-game storm
+  test, 1.8 s alone; `generate.test.ts`'s sweeps, "medium with 3" 2.3 to 2.9 s;
+  `wilds.large.test.ts`'s and `wilds.medium.test.ts`'s 4-nation seeds, 1.7 to 2.3 s, Medium's
+  seed 4 having timed out once at a load average near 10; `determinism.test.ts`'s 365-day
+  replay, 0.9 to 1.1 s) have explicit timeouts of 10 to 12 s, documented beside each. A full
+  run that fails one of these and passes it alone has met load, not a regression.
 - Preset matrix (Phase 6b.3, for Phase 12), measured without wilds: 8 of 10 presets miss the
   35% to 65% band against the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%,
   Dread Idol 75%; Deep Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The
@@ -1110,7 +1191,9 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   refused a command. The first 20 games (with wilds off 10, 9 and a timeout; with wilds on 17
   and 3) are a lucky sample for wilds off, whose games 20 to 99 go 60 to 19, so the lean is
   older than wilds. With wilds on by default, the 20 default games now fail the docs/09-balance
-  check (3 of 20 for Thornwood).
+  check (3 of 20 for Thornwood). After the QA sweep's Fire Sprite healing (BM-1) the same 100
+  seeds give, with wilds, 76, 23 and 1 (mean 25.1 months) and, without, 69, 30 and 1 (mean 24.6);
+  the first 20 go 16 to 4 with wilds and 11 to 9 without; 0 refused commands. The lean holds.
 - Balance, older than Phase 1b: the docs/09-balance checklist's "Thornwood beats Cinder Horde
   in roughly half of AI vs AI games" passed on its 20 default games without wilds (seed 1, 10
   to 9) only by sample, and fails with them (17 to 3). Over 100 seeds Thornwood wins 28 to
@@ -1131,3 +1214,12 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   morale base by 1, about 80% of random records still matched and showed morale rolls against
   the new target). `rerun.rules` now stores `battleRulesHash()`, and a save from a build with
   other battle rules, spells or units loads with a null `rerun` (log-only replay).
+- Raster art (QA sweep, DOC-4): the WebP rasters total 1,987,716 bytes against the 2 MB
+  (2,000,000 byte) cap, so the next raster must displace one; `tests/assets/portraits.test.ts`
+  fails when the total passes the cap. The sweep made a summoned commander's 4-face set complete
+  and let it replace the rig's portrait pose, to match the shipped Salamander and Treant sets;
+  the owner may prefer 8 faces or the rig pose for summons, in which case docs/09-art-direction
+  and that test change together.
+- The Wellspring retry (QA sweep, map-1) costs about 110 ms per unfair placement on Medium with
+  4 nations, some 12% of those maps' generation time; with 2 nations it never ran in the seeds
+  checked.

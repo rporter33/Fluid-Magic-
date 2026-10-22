@@ -173,9 +173,11 @@ presentation" table (Phases 8 to 11).
 - [ ] Thornwood beats Cinder Horde in roughly half of AI vs AI games on Medium maps (run 20 headless games with `npm run sim:aivai`).
   - Measured 2026-10-22 (Phase 1b review, wilds off, then the default): the 20 games from seed 1 go 10 to 9 with one timeout, but 100 games go Cinder Horde 70, Thornwood 28, 2 with no winner, so the 20-game check passes by sample. See the Known issues in `docs/PROGRESS.md`.
   - Measured 2026-10-22 (Phase 1b commit B, wilds on by default): the 20 default games go Cinder Horde 17, Thornwood 3, none undecided (mean 23.6 months), so the check fails; 100 games go 77, 20 and 3. Against wilds off on the same 100 seeds (70, 28, 2) the difference is not significant (Fisher exact p = 0.24): the lean is the older one above.
+  - Measured 2026-10-22 (QA sweep, after Fire Sprites heal like fed units, finding BM-1): with wilds the 20 default games go 16 to 4 (mean 21.6 months) and 100 games 76, 23, 1; without wilds 11 to 9 with none undecided (mean 23.5) and 100 games 69, 30, 1. The check still fails with wilds.
 - [ ] Each preset wins 35% to 65% of its games against the opposing default (`npm run sim:aivai -- --matrix`, 20 seeds in both nation orders).
   - Measured 2026-10-22 (Phase 6b.3, maps without wilds): 2 of 10 within the band (Ember Oracle 57%, Wyrm of the Loam 43%).
   - Measured 2026-10-22 (Phase 1b, wilds on by default): 1 of 10 within the band (Ember Oracle 60%); the baseline goes Warlord 34, Elder Oak 6. The rows are above.
+  - Measured 2026-10-22 (QA sweep, after Fire Sprites heal, finding BM-1; wilds on): 1 of 10 within the band (Ember Oracle 50%); the baseline goes Warlord 33, Elder Oak 7. Wildfire 75%, Deep Root 5%, Wyrm of the Loam 25%, Undying Flame 88%, Pyre Host 75%, Dread Idol 80%, Heartwood 15%, Hunt Lord 23%, Mother of the Pack 18%; 0 refused in 440 games.
 - [ ] Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3.
 - [ ] Research reaches level 4 in the nation color by month 24 with 4 mages.
 - [ ] A match against one Normal AI ends by month 70 in most games (victory or defeat).
