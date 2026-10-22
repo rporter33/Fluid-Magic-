@@ -18,8 +18,15 @@ import { bfsDistances } from './graph';
 
 type Adjacency = readonly (readonly number[])[];
 
-/** One of the highest-scoring indices, chosen uniformly among ties. */
-function bestOf(rng: RngState, indices: readonly number[], score: (i: number) => number): number {
+/**
+ * One of the highest-scoring indices, chosen uniformly among ties, or the first of them when
+ * `rng` is null (which draws nothing from the stream).
+ */
+function bestOf(
+  rng: RngState | null,
+  indices: readonly number[],
+  score: (i: number) => number,
+): number {
   let best = Number.NEGATIVE_INFINITY;
   let ties: number[] = [];
   for (const i of indices) {
@@ -31,7 +38,7 @@ function bestOf(rng: RngState, indices: readonly number[], score: (i: number) =>
       ties.push(i);
     }
   }
-  return pick(rng, ties);
+  return rng === null ? (ties[0] ?? -1) : pick(rng, ties);
 }
 
 function range(n: number): number[] {
@@ -90,7 +97,10 @@ export function wellspringsToWin(count: number): number {
  * single swaps are taken while they lower the cost: unfairness (the spread between nations
  * in total distance to the Wellsprings each needs to win) times
  * MAPGEN.wellspringFairnessWeight, minus the closest pair's separation. The cheapest set
- * wins. Returns null when the constraints cannot be met.
+ * wins. When it is still unfair, the same search runs again from every candidate, ties going
+ * to the first, so a local optimum of the random starts is not kept (QA sweep map-1). That
+ * retry draws nothing from the rng, so maps whose first result is fair are unchanged.
+ * Returns null when the constraints cannot be met.
  */
 export function placeWellsprings(
   rng: RngState,
@@ -122,7 +132,7 @@ export function placeWellsprings(
     return closest;
   };
   const need = wellspringsToWin(count);
-  const cost = (set: readonly number[]) => {
+  const unfairness = (set: readonly number[]) => {
     const reach = perCapital.map((d) =>
       set
         .map((w) => d[w] ?? 0)
@@ -130,18 +140,19 @@ export function placeWellsprings(
         .slice(0, need)
         .reduce((sum, x) => sum + x, 0),
     );
-    const unfairness = Math.max(...reach) - Math.min(...reach);
-    return MAPGEN.wellspringFairnessWeight * unfairness - closestPair(set);
+    return Math.max(...reach) - Math.min(...reach);
   };
+  const cost = (set: readonly number[]) =>
+    MAPGEN.wellspringFairnessWeight * unfairness(set) - closestPair(set);
 
-  const search = (start: number): number[] | null => {
+  const search = (start: number, ties: RngState | null): number[] | null => {
     const chosen = [start];
     while (chosen.length < count) {
       const open = candidates.filter(
         (c) => !chosen.includes(c) && chosen.every((w) => gap(w, c) >= minSeparation),
       );
       if (open.length === 0) return null;
-      chosen.push(bestOf(rng, open, (c) => Math.min(...chosen.map((w) => gap(w, c)))));
+      chosen.push(bestOf(ties, open, (c) => Math.min(...chosen.map((w) => gap(w, c)))));
     }
     let current = cost(chosen);
     let improved = true;
@@ -164,14 +175,19 @@ export function placeWellsprings(
     return chosen;
   };
 
-  let best: { set: number[]; cost: number } | null = null;
-  for (const start of candidates.slice(0, MAPGEN.wellspringSearchStarts)) {
-    const set = search(start);
-    if (set === null) continue;
-    const setCost = cost(set);
-    if (best === null || setCost < best.cost) best = { set, cost: setCost };
-  }
-  return best?.set ?? null;
+  type Found = { set: number[]; cost: number } | null;
+  const cheapest = (best: Found, starts: readonly number[], ties: RngState | null): Found => {
+    for (const start of starts) {
+      const set = search(start, ties);
+      if (set === null) continue;
+      const setCost = cost(set);
+      if (best === null || setCost < best.cost) best = { set, cost: setCost };
+    }
+    return best;
+  };
+  const found = cheapest(null, candidates.slice(0, MAPGEN.wellspringSearchStarts), rng);
+  if (found === null || unfairness(found.set) === 0) return found?.set ?? null;
+  return cheapest(found, candidates, null)?.set ?? null;
 }
 
 /** The scale step each Wellspring grants: distinct axes while they last, random poles. */

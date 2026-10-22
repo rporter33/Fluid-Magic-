@@ -4,8 +4,11 @@
 // tolerance or which graph the balance is measured on; a pin does. Recorded in commit A, then
 // re-pinned in commit B for MAPGEN.balanceCandidates 6 to 10: the 7 four-nation maps that had no
 // map within the 1.5 ratio among their first 6 valid candidates now keep a more balanced one of
-// 10 (small-4-2 to 4-5, medium-4-1, 4-2 and 4-4); the other 13 are unchanged. Re-record these only
-// for a change meant to move wild maps, and say so in docs/PROGRESS.md.
+// 10 (small-4-2 to 4-5, medium-4-1, 4-2 and 4-4); the other 13 are unchanged. The QA sweep's
+// Wellspring retry (finding map-1) re-pinned small-4-3 (was 324ceb37...) and medium-4-3 (was
+// f79fff1d...): their first Wellspring sets were 1 hop unfair and the retry found fair ones; only
+// their Wellsprings, springs and independent strengths moved. Re-record these only for a change
+// meant to move wild maps, and say so in docs/PROGRESS.md.
 import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { generateMap } from '../../src/mapgen/generate';
@@ -14,7 +17,7 @@ import { FOUR_CAPITALS, TWO_CAPITALS } from './fixtures';
 const RECORDED: Readonly<Record<string, string>> = {
   'small-4-1': 'df7752b9f152a9f12210e42f04e301abf8255ea480d50ae85ee9c55f4b9d682f',
   'small-4-2': '84f1480b3e0aa3fb33393cec43a510cdeba928f65a2ceeb2edb7aaf45a8f613a',
-  'small-4-3': '324ceb374e96425657ed9835b75f870c75d775dacbaa9d5ebe5e72c805942967',
+  'small-4-3': 'b3cbafc125b8a487399c451b8cd049d65678394f918db2b8ae5e06d4ca37288d',
   'small-4-4': 'c1af799eec4369ea497f872259eccc739a80e1bf0eea4f0175e474affe10b645',
   'small-4-5': 'ff46edb20541f2ca617d9f47b8cfcae1ea942bde751854396224f61e77952d4d',
   'medium-2-1': 'ed988bd6326d73fe44b28fc9b0ca3ef102d7562d3ee3da764b40e95854836b51',
@@ -24,7 +27,7 @@ const RECORDED: Readonly<Record<string, string>> = {
   'medium-2-5': '6c3954c4063d5e2722f53612a3389a9046ab660c09f28b42747ae9441d1b2b87',
   'medium-4-1': '44871143fc83c90dd5f4ad6b46147e80d1c846de2c0b3b32f99eadf06a7ff829',
   'medium-4-2': '9da83f63ae79f6e401f0ab1476cd0765a5b7d06e09aafafd60811107208edd75',
-  'medium-4-3': 'f79fff1dad2c8055a4d2687da3ae3077de127d1f9aba21fa09b2a157fcb47763',
+  'medium-4-3': 'caf684eab0d71a4f976117b370a0e3e0e015b0057f843c8f5e5ad734e0256684',
   'medium-4-4': '0dad843fb045b79793e1ea46735760e30a9727ac469155998d286503cabd6520',
   'medium-4-5': 'b9d3cacf26d576ae28678d16edcfe2b880a08d0c50de418076813588d4e0ae5a',
   'large-2-1': 'db706ef845a13f9ee7ed7b484adadc6007a8fdf08f20c299c2bd079a16e19bec',

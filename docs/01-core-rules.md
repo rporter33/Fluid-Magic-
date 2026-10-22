@@ -276,7 +276,11 @@ Rules settled during implementation where this doc was silent or conflicted, rec
   drawn map and the graph always agree.
 - **Wellsprings** are never adjacent to each other and at least 3 from every capital. They
   are chosen so every nation is equally far, in total, from the Wellsprings it needs to win
-  (2 of 3, 3 of 5), and then spread as far apart as that allows.
+  (2 of 3, 3 of 5), and then spread as far apart as that allows. The search (8 random starts,
+  each a greedy pick improved by single swaps) runs again from every candidate, with ties to
+  the first and no draws from the rng, whenever its result is still unfair (QA sweep
+  2026-10-22, finding map-1: it had stopped at 2 hops of unfairness on about 1 in 100 Small
+  4-nation maps where fair sets existed). Maps whose first result was fair are unchanged.
 - **Wellspring scale bonus**: "+1 to one scale" is one step toward one pole of one axis,
   chosen by the generator. Axes differ between Wellsprings while there are axes left; the
   pole is random.
