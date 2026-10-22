@@ -23,7 +23,7 @@ function manaProblems(where: string, mana: ManaAmounts): string[] {
   );
 }
 
-function battleEffectProblems(where: string, e: BattleEffect): string[] {
+export function battleEffectProblems(where: string, e: BattleEffect): string[] {
   switch (e.kind) {
     case 'damage': {
       const area = e.targets.kind !== 'area' || whole(e.targets.count, 1);

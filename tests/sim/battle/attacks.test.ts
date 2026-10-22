@@ -10,7 +10,7 @@ import { foldReplay } from '../../../src/sim/battle/replay';
 import type { BattleSquadSetup, CombatStats } from '../../../src/sim/battle/types';
 import { drn } from '../../../src/sim/drn';
 import { cloneRng, createRng, randBelow } from '../../../src/sim/rng';
-import { commander, fightOnce, IMMORTAL, setup, side, squad } from './fixtures';
+import { commander, fightOnce, IMMORTAL, setup, shield, side, squad } from './fixtures';
 
 describe('routing units', () => {
   it('neither swing nor shoot in their exit round', () => {
@@ -235,7 +235,7 @@ describe('the fire shield', () => {
     const field = buildField(
       setup(
         side([squad('a', 'cinderWarrior', 3, { stats: { att: 50, str: 30 } })]),
-        side([squad('d', 'warden', 1, { hp: 1000, stats: { hp: 1000, prot: 0, fireShield: 7 } })]),
+        side([squad('d', 'warden', 1, { hp: 1000, stats: { hp: 1000, prot: 0, ...shield(7) } })]),
       ),
     );
     tooTired(field.sides.defender[0]!);
@@ -336,7 +336,7 @@ describe('the fire shield', () => {
   it('protects only the unit that has it: a shielded striker is not burned by its own blows', () => {
     const field = buildField(
       setup(
-        side([squad('a', 'cinderWarrior', 3, { stats: { att: 50, str: 30, fireShield: 5 } })]),
+        side([squad('a', 'cinderWarrior', 3, { stats: { att: 50, str: 30, ...shield(5) } })]),
         side([], [commander('c', 'ashChieftain', { row: 'front', stats: { hp: 1000, prot: 0 } })]),
       ),
     );

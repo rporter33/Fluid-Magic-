@@ -11,6 +11,7 @@ import type { WeaponDef } from '../../../src/content/types';
 import { createRng } from '../../../src/sim/rng';
 import { ending, groups, landings, merge, PHASES, spans } from './fixtures/detail';
 import { NAMED } from './fixtures/named';
+import { NAMED_6B2 } from './fixtures/named6b';
 
 const EQUIVALENCE_SEEDS = Array.from({ length: 20 }, (_, i) => i + 1);
 const DETAIL_SEEDS = [1, 2, 3, 4, 5];
@@ -47,7 +48,7 @@ function checkStoredLog(result: BattleResult, label: string): void {
   }
 }
 
-describe.each(NAMED.map((f) => [f.name, f] as const))('%s', (name, f) => {
+describe.each([...NAMED, ...NAMED_6B2].map((f) => [f.name, f] as const))('%s', (name, f) => {
   it('gives the same result, log, and rng state with a sink as without, on 20 seeds', () => {
     for (const seed of EQUIVALENCE_SEEDS) {
       const plainRng = createRng(seed);
@@ -276,6 +277,9 @@ describe.each(NAMED.map((f) => [f.name, f] as const))('%s', (name, f) => {
   });
 
   it('keeps its order: roll order, at never falling, each blow before the damage it caused', () => {
+    const weapons = weaponsOf(f.build());
+    // A multi-strike weapon's swings share member and weapon, one after another (N2).
+    const multi = (s: Strike) => (weapons.get(s.attacker)?.[s.weapon]?.strikes ?? 1) > 1;
     for (const seed of DETAIL_SEEDS) {
       const { result, detail } = run(seed);
       const info = groups(result);
@@ -293,7 +297,8 @@ describe.each(NAMED.map((f) => [f.name, f] as const))('%s', (name, f) => {
           s.phase === 'melee' ? [s.attackerMember, s.weapon] : [s.weapon, s.attackerMember];
         const order = [side, g.order, ...inner];
         const stepKey = `${String(s.round)}/${s.phase}`;
-        if (stepKey === lastStep && last && compare(order, last) <= 0) outOfOrder.push(s);
+        const step = stepKey === lastStep && last ? compare(order, last) : 1;
+        if (step < 0 || (step === 0 && !multi(s))) outOfOrder.push(s);
         last = order;
         lastStep = stepKey;
       }
@@ -316,20 +321,26 @@ describe.each(NAMED.map((f) => [f.name, f] as const))('%s', (name, f) => {
           by: s.attacker,
         });
       });
-      // Any other damage with a striker is a fire-shield burn, after the burns it sums up.
+      // Any other damage with a striker is a shield burn in its element (N4), after the burns
+      // it sums up.
       merged.forEach((m, i) => {
         if (!('stored' in m) || m.stored.kind !== 'damage' || m.stored.by === undefined) return;
         const e = m.stored;
         const prev = merged[i - 1];
         const blow = prev && 'detail' in prev && prev.detail.kind === 'strike' ? prev.detail : null;
         if (blow?.target === e.target && blow.attacker === e.by) return;
-        expect(e.element).toBe('fire');
         const round = at[m.at]?.round;
-        const burns = detail.filter(
-          (b) => b.kind === 'burn' && b.unit === e.target && b.round === round && b.at <= m.at,
+        const burns = detail.flatMap((b) =>
+          b.kind === 'burn' &&
+          b.unit === e.target &&
+          b.element === e.element &&
+          b.round === round &&
+          b.at <= m.at
+            ? [b]
+            : [],
         );
         expect(burns.length).toBeGreaterThan(0);
-        expect(burns.map((b) => (b.kind === 'burn' ? b.shield : ''))).toContain(e.by);
+        expect(burns.map((b) => b.shield)).toContain(e.by);
       });
     }
   });

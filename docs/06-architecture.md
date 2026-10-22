@@ -72,8 +72,9 @@ fluid-magic/
         types.ts          # BattleSetup, CombatStats, BattleResult
         resolve.ts        # resolveBattle(setup, rng): the round loop, scripts, the winner
         field.ts          # rows, troops, stat modifiers inside one battle
-        attacks.ts        # ranged fire, melee, damage
-        landing.ts        # a phase's attacks landing: tallies, life drain, fire-shield burns
+        abilities.ts      # battle-start abilities, fired in round 1 before the scripts
+        attacks.ts        # ranged fire, melee (multi-strike and trample), damage
+        landing.ts        # a phase's attacks landing: tallies, life drain, shield burns by element
         morale.ts         # morale checks, routs, commander deaths
         spells.ts         # choosing and casting a spell, fatigue
         targets.ts        # who a spell lands on
@@ -90,6 +91,8 @@ fluid-magic/
       serialize.ts        # save/load JSON, version field, migrations
     content/              # DATA ONLY. Plain objects, typed.
       types.ts            # shapes of unit, nation, building records
+      abilities.ts        # the abilities catalog (battle-start triggers in M1's Phase 6b.2)
+      validateAbilities.ts # ability checks and units' ability lists for content validation
       rules.ts            # rule numbers: time, tax, economy, materials, supply, unrest, mana, pillage
       ai.ts               # difficulty levels and every number the AI plays by (AI)
       independents.ts     # independent troop pools by terrain, strength words

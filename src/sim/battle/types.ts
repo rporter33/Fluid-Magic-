@@ -2,8 +2,9 @@
 // every modifier already folded into each unit's stats, so the resolver needs nothing but
 // the setup and the rng, and tests can stage any fight.
 import type { UnitTypeId } from '../../content';
+import type { UnitAbility } from '../../content/abilities';
 import type { BattleSpellDef } from '../../content/spells/types';
-import type { UnitTag, WeaponDef } from '../../content/types';
+import type { Shield, UnitTag, WeaponDef } from '../../content/types';
 import type { NationId, ProvinceId } from '../ids';
 import type { Formation, Pips, ScriptSlot } from '../types';
 import type { BattleEvent, BattleRoster, BattleSide, BattleUnitRef } from './events';
@@ -24,8 +25,15 @@ export interface CombatStats {
   regeneration: number;
   /** HP a troop regains per damaging hit it lands (the Black bless). */
   lifeDrain: number;
-  /** Fire damage each melee hit on it deals back to the striker. */
-  fireShield: number;
+  /**
+   * Retaliation shields (N4): what each damaging melee hit on it deals back to the striker, per
+   * element. One entry per element, amounts added, in ELEMENTS order; empty for none.
+   */
+  shields: readonly Shield[];
+  /** The body's size, 1 to 6: trample strikes only targets up to its weapon's limit (N2). */
+  size: number;
+  /** N3: added to the amount of every damage and heal effect of its spells. */
+  spellPower: number;
 }
 
 export interface BattleSquadSetup {
@@ -38,6 +46,11 @@ export interface BattleSquadSetup {
   hp: number;
   row: Formation;
   stats: CombatStats;
+  /**
+   * N5: a bound squad that breaks never drags its commander into a rout. Set for a squad of the
+   * unit its leading pretender's chassis summons each month; battle summons are always bound.
+   */
+  bound?: true;
 }
 
 export interface BattleCommanderSetup {
@@ -57,6 +70,8 @@ export interface BattleCommanderSetup {
    * spells need no research). The resolver casts only these.
    */
   spells: readonly BattleSpellDef[];
+  /** N1: its body's battle-start abilities, in list order. */
+  abilities: readonly UnitAbility[];
 }
 
 export interface BattleSideSetup {
@@ -64,7 +79,10 @@ export interface BattleSideSetup {
   nation: NationId | null;
   commanders: BattleCommanderSetup[];
   squads: BattleSquadSetup[];
-  /** Stats, with this side's modifiers, of every unit its commanders' spells can summon. */
+  /**
+   * Stats, with this side's modifiers, of every unit its commanders' spells and abilities can
+   * summon.
+   */
   summons: Partial<Record<UnitTypeId, CombatStats>>;
 }
 

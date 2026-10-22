@@ -1,8 +1,8 @@
 // Landing a ranged or melee phase's attacks (docs/04-battle.md, round steps 2 and 3): damage
-// and kills in roll order, the attack tallies of the log, then life drain and fire-shield
-// burns once every blow has landed. Nothing here draws from the rng; with a detail sink set,
-// every attack, drain, and burn is also reported there.
-import type { WeaponDef } from '../../content/types';
+// and kills in roll order, the attack tallies of the log, then life drain and retaliation-shield
+// burns (by element, N4) once every blow has landed. Nothing here draws from the rng; with a
+// detail sink set, every attack, drain, and burn is also reported there.
+import { ELEMENTS, type Element, type WeaponDef } from '../../content/types';
 import type { DamageRoll, DetailEvent, Landing } from './detail';
 import type { AttackTally, BattleEvent, BattleUnitRef } from './events';
 import { detailAt, raging, type Field, type Fighter, type Group } from './field';
@@ -12,7 +12,7 @@ type Strike = Extract<DetailEvent, { kind: 'strike' }>;
 /** One attack, rolled against the field as the phase began. A miss has no damage roll. */
 export interface Hit {
   by: Group;
-  /** The troop that struck, which life drain heals and fire shields burn. */
+  /** The troop that struck, which life drain heals and retaliation shields burn. */
   from: Fighter;
   weapon: WeaponDef;
   target: Fighter;
@@ -55,7 +55,7 @@ export function strikeOf(
   };
 }
 
-/** Fire owed by shielded targets to one striker or one group, by the shield's group. */
+/** What shielded targets owe one striker or one group in one element, by the shield's group. */
 interface Owed {
   amount: number;
   shields: Map<Group, number>;
@@ -79,6 +79,16 @@ function mainShield(o: Owed): BattleUnitRef {
     }
   }
   return best.ref;
+}
+
+/** The debt in one element of a map of debts by element, made on first use. */
+function debt(debts: Map<Element, Owed>, element: Element, first: Group): Owed {
+  let o = debts.get(element);
+  if (!o) {
+    o = { amount: 0, shields: new Map(), first };
+    debts.set(element, o);
+  }
+  return o;
 }
 
 /** Reports a landed attack to the detail sink: after the stored events logged so far. */
@@ -119,67 +129,84 @@ function drainLife(field: Field, hits: Hit[], log: BattleEvent[]): void {
 }
 
 /**
- * Fire shields burn every melee striker that hit them, once all of the phase's hits have
- * landed: fire damage per hit, no armor. The log names the shield that burned a group most.
+ * Retaliation shields burn every melee striker that wounded them, once all of the phase's hits
+ * have landed (N4): per damaging hit, every shield of the struck group adds its amount to the
+ * striker's debt in its element. Debts are paid per striker troop in first-hit order, element by
+ * element in ELEMENTS order, while the troop lives, ignoring protection. The log has one damage
+ * per burned group and element, by the shield group that owed that group the most of it.
  */
 function burnStrikers(field: Field, hits: Hit[], log: BattleEvent[]): void {
-  const owed = new Map<Fighter, Owed>();
+  const owed = new Map<Fighter, Map<Element, Owed>>();
   for (const h of hits) {
     const shield = h.target.group;
-    const amount = shield.base.fireShield;
-    if (amount > 0 && h.roll !== null && h.roll.rolled > 0) {
-      let o = owed.get(h.from);
-      if (!o) {
-        o = { amount: 0, shields: new Map(), first: shield };
-        owed.set(h.from, o);
+    if (shield.base.shields.length === 0 || h.roll === null || h.roll.rolled <= 0) continue;
+    let debts = owed.get(h.from);
+    if (!debts) {
+      debts = new Map();
+      owed.set(h.from, debts);
+    }
+    for (const sh of shield.base.shields) {
+      if (sh.amount > 0) owe(debt(debts, sh.element, shield), shield, sh.amount);
+    }
+  }
+  type Burned = Owed & { dealt: number; kills: number };
+  const tally = new Map<Group, Map<Element, Burned>>();
+  for (const [f, debts] of owed) {
+    for (const element of ELEMENTS) {
+      const o = debts.get(element);
+      if (!o || !f.alive) continue;
+      let byElement = tally.get(f.group);
+      if (!byElement) {
+        byElement = new Map();
+        tally.set(f.group, byElement);
       }
-      owe(o, shield, amount);
+      let t = byElement.get(element);
+      if (!t) {
+        t = { amount: 0, shields: new Map(), first: o.first, dealt: 0, kills: 0 };
+        byElement.set(element, t);
+      }
+      for (const [shield, amount] of o.shields) owe(t, shield, amount);
+      const hpBefore = f.hp;
+      t.dealt += Math.min(o.amount, f.hp);
+      f.hp -= o.amount;
+      const killed = f.hp <= 0;
+      if (killed) {
+        f.hp = 0;
+        f.alive = false;
+        f.group.deathsThisRound += 1;
+        t.kills += 1;
+      }
+      field.detail?.push({
+        kind: 'burn',
+        ...detailAt(field, log),
+        unit: f.group.ref,
+        member: f.index,
+        element,
+        shield: mainShield(o),
+        owed: o.amount,
+        landing: { hpBefore, dealt: Math.min(o.amount, hpBefore), killed },
+      });
     }
   }
-  const tally = new Map<Group, Owed & { dealt: number; kills: number }>();
-  for (const [f, o] of owed) {
-    if (!f.alive) continue;
-    let t = tally.get(f.group);
-    if (!t) {
-      t = { amount: 0, shields: new Map(), first: o.first, dealt: 0, kills: 0 };
-      tally.set(f.group, t);
+  for (const [g, byElement] of tally) {
+    for (const element of ELEMENTS) {
+      const t = byElement.get(element);
+      if (!t) continue;
+      log.push({
+        kind: 'damage',
+        target: g.ref,
+        amount: t.dealt,
+        element,
+        kills: t.kills,
+        by: mainShield(t),
+      });
     }
-    for (const [shield, amount] of o.shields) owe(t, shield, amount);
-    const hpBefore = f.hp;
-    t.dealt += Math.min(o.amount, f.hp);
-    f.hp -= o.amount;
-    const killed = f.hp <= 0;
-    if (killed) {
-      f.hp = 0;
-      f.alive = false;
-      f.group.deathsThisRound += 1;
-      t.kills += 1;
-    }
-    field.detail?.push({
-      kind: 'burn',
-      ...detailAt(field, log),
-      unit: f.group.ref,
-      member: f.index,
-      shield: mainShield(o),
-      owed: o.amount,
-      landing: { hpBefore, dealt: Math.min(o.amount, hpBefore), killed },
-    });
-  }
-  for (const [g, t] of tally) {
-    log.push({
-      kind: 'damage',
-      target: g.ref,
-      amount: t.dealt,
-      element: 'fire',
-      kills: t.kills,
-      by: mainShield(t),
-    });
   }
 }
 
 /**
  * Lands the phase's hits in roll order and logs one tally per attacking and target group
- * (docs/04 decisions, "Attack tallies"), then pays life drain and, in melee, fire shields.
+ * (docs/04 decisions, "Attack tallies"), then pays life drain and, in melee, shield burns.
  */
 export function land(
   field: Field,

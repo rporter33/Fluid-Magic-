@@ -101,6 +101,11 @@ the truth for current values.
 | 2026-10-21 | 05 Step 6 | White, Blue, Black blessings (6b.1) | fixed bless only | W: Resolve mor +1, Warding prot +1 (W2); U: Keen Eye prec +1, Wariness def +1 (U2); B: Cruelty att +1, Grim Resolve mor +1 (B2); with each color's fixed bless as its standard (4) and greater (6) blessing | Build spec A.6: two minors so a splash pays off; full menus are M2 |
 | 2026-10-21 | 05 Step 7 | Boons (6b.1) | none | Sacred Spring 40 (one spring of a color the design has a pip in, at the capital); Avatar 40 (the god fights blessed where its nation's dominion has strength 1 or more) | Build spec A.7; each at most once |
 | 2026-10-21 | 05 decisions | The god's name (6b.1) | none | 1 to 24 symbols: Latin letters, space, apostrophe, hyphen, period | Owner decision 6; the share code's 6-bit alphabet (build spec B.9) |
+| 2026-10-21 | 05 Step 6 | Thornhide (6b.2) | waited for shields by element | G5, cost 4, group G.shield, incarnate: nature shield 4, prot +1 | Build spec A.6, with N4. The bounds table gains its nature-shield column: 4 from G6 (G5 buys it with 0 left; G6 with 1 point for a minor), pinned in `tests/sim/bless.test.ts`; no other bound moved |
+| 2026-10-21 | 04 decisions | Battle-start abilities (6b.2) | none | Fear: −2 morale for the battle on every present enemy group; Kindle the Host: 6 Fire Sprites; Call the Hunt: 8 Wolves | Build spec A.4 and N1. Content only until their bodies arrive in Phase 6b.3 (Primordial, Pyre Lord, Horned Hunter); no shipped unit lists one |
+| 2026-10-21 | 04 decisions | Multi-strike weapon limits (6b.2) | none | `strikes` 1 to 4; `maxTargetSize` 1 to 6; melee weapons only | Build spec N2. The Trample of Phase 6b.3 is dmg 2, strikes 2, size 2 or less |
+| 2026-10-21 | 02 decisions | Spell power (6b.2) | none | adds to every damage and heal amount a caster's spells land; abilities add none; content a whole number ≥ 0 on commanders | Build spec N3. The Ember Hierophant's 3 arrives in Phase 6b.3 |
+| 2026-10-21 | 04 decisions | Ability one line (6b.2) | none | at most 120 characters (`UI.unitCard.oneLineMax`) | Units-and-items build spec B.1, so the card and the hover read one catalog |
 
 ## Playtest checklist (run before calling M1 done)
 

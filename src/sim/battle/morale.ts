@@ -140,11 +140,13 @@ export function moralePhase(field: Field, round: number, rng: RngState, log: Bat
       const cause = shaken(g, 0) ? 'losses' : 'shock';
       if (breaks(field, rng, g, pressure + g.shock, cause, log).broke) {
         rout(g, round, log);
-        if (g.leader !== null) brokeNow.add(g.leader);
+        // N5: a bound squad (a battle summon, a pretender's monthly kin) never drags its leader.
+        if (g.leader !== null && !g.bound) brokeNow.add(g.leader);
       }
     }
     // A commander whose last standing squad broke this round goes with its troops. One that
-    // led no squads, or whose squads all died, fights on.
+    // led no squads, or whose squads all died, fights on. Its bound squads keep it there too
+    // while they stand.
     for (const c of groups) {
       if (!c.isCommander || !brokeNow.has(c.ref) || !present(c) || c.routingSince !== null)
         continue;

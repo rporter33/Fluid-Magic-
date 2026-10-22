@@ -100,10 +100,11 @@ export function stepReplay(state: ReplayState, e: BattleEvent): void {
         gone: false,
       });
       break;
-    // Markers, casts, and changes the viewer's unit state does not show.
+    // Markers, casts, abilities, and changes the viewer's unit state does not show.
     case 'phase':
     case 'roundStart':
     case 'cast':
+    case 'ability':
     case 'buff':
     case 'expire':
     case 'field':

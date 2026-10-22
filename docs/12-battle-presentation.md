@@ -3139,3 +3139,33 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   stats; `pdDefense` uses the `pd0`/`pd1` refs with no commander; `mageDuel` has a third Red
   caster with only Ember Dart and a Sapling Druid with only Bark Skin, so all eleven spells are
   cast on every seed; `salamander` is made sturdy enough to run out of breath.
+
+**Phase 6b.2 (the pretender expansion's battle rules)**
+At the owner's direction ("good options for pretenders like Dominions has"), the pretender build
+spec of 2026-10-21 (section C.2, amendments 1 to 6) changed S1's types. They landed with the
+rules (`docs/04-battle.md`, "Pretender abilities and new battle rules"):
+- **Stored events (S1.2)** gain `{ kind: 'ability'; unit; ability; targets }`: a commander's
+  battle-start ability fired, in round 1's `scripts` span before the first script, followed by
+  its effects' events. `foldReplay` ignores it. The script builder, the sound cue map, the
+  ticker and the report do not exist yet; when S2 and S3 build them, each handles `ability`:
+  the script opens a `SpellBeat` with `ability: true` and `fatigue: 0`, the sound plays a cast
+  of the ability's `color` (its first effect's template look when null), and the ticker and
+  report read "Primordial: Fear".
+- **A2**: `attacks` counts every swing of a multi-strike weapon; a weapon's swings are
+  consecutive in the detail stream (member, then weapon, then swing), so two `strike` events
+  in a row may share attacker, member and weapon.
+- **A3 and S1.3**: a shield burn logs one `damage` per burned group and element, in first-hit
+  order and then `ELEMENTS` order, `by` the largest contributing shield group of that element
+  (ties to the first struck, as before). The detail `burn` event gains `element`. With fire
+  shields only, as in all earlier content, the log is exactly S1's.
+- **Types and the record (S1.5)**: `CombatStats.fireShield` became `shields` (element and
+  amount, one per element), and `CombatStats` gained `size` and `spellPower`;
+  `BattleSquadSetup` gained `bound?: true`; `BattleCommanderSetup` gained `abilities`; a
+  `CommanderSetupRecord` stores spells and abilities by id, `fromSetupRecord` throws on an
+  unknown ability, and `battleRulesHash()` covers the abilities. A record made before 6b.2
+  loads with a null re-run (log-only replay).
+- **Goldens and fixtures (S1.9)**: no golden changed; the 30 pinned battles hold no ability,
+  strike count, spell power, second shield element or bound squad below morale 50. Seven new
+  named battles (`primordialFear`, `pyreLordKindle`, `hunterCall`, `trample`, `twoShields`,
+  `spellPower`, `boundWolves`) live in `tests/sim/battle/fixtures/named6b.ts` and run in the
+  equivalence and re-run tests; S2 moves them with the rest.

@@ -77,6 +77,7 @@ export type DetailEvent =
   | (DetailBase & {
       kind: 'spellHit';
       caster: BattleUnitRef;
+      /** The spell's id, or for an ability its source id (its own id unless it copies a spell). */
       spell: string;
       /** Index into the spell's effects. */
       effect: number;
@@ -86,11 +87,15 @@ export type DetailEvent =
       damage: DamageRoll;
       landing: Landing;
     })
-  /** A fire shield burned a striker; shield is the largest contributor to what it owed. */
+  /**
+   * A retaliation shield burned a striker in one element (N4); shield is the largest
+   * contributor of that element to what it owed.
+   */
   | (DetailBase & {
       kind: 'burn';
       unit: BattleUnitRef;
       member: number;
+      element: Element;
       shield: BattleUnitRef;
       owed: number;
       landing: Landing;

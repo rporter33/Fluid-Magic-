@@ -115,3 +115,12 @@ export interface RitualSpellDef extends SpellBase {
 }
 
 export type SpellDef = BattleSpellDef | RitualSpellDef;
+
+/**
+ * What target planning and effect application read from a spell or an ability (N1): its id,
+ * which is the source of the stat changes it makes, and its effects. BattleSpellDef has both.
+ */
+export interface EffectSource {
+  id: string;
+  effects: readonly BattleEffect[];
+}

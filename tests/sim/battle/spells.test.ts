@@ -100,6 +100,7 @@ describe('fatigue', () => {
       pips,
       holy,
       spells: [],
+      abilities: [],
       carriedMana: {},
     });
 

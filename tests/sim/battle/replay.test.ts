@@ -1,6 +1,7 @@
 // The replay log is self-sufficient: folding it over the roster gives the battle's outcome.
 import { describe, expect, it } from 'vitest';
 import { unitDef } from '../../../src/content';
+import { ABILITIES } from '../../../src/content/abilities';
 import { SPELLS } from '../../../src/content/spells';
 import type { BattleSpellDef } from '../../../src/content/spells/types';
 import type { BattlePhase } from '../../../src/sim/battle/events';
@@ -118,6 +119,25 @@ describe('foldReplay', () => {
     expect(result.replay.some((e) => e.kind === 'phase')).toBe(true);
     const unmarked = result.replay.filter((e) => e.kind !== 'phase');
     expect(foldReplay(result.roster, unmarked)).toEqual(foldReplay(result.roster, result.replay));
+  });
+
+  it('changes no unit on an ability, and folds its summon like a spell’s (N1)', () => {
+    const result = fightOnce(
+      side(
+        [squad('a', 'cinderWarrior', 10, { leader: 'c' })],
+        [commander('c', 'titan', { abilities: [ABILITIES.callTheHunt] })],
+      ),
+      side([squad('d', 'ashMilitia', 20)]),
+    );
+    const ability = result.replay.find((e) => e.kind === 'ability');
+    expect(ability).toBeDefined();
+    const state = startReplay(result.roster);
+    const before = structuredClone(state);
+    stepReplay(state, ability!);
+    expect(state).toEqual(before);
+    const folded = foldReplay(result.roster, result.replay);
+    expect(folded.get('su0')).toMatchObject({ side: 'attacker', isCommander: false });
+    for (const [ref, o] of result.squads) expect(folded.get(ref)?.count, ref).toBe(o.count);
   });
 
   it('starts a summoned squad with its full HP pool', () => {

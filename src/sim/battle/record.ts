@@ -14,9 +14,10 @@ export interface BattleScene {
   storm: StormState | null;
 }
 
-/** A commander's setup with its spells by id, as saves hold it. */
-export interface CommanderSetupRecord extends Omit<BattleCommanderSetup, 'spells'> {
+/** A commander's setup with its spells and abilities by id, as saves hold it. */
+export interface CommanderSetupRecord extends Omit<BattleCommanderSetup, 'spells' | 'abilities'> {
   spells: string[];
+  abilities: string[];
 }
 
 export interface SideSetupRecord extends Omit<BattleSideSetup, 'commanders'> {

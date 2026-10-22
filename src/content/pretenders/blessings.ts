@@ -1,7 +1,7 @@
 // The blessing menu (docs/05-pretender.md Step 6, docs/02-magic.md section 8), after Dominions
 // 6. Each color's pips give bless points that buy that color's blessings; the standard and
 // greater blessings are the fixed bless of Phase 5 and the default picks. Full menus for White,
-// Blue and Black come with their nations in M2. Thornhide (Green, a nature shield) waits for
+// Blue and Black come with their nations in M2. Thornhide (Green, a nature shield) joined with
 // shields by element (Phase 6b.2, N4).
 import type { Color } from '../colors';
 import type { Element, Shield } from '../types';
@@ -19,7 +19,7 @@ export interface BlessingEffect {
   regeneration?: number;
   /** HP regained per damaging hit. */
   lifeDrain?: number;
-  /** A retaliation shield (fire only until Phase 6b.2). */
+  /** A retaliation shield of its element (N4). */
   shield?: Shield;
   /** Every melee weapon gains this much damage, and the element and armor piercing if given. */
   melee?: { dmg: number; element?: Element; armorPiercing?: true };
@@ -159,6 +159,13 @@ export const BLESSINGS = {
     ...b('wildVigor', 'Wild Vigor', 'G', 5, 4, 'G.regen', { regeneration: 0.2, str: 1 }),
     incarnate: true,
     requiresScale: { axis: 'growth', toward: 'positive', steps: 1 },
+  },
+  thornhide: {
+    ...b('thornhide', 'Thornhide', 'G', 5, 4, 'G.shield', {
+      shield: { element: 'nature', amount: 4 },
+      prot: 1,
+    }),
+    incarnate: true,
   },
   greaterEvergreen: b(
     'greaterEvergreen',

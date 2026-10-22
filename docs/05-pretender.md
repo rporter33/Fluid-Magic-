@@ -15,9 +15,10 @@ menu, and every god gets a look and an identity that never touch the rules. The 
   minimum awakening, starting springs, the god's name, roles and AI power on the six chassis
   of Phase 6; the blessing menu with the fixed bless as its default; the Sacred Spring and
   Avatar boons.
-- **Phase 6b.2**: the battle rules the new bodies need (battle-start abilities, multi-strike
-  weapons for trample, spell power, retaliation shields by element, bound squads) and the
-  Thornhide blessing, whose nature shield needs shields by element.
+- **Phase 6b.2 (this text)**: the battle rules the new bodies need (battle-start abilities,
+  multi-strike weapons for trample, spell power, retaliation shields by element, bound squads;
+  `docs/04-battle.md`) and the Thornhide blessing, whose nature shield needs shields by
+  element.
 - **Phase 6b.3**: the ten new chassis and their bodies (Ascended Hero, Primordial, Ash
   Phoenix, Pyre Lord, Cinder Idol, Ember Hierophant, World Tree, Horned Hunter, Elder Wyrm,
   Mother of Beasts), monthly summons, the Ash Phoenix's reform after death, and six new
@@ -134,7 +135,7 @@ a menu, after Dominions 6.
 | Color | Blessings (requirement, cost; * incarnate) |
 |-------|----------------------------------|
 | R | Fervor (2, 1) mor +1; Keen Edge (2, 1) att +1; Ember Might (3, 2) str +2; **Ember Wrath** (4, 3) att +2 str +2; Cinder Skin (4, 3) fire shield 3; Blazing Charge (4, 3) +5 damage in the first melee round, mor +1; Fury Unbound* (5, 4, needs Fury 1) berserk, att +1; Flaming Weapons* (5, 4) melee +3 fire armor piercing; **Greater Ember Wrath** (6, 5) att +4 str +4; Living Pyre* (6, 5) fire shield 5, att +2 |
-| G | Thick Skin (2, 1) prot +1; Vigor (2, 1) regeneration 5%; Strength of the Earth (3, 2) str +2; **Evergreen** (4, 3) regeneration 10%, prot +1; Oakhide (4, 3) prot +3; Deep Roots (4, 3) mor +3, prot +1; Wild Vigor* (5, 4, needs Growth 1) regeneration 20%, str +1; **Greater Evergreen** (6, 5) regeneration 20%, prot +2; Ironbark* (6, 5) prot +5, str +2. Thornhide* (5, 4) thorn shield 4 (nature), prot +1 arrives in Phase 6b.2 |
+| G | Thick Skin (2, 1) prot +1; Vigor (2, 1) regeneration 5%; Strength of the Earth (3, 2) str +2; **Evergreen** (4, 3) regeneration 10%, prot +1; Oakhide (4, 3) prot +3; Deep Roots (4, 3) mor +3, prot +1; Wild Vigor* (5, 4, needs Growth 1) regeneration 20%, str +1; Thornhide* (5, 4) thorn shield 4 (nature), prot +1; **Greater Evergreen** (6, 5) regeneration 20%, prot +2; Ironbark* (6, 5) prot +5, str +2 |
 | W | Resolve (2, 1) mor +1; Warding (2, 1) prot +1; **Steadfast** (4, 3) mor +2, prot +1; **Greater Steadfast** (6, 5) mor +4, prot +2 |
 | U | Keen Eye (2, 1) prec +1; Wariness (2, 1) def +1; **Clear Sight** (4, 3) def +2, prec +2; **Greater Clear Sight** (6, 5) def +4, prec +4 |
 | B | Cruelty (2, 1) att +1; Grim Resolve (2, 1) mor +1; **Blood Thirst** (4, 3) life drain 2, att +1; **Greater Blood Thirst** (6, 5) life drain 4, att +2 |
@@ -295,8 +296,10 @@ your defaults, continue". The defaults are therefore the owner's decisions:
   battle effects.
 - **Fire shield** and blessing shields: each melee hit that deals damage to a shielded unit
   deals the shield's amount to the striker, ignoring protection, after the phase (like life
-  drain). Until shields by element land (Phase 6b.2), a blessing's fire shield adds to the
-  unit's fire shield, and content validation refuses any other element.
+  drain). Since Phase 6b.2 shields go by element: a blessing's shield merges with the body's
+  fire shield in its own element (Cinder Skin on an Ash Colossus with Avatar burns fire 8;
+  Thornhide adds nature 4 beside it), and each element is logged on its own
+  (`docs/04-battle.md`, "Retaliation shields").
 - **Wild Spirit regeneration** is 10% of its HP per round (docs/09).
 - **Great Wyrm breath**: 12 damage, range 3, ammo 5. Its element is display only: elements
   have no effect in M1. The replay viewer shows it in the nation's color (docs/12); from

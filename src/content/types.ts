@@ -1,5 +1,6 @@
 // Shapes of content records. Content is plain typed data; the sim reads it through the
 // registry in content/index.ts.
+import type { TriggerAbilityId } from './abilities';
 import type { BuildingId } from './buildings';
 import type { Color } from './colors';
 import type { TerrainId } from './terrain';
@@ -11,8 +12,8 @@ export type Element = (typeof ELEMENTS)[number];
 
 /**
  * A retaliation shield: each melee hit that deals damage to its bearer deals `amount` back to
- * the striker in `element`. Until shields by element land (Phase 6b.2, N4) the battle folds
- * only fire shields, so content validation allows no other element.
+ * the striker in `element`, ignoring protection, once the phase's hits have landed (N4).
+ * Shields of one element add; each element burns and is logged on its own.
  */
 export interface Shield {
   element: Element;
@@ -34,6 +35,13 @@ export interface WeaponDef {
   armorNegating?: boolean;
   /** Extra damage in the unit's first melee round (lances). */
   firstRoundBonus?: number;
+  /** Melee weapons only (N2): swings per troop per melee phase with it, 1 to 4; default 1. */
+  strikes?: number;
+  /**
+   * Melee weapons only (N2, trample): it strikes only targets of this size or smaller, 1 to 6.
+   * "Trample hits only bodies of size {m} or less"; with none in reach it swings at nothing.
+   */
+  maxTargetSize?: number;
 }
 
 export const UNIT_TAGS = [
@@ -101,6 +109,10 @@ export interface UnitDef {
   regeneration?: number;
   /** Fire damage dealt to each melee striker per hit landed on this unit (Ash Colossus). */
   fireShield?: number;
+  /** N3: added to the amount of every damage and heal effect its spells land (not abilities). */
+  spellPower?: number;
+  /** N1: battle-start abilities, by catalog id (trigger entries only; commander units only). */
+  abilities?: readonly TriggerAbilityId[];
   /** Null for units that cannot be recruited (summons, independents). */
   cost: UnitCost | null;
   /** Troops: days per batch of 10. Commanders: days per unit. 0 when not recruitable. */

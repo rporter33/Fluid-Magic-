@@ -447,6 +447,67 @@ decisions in `docs/05-pretender.md`.
   blessing validation (melee element and negative damage, zero scale steps, a scale on a
   default pick, the default picks' thresholds and extra fields). 1371 tests after the fixes.
 
+## Phase 6b.2: Pretender battle rules: abilities, trample, spell power, shields, bound squads (done)
+
+The second of three Phase 6b steps, after the battle track's S1 (the 2026-10-21 pretender build
+spec, E.1; at the owner's direction, "good options for pretenders like Dominions has"). Rules
+N1 to N5 and the battle-design amendments 1 to 6 of the spec's C.2, with N1 in the final shape
+of the units-and-items build spec (section B; E.6 items 1, 2 and 8).
+- Content: new `content/abilities.ts`, the abilities catalog's trigger kind: `AbilityDef` with
+  `kind: 'trigger'`, name, glyph id and one line (at most `UI.unitCard.oneLineMax`, 120), the
+  trigger, a presentation color, effects and an optional `sourceId`; `UnitAbility` is
+  `Extract<AbilityDef, { kind: 'trigger' }>`, `triggerDef`, `abilitySource(a)`; the three
+  abilities Fear, Kindle the Host and Call the Hunt (no unit lists them until 6b.3).
+  `EffectSource` and `BattleSpellId` in `content/spells`. `WeaponDef.strikes` and
+  `maxTargetSize`, `UnitDef.spellPower` and `abilities`, `ChassisDef.monthlySummon` (the type
+  only; N7's rule is 6b.3). The Thornhide blessing (32 blessings). Validation in the new
+  `content/validateAbilities.ts` and `validateUnit`: display fields, effects through
+  `battleEffectProblems`, ids apart from spell ids, a copied spell's shape, glyphs unique, the
+  trigger id list, abilities on commanders only, weapon field ranges, spell power, fire shields,
+  monthly summons; shield blessings take any element.
+- Sim: `battle/abilities.ts` (`abilityPhase`, round 1 inside the scripts span before
+  `scriptsPhase`); `effectGroups`, `hasTargets`, `plan`, `applyEffect` and `fieldEffect` take an
+  `EffectSource`; `applyEffect` takes the spell power, which `cast` passes and abilities do not;
+  `meleePhase` swings each weapon's strikes in a row and filters a size-limited weapon's targets
+  once per group, drawing nothing when none are in reach; `burnStrikers` owes per striker troop
+  and element and logs one `damage` per group and element; `moralePhase` skips bound squads
+  when it collects the commanders to drag; summons are bound. `setup.ts` builds `shields`,
+  `size` and `spellPower`, resolves a body's abilities, adds their summons' stats, and binds the
+  pretender's squads of its chassis's monthly-summon unit. The `ability` event, the detail
+  `burn`'s element, `foldReplay`'s new case, setup records with abilities by id,
+  `validRerun`'s check, and `battleRulesInput()`/`battleRulesHash()` with the abilities.
+- Tests: `tests/sim/battle/abilities.test.ts` (N1's eight, plus all-or-nothing with a summon,
+  inactive commanders, no fatigue, `sourceId`, the hash), `attacks.strikes.test.ts` (N2),
+  `effects.staged.test.ts` (N3), `landing.test.ts` (N4), `morale.bound.test.ts` (N5's six and
+  standing bound squads), `setup.abilities.test.ts` (abilities, summons, size, spell power,
+  shield merging, bound at setup), `named6b.test.ts` and the seven new named battles in the
+  detail-sink equivalence and re-run tests, `tests/content/abilities.test.ts` (the fixture
+  catalog and every refusal), Thornhide in `blessings.test.ts` and `bless.test.ts` (the bounds'
+  nature-shield column). The fire-shield overrides in `attacks.test.ts`, `landing.test.ts`,
+  `setup.test.ts` and `setup.bless.test.ts` moved to `shields`; `presetPins.ts` puts setups back
+  in the Phase 6 shape before hashing, so the six presets' setup and game pins still match.
+  `golden.json` matches byte for byte (not regenerated). The review's mutation pass added
+  tests for the bounds it found loose: spell power stays off drains, shocks, buffs, debuffs
+  and summons; Trample reaches size 2 exactly; a weapon listed first swings all its strikes
+  first, each with the first-round bonus; a troop pays its shield debts in `ELEMENTS` order
+  across shield groups; an ability draws from the battle rng as a cast does; two copies of
+  one spell plan and check targets under its id; and the validators' accepted edges (a
+  120-character line, every placeholder, strikes 1, size 1, fire shield 1, spell power 0, a
+  summon cap equal to its count). 1371 tests before, 1509 after.
+- Deviations from the build specs: `TriggerAbilityId` comes from a written-out
+  `TRIGGER_ABILITY_IDS` list, not a type mapped over `ABILITIES` (that type is circular once a
+  unit names an ability; validation holds the list to the catalog). A shield burn's `by` ties
+  go to the first shield struck (S1's rule), not "the earlier in setup order", because the
+  spec also requires today's log exactly; the spec owner is asked to amend N4's tie clause
+  and R4 to match (no pin tells the two rules apart, so a switch would be a one-line change
+  in `mainShield`). The seven new named battles sit beside `NAMED`
+  (`fixtures/named6b.ts`), outside the golden pin. N5's corner test shocks morale-47 hornets
+  to make them break, since a roll at 47 against 10 almost never fails. The catalog's
+  remaining display fields (Codex text, placement, card priority, condition, milestone) and
+  kinds wait for 7b.1. Amendment 1's script builder, sound map, ticker and report do not exist
+  yet; `docs/12` records what each must do with `ability`. Choices where the specs are silent
+  are in `docs/04` ("Choices the Phase 6b.2 build spec left open").
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -493,6 +554,10 @@ decisions in `docs/05-pretender.md`.
   realms replace "the nation offers all chassis"; the new-color price is per chassis (the
   Oracle's fell from 50 to 30 net); the fixed bless is now the blessing menu's default. Each
   nation offers five chassis until the ten new ones land in Phase 6b.3.
+- Phase 6b.2 (`docs/04-battle.md`, "Pretender abilities and new battle rules" and the choices
+  after it): `CombatStats.fireShield` is now `shields`; a summoned squad that breaks below
+  morale 50 (Swarm's hornets under Dread or Fear) no longer drags its caster; the trigger id
+  list is written out; burn ties keep S1's rule.
 - Phase 10 S1 (`docs/12-battle-presentation.md`, "Implementation decisions"): landing the hits
   lives in `battle/landing.ts` and the migration map in `src/sim/migrate.ts`, files the spec's
   S1.1 table does not list; the migration test is `tests/sim/migrate.test.ts`, mirroring the
@@ -604,10 +669,18 @@ decisions in `docs/05-pretender.md`.
   ones.
 - Phase 6b.1 leaves for later: `aiPower` is unread until `armyPower` moves into the sim
   (Phase 8); no AI picks blessings or boons (AI nations keep their default presets); the
-  designer's "Recommended" blessings and the unspent-points display are Phase 9 UI; Thornhide
-  and the bounds' nature-shield column wait for shields by element (6b.2). Incarnate
-  blessings soften the "sleeping builds are strong" issue only for designs that pick them;
-  the default picks still bless from day 0.
+  designer's "Recommended" blessings and the unspent-points display are Phase 9 UI (Thornhide
+  and the bounds' nature-shield column, which waited for shields by element, landed in 6b.2).
+  Incarnate blessings soften the "sleeping builds are strong" issue only for designs that pick
+  them; the default picks still bless from day 0.
+- For merging Phase 7 (AI) and later tracks over Phase 6b.2: `CombatStats` literals need
+  `shields` (not `fireShield`), `size` and `spellPower`; `BattleCommanderSetup` literals and
+  `group()` commander parts need `abilities`; `applyEffect` and the target planners take an
+  `EffectSource`. Battle records made before 6b.2 load with a null re-run.
+- Phase 6b.2 leaves for later: no shipped unit carries an ability, a multi-strike weapon or
+  spell power, and no chassis a monthly summon, until the new bodies of Phase 6b.3; the
+  battle presentation's handling of `ability` (script beat, sound, ticker, report) lands with
+  S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
 - The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin) can fail when the
   machine is loaded by other processes; they pass when run alone.
 - Fixed during S1: a re-run used to be trusted whenever its log matched the record, so a

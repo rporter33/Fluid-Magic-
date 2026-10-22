@@ -3,6 +3,7 @@
 // state always give the same result and log. An optional detail sink receives every blow and
 // roll (detail.ts); it only watches, so the result is the same with or without it.
 import { BATTLE, CASTING } from '../../content/rules';
+import { abilityPhase } from './abilities';
 import { meleePhase, rangedPhase } from './attacks';
 import type { DetailEvent } from './detail';
 import { dropMods } from './effects';
@@ -13,6 +14,7 @@ import {
   buildField,
   exhausted,
   frontRow,
+  interleaved,
   living,
   present,
   SIDES,
@@ -49,20 +51,6 @@ function roster(side: BattleSideSetup): BattleRoster {
       row: s.row,
     })),
   };
-}
-
-/** Commanders in casting order: attacker 0, defender 0, attacker 1, ... */
-function interleaved(field: Field): Group[] {
-  const a = field.sides.attacker.filter((g) => g.isCommander);
-  const d = field.sides.defender.filter((g) => g.isCommander);
-  const out: Group[] = [];
-  for (let i = 0; i < Math.max(a.length, d.length); i++) {
-    const x = a[i];
-    const y = d[i];
-    if (x) out.push(x);
-    if (y) out.push(y);
-  }
-  return out;
 }
 
 /**
@@ -230,6 +218,8 @@ export function resolveBattle(
     field.round = round;
     replay.push({ kind: 'roundStart', round });
     span(field, 'scripts', replay, () => {
+      // N1: battle-start abilities fire once, before the first scripts.
+      if (round === 1) abilityPhase(field, round, rng, replay);
       scriptsPhase(field, round, rng, replay);
       commanderDeaths(field, round, rng, replay);
     });

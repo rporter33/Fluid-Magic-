@@ -2,6 +2,8 @@
 // is rolled against the field as it stood when the phase began, then all damage lands, so no
 // unit gains by acting first. Rolls go attacker side first, in setup order. Every roll is
 // bound to a local in the same order with or without a detail sink, so the sink only watches.
+// A multi-strike weapon swings several times per troop, and a trampling one strikes only bodies
+// up to its size limit (N2); weapons without those fields swing and draw exactly as before.
 import { BATTLE, FIELD_EFFECTS } from '../../content/rules';
 import { UNARMED } from '../../content/units/base';
 import type { WeaponDef } from '../../content/types';
@@ -24,6 +26,7 @@ import {
   statOf,
   targetsUpTo,
   type Field,
+  type Fighter,
   type Group,
 } from './field';
 import { land, strikeOf, type Hit } from './landing';
@@ -189,14 +192,63 @@ export function rangedPhase(field: Field, round: number, rng: RngState, log: Bat
   land(field, hits, 'volley', log);
 }
 
-/** A group's melee weapons with their slots in base.weapons; unarmed (-1) if it has none. */
-function swingsOf(g: Group): { w: WeaponDef; slot: number }[] {
-  const swings: { w: WeaponDef; slot: number }[] = [];
+/** One melee weapon of a group: its slot in base.weapons (-1 unarmed), and whom it can strike. */
+interface Swing {
+  w: WeaponDef;
+  slot: number;
+  /** Swings per troop this phase (N2): the weapon's strikes, 1 by default. */
+  strikes: number;
+  /** The phase's targets it can reach: all of them, or only bodies up to its size limit. */
+  candidates: readonly Fighter[];
+}
+
+/**
+ * A group's melee weapons, unarmed if it has none. A weapon with a size limit (trample) is
+ * filtered once per group and phase to the targets of that size or smaller (N2).
+ */
+function swingsOf(g: Group, targets: readonly Fighter[]): Swing[] {
+  const swings: Swing[] = [];
+  const add = (w: WeaponDef, slot: number) => {
+    const limit = w.maxTargetSize;
+    const candidates =
+      limit === undefined ? targets : targets.filter((t) => t.group.base.size <= limit);
+    swings.push({ w, slot, strikes: w.strikes ?? 1, candidates });
+  };
   g.base.weapons.forEach((w, slot) => {
-    if (w.range === undefined) swings.push({ w, slot });
+    if (w.range === undefined) add(w, slot);
   });
-  if (swings.length === 0) swings.push({ w: UNARMED, slot: -1 });
+  if (swings.length === 0) add(UNARMED, -1);
   return swings;
+}
+
+/** One melee swing of a troop: target, attack and defense DRNs, then on a hit the damage. */
+function swingAt(
+  field: Field,
+  rng: RngState,
+  g: Group,
+  m: Fighter,
+  swing: Swing,
+  firstRound: boolean,
+): Hit | null {
+  const { w, slot, candidates } = swing;
+  const target = candidates[randBelow(rng, candidates.length)];
+  if (!target) return null;
+  const attack = statOf(m, 'att');
+  const attackDrn = drn(rng);
+  const defense = statOf(target, 'def');
+  const defenseDrn = drn(rng);
+  const hit = attack + attackDrn > defense + defenseDrn;
+  const bonus = firstRound ? (w.firstRoundBonus ?? 0) : 0;
+  const roll = hit ? weaponRoll(rng, statOf(m, 'str'), w, statOf(target, 'prot'), bonus) : null;
+  const rolls = { attack, attackDrn, defense, defenseDrn };
+  return {
+    by: g,
+    from: m,
+    weapon: w,
+    target,
+    roll,
+    strike: field.detail ? strikeOf(field, g, m, slot, target, rolls, roll, firstRound) : null,
+  };
 }
 
 export function meleePhase(field: Field, round: number, rng: RngState, log: BattleEvent[]): void {
@@ -212,40 +264,17 @@ export function meleePhase(field: Field, round: number, rng: RngState, log: Batt
       if (!contact.has(g) || exhausted(g)) continue;
       g.firstMelee ??= round;
       const firstRound = g.firstMelee === round;
-      const swings = swingsOf(g);
+      const swings = swingsOf(g, targets);
       for (const m of g.members) {
         if (!m.alive) continue;
-        for (const { w, slot } of swings) {
-          const target = targets[randBelow(rng, targets.length)];
-          if (!target) continue;
-          const attack = statOf(m, 'att');
-          const attackDrn = drn(rng);
-          const defense = statOf(target, 'def');
-          const defenseDrn = drn(rng);
-          const hit = attack + attackDrn > defense + defenseDrn;
-          const bonus = firstRound ? (w.firstRoundBonus ?? 0) : 0;
-          const roll = hit
-            ? weaponRoll(rng, statOf(m, 'str'), w, statOf(target, 'prot'), bonus)
-            : null;
-          hits.push({
-            by: g,
-            from: m,
-            weapon: w,
-            target,
-            roll,
-            strike: field.detail
-              ? strikeOf(
-                  field,
-                  g,
-                  m,
-                  slot,
-                  target,
-                  { attack, attackDrn, defense, defenseDrn },
-                  roll,
-                  firstRound,
-                )
-              : null,
-          });
+        // Each weapon's swings in a row (N2). With no target in reach a weapon swings at
+        // nothing and draws nothing, since randBelow refuses a bound of 0.
+        for (const swing of swings) {
+          if (swing.candidates.length === 0) continue;
+          for (let n = 0; n < swing.strikes; n++) {
+            const h = swingAt(field, rng, g, m, swing, firstRound);
+            if (h) hits.push(h);
+          }
         }
       }
     }

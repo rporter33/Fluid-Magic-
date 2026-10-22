@@ -1,5 +1,6 @@
 // The pretender chassis (docs/05-pretender.md, Step 1). Phase 6b.1 gave the six of Phase 6
 // their realm, role, new-color price and AI power; the ten new chassis arrive in Phase 6b.3.
+// Phase 6b.2 added the monthly summon's type, which bound squads read in battle.
 import type { Color } from '../colors';
 import type { UnitTypeId } from '../units';
 import type { ScaleAxis } from './scales';
@@ -50,6 +51,12 @@ export interface ChassisDef {
   minAwakening?: Exclude<Awakening, 'awake'>;
   /** D5: springs added to the capital at game creation ('nation': the nation's primary color). */
   startSprings?: { color: Color | 'nation'; count: number };
+  /**
+   * N7: troops that join the pretender on the first day of each month; cap counts the nation's
+   * whole stock of the unit. The monthly rule lands in Phase 6b.3; from 6b.2 a squad of this unit
+   * led by the pretender is bound in battle (N5), whatever its source.
+   */
+  monthlySummon?: { unit: UnitTypeId; count: number; cap: number };
   /** The Avatar boon (boons.ts) is built in. */
   avatar?: true;
   /** A.11: Light Infantry equivalent of the body and its battle-start summons, for armyPower. */

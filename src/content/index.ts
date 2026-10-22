@@ -1,5 +1,6 @@
 // Content registry: lookups by id and a validation pass over every record
 // (docs/06-architecture.md, "Content validation").
+import { ABILITIES, type AbilityDef } from './abilities';
 import { AI, DIFFICULTIES } from './ai';
 import { BUILDINGS, CAPITAL_BUILDINGS, isBuildingId } from './buildings';
 import { isColor } from './colors';
@@ -18,6 +19,7 @@ import { DOMINION, MAX_PIPS, PD, RECRUITMENT, UNREST } from './rules';
 import { isSpellId, SPELLS } from './spells';
 import { validateSpell } from './spells/validate';
 import { isTerrainId } from './terrain';
+import { unitAbilityProblems, validateAbility, validateCatalog } from './validateAbilities';
 import type { BuildingDef, BuildingId, NationDef, UnitDef } from './types';
 import { UNIT_TAGS } from './types';
 import { isUnitTypeId, UNITS, type UnitTypeId } from './units';
@@ -35,6 +37,11 @@ export function nationDef(id: NationDefId): NationDef {
 export function buildingDef(id: BuildingId): BuildingDef {
   return BUILDINGS[id];
 }
+
+/** N2: the most swings a multi-strike weapon makes per troop per melee phase. */
+const MAX_STRIKES = 4;
+
+const whole = (n: number, min: number, max: number) => Number.isInteger(n) && n >= min && n <= max;
 
 /** Requirements a capital meets on day 1. */
 const CAPITAL_PROVIDES = new Set<string>([...CAPITAL_BUILDINGS, 'capital']);
@@ -56,7 +63,21 @@ function validateUnit(key: string, u: UnitDef): string[] {
     const ranged = w.range !== undefined;
     if (ranged !== (w.ammo !== undefined)) problems.push(`${where} ${w.name} range without ammo`);
     if (w.dmg < 0) problems.push(`${where} ${w.name} negative damage`);
+    // N2: strikes and a size limit belong to melee weapons only.
+    if (w.strikes !== undefined && (ranged || !whole(w.strikes, 1, MAX_STRIKES))) {
+      problems.push(`${where} ${w.name} bad strikes`);
+    }
+    if (w.maxTargetSize !== undefined && (ranged || !whole(w.maxTargetSize, 1, 6))) {
+      problems.push(`${where} ${w.name} bad target size limit`);
+    }
   }
+  if (u.fireShield !== undefined && !whole(u.fireShield, 1, Infinity)) {
+    problems.push(`${where} bad fire shield`);
+  }
+  if (u.spellPower !== undefined && (!u.commander || !whole(u.spellPower, 0, Infinity))) {
+    problems.push(`${where} spell power belongs to commanders, as a whole number`);
+  }
+  problems.push(...unitAbilityProblems(where, u));
   if (u.cost !== null) {
     if (u.recruitDays <= 0) problems.push(`${where} is recruitable but takes no time`);
     if (!u.requires.includes('fort')) problems.push(`${where} is recruitable without a fort`);
@@ -235,6 +256,9 @@ export function validateContent(): string[] {
     if (b.gold < 0 || b.materials < 0 || b.days < 1) problems.push(`building ${key} bad cost`);
   }
   for (const [key, spell] of Object.entries(SPELLS)) problems.push(...validateSpell(key, spell));
+  const abilities: [string, AbilityDef][] = Object.entries(ABILITIES);
+  for (const [key, a] of abilities) problems.push(...validateAbility(key, a));
+  problems.push(...validateCatalog());
   for (const [key, c] of Object.entries(CHASSIS)) problems.push(...validateChassis(key, c));
   for (const [key, bl] of Object.entries(BLESSINGS)) problems.push(...validateBlessing(key, bl));
   problems.push(...validateBlessingTiers(), ...validateBoons());

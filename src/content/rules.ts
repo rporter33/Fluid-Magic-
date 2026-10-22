@@ -304,3 +304,11 @@ export const PRETENDER_NAME = {
 export const SCRY = {
   days: 30,
 } as const;
+
+/**
+ * Text limits the content must fit (units-and-items build spec B.1): an ability's one line on
+ * the unit card and in the hover is at most oneLineMax characters.
+ */
+export const UI = {
+  unitCard: { oneLineMax: 120 },
+} as const;

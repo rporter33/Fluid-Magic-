@@ -276,9 +276,9 @@ describe('buildBattle', () => {
       forces(green, [raiders]),
       forces(red, [god, chieftain]),
     );
-    expect(setup.defender.commanders.map((c) => [c.unit, c.stats.fireShield])).toEqual([
-      ['ashColossus', 5],
-      ['ashChieftain', 0],
+    expect(setup.defender.commanders.map((c) => [c.unit, c.stats.shields])).toEqual([
+      ['ashColossus', [{ element: 'fire', amount: 5 }]],
+      ['ashChieftain', []],
     ]);
     expect(setup.defender.commanders[0]!.stats).toMatchObject({ hp: 80, str: 22 });
     const others = [
@@ -287,6 +287,6 @@ describe('buildBattle', () => {
       ...setup.attacker.commanders,
     ];
     expect(others.length).toBeGreaterThan(2);
-    for (const u of others) expect(u.stats.fireShield, u.unit).toBe(0);
+    for (const u of others) expect(u.stats.shields, u.unit).toEqual([]);
   });
 });

@@ -93,10 +93,16 @@ export type BattleEvent =
   | ({ kind: 'volley' } & AttackTally) // A2
   | ({ kind: 'melee' } & AttackTally) // A2
   /**
+   * N1: a commander's battle-start ability fired, with the union of the groups its effects
+   * planned; its effects' events follow. No fatigue, mana or spell power.
+   */
+  | { kind: 'ability'; unit: BattleUnitRef; ability: string; targets: BattleUnitRef[] }
+  /**
    * Damage to one unit (a commander) or, from spells, to a squad; kills it caused. A3: by is
-   * the striking group, set for weapon hits on commanders. For fire-shield burns, by is the
-   * shield's group (the largest contributor if several burned the target). Spell damage
-   * leaves it out: the preceding cast names the caster.
+   * the striking group, set for weapon hits on commanders. For retaliation-shield burns, one
+   * event per burned group and element (N4), by is the shield's group that contributed most of
+   * that element. Spell and ability damage leaves it out: the cast or ability before it names
+   * the caster.
    */
   | {
       kind: 'damage';

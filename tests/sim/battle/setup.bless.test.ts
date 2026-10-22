@@ -14,6 +14,9 @@ import type { CommanderState, GameState } from '../../../src/sim/types';
 import { patched } from '../../content/patched';
 import { addArmy, independentProvince, nationIds, pretender, twoNationGame } from '../fixtures';
 
+/** A fire shield of this amount, as CombatStats.shields holds it. */
+const fire = (amount: number) => [{ element: 'fire', amount }];
+
 function forces(nation: NationId | null, commanders: CommanderState[]): SideForces {
   return { nation, commanders, garrison: null, pd: false };
 }
@@ -73,14 +76,14 @@ describe('blessing folds on sacred units', () => {
     const stats = squadStats(state, nation, capital, 'flamebrand');
     expect(stats.weapons).toBe(unitDef('flamebrand').weapons);
     expect(stats.tags).toBe(unitDef('flamebrand').tags);
-    expect(stats.fireShield).toBe(0);
+    expect(stats.shields).toEqual([]);
     expect(stats).toMatchObject({ att: unitDef('flamebrand').att + 4 });
   });
 
   it('give Cinder Skin’s fire shield 3 to sacreds and to nobody else', () => {
     const { state, nation, capital } = gameWith(0, titan({ R: 4 }, { blessings: ['cinderSkin'] }));
-    expect(squadStats(state, nation, capital, 'flamebrand').fireShield).toBe(3);
-    expect(squadStats(state, nation, capital, 'cinderWarrior').fireShield).toBe(0);
+    expect(squadStats(state, nation, capital, 'flamebrand').shields).toEqual(fire(3));
+    expect(squadStats(state, nation, capital, 'cinderWarrior').shields).toEqual([]);
   });
 
   it('give Flaming Weapons +3 fire armor piercing: a fire blade stays fire, a maul becomes fire', () => {
@@ -131,12 +134,12 @@ describe('blessing folds on sacred units', () => {
     const base = unitDef('flamebrand');
     expect(squadStats(state, nation, capital, 'flamebrand')).toMatchObject({
       att: base.att,
-      fireShield: 0,
+      shields: [],
     });
     const awake = gameWith(0, { ...design, awakening: 'awake' });
     expect(squadStats(awake.state, awake.nation, awake.capital, 'flamebrand')).toMatchObject({
       att: base.att + 2,
-      fireShield: 5,
+      shields: fire(5),
     });
   });
 });
@@ -168,12 +171,12 @@ describe('Avatar', () => {
     const blessed = gameWith(0, titan({ R: 6 }, { ...pyre, ...avatar }));
     expect(godStats(blessed.state, blessed.nation, blessed.capital)).toMatchObject({
       att: unitDef('titan').att + 2,
-      fireShield: 5,
+      shields: fire(5),
     });
     const plain = gameWith(0, titan({ R: 6 }, pyre));
     expect(godStats(plain.state, plain.nation, plain.capital)).toMatchObject({
       att: unitDef('titan').att,
-      fireShield: 0,
+      shields: [],
     });
   });
 });
@@ -206,11 +209,13 @@ describe('the prophet and an Avatar god', () => {
   it('take a blessing’s shield: Cinder Skin gives the prophet fire shield 3', () => {
     const plain = gameWith(0, titan({ R: 4 }, { blessings: ['cinderSkin'] }));
     const without = godAndProphet(plain.state, plain.nation, plain.capital);
-    expect(without.prophet.fireShield).toBe(3);
+    expect(without.prophet.shields).toEqual(fire(3));
     // The god without Avatar stays unblessed; with it, it is shielded too.
-    expect(without.god.fireShield).toBe(0);
+    expect(without.god.shields).toEqual([]);
     const blessed = gameWith(0, titan({ R: 4 }, { blessings: ['cinderSkin'], ...avatar }));
-    expect(godAndProphet(blessed.state, blessed.nation, blessed.capital).god.fireShield).toBe(3);
+    expect(godAndProphet(blessed.state, blessed.nation, blessed.capital).god.shields).toEqual(
+      fire(3),
+    );
   });
 
   it('take Fury Unbound’s berserk tag', () => {

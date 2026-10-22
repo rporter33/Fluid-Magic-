@@ -4,6 +4,7 @@
 // never touched. Nothing here outlives a battle. The field also carries the optional detail
 // sink and the round and step being resolved, which detail events record.
 import type { UnitTypeId } from '../../content';
+import type { UnitAbility } from '../../content/abilities';
 import { BATTLE, CASTING } from '../../content/rules';
 import type { BattleSpellDef, FieldEffectKind } from '../../content/spells/types';
 import type { Formation, Pips, ScriptSlot } from '../types';
@@ -49,6 +50,8 @@ export interface Group {
   isCommander: boolean;
   /** Joined mid-battle (Phase 5 summons): not counted in the side's starting troops. */
   summoned: boolean;
+  /** N5: when it breaks it never drags its commander into a rout (summons, bound squads). */
+  bound: boolean;
   base: Readonly<CombatStats>;
   mods: StatMod[];
   row: Formation;
@@ -67,11 +70,15 @@ export interface Group {
   checked: boolean;
   /** Extra morale pressure from shock spells this round; it must check while above 0. */
   shock: number;
-  /** Commanders only: script, pips, the spells it can cast, fatigue, and mana carried. */
+  /**
+   * Commanders only: script, pips, the spells it can cast, its battle-start abilities, fatigue,
+   * and mana carried.
+   */
   script: readonly ScriptSlot[];
   pips: Pips;
   holy: number;
   spells: readonly BattleSpellDef[];
+  abilities: readonly UnitAbility[];
   fatigue: number;
   carriedMana: Pips;
 }
@@ -102,10 +109,18 @@ interface CommanderParts {
   pips: Pips;
   holy: number;
   spells: readonly BattleSpellDef[];
+  abilities: readonly UnitAbility[];
   carriedMana: Pips;
 }
 
-const TROOPS: CommanderParts = { script: [], pips: {}, holy: 0, spells: [], carriedMana: {} };
+const TROOPS: CommanderParts = {
+  script: [],
+  pips: {},
+  holy: 0,
+  spells: [],
+  abilities: [],
+  carriedMana: {},
+};
 
 export function group(
   side: BattleSide,
@@ -124,6 +139,7 @@ export function group(
     leader,
     isCommander: commander !== null,
     summoned: false,
+    bound: false,
     base: stats,
     mods: [],
     row,
@@ -140,6 +156,7 @@ export function group(
     pips: parts.pips,
     holy: parts.holy,
     spells: parts.spells,
+    abilities: parts.abilities,
     fatigue: 0,
     carriedMana: { ...parts.carriedMana },
   };
@@ -152,15 +169,18 @@ export function group(
 }
 
 function sideGroups(side: BattleSide, setup: BattleSideSetup): Group[] {
-  const squads = setup.squads.map((s) =>
-    group(side, s.ref, s.commander, s.stats, s.row, s.count, s.hp, null),
-  );
+  const squads = setup.squads.map((s) => {
+    const g = group(side, s.ref, s.commander, s.stats, s.row, s.count, s.hp, null);
+    g.bound = s.bound === true;
+    return g;
+  });
   const commanders = setup.commanders.map((c) =>
     group(side, c.ref, null, c.stats, c.row, 1, c.hp, {
       script: c.script,
       pips: c.pips,
       holy: c.holy,
       spells: c.spells,
+      abilities: c.abilities,
       carriedMana: c.carriedMana,
     }),
   );
@@ -183,6 +203,20 @@ export function buildField(setup: BattleSetup, detail: DetailEvent[] | null = nu
     round: 0,
     phase: 'scripts',
   };
+}
+
+/** Commanders in caster order: attacker 0, defender 0, attacker 1, ... */
+export function interleaved(field: Field): Group[] {
+  const a = field.sides.attacker.filter((g) => g.isCommander);
+  const d = field.sides.defender.filter((g) => g.isCommander);
+  const out: Group[] = [];
+  for (let i = 0; i < Math.max(a.length, d.length); i++) {
+    const x = a[i];
+    const y = d[i];
+    if (x) out.push(x);
+    if (y) out.push(y);
+  }
+  return out;
 }
 
 /** Where a detail event emitted now sits: after every stored event logged so far. */

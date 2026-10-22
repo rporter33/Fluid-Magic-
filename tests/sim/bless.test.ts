@@ -172,8 +172,23 @@ describe('blessOf with chosen blessings', () => {
       'flamingWeapons',
       'livingPyre',
       'wildVigor',
+      'thornhide',
       'ironbark',
     ]);
+  });
+
+  it('folds Thornhide as a nature shield beside a fire shield, in ELEMENTS order', () => {
+    const design = god({ R: 4, G: 5 }, ['cinderSkin', 'thornhide']);
+    expect(blessOf(design, true)).toEqual({
+      ...NO_BLESS,
+      prot: 1,
+      shields: [
+        { element: 'fire', amount: 3 },
+        { element: 'nature', amount: 4 },
+      ],
+    });
+    // Incarnate: gone while the god is off the map, with the fire shield kept.
+    expect(blessOf(design, false).shields).toEqual([{ element: 'fire', amount: 3 }]);
   });
 });
 
@@ -316,6 +331,7 @@ function bounds(pips: Pips): Record<string, number> {
     prec: b.prec,
     regeneration: b.regeneration,
     fireShield: b.shields.find((s) => s.element === 'fire')?.amount ?? 0,
+    natureShield: b.shields.find((s) => s.element === 'nature')?.amount ?? 0,
     meleeDmg: b.meleeDmg,
     firstRound: b.firstRoundBonus,
   });
@@ -338,17 +354,27 @@ function bounds(pips: Pips): Record<string, number> {
 }
 
 describe('blessing bounds', () => {
-  it('match the design table (the nature shield column arrives with Thornhide in 6b.2)', () => {
+  it('match the design table, Thornhide’s nature shield included', () => {
     const row = (pips: Pips) => {
       const b = bounds(pips);
-      return [b.att, b.str, b.prot, b.mor, b.regeneration, b.fireShield, b.meleeDmg, b.firstRound];
+      return [
+        b.att,
+        b.str,
+        b.prot,
+        b.mor,
+        b.regeneration,
+        b.fireShield,
+        b.natureShield,
+        b.meleeDmg,
+        b.firstRound,
+      ];
     };
-    expect(row({ R: 4 })).toEqual([2, 2, 0, 1, 0, 3, 0, 5]);
-    expect(row({ R: 6 })).toEqual([4, 4, 0, 2, 0, 5, 3, 5]);
-    expect(row({ G: 4 })).toEqual([0, 2, 3, 3, 0.1, 0, 0, 0]);
-    expect(row({ G: 6 })).toEqual([0, 2, 5, 3, 0.2, 0, 0, 0]);
-    expect(row({ R: 6, G: 6 })).toEqual([4, 6, 5, 5, 0.2, 5, 3, 5]);
-    expect(row({ W: 6, U: 6, B: 6, R: 6, G: 6 })).toEqual([6, 6, 7, 10, 0.2, 5, 3, 5]);
+    expect(row({ R: 4 })).toEqual([2, 2, 0, 1, 0, 3, 0, 0, 5]);
+    expect(row({ R: 6 })).toEqual([4, 4, 0, 2, 0, 5, 0, 3, 5]);
+    expect(row({ G: 4 })).toEqual([0, 2, 3, 3, 0.1, 0, 0, 0, 0]);
+    expect(row({ G: 6 })).toEqual([0, 2, 5, 3, 0.2, 0, 4, 0, 0]);
+    expect(row({ R: 6, G: 6 })).toEqual([4, 6, 5, 5, 0.2, 5, 4, 3, 5]);
+    expect(row({ W: 6, U: 6, B: 6, R: 6, G: 6 })).toEqual([6, 6, 7, 10, 0.2, 5, 4, 3, 5]);
   });
 
   it('reach def and prec through Blue only, and add a minor to a standard at 5 pips', () => {

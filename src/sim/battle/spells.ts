@@ -2,7 +2,7 @@
 // a commander casts, what it costs, and the cast itself. Casts land one after another, so a
 // later caster sees the field after earlier casts.
 import { CASTING } from '../../content/rules';
-import type { BattleEffect, BattleSpellDef } from '../../content/spells/types';
+import type { BattleEffect, BattleSpellDef, EffectSource } from '../../content/spells/types';
 import { colorPips, extraPips } from '../pips';
 import type { RngState } from '../rng';
 import { applyEffect, removeSource, type Plan } from './effects';
@@ -43,15 +43,13 @@ function needsHeal(g: Group, e: Extract<BattleEffect, { kind: 'heal' }>): boolea
   return wounded(g) || ((e.removeDebuffs ?? 0) > 0 && debuffSources(g).length > 0);
 }
 
-/** The groups an effect would land on; no rng is drawn here. */
-function effectGroups(
-  field: Field,
-  caster: Group,
-  spell: BattleSpellDef,
-  e: BattleEffect,
-): Group[] {
+/**
+ * The groups an effect of a spell or ability would land on; no rng is drawn here. Only the
+ * source's id is read: a group already carrying a change from it is not chosen again.
+ */
+function effectGroups(field: Field, caster: Group, source: EffectSource, e: BattleEffect): Group[] {
   const enemy = OTHER[caster.side];
-  const lacks = (g: Group) => present(g) && !hasSource(g, spell.id);
+  const lacks = (g: Group) => present(g) && !hasSource(g, source.id);
   const one = (g: Group | null) => (g ? [g] : []);
   // An all-groups target takes every group, or none when no group needs the effect.
   const allIf = (all: Group[], needs: (g: Group) => boolean) => (all.some(needs) ? all : []);
@@ -63,9 +61,9 @@ function effectGroups(
     case 'damage':
       return one(enemyTarget(field, caster));
     case 'buff':
-      if (e.targets.kind === 'self') return hasSource(caster, spell.id) ? [] : [caster];
+      if (e.targets.kind === 'self') return hasSource(caster, source.id) ? [] : [caster];
       if (e.targets.kind === 'friendlySquad') {
-        return one(friendlySquad(field, caster, (g) => !hasSource(g, spell.id)));
+        return one(friendlySquad(field, caster, (g) => !hasSource(g, source.id)));
       }
       return allIf(friends(e.targets.kind), lacks);
     case 'debuff':
@@ -95,12 +93,15 @@ function effectGroups(
   }
 }
 
-/** Every effect has something to land on (summons always do; a field effect once at a time). */
-function hasTargets(field: Field, caster: Group, spell: BattleSpellDef): boolean {
-  return spell.effects.every((e) => {
+/**
+ * Every effect has something to land on (summons always do; a field effect once at a time). A
+ * spell is cast and an ability fires only then.
+ */
+export function hasTargets(field: Field, caster: Group, source: EffectSource): boolean {
+  return source.effects.every((e) => {
     if (e.kind === 'summon') return true;
     if (e.kind === 'fieldEffect') return !fieldHas(field, (f) => f.kind === e.effect);
-    return effectGroups(field, caster, spell, e).length > 0;
+    return effectGroups(field, caster, source, e).length > 0;
   });
 }
 
@@ -138,17 +139,18 @@ export function chooseSpell(
 }
 
 /**
- * Chooses every effect's targets once per cast: area effects share one draw of troops, and
- * other effects share the targets of an earlier effect of the same kind and target kind.
+ * Chooses every effect's targets once per cast or ability: area effects share one draw of
+ * troops, and other effects share the targets of an earlier effect of the same kind and target
+ * kind.
  */
-function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState): Plan[] {
+export function plan(field: Field, caster: Group, source: EffectSource, rng: RngState): Plan[] {
   const chosen = new Map<string, Plan>();
-  return spell.effects.map((effect, index) => {
+  return source.effects.map((effect, index) => {
     const targets = 'targets' in effect ? effect.targets.kind : '';
     const key = targets === 'area' ? 'area' : `${effect.kind}:${targets}`;
     const earlier = chosen.get(key);
     if (earlier) return { ...earlier, effect, index };
-    const groups = effectGroups(field, caster, spell, effect);
+    const groups = effectGroups(field, caster, source, effect);
     let troops: Plan['troops'] = [];
     if (effect.kind === 'damage' || (effect.kind === 'debuff' && effect.targets.kind === 'area')) {
       const target = groups[0];
@@ -170,9 +172,19 @@ function plan(field: Field, caster: Group, spell: BattleSpellDef, rng: RngState)
   });
 }
 
+/** The groups a cast or ability names: every planned group and every planned troop's group. */
+export function plannedRefs(plans: readonly Plan[]): string[] {
+  const targets = new Set<string>();
+  for (const p of plans) {
+    for (const g of p.groups) targets.add(g.ref);
+    for (const t of p.troops) targets.add(t.group.ref);
+  }
+  return [...targets];
+}
+
 /**
- * Casts a spell: fatigue and carried mana are paid, targets chosen, then each effect lands. The
- * cast is logged with the caster's fatigue after paying.
+ * Casts a spell: fatigue and carried mana are paid, targets chosen, then each effect lands with
+ * the caster's spell power (N3). The cast is logged with the caster's fatigue after paying.
  */
 export function cast(
   field: Field,
@@ -188,16 +200,11 @@ export function cast(
     caster.carriedMana[key] = (caster.carriedMana[key] ?? 0) - need;
   }
   const plans = plan(field, caster, spell, rng);
-  const targets = new Set<string>();
-  for (const p of plans) {
-    for (const g of p.groups) targets.add(g.ref);
-    for (const t of p.troops) targets.add(t.group.ref);
-  }
   log.push({
     kind: 'cast',
     caster: caster.ref,
     spellId: spell.id,
-    targets: [...targets],
+    targets: plannedRefs(plans),
     fatigue: caster.fatigue,
   });
   // A recast replaces the spell's earlier changes on its targets; it never stacks.
@@ -207,5 +214,6 @@ export function cast(
       for (const g of p.groups) changed.add(g);
   }
   for (const g of changed) removeSource(g, spell.id, log);
-  for (const p of plans) applyEffect(field, caster, spell, p, round, rng, log);
+  const power = caster.base.spellPower;
+  for (const p of plans) applyEffect(field, caster, spell, p, round, rng, log, power);
 }

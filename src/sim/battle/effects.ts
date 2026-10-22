@@ -1,8 +1,9 @@
 // Battle effect primitives (docs/02-magic.md section 5): what each one does once its targets
-// are chosen. Effects land at once, in cast order.
+// are chosen. Effects land at once, in cast order. A spell and a battle-start ability (N1) land
+// alike: both are an EffectSource, whose id is the source of the stat changes it makes.
 import { unitDef } from '../../content';
 import { FIELD_EFFECTS } from '../../content/rules';
-import type { BattleEffect, BattleSpellDef, Duration } from '../../content/spells/types';
+import type { BattleEffect, Duration, EffectSource } from '../../content/spells/types';
 import { defaultFormation } from '../commanders';
 import type { RngState } from '../rng';
 import { rollDamageParts } from './attacks';
@@ -23,7 +24,7 @@ import { debuffSources } from './targets';
 /** What one effect of a cast lands on. */
 export interface Plan {
   effect: BattleEffect;
-  /** Its index in the spell's effects. */
+  /** Its index in the source's effects. */
   index: number;
   groups: Group[];
   /** Troops hit, for damage. */
@@ -69,13 +70,17 @@ function addMod(
   log?.push({ kind: 'buff', target: g.ref, stat, delta, source, untilRound: until, debuff });
 }
 
-/** Rolls the damage on every troop planned, in order; reports each roll to the detail sink. */
+/**
+ * Rolls the damage on every troop planned, in order, with the caster's spell power added to the
+ * amount (N3); reports each roll to the detail sink.
+ */
 function damage(
   field: Field,
   caster: Group,
-  spell: BattleSpellDef,
+  source: EffectSource,
   plan: Plan,
   e: Extract<BattleEffect, { kind: 'damage' }>,
+  power: number,
   rng: RngState,
   log: BattleEvent[],
 ): void {
@@ -83,7 +88,7 @@ function damage(
   for (const t of plan.troops) {
     const roll = rollDamageParts(
       rng,
-      e.amount,
+      e.amount + power,
       statOf(t, 'prot'),
       e.armorPiercing === true,
       e.armorNegating === true,
@@ -110,7 +115,7 @@ function damage(
       kind: 'spellHit',
       ...detailAt(field, log),
       caster: caster.ref,
-      spell: spell.id,
+      spell: source.id,
       effect: plan.index,
       element: e.element,
       target: t.group.ref,
@@ -150,6 +155,8 @@ function summon(
   const row = defaultFormation(unitDef(e.unit));
   const g = group(caster.side, ref, caster.ref, stats, row, e.count, e.count * stats.hp, null);
   g.summoned = true;
+  // N5: a battle summon never drags its caster into a rout.
+  g.bound = true;
   field.sides[caster.side].push(g);
   log.push({
     kind: 'summon',
@@ -166,7 +173,7 @@ function summon(
 function fieldEffect(
   field: Field,
   caster: Group,
-  spell: BattleSpellDef,
+  source: EffectSource,
   e: Extract<BattleEffect, { kind: 'fieldEffect' }>,
   round: number,
   log: BattleEvent[],
@@ -180,26 +187,30 @@ function fieldEffect(
   for (const side of SIDES) {
     for (const g of field.sides[side]) {
       if (!present(g)) continue;
-      if (rules.att !== 0) addMod(g, 'att', rules.att, spell.id, until, false, null);
-      if (rules.prec !== 0) addMod(g, 'prec', rules.prec, spell.id, until, false, null);
+      if (rules.att !== 0) addMod(g, 'att', rules.att, source.id, until, false, null);
+      if (rules.prec !== 0) addMod(g, 'prec', rules.prec, source.id, until, false, null);
     }
   }
 }
 
-/** Lands one planned effect. */
+/**
+ * Lands one planned effect. `power` is the caster's spell power (N3), added to the amount of a
+ * damage or heal effect; abilities pass 0.
+ */
 export function applyEffect(
   field: Field,
   caster: Group,
-  spell: BattleSpellDef,
+  source: EffectSource,
   plan: Plan,
   round: number,
   rng: RngState,
   log: BattleEvent[],
+  power = 0,
 ): void {
   const e = plan.effect;
   switch (e.kind) {
     case 'damage':
-      damage(field, caster, spell, plan, e, rng, log);
+      damage(field, caster, source, plan, e, power, rng, log);
       return;
     case 'buff':
     case 'debuff':
@@ -208,7 +219,7 @@ export function applyEffect(
           g,
           e.stat,
           e.delta,
-          spell.id,
+          source.id,
           untilRound(e.duration, round),
           e.kind === 'debuff',
           log,
@@ -219,7 +230,7 @@ export function applyEffect(
       summon(field, caster, e, log);
       return;
     case 'heal':
-      for (const g of plan.groups) heal(g, e.amount, e.removeDebuffs ?? 0, log);
+      for (const g of plan.groups) heal(g, e.amount + power, e.removeDebuffs ?? 0, log);
       return;
     case 'fatigueDrain':
       for (const g of plan.groups) {
@@ -231,7 +242,7 @@ export function applyEffect(
       for (const g of plan.groups) g.shock += Math.abs(e.amount);
       return;
     case 'fieldEffect':
-      fieldEffect(field, caster, spell, e, round, log);
+      fieldEffect(field, caster, source, e, round, log);
       return;
   }
 }

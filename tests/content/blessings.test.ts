@@ -22,7 +22,7 @@ const byId = (id: string): BlessingDef => {
 };
 
 describe('the blessing menu', () => {
-  it('lists the build spec’s blessings by color, Thornhide waiting for shields by element', () => {
+  it('lists the build spec’s blessings by color, Thornhide with shields by element', () => {
     const ids = (color: string) =>
       BLESSING_LIST.filter((bl) => bl.color === color).map((bl) => bl.id);
     expect(ids('R')).toEqual([
@@ -45,15 +45,16 @@ describe('the blessing menu', () => {
       'oakhide',
       'deepRoots',
       'wildVigor',
+      'thornhide',
       'greaterEvergreen',
       'ironbark',
     ]);
     expect(ids('W')).toEqual(['resolve', 'warding', 'steadfast', 'greaterSteadfast']);
     expect(ids('U')).toEqual(['keenEye', 'wariness', 'clearSight', 'greaterClearSight']);
     expect(ids('B')).toEqual(['cruelty', 'grimResolve', 'bloodThirst', 'greaterBloodThirst']);
-    expect(isBlessingId('thornhide')).toBe(false);
+    expect(isBlessingId('thornhide')).toBe(true);
     expect(isBlessingId('toString')).toBe(false);
-    expect(BLESSING_LIST).toHaveLength(31);
+    expect(BLESSING_LIST).toHaveLength(32);
   });
 
   it('requires 2 to 6 pips, costs max(1, requires − 1), groups by color, and has an effect', () => {
@@ -131,6 +132,13 @@ describe('the blessing menu', () => {
       toward: 'positive',
       steps: 1,
     });
+    expect(row('thornhide')).toEqual([
+      5,
+      4,
+      'G.shield',
+      true,
+      { shield: { element: 'nature', amount: 4 }, prot: 1 },
+    ]);
     expect(row('ironbark')).toEqual([6, 5, 'G.prot', true, { prot: 5, str: 2 }]);
     // The White, Blue and Black minors: requirement 2, cost 1, one group each.
     expect(row('resolve')).toEqual([2, 1, 'W.mor', false, { mor: 1 }]);
@@ -171,8 +179,8 @@ describe('content validation of blessings', () => {
     check('effect', { regeneration: 1.5 }, 'blessing fervor bad regeneration');
     check(
       'effect',
-      { shield: { element: 'nature', amount: 4 } },
-      'blessing fervor shield must be fire until shields by element land',
+      { shield: { element: 'acid' as Element, amount: 4 } },
+      'blessing fervor bad shield element',
     );
     check('effect', { shield: { element: 'fire', amount: 0 } }, 'blessing fervor bad shield');
     check('effect', { melee: { dmg: 1.5 } }, 'blessing fervor bad melee damage');

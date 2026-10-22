@@ -3,13 +3,14 @@
 // carry it. effects.test.ts follows the same primitives through whole battles.
 import { describe, expect, it } from 'vitest';
 import { SPELLS } from '../../../src/content/spells';
+import type { BattleSpellDef } from '../../../src/content/spells/types';
 import type { DetailEvent } from '../../../src/sim/battle/detail';
 import type { BattleEvent } from '../../../src/sim/battle/events';
 import { groupStat } from '../../../src/sim/battle/field';
 import { commanderDeaths, moralePhase } from '../../../src/sim/battle/morale';
 import { drn } from '../../../src/sim/drn';
 import { cloneRng, createRng, randBelow } from '../../../src/sim/rng';
-import { side, squad, statsOf } from './fixtures';
+import { commander, side, squad, statsOf } from './fixtures';
 import { mage, staged, testSpell } from './spellFixtures';
 
 describe('spell damage', () => {
@@ -154,4 +155,91 @@ describe('summons', () => {
       { kind: 'rout', squad: 'su0' },
     ]);
   });
+});
+
+describe('spell power (N3)', () => {
+  /** A Cinder Magus of this spell power casting at 20 militia, with a detail sink. */
+  function powered(power: number, spells: readonly BattleSpellDef[] = [SPELLS.emberDart]) {
+    const caster = commander('m', 'cinderMagus', { spells, stats: { spellPower: power } });
+    const { field, find, castBy } = staged(
+      // Warriors at 10 of 100 HP each, so no heal is capped.
+      side([squad('w', 'cinderWarrior', 10, { hp: 100, stats: { hp: 100 } })], [caster]),
+      side([squad('d', 'ashMilitia', 20, { stats: { prot: 4, hp: 99 }, hp: 20 * 99 })]),
+    );
+    const detail: DetailEvent[] = [];
+    field.detail = detail;
+    return { find, castBy, detail };
+  }
+
+  it('adds to a damage spell’s amount and changes no target or draw', () => {
+    const rolls = [0, 3].map((power) => {
+      const { castBy, detail } = powered(power);
+      const rng = createRng(7);
+      const log = castBy('m', SPELLS.emberDart, rng);
+      const hits = detail.flatMap((e) => (e.kind === 'spellHit' ? [e] : []));
+      return { log, hits, rng };
+    });
+    const [plain, strong] = rolls as [(typeof rolls)[0], (typeof rolls)[0]];
+    expect(plain.hits.map((h) => h.damage.base)).toEqual([12]);
+    expect(strong.hits.map((h) => h.damage.base)).toEqual([15]);
+    expect(strong.hits.map((h) => [h.target, h.targetMember])).toEqual(
+      plain.hits.map((h) => [h.target, h.targetMember]),
+    );
+    expect(strong.rng).toEqual(plain.rng);
+    const dealt = strong.hits[0]!.damage.rolled;
+    expect(strong.log.find((e) => e.kind === 'damage')).toMatchObject({ amount: dealt });
+  });
+
+  it('adds to a heal: Regrowth heals 10 + 3 on each wounded troop', () => {
+    const heals = [0, 3].map((power) => {
+      const { find, castBy } = powered(power, [SPELLS.regrowth]);
+      const healed = castBy('m', SPELLS.regrowth).find((e) => e.kind === 'heal');
+      return { healed, hp: find('w').members.map((t) => t.hp) };
+    });
+    expect(heals.map((h) => h.healed)).toEqual([
+      { kind: 'heal', target: 'w', amount: 10 * 10 },
+      { kind: 'heal', target: 'w', amount: 10 * 13 },
+    ]);
+    expect(heals[1]?.hp).toEqual(Array<number>(10).fill(10 + 13));
+  });
+
+  it.each([
+    testSpell('test:drain', [{ kind: 'fatigueDrain', amount: 5, targets: { kind: 'enemySquad' } }]),
+    testSpell('test:shock', [{ kind: 'moraleShock', amount: -5, targets: { kind: 'enemySquad' } }]),
+    SPELLS.barkSkin,
+    SPELLS.entangle,
+    SPELLS.swarm,
+  ])(
+    'never touches a drain, shock, buff, debuff or summon: $id at power 3 is $id at 0',
+    (spell) => {
+      const run = (power: number) => {
+        const caster = commander('m', 'elderDruid', {
+          spells: [spell],
+          stats: { spellPower: power },
+        });
+        const { field, castBy } = staged(
+          side([squad('w', 'warden', 10)], [caster]),
+          side([squad('d', 'ashMilitia', 20)], [commander('e', 'cinderMagus')]),
+        );
+        const groups = () =>
+          [...field.sides.attacker, ...field.sides.defender].map((g) => ({
+            ref: g.ref,
+            fatigue: g.fatigue,
+            shock: g.shock,
+            mods: g.mods.map((m) => [m.stat, m.delta]),
+            members: g.members.length,
+          }));
+        const before = groups();
+        const log = castBy('m', spell);
+        return { log, before, after: groups() };
+      };
+      const plain = run(0);
+      // The plain cast did something to a group other than its caster.
+      const others = (gs: typeof plain.before) => gs.filter((g) => g.ref !== 'm');
+      expect(others(plain.after)).not.toEqual(others(plain.before));
+      const strong = run(3);
+      expect(strong.log).toEqual(plain.log);
+      expect(strong.after).toEqual(plain.after);
+    },
+  );
 });

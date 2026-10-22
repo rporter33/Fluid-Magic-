@@ -95,6 +95,7 @@ heuristic: damage spells when enemies ≥ 10 troops, buffs otherwise.
 Every event is appended to `replay`. Event kinds:
 `roundStart(r)`, `phase(scripts | ranged | melee | morale | end)`,
 `cast(caster, spellId, targets, fatigue)`,
+`ability(unitId, abilityId, targets)`,
 `volley` and `melee(squad, target, attacks, hits, blocked, onFallen, kills, dmg)`,
 `damage(target, amount, element, kills, by?)`, `heal`, `rout`, `leave`, `advance`,
 `death(commander)`, `summon`, `buff`, `expire`, `field`, `fieldEnd`, `fatigue`,
@@ -155,10 +156,11 @@ The replay viewer plays a battle blow by blow, re-run from its record, with the 
   that killed it: it is logged and its squads roll at once with pressure +4, and do not roll
   again that round.
 - **A commander's rout** (deviation from "checks morale too"): when a commander's last
-  standing squad routs, the commander routs with it without a roll, unless it has morale 50
-  or is berserk. A commander that brought no squads, or whose squads all died, fights on and
-  never routs by morale. A brave commander that stayed behind alone would leave its routed
-  troops without a commander, and squads cannot travel without one (docs/01 section 10).
+  standing squad routs, the commander routs with it without a roll, unless it has morale 50 or
+  is berserk, or the squad that broke is bound (below). A commander that brought no squads,
+  or whose squads all died, fights on and never routs by morale. A brave commander that stayed
+  behind alone would leave its routed troops without a commander, and squads cannot travel
+  without one (docs/01 section 10).
 - **Berserk**: a berserk troop below half its HP attacks at +2 att and +2 str
   (`BATTLE.berserk`). Berserk squads never rout: not by morale, not with their commander, not
   on a Retreat slot. Only the round-50 retreat takes them off the field.
@@ -241,3 +243,80 @@ The replay viewer plays a battle blow by blow, re-run from its record, with the 
   open every ranged phase that is not grounded by a storm and every melee phase. A strike's
   `berserk` marks melee blows with the rage bonus; `firstRound` marks blows in the group's
   first melee round.
+
+**Pretender abilities and new battle rules (Phase 6b)**
+
+Added on 2026-10-21 at the owner's direction ("good options for pretenders like Dominions
+has"). Each rule is tested alone; none adds a randomness source.
+
+- **Battle-start abilities**: a commander's body may list abilities, each an effect list of
+  `docs/02` section 5 primitives. In round 1, inside step 1 and before the scripts, commanders
+  in caster order fire theirs, in list order, if they are active. An ability fires only when
+  every effect has a target, as a spell needs; it plans targets as a spell does and lands its
+  effects at once, with no fatigue, mana, research or spell power. It logs `ability` with its
+  targets, then its effects' events. Only commanders carry abilities.
+- **Multi-strike weapons**: a melee weapon with `strikes` n swings n times per troop per melee
+  phase, each swing a full attack with its own target draw. A weapon with `maxTargetSize`
+  strikes only targets of that size or smaller: "Trample hits only bodies of size {m} or
+  less". With none present it swings at nothing and draws nothing.
+- **Spell power**: see `docs/02-magic.md` decisions.
+- **Retaliation shields**: a unit's shields are a list of element and amount (the Ash
+  Colossus: fire 5). After the melee hits of a phase land, each damaging hit on a shielded
+  unit costs its striker the shield's amount, per element, ignoring protection. Shields of one
+  element add; each element logs its own `damage`, fire before nature.
+- **Bound squads**: a squad summoned in the battle, or a squad of the unit its leading
+  pretender's chassis summons each month, is bound. A bound squad that breaks never drags its
+  commander into a rout; standing bound squads still keep it on the field. The one change for
+  earlier content: summoned hornets pushed below morale 50 by Dread or Fear no longer drag
+  their caster when they break.
+- **Fear and morale 50**: Fear is a battle-long morale debuff; like Dread and unpaid upkeep, it
+  can bring a morale-50 unit below the line, and such a unit then rolls like any other.
+
+**Choices the Phase 6b.2 build spec left open** (recorded per `CLAUDE.md`):
+- **Ability records** are the trigger entries of the abilities catalog (`src/content/abilities.ts`,
+  after the units-and-items build spec, section B): `kind: 'trigger'`, a name, a glyph id and a
+  one line of at most 120 characters (`UI.unitCard.oneLineMax`), the trigger, a presentation
+  color, the effects, and an optional `sourceId`. With `sourceId` (a battle spell whose effect
+  the ability copies) its stat changes carry the spell's id as their source, so the copy and the
+  spell never land on one squad; the `ability` event still names the ability's own id. No
+  shipped ability has one. The other catalog kinds and display fields arrive in Phase 7b.1.
+- **The trigger id list** `TRIGGER_ABILITY_IDS` is written out beside the catalog: a type
+  derived from the catalog itself would be circular once a unit names an ability (units,
+  abilities, effects, the summoned unit's id). Content validation holds the list equal to the
+  catalog's trigger entries, in order.
+- **An ability's targets** in its event are the groups its effects planned, as a cast's; a
+  summon plans none, so Kindle the Host and Call the Hunt log `targets: []`. The detail
+  `spellHit` of an ability's damage names its source id in `spell`.
+- **Who an ability skips**: only commanders that are not active (dead before the battle, or
+  absent); being too tired does not matter in round 1, when nobody is.
+- **Spell power** adds to every `damage` and `heal` effect a cast lands (single, squad and
+  area alike), never to fatigue drains, shocks, buffs or summons; abilities pass 0.
+  Content: a whole number, 0 or more, on commanders only.
+- **Weapon fields**: `strikes` is a whole number from 1 to 4 and `maxTargetSize` from 1 to 6,
+  both on melee weapons only. A troop swings each weapon's strikes in a row before its next
+  weapon, so a weapon's `strike` detail events are consecutive. The size compared is the
+  target's `CombatStats.size`, the body's `UnitDef.size`.
+- **A shield burn's `by`** is the shield group that owed the burned group the most of that
+  element, ties to the first shield of that element struck. The build spec wrote "the earlier
+  in setup order" for ties but also required today's log exactly and called its rule the
+  battle design's A3 rule, which landed in S1 as first struck; S1's rule is kept, so no
+  existing burn changes (Cinder Skin on several sacred squads can tie on fire). No pinned
+  battle reaches a tie where the two rules differ. The spec's N4 tie clause and R4 are to
+  read "ties: the first shield of that element struck (S1's rule)". The detail `burn` event
+  carries its element; a striker owed several elements burns in `ELEMENTS` order and stops
+  when it dies.
+- **Shields at setup** merge the body's `fireShield` with the blessings' shields, by element,
+  in `ELEMENTS` order; a unit with none has an empty list.
+- **Bound at setup**: `sideSetup` marks a squad bound when its commander is its owner's
+  pretender and its unit is that pretender's chassis's `ChassisDef.monthlySummon.unit`. The
+  type lands in Phase 6b.2 so the battle rule can read it; the monthly rule itself and the
+  chassis that use it arrive in Phase 6b.3. Battle summons are bound when they join.
+- **Records**: a commander's setup record holds its abilities by id; `fromSetupRecord` throws
+  on an unknown id and `validRerun` asks for the list, so a Phase 6b.1 record (no
+  `abilities`, `fireShield` in its stats) loads as a log-only replay. `battleRulesHash()`
+  covers the abilities too, so no `STATE_VERSION` step was needed.
+- **Fixtures**: the named battles `primordialFear`, `pyreLordKindle`, `hunterCall`, `trample`,
+  `twoShields`, `spellPower` and `boundWolves` (`tests/sim/battle/fixtures/named6b.ts`) join the
+  detail-sink equivalence and re-run tests, not the golden pin, whose 30 battles hold none of
+  the new rules and still match byte for byte. Their abilities ride on existing bodies until
+  the new chassis arrive in Phase 6b.3.

@@ -12,7 +12,9 @@ import type {
 import { defaultFormation } from '../../../src/sim/commanders';
 import type { ProvinceId } from '../../../src/sim/ids';
 import { createRng } from '../../../src/sim/rng';
-import type { BattleSpellDef } from '../../../src/content/spells/types';
+import { triggerDef, type UnitAbility } from '../../../src/content/abilities';
+import type { BattleEffect, BattleSpellDef } from '../../../src/content/spells/types';
+import type { Element } from '../../../src/content/types';
 import type { Formation, Pips, ScriptSlot } from '../../../src/sim/types';
 
 export function statsOf(unit: UnitTypeId, overrides: Partial<CombatStats> = {}): CombatStats {
@@ -30,16 +32,30 @@ export function statsOf(unit: UnitTypeId, overrides: Partial<CombatStats> = {}):
     tags: d.tags,
     regeneration: d.regeneration ?? 0,
     lifeDrain: 0,
-    fireShield: d.fireShield ?? 0,
+    shields: d.fireShield === undefined ? [] : [{ element: 'fire', amount: d.fireShield }],
+    size: d.size,
+    spellPower: d.spellPower ?? 0,
     ...overrides,
   };
+}
+
+/** Fire, nature or any element's retaliation shield, as a stats override (N4). */
+export function shield(amount: number, element: Element = 'fire'): Partial<CombatStats> {
+  return { shields: [{ element, amount }] };
 }
 
 export function squad(
   ref: string,
   unit: UnitTypeId,
   count: number,
-  opts: { row?: Formation; leader?: string | null; stats?: Partial<CombatStats>; hp?: number } = {},
+  opts: {
+    row?: Formation;
+    leader?: string | null;
+    stats?: Partial<CombatStats>;
+    hp?: number;
+    /** N5: it never drags its leader into a rout. */
+    bound?: true;
+  } = {},
 ): BattleSquadSetup {
   const stats = statsOf(unit, opts.stats);
   return {
@@ -50,6 +66,7 @@ export function squad(
     hp: opts.hp ?? count * stats.hp,
     row: opts.row ?? defaultFormation(unitDef(unit)),
     stats,
+    ...(opts.bound ? { bound: true as const } : {}),
   };
 }
 
@@ -63,6 +80,8 @@ export function commander(
     row?: Formation;
     /** Spells it knows; its pips default to the unit's. */
     spells?: readonly BattleSpellDef[];
+    /** Battle-start abilities (N1); its unit's by default. */
+    abilities?: readonly UnitAbility[];
     pips?: Pips;
     holy?: number;
     carriedMana?: Pips;
@@ -82,18 +101,19 @@ export function commander(
     holy: opts.holy ?? traits?.holy ?? 0,
     carriedMana: opts.carriedMana ?? {},
     spells: opts.spells ?? [],
+    abilities: opts.abilities ?? (unitDef(unit).abilities ?? []).map(triggerDef),
   };
 }
 
-/** A side; summoned units get their plain unit stats. */
+/** A side; units its spells and abilities summon get their plain unit stats. */
 export function side(
   squads: BattleSquadSetup[],
   commanders: BattleCommanderSetup[] = [],
 ): BattleSideSetup {
   const summons: BattleSideSetup['summons'] = {};
   for (const c of commanders) {
-    for (const spell of c.spells) {
-      for (const e of spell.effects) if (e.kind === 'summon') summons[e.unit] = statsOf(e.unit);
+    for (const source of [...c.spells, ...c.abilities]) {
+      for (const e of source.effects) if (e.kind === 'summon') summons[e.unit] = statsOf(e.unit);
     }
   }
   return { nation: null, commanders, squads, summons };
@@ -131,6 +151,28 @@ export function byRound(result: BattleResult) {
     if (e.kind === 'roundStart') round = e.round;
     return e.kind === 'phase' ? [] : [{ round, event: e }];
   });
+}
+
+/**
+ * A test-only battle-start ability (N1). Its id starts with `test:`, so no record of a battle
+ * with it re-runs (the registry does not know it).
+ */
+export function testAbility(
+  id: string,
+  effects: BattleEffect[],
+  extra: Partial<UnitAbility> = {},
+): UnitAbility {
+  return {
+    kind: 'trigger',
+    id: `test:${id}`,
+    name: id,
+    glyph: 'test',
+    oneLine: `${id}: a test ability.`,
+    trigger: 'battleStart',
+    color: null,
+    effects,
+    ...extra,
+  };
 }
 
 /** Stats that keep a squad or commander standing and steady through a whole battle. */

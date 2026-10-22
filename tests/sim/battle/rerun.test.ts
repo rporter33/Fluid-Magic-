@@ -22,6 +22,7 @@ import { advance } from '../../../src/sim/tick';
 import type { BattleRecord, GameState } from '../../../src/sim/types';
 import { besiege, nation, neighbors, redField, twoNationGame } from '../fixtures';
 import { NAMED, namedFixture } from './fixtures/named';
+import { NAMED_6B2 } from './fixtures/named6b';
 
 /** Red's starting army, made strong, fights the independents next door through fight(). */
 function redBattle(seed = 1) {
@@ -115,10 +116,13 @@ describe('a recorded battle', () => {
 });
 
 describe('setup records of the named battles', () => {
+  const ALL = [...NAMED, ...NAMED_6B2];
   /** A named battle fought plainly, and as a record of it would re-run. */
-  const contentOnly = NAMED.filter((f) =>
+  const contentOnly = ALL.filter((f) =>
     [f.build().attacker, f.build().defender].every((s) =>
-      s.commanders.every((c) => c.spells.every((spell) => !spell.id.startsWith('test:'))),
+      s.commanders.every((c) =>
+        [...c.spells, ...c.abilities].every((source) => !source.id.startsWith('test:')),
+      ),
     ),
   );
 
@@ -128,7 +132,7 @@ describe('setup records of the named battles', () => {
       if (typeof value !== 'object' || value === null) return [];
       return Object.values(value).flatMap(numbers);
     };
-    for (const f of NAMED) {
+    for (const f of ALL) {
       const all = numbers(f.build());
       expect(all.length).toBeGreaterThan(0);
       expect(all.every(Number.isFinite), f.name).toBe(true);

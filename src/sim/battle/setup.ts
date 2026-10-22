@@ -6,14 +6,21 @@ import { PROPHET, STORM } from '../../content/rules';
 import { BATTLE_SPELLS } from '../../content/spells';
 import type { BattleSpellDef } from '../../content/spells/types';
 import { TERRAIN } from '../../content/terrain';
-import type { WeaponDef } from '../../content/types';
+import { triggerDef } from '../../content/abilities';
+import {
+  ELEMENTS,
+  type Element,
+  type Shield,
+  type UnitDef,
+  type WeaponDef,
+} from '../../content/types';
 import { nationBless, NO_BLESS, type Bless } from '../bless';
 import { defaultFormation } from '../commanders';
 import { pdForce } from '../pd';
 import { meetsRequirement } from '../pips';
 import { researchLevels } from '../research';
 import { provinceScales, scaleEffect } from '../scales';
-import { hasAvatar } from '../pretender';
+import { chassisOf, hasAvatar } from '../pretender';
 import { isPretender, isProphet, starvationMoralePenalty, unpaidMoralePenalty } from '../selectors';
 import { activeEffects, getMapProvince, getNation, getProvince } from '../state';
 import type { CommanderId, NationId, ProvinceId } from '../ids';
@@ -161,11 +168,27 @@ function statsFor(
     tags: bless.berserk && !def.tags.includes('berserk') ? [...def.tags, 'berserk'] : def.tags,
     regeneration: (def.regeneration ?? 0) + bless.regeneration,
     lifeDrain: bless.lifeDrain,
-    // Only fire shields fold until shields by element land (Phase 6b.2); content allows no other.
-    fireShield:
-      (def.fireShield ?? 0) +
-      bless.shields.reduce((sum, sh) => sum + (sh.element === 'fire' ? sh.amount : 0), 0),
+    shields: shieldsOf(def, bless),
+    size: def.size,
+    spellPower: def.spellPower ?? 0,
   };
+}
+
+/**
+ * A unit's retaliation shields (N4): its own fire shield and its blessings' shields, merged by
+ * element (amounts add), in ELEMENTS order.
+ */
+function shieldsOf(def: UnitDef, bless: Bless): readonly Shield[] {
+  const own = def.fireShield ?? 0;
+  if (own === 0) return bless.shields;
+  if (bless.shields.length === 0) return [{ element: 'fire', amount: own }];
+  const amounts = new Map<Element, number>([['fire', own]]);
+  for (const sh of bless.shields)
+    amounts.set(sh.element, (amounts.get(sh.element) ?? 0) + sh.amount);
+  return ELEMENTS.flatMap((element) => {
+    const amount = amounts.get(element);
+    return amount === undefined ? [] : [{ element, amount }];
+  });
 }
 
 /**
@@ -204,7 +227,17 @@ function commanderSetup(ctx: Context, c: CommanderState): BattleCommanderSetup {
     holy: c.holy,
     carriedMana: { ...c.carriedMana },
     spells: knownSpells(ctx.state, ctx.nation, c.pips, c.holy),
+    abilities: (unitDef(c.unit).abilities ?? []).map(triggerDef),
   };
+}
+
+/**
+ * The unit whose squads a commander leads bound (N5): for its nation's pretender, the unit its
+ * chassis summons each month, whatever the squad's source. Null for everyone else.
+ */
+function boundUnit(state: GameState, c: CommanderState): UnitTypeId | null {
+  if (c.owner === null || !isPretender(state, c)) return null;
+  return chassisOf(state, c.owner)?.monthlySummon?.unit ?? null;
 }
 
 function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
@@ -214,7 +247,7 @@ function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
     squads: [],
     summons: {},
   };
-  const squad = (s: Squad, leader: CommanderId | null) => {
+  const squad = (s: Squad, leader: CommanderId | null, bound: UnitTypeId | null = null) => {
     side.squads.push({
       ref: s.id,
       commander: leader,
@@ -223,18 +256,21 @@ function sideSetup(ctx: Context, forces: SideForces): BattleSideSetup {
       hp: s.hp,
       row: s.formation,
       stats: statsFor(ctx, s.unit, s.starvedDays),
+      ...(s.unit === bound ? { bound: true as const } : {}),
     });
   };
   for (const c of forces.commanders) {
     const commander = commanderSetup(ctx, c);
     side.commanders.push(commander);
-    // Summoned troops fight with this side's modifiers, worked out here; they draw no pay.
-    for (const spell of commander.spells) {
-      for (const e of spell.effects) {
+    // Summoned troops fight with this side's modifiers, worked out here; they draw no pay. Spells
+    // and battle-start abilities summon alike.
+    for (const source of [...commander.spells, ...commander.abilities]) {
+      for (const e of source.effects) {
         if (e.kind === 'summon') side.summons[e.unit] ??= statsFor(ctx, e.unit, 0, false);
       }
     }
-    for (const s of c.squads) squad(s, c.id);
+    const bound = boundUnit(ctx.state, c);
+    for (const s of c.squads) squad(s, c.id, bound);
   }
   for (const s of forces.garrison?.squads ?? []) squad(s, null);
   if (forces.pd) {

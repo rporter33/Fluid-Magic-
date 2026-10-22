@@ -1,7 +1,13 @@
 // Fighting a recorded battle again (docs/04-battle.md, "Replay detail"). A player battle's
-// record keeps its setup, spells by id, and the rng state from just before the battle; the
-// replay viewer re-runs the same pure resolver with a detail sink and trusts the detail only
-// if the re-run reproduces the stored log, winner, and rounds.
+// record keeps its setup, spells and abilities by id, and the rng state from just before the
+// battle; the replay viewer re-runs the same pure resolver with a detail sink and trusts the
+// detail only if the re-run reproduces the stored log, winner, and rounds.
+import {
+  ABILITIES,
+  isTriggerAbilityId,
+  triggerDef,
+  type UnitAbility,
+} from '../../content/abilities';
 import { BATTLE, FIELD_EFFECTS } from '../../content/rules';
 import { BATTLE_SPELLS, isSpellId, spellDef } from '../../content/spells';
 import type { BattleSpellDef } from '../../content/spells/types';
@@ -23,14 +29,24 @@ function viaJson<T>(value: T): T {
 let rulesHash: string | null = null;
 
 /**
- * A fingerprint of everything the resolver reads besides the setup and the rng: the battle
- * rules, the battle spells, and the unit types (summons are built from content). Computed
- * once; content never changes while the game runs.
+ * Everything the resolver reads besides the setup and the rng, as JSON: the battle rules, the
+ * battle spells, the battle-start abilities (N1), and the unit types (summons are built from
+ * content).
  */
+export function battleRulesInput(): string {
+  return JSON.stringify({
+    BATTLE,
+    FIELD_EFFECTS,
+    UNARMED,
+    spells: BATTLE_SPELLS,
+    abilities: ABILITIES,
+    units: UNITS,
+  });
+}
+
+/** A fingerprint of battleRulesInput(). Computed once; content never changes while the game runs. */
 export function battleRulesHash(): string {
-  rulesHash ??= cyrb53(
-    JSON.stringify({ BATTLE, FIELD_EFFECTS, UNARMED, spells: BATTLE_SPELLS, units: UNITS }),
-  );
+  rulesHash ??= cyrb53(battleRulesInput());
   return rulesHash;
 }
 
@@ -39,11 +55,18 @@ export function rerunCurrent(rerun: BattleRerun): boolean {
   return rerun.rules === battleRulesHash();
 }
 
-/** JSON round trip, spells replaced by ids, so the same session equals a loaded save. */
+/**
+ * JSON round trip, spells and abilities replaced by ids, so the same session equals a loaded
+ * save.
+ */
 export function toSetupRecord(setup: BattleSetup): BattleSetupRecord {
   const side = (s: BattleSideSetup): SideSetupRecord => ({
     ...s,
-    commanders: s.commanders.map((c) => ({ ...c, spells: c.spells.map((spell) => spell.id) })),
+    commanders: s.commanders.map((c) => ({
+      ...c,
+      spells: c.spells.map((spell) => spell.id),
+      abilities: c.abilities.map((a) => a.id),
+    })),
   });
   return viaJson({
     province: setup.province,
@@ -58,15 +81,24 @@ function battleSpell(id: string): BattleSpellDef {
   return spell;
 }
 
+function battleAbility(id: string): UnitAbility {
+  if (!isTriggerAbilityId(id)) throw new Error(`unknown ability ${id} in a battle record`);
+  return triggerDef(id);
+}
+
 /**
- * Resolves spell ids through the content registry; throws on an unknown id. The setup is a
- * copy, so nothing done with it reaches the record.
+ * Resolves spell and ability ids through the content registry; throws on an unknown id. The
+ * setup is a copy, so nothing done with it reaches the record.
  */
 export function fromSetupRecord(record: BattleSetupRecord): BattleSetup {
   const copy = viaJson(record);
   const side = (s: SideSetupRecord): BattleSideSetup => ({
     ...s,
-    commanders: s.commanders.map((c) => ({ ...c, spells: c.spells.map(battleSpell) })),
+    commanders: s.commanders.map((c) => ({
+      ...c,
+      spells: c.spells.map(battleSpell),
+      abilities: c.abilities.map(battleAbility),
+    })),
   });
   return { province: copy.province, attacker: side(copy.attacker), defender: side(copy.defender) };
 }
@@ -120,12 +152,17 @@ function validSide(value: unknown): boolean {
       (c) =>
         isObject(c) &&
         Array.isArray(c.spells) &&
-        c.spells.every((s: unknown) => typeof s === 'string'),
+        c.spells.every((s: unknown) => typeof s === 'string') &&
+        Array.isArray(c.abilities) &&
+        c.abilities.every((a: unknown) => typeof a === 'string'),
     )
   );
 }
 
-/** Shape check for loads: an object with both sides' arrays, an RngState, and a rules hash. */
+/**
+ * Shape check for loads: an object with both sides' arrays (every commander's spells and
+ * abilities as ids), an RngState, and a rules hash.
+ */
 export function validRerun(value: unknown): value is BattleRerun {
   if (!isObject(value) || !isRngState(value.rng) || typeof value.rules !== 'string') return false;
   const setup = value.setup;

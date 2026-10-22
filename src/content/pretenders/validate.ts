@@ -56,6 +56,15 @@ export function validateChassis(key: string, c: ChassisDef): string[] {
       problems.push(`${where} bad start springs`);
     }
   }
+  if (c.monthlySummon) {
+    const { unit, count, cap } = c.monthlySummon;
+    const summoned: UnitDef | undefined = isUnitTypeId(unit) ? UNITS[unit] : undefined;
+    if (!summoned || summoned.commander)
+      problems.push(`${where} monthly summon ${unit} is not a troop`);
+    if (!Number.isInteger(count) || count < 1 || !Number.isInteger(cap) || cap < count) {
+      problems.push(`${where} bad monthly summon numbers`);
+    }
+  }
   if (!(c.aiPower >= 0)) problems.push(`${where} bad AI power`);
   return problems;
 }
@@ -84,8 +93,7 @@ function effectProblem(e: BlessingEffect): string | null {
   if (e.shield) {
     const { element, amount } = e.shield;
     if (!Number.isInteger(amount) || amount < 1) return 'bad shield';
-    // Shields by element are Phase 6b.2 (N4); until then the battle folds only fire.
-    if (element !== 'fire') return 'shield must be fire until shields by element land';
+    if (!ELEMENTS.includes(element)) return 'bad shield element';
   }
   if (e.melee) {
     const { dmg, element } = e.melee;

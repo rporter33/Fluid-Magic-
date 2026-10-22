@@ -238,15 +238,21 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   them in.
 - **Life drain** (the Black bless) heals each striker 2 per damaging hit, paid after every hit
   of the phase has landed and only to strikers still alive.
-- **Blessing folds** (Phase 6b.1): every blessing is a stat change folded in at battle setup
-  (`battle/setup.ts`); the resolver gains nothing for blessings. Weapon blessings copy each
-  melee weapon (no range) with more damage, an element and armor piercing; a first-round
-  blessing raises each melee weapon's first-round bonus; a berserk blessing adds the tag; a
-  shield blessing adds a retaliation shield of its element (fire only until shields by element
-  land in Phase 6b.2, when Thornhide's nature shield joins). Ranged weapons and unarmed blows
-  gain nothing. Blessings fold in content order, so the order a design lists them never
-  matters; with two blessings naming a melee element the first in content order wins (no M1
-  content has two). Pretender abilities and spell power join these decisions in Phase 6b.2.
+- **Blessing folds** (Phase 6b): every blessing is a stat change folded in at battle setup
+  (`battle/setup.ts`); the resolver gains nothing for blessings beyond shields by element.
+  Weapon blessings copy each melee weapon (no range) with more damage, an element and armor
+  piercing; a first-round blessing raises each melee weapon's first-round bonus; a berserk
+  blessing adds the tag; a shield blessing adds a retaliation shield of its element (Cinder
+  Skin and Living Pyre fire, Thornhide nature), merged by element with the body's own fire
+  shield (`docs/04-battle.md`, "Retaliation shields"). Ranged weapons and unarmed blows gain
+  nothing. Blessings fold in content order, so the order a design lists them never matters;
+  with two blessings naming a melee element the first in content order wins (no M1 content
+  has two).
+- **Pretender abilities** (Phase 6b) are effect lists of the section 5 battle primitives on a
+  pretender body, fired at battle start (`docs/04-battle.md`). They plan targets as a spell
+  does, cost no fatigue or mana, and ignore spell power. Their ids never equal a spell id.
+- **Spell power** (Phase 6b): a caster's `spellPower` adds to the amount of every damage and
+  heal effect it casts (the Ember Hierophant: 3).
 
 **Rituals** (sections 3, 5, 6)
 - **Casting** needs a nation that is not godless, a caster standing in a lab province its

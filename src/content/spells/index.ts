@@ -15,12 +15,21 @@ export const SPELLS = {
 
 export type SpellId = keyof typeof SPELLS;
 
+/** Ids of battle spells only (a copied spell's id in an ability's sourceId, N1). */
+export type BattleSpellId = {
+  [K in SpellId]: (typeof SPELLS)[K]['kind'] extends 'battle' ? K : never;
+}[SpellId];
+
 export function isSpellId(value: unknown): value is SpellId {
   return typeof value === 'string' && Object.hasOwn(SPELLS, value);
 }
 
 export function spellDef(id: SpellId): SpellDef {
   return SPELLS[id];
+}
+
+export function isBattleSpellId(value: unknown): value is BattleSpellId {
+  return isSpellId(value) && SPELLS[value].kind === 'battle';
 }
 
 const ALL: readonly SpellDef[] = Object.values(SPELLS);
