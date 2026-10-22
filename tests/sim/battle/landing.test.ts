@@ -242,3 +242,42 @@ describe('shields by element (N4)', () => {
     ]);
   });
 });
+
+// QA sweep BM-2: a hit on a troop already fallen this phase deals no damage, so it neither
+// burns its striker (docs/05: "each melee hit that deals damage to a shielded unit") nor feeds
+// life drain (docs/02: "per damaging hit"). Before the fix every striker that rolled damage paid.
+describe('blows on a troop already fallen this phase', () => {
+  const frail = (stats: Partial<CombatStats> = {}) =>
+    squad('d', 'warden', 1, { hp: 1, row: 'front', stats: { hp: 1, prot: 0, def: 0, ...stats } });
+
+  it('are not burned by its shield: one blow killed it, so one striker pays', () => {
+    const { log, burns, detail } = burned([sure('a', 10)], [frail(shield(5))]);
+    expect(log.find((e) => e.kind === 'melee')).toMatchObject({
+      hits: 10,
+      onFallen: 9,
+      kills: 1,
+      dmg: 1,
+    });
+    expect(burns).toEqual([
+      { kind: 'damage', target: 'a', amount: 5, element: 'fire', kills: 0, by: 'd' },
+    ]);
+    const burnedMembers = detail.flatMap((e) => (e.kind === 'burn' ? [e.member] : []));
+    const killer = detail.find(
+      (e) => e.kind === 'strike' && e.landing !== null && e.landing.killed,
+    );
+    expect(burnedMembers).toEqual([killer?.kind === 'strike' ? killer.attackerMember : -1]);
+  });
+
+  it('feed no life drain: only the blow that dealt damage heals its striker', () => {
+    const drainers = squad('a', 'cinderWarrior', 10, {
+      stats: { att: 50, str: 30, hp: 100, lifeDrain: 2 },
+      hp: 500,
+    });
+    const { log, detail } = burned([drainers], [frail()]);
+    expect(log.find((e) => e.kind === 'melee')).toMatchObject({ onFallen: 9, kills: 1 });
+    expect(log.filter((e) => e.kind === 'heal')).toEqual([
+      { kind: 'heal', target: 'a', amount: 2 },
+    ]);
+    expect(detail.filter((e) => e.kind === 'drain')).toHaveLength(1);
+  });
+});

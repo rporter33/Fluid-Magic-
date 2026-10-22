@@ -99,16 +99,14 @@ function report(field: Field, log: BattleEvent[], s: Strike, landing: Landing | 
 }
 
 /**
- * Life drain owed for the phase's damaging hits, paid only once every hit has landed, to
- * strikers still alive, so neither side gains by rolling first.
+ * Life drain owed for the phase's damaging hits (those land() found dealing damage), paid only
+ * once every hit has landed, to strikers still alive, so neither side gains by rolling first.
  */
-function drainLife(field: Field, hits: Hit[], log: BattleEvent[]): void {
+function drainLife(field: Field, damaging: readonly Hit[], log: BattleEvent[]): void {
   const owed = new Map<Fighter, number>();
-  for (const h of hits) {
+  for (const h of damaging) {
     const drain = h.by.base.lifeDrain;
-    if (drain > 0 && h.roll !== null && h.roll.rolled > 0) {
-      owed.set(h.from, (owed.get(h.from) ?? 0) + drain);
-    }
+    if (drain > 0) owed.set(h.from, (owed.get(h.from) ?? 0) + drain);
   }
   const healed = new Map<Group, number>();
   for (const [f, amount] of owed) {
@@ -130,16 +128,17 @@ function drainLife(field: Field, hits: Hit[], log: BattleEvent[]): void {
 
 /**
  * Retaliation shields burn every melee striker that wounded them, once all of the phase's hits
- * have landed (N4): per damaging hit, every shield of the struck group adds its amount to the
+ * have landed (N4): per damaging hit (one that land() found dealing damage, so not a blow on a
+ * troop already fallen this phase), every shield of the struck group adds its amount to the
  * striker's debt in its element. Debts are paid per striker troop in first-hit order, element by
  * element in ELEMENTS order, while the troop lives, ignoring protection. The log has one damage
  * per burned group and element, by the shield group that owed that group the most of it.
  */
-function burnStrikers(field: Field, hits: Hit[], log: BattleEvent[]): void {
+function burnStrikers(field: Field, damaging: readonly Hit[], log: BattleEvent[]): void {
   const owed = new Map<Fighter, Map<Element, Owed>>();
-  for (const h of hits) {
+  for (const h of damaging) {
     const shield = h.target.group;
-    if (shield.base.shields.length === 0 || h.roll === null || h.roll.rolled <= 0) continue;
+    if (shield.base.shields.length === 0) continue;
     let debts = owed.get(h.from);
     if (!debts) {
       debts = new Map();
@@ -206,7 +205,9 @@ function burnStrikers(field: Field, hits: Hit[], log: BattleEvent[]): void {
 
 /**
  * Lands the phase's hits in roll order and logs one tally per attacking and target group
- * (docs/04 decisions, "Attack tallies"), then pays life drain and, in melee, shield burns.
+ * (docs/04 decisions, "Attack tallies"), then pays life drain and, in melee, shield burns, for
+ * the hits that dealt damage: a hit on a troop already fallen (onFallen) or a blocked one deals
+ * none (QA sweep BM-2).
  */
 export function land(
   field: Field,
@@ -215,6 +216,7 @@ export function land(
   log: BattleEvent[],
 ): void {
   const tally = new Map<string, AttackTally>();
+  const damaging: Hit[] = [];
   for (const h of hits) {
     const target = h.target;
     const key = `${h.by.ref} ${target.group.ref}`;
@@ -247,6 +249,7 @@ export function land(
     const hpBefore = target.hp;
     const dealt = Math.min(roll.rolled, hpBefore);
     if (roll.rolled === 0) t.blocked += 1;
+    else damaging.push(h);
     t.dmg += dealt;
     target.hp -= roll.rolled;
     const killed = target.hp <= 0;
@@ -270,6 +273,6 @@ export function land(
     }
   }
   for (const t of tally.values()) log.push({ kind, ...t });
-  drainLife(field, hits, log);
-  if (kind === 'melee') burnStrikers(field, hits, log);
+  drainLife(field, damaging, log);
+  if (kind === 'melee') burnStrikers(field, damaging, log);
 }

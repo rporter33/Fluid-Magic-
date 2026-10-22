@@ -324,3 +324,11 @@ has"). Each rule is tested alone; none adds a randomness source.
   they were written before the new chassis arrived in Phase 6b.3; the staged duels of
   `npm run sim:duel` (`tests/sim/battle/fixtures/duel.ts`, Phase 6b.3) fight the real bodies
   with their own abilities, and the golden pin still matches byte for byte.
+
+**QA sweep (2026-10-22)**
+- **Damaging hits** (finding BM-2): retaliation shields burn, and life drain heals, only for a
+  hit that dealt damage: the target was still alive when it landed and the roll was above 0. A
+  hit on a troop already felled in the same phase (`onFallen`) deals none, so it neither burns
+  its striker nor feeds drain. Before the fix every striker that rolled damage paid or gained.
+  The golden pin's `fireShield` and `lifeDrain` battles changed with it (9 of 150 entries): their
+  burns, heals and HP, not their draws, winners or rounds.
