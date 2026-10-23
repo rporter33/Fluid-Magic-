@@ -1,6 +1,6 @@
 # Romance of the Three Kingdoms as a template for Fluid Magic
 
-> Status: proposed, 2026-10-23, pending the owner's answers to section 11. Lands after Phases 8 and 9; nothing here is built.
+> Status: proposed, 2026-10-23; the owner settled section 11 on its defaults the same day (`three-kingdoms.owner-answers.md`). Lands after Phases 8 and 9; nothing here is built.
 
 Analysis against branch `claude/gifted-meitner-v8l3qv` (53 commits, Phases 0 to 7 plus 1b, 6b and
 10 S1 done, 2207 tests). Nothing in the repository was changed. Goal: more complexity and more
@@ -378,9 +378,10 @@ victory with a spread of 15 or more between fastest and slowest; at least one ca
 ransom or recruit, and one treaty per game on average; no AI refusal. Those six lines belong in
 `docs/09-balance.md`'s checklist beside the existing items.
 
-## 11. Open questions for the owner
+## 11. Open questions for the owner (settled)
 
-Defaults in bold; the build would follow them.
+The owner chose the defaults on 2026-10-23 ("go with the defaults on the open questions",
+`three-kingdoms.owner-answers.md`). Defaults in bold; the build follows them.
 
 1. Do officers keep their stats when they change nation by capture or defection? **Yes, stats and
    items stay; loyalty resets to 40.**
