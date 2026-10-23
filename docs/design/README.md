@@ -15,6 +15,7 @@ and in which phase.
 | `war-table.md` | The oak war table in a tavern, impassable wilds, painted map detail, growth by alignment, leader portraits, the art prompt pack | Phase 1b, Phases 8 to 11 |
 | `battle-overhead.md` | Proposed: the overhead three-quarter battle stage with massed formations, monsters at true size, the card bar and hover cards, replacing `docs/12`'s side view (S2.4, S2.5, S4.3, S4.4, S4.6) | Phase 10 S2 and S4, after owner review |
 | `map-relief.md` | Proposed: the clean relief-terrain map, a terrain model on the war table, thin owner rails, miniatures on bases, labels by zoom | `docs/07`, `docs/09`, Phase 8, after owner review |
+| `painted-units.plan.md` | Stage A of the painted unit art: style lock, camera references, the inventory of troops, commanders, creatures, mounts and gods (`painted-units.inventory.md`), the owner's four review stages, the animation and magic plans, the pipeline; with the art director's pilot review (`painted-units.pilot-review.md`) | Battle presentation S4 and Phase 11, after the owner's verdict |
 
 `visual-references.analysis.md` and `visual-references.tech.md` are the reference analysis and the measured Pixi research
 behind the two proposed records.
