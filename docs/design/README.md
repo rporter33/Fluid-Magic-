@@ -8,7 +8,7 @@ and in which phase.
 
 | Record | What it covers | Lands in |
 |---|---|---|
-| `ui-spec.md` | The layered UI: five layers, top bar, alerts ribbon, outliner, panels, map, Codex, keys, component inventory | `docs/07`, Phases 8 to 10 |
+| `ui-spec.md` | The layered UI: five layers, top bar, alerts ribbon, outliner, panels, map, Codex, keys, component inventory; amended 2026-10-23 with the Court modal, the officer alerts and their sim support, tagged [Phase 9b] (sections 2.5, 3.6b, 6.6, 7.2, 9.2, 9.3) | `docs/07`, Phases 8 to 10; the [Phase 9b] items with Phase 9b |
 | `battle-presentation.md` | Visceral battle replays: detail sink, timeline, procedural sound, renderer, battle lab | `docs/12`, Phase 10 stages S1 to S6 (S1 is done) |
 | `pretender-and-magic.md` | Sixteen pretender chassis, the blessing menu, boons, appearance and identity, share codes, the magic effects grammar | `docs/05`, Phase 6b (6b.1 and 6b.2 are done), Phases 8 to 12 |
 | `units-and-items.md` | Size ladder, mounts, gear pieces, reach, resistances, the abilities catalog, forged magic items | Phase 7b, Phases 8 to 12 |
