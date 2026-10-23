@@ -905,9 +905,12 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   every province, tribute and marriage, monthly meters, aging) is out or kept for the long
   session. The record lists the state, command, AI and content additions, five runner lines for
   docs/09-balance's checklist, and keeps Tier 1's data shapes open-ended.
-- `docs/00-vision.md` (`acc56be`) now says the 45 to 75 minute match ships first and the ideal
-  full session will become 15 to 20 hours (owner direction, 2026-10-23), with an M5 row in the
-  scope ladder for the long session. The record's section 6 lists what that unlocks: scenarios
+- `docs/00-vision.md` (`acc56be`, `4ea72bd`) now says the 45 to 75 minute match ships first and
+  the ideal full session will become 15 to 20 hours (owner direction, 2026-10-23). Its scope
+  ladder gains a gated "M1, Phase 9b" row for the officers prototype (built after Phase 9,
+  played for three matches, shipped in M1 only if the playtest says so, not an acceptance
+  criterion) and an M5 row for the long session that builds on Phase 9b with the record's Tier
+  2, scenarios, bigger rosters and an event deck. The record's section 6 lists what that unlocks: scenarios
   as the main replay lever, rosters of 30 to 60, an event deck, generations, wider diplomacy.
 - The doc pass (2026-10-23, after the owner's "update" requests, one commit per doc): every
   numbered doc the record touches now carries its Phase 9b lines, each marked proposed and
