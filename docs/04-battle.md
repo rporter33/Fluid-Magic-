@@ -74,6 +74,30 @@ DRN: roll 1d6 twice; each die that shows 6 is rerolled and the new value added, 
   `Hold` stays in its row and attacks only if engaged. Defaults: mages Cast, priests
   Cast (priests have a built-in holy spell: Bless, +1 morale friendly squad), others Hold.
 
+**Phase 9b (proposed, `docs/design/three-kingdoms.md` 3.2 and 3.3; built only after Phase 9 and
+gated on its playtest):**
+
+- **Capture.** A commander at 0 HP in a battle its side *loses* is captured by the winner
+  instead of dying, with probability `BATTLE.captureBase` (0.6) plus `0.02` per point of the
+  winning side's best Valor, minus `0.2` for Wanderer, rolled once per downed commander after
+  `battleEnd` on the battle's rng. In a battle its side wins, or that ends undecided, 0 HP is
+  death as before. Pretenders are never captured: a downed pretender dies (or reforms) as today.
+  Independents' commanders are captured like any other and join the free pool. A fort that is
+  stormed and falls captures every commander still inside, downed or not. Inside the battle
+  nothing changes: the downed commander's squads still check morale at routPressure +4 and go
+  to the heir after the battle; the capture is a post-battle outcome written where deaths are
+  (`battle/apply.ts`), and the replay's `death` event becomes `down(commander)` followed by
+  `captured(commander, by)` or `death(commander)` once the winner is known.
+- **Duels.** Before round 1, after battle-start abilities, if either side has an active commander
+  with the Duelist trait and the other side has an active commander not scripted Retreat, the
+  two highest-Valor eligible commanders fight a duel: alternating single melee attacks with the
+  normal attack, damage and shield rules, no squads, no spells, until one is at or below half
+  HP or 10 exchanges have passed (then no result). The loser's side takes a `moraleShock` of
+  −2 for the battle, the winner gains a rank step, and the loser keeps the wounds into the
+  battle proper. A commander that loses a duel and whose side then loses the battle is captured
+  at `captureBase + 0.2`. The duel is scripted by nobody and refused by nobody: it fires, as in
+  RTK XIV. One duel per battle.
+
 ## Scripts
 
 Each commander has 5 script slots, each `Cast(spellId) | Attack | Hold | Retreat`. After
@@ -101,6 +125,9 @@ Every event is appended to `replay`. Event kinds:
 `damage(target, amount, element, kills, by?)`, `heal`, `rout`, `leave`, `advance`,
 `death(commander)`, `summon`, `buff`, `expire`, `field`, `fieldEnd`, `fatigue`,
 `battleEnd(winner, rounds)`.
+Phase 9b (proposed) adds `duel(a, b)` with its exchanges as ordinary `melee` and `damage`
+events, `duelEnd(winner, loser)`, `down(commander)` in place of `death` while the outcome is open,
+and `captured(commander, by)` after `battleEnd`.
 
 The replay viewer plays a battle blow by blow, re-run from its record, with the pacing in
 `docs/12-battle-presentation.md` (about 5 to 10 s for a busy round at 1x, a hard cap of
@@ -114,6 +141,17 @@ The replay viewer plays a battle blow by blow, re-run from its record, with the 
 - Archers with 3 free volleys kill at least 2 of 20 militia on average.
 - Pyre Storm on a 30-militia front row kills at least 8 on average.
 - Round 50 attacker retreat triggers when both sides are 1 immortal-equivalent (mor 50, prot 99).
+
+Phase 9b (proposed):
+- Capture odds over 500 seeds match the closed formula within 3 points for the base, the best
+  Valor and Wanderer cases; a pretender is never captured; a winning side's downed commander dies.
+- A stormed fort that falls captures every commander inside; a siege that lifts captures none.
+- A duel is deterministic, fires exactly once with a Duelist on either side, never with a Retreat
+  script on the other, ends at half HP or 10 exchanges, and its `moraleShock` shows in the
+  loser's side's next morale check.
+- The battle goldens (`tests/sim/battle/golden.json`) are unchanged when no commander has the
+  Duelist trait and no battle is lost by a side with a downed commander; with them, only the
+  post-battle outcome and the new events differ, never a draw before `battleEnd`.
 
 ## Implementation decisions
 
@@ -339,3 +377,10 @@ has"). Each rule is tested alone; none adds a randomness source.
   its striker nor feeds drain. Before the fix every striker that rolled damage paid or gained.
   The golden pin's `fireShield` and `lifeDrain` battles changed with it (9 of 150 entries): their
   burns, heals and HP, not their draws, winners or rounds.
+- **Capture and duels** (Phase 9b, proposed): capture is decided after `battleEnd` on the battle's
+  rng so that every draw before it is unchanged and the goldens hold; the roll order is downed
+  commanders in setup order. `apply.ts` writes `held` and the prisoner row where it wrote the
+  death, and the heir rule is the same. The duel runs in `resolve.ts` between abilities and
+  round 1 as its own phase (`phase(duel)`), using the melee attack and landing code on two
+  one-unit groups so shields, resistances and multi-strike apply unchanged. Its numbers are in
+  `BATTLE` (`captureBase`, `captureValor`, `captureWanderer`, `duelExchanges`, `duelShock`).
