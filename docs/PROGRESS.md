@@ -955,9 +955,20 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   - docs/03 (`2c88faf`): `officer` ranges and `traitWeights` in the unit stat model; an Officer
     stat ranges section per nation, the four Independent Captain outfits, fixed summons, the
     flavor rule (no recruit range above 16), and the M2 nations' leanings.
+  - docs/12 (`8598ee5`): the `'duel'` phase in the stored log; pacing rows for the duel (3.0 s
+    plus 0.5 s per exchange, cap 7.0 s) and the capture beat in the outro; the walk-out,
+    exchange, stagger and `moraleShock` choreography through the existing impact grammar, kept
+    apart from S2.8's sampled sprite pairings; the challenge horn, crowd hush, gasp and roar
+    with two recipes; the HUD's Duel chip, scrubber beat, duellist docks at 64 px, ticker lines
+    and the result card's captured list; a decision that the exchanges are ordinary `melee`
+    and `damage` events on one-member groups, so the goldens and equivalence tests stay
+    unchanged and a named `duel` fixture joins the next fixture file.
+  - `docs/design/README.md` (`8ccb464`): the record's row says its docs text has landed and
+    where.
   - README (`cdfd03a`, `0cf5103`): docs/12 and PROGRESS in the documents table, a design records
     table, and a status line naming every phase done on this branch.
-- Still no code changed. The docs now describe Phase 9b completely enough to build from; the
+- Still no code changed. Every numbered doc, docs/12 included, now carries its Phase 9b lines,
+  so the docs describe the prototype completely enough to build from; the
   record and `three-kingdoms.owner-answers.md` (three directions quoted) remain the source where
   a numbered doc is silent.
 
