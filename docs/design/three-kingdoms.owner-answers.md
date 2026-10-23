@@ -34,3 +34,13 @@ Read as:
    so `docs/00-vision.md` keeps its 45 to 75 minute match until the long format is scheduled.
    The record's section 6 lists what the long session unlocks, and Tier 1's data shapes are built
    to hold it.
+
+## Third direction, 2026-10-23
+
+Asked whether the officers prototype (Phase 9b in `docs/10-milestone-1.md`) should run before
+Phase 10, so the duels are in the battle records the replay viewer is built on, or wait until
+after the Phase 12 balance pass, the owner wrote:
+
+> keep it before phase 10
+
+So Phase 9b stays after Phase 9 and before Phase 10.
