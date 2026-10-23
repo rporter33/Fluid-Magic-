@@ -965,6 +965,13 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
     unchanged and a named `duel` fixture joins the next fixture file.
   - `docs/design/README.md` (`8ccb464`): the record's row says its docs text has landed and
     where.
+  - `docs/design/ui-spec.md` (`96643c1`), the one other design record amended, every item tagged
+    [Phase 9b]: the two button alerts in 2.5; a new 3.6b Court section (a Ledger sibling on key K
+    with Officers, Posts and Prisoners tabs, a where-each-detail-lives table with loyalty
+    nowhere before Tier 2, the entry points, a depth audit of 4); `CourtModal`, `PostCard`,
+    `StatBars`, `TraitChip`, `BondChip`, `ProposalAlert` and `PrisonerAlert` in 6.6; rows 13
+    (seven officer selectors) and 14 (six message kinds) in 7.2; a 9.2 open-items row and a 9b
+    row in the 9.3 build plan.
   - README (`cdfd03a`, `0cf5103`): docs/12 and PROGRESS in the documents table, a design records
     table, and a status line naming every phase done on this branch.
 - Still no code changed. Every numbered doc, docs/12 included, now carries its Phase 9b lines,
