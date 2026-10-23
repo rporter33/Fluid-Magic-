@@ -76,6 +76,26 @@ Ritual primitives:
 - `scry { provinceId }`, `dominionPush { provinceId, strength }`
 - `manaConvert { from, to, ratio }`
 
+Ploy primitives (Phase 9b, proposed, `docs/design/three-kingdoms.md` 6.2 and owner decision 5:
+the primitives land with the officer phase; the spells that use them are Tier 2, with the M2
+Blue and Black nations after their listed spells). A ploy is a ritual whose target is an enemy
+commander or province in the caster's sight, and whose effect is decided by a **contest**: the
+caster's Lore plus DRN against the target's defence plus DRN, with the Spymaster post (Tier 2)
+adding to its side. A failed ploy spends its mana and days and posts a message to the target's
+nation naming the caster's nation, never the caster.
+
+- `officerLoyalty { delta }` (target commander; defence: its rank × 5; shifts its loyalty state
+  once Tier 2 exists, and until then does nothing, so the primitive can be implemented and
+  tested in Phase 9b without a spell)
+- `defect` (target commander in the disloyal state; defence: its rank × 5 plus 5; it joins the
+  caster's nation at the nearest friendly province with its stats and items, loyalty reset)
+- `inciteRevolt { unrest }` (target province; defence: the governor's Presence, else 5; unrest
+  +`unrest`, and rebels from the terrain's independent pool when unrest passes 60)
+- `falseSighting { months }` (target province; no contest; a phantom army of the caster's choice
+  appears in the target nation's fog for `months`, dispelled by a scout's sight)
+- `bribe { gold }` (target prisoner held by the caster's nation; no contest; raises the next
+  recruit contest by `gold / 50`)
+
 ## 6. Spell list
 
 Each color has 5 battle spells and 5 rituals. **Red and Green must be fully implemented
@@ -125,11 +145,19 @@ Rituals: Blessed Harvest (L1, W, unrest −20), Consecrate (L2, WW, dominionPush
 
 Battle: Frost Needle (L1, U, damage 9 cold single + fatigue +5), Mist Veil (L2, U, debuff enemy precision −4 battle), Sapping Tide (L3, UU, fatigueDrain 20 enemy squad), Phantom Host (L4, UU, summon Illusion x15: 1 hp, high def, no damage), Tempest (L5, UUU, fieldEffect storm: no ranged, −2 att all, 10 rounds).
 Rituals: Scry (L1, U, scry any province within 5 hops), Swift Currents (L2, UU, −50% move days from caster's province for 6 months), Veil the Border (L3, UU, hide armies in province for 6 months), Deep Study (L4, UUU, +50% research in lab for 6 months), Rift Step (L6, UUUU, teleport caster and squads to any owned province).
+Ploys (Tier 2 of `docs/design/three-kingdoms.md`, after the rituals above, proposed): Whispers
+of Doubt (L2, UU, officerLoyalty −1 state on a visible enemy commander; cost {U:3, generic:1}, 10
+days), False Banners (L3, UU, falseSighting 1 month; cost {U:4, generic:2}, 10 days), Turn the
+Cloak (L5, UUU, defect on a disloyal enemy commander; cost {U:8, generic:4}, 20 days).
 
 ### Black (Umbra), M2
 
 Battle: Wither (L1, B, damage 10 decay single, armor negating), Dread Aura (L2, B, moraleShock −2 enemy squad), Life Leech (L3, BB, damage 8 area(4) and heal caster), Raise the Fallen (L4, BB, summon Skeleton x10 from casualties), Plague Wind (L5, BBB, damage 6 area(15) each round for 3 rounds).
 Rituals: Dark Tithe (L1, B, sacrifice 2% pop of caster's province for 6 B mana), Grave Call (L2, BB, summon Skeleton x12), Creeping Rot (L3, BB, target province Rot +2 for 6 months, unrest +10), Bind Wraith (L4, BBB, summon Wraith commander), Hollowing (L6, BBBB, target province pop −15%, summon Skeletons equal to pop lost / 50).
+Ploys (Tier 2, proposed): Incite the Mob (L3, BB, inciteRevolt +30 on an enemy province within 3
+hops; cost {B:4, generic:2}, 10 days), Blood Price (L2, B, bribe 100 gold on a held prisoner; cost
+{B:2}, 5 days), Turn the Cloak (shared with Blue as a U/B hybrid, L5, U/B U/B U/B).
+Red and Green get no ploys: the color pie keeps deception and corruption out of them.
 
 ## 7. Mage design rules
 
@@ -286,4 +314,10 @@ Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
   −3..+3 and moves supply with it (docs/01 sections 3 and 4).
 - **giveMana** moves whole mana from the pool to a commander standing in a lab province its
   nation owns; nothing moves back in M1. Mana carried is lost with its commander.
-
+- **Ploy primitives** (Phase 9b, proposed): the five ploy primitives live in `ritualEffects.ts`
+  beside the others and go through the same `castRitual` command, payment, target check and
+  completion check. The contest is one shared function (`ployContest(caster, defence, rng)`)
+  on `state.rng` in the caster's completion step, so it is deterministic and replays. `scry`'s
+  target rule (in the caster's sight) is the ploys' target rule. `officerLoyalty` and `defect`
+  are implemented and tested in Phase 9b with no spell using them; the Blue and Black ploys are
+  content added in Tier 2 and validated like every other spell. A ploy is never a battle spell.
