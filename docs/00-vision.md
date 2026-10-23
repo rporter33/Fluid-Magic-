@@ -30,17 +30,32 @@ and the colors stand on their own rather than translating Dominions' eight paths
 ## Audience and session
 
 - Players who like Dominions, Paradox grand strategy, and MTG's color philosophy.
-- A match is shorter than Dominions: roughly 45 to 75 minutes of play against AI.
+- For now a match is shorter than Dominions: roughly 45 to 75 minutes of play against AI.
+- The ideal full session will become 15 to 20 hours (owner direction, 2026-10-23,
+  `docs/design/three-kingdoms.owner-answers.md`): a long campaign where named officers,
+  scenarios and a court matter. The short match ships first; the long format is a later
+  milestone, and systems built now keep their data shapes open for it
+  (`docs/design/three-kingdoms.md`, section 6).
 - Desktop first. Touch layout is a later milestone.
 
 ## Scope ladder
 
 | Milestone | Summary |
 |-----------|---------|
-| M1 (this scope) | Solo skirmish, one generated map, two mono-color nations (Red and Green), 12 units each, 10 spells per shipped color, pretender design, dominion, Wellsprings victory, simple AI, placeholder art with animations, save/load. |
-| M2 | Remaining three mono nations (White, Blue, Black) with their 30 spells, forts, more pretender chassis, events, balance pass. |
+| M1 (this scope) | Solo skirmish, one generated map, two mono-color nations (Red and Green), 12 units each, 10 spells per shipped color, pretender design with 16 chassis (11 per nation), a blessing menu and appearance customization, dominion, Wellsprings victory, simple AI, placeholder art with animations, save/load. |
+| M1, Phase 9b (gated) | The officers prototype, proposed (`docs/design/three-kingdoms.md` Tier 1): named commanders with stats and traits, capture and prisoners, automatic duels, the god's Ascendancy with a field cap and three posts, fort governors and developments, officer proposals, comrade and grudge bonds. Built after Phase 9 and before Phase 10, played for three matches, and shipped in M1 only if the playtest says so; not an M1 acceptance criterion (`docs/10`). |
+| M2 | Remaining three mono nations (White, Blue, Black) with their 30 spells, their pretender chassis and blessing menus, forts, events, deeper pretender customization (more slots and variants, a color picker), balance pass. |
 | M3 | Ten two-color nations, hybrid mana costs in depth, more rituals, touch layout. |
 | M4 | Multiplayer on an authoritative server (the sim is written for this from day one). |
+| M5 | The long session: 15 to 20 hour campaigns built on Phase 9b's officers and court, with the record's Tier 2 (loyalty states, treaties and the coalition rule, Search, legends, ploys), scenarios, bigger rosters and an event deck (`docs/design/three-kingdoms.md`, section 6). |
+
+The pretender's M1 scope grew on 2026-10-21 at the owner's direction: "I think flashy magic
+effects is always interesting and good options for pretenders like Dominions has is always a
+highlight. If it's possible. A customization level matching Age of Wonders 4 would be very
+ideal." Ten new chassis, the blessing menu and the customization system moved from M2 into
+M1 (Phase 6b and additions to Phases 8 to 12 in `docs/10-milestone-1.md`); the per-slot depth
+that matches Age of Wonders 4 arrives in M2. The owner approved the scope change and its
+cut order on 2026-10-21 (owner decision 1 in `docs/05-pretender.md`).
 
 ## Naming glossary
 

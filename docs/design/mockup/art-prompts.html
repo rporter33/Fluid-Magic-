@@ -1,0 +1,277 @@
+<title>Fluid Magic Art Prompts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column on oak, each prompt a card with its code, size, checks and a copy button.
+   Single dark look on purpose: it matches the game's chrome and the tavern war table. */
+:root {
+  --bg: #1C1A17;          /* the game's chrome-0 */
+  --panel: #26231E;       /* chrome-1 */
+  --panel-2: #2F2B25;
+  --line: #4A443B;
+  --text: #F4EEDF;
+  --dim: #BDB4A2;
+  --faint: #8E8574;
+  --brass: #B8914A;       /* aged brass, frames only */
+  --oak: #715636;
+  --ok: #7FB77E;
+  --font-display: 'Marcellus SC', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  color-scheme: dark;
+}
+html { background: var(--bg); }
+body {
+  background: var(--bg); color: var(--text); font: 16px/1.5 var(--font-body);
+  font-variant-numeric: lining-nums;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 48px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+.eyebrow { font: 600 12px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+h1 { font: 400 30px/1.15 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h2 { font: 400 21px/1.2 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h3 { font: 700 17px/1.3 var(--font-body); margin: 0; }
+p { margin: 0; }
+.lead { color: var(--dim); max-width: 62ch; }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; color: var(--dim); max-width: 64ch; }
+ol.steps b { color: var(--text); font-weight: 500; }
+section { display: flex; flex-direction: column; gap: 14px; }
+.section-head { display: flex; flex-direction: column; gap: 4px; }
+.section-head p { color: var(--dim); font-size: 15px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card.now { border-color: var(--brass); }
+.card-top { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.code { font: 500 13px var(--font-mono); color: var(--bg); background: var(--brass); border-radius: 3px; padding: 1px 7px; }
+.size { font: 13px var(--font-mono); color: var(--dim); margin-left: auto; font-variant-numeric: tabular-nums; }
+.meta { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font-size: 14.5px; }
+.meta dt { color: var(--faint); }
+.meta dd { margin: 0; color: var(--dim); min-width: 0; }
+.prompt { font: 13.5px/1.55 var(--font-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 12px; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text); max-height: 340px; overflow: auto; margin: 0; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+button { font: 500 14.5px var(--font-body); color: var(--text); background: var(--panel-2); border: 1px solid #CFC5B0; border-radius: 4px; padding: 7px 14px; cursor: pointer; }
+button:hover { background: #3A352D; }
+button:focus-visible, select:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+button.copied { border-color: var(--ok); color: var(--ok); }
+.note { font-size: 14px; color: var(--faint); }
+label { font-size: 14.5px; color: var(--dim); display: flex; gap: 8px; align-items: center; }
+select { font: 15px var(--font-body); color: var(--text); background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; }
+.traits { display: flex; gap: 6px; flex-wrap: wrap; }
+.trait { min-width: 40px; padding: 5px 0; text-align: center; font: 500 14px var(--font-mono); border-color: var(--line); }
+.trait[aria-pressed="true"] { border-color: var(--brass); background: #3A3226; }
+.trait.done { color: var(--ok); }
+.done-toggle { margin-left: auto; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 16px; }
+details summary { cursor: pointer; font-weight: 500; }
+details ul { margin: 10px 0 0; padding-left: 20px; color: var(--dim); display: grid; gap: 6px; font-size: 15px; }
+footer { border-top: 1px solid var(--line); padding-top: 16px; color: var(--faint); font-size: 14px; display: grid; gap: 6px; max-width: 64ch; }
+@media (max-width: 520px) { h1 { font-size: 25px; } .size { margin-left: 0; width: 100%; } .meta { grid-template-columns: 1fr; } .meta dt { margin-top: 4px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Fluid Magic · art for the war table</span>
+    <h1>Art prompts for ChatGPT</h1>
+    <p class="lead">These are the images that replace the game's drawn-in-code placeholders: the oak table top, the tavern floor around it, and leader portraits. Nothing in the game waits for them, so make them whenever it suits you.</p>
+    <ol class="steps">
+      <li><b>Copy a prompt</b> with its button and paste it into ChatGPT as written. Ask for the size shown on its card.</li>
+      <li><b>Regenerate until it passes</b> the "Looks right when" line on the card.</li>
+      <li><b>Attach the image in our chat</b> and say its code (for example "A1"). I check it, crop it, and add it to the game with a record of the prompt and the date.</li>
+    </ol>
+  </header>
+
+  <section aria-labelledby="now-h">
+    <div class="section-head">
+      <h2 id="now-h">Make these now</h2>
+      <p>Two images for the table and the room. P0, the portrait anchor, is approved and stays here for reference.</p>
+    </div>
+    <div id="now"></div>
+  </section>
+
+  <section aria-labelledby="sets-h">
+    <div class="section-head">
+      <h2 id="sets-h">Portrait sets</h2>
+      <p>Eight faces per leader type. In ChatGPT, attach the approved P0 anchor (the rim-light Ash Chieftain) first, so it becomes "Image 1", then paste the prompt. Pick the type and the face number; the prompt below updates. Tick each one as you send it.</p>
+    </div>
+    <div class="card" id="setCard">
+      <div class="row">
+        <label for="setSel">Leader type
+          <select id="setSel"></select>
+        </label>
+        <span class="size">square · 1024 × 1024</span>
+      </div>
+      <div class="traits" id="traits" role="group" aria-label="Face number"></div>
+      <dl class="meta">
+        <dt>This face</dt><dd id="traitText"></dd>
+        <dt>Looks right when</dt><dd>It matches P0's painting style, lighting, dark background and framing, with the face turned to the right and the eyes about 40% down from the top.</dd>
+      </dl>
+      <pre class="prompt" id="setPrompt"></pre>
+      <div class="row">
+        <button id="copySet" type="button">Copy prompt</button>
+        <button id="doneSet" class="done-toggle" type="button" aria-pressed="false">Mark as sent</button>
+      </div>
+      <p class="note" id="setProgress"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="later-h">
+    <div class="section-head">
+      <h2 id="later-h">After the summer floor is approved</h2>
+    </div>
+    <div id="later"></div>
+  </section>
+
+  <details>
+    <summary>More leader types, for later</summary>
+    <ul>
+      <li>Ember Adept, Cinder Magus and Cinder Scout for the Cinder Horde.</li>
+      <li>Sapling Druid, Elder Druid and Thorn Scout for the Thornwood.</li>
+      <li>Independent captains in four outfits: levy, hunter, mountaineer, reedman.</li>
+      <li>Only the Cinder Magus and the Elder Druid have glowing eyes. No portrait carries a banner color; the frame in the game does that.</li>
+    </ul>
+  </details>
+
+  <footer>
+    <p>Keep the original files. When you send one, I record the prompt, the date and the tool with it, so every image in the game can be traced back to how it was made.</p>
+    <p>Sizes are the three ChatGPT offers: square 1024 × 1024, landscape 1536 × 1024, portrait 1024 × 1536.</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const STYLE = `Head-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.
+Lighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.
+Medium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the light face against the dark background must still read when the image is shrunk to 48 pixels.
+Colors: muted and earthy. Nothing in the image glows, except where the subject below says a mage's eyes glow. No saturated red, orange, green or blue area larger than a small clasp or trim.`;
+
+  const NATION = {
+    cinder: 'A warrior of the Cinder Horde, ash-born clans who worship fire: ash-grey skin with faint soot markings, charcoal and smoke-grey clothing, armor of dark iron plates with rusted edges.',
+    thorn: 'A warden of the Thornwood, forest clans who live among ancient trees: weathered bark-brown skin, bark-and-leaf clothing and armor in moss green and bark brown, a few pale blossoms.',
+  };
+
+  const NOW = [
+    {
+      code: 'A1', title: 'Oak table top', size: 'square · 1024 × 1024',
+      use: 'The wood under the map, tiled across the whole table.',
+      check: 'Grey-gold oiled oak seen straight from above, grain running left to right, two thin plank seams, even light, no orange stain, no shine, no objects. I check that the edges tile seamlessly.',
+      prompt: `A seamless, tileable texture of an oiled, quarter-sawn white oak tabletop, seen from directly above, filling the whole square image. Straight, tight grain runs left to right with a subtle silvery ray fleck. Two thin dark plank seams run straight across the image from left to right, one a third of the way down and one two thirds of the way down. Tawny grey-gold color: highlights near #B08A5E, the body near #8F7459, grain lines near #715636. Matte oil finish, worn smooth, with a few very faint fine scratches. Soft, even, neutral daylight from directly above, low contrast, no shadows of objects, no vignette, no lighting gradient across the image. No orange or reddish stain, no varnish shine, no knots larger than a thumbnail, no cracks. Photographic realism with a slightly painterly softness. The left edge must continue seamlessly into the right edge, and the top edge into the bottom edge. No objects, no text, no letters, no logos, no border, no frame, no people. Square image.`,
+    },
+    {
+      code: 'A2', title: 'Tavern floor around the table, summer', size: 'landscape · 1536 × 1024',
+      use: 'What you see around the table when you zoom all the way out.',
+      check: 'Seen straight down; a plain dark empty rectangle in the middle (the table goes there); hearth glow from the left, window light on the right; muted colors; no people, faces or text.',
+      prompt: `A top-down view, looking straight down from the ceiling, of the floor of a cozy, natural village tavern around a large rectangular oak table. The table itself is NOT in the image: the center of the image is an empty rectangle of plain dark floor, 60% of the image wide and 60% of it high, where the table will be placed later. Landscape image.
+Around that empty center: wide oak floorboards with dark seams; a woven wool rug in undyed creams and browns below the center; a wooden bench with a folded wool cloak on it; a barrel with iron hoops; a three-legged stool; a large hound asleep on the rug, seen from above with its head tucked away; a little straw near a plank door at the bottom edge.
+Light: the warm glow of a stone hearth just beyond the left edge spills across the floorboards from the left, small and soft; cool natural daylight from a leaded window beyond the right edge lies as a pale rectangle on the floor on the right, with the shadows of the window's lead lines. The corners of the image fall gently into warm darkness.
+Summer: the window patch is bright and slightly warm.
+Painterly realism with a gouache and oil feel, matte, muted natural colors: oak browns (near #5E4630 and #8C6A47), warm grey stone, pewter greys, undyed wool. Keep the firelight small. No saturated red, orange, green, blue or violet anywhere except the small glow at the left edge. No people, no faces, no text, no signs, no banners, no weapons, nothing in the empty center.`,
+    },
+    {
+      code: 'P0', title: 'Portrait style anchor: approved', size: 'square · 1024 × 1024',
+      use: 'Approved on 22 October: the rim-light Ash Chieftain in the Figma file “Fluid Magic art references” (figma.com/design/g31i2MTgVkg06p4f8w6ZNZ). In Figma, select that image and use Export → PNG, then attach it as Image 1 to every portrait prompt.',
+      check: 'Nothing left to do. The prompt below is the one behind the anchor, kept so the look can be made again.',
+      prompt: `${STYLE}
+
+Subject: ${NATION.cinder}
+An Ash Chieftain: a horned helm of blackened iron with large curled horns, a braided beard, scale-plate pauldrons.
+Traits: a braided beard, a grim expression, a scar through the left eyebrow.`,
+    },
+  ];
+
+  const LATER = [
+    {
+      code: 'A3', title: 'Tavern floor, winter', size: 'landscape · 1536 × 1024',
+      use: 'The same floor in winter. Attach your approved A2 image first (it becomes "Image 1").',
+      check: 'Everything matches A2 except the season: a pale, cool window patch with a little frost, a stronger hearth glow, melted snow by the door.',
+      prompt: `Image 1 is the approved tavern floor. Keep everything exactly the same: the view straight down, the empty dark rectangle in the center, every piece of furniture, the hound, the rug, the floorboards, the painting style and the colors. Change only the season and the light: it is winter. The window patch on the right is pale and cool, with a little frost at its edges; the hearth's glow from the left is somewhat stronger and warmer; a little melted snow lies by the door at the bottom edge. No people, no faces, no text, nothing in the empty center. Landscape image.`,
+    },
+  ];
+
+  const SETS = [
+    { id: 'P1', name: 'Ash Chieftain (Cinder Horde)', nation: 'cinder', type: 'An Ash Chieftain: a horned helm of blackened iron, scale-plate pauldrons.', traits: ['a braided beard, a grim expression, a scar through the left eyebrow.', 'a cropped beard, weary eyes, grey at the temples.', 'no beard, a broad jaw, soot stripes across the brow.', 'a long braided beard with iron rings, a fierce stare.', 'a short beard, a broken nose, a calm and cold look.', 'a heavy beard, deep-set eyes, a thin crack-like scar on the cheek.', 'no beard, gaunt cheeks, one horn of the helm chipped.', 'a braided moustache, old and scarred, watchful.'] },
+    { id: 'P2', name: 'Warden Captain (Thornwood)', nation: 'thorn', type: 'A Warden Captain: a helm of layered bark plates with short antler stubs, a cloak of real leaves over bark armor.', traits: ['braided hair, a full beard, a steady look.', 'long hair tied back, no beard, watchful eyes.', 'a short beard with moss in it, a stern mouth.', 'grey braids, a weathered face, a calm look.', 'a young face, a thin beard, a scar on the chin.', 'a heavy brow, a full red-brown beard, a patient look.', 'close-cropped hair under the helm, no beard, a leaf tattoo on the cheek.', 'an old face, a white beard, kind but hard eyes.'] },
+    { id: 'P3', name: 'Pyre Priest (Cinder Horde)', nation: 'cinder', type: 'A Pyre Priest: a hood of charcoal cloth with an ember-shaped iron clasp, a collar of dark iron rings, soot stripes across the cheeks.', traits: ['an old lined face, a shaved chin.', 'a thin face, a short grey beard.', 'a young face, intense eyes.', 'a heavy face, a burn scar on the jaw.', 'a narrow face, a long braided beard.', 'a gaunt face, sunken eyes, a calm smile.', 'a round face, a stubbled chin.', 'an old face, a forked beard.'] },
+    { id: 'P4', name: 'Grove Priest (Thornwood)', nation: 'thorn', type: 'A Grove Priest: a wreath crown of oak leaves, moss in the hair, a plain green-grey robe with a carved leaf clasp.', traits: ['an old serene face, a long white beard.', 'a young calm face, braided hair.', 'a lined face, a short beard, gentle eyes.', 'a narrow face, long loose hair.', 'a broad face, a moss-tangled beard.', 'a weathered face, a scar across the nose.', 'an old face, no beard, a thoughtful look.', 'a stern face, grey braids.'] },
+  ];
+
+  const PREFACE = 'Image 1 is the style reference: match its painting style, lighting, framing, background and proportions exactly. Change only the subject described below. Keep everything else the same.';
+
+  // Per-viewer conveniences only: which set and face are open, and which faces were sent.
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('fm-art-' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('fm-art-' + k, JSON.stringify(v)); } catch { /* storage unavailable */ } },
+  };
+
+  async function copy(text, btn, pre) {
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copied'; btn.classList.add('copied');
+    } catch {
+      const range = document.createRange(); range.selectNodeContents(pre);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      btn.textContent = 'Selected: copy it'; btn.classList.add('copied');
+    }
+    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 1800);
+  }
+
+  function card(item, now) {
+    const el = document.createElement('article');
+    el.className = 'card' + (now ? ' now' : '');
+    el.id = item.code.toLowerCase();
+    el.innerHTML = `<div class="card-top"><span class="code">${item.code}</span><h3>${item.title}</h3><span class="size">${item.size}</span></div>
+      <dl class="meta"><dt>Used for</dt><dd>${item.use}</dd><dt>Looks right when</dt><dd>${item.check}</dd></dl>
+      <pre class="prompt"></pre>
+      <div class="row"><button type="button">Copy prompt</button></div>`;
+    const pre = el.querySelector('pre'); pre.textContent = item.prompt;
+    const btn = el.querySelector('button'); btn.addEventListener('click', () => copy(item.prompt, btn, pre));
+    return el;
+  }
+  const nowEl = document.getElementById('now'); NOW.forEach((i) => nowEl.appendChild(card(i, true)));
+  nowEl.style.display = 'grid'; nowEl.style.gap = '14px';
+  const laterEl = document.getElementById('later'); LATER.forEach((i) => laterEl.appendChild(card(i, false)));
+
+  const setSel = document.getElementById('setSel');
+  const traitsEl = document.getElementById('traits');
+  const promptEl = document.getElementById('setPrompt');
+  const traitText = document.getElementById('traitText');
+  const doneBtn = document.getElementById('doneSet');
+  const progress = document.getElementById('setProgress');
+  SETS.forEach((s) => { const o = document.createElement('option'); o.value = s.id; o.textContent = `${s.id} · ${s.name}`; setSel.appendChild(o); });
+  let cur = { set: store.get('set', 'P1'), face: store.get('face', 0) };
+  if (!SETS.some((s) => s.id === cur.set)) cur = { set: 'P1', face: 0 };
+  const sent = store.get('sent', {});
+
+  function setPrompt(s, k) {
+    return `${PREFACE}\n\n${STYLE}\n\nSubject: ${NATION[s.nation]}\n${s.type}\nTraits: ${s.traits[k]}`;
+  }
+  function render() {
+    const s = SETS.find((x) => x.id === cur.set);
+    setSel.value = s.id;
+    traitsEl.innerHTML = '';
+    s.traits.forEach((t, k) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'trait' + (sent[`${s.id}-${k}`] ? ' done' : '');
+      b.textContent = String(k + 1).padStart(2, '0');
+      b.setAttribute('aria-pressed', String(k === cur.face));
+      b.setAttribute('aria-label', `Face ${k + 1}${sent[`${s.id}-${k}`] ? ', sent' : ''}`);
+      b.addEventListener('click', () => { cur.face = k; store.set('face', k); render(); });
+      traitsEl.appendChild(b);
+    });
+    traitText.textContent = s.traits[cur.face];
+    promptEl.textContent = setPrompt(s, cur.face);
+    const key = `${s.id}-${cur.face}`;
+    doneBtn.textContent = sent[key] ? 'Sent ✓ (undo)' : 'Mark as sent';
+    doneBtn.setAttribute('aria-pressed', String(Boolean(sent[key])));
+    const n = s.traits.filter((_, k) => sent[`${s.id}-${k}`]).length;
+    progress.textContent = `${s.id}: ${n} of 8 sent. File name I will give it: ${s.id === 'P1' ? 'cinderHorde__ashChieftain' : s.id === 'P2' ? 'thornwood__wardenCaptain' : s.id === 'P3' ? 'cinderHorde__pyrePriest' : 'thornwood__grovePriest'}__${String(cur.face + 1).padStart(2, '0')}.`;
+  }
+  setSel.addEventListener('change', () => { cur = { set: setSel.value, face: 0 }; store.set('set', cur.set); store.set('face', 0); render(); });
+  document.getElementById('copySet').addEventListener('click', (e) => copy(promptEl.textContent, e.currentTarget, promptEl));
+  doneBtn.addEventListener('click', () => { const key = `${cur.set}-${cur.face}`; if (sent[key]) delete sent[key]; else sent[key] = true; store.set('sent', sent); render(); });
+  render();
+})();
+</script>

@@ -33,6 +33,12 @@ value; the implementer may tune, but must record tuned values in `docs/09-balanc
 | Wasteland | 15 | 10 | 5 | 500 to 2000 | 0 |
 
 - Seas are out of scope for M1. The generator produces a landlocked map.
+- **Impassable terrain (wilds).** Some of the map is wild: named mountain massifs (peaks) and
+  dark lakes (meres). A wild is not a province. No one owns, enters, crosses or targets it. Two
+  provinces are neighbors only where their own borders meet, so a wild between them blocks
+  movement, retreat, sight, dominion spread and ritual reach alike, and everything counted in
+  provinces is counted around it. Every province can still reach every other, no single province
+  is the only way through, and no wild lies within 2 provinces of a capital.
 - Capitals start at 25000 population on Farmland or Plains, with a fort, a temple, and a lab.
 
 ## 3. Population
@@ -122,6 +128,8 @@ Orders a commander can hold: `Idle`, `Move(path)`, `Pillage`, `PatrolDefend`,
 `Research` (mages in a lab), `Preach` (priests, spreads dominion), `CastRitual(spellId, target)`,
 `ClaimWellspring`, `Build(buildingId)` (any commander), `Recruit` is province-level not
 commander-level.
+Phase 9b (proposed, `docs/design/three-kingdoms.md` 3.5): `Govern` (any commander in an owned
+fort province; see section 7, "Governors and developments").
 
 ### Movement
 - Movement is along the province adjacency graph. A commander in transit has
@@ -145,6 +153,37 @@ commander-level.
 
 A commander in the province issues the Build order. The commander is busy for the
 duration. Building completes even if the commander leaves (keep it simple).
+
+### Governors and developments (Phase 9b, proposed; built only after Phase 9, gated on its playtest)
+
+A commander with the order `Govern` in an owned fort province is its **governor**. Its reach is
+the **prefecture**: the fort province plus the adjacent friendly provinces without a fort of
+their own, the same set that feeds the fort materials (section 4, Materials). A governor fights
+if its province is attacked, as a researcher does, stops governing when it moves, and a fort holds one
+governor at a time (a second `Govern` order is refused). Its effects, per month, over the
+prefecture:
+
+| Effect | Per point of the governor's stat |
+|---|---|
+| Gold and materials | +1% per Stewardship |
+| Unrest decay | +0.25 per Presence |
+| Build time | −1% per Stewardship |
+| Wellspring claim in the prefecture | −1 day per 5 Presence |
+
+**Developments** are buildings that exist only in fort provinces, one of each per fort, built
+with the Build order like a temple. They affect the prefecture. Pillage in the fort province
+destroys one development, the newest first, before it takes population.
+
+| Development | Gold | Materials | Days | Effect on the prefecture per month |
+|---|---|---|---|---|
+| Granary | 150 | 25 | 30 | supply +15%; a besieged fort starts starving 15 days later |
+| Market | 200 | 0 | 30 | gold +10% |
+| Barracks | 250 | 50 | 40 | recruit time −15%, PD cost −20% |
+| Shrine | 100 | 0 | 20 | +1 dominion check for the owner's temple in the fort province |
+
+Nothing is added to provinces without a fort, so in M1 developments exist at the capital only;
+the settlement tiers drawn on the map stay art.
+The numbers are starting values for `docs/09-balance.md`.
 
 ## 8. Recruitment
 
@@ -209,12 +248,16 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
   - Temple: 1 check (+1 with the Sanctity scale per step).
   - Pretender present in the province: 2 checks. Prophet: 1 check.
   - Priest with order Preach: 1 check per holy pip.
+  - Phase 9b (proposed): a preaching commander adds `floor(Presence / 10)` checks beyond its
+    holy pips; a governor at Presence 15 or more adds 1 check to its fort's temple; a Shrine
+    adds 1 check to the same temple. Priests stay the main source.
 - A check: pick a random adjacent province (or the same province 40% of the time). Roll
   d10; if the roll ≤ the nation's `dominionScore`, push +1 toward the nation. If the
   province is dominated by another nation, that nation's strength decreases by 1 instead,
   and it flips when it reaches 0. Strength caps at the nation's `dominionScore`.
-- A nation whose capital dominion reaches 0 and that holds no temple anywhere suffers
-  **Godless**: no rituals, pretender recall. A nation with no provinces is eliminated.
+- A nation whose capital dominion reaches 0 and that holds no temple under its own
+  dominion suffers **Godless**: no rituals, pretender recall. A nation with no provinces is
+  eliminated.
 - Scales in a province are the scales of the dominating nation, scaled by strength:
   `effectiveScale = round(nationScale * strength / 10)`. Independents have scales of 0.
   Enemy scales therefore apply inside your provinces when their dominion overtakes yours.
@@ -238,3 +281,297 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
 - Enemy armies are visible in provinces adjacent to any owned province or any own army
   and anywhere a scout can see (scouts see 2 provinces). Population and springs of a
   province are visible once it has been owned or scouted.
+- **Incursions.** An incursion of nation E into nation N opens when a commander of E visible
+  to N has a current leg that ends in N's land or where N's army stands. It closes after
+  `APPROACH.quietDays` (10) days with none. N gets one `approaching` message when it opens.
+  N also gets one `threatened` message per target province, the first time such a leg ends
+  where N has troops, a fort, or its capital. Commanders of E reaching one target on one day
+  share a message. `NationState.incursions` holds the open incursions.
+
+## Implementation decisions
+
+Rules settled during implementation where this doc was silent or conflicted, recorded per
+`CLAUDE.md`. Numbers live in `src/content/mapgen.ts` and `docs/09-balance.md`.
+
+**Map generation (Phase 1)**
+- **Province count**: the New Game size (Small 40, Medium 60, Large 80) is the count for two
+  nations; each nation beyond two adds 25. Medium with two nations is section 2's 60. The
+  count is exact, not approximate.
+- **Capital terrain and name** come from the nation (Kharnath is Plains, Deepmoss is
+  Forest), overriding section 2's "Farmland or Plains" where the nation doc differs. When
+  the same nation appears twice, later capitals get numerals (Kharnath II).
+- **Capital placement**: farthest-point sampling on the province graph, at least 6 apart;
+  which nation gets which capital is shuffled. Maps whose capitals' starting neighborhoods
+  (provinces within 2 hops) differ in population by more than 1.5x are passed over: the
+  generator takes the first map within the ratio, or the most even of several valid maps.
+- **Terrain** is assigned by rank from simplex-noise elevation and moisture over the provinces
+  (wilds are not provinces and take no terrain), so every map has exactly the terrain shares in
+  `TERRAIN_SHARES`, capitals included.
+- **Adjacency**: two provinces are neighbors exactly when their borders share a segment;
+  cells that meet at a single point are not, and a border with a wild makes no neighbor. The
+  drawn map and the graph always agree.
+- **Wellsprings** are never adjacent to each other and at least 3 from every capital. They
+  are chosen so every nation is equally far, in total, from the Wellsprings it needs to win
+  (2 of 3, 3 of 5), and then spread as far apart as that allows. The search (8 random starts,
+  each a greedy pick improved by single swaps) runs again from every candidate, with ties to
+  the first and no draws from the rng, whenever its result is still unfair (QA sweep
+  2026-10-22, finding map-1: it had stopped at 2 hops of unfairness on about 1 in 100 Small
+  4-nation maps where fair sets existed). Maps whose first result was fair are unchanged.
+- **Wellspring scale bonus**: "+1 to one scale" is one step toward one pole of one axis,
+  chosen by the generator. Axes differ between Wellsprings while there are axes left; the
+  pole is random.
+- **Springs** (section 4): independent provinces hold 0 to 2 springs. Across the
+  independents every color gets the same number of springs, give or take one, and at least
+  two; terrain decides which color goes where when there is a choice. Wellspring provinces
+  hold no ordinary springs, since they already yield every color.
+- **Independents** (section 9): each province stores its starting defender strength
+  (`8 + 4d`, 30 on Wellsprings) at generation. Troop composition by terrain comes in Phase 3.
+- **Starting population** is uniform in the terrain's range, rounded to 100.
+
+**Wilds (Phase 1b)**
+
+Added by the project owner's direction of 2026-10-21: "i want to make sure the maps have some
+impassible terrain that is noticeable". The form below (named peak massifs and dark meres that
+are map cells but not provinces, with ridges and chasms waiting for M2) was offered to the owner
+as the default on 2026-10-22.
+- **Count and kinds.** A map has `round(provinces / 20)` wild ranges (Small 2, Medium 3, Large 4;
+  6 on Medium with 4 nations). Their kinds cycle peaks, mere, peaks. A peak range has 1, 2 or 3
+  cells (weights 25, 50, 25), a mere 1 or 2 (weights 60, 40). Wild cells are extra Voronoi cells
+  beyond the province count, so the count stays exact and the map grows to keep each province's
+  area.
+- **Placement.** Capitals are placed first, on every cell. Peak ranges then start at the
+  highest-elevation eligible cell and grow into their highest eligible neighbors; meres do the
+  same by moisture minus elevation. A range that cannot reach its size tries the next seed, up to
+  12; an attempt that cannot place a range is retried like any failed attempt.
+- **Eligible cells.** A wild cell has no vertex on the map's edge, is at least 3 cells from every
+  capital, and is at least 3 cells from every other range, so no province borders two ranges.
+  Removing it must leave the provinces connected, each with at least 2 neighbors, with no single
+  province as the only way between two parts of the map, and with the provinces around every
+  range at most 6 steps apart.
+- **Everything else on the provinces.** Terrain, Wellsprings and their fairness, springs, names,
+  starting population, capital distance and independent strength are placed and checked on the
+  provinces that remain, as before. Each capital's 2-hop neighborhood keeps the provinces it would
+  have without wilds. The balance search takes up to 10 valid maps.
+- **Data.** Wilds live in `MapData.wilds` with their own ids (`w0`, `w1`, ...), never from the
+  game's counter. They are never provinces and never in `neighbors`, so movement, retreat, sight,
+  dominion spread, ritual reach, fort materials and the AI respect them with no rule of their
+  own. Wilds are terrain: every nation sees them, with their names.
+- **On by default.** New Game and the headless runner make maps with wilds. `GameSetup.wilds:
+  false` (`MapGenParams.wilds: false`) draws none and makes every map step for step as the
+  generator did before wilds; only the balance search's 10 candidates (6 before) can pick a more
+  even map where none of the first 6 was within the ratio.
+- **Not in M1:** impassable borders between provinces (ridges) with passes that open or close,
+  fliers, chasms, roads and tunnels.
+
+**Economy and population (Phase 2)**
+- **Daily application**: every monthly rate (gold, materials, mana, growth, unrest) is
+  applied each day as rate / 30. A day's rates come from one snapshot taken before any of
+  them change. Discrete monthly events (dominion spread) fire on the last day of a month.
+- **Start**: 300 gold, no mana, an empty materials pool. The capital starts with dominion
+  of its own nation at the pretender's dominion score.
+- **Scales in a province** (section 12): `effectiveScale` rounds halves away from zero, so
+  both poles round alike. A nation's own scales gain one step per Wellspring province it
+  owns. Scale effects from section 4's formulas apply in both directions, alongside the
+  pretender table: Turmoil lowers gold 7% per step, Wild lowers materials 10% per step,
+  Artifice lowers supply 10% per step.
+- **Upkeep** (section 4): upkeep is paid as far as the treasury allows; gold never goes
+  below zero from upkeep. A short day adds its unpaid share to the nation's unpaid-days
+  counter and a fully paid day takes one off, so morale recovers at the rate it was lost.
+  Troops lose 1 morale per 30 unpaid days, at most 3 (the "gold below zero" rule).
+- **Materials cap**: the 6-month cap only stops a pool from growing. A pool above the cap
+  (after a siege or a population drop) keeps what it has. A besieged fort collects
+  nothing, neither its own materials nor its neighbors' share.
+- **Province effects** (timed ritual effects) are in force while the day is before their
+  `untilDay` and are dropped at the end of the day before it.
+- **Supply**: commanders eat where they stand, also while in transit (at the province they
+  left). Independents never eat and never starve. A starving squad loses HP from its pool,
+  with wounds spread evenly as in the resolver, so troops die in proportion:
+  `count = ceil(count * newHp / oldHp)` (0 once the pool is empty), which for a healthy squad
+  is the pool rounded up to whole troops. Commanders cannot starve below 1 HP. The
+  starvation counter is capped so morale returns at the rate it was lost. Fed units heal
+  2% of max HP per day, which also heals battle wounds. Units that eat nothing (constructs and
+  undead, such as Fire Sprites) never starve and count as fed, so they heal too (QA sweep
+  2026-10-22, finding BM-1: they used to skip healing as well). The squad `moraleMod` of section 6
+  is derived from the starvation counter and the unpaid-days counter, not stored.
+- **Unrest** (section 5): priests calm only their own nation's provinces and only while
+  standing there. "Enemy dominion present" means another nation dominates the province.
+- **Mana**: sieges stop gold, materials, and recruits, not mana.
+- **Pillage** (section 3): one army with the Pillage order is enough; more do not stack.
+  Pillage works in any province the army stands in. With several nations pillaging, the
+  first in nation order takes the gold. Patrol has no economic effect. Pillage is applied
+  after the day's gold and before growth, which is computed from the population at the
+  start of the day.
+- **Buildings** (section 7): one construction per province at a time. It is abandoned if the
+  province changes hands, and the commander who started it returns to idle when it ends,
+  unless it has since been given another order (a Build order names its province). Wild and
+  Artifice scale construction time; it is never under 1 day.
+
+**Commanders, movement, recruitment, independents, fog (Phase 3)**
+- **Map speed**: national commanders move at speed 3 (docs/03), so an army's pace is set by
+  its slowest troops; a lone commander or scout moves at 3. A group moved together keeps the
+  slowest member's speed on every leg, frozen when ordered.
+- **Leg days** are whole days: `round(moveDays * speedFactor)`, at least 1 (table in
+  docs/09-balance.md). Progress counts days, so a reversal and an ETA are whole days too.
+- **Hostile provinces**: a province is hostile to a nation if it does not own it, or if a
+  commander of another owner is present in it (in transit or not; garrison holders never
+  count, and neither do commanders hidden by stealth, since a refused path would give them
+  away). A besieged fort is hostile to its owner's arrivals because its besiegers stand in
+  it. A move ends on arrival in a hostile province; Phase 4 fights there. Paths may cross
+  only friendly provinces, so only the last province of a path may be hostile; the
+  pathfinder and move validation both enforce this, and `findPathFor` gives a group exactly
+  the path validation accepts (none while its leg ends among hostiles). A stealthy scout
+  that enters a hostile province stops there like any army.
+- **Movement within a day** (step 2): every transit advances; arrivals settle (Phase 4
+  battles go here); then commanders with a move order start their next leg the same day.
+  Commanders passing through therefore stand in the province while arrivals are resolved.
+- **Location** is always the last province a commander stood in, and a commander is present
+  there in transit or not for supply, vision, hostility, and (Phase 4) battles. Acting there
+  needs it to stand still: squad transfers, Build orders, and research are refused on the
+  march, priests calm unrest and armies pillage only while standing. A reversal swaps the leg's ends and turns the days walked into the days back
+  (section 6), but the commander never reached the far end, so its location, supply,
+  vision, and `cameFrom` stay those of the province it left. Reversing a leg not yet begun cancels it. A reversed commander stops when
+  it gets back. A new path for a commander in transit starts where its current leg ends.
+- **Orders** set without arguments (idle, pillage, patrol, research, preach) take effect on
+  arrival when given on the march; research needs a mage standing in an own province with a
+  lab; preach needs holy pips. Orders with progress or targets come only from their own
+  commands. The garrison holder takes no orders, scripts, or builds; only its squads move.
+- **Squads**: a commander holds at most one squad per unit type and row. Transfers,
+  formation changes, and recruits merge into a matching squad, which keeps its id (troops
+  and HP add up; the higher starvation counter stays). A partial transfer splits off a proportional share of
+  the HP pool. Leadership counts troops, whatever their size.
+- **Recruitment** (section 8): time is `recruitDays * ceil(count / 10)` for troops and
+  `recruitDays` for commanders, scaled by the fort province's recruit time (Order +5%, Turmoil
+  -10% per step) and build time (Wild +15%, Artifice -15% per step; section 8 calls recruit
+  time "build time"), rounded up to whole days and fixed when queued. Beasts cost 10% less
+  gold per Wild step. The queue pauses while the fort is besieged or its unrest is above 50,
+  and queueing is refused then. A finished item waits until the province has the population
+  it costs. Completed troops join the fort's garrison holder; commanders stand in the fort.
+  Items queued by a nation that no longer owns the fort are dropped without refund. The
+  recruit and build time percentages are summed into one factor, `max(0, 1 + sum)`.
+  Cancelling returns the gold in full and the materials only up to the fort's pool cap, so
+  the queue cannot bank materials past the cap; a besieged fort's queue is frozen and cannot
+  be cancelled from.
+- **Garrison holder**: exactly one per fort, owned by the fort's owner and standing there;
+  createGame sets this up. A fort that changes hands (Phase 4 capture) gets a new holder, and
+  the old one is removed with any troops it still keeps.
+- **Provincial defense** (section 8): raising PD from level L costs `(L + 1) * 15`, so 0 to 30
+  costs 6975 gold. PD cannot be bought during a siege. PD levels are public knowledge, like
+  terrain and ownership.
+- **Independents** (section 9): one Independent Captain leads each province's force. Pools are
+  split by weight (largest remainders): plains, farmland, and wasteland 2 light infantry to 1
+  archer; forest 2 wolves to 1 archer; hills heavy infantry; mountains heavy infantry plus one
+  giant (counted in the strength) at 3 or more from a capital; swamp swamp fighters.
+  Farmland and wasteland have no pool in section 9 and use the plains pool.
+- **Fog** (section 14): a nation sees other nations' armies in and next to its provinces and
+  its commanders' locations, and within 2 of its scouts. A stealthy commander leading only
+  stealthy troops is never seen; garrison holders show only while they keep troops. Explored
+  provinces (population and springs known) are those ever owned or within a scout's sight.
+  Independent strength reads as weak (under 16), moderate (under 24), strong (under 30), or
+  fortress, and exactly where one of the nation's scouts is in or next to the province.
+  Each day a nation is told, once per province and enemy nation, of armies that came into
+  sight; it remembers which enemy commanders it saw at the end of the last day.
+
+**Battles, sieges, capture (Phase 4)**
+- **Who fights** (sections 6 and 10): when a nation's commanders arrive in a province hostile
+  to it, their moves end and, while it still has commanders there: (1) it first fights any
+  third nation with commanders present (the first in nation order), and stops if it loses;
+  (2) in its own province it stops there (a relief is done); (3) a nation's fort is besieged,
+  defended or not, with no battle on arrival; (4) any other province is taken at once if
+  nobody defends it, or fought for. The defenders are the owner's commanders present, the
+  fort's garrison troops (never the holder itself), and PD; in an independent province, the
+  independents. All of a day's arrivals stand in their provinces before any is resolved, and
+  they are resolved in arrival order, so a later same-day arrival is already there to defend
+  when an earlier one fights.
+- **Hidden commanders** (stealthy, leading only stealthy troops) take no part on either side:
+  they never fight, besiege, storm, or take a province, and are never attacked. An arrival
+  of hidden commanders only ends its move.
+- **Capture only if held**: a won battle or storm takes the province only if the winning nation
+  still has a commander (not hidden, not a garrison holder) standing there. Otherwise the
+  owner keeps it, with whatever PD and garrison troops the battle left.
+- **Retreat** (section 10, one rule for every loser): back to the province it came from if
+  that is not the battle's province and is friendly (owned by its nation, with no other
+  nation's commander present, hidden ones aside); else to a random adjacent friendly province
+  (`state.rng`); else the commander dies with its troops. Independents never move, so beaten
+  independents die. A fort's garrison troops are lost when its defenders lose. Retreating
+  commanders arrive at once, idle. A commander that cannot move (map speed 0: the Living
+  Monolith) never retreats; when its side loses, it dies with its troops (Phase 6).
+- **Heirs at a fort**: the fort's garrison holder takes in a fallen defender's troops even when
+  it kept none of its own (docs/04 "After the battle").
+- **After a battle**, every surviving commander that fought, on either side, ends its transit
+  and its move order (idle) where it fought; the losers then retreat. A winning side's routed
+  squads and commanders stay in the province with their side: section 10's "return to the
+  province they came from" would need a squad to travel without a commander.
+- **Deaths**: every commander death (battle, nowhere to retreat, elimination) goes through
+  one path, `commanderDies`, which clears the nation's `pretenderId` and sets `pretenderDead`
+  (a dead pretender never returns in M1) and, for a prophet, clears `prophetId`, starting the
+  24-month wait for a new prophet.
+- **Population and unrest** (sections 3 and 5): a battle costs the province
+  `pop * 0.005 * casualties / 100`, counting every troop and commander killed on both sides
+  (summoned units aside). "Lost battle in province +10 once" applies when the province's owner
+  loses a battle there, whether it attacked or defended.
+- **PD after a battle**: PD that fought is set to `min(pd, ceil(militia left / 2))`; archers do
+  not count.
+- **Sieges** (section 11), each day after arrivals: a siege ends when no commander of the
+  besieger (hidden ones aside) is present. Otherwise the walls take `attackers' str / 10`
+  and are repaired by `defenders' str / 20`, clamped to 0..300, where str sums every troop
+  and commander present on that side (garrison troops and PD defend; the holder does not).
+  Walls are down below 1 HP, shown as 0. An undefended fort falls once its walls are down.
+  Reinforcements of the besieger join the siege as it stands; a nation that beats the
+  besiegers in the province takes over the siege and its battered walls. A nation that
+  arrives after the besiegers left, without a fight, starts with the walls whole.
+- **Storm**: the besieger may order a storm at any time while it has a commander there. It is
+  fought in the next day's siege step: an undefended fort falls at once; otherwise the
+  defenders get +2 morale and +6 protection while the walls stand, +3 once they are down.
+  The siege ends with the storm, whoever wins.
+- **Capture** (sections 8, 9, 13): the new owner gets the province at Normal tax with PD 0;
+  any siege ends, a Wellspring claim is cleared, and a fort gets a new garrison holder (the
+  old one's troops are lost). The old owner's recruitment queue drops by the Phase 3 rule
+  and construction is abandoned by the Phase 2 rule. Dominion is unchanged.
+
+**Dominion, Wellsprings, victory (Phase 6)**
+- **Spread** (section 12) runs on the last day of each month, in tick step 5. Each nation's
+  checks are listed in a fixed order (capital, temples in province order, pretender, prophet,
+  preaching priests), and all nations' lists are shuffled together once with `state.rng`, so
+  no nation always pushes last. Each check then draws its own province (40%) or a random
+  neighbor and rolls 1d10 against the nation's dominion score as it stood when the spread
+  began.
+- **Sources**: the capital's 3 checks need the nation to own it. Each temple the nation owns
+  makes 1 check plus one per step of the nation's Sanctity (Wellspring steps included). A
+  pretender or prophet checks from its location, in transit or not (the Phase 3 location
+  rule); the Living Monolith's x2 doubles its own pretender checks only. A preaching priest
+  is standing by definition (a move replaces Preach) and makes one check per holy pip, plus
+  one in a province with a temple its nation owns (section 7's temple preach bonus).
+- **A push** raises an empty or own province by 1 up to the nation's dominion score and never
+  lowers it (a province above a score that has since fallen keeps its strength). Against
+  another nation's dominion it lowers that by 1; at 0 the province has no dominion, and the
+  next push makes it the pusher's. A province's owner hears when its dominating nation
+  changes.
+- **Godless** (section 12): a nation is Godless while its capital's dominion is not its own
+  (another nation's, or none) and no temple it owns is under its own dominion either; a
+  temple standing under another nation's dominion keeps no faith. The trigger first read
+  "holds no temple anywhere", which M1 could never meet (every fort is a capital with a
+  temple, and buildings are never removed); it was changed to this wording in Phase 6 by
+  the project owner's decision. Godless is settled monthly, right after the spread. While
+  Godless the nation casts no rituals (Phase 5) and its pretender leaves the map: the
+  pretender's troops join another of the nation's commanders in the province, else the
+  fort's garrison holder, else are lost. The pretender returns to the capital, as a new
+  commander, in the first tick after Godless ends in which the nation holds its capital.
+- **Claiming a Wellspring** (section 13): a priest (holy pips) standing in a Wellspring
+  province its nation owns, not yet claimed by that nation, may take the claim order. Its 10
+  days count down in tick step 3. Any other order or a move, a battle the priest fights,
+  losing the province, or the priest's death ends the claim. Claims are public: every nation
+  still playing hears when one completes.
+- **The end of the day** (tick step 7): first, a nation that lost its capital but owns
+  another fort moves its capital to the first such fort in map order. Then a nation that owns
+  no province, or no fort, is eliminated: its commanders die (the pretender with them, for
+  good: a reforming Ash Phoenix's promised return is cancelled, `docs/05`), the sieges it lays
+  end, its provinces pass to no one (Normal tax, PD 0, siege and claim cleared; they hold no
+  fort, so no garrison), its dominion stays, and every nation hears of it. Then
+  the game may end: a nation with `wellspringsToWin` claimed Wellsprings wins (the first in
+  nation order if two reach it the same day); else, with at most one nation left, that nation
+  wins as the last with a capital (`lastCapital`; no winner if none is left); else, if the
+  game has a human player and every human is eliminated, it ends with `playerDefeated` and no
+  winner. Once there is a result, `advance` does nothing, so AI-only games end only by
+  Wellsprings or last capital.
+- **"The last nation with a capital"** is the last nation not eliminated: a nation still in
+  the game owns a fort, and every M1 fort was a capital.

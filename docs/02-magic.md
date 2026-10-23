@@ -76,6 +76,26 @@ Ritual primitives:
 - `scry { provinceId }`, `dominionPush { provinceId, strength }`
 - `manaConvert { from, to, ratio }`
 
+Ploy primitives (Phase 9b, proposed, `docs/design/three-kingdoms.md` 6.2 and owner decision 5:
+the primitives land with the officer phase; the spells that use them are Tier 2, with the M2
+Blue and Black nations after their listed spells). A ploy is a ritual whose target is an enemy
+commander or province in the caster's sight, and whose effect is decided by a **contest**: the
+caster's Lore plus DRN against the target's defence plus DRN, with the Spymaster post (Tier 2)
+adding to its side. A failed ploy spends its mana and days and posts a message to the target's
+nation naming the caster's nation, never the caster.
+
+- `officerLoyalty { delta }` (target commander; defence: its rank × 5; shifts its loyalty state
+  once Tier 2 exists, and until then does nothing, so the primitive can be implemented and
+  tested in Phase 9b without a spell)
+- `defect` (target commander in the disloyal state; defence: its rank × 5 plus 5; it joins the
+  caster's nation at the nearest friendly province with its stats and items, loyalty reset)
+- `inciteRevolt { unrest }` (target province; defence: the governor's Presence, else 5; unrest
+  +`unrest`, and rebels from the terrain's independent pool when unrest passes 60)
+- `falseSighting { months }` (target province; no contest; a phantom army of the caster's choice
+  appears in the target nation's fog for `months`, dispelled by a scout's sight)
+- `bribe { gold }` (target prisoner held by the caster's nation; no contest; raises the next
+  recruit contest by `gold / 50`)
+
 ## 6. Spell list
 
 Each color has 5 battle spells and 5 rituals. **Red and Green must be fully implemented
@@ -125,11 +145,19 @@ Rituals: Blessed Harvest (L1, W, unrest −20), Consecrate (L2, WW, dominionPush
 
 Battle: Frost Needle (L1, U, damage 9 cold single + fatigue +5), Mist Veil (L2, U, debuff enemy precision −4 battle), Sapping Tide (L3, UU, fatigueDrain 20 enemy squad), Phantom Host (L4, UU, summon Illusion x15: 1 hp, high def, no damage), Tempest (L5, UUU, fieldEffect storm: no ranged, −2 att all, 10 rounds).
 Rituals: Scry (L1, U, scry any province within 5 hops), Swift Currents (L2, UU, −50% move days from caster's province for 6 months), Veil the Border (L3, UU, hide armies in province for 6 months), Deep Study (L4, UUU, +50% research in lab for 6 months), Rift Step (L6, UUUU, teleport caster and squads to any owned province).
+Ploys (Tier 2 of `docs/design/three-kingdoms.md`, after the rituals above, proposed): Whispers
+of Doubt (L2, UU, officerLoyalty −1 state on a visible enemy commander; cost {U:3, generic:1}, 10
+days), False Banners (L3, UU, falseSighting 1 month; cost {U:4, generic:2}, 10 days), Turn the
+Cloak (L5, UUU, defect on a disloyal enemy commander; cost {U:8, generic:4}, 20 days).
 
 ### Black (Umbra), M2
 
 Battle: Wither (L1, B, damage 10 decay single, armor negating), Dread Aura (L2, B, moraleShock −2 enemy squad), Life Leech (L3, BB, damage 8 area(4) and heal caster), Raise the Fallen (L4, BB, summon Skeleton x10 from casualties), Plague Wind (L5, BBB, damage 6 area(15) each round for 3 rounds).
 Rituals: Dark Tithe (L1, B, sacrifice 2% pop of caster's province for 6 B mana), Grave Call (L2, BB, summon Skeleton x12), Creeping Rot (L3, BB, target province Rot +2 for 6 months, unrest +10), Bind Wraith (L4, BBB, summon Wraith commander), Hollowing (L6, BBBB, target province pop −15%, summon Skeletons equal to pop lost / 50).
+Ploys (Tier 2, proposed): Incite the Mob (L3, BB, inciteRevolt +30 on an enemy province within 3
+hops; cost {B:4, generic:2}, 10 days), Blood Price (L2, B, bribe 100 gold on a held prisoner; cost
+{B:2}, 5 days), Turn the Cloak (shared with Blue as a U/B hybrid, L5, U/B U/B U/B).
+Red and Green get no ploys: the color pie keeps deception and corruption out of them.
 
 ## 7. Mage design rules
 
@@ -142,16 +170,154 @@ Rituals: Dark Tithe (L1, B, sacrifice 2% pop of caster's province for 6 B mana),
 
 ## 8. Blessings
 
-Sacred units of a nation receive a **bless** derived from the pretender's pips at game
-start (computed once):
+Sacred units, the prophet, and a pretender with Avatar fight **blessed**. What they get is
+chosen at pretender design from a blessing menu (`docs/05-pretender.md`, Step 6), after
+Dominions 6. The menu was introduced on 2026-10-21 at the owner's direction ("good options for
+pretenders like Dominions has").
 
-| Color pips ≥ 4 | Bless effect on sacred units |
-|----------------|------------------------------|
-| W | +2 morale, +1 protection |
-| U | +2 defense, +2 precision |
-| B | Life drain 2 per hit, +1 attack |
-| R | +2 attack, +2 strength |
-| G | Regeneration 10% max HP per round, +1 protection |
+- Bless points per color = pips in that color − 1; a color's points buy only its blessings.
+- A blessing costs its requirement − 1 (at least 1); requirements run from 2 to 6.
+- At most one blessing per group. Incarnate blessings work only while the god is on the map.
+- Without a choice, each color at 4 or 5 pips gives its standard blessing and at 6 its greater
+  one:
 
-Pips ≥ 6 in a color doubles the numeric parts. Blesses apply only in battle and only to
-units with `sacred: true`.
+| Color | Standard (4 pips) | Greater (6 pips) |
+|-------|-------------------|------------------|
+| W | +2 morale, +1 protection | +4 morale, +2 protection |
+| U | +2 defense, +2 precision | +4 defense, +4 precision |
+| B | Life drain 2 per hit, +1 attack | Life drain 4 per hit, +2 attack |
+| R | +2 attack, +2 strength | +4 attack, +4 strength |
+| G | Regeneration 10% max HP per round, +1 protection | Regeneration 20%, +2 protection |
+
+Blessings apply only in battle.
+
+## Implementation decisions
+
+Recorded per `CLAUDE.md` (Phase 5); numbers are also in `docs/09-balance.md`.
+
+**Spell data**
+- **Requirements** are strings in this doc's notation: one letter per pip, a slash joining
+  the letters of a pip either color can fill (`RR`, `R/G`, `RR/G`). They parse once into pip
+  slots; a caster meets a requirement when its pips fill every slot, one pip each (an exact
+  search, so `R` plus `R/G` needs two pips). Holy spells have an empty requirement and a holy
+  pip count. Every castability check (battle, scripts, rituals, the UI) uses this one rule.
+- **White, Blue, and Black** spell data is not written in M1. Section 6 calls them M2 and
+  gives none of their fatigue, mana costs, cast days, or durations, and several need effects
+  the primitive list lacks (Edict of Order, Beacon, Swift Currents, Veil the Border, Deep
+  Study, Rift Step, Dark Tithe, Hollowing, Raise the Fallen "from casualties", "double vs
+  undead") or units that do not exist. Every primitive is still implemented and tested with
+  test-only spells. The Research panel shows those colors' levels without spell names.
+- **Bless** is the priests' holy spell: holy 1, no research, fatigue 10, +1 morale on one
+  friendly squad for the battle. Pyre and Grove Priests default to it (docs/08 "priests
+  Bless"); when every squad is blessed they fall back to their best castable spell.
+- **Blood Fury**'s "debuff defense −2" falls on its own squad, so it is a buff with a
+  negative delta: the price of the fury, which Regrowth never lifts.
+- **Area damage** has one shape in M1: `n` distinct random living troops among every present
+  unit in the target group's row. The damage primitive omits `aoeShape` until a second shape
+  exists.
+
+**Research** (section 4)
+- A researcher is a commander with a color pip (holy pips do not count) whose order is
+  Research, standing, in a lab province its nation owns. Phase 6 decides which pretenders
+  research; one predicate (`canResearch`) holds that rule.
+- Monthly points `(3 + 2 * colorPips) * (1 + researchPct)`, where `researchPct` is the
+  province's Lore/Fury scale effect (+10% per Lore step, −10% per Fury step), applied daily
+  as a thirtieth. A level is reached at its threshold, with a 1e-9 slack for the daily sums.
+  Points stop at the level-6 threshold (1050); research beyond it is lost. A message names
+  each level reached and the spells it unlocks.
+
+**Battle spells** (section 3, docs/04 round step 1)
+- **Fatigue** at 100 or more stops a commander from acting at all: no spell, no Attack or
+  Retreat slot, no melee or ranged attack, and no closing on the enemy, so it draws no enemy
+  archers into melee. It can still be hit and recovers 5 a round. M1 treats 200
+  ("unconscious") the same: only a fatigue drain can reach it and no M1 spell drains. A cast
+  costs `max(fatigue * 0.2, fatigue − 5 * extra)`, `extra` being the caster's pips in the
+  requirement's colors beyond its slots (holy pips beyond for holy spells).
+- **The spells a commander knows** are fixed at battle setup: those its pips meet and its
+  nation has researched. A Cast slot casts the named spell if it is known and has a target,
+  else the best castable one: against 10 or more active enemy troops damage spells first,
+  otherwise the rest first, then the highest level, then content order. A spell is castable
+  with its carried mana in hand and a target for every effect.
+- **Targets** are chosen once per cast: a spell's area effects share one draw of troops and
+  land on every group those troops belong to; its other effects share the targets of an
+  earlier effect of the same kind and target kind.
+  Enemy groups: the largest present group in the enemy's front row, then the rows behind it.
+  Friendly squads: the largest active squad lacking the spell's effect (or, for heals,
+  wounded or cursed), front row first. A buff or curse is cast only on a target without it;
+  a recast (Warcry once a summon arrives) first removes the spell's earlier changes from its
+  targets, so effects never stack. Damage spells roll `amount + DRN − prot − DRN` per troop
+  hit, at least 0, with armor piercing and negating as for weapons, and no hit roll.
+- **Summons** last the battle: they join on the caster's side under the caster, with the
+  side's modifiers worked out at setup (terrain, scales, storm), and are not written back or
+  counted as casualties.
+- **Heal** with `removeDebuffs n` lifts every change of the `n` newest curse spells on each
+  target group (Regrowth lifts a whole Entangle).
+- **moraleShock** adds its amount to a group's morale pressure for the round and makes it
+  check in the morale step even without losses; a squad still rolls once a round.
+  **fatigueDrain** tires the enemy caster with the most pips (or all of them).
+- **Field effects**: storm stops all ranged fire and gives everyone −2 attack (Tempest's
+  text), so front-row archers, unable to shoot, close like other troops; fog gives everyone
+  −4 precision; wall stops melee between the fronts. One of each
+  kind at a time. Their stat parts fall on every unit present when cast; later summons
+  arrive unaffected. Fog and wall numbers are this milestone's own (no spell defines them).
+- **Carried mana** a battle spell uses is spent from the caster's carried pool and counted in
+  the nation's mana spent, also when the caster dies later in the battle.
+- **"All friendly squads"** (Regrowth) leaves commanders out; "all friendly" (Warcry) takes
+  them in.
+- **Life drain** (the Black bless) heals each striker 2 per damaging hit, paid after every hit
+  of the phase has landed and only to strikers still alive.
+- **Blessing folds** (Phase 6b): every blessing is a stat change folded in at battle setup
+  (`battle/setup.ts`); the resolver gains nothing for blessings beyond shields by element.
+  Weapon blessings copy each melee weapon (no range) with more damage, an element and armor
+  piercing; a first-round blessing raises each melee weapon's first-round bonus; a berserk
+  blessing adds the tag; a shield blessing adds a retaliation shield of its element (Cinder
+  Skin and Living Pyre fire, Thornhide nature), merged by element with the body's own fire
+  shield (`docs/04-battle.md`, "Retaliation shields"). Ranged weapons and unarmed blows gain
+  nothing. Blessings fold in content order, so the order a design lists them never matters;
+  with two blessings naming a melee element the first in content order wins (no M1 content
+  has two).
+- **Pretender abilities** (Phase 6b) are effect lists of the section 5 battle primitives on a
+  pretender body, fired at battle start (`docs/04-battle.md`). They plan targets as a spell
+  does, cost no fatigue or mana, and ignore spell power. Their ids never equal a spell id.
+- **Spell power** (Phase 6b): a caster's `spellPower` adds to the amount of every damage and
+  heal effect it casts (the Ember Hierophant: 3).
+
+**Rituals** (sections 3, 5, 6)
+- **Casting** needs a nation that is not godless, a caster standing in a lab province its
+  nation owns, its pips, the research level, a fitting target, and the mana. The whole cost
+  is paid when the ritual begins: the colored part, then the generic part as the command
+  splits it (whole amounts) or by default from the spell's color first and then the largest
+  other pools. The caster's order counts down castDays; any other order, a retreat, or death
+  ends the ritual and the mana is lost.
+- **Targets**: rituals cast on the caster's own province take no target; Forge of Cinders
+  needs a fort there; ranged rituals reach provinces within their hops (by adjacency), and
+  "owned" ones only provinces the nation owns. A ritual with timed effects cannot be cast on
+  a province that holds an effect of the same spell from anyone.
+- **Targets offered** (Ritual panel, AI) are those the command accepts with the default split,
+  leadership and mana included; the default split pays whenever any whole split could.
+- **At completion** the same checks run again (mana and leadership aside); if one fails, it fails
+  with a message naming why, and nothing is refunded.
+- **Summoned troops** must fit the caster's leadership when the ritual begins; when they
+  arrive they join whatever it leads by then. Summoned commanders (Salamander, Treant) stand
+  in the caster's province with their unit's pips and the default caster script.
+- **Primitives**: timed effects last `months * 30` days. `remoteDamage` hits troops only
+  (every squad in the province, any owner, hidden ones included), each taking plain `dice`
+  d6 with no protection; wounds spread evenly, the dead leave, survivors keep their wounds;
+  commanders and PD are untouched. `scry` shows the nation that province alone for 30 days
+  (armies and exact independent strength) and explores it. `dominionPush` applies single
+  docs/01 section 12 steps through the same function Phase 6's spread will use (own or
+  empty: +1 up to the dominion score; another nation's: −1, leaving no dominion at 0).
+  `manaConvert` turns the nation's whole `from` pool into `to`, `ratio` to one.
+  `provinceSupply` is a factor of its own, `1 + sum of deltaPct`, after the scales' supply
+  change, so Burn the Fields halves supply and Bounty of the Loam doubles it whatever the
+  province's scales. `provinceGrowth` adds to the province's Growth scale, which stays within
+  −3..+3 and moves supply with it (docs/01 sections 3 and 4).
+- **giveMana** moves whole mana from the pool to a commander standing in a lab province its
+  nation owns; nothing moves back in M1. Mana carried is lost with its commander.
+- **Ploy primitives** (Phase 9b, proposed): the five ploy primitives live in `ritualEffects.ts`
+  beside the others and go through the same `castRitual` command, payment, target check and
+  completion check. The contest is one shared function (`ployContest(caster, defence, rng)`)
+  on `state.rng` in the caster's completion step, so it is deterministic and replays. `scry`'s
+  target rule (in the caster's sight) is the ploys' target rule. `officerLoyalty` and `defect`
+  are implemented and tested in Phase 9b with no spell using them; the Blue and Black ploys are
+  content added in Tier 2 and validated like every other spell. A ploy is never a battle spell.
