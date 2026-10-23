@@ -1029,6 +1029,9 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   gates (runner games on a Vast 6-nation map ending by three reasons past 48 months with two
   coalitions; the Hills starvation line by distance; a 15-hour human session with the ribbon
   never past six and the overview band at 60 fps; the Three Kingdoms questions asked again).
+- The owner answered the nine questions the same day (`mid-game.owner-answers.md`, quoted):
+  defaults on seven; supply reach at two hops instead of three; the Vast map uncapped at 270
+  provinces and measured before any cap. Sections 3, 9 and 12 of the record carry the changes.
 - Indexed in `docs/design/README.md` and the top README; `docs/00`'s M5 row points at it. No
   code changed; nothing is built; no numbered doc changes until a phase builds a section.
 

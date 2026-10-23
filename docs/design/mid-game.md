@@ -3,8 +3,8 @@
 > Status: proposed, 2026-10-23, written at the owner's request after the Three Kingdoms research
 > pass. Nothing here is built. It lands in stages: the map section's rules with Phase 8 where
 > they are cheap, the rest after Phase 9b's playtest, across M2 and M5 (`docs/00-vision.md`).
-> Open questions with defaults are in section 12; the owner's answers go in
-> `mid-game.owner-answers.md` when given.
+> The owner answered section 12's questions the same day (`mid-game.owner-answers.md`): seven
+> on their defaults, supply reach at two hops and the Vast map uncapped at 270 and measured.
 
 The owner's aim (2026-10-23): "a much deeper, modern, accessible and realistic Dominions game",
 with the ideal full session "the length of other notable 4X games". Today's match is expansion,
@@ -21,7 +21,7 @@ the map is where the player lives for those hours.
 2. **Seasons**: four of three months each. Winter cuts supply and slows marches; spring grows.
    Every rate the economy already has gets one seasonal factor from content.
 3. **Supply lines**: an army eats from the nearest own fort along a path of friendly land; each
-   hop past three costs a share of the supply it finds. Doomstacks deep in enemy land starve.
+   hop past two costs a share of the supply it finds (owner decision 2). Doomstacks deep in enemy land starve.
 4. **Rivers and roads** are drawn by the relief map already; they become rules: roads shorten
    legs and supply hops, rivers slow crossings and shield defenders.
 5. **Diplomacy** moves from the Three Kingdoms record's Tier 2 to core once a map holds six
@@ -96,13 +96,13 @@ globals, staged victories). The design below takes one of each.
 
 - **The rule.** Every province has a supply source today (`supplyBase + pop / 50`). An army also
   draws on its nation's nearest fort: its **supply path** is the shortest path over friendly or
-  own-dominated land to an own fort province, by hops. An army at most 3 hops from a fort eats
-  from the province as today. Each hop past 3 reduces the supply the army can use by 20%
+  own-dominated land to an own fort province, by hops. An army at most 2 hops from a fort eats
+  from the province as today (owner decision 2; the default said 3). Each hop past 2 reduces the supply the army can use by 20%
   (content), to a floor of 20%. No friendly path at all: the floor. Independents and garrisons
   are never on a supply line.
 - **Roads** (section 4) count a hop as half. A Granary (Phase 9b) extends its fort's reach by 1.
 - **What it does.** A 60-troop stack four hops into enemy land on Hills (supply 100 to 160 a
-  day, the Known-issue number) starves at 80% of that; six hops, at 40%. Forts, roads and
+  day, the Known-issue number) starves at 60% of that; six hops, at 20%. Forts, roads and
   governors become the logistics the Known issues asked for ("armies larger than 60 troops in a
   Hills province starve within a month" can pass by distance, not by cutting Hills supply).
 - **Visible.** The Supply map mode draws the supply path from a selected army as a dotted line
@@ -222,8 +222,9 @@ has three **schools** of two levels each, and a level is reached by choosing a s
   already makes Large 4-nation maps (130 provinces) in about half a second and the tick runs
   under 2 ms at 110 provinces with 326 commanders (`docs/PROGRESS.md` Phases 1b and 3), so 200
   provinces and 8 nations are inside the performance budgets with the same code. New map size
-  `Vast` (120 for 2 nations, +25 per nation; 8 nations give 270, so cap at 200 by shrinking the
-  per-nation step to 12 past 4 nations).
+  `Vast` (120 for 2 nations, +25 per nation; 8 nations give 270). Owner decision 8: no cap at
+  200; the map reaches 270 and is measured (generation time, the 2 ms tick budget, the overview
+  band at 60 fps) before any cap is set.
 - **Named regions.** The generator groups provinces into regions of 5 to 9 by terrain and
   adjacency (a watershed, a range's foothills, a coast), names each from the syllable generator
   with a region suffix ("the Reedmarsh", "Ashfall Downs"), and draws the name at the mid zoom
@@ -232,6 +233,7 @@ has three **schools** of two levels each, and a level is reached by choosing a s
 - **Wellsprings** scale: 3 for 2 nations, 5 for 3 to 4, 7 for 5 to 6, 9 for 7 to 8, placed by the
   existing fairness search.
 - **Staged victory.** Claiming the majority of Wellsprings opens an **Ascension** of 6 months
+  (owner decision 5: start at six and test)
   during which every other nation sees the claimant's capital marked and the coalition rule
   applies at double weight; the claim must hold all 6 months. Losing one Wellspring resets it.
   Last capital standing still wins at once. The short match keeps the immediate win.
@@ -315,18 +317,19 @@ is the game's.
 - **UI.** The season in the clock and on the land; the supply path in Supply mode; the tavern
   board; the Workings banner; the schools modal; the overview band; search, pins, muting.
 
-## 12. Open questions for the owner
+## 12. Open questions for the owner (settled)
 
-Defaults in bold; the build follows them.
+Answered 2026-10-23 (`mid-game.owner-answers.md`): defaults on 1, 3, 4, 5, 6, 7 and 9; two
+hops on 2; 270 and measure on 8. Defaults in bold as asked.
 
 1. Season length: **three months each**, or two?
-2. Supply reach before the penalty: **three hops**, or two?
+2. Supply reach before the penalty: **three hops**, or two? (Owner: two.)
 3. Do rivers protect defenders: **yes, +1 def for that battle**, or only slow the crossing?
 4. Working slots: **`floor(nations / 2) + 1`**, or a flat three?
 5. The Ascension hold period: **six months**, or twelve?
 6. Research schools: **three per color of two levels**, or keep levels and add a queue only?
 7. Mercenaries: **in the long session and M2 forts**, or already in the short match?
-8. The Vast map's cap: **200 provinces**, or let it reach 270 and measure?
+8. The Vast map's cap: **200 provinces**, or let it reach 270 and measure? (Owner: 270 and measure.)
 9. Automation on every difficulty: **yes; it is a convenience, not a rule**.
 
 ## 13. Order of work and gates
