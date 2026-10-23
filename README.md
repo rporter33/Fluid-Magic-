@@ -6,7 +6,12 @@ built on the Magic: The Gathering color pie.
 
 ## Status
 
-Milestone 1 in progress: Phases 0 to 7 are done. See [docs/PROGRESS.md](docs/PROGRESS.md).
+Milestone 1 in progress. Done: Phases 0 to 7 (scaffold, map, economy, commanders, battle,
+magic, pretender and dominion, AI), Phase 1b (impassable terrain), Phases 6b.1 to 6b.3 (pretender
+design rules, battle rules, sixteen chassis) and Phase 10 S1 (battle detail records), with a QA
+sweep on 2026-10-22. The headless AI vs AI runner plays full games; the game is not yet playable
+by a person (Phases 8 and 9, the map renderer and UI, come next). Approved leader portraits and
+the design records are in. See [docs/PROGRESS.md](docs/PROGRESS.md).
 
 ```
 npm install
