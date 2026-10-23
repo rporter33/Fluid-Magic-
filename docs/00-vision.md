@@ -30,7 +30,12 @@ and the colors stand on their own rather than translating Dominions' eight paths
 ## Audience and session
 
 - Players who like Dominions, Paradox grand strategy, and MTG's color philosophy.
-- A match is shorter than Dominions: roughly 45 to 75 minutes of play against AI.
+- For now a match is shorter than Dominions: roughly 45 to 75 minutes of play against AI.
+- The ideal full session will become 15 to 20 hours (owner direction, 2026-10-23,
+  `docs/design/three-kingdoms.owner-answers.md`): a long campaign where named officers,
+  scenarios and a court matter. The short match ships first; the long format is a later
+  milestone, and systems built now keep their data shapes open for it
+  (`docs/design/three-kingdoms.md`, section 6).
 - Desktop first. Touch layout is a later milestone.
 
 ## Scope ladder
@@ -41,6 +46,7 @@ and the colors stand on their own rather than translating Dominions' eight paths
 | M2 | Remaining three mono nations (White, Blue, Black) with their 30 spells, their pretender chassis and blessing menus, forts, events, deeper pretender customization (more slots and variants, a color picker), balance pass. |
 | M3 | Ten two-color nations, hybrid mana costs in depth, more rituals, touch layout. |
 | M4 | Multiplayer on an authoritative server (the sim is written for this from day one). |
+| M5 | The long session: 15 to 20 hour campaigns with named officers, a court, scenarios and an event deck (`docs/design/three-kingdoms.md`). |
 
 The pretender's M1 scope grew on 2026-10-21 at the owner's direction: "I think flashy magic
 effects is always interesting and good options for pretenders like Dominions has is always a
