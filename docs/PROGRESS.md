@@ -1008,6 +1008,30 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   record and `three-kingdoms.owner-answers.md` (three directions quoted) remain the source where
   a numbered doc is silent.
 
+## Docs: the mid-game record (docs only)
+
+- `docs/design/mid-game.md` (2026-10-23) is a proposed design record written at the owner's
+  request after the Three Kingdoms research pass and a second pass on player feedback about the
+  overworlds of Dominions, Total War: Three Kingdoms, Crusader Kings 3, Civilization VI, RTK XIV,
+  Age of Wonders 4 and the Paradox map modes (sources in the record). The owner's aim, quoted in
+  the record: a deeper, modern, accessible and realistic Dominions game whose full session is
+  the length of other notable 4X games.
+- What it designs, against the branch's rules and measurements: seasons as one content factor
+  per rate; supply lines as hops from the nearest own fort; rivers and roads as edge costs that
+  the relief map already draws; diplomacy promoted to core past six nations, with claims from
+  dominion and coalition wars; mercenaries in the tavern with bids and contracts; five Great
+  Workings with slots and Unmaking; research as three schools per color over the same spells;
+  the Vast map (150 to 200 provinces, 6 to 8 nations) with named regions, scaled Wellsprings
+  and a six-month Ascension hold; the automation ladder as UI-side commands; and the overworld:
+  an overview band stated as what each zoom removes, region names on the land, drawn rules
+  only, map search, pins and marker muting, fog as memory, and no hex painted by hand.
+- Nine owner questions with defaults, an order of work after Phase 9b's playtest, and four
+  gates (runner games on a Vast 6-nation map ending by three reasons past 48 months with two
+  coalitions; the Hills starvation line by distance; a 15-hour human session with the ribbon
+  never past six and the overview band at 60 fps; the Three Kingdoms questions asked again).
+- Indexed in `docs/design/README.md` and the top README; `docs/00`'s M5 row points at it. No
+  code changed; nothing is built; no numbered doc changes until a phase builds a section.
+
 ## QA sweep (2026-10-22)
 
 The owner asked for any further issues and QA. A sweep for real defects (wrong results,

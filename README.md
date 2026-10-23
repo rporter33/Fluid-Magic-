@@ -56,5 +56,6 @@ docs win where they differ; each record says what moves into them and in which p
 | [map-relief.md](docs/design/map-relief.md) | Proposed: the relief-terrain map on the war table, owner rails, miniatures, labels by zoom | docs/07, docs/09, Phase 8 |
 | [painted-units.plan.md](docs/design/painted-units.plan.md) | Painted unit art: style lock, camera, inventory, review stages, pipeline, with the pilot review | Battle presentation S4, Phase 11 |
 | [three-kingdoms.md](docs/design/three-kingdoms.md) | Proposed: Romance of the Three Kingdoms as a template: named commanders, capture and prisoners, duels, the god's Ascendancy, fort governors, proposals, bonds; what the 15 to 20 hour session unlocks | A prototype phase after Phases 8 and 9 |
+| [mid-game.md](docs/design/mid-game.md) | Proposed: the mid-game and the long session: seasons, supply lines, rivers and roads, diplomacy with coalitions, mercenaries, Great Workings, research schools, the Vast map with regions and a staged victory, the overworld's overview band and late-game tools | Map rules with Phase 8; the rest after Phase 9b, across M2 and M5 |
 
 `CLAUDE.md` holds the working rules for the implementing model.
