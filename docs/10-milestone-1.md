@@ -226,6 +226,29 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   the owner chose them.
 - Tests: formation layout budget, battle summaries outliving records, depth audit, concepts.
 
+### Phase 9b: Officers prototype (owner decision 2026-10-23)
+- The owner's direction: the best Romance of the Three Kingdoms features around officers,
+  rulers and cities, in the thinner shape of `docs/design/three-kingdoms.md` (Tier 1), gated on
+  a playtest. It runs after Phase 9, when a person can play, and before Phase 10 so the duels
+  are in the records the viewer shows. It is not an M1 acceptance criterion: M1 is done without
+  it, and the playtest decides whether it ships in M1 or waits.
+- One commit, green: named commanders with five rolled stats from content ranges and one or two
+  traits from the abilities catalog; capture of a commander downed in a lost battle, with
+  `recruitPrisoner`, `ransomPrisoner` and `releasePrisoner`; automatic duels in the resolver,
+  recorded for the replay; the god's Ascendancy with the field-army cap in `validate` and three
+  posts whose effects scale with the holder (`assignPost`); the `govern` order at fort provinces
+  and four fort-only developments through `build`; officer proposals in the alerts ribbon
+  (`acceptProposal`, `dismissProposal`); comrade and grudge bonds; Presence in dominion spread.
+  AI steps `prisoners`, `court`, `governors`, `proposals`; one save-version step; a Court modal
+  and the proposal alerts in the UI.
+- Tests: capture odds against a closed formula over 500 seeds; prisoners through save and load;
+  the cap refused in `validate` only; post effects scale with the holder; duels deterministic and
+  in the replay; the 365-day replay hash with officers on; 20 runner games with no refusal, at
+  least one capture and prisoner action per game on average, and at least one elimination.
+- The gate: three matches, then the record's two questions (did a named person make a story the
+  player retold; did officer pauses outnumber army pauses). Tier 2 (loyalty states, execution,
+  the coalition rule, Search, legends, ploys) starts only on the right answers, and not in M1.
+
 ### Phase 10: Battle replay viewer
 - The replay frame per `docs/07-ui.md`: header with condition chips, rosters (player on the
   left), log with four levels, transport and an event-indexed scrubber, cinematic mode, captions.
@@ -278,7 +301,9 @@ Building new forts, random events, W/U/B nations as playable, hybrid mana costs,
 provinces, multiplayer, touch layout, music, sound outside battle replays (map and tavern
 ambience, menus, UI, alerts), localization, mod support, map editor, pretender appearance
 editing during a game, links that carry a god, random presets for AI opponents, a free color
-picker, designer and map sound. Stub nothing for these except where the data format is already
+picker, designer and map sound. The Three Kingdoms record's Tier 2 and Tier 3 (loyalty states,
+execution, treaties and the coalition rule, Search and the tavern board, legends, ploys,
+scenarios, the event deck, officer play) and the 15 to 20 hour session (`docs/00`, M5). Stub nothing for these except where the data format is already
 designed to hold them (spell requirement strings, nation color identity arrays).
 
 ## Liberties taken
