@@ -128,6 +128,8 @@ Orders a commander can hold: `Idle`, `Move(path)`, `Pillage`, `PatrolDefend`,
 `Research` (mages in a lab), `Preach` (priests, spreads dominion), `CastRitual(spellId, target)`,
 `ClaimWellspring`, `Build(buildingId)` (any commander), `Recruit` is province-level not
 commander-level.
+Phase 9b (proposed, `docs/design/three-kingdoms.md` 3.5): `Govern` (any commander in an owned
+fort province; see section 7, "Governors and developments").
 
 ### Movement
 - Movement is along the province adjacency graph. A commander in transit has
@@ -151,6 +153,36 @@ commander-level.
 
 A commander in the province issues the Build order. The commander is busy for the
 duration. Building completes even if the commander leaves (keep it simple).
+
+### Governors and developments (Phase 9b, proposed; built only after Phase 9, gated on its playtest)
+
+A commander with the order `Govern` in an owned fort province is its **governor**. Its reach is
+the **prefecture**: the fort province plus the adjacent friendly provinces without a fort of
+their own, the same set that feeds the fort materials (section 4, Materials). A governor is
+absent from battle like a researcher, stops governing when it moves, and a fort holds one
+governor at a time (a second `Govern` order is refused). Its effects, per month, over the
+prefecture:
+
+| Effect | Per point of the governor's stat |
+|---|---|
+| Gold and materials | +1% per Stewardship |
+| Unrest decay | +0.25 per Presence |
+| Build time | −1% per Stewardship |
+| Wellspring claim in the prefecture | −1 day per 5 Presence |
+
+**Developments** are buildings that exist only in fort provinces, one of each per fort, built
+with the Build order like a temple. They affect the prefecture. Pillage in the fort province
+destroys one development, the newest first, before it takes population.
+
+| Development | Gold | Materials | Days | Effect on the prefecture per month |
+|---|---|---|---|---|
+| Granary | 150 | 25 | 30 | supply +15%; a besieged fort starts starving 15 days later |
+| Market | 200 | 0 | 30 | gold +10% |
+| Barracks | 250 | 50 | 40 | recruit time −15%, PD cost −20% |
+| Shrine | 100 | 0 | 20 | +1 dominion check for the owner's temple in the fort province |
+
+Nothing is added to provinces without a fort; the settlement tiers drawn on the map stay art.
+The numbers are starting values for `docs/09-balance.md`.
 
 ## 8. Recruitment
 
@@ -215,6 +247,9 @@ Full resolver rules are in `docs/04-battle.md`. Summary:
   - Temple: 1 check (+1 with the Sanctity scale per step).
   - Pretender present in the province: 2 checks. Prophet: 1 check.
   - Priest with order Preach: 1 check per holy pip.
+  - Phase 9b (proposed): a preaching commander adds `floor(Presence / 5)` checks beyond its
+    holy pips; a governor adds `floor(Presence / 10)` checks to its fort's temple; a Shrine
+    adds 1 check to the same temple. Priests stay the main source.
 - A check: pick a random adjacent province (or the same province 40% of the time). Roll
   d10; if the roll ≤ the nation's `dominionScore`, push +1 toward the nation. If the
   province is dominated by another nation, that nation's strength decreases by 1 instead,
