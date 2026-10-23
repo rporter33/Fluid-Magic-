@@ -43,6 +43,7 @@ fluid-magic/
         province.ts       # recruit, cancel, PD, tax, storm
         magic.ts          # research color, rituals, giving mana
         pretender.ts      # naming a prophet, claiming a Wellspring
+        officers.ts       # Phase 9b (proposed): prisoners, posts, proposals
         check.ts          # ownership lookups shared by validators
       economy.ts          # gold, mana, upkeep, fort materials (daily accrual)
       supply.ts           # starvation and healing
@@ -68,6 +69,8 @@ fluid-magic/
       rituals.ts          # who may cast what where, payment, the daily ritual step
       ritualEffects.ts    # the ritual primitives
       wellsprings.ts      # Wellspring claims
+      officers.ts         # Phase 9b (proposed): stats, traits, rank, capture, Ascendancy, bonds, governors
+      proposals.ts        # Phase 9b (proposed): officer proposals from content rules
       victory.ts          # capital moves, elimination, the game's result
       visibility.ts       # fog of war
       battle/
@@ -99,6 +102,7 @@ fluid-magic/
       ui.ts               # UI thresholds (Phase 8, docs/07); until then `UI` lives in rules.ts
       ai.ts               # difficulty levels and every number the AI plays by (AI)
       independents.ts     # independent troop pools by terrain, strength words
+      officers.ts         # Phase 9b (proposed): stat ranges, traits, posts, developments, proposal rules, capture odds
       colors.ts           # the five colors, palettes, enemy/ally pairs, nation banners, map keylines
       terrain.ts
       mapgen.ts           # map sizes and every map generation number (shares, springs, placement)
@@ -243,6 +247,7 @@ interface GameState {
   provinceEffects: ProvinceEffect[];   // timed effects from rituals
   result: GameResult | null;
   // Ritual progress lives in the caster's castRitual order (see Implementation decisions).
+  // Phase 9b (proposed, docs/design/three-kingdoms.md): bonds: Bond[]; proposals: Proposal[].
 }
 
 function advance(state: GameState): void;              // mutates, one day
@@ -297,6 +302,23 @@ type Command =
 Each command has `nationId` resolved from the acting commander or province; validation
 rejects commands against units the nation does not own. The AI uses the same commands.
 
+Phase 9b (proposed, `docs/design/three-kingdoms.md` Tier 1; built only after Phase 9, gated on
+its playtest) adds, all validated the same way and used by the AI:
+
+```ts
+  | { type: 'recruitPrisoner'; nation; commander }     // Presence contest; a failure counts
+  | { type: 'ransomPrisoner'; nation; commander }      // the owner pays gold by rank
+  | { type: 'releasePrisoner'; nation; commander }     // goes home with a bond toward the captor
+  | { type: 'assignPost'; nation; post; commander }    // Marshal, Chancellor, Hierophant; null clears
+  | { type: 'acceptProposal'; nation; proposal }       // issues the proposed command through validate
+  | { type: 'dismissProposal'; nation; proposal }
+```
+
+plus the order `{ kind: 'govern' }` through `setOrder` (fort provinces only), and the four
+fort-only developments through `build`. The one change to an old command: `move` into an unowned
+province is refused for the newest field commander over the Ascendancy field cap, in `validate`
+only, with a message that names the cap.
+
 ## Game loop
 
 ```
@@ -336,6 +358,12 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
 - `STATE_VERSION` 4 (Phase 1b) adds `map.wilds`, the impassable wild ranges; the migration
   sets it to `[]`, so an older map has none. The key goes last in the map, where
   `generateMap` puts it, so a lifted save hashes like the same game created on version 4.
+- Phase 9b (proposed) takes the `STATE_VERSION` step after Phase 8's: `CommanderState` gains
+  `stats`, `traits`, `rank` and `held` (the migration gives existing commanders the midpoint of
+  their unit's ranges, no traits, rank 0, `held` null); `NationState` gains `prisoners` (`[]`),
+  `ascendancy` (computed on load) and `posts` (all null); `GameState` gains `bonds` and
+  `proposals` (`[]`). New keys go last in each record, as the earlier steps do, so a lifted
+  save hashes like the same game created on the new version.
 - The save file's UI block (never `GameState`) also holds presentation state: the map's slow
   look keys with their month index, so a reload shows the same map, and commanders' personal
   names. The sim never reads it.
@@ -507,3 +535,14 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   and slot and picks by rendezvous over append-only part tables; state picks overlays and frames
   only. Personal names are dealt from per-nation decks after each simulated day and kept in the
   UI block.
+- **Officers** (Phase 9b, proposed; `docs/design/three-kingdoms.md`): every officer number is
+  content (`src/content/officers.ts`: stat ranges per unit, the eight traits as abilities with an
+  `officer` placement, posts and their stat scaling, developments, proposal rules, capture odds).
+  Stats are rolled at recruitment from `state.rng` where the adept tier rolls its third pip.
+  Capture happens in `battle/apply.ts` where deaths are written, so a captured commander stays in
+  `state.commanders` with `owner` unchanged and `held` set; its troops go to the heir as today.
+  Duels run in `battle/resolve.ts` before round 1 and are ordinary replay and detail events.
+  Monthly settles run in tick step 5 in a fixed order after dominion spread: Ascendancy, posts,
+  proposals. The field cap lives in `validate` and nowhere else. The AI gains the steps
+  `prisoners`, `court`, `governors` and `proposals`, every number in `AI`, and two personality
+  weights (`mercy`, `pride`). The purity guard covers the new modules unchanged.
