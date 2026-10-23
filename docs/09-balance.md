@@ -167,6 +167,37 @@ presentation" table (Phases 8 to 11).
 | 2026-10-22 | 07 | Commander panel portrait | 64 px | 96 px | Leaders need faces (owner direction 2026-10-21: "leaders certainly need portraits") |
 | 2026-10-22 | 09 | Raster art | — | at most 2 MB (2,000,000 bytes) in the bundle; a portrait set needs 8 images, 4 for a summoned commander (QA sweep 2026-10-22); 256 px WebP ≤ 24 KB and 64 px ≤ 4 KB each | Keeps criterion 1's 5 MB bundle. The WebP rasters total 1,987,716 bytes (2026-10-22), 12 KB under the cap, so the next raster must displace one; `tests/assets/portraits.test.ts` checks all of it |
 
+### Officers prototype (Phase 9b, proposed; design values ahead of their code)
+
+Starting values from `docs/design/three-kingdoms.md` and the Phase 9b lines in docs/01, 03, 04,
+07 and 08. Phase 9b puts them in `src/content/officers.ts`, `BATTLE` and `AI`; the playtest and
+the runner lines in the checklist below decide what moves.
+
+| Date | Doc | Field | From | To | Reason |
+|------|-----|-------|------|----|--------|
+| 2026-10-23 | 03 | Officer stat bounds | — | Command 10 to 100; Valor, Lore, Stewardship, Presence 1 to 20; no recruit range above 16 | 17 to 20 are left for rank steps and the Tier 2 legends |
+| 2026-10-23 | 03 | Command ranges | leadership 80 / 20 / 10 / 60 | 60 to 100 (leaders), 10 to 30 (priests, adept-tier mages), 5 to 15 (scouts, apprentice mages), 40 to 80 (Independent Captains); summons fixed at their leadership | Midpoint equals today's leadership so armies do not move on average |
+| 2026-10-23 | 03 | Leader stats | — | Ash Chieftain Valor 9 to 15, Stewardship 3 to 7, Presence 6 to 10; Warden Captain Valor 8 to 14, Stewardship 5 to 9, Presence 6 to 10 | Cinder Horde high in Valor, Thornwood in Stewardship (the flavor rule) |
+| 2026-10-23 | 03 | Priest stats | — | Presence 10 to 14 both; Pyre Priest Stewardship 5 to 9, Grove Priest 7 to 11 | Priests are the Presence officers; Grove Priests govern well |
+| 2026-10-23 | 03 | Mage stats | — | Lore 8 to 12 (apprentice tier), 12 to 16 (adept tier) | Research rate at the midpoint matches today's `3 + 2 × pips` |
+| 2026-10-23 | 03 | Scout stats | — | every stat 2 to 8 | Cheap officers with no strong line |
+| 2026-10-23 | 03 | Captain stats by outfit | — | Levy Stewardship 6 to 10; Hunter Valor 7 to 13; Mountaineer Valor 8 to 14; Reedman Lore 4 to 8 | Each outfit has one line worth hiring for |
+| 2026-10-23 | 03 | Summons | — | Salamander 30 / 14 / 6 / 1 / 2; Treant 40 / 10 / 8 / 4 / 6 | Fixed; a summon is a body, not a person |
+| 2026-10-23 | 03 | Trait weights | — | one of eight traits at recruitment, weighted 3 / 2 / 1 per unit (tables in docs/03); a second at rank 1 | One trait keeps the card readable |
+| 2026-10-23 | 01 | Rank steps | — | three; at 3 battles survived, a province taken, a research level contributed; +5 Command each | Experience without pips (docs/02 §7 stands) |
+| 2026-10-23 | 04 | Capture odds | death at 0 HP | `captureBase` 0.6 + 0.02 × the winner's best Valor − 0.2 for Wanderer; +0.2 after a lost duel; losing side only; never the pretender | Most downed losers are taken, so prisoners are common enough to matter |
+| 2026-10-23 | 04 | Duel | — | one per battle; ends at half HP or `duelExchanges` 10; `duelShock` −2 to the loser's side for the battle | A duel decides morale, not the battle |
+| 2026-10-23 | 01 | Ascendancy | — | provinces + 3 per Wellspring + 1 per battle won − 2 per fort lost, monthly | Land and faith count most, as RTK XIV's Royal Rank does |
+| 2026-10-23 | 01 | Field cap | — | `2 + floor(ascendancy / 5)` commanders with troops outside fort provinces | A brake on the Wellspring rush (runner games end in a mean of 22 months) |
+| 2026-10-23 | 01 | Posts | — | Marshal at 5 (+Command / 10 to commanders in its province), Chancellor at 10 (+Stewardship % gold), Hierophant at 15 (+Presence / 4 checks at the capital); stipend rank × 5 gold a month | Effects scale with the holder (the Total War lesson) |
+| 2026-10-23 | 01 | Governor effects | — | gold and materials +1% per Stewardship; unrest decay +0.25 per Presence; build time −1% per Stewardship; claim −1 day per 5 Presence | A Stewardship 14 governor is worth about a Market |
+| 2026-10-23 | 01 | Developments | — | Granary 150 / 25 / 30 (supply +15%, 15 days of siege grace); Market 200 / 0 / 30 (gold +10%); Barracks 250 / 50 / 40 (recruit −15%, PD −20%); Shrine 100 / 0 / 20 (+1 check) | Priced between a Temple and a Lab; one of each per fort |
+| 2026-10-23 | 01 | Presence in spread | — | `floor(Presence / 5)` checks for a preaching commander beyond holy pips; `floor(Presence / 10)` for a governor | Priests stay the main source |
+| 2026-10-23 | 07 | Proposals | — | at most 3 open, 1 per officer per month; no auto-pause unless "Officer events" is on | The ribbon never fills |
+| 2026-10-23 | 04 | Prisoner recruit contest | — | captor's Presence + DRN against rank × 5 + DRN; each failure +2 to the defence | A rank 3 hero takes a Presence 14 captor two or three tries |
+| 2026-10-23 | 04 | Ransom | — | 50 × (rank + 1) gold; release costs 5 unrest at the captor's capital region | Cheaper than recruiting a leader (40 gold plus time) only at rank 0 |
+| 2026-10-23 | 08 | AI thresholds | — | `recruitOdds` 0.5, `ransomGold` 300, `postGain` 2, `developGold` 400; `mercy` and `pride` 0.3 for Cinder Horde, 0.7 and 0.4 for Thornwood | Cinder Horde ransoms, Thornwood releases |
+
 ## Playtest checklist (run before calling M1 done)
 
 - [ ] A new player can start Cinder Horde with the Warlord preset and take 4 provinces by month 6 without reading docs.
