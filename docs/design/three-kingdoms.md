@@ -116,8 +116,10 @@ a fixed amount of Command and unlocks the second trait pick. Three ranks.
 
 A commander brought to 0 HP in a battle its side *loses* is captured by the winner with a content
 probability (base 60%, up with the captor's Valor, down for Wanderer). In a battle its side wins,
-0 HP still means death. A fort that falls captures everyone inside. Its troops go to the heir, as
-today (`apply.ts`).
+0 HP still means death. A losing commander that has nowhere to retreat to (no friendly adjacent
+province, the case that kills it today in `conflict.ts`, which includes everyone inside a stormed
+fort that falls and every Independent commander) is captured on the same roll instead of dying.
+Pretenders are never captured. Its troops go to the heir, as today (`apply.ts`).
 
 Prisoners stay in `state.commanders` with `owner` unchanged and a new `held: NationId | null`, so
 portrait, name, stats and items survive; `NationState.prisoners` lists them with the day taken
@@ -137,6 +139,9 @@ consequences are loyalty effects.
 
 Before round 1, if either side has a commander with Duelist and the other side has a commander
 not scripted Retreat, the resolver runs a duel with its own melee rules until one is at half HP.
+Only commanders with officer stats duel: recruitable commanders and Independent Captains. A
+pretender, a summoned body or a garrison holder never answers a challenge (a god does not duel
+a mortal; the duellist picks the best eligible officer on the other side instead, or no duel).
 The loser's side takes a `moraleShock` (a primitive that exists); the loser may be wounded or,
 if the battle is then lost, captured by 3.2. No script slot; it happens, as in XIV, and the
 replay shows it at centre.
@@ -146,15 +151,22 @@ replay shows it at centre.
 `ascendancy` on `NationState`, settled monthly: provinces, plus 3 per Wellspring claimed, plus 1
 per battle won, minus 2 per fort lost. Its thresholds do two things:
 
-- **The field cap.** Commanders that may hold troops outside a fort province: `2 + floor(ascendancy
-  / 5)`. Over the cap, `validate` refuses a `move` into an unowned province for the newest field
-  commander and names the cap. The AI obeys on every difficulty (owner decision 4). This is the
+- **The field cap.** Armies in the field, counted as *stacks*: distinct groups of own commanders
+  with troops sharing one location or transit outside a fort province (a leader, its mage and
+  the pretender marching together are one stack; the garrison and PD are none). The cap is
+  `2 + floor(ascendancy / 5)`. `validate` refuses a `move` that would leave more stacks in the
+  field than the cap (a stack leaving a fort, or part of a stack splitting off) and names the
+  cap; a stack already in the field always moves. Fit check (2026-10-23): counting commanders
+  would have broken the AI's army pass, which marches a leader, a battle mage, summons and the
+  fighter pretender as one group, and the player's natural leader-plus-mage army. The AI obeys
+  on every difficulty (owner decision 4). This is the
   realtime form of RTK's commands per turn and a brake on the Wellspring rush, which today ends
   every runner game in a mean of 22 months with no eliminations.
 - **Three posts.** Marshal, Chancellor, Hierophant, opened at ascendancy 5, 10 and 15. A post's
   effect scales with its holder's stat, never a flat bonus (the Total War lesson): the Marshal
-  adds Command / 10 to every commander in its province; the Chancellor adds Stewardship percent
-  to gold; the Hierophant adds Presence / 4 dominion checks at the capital. A post pays a stipend
+  gives every squad in its province +1 morale per 40 Command (at most +2) and lets commanders
+  there lead Command / 5 more troops; the Chancellor adds Stewardship percent to gold; the
+  Hierophant adds Presence / 4 dominion checks at the capital. A post pays a stipend
   of rank × 5 gold a month. The pretender holds none; the prophet may hold Hierophant (owner
   decision 2). `assignPost` is the one command.
 
@@ -163,8 +175,10 @@ per battle won, minus 2 per fort lost. Its thresholds do two things:
 A commander with the order `govern` in an owned fort province applies Stewardship and Presence to
 the fort's material catchment (the neighbors that already feed it): materials and gold +1% per
 Stewardship point, unrest decay +0.25 per Presence point, build time −1% per Stewardship point.
-Governing commanders are absent from battle like researchers. Developments are buildings in
-content with `fort: true`, built with the existing `build` command, one each per fort:
+A governor fights if its province is attacked, as a researching mage does today (nothing in the
+battle setup excuses anyone but hidden commanders). Developments are buildings in content with
+`fort: true`, built with the existing `build` command, one each per fort. In M1 the only fort is
+the capital, so the whole system is four buildings there; it grows with M2's forts:
 
 | Development | Gold / materials / days | Effect on the catchment per month |
 |---|---|---|
@@ -201,9 +215,10 @@ Both are announced in the message feed and shown as chips on the card. No stat v
 
 ### 3.8 Presence in dominion spread
 
-A commander with order `preach` adds `floor(Presence / 5)` checks beyond its holy pips, and a
-governor adds `floor(Presence / 10)` checks to its fort's temple. Priests stay the main source;
-this is the XIV idea at a tenth of the weight.
+A commander with order `preach` adds `floor(Presence / 10)` checks beyond its holy pips (one
+check at Presence 10 or more), and a governor adds one check to its fort's temple at Presence 15
+or more. Priests stay the main source; fit check (2026-10-23): at `Presence / 5` a priest of holy
+2 and Presence 12 would have doubled its spread, and the spread's die and caps are tuned.
 
 ### 3.9 State, commands, AI, tests
 
@@ -219,7 +234,10 @@ this is the XIV idea at a tenth of the weight.
   `src/content/officers.ts`, validated in `tests/content`.
 - Tests: capture odds against a closed formula over 500 seeds; prisoners survive save and load;
   the cap refused in `validate` only; post effects scale; duels deterministic and in the replay;
-  the 365-day replay hash with officers on; no AI refusal in 20 runner games.
+  the 365-day replay hash with officers on; no AI refusal in 20 runner games. Rolling stats at
+  recruitment and the capture roll draw from `state.rng`, so every runner game changes: the
+  preset pins (`tests/content/presetPins.ts`) are re-pinned and the matchup and the preset
+  matrix re-measured in the same commit, as Phase 1b did; the battle goldens do not change.
 
 ## 4. Tier 2: after the playtest
 

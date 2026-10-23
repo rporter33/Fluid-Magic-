@@ -315,9 +315,10 @@ its playtest) adds, all validated the same way and used by the AI:
 ```
 
 plus the order `{ kind: 'govern' }` through `setOrder` (fort provinces only), and the four
-fort-only developments through `build`. The one change to an old command: `move` into an unowned
-province is refused for the newest field commander over the Ascendancy field cap, in `validate`
-only, with a message that names the cap.
+fort-only developments through `build`. The one change to an old command: a `move` that would
+leave more stacks (groups of own commanders with troops sharing a location or transit outside a
+fort province) in the field than the Ascendancy field cap is refused, in `validate` only, with a
+message that names the cap; a stack already in the field always moves.
 
 ## Game loop
 

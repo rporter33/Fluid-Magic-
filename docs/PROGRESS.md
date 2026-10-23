@@ -977,6 +977,32 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
     row in the 9.3 build plan.
   - README (`cdfd03a`, `0cf5103`): docs/12 and PROGRESS in the documents table, a design records
     table, and a status line naming every phase done on this branch.
+- Fit pass (2026-10-23, after the owner asked for a second look): the additions were re-read
+  against the rules and the branch's code, and five did not fit as written; all are fixed in
+  the record and the docs that carry them, each with a "fit check" note where it changed.
+  - The field cap counted commanders; the AI's army pass marches a leader, a battle mage,
+    summons and the fighter pretender as one group, and a player's army is a leader plus a mage.
+    It now counts stacks (groups with troops sharing a location or transit outside a fort), and
+    `validate` refuses only a move that would make more stacks than the cap (docs/06, 07, 08,
+    09-balance, the record 3.4, the UI spec 7.2).
+  - Capture named "everyone inside a stormed fort", which overrode the retreat rule. It is now
+    the retreat rule's own dead end: a losing commander with nowhere to retreat (`conflict.ts`
+    kills it today, which covers a fallen fort and every Independent commander) is captured on
+    the same roll instead; a commander with a retreat open is never captured unless downed
+    (docs/04, the record 3.2).
+  - Duels could drag a pretender or a summoned body into a challenge. Only commanders with
+    officer stats duel (docs/04, the record 3.3).
+  - Governors were "absent from battle like researchers", but nothing in the battle setup
+    excuses a researcher; a governor now fights if its province is attacked (docs/01, the
+    record 3.5). The record and docs/01 also say that in M1 developments exist at the capital
+    only, since it is the only fort.
+  - Presence in spread at `Presence / 5` would have doubled a holy-2 priest's checks against a
+    tuned spread; it is `Presence / 10` for preachers and one check for a governor at Presence
+    15 (docs/01, 09-balance, the record 3.8). The Marshal's "+Command / 10" added troops led,
+    not strength; it is now +1 morale per 40 Command (at most +2) and Command / 5 more troops
+    led (09-balance, the record 3.4).
+  - Stat rolls and capture rolls move `state.rng`, so Phase 9b re-pins the preset pins and
+    re-measures the matchup and matrix in its commit, as Phase 1b did (docs/10, the record 3.9).
 - Still no code changed. Every numbered doc, docs/12 included, now carries its Phase 9b lines,
   so the docs describe the prototype completely enough to build from; the
   record and `three-kingdoms.owner-answers.md` (three directions quoted) remain the source where

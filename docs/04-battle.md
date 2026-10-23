@@ -82,15 +82,20 @@ gated on its playtest):**
   winning side's best Valor, minus `0.2` for Wanderer, rolled once per downed commander after
   `battleEnd` on the battle's rng. In a battle its side wins, or that ends undecided, 0 HP is
   death as before. Pretenders are never captured: a downed pretender dies (or reforms) as today.
-  Independents' commanders are captured like any other and join the free pool. A fort that is
-  stormed and falls captures every commander still inside, downed or not. Inside the battle
+  A losing commander that has nowhere to retreat to (no friendly adjacent province: the case
+  `conflict.ts` kills today, which covers everyone inside a stormed fort that falls and every
+  Independent commander) is captured on the same roll instead of dying; an immobile pretender
+  still dies. A losing commander with a retreat open is never captured unless downed. A held
+  Independent Captain is a prisoner like any other and can be recruited. Inside the battle
   nothing changes: the downed commander's squads still check morale at routPressure +4 and go
   to the heir after the battle; the capture is a post-battle outcome written where deaths are
   (`battle/apply.ts`), and the replay's `death` event becomes `down(commander)` followed by
   `captured(commander, by)` or `death(commander)` once the winner is known.
 - **Duels.** Before round 1, after battle-start abilities, if either side has an active commander
   with the Duelist trait and the other side has an active commander not scripted Retreat, the
-  two highest-Valor eligible commanders fight a duel: alternating single melee attacks with the
+  two highest-Valor eligible commanders fight a duel (eligible: commanders with officer stats,
+  so recruitable commanders and Independent Captains; never a pretender, a summoned body or a
+  garrison holder): alternating single melee attacks with the
   normal attack, damage and shield rules, no squads, no spells, until one is at or below half
   HP or 10 exchanges have passed (then no result). The loser's side takes a `moraleShock` of
   −2 for the battle, the winner gains a rank step, and the loser keeps the wounds into the
@@ -145,7 +150,8 @@ The replay viewer plays a battle blow by blow, re-run from its record, with the 
 Phase 9b (proposed):
 - Capture odds over 500 seeds match the closed formula within 3 points for the base, the best
   Valor and Wanderer cases; a pretender is never captured; a winning side's downed commander dies.
-- A stormed fort that falls captures every commander inside; a siege that lifts captures none.
+- A stormed fort that falls captures every commander inside that has no retreat; a siege that
+  lifts captures none; a losing commander with a friendly neighbor retreats as today.
 - A duel is deterministic, fires exactly once with a Duelist on either side, never with a Retreat
   script on the other, ends at half HP or 10 exchanges, and its `moraleShock` shows in the
   loser's side's next morale check.

@@ -243,8 +243,10 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   and the proposal alerts in the UI.
 - Tests: capture odds against a closed formula over 500 seeds; prisoners through save and load;
   the cap refused in `validate` only; post effects scale with the holder; duels deterministic and
-  in the replay; the 365-day replay hash with officers on; 20 runner games with no refusal, at
-  least one capture and prisoner action per game on average, and at least one elimination.
+  in the replay; the 365-day replay hash with officers on; the preset pins re-pinned and the
+  matchup and matrix re-measured (stat rolls and capture rolls move `state.rng`); 20 runner
+  games with no refusal, at least one capture and prisoner action per game on average, and at
+  least one elimination.
 - The gate: three matches, then the record's two questions (did a named person make a story the
   player retold; did officer pauses outnumber army pauses). Tier 2 (loyalty states, execution,
   the coalition rule, Search, legends, ploys) starts only on the right answers, and not in M1.
