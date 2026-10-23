@@ -884,6 +884,34 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   days with wilds (8, 5 and 6 without). The reserve row's 7 days came from before Phase 7's
   review fixes; it now gives the 8 measured after them, as Phase 7 above has it.
 
+## Docs: the Three Kingdoms record and the long session (docs only)
+
+- `docs/design/three-kingdoms.md` (2026-10-23, commits `502ce19`, `66179fe`, `986dcd1`) is a
+  proposed design record: what the Romance of the Three Kingdoms series does with officers,
+  rulers and cities, and how it fits a game that does not revolve around them. It was written
+  against this branch (Phases 0 to 7, 1b, 6b and 10 S1), then thinned after a research pass
+  across RTK XI, XIII, XIV, the RTK 8 Remake, Nobunaga's Ambition: Awakening and Total War: Three
+  Kingdoms (sources in the record). The owner settled its five open questions on their defaults
+  and asked for the thinner shape (`three-kingdoms.owner-answers.md`, both directions quoted).
+- The shape: Tier 1 is one prototype phase after Phases 8 and 9: named commanders with five
+  rolled stats and traits from the abilities catalog, capture with recruit, ransom and release,
+  automatic duels in the resolver, the god's Ascendancy rank with a field-army cap and three
+  posts whose effects scale with the holder, fort governors with four fort-only developments,
+  officer proposals in the alerts ribbon, comrade and grudge bonds, and Presence adding dominion
+  checks. Nothing is a meter the player tends. Tier 2 (loyalty states, execution, the coalition
+  rule with truce and alliance, Search and the tavern board, legends, ploys with the M2 nations)
+  waits for a three-match playtest with two questions: did a named person make a story, and did
+  officer pauses outnumber army pauses. Tier 3 (officer play, hundreds of officers, slots on
+  every province, tribute and marriage, monthly meters, aging) is out or kept for the long
+  session. The record lists the state, command, AI and content additions, five runner lines for
+  docs/09-balance's checklist, and keeps Tier 1's data shapes open-ended.
+- `docs/00-vision.md` (`acc56be`) now says the 45 to 75 minute match ships first and the ideal
+  full session will become 15 to 20 hours (owner direction, 2026-10-23), with an M5 row in the
+  scope ladder for the long session. The record's section 6 lists what that unlocks: scenarios
+  as the main replay lever, rosters of 30 to 60, an event deck, generations, wider diplomacy.
+- No code changed. Nothing in the record is built; no phase, test or balance row moves until
+  Phases 8 and 9 make the game playable by a person.
+
 ## QA sweep (2026-10-22)
 
 The owner asked for any further issues and QA. A sweep for real defects (wrong results,
