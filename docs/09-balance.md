@@ -184,3 +184,15 @@ presentation" table (Phases 8 to 11).
 - [ ] On maps with wilds, a new player finds the way around a range without reading docs (the path preview bends and the label names the range), and a match against one Normal AI still ends by month 70 in most games.
 - [ ] No battle takes more than 100 ms to resolve.
 - [ ] Save, reload, and continue produce the same state as not reloading (hash check).
+
+### Officers prototype (Phase 9b; run only if it is built, after its three-match playtest)
+
+Runner lines from `docs/design/three-kingdoms.md` section 7, measured over 20 seeds per matchup
+with `npm run sim:aivai`. They do not gate M1; they gate Tier 2 of the record.
+
+- [ ] At least one capture and one prisoner action (recruit, ransom or release) per game on average.
+- [ ] At least one game in 20 ends by elimination.
+- [ ] Months to victory spread by 15 or more between the fastest and the slowest game.
+- [ ] The AI never leaves a prisoner unhandled for 60 days.
+- [ ] No AI refusal in 20 games with officers on.
+- [ ] The playtest's two questions, answered by the owner after three matches: a named person made a story the player retold; officer pauses did not outnumber army pauses.
