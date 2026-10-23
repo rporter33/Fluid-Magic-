@@ -277,6 +277,7 @@ that they implement, in the same commit.
 // events.ts
 /** Round steps in resolver order (docs/04-battle.md, "Round structure"). */
 export type BattlePhase = 'scripts' | 'ranged' | 'melee' | 'morale' | 'end';
+// Phase 9b (proposed, docs/04 "Duels"): | 'duel', spanning the exchanges before round 1's scripts.
 
 /**
  * One attacking group against one target group in one ranged or melee phase. Every attack is
@@ -1130,6 +1131,8 @@ duration matches the table.
 | Morale | 0.3 s if any squad checked (detail) or any kill (fallback); 1.0 s for the first rout, +0.3 s each more, cap 2.2 s | runners keep running in the background |
 | End of round | 0.4 s if the span logged anything | regeneration, expiries, field ends |
 | Outro | 2.5 s, then the result card holds | |
+| Duel (Phase 9b, proposed) | 3.0 s + 0.5 s per exchange, cap 7.0 s; Beats 1.5 s | inserted after the intro and the battle-start abilities, before round 1's card; the armies hold; hit-stop on every exchange that lands; the loser's stagger 0.6 s and the `moraleShock` floater over the losing side close it |
+| Capture (Phase 9b, proposed) | +1.2 s inside the outro | one beat per `captured` event: the downed commander is pulled to its feet by the winner's sprites, with a shackle chip over its dock row |
 
 **Compression** runs in this order, in the builder:
 
@@ -1191,6 +1194,17 @@ whole phase.
   - speed 1 advances in step (0.9 s);
   - speed 2 runs (0.7 s);
   - speed 3 and flyers charge (0.5 s).
+- **The duel (Phase 9b, proposed; docs/04 "Duels").** On the `duel(a, b)` event the two
+  commanders walk from their rows to the stage's centre line (0.8 s each, their blocks holding
+  and bracing), the camera eases to the pretender-spotlight framing on the pair, and every
+  other sprite drops to idle life. Each exchange is one melee strike with the normal impact
+  grammar: the striker lunges, the target reacts by the defense reaction table, a landing blow
+  gets hit-stop and a damage floater, a shield burn its flash. On `duelEnd` the loser staggers
+  back (0.6 s) and either walks to its row with the wound overlay on its dock portrait or, at 0
+  HP, falls with its death style; the winner raises its weapon (0.4 s) and a `moraleShock`
+  floater crosses the losing side's rows. The round card then plays as usual. The sampled
+  sprite "duels" in the next bullet are unrelated pairings; captions and the HUD use the word
+  duel only for this phase.
 - **Who fights whom.** Duels come from the sampled blows. A sprite steps over a body (0.2 s)
   to its next foe. A block that outnumbers its foes flanks them, 2 or 3 sprites on one foe at
   y ±12. A unit of size 3 or more is mobbed by up to 5 small sprites. Cross-lane strikes go
@@ -2132,6 +2146,11 @@ salamander, wyrm, stone, spirit, colossus, swarm, sprite, wolf, mounts).
 - The eleven M1 spells map as in the sound proposal 5.5. For example, Pyre Storm plays a
   meteor whistle 0.25 s before each impact, with at most 6 explosions at once.
 
+**The duel (Phase 9b, proposed):** a single horn as the pair walks out, the crowd hush (the idle
+layer ducked 12 dB), each exchange as one melee strike at full voice with the crowd's gasp on a
+landing blow, a roar from the winner's side on `duelEnd` (the losing side's murmur), and the
+commander-death voice if the loser falls. Two new recipes: `horn.challenge` and `crowd.gasp`.
+
 **Morale and commanders:**
 
 - **Shaken:** a murmur. **Holds:** a shout.
@@ -2773,6 +2792,13 @@ export function proceduralPartSet(renderer: Renderer): PartSet;   // S4
 +--------------------------------------------------------------------------------------------+
 ```
 
+- **Duel and capture (Phase 9b, proposed).** Round 1's chip row gains a [Duel] chip before
+  [Spells] when the record holds a `duel` phase, and the scrubber a crossed-sabres beat icon
+  there. During the duel phase each dock shows its duellist at 64 px with name and HP in place
+  of its roster (`docs/09-art-direction.md`, "Leader portraits"), and the ticker reads "Varo
+  challenges Thessaly", then "Thessaly yields" or "Thessaly falls". The result card lists
+  captured commanders under the casualties with a shackle chip, and the ticker reads "Varo is
+  taken" on each `captured` event.
 - **Bars and docks.** The top bar is 48 px and the transport is 88 px. The docks overlay the
   canvas: 280 px expanded, 72 px collapsed, toggled with Tab.
 - **Dock header:**
@@ -3171,3 +3197,12 @@ rules (`docs/04-battle.md`, "Pretender abilities and new battle rules"):
   named battles (`primordialFear`, `pyreLordKindle`, `hunterCall`, `trample`, `twoShields`,
   `spellPower`, `boundWolves`) live in `tests/sim/battle/fixtures/named6b.ts` and run in the
   equivalence and re-run tests; S2 moves them with the rest.
+- **Duel and capture (Phase 9b, proposed)**: the duel is one more stored phase, `'duel'`, so
+  the detail sink, `foldReplay` and the time map treat it like any other span; its exchanges
+  are ordinary `melee` and `damage` events on two one-member groups, so S2's impact grammar,
+  S3's strike voices and S4's rigs need no new cue kind, only the walk-out, stagger and
+  raise-weapon choreography and the two recipes above. `down` replaces `death` while the
+  outcome is open and folds like a death for the docks' counts; `captured` after `battleEnd`
+  changes no unit and plays only in the outro. The 30 pinned battles hold no Duelist and no
+  downed loser, so the goldens and the equivalence tests are unchanged; a named `duel` fixture
+  joins `named6b.ts`'s successor for the equivalence and re-run tests.
