@@ -113,11 +113,12 @@ listed here needs a distinct SVG (M1 acceptance criterion 14).
 | Group | Icons |
 |---|---|
 | Resources | gold coin, materials (anvil), supply (wheat), population (figures), unrest (fist), each mana symbol, candle (dominion), research book |
-| Buildings and places | fort, temple, lab, Wellspring (a fountain with five drops), spring (a drop with the color's glyph); each building also drawn as a faint outline for an empty slot |
-| Orders | idle (open hand), guard (shield on a post), pillage (torch), research (book), preach (raised staff with symbol), claim (hand over a fountain), cast (ring with a spark), make prophet (halo), reverse (U-turn arrow), storm (ladder on a wall), move (arrow), build (hammer) |
+| Buildings and places | fort, temple, lab, Wellspring (a fountain with five drops), spring (a drop with the color's glyph); each building also drawn as a faint outline for an empty slot; developments (Phase 9b, proposed): granary (a round silo), market (an awning), barracks (a tent with a spear), shrine (a small roofed niche with a candle) |
+| Orders | idle (open hand), guard (shield on a post), pillage (torch), research (book), preach (raised staff with symbol), claim (hand over a fountain), cast (ring with a spark), make prophet (halo), reverse (U-turn arrow), storm (ladder on a wall), move (arrow), build (hammer); govern (a seal on a scroll over a keep; Phase 9b, proposed) |
 | Status glyphs (corner badges on army badges and rows) | starving (crossed wheat), tight supply (half wheat), unpaid (crossed coin), wounded (cracked heart), besieging (ram), casting (ring in the spell's color), pillaging (torch), script problem (scroll with !) |
 | Map | army badge shapes: rounded shield (own), notched shield (other nations), plain shield (independents); battle marker (crossed blades); siege ram; scout eye; transit arrow; selection ring; wild (three snow-capped peaks over a row of cliff ticks); path tack (a square set as a diamond) |
 | Roles | crown (pretender), halo (prophet), eye (scout), hood (stealthy) |
+| Officers (Phase 9b, proposed) | baton (Marshal), key (Chancellor), censer (Hierophant), shackle (prisoner), stud (rank), laurel (Ascendancy), crossed sabres over a ring (duel), scroll with a seal (proposal), two linked rings (comrade bond), a broken ring (grudge), the five stats as small glyphs: standard (Command), sword (Valor), open book (Lore), scales (Stewardship), speaking face (Presence) |
 | Alert tiers | Urgent (octagon), Important (triangle), Opportunity (circle), Hint (rounded square with "i"); the shape carries the tier without hue |
 | Map modes | ownership (banner), dominion (candle), supply (wheat), unrest (fist), population (figures), mana springs (drop), numbers layer (#) |
 | Script stances | cast (the spell's mana symbol), attack (crossed blades), hold (shield), retreat (arrow) |
@@ -299,6 +300,38 @@ Added on 2026-10-21 at the owner's direction: "leaders certainly need portraits"
   complete at 4 faces and replaces its rig's portrait pose, which stays the fallback (QA sweep
   2026-10-22, finding DOC-4: the shipped summon sets have 4 faces, which the 8-face rule would
   never draw).
+
+**The Court modal and officer marks (Phase 9b, proposed, `docs/07-ui.md` "Court"):**
+- **Rows at 40 px.** The Officers and Prisoners tabs draw every named person as a 40 px portrait
+  row (the report-card size), so a nation of 30 officers fits one screen without scrolling at
+  1280x720. The Posts tab's three cards draw their holder at 96 px and the candidates at 48 px.
+  The Commander panel keeps its 96 px portrait.
+- **Rank on the frame.** The three rank steps use the frame's material the way the existing
+  ranks do: rank 0 keeps the type's material, rank 1 adds a single stud at the collar, rank 2 a
+  pair, rank 3 a thin inner keyline in the banner. No face changes with rank.
+- **Post marks.** A post holder's frame carries one 12 px mark at the crown notch: a baton
+  (Marshal), a key (Chancellor), a censer (Hierophant). The mark is monoline in the frame's
+  material and sits where the prophet's halo sits; a prophet who is Hierophant shows the halo
+  with the censer inside it.
+- **Prisoners.** A held commander's portrait is drawn in its own nation's frame with a dotted
+  band and a shackle glyph at the lower left corner, the way last-seen commanders use a dotted
+  frame; it is never greyscale, which means dead. The holder's banner color fills the band's
+  dots. On the holder's screen the same portrait appears with its own banner, so the player sees
+  whose officer it is.
+- **Stat bars on the row.** The five stats are 3 px bars to the right of the name at 40 px, in
+  the chrome's brass on oak, never in a color (color carries nation and mana only); a bar above
+  the nation's median for that stat gets a brighter tip. At 24 px and below the bars are dropped.
+- **Trait chips** reuse the ability chip (`units-and-items.md` D.2): a 16 px icon in a rounded
+  square with the trait's name on hover.
+- **Bond chips** are 24 px portraits of the comrade or the grudge's target in a ring: brass for a
+  comrade, a notched iron ring for a grudge, drawn to the right of the trait chips, at most
+  three with a "+N".
+- **Duel in the replay.** The two duellists are drawn at 64 px in the replay docks for the duel
+  phase, facing each other across the stage's centre, with their names; the loser's portrait
+  gains the wound overlay at once.
+- **Raster sets need nothing new.** Rank, post, prisoner and bond marks are frame-only, so an
+  owner-made raster set shows them without a sidecar; the shackle, baton, key and censer are
+  new monoline icons (Icons below). No officer is ever drawn without a portrait.
 
 ## Pretender chassis art
 
