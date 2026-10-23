@@ -40,3 +40,9 @@ npm run typecheck  # tsc --noEmit
 npm run lint       # eslint
 npm run sim:aivai -- --games 20 --seed 1   # headless AI vs AI
 ```
+
+## Skills
+
+`.claude/skills/` holds reference skills for PixiJS 8, procedural generation, save systems,
+performance, and game UI (see its README). They are advisory. Where a skill disagrees with
+`CLAUDE.md` or `docs/**`, the docs win.
