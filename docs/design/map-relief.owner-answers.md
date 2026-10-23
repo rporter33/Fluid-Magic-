@@ -19,3 +19,19 @@ Read as:
    the colour-blind-safe fills; a "Clear terrain colours" setting makes those fills the default view.
 3. **The docs/09 distinct-colours rule** moves from the default view to the Terrain mode and the Clear setting. Nation
    banners, ownership rails and the band rule keep their colour-blind minimums in every view.
+
+## 2026-10-23, province lines in the natural view
+
+Asked how province lines should work, since the thin pale line between every pair of provinces (held at the
+colour-blind floor) still drew a grid over the natural landscape, the owner chose:
+
+> Faint lines, realms clear (Recommended)
+
+The option as offered: "Lines between unowned provinces become faint, like your screenshots, and brighten on hover and
+in the Clear colours setting. Realm borders keep their colour-blind contrast. Cleanest look; neutral borders are harder
+to see at a glance."
+
+Read as: in the natural view, lines between provinces that no realm owns (and the internal lines inside one realm) are
+faint; they brighten to the colour-blind floor around the hovered and selected province, and everywhere in the Clear
+terrain colours setting and the Terrain mode. Realm borders (the rails between owners, and between an owner and
+unowned land) keep their colour-blind contrast in every view.
