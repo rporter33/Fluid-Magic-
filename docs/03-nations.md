@@ -26,6 +26,8 @@ it may take), and AI personality weights.
 | tags | e.g. sacred, undead, beast, flying, construct, mounted, mindless |
 | gold, materials, popCost, recruitDays | recruitment costs |
 | leadership | commanders only: max troop count led |
+| officer | commanders only, Phase 9b (proposed): a `[low, high]` range for each of Command, Valor, Lore, Stewardship and Presence, rolled at recruitment; Command replaces `leadership` as the troops led, with the range's midpoint at today's leadership so nothing moves on average |
+| traitWeights | commanders only, Phase 9b (proposed): weights over the eight officer traits for the one rolled at recruitment |
 | pips, holy | commanders only |
 
 Baseline human infantry: hp 10, str 10, att 10, def 10, prot 0, mr 10, mor 10, prec 10.
@@ -127,6 +129,53 @@ AI personality: aggression 0.4, expansion 0.6, research 0.7, pillage 0.1.
 
 Each M2 nation brings its color's pretender realm (six chassis, sketched in the 2026-10-21
 pretender design) and its full blessing menu.
+
+## Officer stat ranges (Phase 9b, proposed)
+
+Per `docs/design/three-kingdoms.md` 3.1, built only after Phase 9 and gated on its playtest. A
+commander rolls each stat uniformly inside its unit's range from `state.rng` at recruitment, the
+way the adept tier rolls its third pip. Ranges are 1 to 20 except Command, 10 to 100, whose
+midpoint is the unit's current leadership. Summoned commanders have fixed stats. Pretenders take
+none: their chassis numbers stand. Content validation checks every recruitable commander has all
+five ranges inside the global bounds and that each Command midpoint equals the leadership column.
+
+The flavor rule: Cinder Horde officers run high in Valor and Presence and low in Stewardship;
+Thornwood officers the reverse, with Lore on the druids. A nation's best stat in a line is never
+above 16 at recruitment; 17 to 20 are for rank steps and the legends of Tier 2.
+
+### Cinder Horde
+| Unit | Command | Valor | Lore | Stewardship | Presence | Trait weights (of 8) |
+|------|---------|-------|------|-------------|----------|----------------------|
+| Scout | 5 to 15 | 4 to 8 | 3 to 7 | 2 to 6 | 3 to 7 | Wanderer 3, Greedy 2, others 1 |
+| Ash Chieftain | 60 to 100 | 9 to 15 | 2 to 6 | 3 to 7 | 6 to 10 | Fearless 3, Duelist 2, Greedy 2, Cruel 2, others 1 |
+| Pyre Priest | 10 to 30 | 3 to 7 | 5 to 9 | 5 to 9 | 10 to 14 | Beloved 2, Cruel 2, Steady 2, others 1 |
+| Ember Adept | 5 to 15 | 2 to 6 | 8 to 12 | 3 to 7 | 3 to 7 | Scholar 3, Greedy 2, others 1 |
+| Cinder Magus | 10 to 30 | 3 to 7 | 12 to 16 | 3 to 7 | 5 to 9 | Scholar 3, Cruel 2, others 1 |
+| Salamander (summon) | 30 | 14 | 6 | 1 | 2 | none |
+
+### Thornwood
+| Unit | Command | Valor | Lore | Stewardship | Presence | Trait weights (of 8) |
+|------|---------|-------|------|-------------|----------|----------------------|
+| Scout | 5 to 15 | 4 to 8 | 3 to 7 | 3 to 7 | 3 to 7 | Wanderer 3, Steady 2, others 1 |
+| Warden Captain | 60 to 100 | 8 to 14 | 3 to 7 | 5 to 9 | 6 to 10 | Steady 3, Fearless 2, Beloved 2, others 1 |
+| Grove Priest | 10 to 30 | 3 to 7 | 6 to 10 | 7 to 11 | 10 to 14 | Beloved 3, Steady 2, others 1 |
+| Sapling Druid | 5 to 15 | 2 to 6 | 8 to 12 | 5 to 9 | 3 to 7 | Scholar 3, Wanderer 2, others 1 |
+| Elder Druid | 10 to 30 | 3 to 7 | 12 to 16 | 5 to 9 | 5 to 9 | Scholar 3, Beloved 2, others 1 |
+| Treant (summon) | 40 | 10 | 8 | 4 | 6 | none |
+
+### Independent Captains, by outfit
+Captured or hired captains keep the stats they were made with, rolled at game start from the
+outfit their province's terrain gives them (`docs/09-art-direction.md`, the four raster sets).
+
+| Outfit (terrain) | Command | Valor | Lore | Stewardship | Presence | Trait weights (of 8) |
+|------------------|---------|-------|------|-------------|----------|----------------------|
+| Levy (plains, farmland, wasteland) | 40 to 80 | 5 to 11 | 2 to 6 | 6 to 10 | 5 to 9 | Steady 2, Greedy 2, others 1 |
+| Hunter (forest) | 40 to 80 | 7 to 13 | 3 to 7 | 3 to 7 | 4 to 8 | Wanderer 3, Fearless 2, others 1 |
+| Mountaineer (hills, mountains) | 40 to 80 | 8 to 14 | 2 to 6 | 4 to 8 | 5 to 9 | Fearless 3, Duelist 2, others 1 |
+| Reedman (swamp) | 40 to 80 | 5 to 11 | 4 to 8 | 5 to 9 | 4 to 8 | Wanderer 2, Scholar 2, others 1 |
+
+The M2 nations take ranges on the same rule when their commanders are written: Sunward Concord
+high in Presence and Stewardship, Mirrorsea Compact in Lore, Hollow Court in Lore and Cruel.
 
 ## Independents
 
