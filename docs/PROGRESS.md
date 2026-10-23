@@ -909,8 +909,57 @@ them behind a switch, off everywhere; commit B, the owner-decision commit, turns
   full session will become 15 to 20 hours (owner direction, 2026-10-23), with an M5 row in the
   scope ladder for the long session. The record's section 6 lists what that unlocks: scenarios
   as the main replay lever, rosters of 30 to 60, an event deck, generations, wider diplomacy.
-- No code changed. Nothing in the record is built; no phase, test or balance row moves until
-  Phases 8 and 9 make the game playable by a person.
+- The doc pass (2026-10-23, after the owner's "update" requests, one commit per doc): every
+  numbered doc the record touches now carries its Phase 9b lines, each marked proposed and
+  built only after Phase 9, gated on the playtest.
+  - docs/10 (`da05c86`, `55d0cee`): Phase 9b, the officers prototype, after Phase 9 and before
+    Phase 10 (the owner's third direction: "keep it before phase 10", so the duels are in the
+    records the replay viewer is built on); not an M1 acceptance criterion; Tier 2 and 3 and the
+    long session in the out-of-scope list.
+  - docs/09-balance (`9a85a44`, `9faa0fc`): six checklist lines for the prototype (one capture
+    and prisoner action per game, an elimination in 20, a 15-month spread, no prisoner held
+    60 days, no refusal, the two playtest questions), and an Officers prototype table of 22
+    design values ahead of their code (stat bounds and ranges, trait weights, rank steps,
+    capture and duel numbers, Ascendancy, the field cap, posts, governor effects, developments,
+    Presence in spread, proposal limits, the recruit contest, ransom, the AI thresholds and
+    the `mercy` and `pride` weights).
+  - docs/06 (`d2532de`): the new modules in the layout (`sim/officers.ts`, `sim/proposals.ts`,
+    `commands/officers.ts`, `content/officers.ts`), `bonds` and `proposals` on `GameState`, the
+    six commands with the `govern` order and the field cap on `move` (in `validate` only), the
+    save step after Phase 8's with its migration, and an Officers implementation decision.
+  - docs/07 (`11f413b`): the Prisoner taken and Officer proposal alerts (the only alerts with
+    buttons; at most 3 proposals open, 1 per officer per month; no auto-pause unless "Officer
+    events" is on), the Commander panel's stats, traits, rank, bonds and post rows, the
+    Ledger's officer columns, the Court modal on key K (Officers, Posts, Prisoners; no loyalty
+    column before Tier 2), and the selectors and message kinds the sim exposes.
+  - docs/08 (`f531c07`): steps 11 Prisoners, 12 Court, 13 Governors and 14 Proposals with
+    their gates; duels and bonds need no step; five behavior tests over 20 runner games.
+  - docs/04 (`fade357`): capture after `battleEnd` on the battle's rng (losing side only, never
+    the pretender, a stormed fort captures everyone), the automatic duel before round 1 with
+    its `moraleShock`, the events `duel`, `duelEnd`, `down` and `captured`, four required tests
+    with the goldens unchanged when no Duelist or downed loser is present, and the decision
+    placing the duel on the melee and landing code.
+  - docs/01 (`a53eb3f`): the `Govern` order; Governors and developments under Buildings (the
+    prefecture is the fort's material catchment; four effects per stat point; Granary, Market,
+    Barracks and Shrine, one each per fort; pillage destroys the newest first); Presence and
+    Shrine checks in the dominion spread sources.
+  - docs/02 (`086cf32`): five ploy primitives (`officerLoyalty`, `defect`, `inciteRevolt`,
+    `falseSighting`, `bribe`) with the Lore contest, landing with Phase 9b per owner decision 5
+    while the loyalty ones do nothing before Tier 2; the Tier 2 ploys under the M2 Blue and
+    Black rituals, Turn the Cloak as the first U/B hybrid, none for Red and Green; a decision
+    placing them in the ritual pipeline.
+  - docs/09-art (`41d269f`): the Court modal's portrait sizes, rank on the frame, post marks at
+    the crown notch, the prisoner's dotted band and shackle, stat bars in brass, trait and bond
+    chips, duellists in the replay docks; every mark frame-only so raster sets need no sidecar;
+    new monoline icons for officers, the govern order and the developments.
+  - docs/03 (`2c88faf`): `officer` ranges and `traitWeights` in the unit stat model; an Officer
+    stat ranges section per nation, the four Independent Captain outfits, fixed summons, the
+    flavor rule (no recruit range above 16), and the M2 nations' leanings.
+  - README (`cdfd03a`, `0cf5103`): docs/12 and PROGRESS in the documents table, a design records
+    table, and a status line naming every phase done on this branch.
+- Still no code changed. The docs now describe Phase 9b completely enough to build from; the
+  record and `three-kingdoms.owner-answers.md` (three directions quoted) remain the source where
+  a numbered doc is silent.
 
 ## QA sweep (2026-10-22)
 
