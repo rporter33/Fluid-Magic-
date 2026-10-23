@@ -21,3 +21,17 @@ Read as:
    holds for every commander, summon and monster that has a portrait.
 4. **Later build:** cities in battles. A battle fought where a town or city stands shows it, and a storm shows the
    city behind its walls. Scenery still never suggests cover or a chokepoint the rules do not model.
+
+## 2026-10-23, after the painted-art plan
+
+> Amazing work go ahead, show me the pilot when ready - the magic will need the same attention to detail as the
+> animation and monsters, for the monsters and gods and mounts, letting me do a review on the portraits and then in
+> game before animation would be ideal
+
+Read as:
+
+1. **The pilot comes to the owner** before production.
+2. **Magic gets the same attention** as the animation and the monsters: every battle spell and visible ability is
+   storyboarded and painted with the same detail and fidelity.
+3. **Monsters, gods and mounts go through three owner reviews, in order:** their painted portraits first, then their
+   painted figures standing in the game, and only then animation.
