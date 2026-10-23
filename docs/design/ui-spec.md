@@ -1,7 +1,9 @@
 # Fluid Magic UI Specification (final, for docs/07-ui.md)
 
-Status: final, written 2026-10-21. It revises `spec-draft.md` by applying the two judges'
-mustFix and shouldDrop lists. Where the judges disagreed, or where a fix needed a choice, the
+Status: final, written 2026-10-21; amended 2026-10-23 with the Court modal, the officer alerts
+and their sim support (sections 2.5, 3.6b, 6.6, 7.2, 9.2, 9.3), all tagged **[Phase 9b]**, which
+means proposed, built only after Phase 9 and gated on the playtest of `three-kingdoms.md`. It
+revises `spec-draft.md` by applying the two judges' mustFix and shouldDrop lists. Where the judges disagreed, or where a fix needed a choice, the
 decision and its reason are in **Rulings** below. It is the build spec for Phase 8 (map and core
 UI) and Phase 9 (remaining UI). Section 4 also gives Phase 10 (replay viewer) its frame. The
 exact replacement text for `docs/07-ui.md`, plus the lines needed in `docs/09-art-direction.md`,
@@ -554,6 +556,13 @@ here on purpose".
 - `J` jumps to the newest alert or message, and each further press steps back through the last 8
   (StarCraft II's alert jump, moved off Space because Space pauses; U §6 [X]).
 - An Urgent alert's first appearance pulses its icon twice, except under reduced motion.
+
+**[Phase 9b]** Two alert types join the table, the only ones that carry buttons: **Prisoner
+taken** (Important; Recruit with the contest odds, Ransom with the price, Release) and **Officer
+proposal** (Opportunity; the officer's line, the command's preview, Accept and Dismiss; at most 3
+open, 1 per officer per month). Neither pauses the game unless the new "Officer events" auto-pause
+toggle is on. The exact text is in `docs/07-ui.md`, "Alerts ribbon", and the rule that a button
+issues its command through `validateCommand` and shows the disabled reason is principle 3 applied.
 
 ### 2.6 Outliner (right dock, top)
 
@@ -1345,6 +1354,46 @@ control surface: inline PD purchase and tax, as Dominions' F1 lets you buy PD (D
   (D §1.8 [V]).
 - The Battles tab reads the kept `BattleSummary` list (section 4.1), so it lists every battle the
   player fought, not only the last 20.
+
+### 3.6b Court [Phase 9b] (modal, key K)
+
+The officer screen of `three-kingdoms.md` (sections 3.1, 3.2, 3.4, 3.7). It answers "show me every
+named person" the way the Ledger answers "show me all X", and it is a control surface for the
+three officer commands that are not orders: `assignPost`, the prisoner actions and, through the
+rows' context menu, `govern`. It is deliberately three tabs, because RTK XIII's officer list drew
+the "phonebook" complaint (`three-kingdoms.md` section 1) and principle 1 forbids a list the
+player scrolls to find a person: the Officers tab sorts by any stat and the search box filters by
+name and trait.
+
+| Tab | Columns | Filters | Inline actions |
+|---|---|---|---|
+| **Officers** | portrait (40 px), name, type, rank, the five stats as 3 px bars with the nation's median marked, trait chips, bond chips, post, order, location; a header strip with the god's Ascendancy, its next threshold and the field cap as `armies in the field 4 / 5` | field; governing; in a post; wounded; by trait; by stat line above median | Select on the map, Jump, Govern here (fort provinces), Assign to post |
+| **Posts** | three cards, Marshal, Chancellor, Hierophant: threshold, holder at 96 px, stipend, the effect at the holder's stat (`+14% gold at Stewardship 14`), the best three candidates at 48 px by the stat the post scales with | — | Assign, Clear; a locked card names the Ascendancy it needs |
+| **Prisoners** | held by us: the Prisoner taken rows (portrait, name, rank, stats, days held, offers refused); held by others: own officers with the holder and the ransom asked | by holder; by rank | Recruit (odds shown), Ransom (price shown), Release; Pay ransom |
+
+Where each detail lives:
+
+| Detail | Layer |
+|---|---|
+| Stat values and the median mark | L0 on the row (bars); the number on hover |
+| What a stat drives (Command: troops led and morale; Presence: checks, unrest, recruiting) | L1 tooltip with the breakdown, from `officerStats` |
+| A trait's rule | L1 chip tooltip; L4 Codex page |
+| A bond's origin ("comrades since the battle of Kharsk Ford") | L1 chip tooltip |
+| Capture odds and the ransom formula | L1 on the button, from `captureOdds` and `ransomPrice` |
+| Why a post is locked, why the cap binds | L1 on the header strip, from `fieldCap` and `postEffect` |
+| Ascendancy's formula | L2 concept |
+| Loyalty | nowhere in Phase 9b: loyalty states are Tier 2 and the column is added only after the playtest |
+
+- Rows at 40 px keep a nation of 30 officers on one screen at 1280x720 (`docs/09-art-direction.md`,
+  "The Court modal and officer marks"). The pretender has a row but no stats and is never a post
+  candidate; the prophet is a candidate for Hierophant only (owner decision 2).
+- The modal opens from key K, from the top bar's new officers readout (count of named officers,
+  with the Ascendancy as its breakdown), from a Prisoner taken alert's "all prisoners" link, and
+  from a Commander panel's post or prisoner row.
+- Depth audit: the deepest real path is map → K → Prisoners → Recruit → confirmation (4), inside
+  principle 1's limit.
+- Esc closes it as one layer. It is a Ledger sibling: `LedgerTable<T>` renders the Officers and
+  Prisoners tabs; only the Posts tab is a new layout.
 
 ### 3.7 Messages and their settings [M1]
 
@@ -2206,6 +2255,8 @@ selectors on the store, so a prop is usually an id rather than an object.
 | `SettingsModal`, `MessageMatrix`, `BindingTable` | `tab: SettingsTab` | `BindingTable` is read-only |
 | `GameMenu`, `SaveLoadDialog`, `SlotCard` | `mode: 'save'\|'load'` | |
 | `BattleReplay` | `battle: BattleId` | `ReplayHeader`, `ConditionChips`, `RosterPanel` (`side`, `collapsed`), `LiveRail`, `BattleStage` (`BattleStageProps`, section 4.4), `CaptionsStrip`, `BattleLog` (`detail`, `focus`), `Transport`, `Scrubber` (`markers`), `ReplaySettingsPopover` |
+| `CourtModal` **[Phase 9b]** | `tab: 'officers'\|'posts'\|'prisoners'` | `OfficerRow`, `StatBars` (five 3 px bars with the median mark), `TraitChip`, `BondChip`, `PostCard` (`post`, `holder`, `candidates`), `PrisonerRow` (`held: 'byUs'\|'byOthers'`), `AscendancyStrip`; Officers and Prisoners reuse `LedgerTable<T>` |
+| `ProposalAlert`, `PrisonerAlert` **[Phase 9b]** | `proposal: ProposalId` / `commander: CommanderId` | the two button-bearing alert bodies in the ribbon's hover list; buttons go through `validateCommand` and show the disabled reason |
 | `MainMenu` | none | |
 | `NewGame` | none | `MapSizePicker`, `SeedField`, `OpponentRow`, `NationCard`, `GuidancePicker` |
 | `PretenderDesign` | `nation: NationId` | `PresetBar`, `BudgetBar`, `ChassisList`, `PipStepper`, `DominionStepper`, `ScaleSlider`, `AwakeningPicker`, `PretenderCard` |
@@ -2284,6 +2335,9 @@ incursion messages (#8).
 | 10 | `summarizeBattle(record)` | `src/sim/battle/summary.ts` | `BattleSummary`: id, day, province, sides, winner, outcome band, per-squad start, end, killed and routed, commander fates, spells cast, end reason, up to 3 key moments. It is small and serializable | report card, Ledger Battles, replay end, Victory | 9 |
 | 11 | `pretenderReading(nation, design)` | `src/sim/pretender.ts`, phrases in `src/content/pretenders/reading.ts` | the summary card's one-line reading (docs/05) | `PretenderCard` | 9 |
 | 12 | Content: `concepts.ts`; `BATTLE_REPORT` outcome-band thresholds in `rules.ts`; **`src/content/ui.ts`** with every UI threshold (`UI.unrestShowAt` 25, `UI.capitalDominionWarn` 2, `UI.treasuryWarnDays` 30, `UI.idleAlertDays` 5, `UI.battleMarkerDays` 30, `UI.mergeDays` 5, `UI.tips` timings, the zoom-band diameters 70 and 180, the label box 96 × 30) | `src/content/` | data, listed in docs/09-balance | tooltips, alerts, Codex, report | 8 to 10 |
+
+| 13 | **[Phase 9b]** `officerStats(state, commander)` (the five stats with breakdowns of what each drives), `captureOdds(state, battle, commander)`, `ransomPrice(state, commander)`, `fieldCap(state, nation)` (cap, count, the newest field commander), `postEffect(state, nation, post, holder?)`, `postCandidates(state, nation, post)` (best three by the post's stat), `openProposals(state, nation)` | `src/sim/officers.ts`, `src/sim/proposals.ts` | numbers and rows; no state clone | Court, the two alerts, Commander panel rows, Ledger columns, the top-bar readout | 9b |
+| 14 | **[Phase 9b]** New `MessageKind`s `captured`, `prisoner`, `duel`, `post`, `bond`, `proposal`, each with `refs` to the commanders involved | `src/sim/types.ts`, `messages.ts`, `battle/apply.ts`, `officers.ts` | messages | feed, message settings, the "Officer events" auto-pause toggle | 9b |
 
 Items 8 and 9 change `GameState` (one new nation field and new message kinds), so the save format
 version goes up by one with a migration that adds empty `incursions`. The determinism test's
@@ -2575,6 +2629,7 @@ Record these in docs/07, which the Docs text below does.
 | Repeat recruitment per fort | Dominions 5 and 6 have it; a UI loop would break "the AI uses the same commands" | Later |
 | Recast a ritual monthly | Dominions' Shift+m | Later |
 | A trial forecast in a Web Worker with UI-owned seeds and a visible-knowledge setup | ranges, never a point | Later |
+| **[Phase 9b]** `officerStats`, `captureOdds`, `ransomPrice`, `fieldCap`, `postEffect`, `postCandidates`, `openProposals`, the six officer message kinds, and the `proposals` list on `GameState` | the Court, the two button alerts and the Commander panel rows (section 3.6b); `three-kingdoms.md` section 3.9 lists the state and commands | Phase 9b, after the playtest gate |
 
 ### 9.3 Build plan by phase
 
@@ -2582,6 +2637,7 @@ Record these in docs/07, which the Docs text below does.
 |---|---|
 | 8 Map and core UI | `src/content/ui.ts`; tokens and primitives (§6.1); `Tip` with value, entity and action tooltips, timing, Esc, the Shift state machine; trace sinks, `explain*` and overrides; `TopBar` with breakdowns; clock, speed, auto-pause, reason chip and popup queue; alerts ribbon with the M1 types; outliner sections 2 to 10; message feed; incursions and message kinds; the overlay layout and fixed anchors; left dock with the Province panel (Overview with scales, Recruit, Forces); bottom strip with the order bar and Guard; Commander panel Overview (on demand) with Give mana; map with six modes, the numbers layer, labels with the density budget, badges by exception, stacks, move preview, cursor label, waypoints, engagement preview with `armyPower`; concepts content skeleton; the read-only binding table; a minimal battle popup (message text and Jump) until Phase 9's report card |
 | 9 Remaining UI | Nested concept tooltips and the Codex; the Battle Plan sheet (`formationLayout`, script timeline, `scriptCheck`, presets, copy and paste); the Rituals tab and targeting (`predictRitual`, hop outline, targeting pause, commit on click); the Research modal; the Ledger (five tabs); Settings (six tabs, the message matrix); Main Menu, New Game, Pretender Design (`PretenderCard`, `pretenderReading`, per-step `validatePretender`), Game Menu and save/load, Victory; `summarizeBattle`, `BattleReport` and summary capture; onboarding (guidance, hints, Learn with Why); History tab |
+| 9b Officers prototype **[Phase 9b]** | The Court modal (three tabs on `LedgerTable<T>` plus `PostCard`), the Prisoner taken and Officer proposal alerts with their buttons, the Commander panel's stats, traits, rank, bonds and post rows, the Ledger's officer columns, the top-bar officers readout, the "Officer events" auto-pause toggle, key K, the officer Codex pages (stats, traits, posts, Ascendancy), and the duel and capture captions in the replay frame; built as one commit with the sim side of `docs/10` Phase 9b |
 | 10 Replay viewer | The replay frame (§4.3) around the presentation's `BattleStage` with the §4.4 contract; scrubber and seek requests; captions; shared gore, shake and volume settings |
 | 12 Balance and polish | playtest the pause defaults (research level, the battle split), tooltip delays, alert noise, the Idle alert window, and the map width at 1280; [Later] items as time allows |
 
