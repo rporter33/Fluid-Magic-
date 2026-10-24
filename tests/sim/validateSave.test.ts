@@ -1,8 +1,8 @@
 // The check a save passes after its migration (docs/06-architecture.md, "Save and load";
 // src/sim/validateSave.ts): nothing is wrong with games as the sim and the AI leave them; the
 // three links that outlive what they name pass while well formed; anything at all can be checked
-// without a throw; and the check never writes. Each missing key, reference and color it reports
-// is in validateSave.refs.test.ts.
+// without a throw; and the check never writes. Each missing key and color it reports is in
+// validateSave.keys.test.ts, each reference in validateSave.refs.test.ts.
 import { describe, expect, it } from 'vitest';
 import { captureProvince } from '../../src/sim/capture';
 import { createGame } from '../../src/sim/createGame';

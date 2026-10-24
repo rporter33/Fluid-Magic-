@@ -1198,8 +1198,11 @@ part (slots, gzip, IndexedDB, autosave) with the game screens.
   each kind of refusal; a malformed re-run loads as null; the caller's game untouched);
   `validateSave.test.ts` (new games, every kind of record, a human nation's game to day 720 checked
   every 30 days, a fallen nation's sightings, the weak links, garbage, read-only);
-  `validateSave.refs.test.ts` (every required key of 31 record kinds, 58 references and the
-  provinces paired with the map, 12 color cases); `migrate.test.ts` (typed refusals; what the
+  `validateSave.keys.test.ts` (every required key of 31 record kinds, shapes, 12 color cases) and
+  `validateSave.refs.test.ts` (58 references and the provinces paired with the map), which share
+  `tests/sim/saveCases.ts` (split after the Phase 1 hardening to keep each file under 400 lines:
+  the same 74 cases, 2338 tests in 139 files);
+  `migrate.test.ts` (typed refusals; what the
   steps walk; the failing step), its save helpers moved to `tests/sim/saveFixtures.ts`. 2227 tests
   in 132 files before, 2325 in 135 after (five of them the purity scan of the five new modules).
 - Pending for Phase 8: the autosave alternation between the keys `autosave` and `autosave-prev`
