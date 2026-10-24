@@ -240,6 +240,24 @@ describe('map generation content', () => {
     expect(MAPGEN.wellspringMinSeparation).toBeGreaterThanOrEqual(2);
     expect(MAPGEN.capitalPop % MAPGEN.popRounding).toBe(0);
   });
+
+  it('caps every placement loop with a whole number of tries (docs/10 Phase 1)', () => {
+    const caps = [
+      'poissonTries',
+      'fillCandidates',
+      'pointTries',
+      'nameDraws',
+      'maxAttempts',
+      'balanceCandidates',
+      'wellspringSearchStarts',
+      'wellspringSearchPasses',
+    ] as const;
+    for (const key of caps)
+      expect(Number.isInteger(MAPGEN[key]) && MAPGEN[key] >= 1, key).toBe(true);
+    expect(MAPGEN.balanceCandidates).toBeLessThanOrEqual(MAPGEN.maxAttempts);
+    // Points at least this far apart are finitely many, so Bridson's sample ends.
+    expect(MAPGEN.poissonRadius).toBeGreaterThan(0);
+  });
 });
 
 describe('wilds (Phase 1b)', () => {

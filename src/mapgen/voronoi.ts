@@ -1,5 +1,8 @@
 // Province cells: Poisson disc sites, Voronoi via d3-delaunay, Lloyd relaxation, clipping
-// to the rounded map outline, and adjacency from shared borders.
+// to the rounded map outline, and adjacency from shared borders. Every random placement has a
+// fixed cap (docs/10 Phase 1): a point drawn inside the outline gives up after `pointTries`
+// draws, Bridson's sample gives each active point `tries` candidates, and a missing site the best
+// of `tries`; a placement that runs out returns fewer points, and the caller reports the shortfall.
 import { Delaunay } from 'd3-delaunay';
 import { nextFloat, randBelow, type RngState } from '../sim/rng';
 import { centroid, clipConvex, distance, insideConvex, orientPositive } from './geometry';
@@ -10,17 +13,29 @@ export interface Bounds {
   height: number;
 }
 
-/** A uniformly random point inside the convex outline (rejection sampling). */
-function randomPointInside(rng: RngState, outline: readonly Point[], bounds: Bounds): Point {
-  for (;;) {
+/**
+ * A uniformly random point inside the convex outline (rejection sampling), or null when none of
+ * `pointTries` draws lands inside it.
+ */
+function randomPointInside(
+  rng: RngState,
+  outline: readonly Point[],
+  bounds: Bounds,
+  pointTries: number,
+): Point | null {
+  for (let k = 0; k < pointTries; k++) {
     const p = { x: nextFloat(rng) * bounds.width, y: nextFloat(rng) * bounds.height };
     if (insideConvex(outline, p)) return p;
   }
+  return null;
 }
 
 /**
  * Bridson's Poisson disc sampling inside the convex outline: no two points closer than
- * `radius`. Runs to saturation, so the count depends on the radius and the area.
+ * `radius`. Runs to saturation, so the count depends on the radius and the area. Each round
+ * either adds a point or retires an active one after `tries` candidates, and points at least
+ * `radius` apart inside the outline are finitely many, so it ends; with no first point inside
+ * the outline (`pointTries` draws) it returns none.
  */
 export function poissonDisc(
   rng: RngState,
@@ -28,6 +43,7 @@ export function poissonDisc(
   bounds: Bounds,
   radius: number,
   tries: number,
+  pointTries: number,
 ): Point[] {
   const cell = radius / Math.SQRT2;
   const cols = Math.ceil(bounds.width / cell);
@@ -58,7 +74,9 @@ export function poissonDisc(
     points.push(p);
   };
 
-  add(randomPointInside(rng, outline, bounds));
+  const first = randomPointInside(rng, outline, bounds, pointTries);
+  if (first === null) return points;
+  add(first);
   while (active.length > 0) {
     const slot = randBelow(rng, active.length);
     const origin = points[active[slot] ?? 0] as Point;
@@ -103,9 +121,10 @@ function mostCrowded(points: readonly Point[]): number {
 }
 
 /**
- * Brings `points` to exactly `count`: removes the most crowded point while there are too
- * many, and adds the best of `tries` random candidates (farthest from all points) while
- * there are too few.
+ * Brings `points` to `count`: removes the most crowded point while there are too many, and adds
+ * the best of `tries` random candidates (farthest from all points) while there are too few. A
+ * candidate the outline takes no draw for (`pointTries`) ends the candidates; when a missing
+ * point has none, the shortfall is returned and the caller reports it.
  */
 export function adjustCount(
   rng: RngState,
@@ -114,20 +133,23 @@ export function adjustCount(
   outline: readonly Point[],
   bounds: Bounds,
   tries: number,
+  pointTries: number,
 ): Point[] {
   const out = [...points];
   while (out.length > count) out.splice(mostCrowded(out), 1);
   while (out.length < count) {
-    let best = randomPointInside(rng, outline, bounds);
-    let bestDist = Math.min(...out.map((p) => distance(p, best)));
-    for (let k = 1; k < tries; k++) {
-      const candidate = randomPointInside(rng, outline, bounds);
+    let best: Point | null = null;
+    let bestDist = Number.NEGATIVE_INFINITY;
+    for (let k = 0; k < tries; k++) {
+      const candidate = randomPointInside(rng, outline, bounds, pointTries);
+      if (candidate === null) break;
       const d = Math.min(...out.map((p) => distance(p, candidate)));
       if (d > bestDist) {
         best = candidate;
         bestDist = d;
       }
     }
+    if (best === null) break;
     out.push(best);
   }
   return out;

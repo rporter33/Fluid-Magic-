@@ -152,9 +152,6 @@ export function placeWilds(plan: readonly WildPlan[], terrain: WildTerrain): num
   return ranges;
 }
 
-/** Random draws before a repeated wild name falls back to a numbered variant. */
-const MAX_DRAWS = 50;
-
 /** A name for a range of `kind`: a first part and an ending (content/names.ts). */
 export function wildName(rng: RngState, kind: WildKind): string {
   const { onsets, suffixes } = WILD_NAME_PARTS[kind];
@@ -170,7 +167,9 @@ export function nameWilds(
   const used = new Set(taken);
   return kinds.map((kind) => {
     let name = wildName(rng, kind);
-    for (let draw = 1; draw < MAX_DRAWS && used.has(name); draw++) name = wildName(rng, kind);
+    for (let draw = 1; draw < MAPGEN.nameDraws && used.has(name); draw++) {
+      name = wildName(rng, kind);
+    }
     const unique = numbered(name, used);
     used.add(unique);
     return unique;

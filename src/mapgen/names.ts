@@ -1,10 +1,9 @@
 // Province names from per-terrain syllables (content/names.ts), unique across the map.
+import { MAPGEN } from '../content/mapgen';
 import { NAME_MIDDLE_CHANCE, NAME_MIDDLES, NAME_SYLLABLES } from '../content/names';
 import type { TerrainId } from '../content/terrain';
 import { chance, pick, type RngState } from '../sim/rng';
 
-/** Random draws before a duplicate name falls back to a numbered variant. */
-const MAX_DRAWS = 50;
 const NUMERALS = ['II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
 export function provinceName(rng: RngState, terrain: TerrainId): string {
@@ -14,7 +13,10 @@ export function provinceName(rng: RngState, terrain: TerrainId): string {
   return onset + middle + pick(rng, suffixes);
 }
 
-/** Returns `name`, or `name II`, `name III`, ... until it is not in `taken`. */
+/**
+ * Returns `name`, or `name II`, `name III`, ... until it is not in `taken`. It draws nothing and
+ * ends within `taken.size` + 1 candidates, as each taken name rules out one.
+ */
 export function numbered(name: string, taken: ReadonlySet<string>): string {
   if (!taken.has(name)) return name;
   for (const numeral of NUMERALS) {
@@ -48,7 +50,7 @@ export function nameProvinces(
   terrains.forEach((terrain, i) => {
     if (fixedIndices.has(i)) return;
     let name = provinceName(rng, terrain);
-    for (let draw = 1; draw < MAX_DRAWS && taken.has(name); draw++) {
+    for (let draw = 1; draw < MAPGEN.nameDraws && taken.has(name); draw++) {
       name = provinceName(rng, terrain);
     }
     const unique = numbered(name, taken);

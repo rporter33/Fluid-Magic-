@@ -5,6 +5,10 @@
 // With params.wilds (Phase 1b) an attempt also plans wild ranges, makes cells for them beyond
 // the province count, places them after the capitals and the noise, and builds the provinces
 // from the cells that remain (wilds.ts). Without it every step and draw is as before.
+// No placement loop spins (docs/10 Phase 1): each has a fixed cap from MAPGEN or WILDS and takes
+// a shortfall, and a shortfall outside the tolerance (the exact province count, every rule of
+// validateMap) fails the attempt with its reason; if no attempt in MAPGEN.maxAttempts succeeds,
+// generateMap throws with the last one's reasons.
 import { isColor } from '../content/colors';
 import { MAP_SIZES, MAPGEN } from '../content/mapgen';
 import { isTerrainId, type TerrainId } from '../content/terrain';
@@ -13,7 +17,6 @@ import { createRng, type RngState } from '../sim/rng';
 import { centroid, roundedRect, touchesOutline } from './geometry';
 import { bfsDistances, isConnected } from './graph';
 import { nameProvinces } from './names';
-import { createSimplex2D, fractal, type Noise2D } from './noise';
 import {
   capitalBalance,
   independentStrength,
@@ -24,7 +27,7 @@ import {
   wellspringSteps,
 } from './placement';
 import { mapDimensions, provinceCount, wellspringCount } from './size';
-import { assignTerrain } from './terrain';
+import { assignTerrain, terrainFields } from './terrain';
 import type { MapData, MapGenParams, MapProvince, Point } from './types';
 import { validateMap } from './validate';
 import { buildWilds, nameWilds, placeWilds, planWilds, type WildPlan } from './wilds';
@@ -95,13 +98,22 @@ function attempt(rng: RngState, params: MapGenParams, count: number, frame: Fram
     bounds,
     MAPGEN.poissonRadius * scale,
     MAPGEN.poissonTries,
+    MAPGEN.pointTries,
   );
-  const sites = lloydRelax(
-    adjustCount(rng, sampled, total, outline, bounds, MAPGEN.fillCandidates),
+  const placed = adjustCount(
+    rng,
+    sampled,
+    total,
     outline,
     bounds,
-    MAPGEN.lloydRounds,
+    MAPGEN.fillCandidates,
+    MAPGEN.pointTries,
   );
+  if (placed.length < total) {
+    const missing = `${String(total - placed.length)} of ${String(total)} sites`;
+    return { ok: false, problems: [`${missing} found no point inside the outline`] };
+  }
+  const sites = lloydRelax(placed, outline, bounds, MAPGEN.lloydRounds);
   const cells = voronoiCells(sites, outline, bounds);
   const adj = adjacency(cells, MAPGEN.minSharedEdge * scale, 1e-6 * scale);
   const sparse = adj.findIndex((list) => list.length < MAPGEN.minNeighbors);
@@ -114,13 +126,7 @@ function attempt(rng: RngState, params: MapGenParams, count: number, frame: Fram
   if (capitalCells === null) return { ok: false, problems: ['capitals too close'] };
 
   // Noise sampled at every site.
-  const elevationNoise = createSimplex2D(rng);
-  const moistureNoise = createSimplex2D(rng);
-  const frequency = MAPGEN.noiseFeatures / Math.max(bounds.width, bounds.height);
-  const sample = (noise: Noise2D) =>
-    sites.map((p) => fractal(noise, p.x * frequency, p.y * frequency, MAPGEN.noiseOctaves));
-  const elevation = sample(elevationNoise);
-  const moisture = sample(moistureNoise);
+  const { elevation, moisture } = terrainFields(rng, sites, bounds);
 
   // Wilds, then provinces from the cells that remain, re-indexed in site order.
   let ranges: number[][] = [];

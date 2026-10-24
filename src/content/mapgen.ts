@@ -42,6 +42,12 @@ export const MAPGEN = {
   poissonTries: 30,
   /** Random candidates compared when a missing site is added (the farthest one wins). */
   fillCandidates: 30,
+  /**
+   * Draws for one random point inside the map outline before the draw gives up and the caller
+   * takes the shortfall (docs/10 Phase 1: no placement loop spins). The rounded rectangle takes
+   * about 98% of draws; 600 maps never needed more than 3.
+   */
+  pointTries: 100,
   lloydRounds: 2,
   /**
    * Shared borders shorter than this fraction of sqrt(provinceArea) do not make provinces
@@ -96,6 +102,8 @@ export const MAPGEN = {
 
   /** Starting population is rounded to this step. */
   popRounding: 100,
+  /** Draws for a province or wild name that no other has before it takes a numbered variant. */
+  nameDraws: 50,
   /** Generation retries with fresh randomness when a map fails validation. */
   maxAttempts: 25,
 } as const;

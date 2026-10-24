@@ -327,6 +327,18 @@ Rules settled during implementation where this doc was silent or conflicted, rec
 - **Independents** (section 9): each province stores its starting defender strength
   (`8 + 4d`, 30 on Wellsprings) at generation. Troop composition by terrain comes in Phase 3.
 - **Starting population** is uniform in the terrain's range, rounded to 100.
+- **Elevation and moisture** (`terrainFields`, `src/mapgen/terrain.ts`) are fractal simplex noise,
+  each from its own permutation drawn from the generator's rng, sampled at the same coordinates;
+  the two fields are uncorrelated across seeds (2026-10-24, the docs/10 Phase 1 hardening).
+- **Placement caps** (2026-10-24): no placement loop can spin. A point drawn inside the outline
+  gives up after `MAPGEN.pointTries` draws; Bridson's sample gives each point `poissonTries`
+  candidates; a missing site takes the best of `fillCandidates`; capitals and Wellsprings stop
+  when no candidate is left (Wellspring swaps after `wellspringSearchPasses` passes), springs when
+  no province has room, wild ranges after `WILDS.seedTries` seeds, names after `nameDraws` draws
+  (then a numeral). The tolerance is the exact province count and every rule `validateMap`
+  checks: an attempt short of it fails with its reason, and if none of `maxAttempts` attempts
+  succeeds, generation throws with the last attempt's reasons. Every map that generated before
+  the caps is unchanged.
 
 **Wilds (Phase 1b)**
 

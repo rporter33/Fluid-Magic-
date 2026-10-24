@@ -154,7 +154,7 @@ fluid-magic/
       voronoi.ts          # Poisson disc + Delaunay/Voronoi (use d3-delaunay), Lloyd, adjacency
       geometry.ts         # polygon area, centroid, rounded rectangle, convex clipping, wildOutline
       noise.ts            # seeded simplex noise
-      terrain.ts          # terrain by rank from elevation and moisture
+      terrain.ts          # the elevation and moisture fields; terrain by rank from them
       graph.ts            # BFS distances, connectivity, cut vertices
       placement.ts        # capitals, wellsprings, springs, independents
       names.ts            # unique province names

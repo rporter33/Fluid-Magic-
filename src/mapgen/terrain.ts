@@ -1,8 +1,36 @@
 // Terrain by rank: noise gives each province an elevation and a moisture, and terrains are
 // handed out in order so every map gets the shares in content/mapgen.ts exactly (capitals
 // included) while the noise keeps similar terrain clustered into ranges, forests, and marshes.
-import { TERRAIN_SHARES } from '../content/mapgen';
+import { MAPGEN, TERRAIN_SHARES } from '../content/mapgen';
 import { TERRAIN_IDS, type TerrainId } from '../content/terrain';
+import type { RngState } from '../sim/rng';
+import { createSimplex2D, fractal, type Noise2D } from './noise';
+import type { Point } from './types';
+
+/** The fields terrain is assigned from, one value per site. */
+export interface TerrainFields {
+  elevation: number[];
+  moisture: number[];
+}
+
+/**
+ * Elevation and moisture at each site (docs/10 Phase 1): fractal simplex noise at
+ * MAPGEN.noiseFeatures across the map's longer side, each field from its own permutation drawn
+ * from `rng` (elevation's first), both sampled at the same coordinates. The separate
+ * permutations make the fields independent; one field read twice would lay terrain in bands.
+ */
+export function terrainFields(
+  rng: RngState,
+  sites: readonly Point[],
+  bounds: { width: number; height: number },
+): TerrainFields {
+  const elevationNoise = createSimplex2D(rng);
+  const moistureNoise = createSimplex2D(rng);
+  const frequency = MAPGEN.noiseFeatures / Math.max(bounds.width, bounds.height);
+  const sample = (noise: Noise2D) =>
+    sites.map((p) => fractal(noise, p.x * frequency, p.y * frequency, MAPGEN.noiseOctaves));
+  return { elevation: sample(elevationNoise), moisture: sample(moistureNoise) };
+}
 
 /**
  * Splits `total` into integer counts proportional to `shares` (largest remainder; ties go

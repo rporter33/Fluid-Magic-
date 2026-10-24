@@ -6,6 +6,7 @@ import { MAPGEN, type MapSizeId } from '../../src/content/mapgen';
 import { generateMap } from '../../src/mapgen/generate';
 import type { CapitalSpec, MapData, MapGenParams } from '../../src/mapgen/types';
 import { DEEPMOSS, KHARNATH, hopsFrom, indexAdjacency, indexOf } from './fixtures';
+import { patched } from '../content/patched';
 import { expectPlayable } from './playable';
 
 const medium = (seed: number): MapGenParams => ({
@@ -145,6 +146,18 @@ describe('determinism', () => {
       const order = p.neighbors.map((n) => Number(n.slice(1)));
       expect([...order].sort((x, y) => x - y)).toEqual(order);
     });
+  });
+});
+
+describe('a shortfall', () => {
+  it('fails the attempt with its reason, and the map with the last reasons, never spinning', () => {
+    // With no draw allowed, no site finds a point inside the outline: every attempt runs short.
+    patched(MAPGEN as { pointTries: number }, 'pointTries', 0, () => {
+      expect(() => generateMap(medium(1))).toThrow(
+        'no valid map for seed 1: 60 of 60 sites found no point inside the outline',
+      );
+    });
+    expect(generateMap(medium(1))).toEqual(MAPS[0]);
   });
 });
 

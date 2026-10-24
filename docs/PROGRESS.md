@@ -1208,6 +1208,49 @@ part (slots, gzip, IndexedDB, autosave) with the game screens.
   Phase 9 adds the save and load screens on `serialize` and `deserialize`.
 - Unchanged: `golden.json`, the preset pins, the runner's 20 games.
 
+## Phase 1 hardening: capped placement loops, uncorrelated fields, the termination sweep (done)
+
+The third code follow-up of the docs merge (`docs/10` Phase 1: uncorrelated fields; every placement
+loop capped, taking a shortfall and reporting one outside the tolerance; termination for 100
+consecutive seeds).
+- Audit of every loop in `src/mapgen` that draws or searches:
+  - a random point inside the outline (`voronoi.ts`, the first Poisson point and every fill
+    candidate): `for (;;)` rejection sampling, the one loop that could spin. Now capped at
+    `MAPGEN.pointTries` (100, new) and returning null; Poisson then returns no points, and
+    `adjustCount` stops filling and returns the shortfall, which `attempt` reports ("60 of 60 sites
+    found no point inside the outline") instead of building a map from it;
+  - Bridson's sample: `poissonTries` candidates per active point, each round adding or retiring a
+    point, so it ends (content validation now asks for a positive radius and whole caps);
+  - `adjustCount`: trimming removes one point a round; filling compares `fillCandidates`;
+  - capitals (`placeCapitals`): one capital a round or null; Wellsprings: the greedy pick adds one
+    or returns null, swaps stop after `wellspringSearchPasses` passes, the starts are
+    `wellspringSearchStarts`, then every candidate once; springs: the top-up adds one a round or
+    stops when no province has room (a shortfall `validateMap` reports); wild ranges:
+    `WILDS.seedTries` seeds, growth one cell a round or stop; names: `nameDraws` draws (50, moved
+    from two code constants to content), then `numbered`, which draws nothing and ends within
+    `taken.size` + 1 candidates; attempts: `maxAttempts` (25), then a throw with the reasons.
+- Bit identity: 880 maps (Small, Medium and Large with 2, 3 and 4 nations, wilds off and on; seeds 1
+  to 100 with 2 nations, 1 to 15 with 3 and 4, and Medium seeds 101 to 200 with wilds) hashed byte
+  for byte before and after: all equal. On 600 of them the longest run of draws for one point was 3
+  (1.57% of draws miss the outline) and no map used more than 8 of its 25 attempts. The identity
+  test, the wild pins and `golden.json` pass unchanged.
+- Fields: the elevation and moisture sampling moved from `generate.ts` into `terrainFields`
+  (`terrain.ts`), the same draws in the same order. Over seeds 1 to 100 their correlation averages
+  -0.069 (-0.004 over 5,000 seeds, standard error 0.005); one map's |r| averages 0.27, since about
+  1.5 noise features span a map, while one field read twice gives r = 1.
+- Tests: `tests/mapgen/generate.termination.small|medium|large.test.ts` (HEAVY, marked in each file:
+  seeds 1 to 100 per size, wilds off and on, 600 maps; each sweep 1.3 s to 5.6 s alone and 3.3 s to
+  7.8 s with the three in parallel at a load average of 11; 60 s timeouts, helper
+  `tests/mapgen/termination.ts`); `voronoi.test.ts` (the cap ends a draw at exactly
+  `pointTries`, Poisson and the fill return the shortfall, trimming draws nothing, the cap far above
+  need); `generate.test.ts` (a shortfall fails every attempt and the map with its reason, never
+  spinning); `terrain.test.ts` (`terrainFields`' draws and sampling; both fields vary; |mean r| under
+  0.15 and mean |r| under 0.4 over 100 seeds); `tests/content/validate.test.ts` (every cap a whole
+  number of at least 1, a positive Poisson radius). 2325 tests in 135 files before, 2338 in 138
+  after.
+- Docs: `docs/01` Implementation decisions (fields, placement caps), `docs/09-balance.md` (the two
+  caps), `docs/06` layout (`terrain.ts`).
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -1285,9 +1328,10 @@ part (slots, gzip, IndexedDB, autosave) with the game screens.
   maps; it now retries from every candidate while unfair, and the measured 4-nation maps are at 0
   or 1 (QA sweep above). A 1-hop map may still have no fair set at all (Small seed 6 has none);
   nothing proves 1 hop is always reachable.
-- A dead elevation noise field would not fail any test; terrain wiring is covered only by
-  exact shares and clustering. Pinning one seed's terrain would catch it but would churn on
-  every deliberate generator change.
+- Resolved (Phase 1 hardening, 2026-10-24): a dead noise field now fails
+  `tests/mapgen/terrain.test.ts`, which checks `terrainFields` (the function the generator calls)
+  for spread in both fields and for independence across 100 seeds; the bit-identity and wild pins
+  catch a change to how the generator wires the fields in.
 - For later phases: `wellspringsToWin` (majority of Wellsprings) lives in
   `src/mapgen/placement.ts`; Phase 6 victory should reuse it. (Resolved in Phase 3: farmland
   and wasteland use the plains independent pool.)
