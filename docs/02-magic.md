@@ -76,6 +76,12 @@ Ritual primitives:
 - `scry { provinceId }`, `dominionPush { provinceId, strength }`
 - `manaConvert { from, to, ratio }`
 
+Presentation is data too. Every battle spell carries
+`fx: { family, scale?: 1|2|3, duration?: ms }` where `family` is one of the effect
+families in `docs/09-art-direction.md` and the color is the spell's own color. The sim
+ignores `fx`; the replay viewer reads it. Rituals have no `fx`; the map shows a single
+province ring in the ritual's color when one resolves.
+
 ## 6. Spell list
 
 Each color has 5 battle spells and 5 rituals. **Red and Green must be fully implemented

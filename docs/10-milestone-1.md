@@ -54,8 +54,15 @@ rendering before the sim phases are solid; the headless runner is the first "gam
   assignment by noise (elevation and moisture, simplex noise with the seeded rng),
   capital placement by farthest-point sampling, Wellsprings, springs, independents,
   province names from a syllable generator per terrain.
+- Elevation and moisture are sampled with different offsets drawn from `state.rng` so
+  the two fields are uncorrelated; sampling both at the same coordinates produces
+  terrain in bands. Generation fills plain data first; nothing in `mapgen` touches Pixi.
+- Every placement loop (Poisson points, capitals, Wellsprings, springs) has a fixed
+  attempt cap and accepts a shortfall rather than spinning; a shortfall outside the
+  tolerance below is a generation failure that is reported, not hidden.
 - Tests: connectivity, capital distance, province count within ±5%, no province with
-  fewer than 2 neighbors, springs coverage.
+  fewer than 2 neighbors, springs coverage, and termination within tolerance for 100
+  consecutive seeds.
 
 ### Phase 2: Economy and population
 - `types.ts` full GameState. `createGame.ts`. `tick.ts` skeleton with phase ordering.
@@ -102,10 +109,18 @@ rendering before the sim phases are solid; the headless runner is the first "gam
 
 ### Phase 10: Battle replay viewer
 - BattleRenderer per the UI doc with the animation table from the art doc.
+- `render/effects/`: the effect families and per-color motion grammar from the art doc,
+  driven by `cast` and `damage` replay events. Tweens and particle containers only; no
+  custom shaders or full-screen filters in M1.
+- Dev-only effects gallery (route `#/gallery`, excluded from the main menu): every spell
+  effect looping side by side, grouped by color and family, with a 300 vs 300 backdrop
+  toggle. Used to check that the five colors read differently at battle scale.
 
 ### Phase 11: Art and animation
 - All SVG placeholders, part system, tinting, procedural animations, spell particles,
   icons, chassis portraits. Manifest with fallbacks.
+- Review the effects gallery with the readability rules in the art doc before closing
+  the phase; adjust the grammar, not individual spells.
 
 ### Phase 12: Balance and polish
 - Run the playtest checklist in `docs/09-balance.md`. Tune. Record changes. Fix the

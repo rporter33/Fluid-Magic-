@@ -57,9 +57,82 @@ sheets, so every unit gets them for free:
 | Rout | 0.6 s flip horizontally, slide off the edge |
 | Cast | 0.6 s staff raise, a ring in the spell color expands from the caster |
 
-Spell visual effects: a particle burst using 12 to 40 small circles in the color's
-palette with element-specific motion (Ember rises and flickers, Loam spreads outward
-along the ground, Tide ripples, Radiance radiates straight lines, Umbra sinks).
+## Spell effects
+
+Effects are built from a small set of **families**, each with a fixed lifecycle, and a
+**motion grammar** per color. A spell is one family plus one color plus a scale; nothing
+else is authored per spell. This keeps the five colors distinguishable at battle scale and
+lets a new spell get a finished effect by naming its family in content.
+
+### Families
+
+Every family runs spawn, sustain, fade. Durations are at scale 1; scale 2 and 3 multiply
+particle count and radius by 1.5 and 2 and add 100 ms to sustain.
+
+| Family | Use for | Spawn | Sustain | Fade | Particles |
+|--------|---------|-------|---------|------|-----------|
+| `strike` | single-target damage | 80 ms flash at the target | 0 | 150 ms | 6 to 10 |
+| `projectile` | ranged damage with travel | sprite leaves caster | arc to target, 300 ms | burst on arrival (uses `burst` at scale 1) | trail of 8 |
+| `burst` | area damage | ring expands from center, 120 ms | 150 ms | 250 ms | 12 to 40 |
+| `field` | fieldEffect, lingering area debuff | 300 ms fill of the area | until the effect ends | 400 ms | 20, slow drift |
+| `aura` | buffs, heals, blessings on friendlies | ring from caster, 200 ms | pulse once per 500 ms on each target | 300 ms | 8 per target |
+| `summon` | summon | 400 ms column at the spawn point | 0 | 300 ms | 16 |
+| `shock` | moraleShock, debuff on enemies | 100 ms inward pull | 200 ms | 200 ms | 10 |
+
+Total length at scale 1 never exceeds 900 ms so an effect finishes inside one replay
+round at the default speed (1.5 s). At speeds above 2x, skip sustain.
+
+### Motion grammar per color
+
+The family says what happens; the color says how it moves. Both tables apply at once.
+
+| Color | Particle shape | Motion | Easing | Blend |
+|-------|----------------|--------|--------|-------|
+| W Radiance | 2 px lines radiating from center | straight outward, no gravity | ease-out | additive |
+| U Tide | concentric arcs | ripple outward with a 60 ms stagger, slight horizontal sway | sine in-out | normal, 70% alpha |
+| B Umbra | soft circles | sink downward and inward, slow | ease-in | multiply, then additive accent |
+| R Ember | 3 px circles, size jitter 50% | rise with flicker (random x jitter per frame from the renderer's own rng, never the sim's) | ease-out, fast | additive |
+| G Loam | 4 px leaves (short rounded rects) | spread outward along the ground, hugging the row line | ease-out, slow | normal |
+
+Palette use is the same in every family: primary for 70% of particles, accent for 30%,
+secondary only for the `field` fill.
+
+### Glow
+
+Glow is per effect, not per screen. Each effect lives in its own container with
+`blendMode: 'add'` where the grammar says additive; the container gets a one-step
+`BlurFilter` only for `burst` and `aura` at scale 3. No full-screen bloom, no custom
+shaders in M1. Units never glow; only effects and the mana symbol of a casting mage.
+
+### Readability rules
+
+- Two spells of different colors in the same family must be told apart with the sprites
+  hidden. Two spells of the same color in different families must be told apart with
+  color removed. The effects gallery (see milestone Phase 10) exists to check both.
+- Effects never cover the damage numbers; numbers draw on a layer above all effects.
+- At most 3 `burst` or `field` effects play at once; further casts in the same round queue
+  and play in event order so a replay stays deterministic to the eye as well as the log.
+- Effect durations and particle counts are tuned in `content/fx.ts`, never in render code.
+
+### M1 spell to family mapping
+
+| Spell | Family | Scale |
+|-------|--------|-------|
+| Ember Dart | projectile | 1 |
+| Fireball | burst | 2 |
+| Warcry | aura | 2 |
+| Blood Fury | aura | 1 |
+| Pyre Storm | burst | 3 |
+| Thorn Spray | burst | 1 |
+| Bark Skin | aura | 1 |
+| Entangle | shock | 2 |
+| Swarm | summon | 2 |
+| Regrowth | aura | 3 |
+
+W, U, B spells are assigned a family when they are implemented, using the same table
+shape. Battle defaults when a spell has no `fx`: damage with a single target is `strike`,
+area damage is `burst`, buffs and heals are `aura`, debuffs are `shock`, summons are
+`summon`, field effects are `field`.
 
 ## Icons
 
