@@ -96,6 +96,15 @@ nation naming the caster's nation, never the caster.
 - `bribe { gold }` (target prisoner held by the caster's nation; no contest; raises the next
   recruit contest by `gold / 50`)
 
+Presentation is data too. Every battle spell carries
+`fx: { family, scale?: 1|2|3, duration?: ms }` where `family` is one of the effect
+families in `docs/09-art-direction.md` and the color is the spell's own color. For the
+eleven M1 battle spells, `duration` is the full form in `docs/12-battle-presentation.md`
+S2.10, which keeps their beats, durations and particle counts (owner decision 2026-10-24,
+`docs/design/battle-overhead.owner-answers.md`). The sim ignores `fx`; the replay viewer
+reads it. Rituals have no `fx`; the map shows a single province ring in the ritual's color
+when one resolves.
+
 ## 6. Spell list
 
 Each color has 5 battle spells and 5 rituals. **Red and Green must be fully implemented

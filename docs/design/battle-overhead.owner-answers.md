@@ -116,3 +116,26 @@ Read as:
    winged Fire Sprite stay; the Thornwood god palettes stay colour edits of the Cinder paintings.
 6. Next is stage D, animation and magic, opening with the magic pilot (Fireball and Entangle) shown to the owner
    before the rest (art plan section 7.5).
+
+## 2026-10-24, the spell-effects spec from `claude/m1-design-docs` against `docs/12`
+
+Another session's commit 8056fa7 (on `claude/m1-design-docs`) gave `docs/09` effect families with a 900 ms cap and
+12 to 40 particles, and said units never glow. `docs/12` S2.10, written earlier at the owner's direction, makes
+Fireball last 1.9 s and Entangle 1.4 s with 40 to 160 particles, and the art plan lets creatures glow while using
+their fire. Asked which should win, the owner chose:
+
+> Keep the flashier timing (Recommended)
+
+The option as offered: "Fireball 1.9 s, Entangle 1.4 s, the particle counts you asked for. Adopt everything else
+from the new spec: effect families, colour styles, at most 3 big effects at once, numbers on top, the gallery,
+shorter versions at 2x speed and up."
+
+> Glow only during own fire (Recommended)
+
+The option as offered: "No unit glows at rest. A creature's cracks or veins light up only while it uses its own fire
+ability, as part of that effect. Spell light may also tint nearby figures."
+
+Read as: `docs/12`'s beats, durations and particle counts stand for the eleven M1 battle spells; the families, the
+color grammar, the glow container rules, the readability rules, the three-effect cap, numbers above effects,
+`content/fx.ts`, the effects gallery and the 2x short form are adopted (`docs/02`, `06`, `09`, `10` carry both); a
+unit never glows at rest, and a creature's emissive parts light only during its own fire ability.

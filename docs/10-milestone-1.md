@@ -91,8 +91,17 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   assignment by noise (elevation and moisture, simplex noise with the seeded rng),
   capital placement by farthest-point sampling, Wellsprings, springs, independents,
   province names from a syllable generator per terrain.
+- Elevation and moisture are sampled with different offsets or permutations drawn from
+  `state.rng` so the two fields are uncorrelated; sampling one field at the same coordinates
+  for both produces terrain in bands. (The built generator draws a separate simplex
+  permutation per field, which meets this.) Generation fills plain data first; nothing in
+  `mapgen` touches Pixi.
+- Every placement loop (Poisson points, capitals, Wellsprings, springs) has a fixed
+  attempt cap and accepts a shortfall rather than spinning; a shortfall outside the
+  tolerance below is a generation failure that is reported, not hidden.
 - Tests: connectivity, capital distance, province count within ±5%, no province with
-  fewer than 2 neighbors, springs coverage.
+  fewer than 2 neighbors, springs coverage, and termination within tolerance for 100
+  consecutive seeds.
 
 ### Phase 2: Economy and population
 - `types.ts` full GameState. `createGame.ts`. `tick.ts` skeleton with phase ordering.
@@ -265,6 +274,15 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   flourish; placeholder parts for every chassis and slot family.
 - Portrait busts in the replay docks, name cards and result card; the replay modal in the oak and
   brass frame.
+- `render/effects/`: the effect families and per-color motion grammar from the art doc, driven
+  by `cast` and `damage` replay events, at the timings, beats and particle counts of
+  `docs/12-battle-presentation.md` S2.10 (owner decision 2026-10-24). Tweens and particle
+  containers; no custom shaders; no full-screen filter except the cinematic moments
+  `docs/12` names (the dim of Pyre Storm, the god's fall), at High quality.
+- Dev-only effects gallery (route `#/gallery`, excluded from the main menu; it can live in the
+  replay lab): every spell effect looping side by side, grouped by color and family, with a
+  300 vs 300 backdrop toggle, a sprites-hidden toggle and a color-removed toggle. Used to
+  check the art doc's readability rules at battle scale.
 - Done when the S1 to S5 tests pass, no sound mapping is pending, and the owner has signed
   off the listening checklist in `docs/11-sound.md`.
 
@@ -286,6 +304,8 @@ Phases 7 to 9. Each stage ends green and is committed with the prefix `Phase 10 
   brush wipe (the cross-fade stays); standees at Near and the cloaked figure that stands for an
   unscouted independent force; pole motifs at Near (Mid stays); battle scars; personal names;
   the parchment surfaces; raster integration.
+- Review the effects gallery with the readability rules in the art doc before closing the
+  phase; adjust the grammar, not individual spells.
 
 ### Phase 12: Balance and polish
 - Run the playtest checklist in `docs/09-balance.md`. Tune. Record changes. Fix the

@@ -100,9 +100,99 @@ sheets, so every unit gets them for free:
 | Map repaint | a 600 ms cross-fade over a province whose slow look changed; at most 8 at a month end, the rest instant |
 | Table ambience | candle flames ±3% brightness at 0.7 to 1.3 Hz; the hearth ±4% over 7 s; at most 12 dust motes drifting 2 to 4 px/s in the window light, never over the cloth |
 
-Spell visual effects: a particle burst using 12 to 40 small circles in the color's
-palette with element-specific motion (Ember rises and flickers, Loam spreads outward
-along the ground, Tide ripples, Radiance radiates straight lines, Umbra sinks).
+## Spell effects
+
+Effects are built from a small set of **families**, each with a fixed lifecycle, and a
+**motion grammar** per color. A spell is one family plus one color plus a scale; nothing
+else is authored per spell. This keeps the five colors distinguishable at battle scale and
+lets a new spell get a finished effect by naming its family in content.
+
+### Families
+
+Every family runs spawn, sustain, fade. Durations are at scale 1; scale 2 and 3 multiply
+particle count and radius by 1.5 and 2 and add 100 ms to sustain.
+
+| Family | Use for | Spawn | Sustain | Fade | Particles |
+|--------|---------|-------|---------|------|-----------|
+| `strike` | single-target damage | 80 ms flash at the target | 0 | 150 ms | 6 to 10 |
+| `projectile` | ranged damage with travel | sprite leaves caster | arc to target, 300 ms | burst on arrival (uses `burst` at scale 1) | trail of 8 |
+| `burst` | area damage | ring expands from center, 120 ms | 150 ms | 250 ms | 12 to 40 |
+| `field` | fieldEffect, lingering area debuff | 300 ms fill of the area | until the effect ends | 400 ms | 20, slow drift |
+| `aura` | buffs, heals, blessings on friendlies | ring from caster, 200 ms | pulse once per 500 ms on each target | 300 ms | 8 per target |
+| `summon` | summon | 400 ms column at the spawn point | 0 | 300 ms | 16 |
+| `shock` | moraleShock, debuff on enemies | 100 ms inward pull | 200 ms | 200 ms | 10 |
+
+Total length at scale 1 never exceeds 900 ms so an effect finishes inside one replay
+round at the default speed (1.5 s). At speeds above 2x, skip sustain.
+
+**The eleven M1 battle spells keep `docs/12-battle-presentation.md` S2.10** (owner decision
+2026-10-24, `docs/design/battle-overhead.owner-answers.md`: "Keep the flashier timing"): their
+five beats, full and short durations (Fireball 1.9 s, 1.3 s short; Entangle 1.4 s) and
+particle counts (40 to 160 for small casts, up to 300 for large spells at High) win over the
+900 ms total and the particle column above. A family's lifecycle maps onto the beats: spawn is
+charge and release, sustain is travel and impact, fade is linger. The 900 ms total and the
+particle column are the defaults for spells `docs/12` does not storyboard (W, U and B when
+they are implemented, and its generic templates). At speeds above 2x every spell skips
+sustain and plays its short form.
+
+### Motion grammar per color
+
+The family says what happens; the color says how it moves. Both tables apply at once.
+
+| Color | Particle shape | Motion | Easing | Blend |
+|-------|----------------|--------|--------|-------|
+| W Radiance | 2 px lines radiating from center | straight outward, no gravity | ease-out | additive |
+| U Tide | concentric arcs | ripple outward with a 60 ms stagger, slight horizontal sway | sine in-out | normal, 70% alpha |
+| B Umbra | soft circles | sink downward and inward, slow | ease-in | multiply, then additive accent |
+| R Ember | 3 px circles, size jitter 50% | rise with flicker (x jitter from a hash of the particle's index and story time, never the sim's rng and never a per-frame stream, so a scrubbed frame looks the same) | ease-out, fast | additive |
+| G Loam | 4 px leaves (short rounded rects) | spread outward along the ground, hugging the row line | ease-out, slow | normal |
+
+Palette use is the same in every family: primary for 70% of particles, accent for 30%,
+secondary only for the `field` fill. `docs/12` S2.10's color grammar adds to this table
+(Ember's heat shimmer at High quality, Loam's running ground cracks), and its particles are
+closed-form functions of story time (`present/battle/particles.ts`).
+
+### Glow
+
+Glow is per effect, not per screen. Each effect lives in its own container with
+`blendMode: 'add'` where the grammar says additive; the container gets a one-step
+`BlurFilter` only for `burst` and `aura` at scale 3. No full-screen bloom, no custom
+shaders in M1; `docs/12`'s release flash is an overlay under its flash limiter (S2.14), not
+bloom. Units carry no glow of their own at rest, only effects and the mana symbol of a casting
+mage. A creature's emissive parts (the Salamander's cracks, the Ash Colossus' veins, the idols'
+glyphs) light only while it uses its own fire ability, as part of that effect, and a spell's
+light may tint the figures near it (owner decision 2026-10-24: "Glow only during own fire").
+
+### Readability rules
+
+- Two spells of different colors in the same family must be told apart with the sprites
+  hidden. Two spells of the same color in different families must be told apart with
+  color removed. The effects gallery (see milestone Phase 10) exists to check both.
+- Effects never cover the damage numbers; numbers draw on a layer above all effects.
+- At most 3 `burst` or `field` effects play at once; further casts in the same round queue
+  and play in event order so a replay stays deterministic to the eye as well as the log.
+- Effect durations and particle counts are tuned in `content/fx.ts`, never in render code.
+
+### M1 spell to family mapping
+
+| Spell | Family | Scale | Duration (`docs/12` full form, short in brackets) |
+|-------|--------|-------|----------------------------------------------------|
+| Ember Dart | projectile | 1 | 0.9 s (0.6) |
+| Fireball | burst | 2 | 1.9 s (1.3) |
+| Warcry | aura | 2 | 1.3 s |
+| Blood Fury | aura | 1 | 1.4 s |
+| Pyre Storm | burst | 3 | 3.2 s (2.2) |
+| Thorn Spray | burst | 1 | 1.2 s (0.8) |
+| Bark Skin | aura | 1 | 1.2 s |
+| Entangle | shock | 2 | 1.4 s |
+| Swarm | summon | 2 | 1.8 s |
+| Regrowth | aura | 3 | 2.0 s |
+| Bless (the prophet's blessing) | aura | 1 | 1.0 s (0.6) |
+
+W, U, B spells are assigned a family when they are implemented, using the same table
+shape. Battle defaults when a spell has no `fx`: damage with a single target is `strike`,
+area damage is `burst`, buffs and heals are `aura`, debuffs are `shock`, summons are
+`summon`, field effects are `field`.
 
 ## Icons
 

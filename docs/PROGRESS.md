@@ -1105,6 +1105,26 @@ Tests: 2196 in 126 files before, 2207 in 130 files after.
   runner, lean, timing, fairness and `migrateState` items; added, the raster headroom with the
   summon-portrait choice for the owner, and the Wellspring retry's cost.
 
+## Docs: merge of `claude/m1-design-docs` (skills, spell effects, render, save and mapgen notes)
+
+- Merged the two commits another session added on `claude/m1-design-docs`: the reference skills (70e8849,
+  already on this branch unchanged as bc7e083) and 8056fa7 (spell effect families, PixiJS 8 render notes,
+  save and mapgen hardening).
+- Conflicts resolved by keeping both sides: `docs/02` keeps the ploy primitives and gains the `fx` field;
+  `docs/06` keeps the gzip and `STATE_VERSION` notes and gains the load validation and alternating autosave
+  keys; `docs/10` keeps Phase 10's presentation track and Phase 11's painted map and gains the effects module,
+  the dev-only effects gallery and its review.
+- Where 8056fa7 conflicts with this branch, the owner decided (2026-10-24,
+  `docs/design/battle-overhead.owner-answers.md`): `docs/12` S2.10 keeps the eleven M1 spells' beats, durations
+  and particle counts over the 900 ms cap; a unit never glows at rest, and a creature's emissive parts light only
+  during its own fire ability. Reconciled without asking: the camera keeps `docs/07`'s lean-back and table clamp
+  (the [0.5, 3] clamp and 10% margin would hide the table); Ember's flicker comes from a hash of particle and story
+  time, as `docs/12` requires a pure function of story time; `content/fx.ts` and `render/effects/` sit beside
+  `docs/12`'s presentation looks and closed-form particles; the generator's separate simplex permutation per field
+  meets Phase 1's "uncorrelated fields".
+- Follow-up code (next commit): `content/fx.ts` and an `fx` record on each battle spell with its validation; load
+  validation after migration; the mapgen attempt caps and the 100-seed termination test.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.

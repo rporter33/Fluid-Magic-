@@ -135,6 +135,8 @@ fluid-magic/
         validate.ts       # chassis, blessing and boon checks for content validation
         types.ts          # PretenderDesign, awakenings
       buildings.ts
+      fx.ts               # effect families (lifecycle, budgets) and per-color motion grammar; docs/12's
+                          #   presentation/looks/spells.ts and particles.ts read it
       index.ts            # registry: lookups by id, validated on load
       presentation/       # presentation data; never imported by sim, mapgen or ai
                           # the battle presentation's data is in docs/12 S2.1 and S3
@@ -198,6 +200,8 @@ fluid-magic/
         LabelLayer.ts TokenLayer.ts
       portraits.ts        # portrait SVG to cached textures for the replay and map tooltips
       BattleRenderer.ts   # replay viewer
+      effects/            # effect families and color grammar (see art doc), driven by replay events; the
+                          #   Pixi side of docs/12's present/battle/particles.ts (closed form in story time)
       sprites.ts          # texture loading, tinting, procedural animation helpers
     ui/
       App.tsx
@@ -368,6 +372,18 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
 - The save file's UI block (never `GameState`) also holds presentation state: the map's slow
   look keys with their month index, so a reload shows the same map, and commanders' personal
   names. The sim never reads it.
+- `deserialize` refuses a save whose `version` is greater than the build's (report "saved by
+  a newer version", never guess). Migrations are pure functions applied in order
+  `v -> v+1`; each migration gets a test fixture. After migration the state is validated
+  (required keys present, every id reference resolves, color keys in W U B R G) before it
+  is handed to the UI; the replay leniency above runs first, so a malformed `rerun` still
+  becomes null rather than failing the load. A failed load reports the reason and leaves the
+  current game untouched.
+- Autosave alternates between the keys `autosave` and `autosave-prev` so one bad write
+  never loses both. Autosave never writes a manual slot. Each save is one `put` of the
+  full gzipped JSON; IndexedDB makes that write atomic, so no temp-and-rename is needed.
+- Autosave fires on safe boundaries only: at the end of a tick, never mid-battle
+  resolution or while a command is being applied.
 
 ## Performance targets
 
@@ -378,12 +394,51 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
   per zoom band (Near lazily in 512² tiles); GPU memory for table and map at most 96 MB on a
   Large 4-nation map at device pixel ratio 2.
 
+## Rendering notes (PixiJS 8)
+
+Pin the v8 API; most mistakes come from v7 habits.
+
+- Boot: `const app = new Application(); await app.init({...})`. Options go to `init`, not
+  the constructor. Mount `app.canvas` (there is no `app.view`). Pass `resizeTo` the map
+  container element, not `window`, because React panels share the page.
+- Textures: SVG placeholders are rasterized once through `Assets.load` (or `Assets.add`
+  with a data URL for generated SVG strings) at a fixed resolution per zoom bucket (1x, 2x).
+  `Texture.from(url)` only reads the cache in v8; load first.
+- Events: province polygons and army markers set `eventMode = 'static'`; everything else
+  stays `'passive'`. Map drag listens for `pointerdown` on the stage, then
+  `globalpointermove` (plain `pointermove` stops at the object's edge in v8) and ends on
+  `pointerup` or `pointerupoutside`. Right-click move uses `rightdown`.
+- Ticker: the callback receives the `Ticker`; use `ticker.deltaMS`. Sim ticks come from
+  `ui/loop.ts`, never from the Pixi ticker. The Pixi ticker only drives tweens and camera.
+- Layers: `ProvinceLayer` is a render group (`isRenderGroup: true`) because it changes
+  only on ownership or overlay changes. Army markers and labels are ordinary containers.
+- Teardown: leaving the battle replay destroys its sprites and unloads its textures;
+  `removeChild` alone leaks GPU memory. Destroy an app with `releaseGlobalResources: true`
+  before creating another in the same tab (tests, hot reload).
+
+### Camera (`render/camera.ts`)
+
+- State is `{ x, y, zoom }` in world units with a target for each; every frame the
+  current values move toward the target with exponential smoothing using `deltaMS`
+  (never a per-frame `lerp(a, b, 0.1)`, which changes speed with frame rate).
+- Wheel zooms toward the cursor: keep the world point under the cursor fixed while
+  `zoom` changes. Zoom is stepped multiplicatively (x1.15 per notch) and clamped to the
+  range `docs/07` "The table and the camera" sets: from the lean-back at 0.75 of the scale
+  that fits the whole table to the Near band's closest zoom, with the 8% settle on the
+  start zoom.
+- The view is clamped as `docs/07` says (the view's center stays over the table, so the
+  lean-back shows the table and its props); compute the clamp from viewport size divided
+  by zoom, and re-clamp on resize.
+- WASD pans at a constant screen speed (pixels per second divided by zoom). Drag pans
+  1:1 with the pointer with no smoothing while the button is held.
+
 ## Content validation
 
 `content/index.ts` builds registries and `tests/content/validate.test.ts` asserts: every
 unit referenced by a nation or spell exists; every spell's primitives are implemented;
 every preset fits the budget; every nation has a capital unit list that can be recruited
-on day 1 (requirements satisfiable); color keys are only W U B R G.
+on day 1 (requirements satisfiable); color keys are only W U B R G; every battle spell's
+`fx.family` is one of the families in `docs/09-art-direction.md`.
 
 ## Implementation decisions
 
