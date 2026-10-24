@@ -85,3 +85,34 @@ Read as:
 5. **Mounts painted apart from their riders: later** (as in the pilot verdict). Stage C keeps the joint mounted sheets.
 6. Next is stage C: the approved creatures, mounts and gods as figures standing in the game, beside their portraits,
    without animation (owner review 2), then stage D, animation and magic (owner review 3).
+
+## 2026-10-24, the stage C verdict (owner review 2: creatures, mounts and gods standing in the game)
+
+> Stage C verdict. Creatures and mounts: Fire Sprite Keep; Hornet Swarm Keep; Wolf Keep; Oakheart Keep; Ash Rider
+> Redo (Only a minor change. The lance in the image isn't fully visible a little more for the spear to be intact.
+> That's all otherwise. Good! Don't let this one take up time if fix isn't there.); Wolf Rider Keep (Front view just
+> has the spear appearing to not be fully in tact like the back view.); Giant 01 Keep; Giant 02 Keep; Salamander 03
+> Keep; Salamander 04 Keep (The portrait has him as bidepal not four quad pedal); Treant 01 Keep; Treant 02 Keep;
+> Treant 03 Keep; the rest not yet picked. Gods: Ash Colossus Keep; Ash Phoenix Keep; Pyre Lord Keep; Ember
+> Hierophant Keep; Wild Spirit Keep; World Tree Keep; Horned Hunter Keep; Elder Wyrm Keep; Mother of Beasts Keep;
+> Oracle of the Flux Keep; Titan Keep; Great Wyrm Keep; Ascended Hero Keep; Primordial Keep; the rest not yet picked.
+> Questions: Hornet portrait B; Wolf Rider front War Wolf harness; Wolf Rider at plan size Yes; Pretender gods 1.15
+> larger Yes; Long bodies Keep; Ash Phoenix front Keep; Primordial front Keep; Fire Sprite wings Keep; Thornwood god
+> palettes Accept.
+
+Read as:
+
+1. **Kept:** 13 of the 15 creature and mount figures and 14 of the 16 gods. Not yet picked, and staying as painted
+   until the owner picks: Salamander 02, Treant 04, the Living Monolith and the Cinder Idol.
+2. **Ash Rider: one small fix.** The lance should show whole, not cut off. The owner asked that it not take long: try
+   the cheap fix, and if it does not come, keep the figure as it is.
+3. **Wolf Rider kept, with the same note:** its front view's spear looks cut off where the back view's is whole. It
+   gets the same small fix.
+4. **Salamander 04 kept, with a note:** its portrait shows it standing as a biped, while the figure, like every
+   Salamander, is a four-legged body. No change was asked for now.
+5. **Every question settled on its recommended answer:** the Hornet Swarm's portrait is candidate B; the Wolf Rider
+   front is the War Wolf harness; the Wolf Rider stays at the plan's size; pretender gods are drawn 1.15 times their
+   ladder height; long bodies keep their camera-true height; the Ash Phoenix front, the Primordial front and the
+   winged Fire Sprite stay; the Thornwood god palettes stay colour edits of the Cinder paintings.
+6. Next is stage D, animation and magic, opening with the magic pilot (Fireball and Entangle) shown to the owner
+   before the rest (art plan section 7.5).
