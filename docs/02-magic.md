@@ -101,9 +101,10 @@ Presentation is data too. Every battle spell carries
 families in `docs/09-art-direction.md` and the color is the spell's own color. For the
 eleven M1 battle spells, `duration` is the full form in `docs/12-battle-presentation.md`
 S2.10, which keeps their beats, durations and particle counts (owner decision 2026-10-24,
-`docs/design/battle-overhead.owner-answers.md`). The sim ignores `fx`; the replay viewer
-reads it. Rituals have no `fx`; the map shows a single province ring in the ritual's color
-when one resolves.
+`docs/design/battle-overhead.owner-answers.md`). The sim ignores `fx` (the battle rules
+fingerprint leaves it out, and `tests/sim/fx.guard.test.ts` keeps the sim, the AI and mapgen
+from reading it); the replay viewer reads it (`src/content/fx.ts`). Rituals have no `fx`; the
+map shows a single province ring in the ritual's color when one resolves.
 
 ## 6. Spell list
 

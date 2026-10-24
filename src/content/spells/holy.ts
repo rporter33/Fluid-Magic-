@@ -1,5 +1,6 @@
 // Holy spells: the priests' built-in Bless (docs/04-battle.md, "Commanders in battle"). Holy
-// spells need holy pips instead of color pips, and no research.
+// spells need holy pips instead of color pips, and no research. Bless's fx is docs/09's aura at
+// scale 1 with docs/12 S2.10's full-form length.
 import type { BattleSpellDef } from './types';
 
 export const HOLY_SPELLS = {
@@ -23,5 +24,6 @@ export const HOLY_SPELLS = {
         targets: { kind: 'friendlySquad' },
       },
     ],
+    fx: { family: 'aura', scale: 1, duration: 1000 },
   },
 } satisfies Record<string, BattleSpellDef>;

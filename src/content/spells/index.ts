@@ -5,7 +5,7 @@ import { isColor, type Color } from '../colors';
 import { GREEN_SPELLS } from './green';
 import { HOLY_SPELLS } from './holy';
 import { RED_SPELLS } from './red';
-import type { BattleSpellDef, RitualSpellDef, SpellDef } from './types';
+import type { BattleSpellDef, BattleSpellRules, RitualSpellDef, SpellDef } from './types';
 
 export const SPELLS = {
   ...HOLY_SPELLS,
@@ -43,6 +43,16 @@ export const BATTLE_SPELLS: readonly BattleSpellDef[] = ALL.filter(
 export const RITUALS: readonly RitualSpellDef[] = ALL.filter(
   (s): s is RitualSpellDef => s.kind === 'ritual',
 );
+
+/**
+ * A battle spell without its presentation (`fx`), the other keys in their order: what the battle
+ * rules fingerprint reads (sim/battle/rerun.ts), so a change of look never voids a re-run.
+ */
+export function spellRules(spell: BattleSpellDef): BattleSpellRules {
+  const rules: BattleSpellRules & Partial<Pick<BattleSpellDef, 'fx'>> = { ...spell };
+  delete rules.fx;
+  return rules;
+}
 
 /**
  * A requirement string as pip slots, one per pip: a letter is a slot of that color, and a

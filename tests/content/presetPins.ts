@@ -1,8 +1,9 @@
 // Behavior pins for the six presets of Phase 6, computed on the code before Phase 6b.1 and
 // checked by presets.test.ts after it: every battle setup the bless reaches, and whole games
 // played by the Phase 7 AI. Fields Phase 6b.1 and Phase 1b added to the state (and the save
-// version) are stripped first, and battle setups are put back in the Phase 6 shape (Phase 6b.2 changed the
-// shield field and added others), so equal pins mean equal behavior.
+// version) are stripped first, and battle setups are put back in the Phase 6 shape (Phase 6b.2
+// changed the shield field and added others; battle spells gained their fx), so equal pins mean
+// equal behavior.
 import { runAi } from '../../src/ai/ai';
 import { runMatch } from '../../src/ai/match';
 import { nationDef, type NationDefId, type UnitTypeId } from '../../src/content';
@@ -36,7 +37,8 @@ export function stripped(state: GameState): string {
 
 /**
  * Battle setups in the shape the pins were computed on: Phase 6b.2's shields list back to the
- * single fire shield, and the fields it added (size, spell power, abilities, bound) dropped. It
+ * single fire shield, and the fields it added (size, spell power, abilities, bound) dropped, as is
+ * the `fx` the Phase 5 follow-up gave each battle spell (presentation, which no battle reads). It
  * throws on anything Phase 6 could not have held: a shield of another element, an ability, a
  * bound squad, a spell power.
  */
@@ -45,6 +47,11 @@ function inPhase6Shape(value: unknown): string {
     if (typeof v !== 'object' || v === null || Array.isArray(v)) return v;
     const o = v as Record<string, unknown>;
     if ('bound' in o) throw new Error('a preset setup has a bound squad');
+    if ('fx' in o && Array.isArray(o.effects)) {
+      const rest = { ...o };
+      delete rest.fx;
+      return rest;
+    }
     if (Array.isArray(o.abilities)) {
       if (o.abilities.length > 0) throw new Error('a preset setup has an ability');
       const rest = { ...o };

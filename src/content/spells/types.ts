@@ -1,6 +1,7 @@
 // Shapes of spell records (docs/02-magic.md sections 3 and 5). A spell is data: its costs and
 // a list of effect primitives, the only effects the battle resolver and the ritual code know.
 import type { Color } from '../colors';
+import type { SpellFx } from '../fx';
 import type { Element } from '../types';
 import type { UnitTypeId } from '../units';
 
@@ -103,7 +104,12 @@ export interface BattleSpellDef extends SpellBase {
   /** Mana the caster must carry, consumed by each cast. */
   carriedMana: ManaAmounts;
   effects: readonly BattleEffect[];
+  /** Presentation only (docs/02 section 5): the replay viewer reads it, the sim never does. */
+  fx: SpellFx;
 }
+
+/** A battle spell as the battle rules read it: everything but its presentation. */
+export type BattleSpellRules = Omit<BattleSpellDef, 'fx'>;
 
 export interface RitualSpellDef extends SpellBase {
   kind: 'ritual';

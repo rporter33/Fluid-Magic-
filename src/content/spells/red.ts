@@ -1,4 +1,5 @@
-// Red (Ember) spells, docs/02-magic.md section 6: five battle spells and five rituals.
+// Red (Ember) spells, docs/02-magic.md section 6: five battle spells and five rituals. A battle
+// spell's fx is its effect family and scale from docs/09 with docs/12 S2.10's full-form length.
 import type { BattleSpellDef, RitualSpellDef } from './types';
 
 const battle = { kind: 'battle', color: 'R', holy: 0, carriedMana: {} } as const;
@@ -22,6 +23,7 @@ export const RED_SPELLS = {
         armorPiercing: true,
       },
     ],
+    fx: { family: 'projectile', scale: 1, duration: 900 },
   },
   fireball: {
     ...battle,
@@ -32,6 +34,7 @@ export const RED_SPELLS = {
     description: 'A ball of fire that bursts among five enemies.',
     fatigue: 25,
     effects: [{ kind: 'damage', amount: 10, element: 'fire', targets: { kind: 'area', count: 5 } }],
+    fx: { family: 'burst', scale: 2, duration: 1900 },
   },
   warcry: {
     ...battle,
@@ -51,6 +54,7 @@ export const RED_SPELLS = {
         targets: { kind: 'allFriendly' },
       },
     ],
+    fx: { family: 'aura', scale: 2, duration: 1300 },
   },
   bloodFury: {
     ...battle,
@@ -84,6 +88,7 @@ export const RED_SPELLS = {
         targets: { kind: 'friendlySquad' },
       },
     ],
+    fx: { family: 'aura', scale: 1, duration: 1400 },
   },
   pyreStorm: {
     ...battle,
@@ -97,6 +102,7 @@ export const RED_SPELLS = {
     effects: [
       { kind: 'damage', amount: 14, element: 'fire', targets: { kind: 'area', count: 12 } },
     ],
+    fx: { family: 'burst', scale: 3, duration: 3200 },
   },
 
   callFireSprites: {

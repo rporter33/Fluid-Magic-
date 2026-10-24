@@ -9,7 +9,7 @@ import {
   type UnitAbility,
 } from '../../content/abilities';
 import { BATTLE, FIELD_EFFECTS } from '../../content/rules';
-import { BATTLE_SPELLS, isSpellId, spellDef } from '../../content/spells';
+import { BATTLE_SPELLS, isSpellId, spellDef, spellRules } from '../../content/spells';
 import type { BattleSpellDef } from '../../content/spells/types';
 import { UNITS } from '../../content/units';
 import { UNARMED } from '../../content/units/base';
@@ -30,15 +30,15 @@ let rulesHash: string | null = null;
 
 /**
  * Everything the resolver reads besides the setup and the rng, as JSON: the battle rules, the
- * battle spells, the battle-start abilities (N1), and the unit types (summons are built from
- * content).
+ * battle spells without their presentation (docs/02 section 5: the sim ignores it), the
+ * battle-start abilities (N1), and the unit types (summons are built from content).
  */
 export function battleRulesInput(): string {
   return JSON.stringify({
     BATTLE,
     FIELD_EFFECTS,
     UNARMED,
-    spells: BATTLE_SPELLS,
+    spells: BATTLE_SPELLS.map(spellRules),
     abilities: ABILITIES,
     units: UNITS,
   });

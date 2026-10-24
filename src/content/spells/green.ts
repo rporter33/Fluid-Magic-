@@ -1,4 +1,5 @@
-// Green (Loam) spells, docs/02-magic.md section 6: five battle spells and five rituals.
+// Green (Loam) spells, docs/02-magic.md section 6: five battle spells and five rituals. A battle
+// spell's fx is its effect family and scale from docs/09 with docs/12 S2.10's full-form length.
 import type { BattleSpellDef, RitualSpellDef } from './types';
 
 const battle = { kind: 'battle', color: 'G', holy: 0, carriedMana: {} } as const;
@@ -16,6 +17,7 @@ export const GREEN_SPELLS = {
     effects: [
       { kind: 'damage', amount: 8, element: 'nature', targets: { kind: 'area', count: 3 } },
     ],
+    fx: { family: 'burst', scale: 1, duration: 1200 },
   },
   barkSkin: {
     ...battle,
@@ -34,6 +36,7 @@ export const GREEN_SPELLS = {
         targets: { kind: 'friendlySquad' },
       },
     ],
+    fx: { family: 'aura', scale: 1, duration: 1200 },
   },
   entangle: {
     ...battle,
@@ -59,6 +62,7 @@ export const GREEN_SPELLS = {
         targets: { kind: 'enemySquad' },
       },
     ],
+    fx: { family: 'shock', scale: 2, duration: 1400 },
   },
   swarm: {
     ...battle,
@@ -70,6 +74,7 @@ export const GREEN_SPELLS = {
     fatigue: 35,
     carriedMana: { G: 1 },
     effects: [{ kind: 'summon', unit: 'hornetSwarm', count: 20, side: 'friendly' }],
+    fx: { family: 'summon', scale: 2, duration: 1800 },
   },
   regrowth: {
     ...battle,
@@ -83,6 +88,7 @@ export const GREEN_SPELLS = {
     effects: [
       { kind: 'heal', amount: 10, targets: { kind: 'allFriendlySquads' }, removeDebuffs: 1 },
     ],
+    fx: { family: 'aura', scale: 3, duration: 2000 },
   },
 
   callOfTheWild: {

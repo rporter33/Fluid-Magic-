@@ -3153,8 +3153,9 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   commander arrays and a summons object, every commander's spells as strings, a valid
   `RngState`, and a `rules` string.
 - **`BattleRerun.rules`** (added after the adversarial check): `battleRulesHash()`, the cyrb53
-  hash of `BATTLE`, `FIELD_EFFECTS`, `UNARMED`, the battle spells and the unit types (summons
-  are built from content), computed once per run. `migrateState` loads a re-run whose hash
+  hash of `BATTLE`, `FIELD_EFFECTS`, `UNARMED`, the battle spells (without their `fx`, which is
+  presentation: `spellRules`) and the unit types (summons are built from content), computed once
+  per run. `migrateState` loads a re-run whose hash
   differs from the current build's as null, so the battle replays from its log alone. Without
   it, a rule change that left the log intact went unnoticed and the viewer showed rolls the
   battle never had.

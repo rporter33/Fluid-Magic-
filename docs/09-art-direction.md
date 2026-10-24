@@ -440,3 +440,29 @@ sidecar per image, a contact sheet for approval) and lands in `src/assets/raster
 manifest entry; masters stay outside the bundle in `art-source/`. Rasters in the bundle total at
 most 2 MB. A portrait set is used only when complete (8 faces or more, 4 for a summoned
 commander); the procedural art is always the fallback.
+
+## Implementation decisions
+
+Recorded per `CLAUDE.md`; numbers are also in `docs/09-balance.md`.
+
+**Spell effects as data** (Phase 5 follow-up, 2026-10-24): `src/content/fx.ts` holds the family
+table (`FX_FAMILY_DEFS`), the scale rule (`FX_SCALE_RULE`), the limits (`FX_LIMITS`: 900 ms,
+3 big effects, no sustain above 2x, the blur at scale 3 for `burst` and `aura`), palette use
+(`FX_PALETTE_USE`) and the motion grammar (`FX_GRAMMAR`); each battle spell's `fx` record is in
+its spell file. Where "Spell effects" is silent:
+- **Projectile spawn** is 0 ms: the sprite leaves the caster at once, its 300 ms arc is the
+  sustain, and its fade is a `burst` at scale 1 (520 ms), 820 ms in all.
+- **Lingering sustains**: a `field` sustains until its effect ends, and an `aura` pulses on each
+  target every 500 ms while it lasts; both run under later cues, so the 900 ms total counts only
+  spawn and fade for them (`familyLengthMs`).
+- **Scale** 2 and 3 each add 100 ms to a fixed sustain or travel; a linger gains nothing.
+- **Holy spells** (Bless) take docs/12 S2.10's holy grammar, rays from above in the Radiance
+  palette (`FX_GRAMMAR.holy`), since they have no color of their own.
+- **Particle sizes** the grammar table does not give (Tide's arcs, Umbra's soft circles) are
+  `null` until the effects gallery (Phase 10) sets them in `content/fx.ts`.
+- **`duration`** of the eleven M1 battle spells is docs/12's full form in ms; their short forms
+  stay with docs/12's presentation looks (Phase 10).
+- **The sim never reads `fx`**: the battle rules fingerprint takes each spell through
+  `spellRules`, which drops `fx` and keeps the other keys in order, so adding `fx` left
+  `battleRulesHash()` and every pin as they were and a new look voids no saved re-run;
+  `tests/sim/fx.guard.test.ts` keeps `src/sim`, `src/ai` and `src/mapgen` from naming it.

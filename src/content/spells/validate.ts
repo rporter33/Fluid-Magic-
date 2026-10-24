@@ -1,7 +1,8 @@
-// Checks every spell record: requirements parse, numbers are in range, and every primitive is
-// one the resolver and the ritual code implement (docs/06-architecture.md, "Content
-// validation").
+// Checks every spell record: requirements parse, numbers are in range, every primitive is one
+// the resolver and the ritual code implement, and every battle spell's fx names a known effect
+// family at scale 1 to 3 while rituals have none (docs/06-architecture.md, "Content validation").
 import { isColor } from '../colors';
+import { FX_SCALES, isFxFamily } from '../fx';
 import { ELEMENTS, type UnitDef } from '../types';
 import { isUnitTypeId, UNITS } from '../units';
 import { parseRequirement } from './index';
@@ -84,6 +85,21 @@ function ritualEffectProblems(where: string, e: RitualEffect): string[] {
   }
 }
 
+/** A battle spell's fx (docs/02 section 5): a known family, scale 1 to 3, a length in whole ms. */
+function fxProblems(where: string, fx: unknown): string[] {
+  if (typeof fx !== 'object' || fx === null) return [`${where} has no fx`];
+  const { family, scale, duration } = fx as Record<string, unknown>;
+  const problems: string[] = [];
+  if (!isFxFamily(family)) problems.push(`${where} fx family ${JSON.stringify(family)} is unknown`);
+  if (scale !== undefined && !(FX_SCALES as readonly unknown[]).includes(scale)) {
+    problems.push(`${where} fx scale ${JSON.stringify(scale)} is not 1 to 3`);
+  }
+  if (duration !== undefined && !(typeof duration === 'number' && whole(duration, 1))) {
+    problems.push(`${where} fx duration ${JSON.stringify(duration)} is not whole ms`);
+  }
+  return problems;
+}
+
 export function validateSpell(key: string, s: SpellDef): string[] {
   const where = `spell ${key}`;
   const problems: string[] = [];
@@ -110,7 +126,10 @@ export function validateSpell(key: string, s: SpellDef): string[] {
     if (!(s.fatigue > 0)) problems.push(`${where} bad fatigue`);
     problems.push(...manaProblems(where, s.carriedMana));
     for (const e of s.effects) problems.push(...battleEffectProblems(where, e));
+    problems.push(...fxProblems(where, s.fx));
   } else {
+    // A ritual's look is the map's province ring in its color, never an effect family.
+    if (Object.hasOwn(s, 'fx')) problems.push(`${where} is a ritual and has fx`);
     problems.push(...manaProblems(where, s.cost.mana));
     if (!whole(s.cost.generic, 0)) problems.push(`${where} bad generic cost`);
     if (!whole(s.castDays, 1)) problems.push(`${where} bad cast days`);

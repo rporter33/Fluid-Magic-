@@ -1122,8 +1122,42 @@ Tests: 2196 in 126 files before, 2207 in 130 files after.
   time, as `docs/12` requires a pure function of story time; `content/fx.ts` and `render/effects/` sit beside
   `docs/12`'s presentation looks and closed-form particles; the generator's separate simplex permutation per field
   meets Phase 1's "uncorrelated fields".
-- Follow-up code (next commit): `content/fx.ts` and an `fx` record on each battle spell with its validation; load
-  validation after migration; the mapgen attempt caps and the 100-seed termination test.
+- Follow-up code (the commits below): `content/fx.ts` and an `fx` record on each battle spell with its
+  validation; load validation after migration; the mapgen attempt caps and the 100-seed termination test.
+
+## Phase 5 follow-up: spell effect data (done)
+
+The first code follow-up of the merge above (`docs/02` section 5's `fx`, `docs/09-art-direction.md` "Spell
+effects", `docs/06` "Content validation").
+- Content: new `src/content/fx.ts`: the seven effect families with spawn, sustain and fade at scale 1 and
+  their particle budgets (`FX_FAMILY_DEFS`), the scale rule (`FX_SCALE_RULE`), the limits (`FX_LIMITS`: 900 ms,
+  3 big effects at once, no sustain above 2x, the blur at scale 3), palette use (`FX_PALETTE_USE`), the motion
+  grammar for W U B R G and holy (`FX_GRAMMAR`) and `familyLengthMs`. `BattleSpellDef.fx` (`SpellFx`: family,
+  optional scale and duration) is required, and the eleven battle spells carry docs/09's family and scale with
+  docs/12 S2.10's full form in ms (Ember Dart projectile 1, 900; Fireball burst 2, 1900; Warcry aura 2, 1300;
+  Blood Fury aura 1, 1400; Pyre Storm burst 3, 3200; Thorn Spray burst 1, 1200; Bark Skin aura 1, 1200;
+  Entangle shock 2, 1400; Swarm summon 2, 1800; Regrowth aura 3, 2000; Bless aura 1, 1000). `validateSpell`
+  refuses an unknown family, a scale outside 1 to 3, a length that is not whole ms, a battle spell without fx
+  and a ritual with one.
+- The sim never reads `fx`: `battleRulesInput()` takes the spells through `spellRules` (`content/spells`),
+  which drops `fx` and keeps the other keys in order, so the fingerprint is byte for byte what it was
+  (`battleRulesHash()` 17368d21513941 before and after) and a new look voids no saved re-run.
+  `tests/sim/fx.guard.test.ts` scans `src/sim`, `src/ai` and `src/mapgen` for an `fx` name, an `'fx'` key or a
+  `content/fx` import (the province effect id prefix in `ids.ts` is the one allowance), checks the fingerprint
+  with every spell's fx changed, and fights the 150 golden battles with every fx changed: identical.
+- `tests/content/presetPins.ts` puts battle setups back in their Phase 6 shape before hashing, dropping each
+  field later phases added; it now drops the spells' `fx` too (the setups carry whole spell records), and every
+  pinned hash is the one recorded before.
+- Readings where docs/09 is silent are at the end of `docs/09-art-direction.md` (projectile spawn 0 ms,
+  lingering sustains, +100 ms at scale 2 and 3 alike, holy as rays from above in the Radiance palette, sizes
+  left to the effects gallery); `docs/09-balance.md` has the row. `docs/02` and `docs/12` say the fingerprint
+  leaves `fx` out.
+- Tests: `tests/content/fx.test.ts` (the family table, anchors and budgets, the scale rule, every family within
+  900 ms at scale 1, the limits, the grammar, palette use); `spells.test.ts` (each battle spell's fx, no ritual
+  fx, every refusal, `validateContent` over a patched spell, `spellRules`); `tests/sim/fx.guard.test.ts`.
+  2207 tests in 130 files before, 2227 in 132 after.
+- Unchanged: `tests/sim/battle/golden.json`, the preset pins, and the runner (`npm run sim:aivai -- --games 20
+  --seed 1`): Cinder Horde 16, Thornwood 4, no winner 0, mean 21.6 months, 0 refused, game for game as before.
 
 ## Deviations from the docs
 

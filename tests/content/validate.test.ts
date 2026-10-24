@@ -1,8 +1,8 @@
 // Content validation (docs/06-architecture.md, "Content validation"): colors, terrain, scales,
-// buildings, map generation, and names. Unit and nation fixtures live in units.test.ts, spells in
-// spells.test.ts, map palette checks in palette.test.ts, the pretender chassis, costs, and presets
-// in validate.chassis.test.ts, and the nations' chassis pairs and the pip cap in
-// validate.pretender.test.ts.
+// buildings, map generation, and names. Unit and nation fixtures live in units.test.ts, spells and
+// their fx in spells.test.ts, the spell effect families in fx.test.ts, map palette checks in
+// palette.test.ts, the pretender chassis, costs, and presets in validate.chassis.test.ts, and the
+// nations' chassis pairs and the pip cap in validate.pretender.test.ts.
 import { describe, expect, it } from 'vitest';
 import {
   BUILDING_IDS,
