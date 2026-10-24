@@ -62,3 +62,26 @@ Read as:
 5. **Motion:** approved as shown; each figure keeps its own timing, and individuals should stand out.
 6. The art plan's three defaults stand: gods painted in their default parts first; a painted card bust for every
    troop type; the Oakheart goes through the creature reviews.
+
+## 2026-10-24, the stage B verdict (owner review 1 of monsters, mounts and gods)
+
+> Stage B verdict. Portraits: Fire Sprite B; Wolf B; Giant, face 1 B; Giant, face 2 B; Oakheart B; Ash Horse B; War
+> Wolf A; Ash Colossus A; Ash Phoenix B; Pyre Lord A; Cinder Idol B; Ember Hierophant A; Wild Spirit B; World Tree B;
+> Horned Hunter A; Elder Wyrm A; Mother of Beasts A; Oracle of the Flux A; Titan A; Great Wyrm B; Living Monolith B;
+> Ascended Hero A; Primordial B; the rest not yet picked. Troops: Keep. Commanders: Own weapon for every other face
+> Later; Ash Chieftain Keep; Pyre Priest Keep; Ember Adept Keep; Cinder Magus Keep; Scout (Cinder Horde) Keep;
+> Independent Captain, hunter Keep; Independent Captain, levy Keep; Warden Captain Keep; Grove Priest Keep; Sapling
+> Druid Keep; Elder Druid Keep; Scout (Thornwood) Keep; Independent Captain, mountaineer Keep; Independent Captain,
+> reedman Keep. Mounts apart from riders: Later.
+
+Read as:
+
+1. **Portraits approved** for 23 of the 24 subjects, with the candidate named for each. A pick for a god covers both
+   nations' palettes (the Thornwood version is the green edit of the same painting). The Hornet Swarm is not yet
+   picked; candidate B (the art director's "strong" one) stands in for it until the owner picks.
+2. **Troops kept:** every foot troop sheet, the painted card busts and the shader variation within blocks.
+3. **Every commander kind kept**, Cinder, Thornwood and the four Independent Captain outfits.
+4. **Own weapon for every other commander face: later.** The five battle faces already repainted keep theirs.
+5. **Mounts painted apart from their riders: later** (as in the pilot verdict). Stage C keeps the joint mounted sheets.
+6. Next is stage C: the approved creatures, mounts and gods as figures standing in the game, beside their portraits,
+   without animation (owner review 2), then stage D, animation and magic (owner review 3).
