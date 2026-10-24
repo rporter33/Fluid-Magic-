@@ -35,3 +35,22 @@ Read as: in the natural view, lines between provinces that no realm owns (and th
 faint; they brighten to the colour-blind floor around the hovered and selected province, and everywhere in the Clear
 terrain colours setting and the Terrain mode. Realm borders (the rails between owners, and between an owner and
 unowned land) keep their colour-blind contrast in every view.
+
+## 2026-10-24, edges of the wilds in the natural view
+
+After natural-map pass 3 (published at https://claude.ai/artifact/J9d2JrQYGEhYyfbZyq3uAV), the mountain wilds were
+crisp ranges growing out of the land, but every wild still read as a framed shape when zoomed out: a hard black
+outline with a pale band inside it, kept so that colour-blind players can always see the impassable edge. Asked how
+those edges should work in the natural view, the owner chose:
+
+> Soft, like province lines (Recommended)
+
+The option as offered: "Same rule you chose for province lines: in the natural view, mountains and the lake show
+their own natural edge, with no outline. The edge comes up to full contrast when you hover or select nearby, when a
+march would cross it, and always in Clear colours and the Terrain mode."
+
+Read as: in the natural view a wild has no drawn outline or rim at rest; its edge is the landform itself (rock, scree
+and the shore). Around the hovered and selected province, along a planned or previewed march that meets a wild, and
+everywhere in the Clear terrain colours setting and the Terrain mode, the wild's edge is drawn at the colour-blind
+floor as today. Impassability also stays readable through the hover card ("Impassable"), the path refusal and the
+movement preview. Realm borders keep their colour-blind contrast in every view.
