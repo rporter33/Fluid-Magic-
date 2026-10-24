@@ -93,7 +93,11 @@ fluid-magic/
         rerun.ts          # toSetupRecord, fromSetupRecord, rerunBattle, matchesRecord
       selectors.ts        # every economic rate, read by the UI, the AI, and the tick alike
       migrate.ts          # the migration map that lifts older saves to STATE_VERSION
-      serialize.ts        # save/load JSON, version field, migrations
+      serialize.ts        # save/load JSON, version field, migrations, then the check below
+      validateSave.ts     # the check a lifted save passes: required keys, id references, colors
+      saveCheck.ts        # the record, list, id and color checks it walks a save with
+      saveKeys.ts         # every saved record's required keys, kept complete by the typecheck
+      loadError.ts        # LoadError: why a save could not be loaded, by kind, for the UI
     content/              # DATA ONLY. Plain objects, typed.
       types.ts            # shapes of unit, nation, building records
       abilities.ts        # the abilities catalog (battle-start triggers in M1's Phase 6b.2)
@@ -378,7 +382,9 @@ Cap ticks per frame at 16 to keep the UI responsive at 4x on slow machines.
   (required keys present, every id reference resolves, color keys in W U B R G) before it
   is handed to the UI; the replay leniency above runs first, so a malformed `rerun` still
   becomes null rather than failing the load. A failed load reports the reason and leaves the
-  current game untouched.
+  current game untouched. (`src/sim/serialize.ts`: `deserialize` throws a `LoadError` whose
+  `kind` is `unreadable`, `newer`, `version`, `migration`, `shape`, `reference` or `color`, with
+  the reason as its message; see Implementation decisions, "Loading a save".)
 - Autosave alternates between the keys `autosave` and `autosave-prev` so one bad write
   never loses both. Autosave never writes a manual slot. Each save is one `put` of the
   full gzipped JSON; IndexedDB makes that write atomic, so no temp-and-rename is needed.
@@ -591,6 +597,26 @@ Choices made where this doc was silent, recorded per `CLAUDE.md`:
   and slot and picks by rendezvous over append-only part tables; state picks overlays and frames
   only. Personal names are dealt from per-nation decks after each simulated day and kept in the
   UI block.
+- **Loading a save** (Phase 9, early, with the 2026-10-24 docs merge): `serialize(state)` is the
+  state's JSON text; `deserialize(json)` parses it, lifts it with `migrateState` and checks it with
+  `saveProblems` (`validateSave.ts`), returning the game or throwing a `LoadError` (`kind`, a
+  message naming the first three problems, every problem in `problems`). It builds everything from
+  the text, so the caller's game is never touched. `migrateState` refuses, before any step runs, a
+  version that is not a whole number from 1, one newer than `STATE_VERSION` ("saved by a newer
+  version", never guessed at) and a save without what the steps walk (the map's provinces, the
+  provinces, the nations, the battle list); a step that throws is reported as `migration` with the
+  version it failed at; the re-run leniency runs after the steps, so a malformed `rerun` is null
+  before the check. The check only reads, so a save that passes hashes as it was saved. It looks
+  for every required key of every saved record (`saveKeys.ts`; the typecheck fails, naming the
+  key, when a record gains a required key without its line there), every id reference into the
+  save and into this build's content (units, buildings, nations, spells, chassis, blessings,
+  boons, terrain, scale axes, difficulties), and color keys and values. Three links outlive what
+  they name by design and need only be well-formed ids: a message's `battle` (records are kept to
+  `BATTLE.keep`), a construction's `commander` (it may die before the work ends) and a nation's
+  `inSight` (refreshed in tick step 6, before step 7's eliminations). A battle record's links into
+  the game (province, nations, scene) are checked; its roster and log belong to the replay viewer.
+  The autosave keys (`autosave`, `autosave-prev`), gzip and IndexedDB are the UI's save module's,
+  which Phase 8 starts (`docs/PROGRESS.md`).
 - **Officers** (Phase 9b, proposed; `docs/design/three-kingdoms.md`): every officer number is
   content (`src/content/officers.ts`: stat ranges per unit, the eight traits as abilities with an
   `officer` placement, posts and their stat scaling, developments, proposal rules, capture odds).

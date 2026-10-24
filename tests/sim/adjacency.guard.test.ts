@@ -1,7 +1,8 @@
 // The rules and the AI read adjacency only through MapProvince.neighbors (Phase 1b; war-table
 // design 1.7): a wild is never a neighbor, so nothing reaches across one as long as no code in
 // src/sim or src/ai measures the map's geometry or walks its wilds. A source scan, like
-// purity.test.ts; the saves' migration may give an old map its empty wilds.
+// purity.test.ts; the saves' migration may give an old map its empty wilds, and the load check
+// may name the map's keys and check its wilds' ids.
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -15,8 +16,16 @@ const FORBIDDEN: readonly [RegExp, string][] = [
   [/\bmapgen\/(geometry|voronoi|wilds|graph)\b/, 'a mapgen geometry or graph module'],
 ];
 
-/** Files allowed one reach into the map: the migration that adds an old map's wilds. */
-const ALLOWED: Readonly<Record<string, string>> = { 'src/sim/migrate.ts': 'map wilds or size' };
+/**
+ * Files allowed one reach into the map: the migration that adds an old map's wilds, and the
+ * check a loaded save passes, which lists the map's required keys and checks that each wild's
+ * id and borders are sound (docs/06 "Save and load"), never measuring or routing by them.
+ */
+const ALLOWED: Readonly<Record<string, string>> = {
+  'src/sim/migrate.ts': 'map wilds or size',
+  'src/sim/saveKeys.ts': 'map geometry',
+  'src/sim/validateSave.ts': 'map wilds or size',
+};
 
 function stripComments(source: string): string {
   return source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');

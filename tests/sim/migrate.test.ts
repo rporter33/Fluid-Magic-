@@ -3,53 +3,13 @@
 // provinces no added springs; version 3 maps gain no wilds; a malformed re-run loads as null
 // instead of failing the save.
 import { describe, expect, it } from 'vitest';
-import { attackersAt, fight, ownerForces } from '../../src/sim/conflict';
 import { matchesRecord, rerunBattle } from '../../src/sim/battle/rerun';
 import { stateHash } from '../../src/sim/hash';
+import { LoadError } from '../../src/sim/loadError';
 import { MIGRATIONS, migrateState } from '../../src/sim/migrate';
 import { advance } from '../../src/sim/tick';
-import { STATE_VERSION, type GameState, type NationState } from '../../src/sim/types';
-import { neighbors, redField } from './fixtures';
-
-/** Removes from a save what the given version and later ones added, as an older save lacks it. */
-function asVersion(saved: GameState, version: 1 | 2 | 3): GameState {
-  const old = structuredClone(saved);
-  old.version = version;
-  const map: Partial<typeof old.map> = old.map;
-  delete map.wilds;
-  if (version === 3) return old;
-  for (const n of Object.values(old.nations)) {
-    const o: Partial<NationState> = n;
-    delete o.pretenderName;
-    delete o.pretenderReturnDay;
-  }
-  for (const p of Object.values(old.provinces)) {
-    const o: Partial<typeof p> = p;
-    delete o.extraSprings;
-  }
-  if (version === 1) {
-    for (const b of old.battles) {
-      const o: Partial<typeof b> = b;
-      delete o.scene;
-      delete o.rerun;
-    }
-  }
-  return old;
-}
-
-/**
- * A saved game with one recorded battle, as JSON would bring it back. Its map has no wilds unless
- * `wilds`: the saves of versions 1 to 3 it stands for were made before wilds existed.
- */
-function savedWithBattle(wilds = false): GameState {
-  const { state, red, capital, army } = redField(1, wilds);
-  army.squads[0]!.count = 60;
-  army.squads[0]!.hp = 60 * 11;
-  const target = neighbors(state, capital)[0]!;
-  army.location = target;
-  fight(state, target, attackersAt(state, target, red), ownerForces(state, target));
-  return JSON.parse(JSON.stringify(state)) as GameState;
-}
+import { STATE_VERSION, type GameState } from '../../src/sim/types';
+import { asVersion, savedWithBattle } from './saveFixtures';
 
 describe('migrateState', () => {
   it('has a step for every older version', () => {
@@ -161,6 +121,45 @@ describe('migrateState', () => {
       );
     }
     expect(migrateState(withVersion(STATE_VERSION)).version).toBe(STATE_VERSION);
+    // Each refusal is a LoadError of its kind, for the loader to show; a version far below the
+    // first is refused at once, not stepped through.
+    const kindOf = (state: GameState): unknown => {
+      try {
+        migrateState(state);
+      } catch (e) {
+        return e instanceof LoadError ? e.kind : e;
+      }
+      return 'loaded';
+    };
+    expect(kindOf(withVersion(STATE_VERSION + 1))).toBe('newer');
+    expect(kindOf(withVersion(-1e15))).toBe('version');
+    expect(kindOf(withVersion('3'))).toBe('version');
+  });
+
+  it('refuses a save without what the steps walk, and names a step that fails', () => {
+    const old = asVersion(savedWithBattle(), 1);
+    const without = (key: 'map' | 'provinces' | 'nations' | 'battles'): GameState => {
+      const state: Partial<GameState> = structuredClone(old);
+      Reflect.deleteProperty(state, key);
+      return state as GameState;
+    };
+    expect(() => migrateState(without('map'))).toThrow(
+      'This save is damaged: its map has no provinces.',
+    );
+    expect(() => migrateState(without('provinces'))).toThrow(
+      'This save is damaged: it has no provinces.',
+    );
+    expect(() => migrateState(without('nations'))).toThrow(
+      'This save is damaged: it has no nations.',
+    );
+    expect(() => migrateState(without('battles'))).toThrow(
+      'This save is damaged: it has no battle records.',
+    );
+    const broken = structuredClone(old);
+    broken.battles[0]!.province = 'p999' as (typeof broken.battles)[0]['province'];
+    expect(() => migrateState(broken)).toThrow(
+      'This save cannot be loaded: lifting it from version 1 to 2 failed (no map province p999).',
+    );
   });
 
   it('loads a malformed re-run as null rather than failing, and keeps a sound one', () => {

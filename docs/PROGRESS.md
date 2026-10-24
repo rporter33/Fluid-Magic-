@@ -1159,6 +1159,55 @@ effects", `docs/06` "Content validation").
 - Unchanged: `tests/sim/battle/golden.json`, the preset pins, and the runner (`npm run sim:aivai -- --games 20
   --seed 1`): Cinder Horde 16, Thornwood 4, no winner 0, mean 21.6 months, 0 refused, game for game as before.
 
+## Phase 9 (early): save and load with the load check (done)
+
+The second code follow-up of the docs merge (`docs/06` "Save and load": refuse a newer version,
+validate after migration, report the reason, leave the current game untouched). `serialize.ts` is
+Phase 9's module (`docs/06` layout, `docs/10` Phase 9 "save/load"); its pure part lands now, its UI
+part (slots, gzip, IndexedDB, autosave) with the game screens.
+- `src/sim/serialize.ts`: `serialize(state)` is the JSON text; `deserialize(json)` parses, lifts
+  (`migrateState`), checks (`saveProblems`) and returns the game, or throws a `LoadError`
+  (`src/sim/loadError.ts`: `kind` one of `unreadable`, `newer`, `version`, `migration`, `shape`,
+  `reference`, `color`; a message naming the first three problems; all of them in `problems`). It
+  builds everything from the text, so a failed load leaves the caller's game as it was.
+- `src/sim/migrate.ts`: its refusals are now `LoadError`s ("saved by a newer version of the game
+  (save version 5 is newer than this build, 4)"; "no migration from save version 2.5"); a version
+  below 1 is refused at once instead of being stepped through; a save without what the steps walk
+  (the map's provinces, the provinces, the nations, the battle list) is refused as `shape` before
+  any step runs; a step that throws is refused as `migration`, naming the step ("lifting it from
+  version 1 to 2 failed (no map province p999)"). The re-run leniency still runs after the steps,
+  so a malformed `rerun` is null before the check. The messages keep the phrases the old errors had.
+- `src/sim/validateSave.ts` with `saveCheck.ts` and `saveKeys.ts`: every required key of every
+  saved record (the key lists are typed so that the typecheck fails, naming the key, when a record
+  gains a required key without its line), every id reference into the save and into this build's
+  content, and color keys and values only W U B R G. It only reads. Three links outlive what they
+  name by design and need only be well-formed ids: a message's battle (in runner games played to
+  their end with a human nation, up to 62 messages at once named records past `BATTLE.keep`), a
+  construction's builder (the tick lets its work finish), and a nation's sightings (a nation
+  eliminated in tick step 7 leaves its commanders in the sightings step 6 made). A battle record's
+  links into the game are checked; its roster and log are the replay viewer's.
+- `tests/sim/adjacency.guard.test.ts` allows `saveKeys.ts` (it lists the map's keys) and
+  `validateSave.ts` (it checks the wilds' ids and borders) one reach each, as it allows
+  `migrate.ts`; neither measures or routes by the map.
+- Checked outside the suite: 701 states (six runner games to their end, three of them with a human
+  nation; Medium and Large games with 3 and 4 nations; every preset), 9,614 battle records with
+  re-runs among them, no problem found; every seventh state round-tripped through `serialize` and
+  `deserialize` with its hash unchanged.
+- Tests: `tests/sim/serialize.test.ts` (a save loads into the same game, which plays on to the
+  same hash; saves of versions 1, 2 and 3 lift, pass the check and hash like the game made now;
+  each kind of refusal; a malformed re-run loads as null; the caller's game untouched);
+  `validateSave.test.ts` (new games, every kind of record, a human nation's game to day 720 checked
+  every 30 days, a fallen nation's sightings, the weak links, garbage, read-only);
+  `validateSave.refs.test.ts` (every required key of 31 record kinds, 58 references and the
+  provinces paired with the map, 12 color cases); `migrate.test.ts` (typed refusals; what the
+  steps walk; the failing step), its save helpers moved to `tests/sim/saveFixtures.ts`. 2227 tests
+  in 132 files before, 2325 in 135 after (five of them the purity scan of the five new modules).
+- Pending for Phase 8: the autosave alternation between the keys `autosave` and `autosave-prev`
+  (`docs/06`), with gzip and IndexedDB, belongs to the UI's save module, which does not exist yet
+  (`src/ui` holds only the title screen); Phase 8's loop fires autosave at the end of a tick, and
+  Phase 9 adds the save and load screens on `serialize` and `deserialize`.
+- Unchanged: `golden.json`, the preset pins, the runner's 20 games.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
@@ -1328,10 +1377,9 @@ effects", `docs/06` "Content validation").
   (`scripts/golden-battle.ts`, `package.json`, `tests/sim/battle/fixtures/named.ts`,
   `armies.ts`, and `golden.ts` beside it, `tests/sim/battle/golden.test.ts`, `golden.json`),
   which is green on the Phase 6 resolver and regenerates byte for byte there; then the rest.
-- Serialize (Phase 9) must call `migrateState` on load; until then nothing runs the
-  migration outside its test. Since the QA sweep (finding sim-3) it throws for a save it cannot
-  read (newer than `STATE_VERSION`, or no whole-number version), which the loader should catch
-  and show the player.
+- Resolved (Phase 9, early): `deserialize` (`src/sim/serialize.ts`) runs `migrateState` on load and
+  then the load check; every refusal is a `LoadError` with its kind and reason for the loader to
+  show. Still for the UI: the save slots, gzip, IndexedDB and the autosave keys (below).
 - For merging Phase 7 (AI) and later tracks over Phase 6b.1: `scaleStepCost` takes the
   chassis as its second argument, `PRETENDER_COSTS.newColorFirstPip` is gone (use
   `ChassisDef.newColorFirstPip`), `blessOf` takes the design and whether the god is on the
