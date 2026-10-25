@@ -3,8 +3,10 @@
 // 100 maps, and the three files hold 600 (wilds off and on, 2 nations): 1.3 s to 5.6 s a sweep run
 // alone at a load average near 8 on 4 cores, 3.3 s to 7.8 s with the three files in parallel at
 // 11. Every seed must give a map, before the vitest timeout, with the exact province count (the
-// generator's tolerance; docs/10 allows 5%) that passes validateMap; a placement loop that spun
-// would hit the timeout, and a shortfall outside the tolerance would throw with its reasons.
+// generator's tolerance; docs/10 allows 5%) that passes validateMap. Work caps are checked by
+// generate.test.ts and voronoi.test.ts; this timeout is only a scheduling watchdog, not a
+// performance target. A synchronous infinite loop cannot be interrupted by Vitest's timer;
+// the outer CI job deadline remains necessary. A shortfall throws with its reasons.
 import { expect } from 'vitest';
 import type { MapSizeId } from '../../src/content/mapgen';
 import { generateMap } from '../../src/mapgen/generate';
@@ -14,7 +16,7 @@ import { TWO_CAPITALS } from './fixtures';
 
 export const SWEEP_SEEDS = 100;
 
-/** About eight times the slowest sweep seen on a loaded machine (7.8 s). */
+/** Scheduling watchdog only: >2x the loaded full-suite sweep measurements in docs/qa/task3-results.md. */
 export const SWEEP_TIMEOUT = 60_000;
 
 /** Generates seeds 1 to SWEEP_SEEDS and expects every one to give a map within tolerance. */

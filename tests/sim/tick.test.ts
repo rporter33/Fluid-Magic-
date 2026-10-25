@@ -8,6 +8,7 @@ import { findPath } from '../../src/sim/movement';
 import { provinceEconomy } from '../../src/sim/selectors';
 import { advance } from '../../src/sim/tick';
 import type { GameState } from '../../src/sim/types';
+import { expectPerformance, measure } from '../helpers/performance';
 import {
   addArmy,
   annex,
@@ -106,13 +107,15 @@ describe('advance', () => {
     expect(a.provinceEffects).toHaveLength(0);
   });
 
+  // 6.24 s with 36 CPU burners on 9 logical CPUs (Task 3); 15 s gives >2x measured
+  // scheduling headroom. The claim is byte-identical state, not a gameplay speed budget.
   it('runs a busy game the same way twice', () => {
     const a = busyGame();
     const b = busyGame();
     runDays(a, 90);
     runDays(b, 90);
     expect(JSON.stringify(b)).toBe(JSON.stringify(a));
-  });
+  }, 15_000);
 
   it('keeps a heavy marching day near the 2 ms budget (docs/06)', () => {
     const base = marchingGame();
@@ -120,18 +123,22 @@ describe('advance', () => {
       Object.values(state.commanders).filter((c) => c.order.kind === 'move').length;
     runDays(base, 5);
     expect(marching(base)).toBeGreaterThan(150);
-    // The fastest of three runs of the same 60 days, each from a copy of the same game, so a
-    // burst of load from other processes does not fail the test (QA sweep H2).
-    let perDay = Number.POSITIVE_INFINITY;
-    for (let run = 0; run < 3; run++) {
+    // Warm the full measured workload (five days do not reach the same JIT paths).
+    runDays(structuredClone(base), 60);
+    // Five identical 60-day batches; clone outside the measurement, check every result.
+    // Quiet wall acceptance enforces docs/06's 2 ms. Process CPU includes parallel V8:
+    // measured CPU/wall ~1.6x; allow up to 2x CPU ONLY (4 ms, tighter than the old 10 ms
+    // guard), without raising the 2 ms elapsed target. See docs/qa/task3-results.md.
+    const samples = Array.from({ length: 5 }, () => {
       const state = structuredClone(base);
-      const start = performance.now();
-      runDays(state, 60);
-      perDay = Math.min(perDay, (performance.now() - start) / 60);
+      const timing = measure(() => {
+        runDays(state, 60);
+      }, 60);
       expect(state.battles).toEqual([]);
-    }
-    // A loose bound against regressions; the measured target is docs/06's 2 ms.
-    expect(perDay).toBeLessThan(10);
+      expect(state.day).toBe(base.day + 60);
+      return timing;
+    });
+    expectPerformance('heavy marching day', samples, 2, { cpuOnlyHeadroomMs: 2 });
   });
 
   it('continues identically after a save and load', () => {

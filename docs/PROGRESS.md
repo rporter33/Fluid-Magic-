@@ -1463,18 +1463,14 @@ Work paused at a clean point. `docs/HANDOFF.md` is the pickup guide: where the a
   spell power, and no chassis a monthly summon, until the new bodies of Phase 6b.3; the
   battle presentation's handling of `ability` (script beat, sound, ticker, report) lands with
   S2 and S3. Abilities count toward nothing the AI reads (`aiPower` covers them from 6b.3).
-- The timing tests (`tick`, the docs/04 resolver budgets, the re-run pin, and Phase 1b's
-  `generate.perf.test.ts`) can fail when the machine is loaded by other processes; they pass
-  when run alone. Since the QA sweep (H2) the tick and resolver budgets take the fastest of
-  three runs, as the re-run pin takes the best of five, so a burst of load seldom fails them;
-  sustained load still can, `generate.perf.test.ts` most (its 4-nation median is about 600 ms
-  alone against 1,000 ms). Resolved in the QA sweep (H1): the tests that timed out at
-  vitest's 5 s default in loaded full runs and passed alone (`siege.test.ts`'s 60-game storm
-  test, 1.8 s alone; `generate.test.ts`'s sweeps, "medium with 3" 2.3 to 2.9 s;
-  `wilds.large.test.ts`'s and `wilds.medium.test.ts`'s 4-nation seeds, 1.7 to 2.3 s, Medium's
-  seed 4 having timed out once at a load average near 10; `determinism.test.ts`'s 365-day
-  replay, 0.9 to 1.1 s) have explicit timeouts of 10 to 12 s, documented beside each. A full
-  run that fails one of these and passes it alone has met load, not a regression.
+- Timing-sensitive QA: Task 3 replaces fastest wall-clock samples with isolated-fork CPU medians
+  in the full suite, and adds mandatory serial wall-clock acceptance to CI (`npm run test:perf`).
+  The map's 150/1,000 ms and resolver's 50 ms limits stay fixed; replay retains only its existing
+  docs/12 slack; the marching-day check now enforces 2 ms elapsed / 4 ms summed CPU instead of the old 10 ms guard.
+  Correctness assertions and all sweep seeds remain. One reproduced 5 s determinism watchdog
+  becomes 15 s (>2× the measured loaded duration). See `docs/qa/timing.md` and the before/after
+  evidence in `docs/qa/task3-results.md`. CPU speed, cache contention, and unbounded starvation
+  remain environment limits; neither CPU nor wall results certify browser performance.
 - Preset matrix (Phase 6b.3, for Phase 12), measured without wilds: 8 of 10 presets miss the
   35% to 65% band against the opposing default (Wildfire 83%, Undying Flame and Pyre Host 80%,
   Dread Idol 75%; Deep Root 10%, Heartwood 18%, Mother of the Pack 23%, Hunt Lord 30%). The
@@ -1537,3 +1533,15 @@ Work paused at a clean point. `docs/HANDOFF.md` is the pickup guide: where the a
 - The Wellspring retry (QA sweep, map-1) costs about 110 ms per unfair placement on Medium with
   4 nations, some 12% of those maps' generation time; with 2 nations it never ran in the seeds
   checked.
+
+## Phases 1, 2, 4 and 10: Task 3 timing-sensitive QA
+
+- Preserved all game code, content, golden pins, correctness checks, and seed/horizon coverage.
+- Performance tests record paired CPU/wall samples with medians, keeping the established limits;
+  CI separately enforces real elapsed time with serial workers on a quiet runner.
+- Strengthened the map shortfall test with the exact attempt count and bounded the RNG replay
+  test by its maximum possible draws. The 600-map termination sweeps retain their 60 s watchdog.
+- Added measurement-helper regression tests for scheduler delays, sustained CPU regressions,
+  wall-clock acceptance, units/batch normalization, and the explicitly documented headroom.
+- Actual normal/heavy runs, reproduced failures, limitations, and commands are recorded in
+  `docs/qa/task3-results.md`; the measurement contract is `docs/qa/timing.md`.

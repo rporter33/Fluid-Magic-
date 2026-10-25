@@ -105,10 +105,14 @@ describe('the cap on drawing a point inside the outline', () => {
       // Count the draws taken by replaying the stream to the same state.
       const replay = { ...before };
       let n = 0;
-      while (JSON.stringify(replay) !== JSON.stringify(rng)) {
+      // At most pointTries candidates per point, two RNG words each (tries = 1).
+      // A broken RNG replay must fail by work count instead of hanging the test worker.
+      const maxDraws = 2 * 40 * TRIES;
+      while (n < maxDraws && JSON.stringify(replay) !== JSON.stringify(rng)) {
         nextU32(replay);
         n++;
       }
+      expect(replay).toEqual(rng);
       draws += n / 2;
     }
     expect(draws / points).toBeLessThan(1.1);
