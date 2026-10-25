@@ -55,7 +55,7 @@ with its size and sha256.
 
 | Page | Link |
 |---|---|
-| Art gallery (everything approved, for sharing) | see `docs/HANDOFF.md` |
+| Art gallery (everything approved, for sharing; built by `scratchpad/gallery/`) | https://claude.ai/artifact/2naivdtCGfwiZnnAa1Gqtd |
 | Battle mockup (v6, the magic pilot inside) | https://claude.ai/artifact/9N3xAjDepZNfKB4KnrPs4D |
 | Game-screen map (v8, soft wild edges; pass 4 not yet published) | https://claude.ai/artifact/J9d2JrQYGEhYyfbZyq3uAV |
 | Magic pilot (approved 2026-10-25) | https://claude.ai/artifact/47Psan2xdhkNw8CUZAbY4r |
