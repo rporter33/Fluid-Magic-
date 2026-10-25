@@ -109,5 +109,6 @@ Do not edit those files. Do not regenerate, re-key or re-pack owner-approved art
 
 ## Ready-made tasks
 
-`docs/codex/TASKS.md` holds self-contained task prompts. Start a task with: "Read AGENTS.md, then do Task N in
+`docs/codex/TASKS.md` holds self-contained task prompts, and `docs/codex/SETUP.md` explains how to run them in Codex
+cloud. Start a task with: "Read AGENTS.md, then do Task N in
 docs/codex/TASKS.md."
