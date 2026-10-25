@@ -8,6 +8,11 @@ The branch is a storage branch. Do not merge it into the game branch. The game b
 [`docs/HANDOFF.md`](https://github.com/rporter33/Fluid-Magic-/blob/claude/gifted-meitner-v8l3qv/docs/HANDOFF.md) is
 the pickup guide: what is done, what is in flight, and the owner's open decisions.
 
+## For coding agents
+
+Read `AGENTS.md`; the ready-made task is `CODEX-TASK-battlefield.md`. `reference/` holds copies of the game docs a
+mockup task needs, and `vendor/pixi.min.js` is PixiJS 8.22.0 for testing pages offline.
+
 ## Restore
 
 ```sh
