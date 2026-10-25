@@ -1,0 +1,38 @@
+{
+  "file": "cmdCaster.back.body.edit.nb21.png",
+  "sha256": "09e9addfd92246dd31ea856a414c24d0e0311a039219a9844957b00b2d925918",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\n\nRepaint every figure of Image 1 as another leader, the same in every cell: A fire mage of the Cinder Horde: a long charcoal robe to the ground; a heavy mantle of layered smoke-grey cloth over both shoulders and down the back; a thin blackened-iron circlet on the bare head; ash-grey skin, a plain face with a short dark beard; a tall staff of blackened wood held in the right hand, crowned with a small iron cage holding a dull ember that does not glow. No armour, no shield, no cloth of a bright colour. Where a figure of Image 1 holds the axe, this leader holds the staff in the same hand, pointing the same way; in the third row's first two cells he raises the staff high and then thrusts it toward the enemy, casting. The long robe falls to the ground over the legs, its hem swinging with each stride, and the mantle replaces the fur. Keep each figure's pose and outline as close as the robe allows. Painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right).\n\nFacing, again: every figure in every one of the cells faces the same way, away from us toward the upper right, including the figure that is hit and the falling one: we see the back, the grey mantle, the long robe and the back of the head, never the face; only the two fleeing figures turn and run toward us.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdChief.back.body.g3pro.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1595,
+    "candidatesTokenCount": 2247,
+    "totalTokenCount": 4413,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 475
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 571,
+    "serviceTier": "standard"
+  },
+  "seconds": 22.8,
+  "modelText": [],
+  "approved": null
+}

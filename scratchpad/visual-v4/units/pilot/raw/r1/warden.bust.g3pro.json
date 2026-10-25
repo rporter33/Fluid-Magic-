@@ -1,0 +1,39 @@
+{
+  "file": "warden.bust.g3pro.png",
+  "sha256": "a066cb450cfe76fd1cce9897f22e54eafb4386174065625443a7bbe90420cdf1",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\nImage 2 is a painted portrait of a Thornwood leader from the same set, a reference for the nation's materials only (bark plate, leaf cloth, weathered bark-brown skin): do not paint that person, and do not give the soldier a leader's ornaments, crown, antlers or rich trim.\n\nHead-and-shoulders portrait bust of one soldier, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy, except the side's deep pine green cloth (#1F6A50), which shows clearly on the shoulders (the leaf mantle), the tabard and the helm's leaf crest, so the card reads as that side at a glance. Nothing in the image glows.\n\nSubject: A fighter of the Thornwood, forest clans who live among ancient trees: weathered bark-brown skin, bark-and-leaf clothing and armor in moss green and bark brown.\nA Warden: armor of layered bark plates under a deep pine-green tabard that covers the chest and the back to mid-thigh, a helm of bark plates with a crest of stiff deep pine-green leaves running front to back, a deep pine-green mantle of overlapping cloth leaves over the shoulders and upper back, a round shield of bark-covered wood whose face is painted deep pine green with a pale blossom sigil and a bark-brown rim, a straight leaf-bladed sword, bark-brown weathered skin.\nPerson: a common soldier of the line, not a leader; an ordinary weathered face of the nation above.\n",
+  "references": [
+    "anchor-style.webp",
+    "05.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1143,
+    "candidatesTokenCount": 1446,
+    "totalTokenCount": 2881,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 627
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 516
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 292,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.6,
+  "modelText": [],
+  "approved": null
+}

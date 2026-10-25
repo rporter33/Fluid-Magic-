@@ -1,0 +1,48 @@
+{
+  "file": "wolfRider.front.harness.nb21.png",
+  "sha256": "bbbc78666581806a3015350fead669d655739699e8eda924005280e9c43f18d8",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted sprite sheet of a Wolf Rider on his wolf whose drawing is right: keep exactly every figure's place, size, pose, outline and camera, the rider exactly as he is, the light, and the background exactly as it is. Change only the wolf's tack and coat, on every wolf of the sheet, so that the wolf matches Image 2.\n\nImage 2 is the approved painted portrait of this War Wolf: use it only for its coat, its harness and its saddle blanket. Do not copy its framing, its dark background or its candlelight.\n\nThe changes, on every wolf: (1) the cloth over its chest becomes a harness of overlapping plates of hard dark bark strapped with dark leather, as in Image 2; (2) the bottle-green saddle blanket over its back gets an edge of pale bone-coloured cord; (3) its coat becomes the warm grey-brown of Image 2, darker along the brow, the top of the neck and the spine, with a pale grey muzzle and throat; the coat as dark as the darker greys and browns of the portrait, never pink, violet or blue.\n\nKeep everything else exactly: the rider's bottle-green hood, cloak and tabard, his bark armour, the spear and its pennon, the poses, the sizes, the outlines, the camera (high above and in front, looking down at about 40 degrees) and the light from the upper left.\n\nNever: text, letters, numbers, labels, signatures, logos; a floor, ground, scenery or cast shadows; extra figures.",
+  "references": [
+    "wr.front.blue.g3pro.png",
+    "01a.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 2576,
+    "candidatesTokenCount": 1539,
+    "totalTokenCount": 5294,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 336
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1179,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.2,
+  "modelText": [],
+  "approved": null,
+  "job": "wolfRider.front.harness",
+  "purpose": "C creatures: wolfRider front: nb21 plain edit of the owner-kept test sheet, the wolf's tack and coat matched to the War Wolf portrait A (bark-plate harness, bone-cord blanket edge, grey-brown coat)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/wolfRider.front.harness.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/wr.front.blue.g3pro.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/warWolf/01a.webp"
+  ],
+  "route": "edit",
+  "logKey": "C creatures"
+}

@@ -1,0 +1,49 @@
+{
+  "file": "ashRider.front.cfix.r2.nb21.png",
+  "sha256": "a2713d4441fc2747af8233f205b91b3738ced81d22b63c1f6fadae2a19ad21bb",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted sprite sheet of one Ash Rider on his Ash Horse, seen from in front, in a 4 by 4 grid, whose drawing is right: keep exactly every figure's place, size, pose and camera (high above and in front, looking down at about 40 degrees), the rider's armour, lance, pennon and sword, the light from the upper left, and the flat pure green background exactly as it is. Change only the horse's coat and caparison and the rider's cape and helm crest, on every figure of the sheet, so that it matches Image 2.\n\nImage 2 is the approved painted portrait of this rider and horse: use it only for the horse's coat and caparison and the rider's cape and helm crest. Do not copy its framing, its dark background or its candlelight.\n\nThe changes, on every figure of the sheet: The ember-orange caparison covers the horse's chest, shoulders and both flanks and is seen from the front. The rider's ember cape lies over both shoulders and his helm crest is ember. The horse's coat is dark charcoal with sparse pale dapples, as dark as Image 2, never light grey. The riveted iron face plate and the iron bridle rings painted clearly.\n\nKeep everything else exactly as in Image 1, cell by cell. No green anywhere on the creature: no green glow, no green reflections.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; extra figures.",
+  "references": [
+    "ashRider.front.fill.nb21.png",
+    "01b.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 2582,
+    "candidatesTokenCount": 1543,
+    "totalTokenCount": 4908,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 342
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 783,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.1,
+  "modelText": [],
+  "approved": null,
+  "job": "ashRider.front.cfix.r2",
+  "item": "R6",
+  "purpose": "C fix: R6 ashRider front sheet re-roll: nb21 plain edit of the current sheet (ashRider.front.fill), only the horse's coat and caparison and the rider's cape and helm crest changed on every figure (critique R6; the fill route left the painted figures as they were)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/prompts/ashRider.front.cfix.r2.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/ashRider.front.fill.nb21.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/cinderHorde/ashHorse/01b.webp"
+  ],
+  "route": "edit",
+  "logKey": "C fix"
+}

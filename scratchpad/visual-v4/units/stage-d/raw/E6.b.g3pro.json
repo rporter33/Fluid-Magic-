@@ -1,0 +1,40 @@
+{
+  "file": "E6.b.g3pro.png",
+  "sha256": "069769940cf0ff378189bae8c4d6c7facdbfd627a58d319e15b69b90ec333d6d",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure white background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is the approved painted portrait of the game's Fire Sprite, a creature of living flame: it shows how fire, embers and smoke are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game decal sheet: five burn marks left on the ground by fire, painted on white, each exactly where its grey placeholder is and as large as it.\n\nLeft, large: the scorch left by an exploding fireball: a broad ring of black soot and charred earth with short streaks radiating outward, around a scorched dark-brown middle of burnt grass and ash; its outline is a flat ellipse.\nTop middle: a small crater left by a falling meteor: a dark charred pit, ringed by a lighter band of thrown earth in pale grey-brown; a flat ellipse.\nTop right: a small round burn mark: a dark brown-black blot with a soft, feathered edge.\nRight middle: the burnt base of a fire burning on the ground: an irregular blackened patch of ash and charred grass, darkest in its middle.\nBottom: a long track of burnt ground left by a stream of fire: a band of soot and charred grass with ragged edges, tapering at both ends.\nThe marks use charcoal, soot black, burnt umber and ash grey; nothing bright, nothing coloured, no embers.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese are flat marks on the ground (decals) that the game multiplies onto the battle field: pure white means untouched ground and every darker tone darkens the ground under it. Paint only the marks, as stains seen from above, with no light and shade of their own, no highlights brighter than the white, no cast shadows, no objects standing up.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure white (#FFFFFF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "E6.guide.png",
+    "anchor-style.webp",
+    "01b-r3.webp"
+  ],
+  "aspect": "3:2",
+  "usage": {
+    "promptTokenCount": 1486,
+    "candidatesTokenCount": 1324,
+    "totalTokenCount": 3136,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 712
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 326,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.5,
+  "modelText": [],
+  "approved": null
+}

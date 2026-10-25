@@ -1,0 +1,39 @@
+{
+  "file": "L5.b.g3pro.png",
+  "sha256": "caa29e268135322b3da70082a0be438997418477168c78b17afae071d05e309b",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 2 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA seamless square texture of tree bark for a game: dark, deeply ridged, living oak and pine bark that fills the whole image from edge to edge, seen straight on, with no edges, no trunk outline, no background.\n\nLong vertical ridges and deep cracks, plates of bark overlapping like armour, small patches of moss and grey lichen in a few of the cracks; bark browns (#3E2E20 to #6B5640) with grey ridges catching a soft light from the upper left. Even detail and even lightness across the whole image, so it repeats as a tile without a visible seam or a dark or light patch; no single large feature, no knot hole, no face.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no pixel art, no photograph.\n\nThe texture fills the whole square image; no border, no background, no text, no labels.\n",
+  "references": [
+    "01.webp",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 863,
+    "candidatesTokenCount": 1343,
+    "totalTokenCount": 2441,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 347
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 516
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 235,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.5,
+  "modelText": [],
+  "approved": null
+}

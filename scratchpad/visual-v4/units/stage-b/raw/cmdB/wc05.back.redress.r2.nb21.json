@@ -1,0 +1,39 @@
+{
+  "file": "wc05.back.redress.r2.nb21.png",
+  "sha256": "9d05557c5e7f9b1f1fd17d2dd1be32c74f983aa925e193932679f5a30c3cee29",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the helm of layered bark plates with a pair of antlers; (2) the cloak of green leaves with a few small pale cream blossoms; (3) the round carved bark discs on both shoulders; (4) the armour of layered bark plates; (5) the straight sword whose grip is wound with a thorny briar stem. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nThe last attempt failed: in the third cell of the second row (following through after the blow), the third cell of the third row (falling), the fourth cell of the third row (lying dead) the figure did not keep the pose, facing, size or outline of the same cell of Image 1. Keep every figure exactly where, how large and facing which way Image 1 has it. Keep the deep bottle-green wool tunic of Image 1 under the bark plates, and keep the antlers small and close to the helm in the falling and lying cells.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow; no magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "twChief.back.body.edit.nb21.png",
+    "05.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2826,
+    "candidatesTokenCount": 1666,
+    "totalTokenCount": 6003,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 586
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1511,
+    "serviceTier": "standard"
+  },
+  "seconds": 18.8,
+  "modelText": [],
+  "approved": null
+}

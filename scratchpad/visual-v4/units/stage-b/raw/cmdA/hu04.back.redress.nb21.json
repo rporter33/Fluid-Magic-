@@ -1,0 +1,39 @@
+{
+  "file": "hu04.back.redress.nb21.png",
+  "sha256": "674a7adbd09a732d7156c87523f9dde4e42e122d3f1a7832a95e880e9ae286c6",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure blue (#0000FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the heavy dark brown leather hood with a thick shaggy bearskin ruff around the face and over the shoulders; (2) the dark brown leather and bearskin over the back; (3) the plain straight sword with a simple cross guard. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing. He wears a hunter captain's kit instead of the iron cap and the padded jerkin of Image 1: his own fur-trimmed hood worn up as the portrait shows it, a brown leather jerkin with straps and buckles, a short brown cloak over the shoulders and back, a quiver of arrows on the back, brown breeches and soft leather boots; he keeps the plain straight sword of Image 1 in the same hand.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor or shadow; no blue anywhere on the figures: no blue cloth, no blue light, no blue reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdLevy.back.body.g3pro.png",
+    "04.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2791,
+    "candidatesTokenCount": 1687,
+    "totalTokenCount": 5342,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 551
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 864,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.7,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,48 @@
+{
+  "file": "giant01.back.guide.nb21.png",
+  "sha256": "242d1f71733bd876e9b96f2f7d563e274a283b64d0b083853f965864a30eeb26",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the camera and pose guide: a grey clay maquette rendered from the game's battle camera. Copy from it exactly the camera angle, the direction the giant faces, its pose, where its club is and its size in the frame. Do not copy its smooth clay surfaces, its simplified round shapes or its bald clay head: the anatomy follows Image 2 and the description.\n\nImage 2 is this giant's own approved painted portrait: paint the same giant, with the same head, face, beard, skin, hides and marks, now seen full body from above, in the same painting style. Do not copy its dark background, its candlelight or its framing.\n\nOne huge painted giant, full body, alone in the image on a perfectly flat, uniform pure magenta (#FF00FF) background, as a game cutout. Pose: standing at rest, heavy and a little stooped, feet apart, the huge club held low in the right hand, its head end near the ground, the left arm hanging.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, no perspective. The giant faces away from us, toward the upper right of the image: we see its back, its right side and the top of its head from behind. It is foreshortened as seen from above: its back and head large, its legs short.\n\nThe giant: an old mountain giant, four men tall, a giant and not a man: coarse, heavy, massive features, a neck as thick as the head; a huge broad brutish face with a heavy jutting brow, small deep-set pale eyes and a heavy sullen scowl; weathered grey-tan skin rough as granite with pale lichen-grey patches; a bald head with a few long grey wisps; a matted grey beard; a cloak of stitched goat and bear hides over the shoulders and back, pulled up high around the neck; a rope of knotted hide across the chest; bare heavy arms and legs wrapped in hide; a huge crude wooden club as long as a man, held in the right hand. Its marks, every one painted clearly: the bald head with a few long grey wisps; small stones and bone beads knotted into the matted grey beard; a necklace of huge animal teeth; the cloak of stitched goat and bear hides; the broken, flattened nose. Seen from behind and above, the bald head with its grey wisps, the hide cloak over the back and shoulders and the club show clearly; the beard shows at the sides of the head.\n\nProportions: a giant's body, massive and heavy, with long thick arms and huge hands; the head about one sixth of the standing height; not a dwarf, not a big-headed figure.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the giant with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the giant's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 190 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nSize: the giant fills about 86% of the image's height, centred, with at least 24 pixels of clean background all around.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped giant.",
+  "references": [
+    "giant-01.idle.back.png",
+    "01b-r2.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 3140,
+    "candidatesTokenCount": 2519,
+    "totalTokenCount": 6210,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 900
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 551,
+    "serviceTier": "standard"
+  },
+  "seconds": 23.4,
+  "modelText": [],
+  "approved": null,
+  "job": "giant01.back.guide",
+  "purpose": "C creatures: Giant 01 back idle from its clay guide with portrait 01 B (nb21)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/giant01.back.guide.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/sbx/refs/guides/giant-01.idle.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/independent/giant/01b-r2.webp"
+  ],
+  "route": "guide",
+  "logKey": "C creatures"
+}

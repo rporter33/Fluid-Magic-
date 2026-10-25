@@ -1,0 +1,39 @@
+{
+  "file": "cm03.back.redress.kit2.nb21.png",
+  "sha256": "7e103d53aef8c4103fe82d63ba42d8bd4e079859777e4836557be73607a608d3",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the tall, straight, peaked charcoal cowl that does not droop, bound in a spiral by a thin band of dark iron from the brow up to the tip; (2) the heavy mantle of layered smoke-grey cloth over the shoulders; (3) the long charcoal robe to the ground; (4) the tall staff of blackened wood with a hooked top, a small iron cage with a dull ember hanging beneath it. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nThe last attempt drifted in these cells: cell 7 (the follow-through); cell 8 (recoiling from a hit); cell 13 (lying dead face down). In every cell, and in these above all, keep the figure as Image 1 draws it: the same pose, the same facing, the same size, the same length and breadth of the body on the ground, and the same place in its cell.\n\nThe last attempt drifted in cells 7, 8, 11 and 12 (the follow-through, recoiling, falling, lying dead on the back): there the tall cowl stuck out across the body like a spike. Keep every pose exactly as Image 1 draws it; when he lies, the cowl lies flat along the line of his back. In cells 11 to 13 (falling, lying dead on the back, lying dead face down) the body lies exactly where, which way and how long Image 1's body lies; tall headgear lies along the line of the body, not across it.\n\nClosed shapes: the pure green (#00FF00) background shows only through the large gaps between the limbs, the body and the staff or haft, and there it is exactly the same flat colour as everywhere else. Every small opening inside the outline is closed: an iron cage or lantern is packed full with its dull ember or coals, a ring holds its coal or stone, the curl of a horn lies tight against the helm with no hole in it. Nothing inside the figure is tinted pure green.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdCaster.back.body.edit.nb21.png",
+    "03.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 3066,
+    "candidatesTokenCount": 2259,
+    "totalTokenCount": 6595,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 826
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1270,
+    "serviceTier": "standard"
+  },
+  "seconds": 29.3,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,39 @@
+{
+  "file": "cs01.back.redress.nb21.png",
+  "sha256": "3a52ddbc2a3c250b58e583e3818d3f832add89d710df8c9e8143cdfb1a25f3b1",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the low round close-fitting charcoal hood with no brim and no peak, its front edge bound with dark leather; (2) the pale ash-grey wool scarf pulled up over his nose and mouth and wound thick around the neck; (3) the leather strap across the chest; (4) the long knife of dark iron. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdScout.back.body.g3pro.png",
+    "01.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2720,
+    "candidatesTokenCount": 1642,
+    "totalTokenCount": 5236,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 480
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 874,
+    "serviceTier": "standard"
+  },
+  "seconds": 17.0,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,48 @@
+{
+  "file": "wolfRider.back.fill.nb21.png",
+  "sha256": "09aa84213645b803b2da2df33d35c8983f72d1a04daf25613627dd46f2431879",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a sprite sheet of one Wolf Rider on his War Wolf, seen from behind, in a 4 by 4 grid on a flat pure blue (#0000FF) background. 7 of its figures are finished paintings whose camera, size and pose are right. The figures in 9 cells (row 1, column 2; row 1, column 4; row 2, column 1; row 2, column 2; row 2, column 4; row 3, column 1; row 3, column 4; row 4, column 1; row 4, column 4) are grey clay figures. Keep every finished painted figure exactly as it is: its place, size, pose, outline and camera. Paint each grey clay figure as the same rider and wolf, keeping exactly the clay figure's place, size, outline, pose, facing and camera, so that it matches the painted figures beside it in colours, light, scale and hand; no clay may remain. Keep the flat pure blue background, with no grid lines.\n\nImage 2 is the approved painted portrait of this rider and wolf: use it only for its identity, its colours, its materials and its marks. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing.\n\nCamera: high above and behind, looking down at about 40 degrees; orthographic, no perspective. Every figure faces away from us toward the upper right, exactly as in Image 1: we see its back and the top of its head; no face is seen; never at eye level, never seen from the side.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the rider and wolf with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background. The wolf's coat stays as dark as the darker greys and browns of the portrait.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the rider and wolf's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 50 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figures: A Wolf Rider of the Thornwood on his War Wolf. The rider: bark armour under a hooded cloak of deep bottle green, hood up, the cloak spread over his shoulders and back, a bottle-green tabard over his chest, and a spear with a leaf-shaped head that flies a long bottle-green pennon edged in pale bone-coloured cord. The War Wolf is the wolf of Image 2: a huge timber wolf, its shoulder as high as a man's chest, long legs, a deep narrow chest, a long muzzle, pointed ears, a bushy tail; a shaggy grey-brown coat that is darker along the brow, the top of the neck and the spine, a pale grey muzzle and throat and a thick ruff, amber eyes; a harness across its chest of overlapping plates of hard dark bark strapped with dark leather; a saddle blanket of deep bottle-green cloth edged with pale bone-coloured cord over its back under a small bark saddle. The fur is warm grey and brown, never pink, violet or blue. Its marks, every one painted clearly: the bark-plate breast harness; the bottle-green saddle blanket edged with bone-coloured cord; the grey-brown shaggy coat, dark along the neck and spine; the pale muzzle. Seen from behind and above, the rider's hood and cloak, the saddle blanket with its cord edge, the wolf's dark spine and bushy tail show; no face is seen.\n\nSide colour: deep bottle-green (#1F6A50) cloth on the wolf's saddle blanket, the rider's hood, cloak and tabard, and the spear's pennon: large, clean, unbroken areas that face the sky and the camera. The green is a deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green.\n\nAlso, on every figure of the sheet, painted or clay, keeping its outline: the wolf's chest harness is overlapping plates of hard dark bark strapped with dark leather; the bottle-green saddle blanket is edged with pale bone-coloured cord; the wolf's coat is the warm grey-brown of Image 2, darker along the neck and the spine, as dark as the darker greys and browns of the portrait.\n\nThe clay cells to paint, and their poses:\n2. (row 1, column 2) the wolf loping, front paws reaching.\n4. (row 1, column 4) the wolf leaping, front paws off the ground, the rider low.\n5. (row 2, column 1) the wolf landing from a leap, front paws down, hind legs high.\n6. (row 2, column 2) the charge: the wolf at full stretch, the rider leaning forward behind the couched spear.\n8. (row 2, column 4) the rider thrusting the spear down and forward past the wolf's head; the wolf lunging.\n9. (row 3, column 1) the wolf biting: head lunged forward, jaws open, the rider holding on.\n12. (row 3, column 4) the wolf lying dead on its side, the rider lying dead beside it.\n13. (row 4, column 1) the wolf and the rider lying dead, a different sprawl.\n16. (row 4, column 4) the wolf with its head thrown up, howling; the rider raising the spear high overhead.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No blue, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "wolfRider.back.fill.base.png",
+    "01a.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3652,
+    "candidatesTokenCount": 1975,
+    "totalTokenCount": 6044,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1412
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 417,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.5,
+  "modelText": [],
+  "approved": null,
+  "job": "wolfRider.back.fill",
+  "purpose": "C creatures: wolfRider back: nb21 re-dress of the stage B fix2 back sheet (t2r32, camera 7/16) with its 9 failing cells laid in as clay, the wolf matched to the War Wolf portrait A",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/wolfRider.back.fill.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/bases/wolfRider.back.fill.base.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/warWolf/01a.webp"
+  ],
+  "route": "fill",
+  "logKey": "C creatures"
+}

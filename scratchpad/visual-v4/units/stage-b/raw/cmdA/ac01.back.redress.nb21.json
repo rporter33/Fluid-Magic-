@@ -1,0 +1,39 @@
+{
+  "file": "ac01.back.redress.nb21.png",
+  "sha256": "dd83c2f98a9576b676c17f3e0cb3163c99ab9366e3f20e5530d1f933c82396dd",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the rusty dark iron helm with a nasal, cheek guards and two large curled ram horns; (2) the long dark braided beard with bronze rings, and long braids of hair; (3) the heavy mantle of dark bear fur over the shoulders; (4) the pauldrons of overlapping leaf-shaped iron scales, each with a round bronze sun-disc boss; (5) the jagged single-bit dark iron axe. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdChief.back.body.g3pro.png",
+    "01.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2740,
+    "candidatesTokenCount": 1640,
+    "totalTokenCount": 5172,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 500
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 792,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.7,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,39 @@
+{
+  "file": "ac03.back.redress.kit.nb21.png",
+  "sha256": "e7a39d4f56bdca512d922a57d9eaf33acd75e166c356c20681c14f8d2787c615",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the open-faced dark iron helm with two large curled ram horns wrapped in leather cord; (2) the mail aventail at the neck; (3) the dark iron pauldrons studded with rows of iron rings; (4) the grey wolf-fur collar over the shoulders; (5) the long-hafted great axe of dark iron held in both hands, its haft as tall as his chest. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nThe last attempt drifted in these cells: cell 7 (the follow-through); cell 13 (lying dead face down). In every cell, and in these above all, keep the figure as Image 1 draws it: the same pose, the same facing, the same size, the same length and breadth of the body on the ground, and the same place in its cell.\n\nThe last attempt left small openings inside the figure (the curls of the horns) where the background showed through and stayed tinted; close them as said below. His wolf-fur collar is grey-brown as in the portrait, never white.\n\nClosed shapes: the pure green (#00FF00) background shows only through the large gaps between the limbs, the body and the staff or haft, and there it is exactly the same flat colour as everywhere else. Every small opening inside the outline is closed: an iron cage or lantern is packed full with its dull ember or coals, a ring holds its coal or stone, the curl of a horn lies tight against the helm with no hole in it. Nothing inside the figure is tinted pure green.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdChief.back.body.g3pro.png",
+    "03.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2969,
+    "candidatesTokenCount": 1686,
+    "totalTokenCount": 5954,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 729
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1299,
+    "serviceTier": "standard"
+  },
+  "seconds": 18.2,
+  "modelText": [],
+  "approved": null
+}

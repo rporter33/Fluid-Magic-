@@ -1,0 +1,40 @@
+{
+  "file": "G1s.b.g3pro.png",
+  "sha256": "39f7aa70e39f395df3bb09b2eb875840b1b399f8f49fb256fa40c2dad1081465",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the game's approved flame mana ring sheet: the new sheet belongs to the same family of mana rings, with the same size, ring width, layout and hand, but in its own colour and symbol. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: the sun mana ring, painted on black, two separate sprites, each exactly where its grey placeholder is and as large as it.\n\nTop: a ring of light lying on the ground, seen from high above at 40 degrees, so the ring is a flat ellipse about two thirds as tall as it is wide: a band of soft white-gold light with short straight rays standing up from it, small and even all around. At the front of the ring, its foot on the ring's near edge, stands the sun glyph: the game's sun symbol, the bold shape of the grey placeholder (a round disc with eight short straight rays around it), painted as radiant light, brighter than the ring.\nBottom: the sun glyph alone, the same symbol, as a bold, simple shape of radiant light that still reads as the sun symbol when it is shrunk to 20 pixels.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese sprites are light: in the game they are added onto the battle field, so anything that is not black glows and pure black disappears. Paint them as glowing fire on the black, never on a coloured or grey background; no ground, no figures, no scenery, no cast shadows.\nRadiance's colours: white-gold light (#FFFFFF to #F3E6B8) in the brightest parts, a warm pale gold body (#F3E6B8) and deeper old-gold edges (#D9B85C) that fade into the black; never orange flame, never red.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "G1s.guide.png",
+    "G1f.b.g3pro.png",
+    "anchor-style.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1515,
+    "candidatesTokenCount": 1377,
+    "totalTokenCount": 3132,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 741
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 240,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.9,
+  "modelText": [],
+  "approved": null
+}

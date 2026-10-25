@@ -1,0 +1,49 @@
+{
+  "file": "r1.archer.back.g3pro.png",
+  "sha256": "a9a48a2fe49ec60d2cfba53bed814f0aded055d91173fb5d117de03cd8d8be8a",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is the camera and pose guide: grey clay maquettes in exactly this grid, rendered from the game's battle camera; the coloured areas on them mark where the side's cloth goes. Copy from it exactly the camera angle, the direction every figure faces, the pose in each cell, the size of the figure in its cell and the grid. Do not copy its smooth grey clay surfaces, its simple shapes or its toy-like proportions.\nImage 2 is a finished sprite sheet from the same game, painted at the same camera and in the same view: match its camera angle, the size of its figures in their cells, its daylight and its painting. Do not copy its soldier, his kit, his weapon or his colours (no orange, no green cloth, no crest, no horns); its grid of poses is not the one to copy (Image 1's is).\nImage 3 is a painted portrait from the same game, a reference for the painting hand and for the materials only: do not paint that person, and do not copy its dark background, its candlelight or its head-and-shoulders framing.\n\nA game sprite sheet: 16 full-length painted figures of one soldier, one figure in each cell of a 4 by 4 grid, on a perfectly flat, uniform pure magenta (#FF00FF) background. The same soldier, the same equipment, the same colours and the same scale in every cell; only the pose changes.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, with no perspective, so every figure is the same size. Every figure faces away from us, toward the upper right of the image: we see its back, its right side, the top of its helmet or hood and the tops of its shoulders; its face is hidden. The figures are foreshortened as seen from above: the top of the head and the shoulders are large, the legs short.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the tops of helmets and hoods, the shoulders and the upper-left side of every figure with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; a muted earthy palette of charcoal, ash grey, dull iron, bark brown, leather and bone, in which the side's cloth is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of every figure. Each figure has a strong, simple, readable silhouette that still reads when the figure is shrunk to 40 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe soldier: An Archer of the free villages, sworn to no nation: a padded jack of undyed tan linen, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; a grey wool hood worn up with a short shoulder cape; leather bracers; a short wooden hunting bow; a leather quiver of grey-fletched arrows on the back; a long knife at the belt (in the windup and strike cells the bow is slung on the back and the knife is in hand). No colours but grey, tan, leather brown and iron.\n\nSide colour: undyed grey wool (#8C8A80) on the hood, the shoulder cape and the grey surcoat: these fighters belong to no nation, so they wear no dyed colour at all. The grey cloth is a large, clean, unbroken area that faces the sky and the camera, lighter grey-beige #AAA79C where the sun strikes it and #5C5A54 in the shade, with tan linen, leather and iron around it. Never orange, red, green or blue cloth anywhere.\n\nFacing, again: every figure in every one of the cells faces the same way, away from us toward the upper right, including the figure that is hit, the falling one and the fleeing ones; no face is seen anywhere on this sheet.\n\nDetail: at full size each figure is a finished small painting, not a flat icon: mail rings and dented iron, quilted linen and coarse wool with frayed hems, leather straps and buckles, wood grain, a worn blade or point; varied, visible brush strokes. The values stay simple enough that the figure reads at 40 pixels: a light top (headgear, shoulders, cloth) against darker legs.\n\nProportions and scale: realistic adult proportions, the head with its helmet or hood about one sixth of the standing height; weapons at true size. Standing upright, a figure is about 62% of its cell's height; lying figures are as long as the standing ones are tall.\n\nThe cells, left to right, row by row (the poses of the camera and pose guide):\n1. (row 1, column 1) standing ready, weight on both feet.\n2. (row 1, column 2) marching: left foot forward in a long stride, right foot pushing off behind.\n3. (row 1, column 3) marching: right foot forward in a long stride, left foot pushing off behind.\n4. (row 1, column 4) nocking an arrow, the bow raised in front.\n5. (row 2, column 1) full draw: bow arm straight toward the enemy, string pulled back to the cheek.\n6. (row 2, column 2) the loose: the arrow just released, the drawing hand flying back past the ear, the bow arm still extended.\n7. (row 2, column 3) attack windup: the weapon drawn far back, body twisted and coiled.\n8. (row 2, column 4) the strike: the weapon fully extended into the blow, lunging forward on the front foot.\n9. (row 3, column 1) hit from the front: the soldier lurches backward toward us with his back still turned to us, shoulders hunched, arms thrown out to the sides, head bowed forward; we see only the back of his head or helmet and his back, never his face.\n10. (row 3, column 2) falling backward toward us, knees buckling, about halfway to the ground; still seen from behind and above: the back of the head or helmet and the back toward us.\n11. (row 3, column 3) lying dead on the ground on its back, limbs loose.\n12. (row 3, column 4) lying dead on the ground face down, a different sprawl.\n13. (row 4, column 1) fleeing in panic away from the enemy: running hard, weapon dropped, looking back over the shoulder.\n14. (row 4, column 2) fleeing: the other foot forward, arms pumping, looking back.\n15. (row 4, column 3) victory cheer: weapon raised high overhead, other fist raised, shouting.\n16. (row 4, column 4) no person: only the weapon lying flat on the ground, as dropped.\n\nBackground and separation: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No magenta, pink or purple anywhere on the figures.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra people; cropped or overlapping figures.",
+  "references": [
+    "archer.back.png",
+    "independent.back.from-cw.png",
+    "03.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2509,
+    "candidatesTokenCount": 1455,
+    "totalTokenCount": 4262,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1735
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 298,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.1,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/archer.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.back.from-cw.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-hunter/03.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/prompts/r1.archer.back.txt",
+  "job": "archer.back",
+  "purpose": "B troops: archer back sheet (r1, Pro, guide + camera sheet + portrait)",
+  "logKey": "troops"
+}

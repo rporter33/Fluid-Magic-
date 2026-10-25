@@ -1,0 +1,39 @@
+{
+  "file": "sal.front.mark.nb21.png",
+  "sha256": "0f70ee46b6f0665a995d0a7f1425a58672c54d0f7a4257f671e5275a29ae913d",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished painted game cutout of a creature whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), its pose, its outline, its size and position in the image, its colours, its scales and cracks, its light and the flat pure green background. Repaint nothing else.\nImage 2 is this creature's own approved painted portrait. The creature of Image 1 must carry every mark the portrait shows.\n\nAdd the one mark that is missing: the pale healed scrape across the snout, exactly as in the portrait. It is a single long diagonal scar on the top of the snout, between the eyes and the nostrils, running from near the nostril back toward the corner of the mouth: a narrow groove of pale, bone-grey healed skin with a slightly raised, lighter edge, clearly lighter than the dark scales around it, so that it shows when the head is seen from above and in front. It crosses the scale pattern; the dull ember cracks stop at its edges.\n\nKeep the creature as dark as it is: dull obsidian-black scales with a fine net of dull ember-orange cracks, nothing glowing. Keep the row of short stubby horn nubs along each side of the jaw and the three blunt bony knobs on the brow exactly as they are.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green on the creature. Never: text, labels, borders, a floor, cast shadows, fire, extra creatures.\n",
+  "references": [
+    "sal.front.nb21.png",
+    "01.webp"
+  ],
+  "aspect": "3:4",
+  "usage": {
+    "promptTokenCount": 2572,
+    "candidatesTokenCount": 1456,
+    "totalTokenCount": 4631,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 332
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 603,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.7,
+  "modelText": [],
+  "approved": null
+}

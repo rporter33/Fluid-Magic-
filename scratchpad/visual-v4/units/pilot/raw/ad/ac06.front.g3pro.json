@@ -1,0 +1,40 @@
+{
+  "file": "ac06.front.g3pro.png",
+  "sha256": "0c2c3585792781544b963be7aed0b392c359cd48a3ffb98fccabc30fe9865639",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is the camera and pose guide: grey clay maquettes in exactly this grid, rendered from the game's battle camera. Copy from it exactly the camera angle, the direction every figure faces, the pose in each cell, the size of the figure in its cell and the grid. Do not copy its smooth grey clay surfaces, its simple shapes or its toy-like proportions.\nImage 2 is this leader's own painted portrait: paint the same person, with the same headgear, mantle, armour and colours, in the same painting style. Do not copy its dark background, its candlelight or its head-and-shoulders framing.\nImage 3 is a second painting-style reference from the same set; the same rules apply.\n\nA game sprite sheet: 16 full-length painted figures of one leader, one figure in each cell of a 4 by 4 grid, on a perfectly flat, uniform pure green (#00FF00) background. The same leader, the same equipment, the same colours and the same scale in every cell; only the pose changes.\n\nCamera: high above and in front, looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, with no perspective, so every figure is the same size. Every figure faces toward us and toward the lower left of the image: we see its face from above, the top of its helmet or hood, its chest and its left side. The figures are foreshortened as seen from above: the top of the head and the shoulders are large, the legs short.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the tops of helmets and hoods, the shoulders and the upper-left side of every figure with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; a muted earthy palette of charcoal, ash grey, dull iron, bark brown, leather and bone, in which the side's cloth is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of every figure. Each figure has a strong, simple, readable silhouette that still reads when the figure is shrunk to 40 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe leader: An Ash Chieftain (the man of the reference portrait): about fifty-five, heavy, a very full untrimmed dark beard going grey; a dark iron helm crowned with a ring of short iron spikes like flames, no horns; dark iron pauldrons engraved with coiled flame sigils; a mantle of soot-black feathers over the shoulders; charcoal clothes, with dark iron scale sleeves and leather bracers so that little skin shows; a jagged single-bit dark iron axe. His face, as in the portrait: heavy brows, a broad nose, a pale scar across the brow and cheek on the left side of his face, the beard full to the chest.\n\nIdentity: this is the person of the portrait reference, seen full length: the same face, hair and beard, the same headgear with its exact shape, the same mantle, armour and ornaments, as the description above lists them. At this size the headgear, the mantle and the weapon carry his identity, so paint them exactly.\n\nFacing, again: every figure in every one of the cells faces the same way, toward us and to the lower left, including the figure that is hit and the falling one; the fleeing figures alone turn away.\n\nDetail: at full size each figure is a finished small painting, not a flat icon: the engraved coils on the pauldrons, the spikes of the crown-helm, the individual soot-black feathers of the mantle, rivets, leather straps and buckles, worn metal on the axe; varied, visible brush strokes. The values stay simple enough that the figure reads at 46 pixels: the crown-helm, the black feather mantle and the pauldrons against darker legs.\n\nProportions and scale: realistic adult proportions, the head with its helmet or hood about one sixth of the standing height; weapons at true size. Standing upright, a figure is about 62% of its cell's height; lying figures are as long as the standing ones are tall.\n\nThe cells, left to right, row by row (the poses of the camera and pose guide):\n1. (row 1, column 1) standing ready, weight on both feet.\n2. (row 1, column 2) standing at ease, weight shifted onto one leg, head turned a little to one side.\n3. (row 1, column 3) marching: left foot forward in a long stride, right foot pushing off behind.\n4. (row 1, column 4) marching: right foot forward in a long stride, left foot pushing off behind.\n5. (row 2, column 1) attack windup: the weapon drawn far back, body twisted and coiled.\n6. (row 2, column 2) the strike: the weapon fully extended into the blow, lunging forward on the front foot.\n7. (row 2, column 3) follow-through: the weapon swept past the target and low, body turned with the swing.\n8. (row 2, column 4) recoiling from a hit: knocked back, head snapped back, arms thrown out, one foot stepping back.\n9. (row 3, column 1) rallying: the weapon raised high, the head turned back over the shoulder, shouting an order.\n10. (row 3, column 2) commanding the advance: the weapon pointed straight toward the enemy, the free arm sweeping forward.\n11. (row 3, column 3) falling backward, knees buckling, about halfway to the ground.\n12. (row 3, column 4) lying dead on the ground on its back, limbs loose.\n13. (row 4, column 1) lying dead on the ground face down, a different sprawl.\n14. (row 4, column 2) fleeing in panic away from the enemy: running hard, weapon and shield dropped, looking back over the shoulder.\n15. (row 4, column 3) fleeing: the other foot forward, arms pumping, looking back.\n16. (row 4, column 4) victory cheer: weapon raised high overhead, other fist raised, shouting.\n\nBackground and separation: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No green anywhere on the figures: no green cloth, no green glow, no green reflections.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra people; cropped or overlapping figures.\n",
+  "references": [
+    "ashChieftain-06.front.png",
+    "06.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2342,
+    "candidatesTokenCount": 1471,
+    "totalTokenCount": 4109,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1568
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 296,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.2,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,39 @@
+{
+  "file": "lv08.back.redress.r2.nb21.png",
+  "sha256": "ab8636446168691954aafa318f8c6281470bed81953bb83bf72e41afefe5b035",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure blue (#0000FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the low flat-topped iron cap with a short neck flare at the back; (2) his long dark hair to the shoulders and full dark beard; (3) the thick quilted jerkin of faded dun-brown; (4) the stiff leather collar buckled around the throat; (5) the plain straight sword with a simple cross guard. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left), with a neutral grey fill; do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nThe last attempt drifted in these cells: cell 11 (falling); cell 12 (lying dead on the back); cell 13 (lying dead face down). In every cell, and in these above all, keep the figure as Image 1 draws it: the same pose, the same facing, the same size, the same length and breadth of the body on the ground, and the same place in its cell.\n\nLight, for this blue background: the high sun from the upper left and a soft neutral grey fill on the lower right; the shadow side is warm brown-grey and the iron is dark grey with pale grey highlights; nothing on the figure is blue or reflects blue, not even the edge of a blade.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor or shadow; no blue anywhere on the figures: no blue cloth, no blue light, no blue reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdLevy.back.body.g3pro.png",
+    "08.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2875,
+    "candidatesTokenCount": 1827,
+    "totalTokenCount": 5037,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 635
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 335,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.1,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,41 @@
+{
+  "file": "E1.b.g3pro.png",
+  "sha256": "07a2a31d3fe757bd95a72ed07e70fdba6affaa929c07c4e164a4d3e04750ab74",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Fire Sprite, a creature of living flame: it shows how fire, embers and smoke are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved effects sheet from this game (embers, sparks and small flame licks): it shows how flame is painted for the game's effects. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 4 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: three flip-book loops of a single flame tongue, painted on black: 24 frames in an 8 by 3 grid, each frame in its own cell exactly where its grey placeholder is and as large as it.\n\nEach row is one loop of eight frames, read left to right; the flame flickers, sways and curls a little from frame to frame, and frame 8 leads smoothly back into frame 1. Every frame stands on a flat base at the bottom of its cell, where the flame meets the ground or the burning thing.\nTop row: a slender single tongue of flame. Middle row: a forked flame of two tongues. Bottom row: a broad flame of three or four tongues, the largest. Within a row the flame keeps the same size; only its shape moves.\nEach flame: a pale golden-white core low in the flame, an orange body of curling flame-shaped brush strokes, deep red ragged tips that fade into the black, a few tiny sparks. Painted, not smooth: the tongues have the torn, flickering edges of real fire.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese sprites are light: in the game they are added onto the battle field, so anything that is not black glows and pure black disappears. Paint them as glowing fire on the black, never on a coloured or grey background; no ground, no figures, no scenery, no cast shadows.\nEmber's colours: a pale golden-white to golden-yellow core (#FFE9A8 to #FFB347), an orange body (#FD6533) and deep red edges (#7A1E12) that fade into the black; no smoke.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "E1.guide.png",
+    "01b-r3.webp",
+    "E4.a.nb21.png",
+    "anchor-style.webp"
+  ],
+  "aspect": "16:9",
+  "usage": {
+    "promptTokenCount": 1855,
+    "candidatesTokenCount": 1395,
+    "totalTokenCount": 3599,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 823
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1032
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 349,
+    "serviceTier": "standard"
+  },
+  "seconds": 17.1,
+  "modelText": [],
+  "approved": null
+}

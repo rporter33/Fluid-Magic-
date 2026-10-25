@@ -1,0 +1,47 @@
+{
+  "file": "t2b.longbowHunter.back.edit.nb21.png",
+  "sha256": "9caba8570acda09e89cb9f8b7d5bee7c070804a7371df51db11c5d293a79b762",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid, the flat pure magenta (#FF00FF) background, and its painting: the same brushwork, the same soldier, the same weapon.\nImage 2 is a painted portrait from the same game, a reference for the painting hand only: do not copy its dark background, its candlelight, its framing or the person in it.\n\nChange only the figure in row 3, column 1 (the hunter hit from the front): it is painted in the wrong colours, with tan sleeves and a grey hood. Repaint it as the same hunter as every other cell: the deep bottle-green hood up, the long deep bottle-green hooded cloak with its ragged leaf-cut hem down his back, bark-brown leather sleeves and bracers, the long yew bow in his hand; keep its pose, outline, size and place exactly. Every other cell stays exactly as it is, and the cloak is the same deep bottle green in every cell.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back and the back of the head, never a face. Nothing else changes: no new weapons, no new people.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow. No magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "t2a.longbowHunter.back.mixed.nb21.png",
+    "04.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2622,
+    "candidatesTokenCount": 1538,
+    "totalTokenCount": 4869,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 382
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 709,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.5,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/t2a.longbowHunter.back.mixed.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/prompts/b.longbowHunter.back.edit.txt",
+  "job": "longbowHunter.back",
+  "purpose": "B troops2: longbowHunter back sheet re-roll (nb21 edit of its round-a sheet, 15/15: the hit cell's colours)",
+  "logKey": "troops2"
+}

@@ -1,0 +1,48 @@
+{
+  "file": "ashRider.back.fill.nb21.png",
+  "sha256": "b25c120b79aa4e4cf3bc03082a7c0c4150d4f85382f144a091db43c3ff183c45",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a sprite sheet of one Ash Rider on his Ash Horse, seen from behind, in a 4 by 4 grid on a flat pure green (#00FF00) background. 12 of its figures are finished paintings whose camera, size and pose are right. The figures in 4 cells (row 3, column 3; row 3, column 4; row 1, column 4; row 2, column 1) are grey clay figures. Keep every finished painted figure exactly as it is: its place, size, pose, outline and camera. Paint each grey clay figure as the same rider and horse, keeping exactly the clay figure's place, size, outline, pose, facing and camera, so that it matches the painted figures beside it in colours, light, scale and hand; no clay may remain. Keep the flat pure green background, with no grid lines.\n\nImage 2 is the approved painted portrait of this rider and horse: use it only for its identity, its colours, its materials and its marks. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing.\n\nCamera: high above and behind, looking down at about 40 degrees; orthographic, no perspective. Every figure faces away from us toward the upper right, exactly as in Image 1: we see its back and the top of its head; no face is seen; never at eye level, never seen from the side.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the rider and horse with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the rider and horse's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 60 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figures: An Ash Rider of the Cinder Horde on his Ash Horse. The horse is the horse of Image 2: a heavy dark ash-grey warhorse, bred to carry, not to fight, with paler ash dappling on the neck and a greyer muzzle; a thick soot-black mane falling on the near side, a soot-black forelock and tail; a riveted plate of dark iron with rusted edges and a short blunt ridge down its middle over its face from the brow to the nose; a bridle of blackened leather with iron rings; a caparison of dull ember-orange cloth bordered with a charcoal band, covering its back and rump from the saddle to the tail and hanging low on both flanks. The rider: a lancer in blackened iron scale with a dull ember-orange shoulder cape, a rounded dark iron helm with a dull ember-orange horsehair crest, ash-grey skin, a long ash-wood lance with a dark iron head and a dull ember-orange pennon just below it, a sword at the hip (in the windup and strike cells the sword is in his hand and the lance is gone). Its marks, every one painted clearly: the riveted iron face plate; the soot-black mane and forelock; the ember-orange caparison with its charcoal border; the iron bridle rings; the greyer muzzle; the dark ash-grey coat with paler dappling. Seen from behind and above, the caparison over the horse's back and rump, the soot-black tail, the rider's cape, crest and lance show; the faces are hidden.\n\nSide colour: dull ember-orange (#C4532C) cloth on the horse's caparison over its back, rump and flanks, the rider's shoulder cape and helmet crest, and the lance pennon: large, clean, unbroken areas that face the sky and the camera, so that a wedge of these riders reads as that colour from far away. The rest stays muted iron, charcoal and ash grey.\n\nAlso, on every figure of the sheet, painted or clay, keeping its outline: make the dull ember-orange caparison larger: it covers the horse's whole back, rump and flanks down to the knees, and the rider's ember-orange cape is broad over both shoulders.\n\nThe clay cells to paint, and their poses:\n11. (row 3, column 3) the horse lying dead on its side, the rider lying dead beside it.\n12. (row 3, column 4) the horse and the rider lying dead, a different sprawl.\n4. (row 1, column 4) galloping, fully extended: front legs reaching forward, hind legs stretched back.\n5. (row 2, column 1) galloping, gathered: all four legs bunched under the body.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No green anywhere on the creature: no green glow, no green reflections.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "ashRider.back.fill.base.png",
+    "01b.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3457,
+    "candidatesTokenCount": 1819,
+    "totalTokenCount": 7235,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1217
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1959,
+    "serviceTier": "standard"
+  },
+  "seconds": 18.5,
+  "modelText": [],
+  "approved": null,
+  "job": "ashRider.back.fill",
+  "purpose": "C creatures: ashRider back sheet re-roll: nb21 re-dress of the first sheet with its 4 failing cells laid in as clay (cells: deadA, deadB, gallopA, gallopB)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/ashRider.back.fill.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/bases/ashRider.back.fill.base.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/cinderHorde/ashHorse/01b.webp"
+  ],
+  "route": "fill",
+  "logKey": "C creatures"
+}

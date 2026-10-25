@@ -1,0 +1,46 @@
+{
+  "file": "t2a.longbowHunter.back.mixed.nb21.png",
+  "sha256": "3a64fdcd9ed7a2b663bb77fcd1590d1a277eb7f94e4581380c2149c5ac101380",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nMost cells of Image 1 already show this soldier, painted as he must stay. In 2 cells a figure of another soldier was laid in only for its pose: row 3, column 1 (the recoil); row 4, column 3 (the cheer). Repaint each of those figures as this same soldier, in his kit and his colours, keeping the pose, the position of the arms, legs and weapon, the outline, the size and the place in the cell exactly as they are, so that all 16 cells show one and the same soldier.\nImage 2 is a painted portrait from the same game, a reference for the painting hand and the materials only: do not paint that person, and do not copy its dark background, its candlelight or its framing.\n\nThe soldier: A Longbow Hunter: a bark-brown leather jerkin, worn under a sleeveless surcoat of deep bottle-green cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; a deep bottle-green hooded cloak with the hood up, over the shoulders and down the back to the knees with a ragged leaf-cut hem; leather bracers; bark-brown weathered skin; a long yew bow about as tall as the hunter himself, held upright and close to his body; a quiver of grey-fletched arrows on the back; a hunting knife at the belt (in the windup and strike cells the bow is slung on the back and the knife is in hand). No antlers.\n\nSide colour: the raised hood, the long cloak and the long surcoat are cloth dyed deep bottle green: the colour of jade or of a green glass bottle held to the light, a clear and fairly saturated cool green; never leaf-green, olive, grey or blackish, never as blue as teal. These are large, clean, unbroken areas that face the sky and the camera, so that a packed block of these soldiers reads as that colour from far away.\n\nOne more change: his hooded cloak, hood and surcoat are the same deep bottle green in every cell, the windup cell (row 2, column 3) included, where they must be neither lighter, greyer nor more yellow than in the first cell. The laid-in figures get the long yew bow (in the cheer cell raised in his hand), the quiver, the long green hooded cloak with its ragged leaf-cut hem and the hood up.\n\nThe cells, for reference (keep each figure's pose as Image 1 has it):\n1. (row 1, column 1) standing ready, weight on both feet.\n2. (row 1, column 2) marching: left foot forward in a long stride, right foot pushing off behind.\n3. (row 1, column 3) marching: right foot forward in a long stride, left foot pushing off behind.\n4. (row 1, column 4) nocking an arrow, the bow raised in front.\n5. (row 2, column 1) full draw: bow arm straight toward the enemy, string pulled back to the cheek.\n6. (row 2, column 2) the loose: the arrow just released, the drawing hand flying back past the ear, the bow arm still extended.\n7. (row 2, column 3) attack windup: the weapon drawn far back, body twisted and coiled.\n8. (row 2, column 4) the strike: the weapon fully extended into the blow, lunging forward on the front foot.\n9. (row 3, column 1) hit from the front: the soldier lurches backward toward us with his back still turned to us, shoulders hunched, arms thrown out to the sides, head bowed forward; we see only the back of his head or helmet and his back, never his face.\n10. (row 3, column 2) falling backward toward us, knees buckling, about halfway to the ground; still seen from behind and above: the back of the head or helmet and the back toward us.\n11. (row 3, column 3) lying dead on the ground on its back, limbs loose.\n12. (row 3, column 4) lying dead on the ground face down, a different sprawl.\n13. (row 4, column 1) fleeing in panic away from the enemy: running hard, weapon dropped, looking back over the shoulder.\n14. (row 4, column 2) fleeing: the other foot forward, arms pumping, looking back.\n15. (row 4, column 3) victory cheer: weapon raised high overhead, other fist raised, shouting.\n16. (row 4, column 4) no person: only the weapon lying flat on the ground, as dropped.\n\nPaint him in the hand of the game's painted portraits: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette, small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges; nothing glows unless the description says so. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right). Realistic adult proportions; no cartoon, no thick outlines.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back and the back of the head, never a face.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow. No magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "lbh.back.mixed.png",
+    "04.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 3572,
+    "candidatesTokenCount": 2457,
+    "totalTokenCount": 6029,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1332
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "seconds": 20.3,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/lbh.back.mixed.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/prompts/a.longbowHunter.back.mixed.txt",
+  "job": "longbowHunter.back",
+  "purpose": "B troops2: longbowHunter back sheet (stand-in re-roll: nb21 edit of r2 with recoil and cheer laid in, one green)",
+  "logKey": "troops2"
+}

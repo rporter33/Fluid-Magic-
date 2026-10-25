@@ -1,0 +1,48 @@
+{
+  "file": "sal02.front.redress.nb21.png",
+  "sha256": "26f988a462d396cbf0e6f6d8e03c732b78f08d8f4b8eb89db3e0e26994829544",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted game cutout of a salamander whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees, orthographic), the direction it faces, its pose, its body's outline, its size and position in the image, its light and the flat pure green background. This is a plain re-dress of the same body: repaint its head and its scales as the salamander of Image 2, and change the outline only where Image 2's head and horns are a different shape.\n\nImage 2 is the approved painted portrait of the salamander to paint: the same head, horns, eyes, scales, colours, cracks and marks, now seen full body from above, in the same painting style. Do not copy its dark background, its candlelight or its head-and-shoulders framing.\n\nOne large painted creature, full body, alone on a perfectly flat, uniform pure green (#00FF00) background, as a game cutout. Pose: exactly the pose of Image 1, standing at rest on all four legs, the head raised on its neck.\n\nCamera: high above and in front, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, no perspective. The creature faces toward us and to the lower left of the image: we see its face from above, its chest and its left side. It is foreshortened as seen from above: the top of its head and its shoulders large, its legs short.\n\nThe creature: a Salamander, the great fire lizard of the reference portrait, summoned by Cinder Horde mages (size 3): a heavy low-slung lizard about two and a half men long, on four short, thick, splayed legs with blunt claws, with a long thick tail; dull obsidian-black scales with dull ember-orange cracks between them (thin dull lines, never glowing, never bright orange); no flame on its body and no fire in the image. Its head: an ancient salamander: a massive, heavy, square head with a deep underslung jaw and a hanging dewlap of loose skin under the throat; its scales dulled, pitted and dusted grey with ash, with wide deep cracks between them; heavy-lidded, half-closed, cloudy eyes. Its marks, every one painted clearly: thick, blunt, worn horns along each side of the jaw, the largest one snapped off to a short stump; warty bony knobs on the brow; the hanging dewlap under the throat; scales dusted grey with ash. Seen from in front and above, the face and every mark read clearly.\n\nRemove from Image 1 what belongs to the other salamander: the three round brow knobs, the pale scrape across the snout and the row of short stubby horn nubs of Image 1. None of them may remain.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the creature with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background. The creature stays as dark as in its portrait, its scales lit only by small cool and warm highlights, never washed orange.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the creature's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 120 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nSize: the creature fills the image as in Image 1, centred, with at least 24 pixels of clean background all around.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No green anywhere on the creature: no green glow, no green reflections.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped creature.",
+  "references": [
+    "sal.front.mark.nb21.png",
+    "02.webp"
+  ],
+  "aspect": "3:4",
+  "usage": {
+    "promptTokenCount": 3186,
+    "candidatesTokenCount": 1673,
+    "totalTokenCount": 5499,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 946
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 640,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.7,
+  "modelText": [],
+  "approved": null,
+  "job": "sal02.front.redress",
+  "purpose": "C creatures: Salamander 02 front idle: re-dress of the approved face 01 cutout with portrait 02 (nb21)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/sal02.front.redress.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/sal.front.mark.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/02.webp"
+  ],
+  "route": "redress",
+  "logKey": "C creatures"
+}

@@ -1,0 +1,38 @@
+{
+  "file": "cmdScout.front.body.edit.nb21.png",
+  "sha256": "678a849452d0ff648a5e9b664e14d8abd2670e419181cecbd7178c8b8db119dd",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\n\nRepaint every figure of Image 1 as another leader, the same in every cell: A Cinder Scout, a light scout of the Cinder Horde: a low close-fitting hood of charcoal wool worn up; a long scarf of ash-grey wool wound around the neck and pulled up over the nose and mouth; a short shoulder cape of smoke-grey wool; a light jerkin of dark leather with plain straps, charcoal breeches and soft wrapped boots; ash-grey skin; a long knife of dark iron in the right hand. No armour plates, no helmet, no shield, no cloth of a bright colour. He is lean and light, not heavy and broad: no helmet, no spikes, no fur mantle, no pauldrons, no axe. Where a figure of Image 1 holds the axe, this leader holds the long knife in the same hand, pointing the same way. Keep each figure's pose, size and position, and its outline as close as the lighter kit allows. Painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right).\n\nFacing, again: every figure in every one of the cells faces the same way, toward us and to the lower left, including the figure that is hit and the falling one; the fleeing figures alone turn away.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdChief.front.zonesonly.g3pro.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1565,
+    "candidatesTokenCount": 1975,
+    "totalTokenCount": 4399,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 445
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 859,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.0,
+  "modelText": [],
+  "approved": null
+}

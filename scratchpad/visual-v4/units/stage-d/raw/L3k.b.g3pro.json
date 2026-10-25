@@ -1,0 +1,40 @@
+{
+  "file": "L3k.b.g3pro.png",
+  "sha256": "252ec9c107c629451fc5c935fcfc638522caca858d95ff4e950181449b16a87b",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: a crack heaved up through the ground by roots, painted on magenta, in separate sprites, each exactly where its grey placeholder is and as large as it.\n\nTop, across the whole width: a heaved furrow, seen from high above: a dark jagged split along its middle, and broken clods and torn turf pushed up along both of its lips. The clods' upper-left faces are lit by the sun, with soft shadow to their lower right, so the strip reads light, dark, light across its width even when it is shrunk to 16 pixels tall. It tapers cleanly to a point at both ends and keeps the same look all along, because the game stretches it along the ground like a rope.\nMiddle, two sprites: the running head of the crack: clods of earth, torn turf and a puff of dust thrown up and forward to the right, as the crack tears along the ground toward the right; seen from high above at 40 degrees, the clods in the air higher up the image than those on the ground.\nBottom row: six loose clods of earth and turf, each a different shape, lit from the upper left.\nEarth colours: soil browns, dark umber in the split, a little green and ochre turf on the lips.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every clod and lip of earth, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "L3k.guide.png",
+    "01b-r2-512.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "3:2",
+  "usage": {
+    "promptTokenCount": 1527,
+    "candidatesTokenCount": 1500,
+    "totalTokenCount": 3543,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 753
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 516,
+    "serviceTier": "standard"
+  },
+  "seconds": 24.2,
+  "modelText": [],
+  "approved": null
+}

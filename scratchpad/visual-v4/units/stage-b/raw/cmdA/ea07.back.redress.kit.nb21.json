@@ -1,0 +1,39 @@
+{
+  "file": "ea07.back.redress.kit.nb21.png",
+  "sha256": "2ba1074a3d6262a01a67e0a58098f9157b4ff500988f48ac7efb22454dd3125b",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right (another leader of the same kind: none of his own marks, trim or hair carry over): keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) his thick unruly black hair with a thin blackened-iron circlet half-hidden in it, no hood; (2) the charcoal robe to the ground with a padded quilted collar and a dull ember-red trim; (3) the leather book-strap across the chest, with a book at the hip; (4) the slender staff of blackened wood capped with iron and a short spike. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nThe last attempt drifted in these cells: cell 8 (recoiling from a hit). In every cell, and in these above all, keep the figure as Image 1 draws it: the same pose, the same facing, the same size, the same length and breadth of the body on the ground, and the same place in its cell.\n\nIn cells 11 to 13 (falling, lying dead on the back, lying dead face down) the body lies exactly where, which way and how long Image 1's body lies; tall headgear lies along the line of the body, not across it.\n\nClosed shapes: the pure green (#00FF00) background shows only through the large gaps between the limbs, the body and the staff or haft, and there it is exactly the same flat colour as everywhere else. Every small opening inside the outline is closed: an iron cage or lantern is packed full with its dull ember or coals, a ring holds its coal or stone, the curl of a horn lies tight against the helm with no hole in it. Nothing inside the figure is tinted pure green.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdCaster.back.body.r2.nb21.png",
+    "07.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2985,
+    "candidatesTokenCount": 1951,
+    "totalTokenCount": 5814,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 745
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 878,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.3,
+  "modelText": [],
+  "approved": null
+}

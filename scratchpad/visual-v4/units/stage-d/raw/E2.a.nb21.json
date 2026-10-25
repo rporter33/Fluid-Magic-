@@ -1,0 +1,40 @@
+{
+  "file": "E2.a.nb21.png",
+  "sha256": "24c3bee0df82ad4f6407763b5608f0c1f17a4cf54772622b2589413180a59302",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Fire Sprite, a creature of living flame: it shows how fire, embers and smoke are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet for a fireball spell: six separate painted sprites on black.\n\nTop row, left to right, three fireballs, small, medium and large, each exactly the size of its grey ball: a churning ball of living flame, round overall, with a pale golden-white core, an orange body of swirling flame tongues and ragged deep-red edges, a few small flame licks trailing up and to the left; painted with rough flame-shaped brush strokes. The three are the same fireball at three sizes.\nTop right: a soft round glow of warm golden light, the size of its grey placeholder, brightest in the middle and fading evenly to black at its edge; no flames, no rays, no rings: a painted soft light.\nMiddle band: the fireball's trail alone, without a fireball: one long horizontal streak of flame and small sparks, widest and brightest at its right end, where the fireball would be, thinning to a faint smoky deep-red wisp at its left end; ragged painterly edges; it fills its grey band from end to end.\nBottom: a falling meteor: a dark rock of charcoal with glowing orange cracks at the lower right, inside a shell of fire, with a long tail of flame and smoke streaming up to the upper left behind it along the grey placeholder.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese sprites are light: in the game they are added onto the battle field, so anything that is not black glows and pure black disappears. Paint them as glowing fire on the black, never on a coloured or grey background; no ground, no figures, no scenery, no cast shadows.\nEmber's colours: a pale golden-white to golden-yellow core (#FFE9A8 to #FFB347), an orange body (#FD6533) and deep red edges (#7A1E12) that fade into the black; dark charcoal smoke where the fire thins.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "E2.guide.png",
+    "01b-r3.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 4173,
+    "candidatesTokenCount": 1854,
+    "totalTokenCount": 6883,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 813
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 856,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.7,
+  "modelText": [],
+  "approved": null
+}

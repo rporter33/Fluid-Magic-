@@ -1,0 +1,49 @@
+{
+  "file": "oakheart.front.cfix.r2.nb21.png",
+  "sha256": "4fdb876e9533f8b38d9f8c58eb5cf78e41bf0405203ec808b497d843ad4f59c5",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted sprite sheet of one Oakheart warrior, seen from in front, in a 4 by 4 grid, whose drawing is right: keep exactly every figure's place, size, pose and camera (high above and in front, looking down at about 40 degrees), the grey oak body below the shoulders, the thornplate, the maul, the light from the upper left, and the flat pure magenta background exactly as it is. Change only the helm, the head and the mantle, on every figure of the sheet, so that it matches Image 2.\n\nImage 2 is the approved painted portrait of this Oakheart: use it only for the helm, the head and the mantle. Do not copy its framing, its dark background or its candlelight.\n\nThe changes, on every figure of the sheet: A tall helm of upright bark planks rising a full head above the brow, ringed by a crown of long curved thorns, with a fringe of oak leaves at its rim, exactly as Image 2. Never a flat cap or a brimmed hat. The face a gaunt skull-like mask of grey oak with a crack across it and moss in the furrows. Tall, realistic proportions: the head with its helm one sixth of the standing height, long arms. The bottle-green mantle large over both shoulders and hanging down the chest, so that from the front it covers a third of the figure.\n\nThe helm matters most: on every figure the low cap of Image 1 becomes the tall helm of upright bark planks and long curved thorns of Image 2, so each outline grows upward at the head, and the head under it is smaller than in Image 1.\n\nKeep everything else exactly as in Image 1, cell by cell. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; extra figures.",
+  "references": [
+    "oakheart.front.fill.nb21.png",
+    "01b.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2656,
+    "candidatesTokenCount": 1668,
+    "totalTokenCount": 5336,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 416
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1012,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.5,
+  "modelText": [],
+  "approved": null,
+  "job": "oakheart.front.cfix.r2",
+  "item": "R1",
+  "purpose": "C fix: R1 oakheart front sheet re-roll: nb21 plain edit of the current sheet (oakheart.front.fill), only the helm, the head and the mantle changed on every figure (critique R1; the fill route left the painted figures as they were)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/prompts/oakheart.front.cfix.r2.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/oakheart.front.fill.nb21.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/oakheart/01b.webp"
+  ],
+  "route": "edit",
+  "logKey": "C fix"
+}

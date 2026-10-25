@@ -1,0 +1,40 @@
+{
+  "file": "L1.b.g3pro.png",
+  "sha256": "0a419b7092b26b6166bc2678974c19ca108e929ca4bb7390f8c5ae2ac1197ecb",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: thorny roots erupting from the ground, painted on magenta, in twelve separate sprites: four growth stages from left to right, in three variants from top to bottom, each where its grey placeholder is and as large as it.\n\nGrowth stages, left to right: 1: sharp tips just breaking the soil, a little torn earth; 2: half grown; 3: fully grown, the tallest; 4: settled, a little lower and spread wider.\nVariants, top to bottom: a cluster of five or six curved thorn spikes; a ring of thorn spikes around an empty middle where a man would stand; a bigger cluster with one tall central spike.\nThe thorns are woody spikes of dark bark brown with paler, sharp tips, a little moss and a few small dark green leaves, the soil torn up in clods around their base. They stand up from the ground, seen from above at 40 degrees, foreshortened.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every root, thorn and leaf, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\nLoam's colours: living bark-brown roots, deep moss and forest greens (#244F22 to #00674B) with a few small yellow-green highlights (#A6D96A) on leaves and shoots.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "L1.guide.png",
+    "01.webp",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 1522,
+    "candidatesTokenCount": 1454,
+    "totalTokenCount": 3188,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 748
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 212,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.4,
+  "modelText": [],
+  "approved": null
+}

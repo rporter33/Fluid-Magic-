@@ -1,0 +1,40 @@
+{
+  "file": "U1.a.nb21.png",
+  "sha256": "96e9620e1de29dd0c4930c6acf90134dc984da4dcca4c8ccf0a710e8ed94bfec",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure white background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is an approved decal sheet from this game (burn marks on white): it shows how stains on the ground are painted for the game's decals. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game decal sheet of dark magic: marks of creeping shadow, painted on white, each exactly where its grey placeholder is and as large as it.\n\nTop left: dark ripples spreading on the ground: four concentric rings of shadow, inky and uneven, the inner ones darker, around a dark middle; a flat ellipse.\nTop middle: inward tendrils: nine thin curling tendrils of shadow creeping inward over the ground to a dark middle, like ink drawn into a drain; a flat ellipse.\nTop right: four drips of shadow, each a thin inky trickle running down to a heavy drop at its lower end.\nMiddle band: a long band of dark ripples crossing the whole width, two or three wavy inky bands with soft edges, for a ripple that rolls across the field.\nBottom two strips: two thin dark threads, inky and slightly twisting, the same thickness from end to end, each filling its strip, for a thread of drained life.\nSoft, painterly ink and smoke edges; no hard vector lines.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese are flat marks on the ground (decals) that the game multiplies onto the battle field: pure white means untouched ground and every darker tone darkens the ground under it. Paint only the marks, as stains seen from above, with no light and shade of their own, no highlights brighter than the white, no cast shadows, no objects standing up.\nUmbra's colours: deep violet-black ink (#1A1024) in the darkest strokes, a dusky plum-grey (#3D2B4F) body and soft grey edges that fade into the white; no bright purple, no other colour.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure white (#FFFFFF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "U1.guide.png",
+    "E6.a.nb21.png",
+    "anchor-style.webp"
+  ],
+  "aspect": "3:2",
+  "usage": {
+    "promptTokenCount": 4112,
+    "candidatesTokenCount": 1636,
+    "totalTokenCount": 6356,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 752
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 608,
+    "serviceTier": "standard"
+  },
+  "seconds": 12.7,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,40 @@
+{
+  "file": "L2h.b.g3pro.png",
+  "sha256": "d18ebe43ffd72fa7062731c42a16ff605ac69d1cb31591295f312d39177421f2",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: roots and vines that seize a man by the legs, painted on magenta, in twelve separate sprites, one in each cell of a 6 by 2 grid, each where its grey placeholder is and as large as it.\n\nThe man is never painted. In each cell a thin pale outline marks where his two legs stand, from the ground to his hips: leave that space empty magenta, never paint legs, feet or a body there, and never paint the outline itself.\nEach growth stage is painted as two separate sprites side by side, so the game can draw the man's legs between them: on the left the back half, on the right the front half.\nThe back half: the far arc of a ring of cracked, heaved earth around the empty middle, the roots and vines that rise from that far arc and curl up behind where the legs stand, and a few tendrils lying on the ground radiating outward from the ring.\nThe front half: the near arc of the same ring and the roots and vines that rise from it and spiral up across the front of where the legs stand, crossing it at a slant.\nBoth halves are open and see-through: separate twisting tendrils with clear magenta gaps between them, like a loose basket of roots, never a solid mound, a cocoon or a filled shape.\nTop row, three growth stages of living roots, each as its back half and its front half: 1: roots just breaking out of the cracked ring, ankle high; 2: tendrils climbing and twisting to the knees; 3: fully grown, spiralling up to the hips, with a few small leaves and thorns.\nBottom row, the same three stages withered: 1: brittle and brown, sagging; 2: collapsing, strands breaking and falling outward; 3: fallen: a low litter of dry broken root pieces lying on the ground in the ring.\nLiving roots: bark browns and moss, with living green on the newest growth and a few small yellow-green shoots; withered roots: dry grey-brown, ochre and dead-leaf brown, with no green.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every root, thorn and leaf, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\nLoam's colours: living bark-brown roots, deep moss and forest greens (#244F22 to #00674B) with a few small yellow-green highlights (#A6D96A) on leaves and shoots.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "L2h.guide.png",
+    "01.webp",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 1765,
+    "candidatesTokenCount": 1765,
+    "totalTokenCount": 3775,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 991
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 245,
+    "serviceTier": "standard"
+  },
+  "seconds": 19.5,
+  "modelText": [],
+  "approved": null
+}

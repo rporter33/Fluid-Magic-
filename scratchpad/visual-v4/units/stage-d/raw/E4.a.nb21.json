@@ -1,0 +1,40 @@
+{
+  "file": "E4.a.nb21.png",
+  "sha256": "9b89ef6e2d19fa19d18638c54e337d135c0381b467110459da1e6687fbe1acd3",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Fire Sprite, a creature of living flame: it shows how fire, embers and smoke are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: 16 small painted particle sprites on black, one in each cell of a 4 by 4 grid, each centred where its grey placeholder is and as large as it, with black around it.\n\nTop row: four ember flecks: small irregular bits of burning matter, a golden core, orange to deep red edges, each a different shape.\nSecond row: four sparks: thin bright streaks of golden-white light lying exactly along their grey placeholders, brightest along their middle, tapering at both ends.\nThird row: four small flame licks: single tongues of flame pointing straight up, a golden core, an orange body, deep red tips, each a different shape.\nBottom row: two soft round glows of golden light fading evenly to black, then two four-pointed star sparks with thin white-gold rays and a small bright centre.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese sprites are light: in the game they are added onto the battle field, so anything that is not black glows and pure black disappears. Paint them as glowing fire on the black, never on a coloured or grey background; no ground, no figures, no scenery, no cast shadows.\nEmber's colours: a pale golden-white to golden-yellow core (#FFE9A8 to #FFB347), an orange body (#FD6533) and deep red edges (#7A1E12) that fade into the black; dark charcoal smoke where the fire thins.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "E4.guide.png",
+    "01b-r3.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 4081,
+    "candidatesTokenCount": 1611,
+    "totalTokenCount": 6163,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 721
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 471,
+    "serviceTier": "standard"
+  },
+  "seconds": 12.9,
+  "modelText": [],
+  "approved": null
+}

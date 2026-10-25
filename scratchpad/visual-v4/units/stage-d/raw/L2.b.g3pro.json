@@ -1,0 +1,40 @@
+{
+  "file": "L2.b.g3pro.png",
+  "sha256": "5a841f0205980d669a315fb71b3f52c11a41120476acf3a8f6e0f87a2f975908",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: roots and vines that seize a man by the legs, painted on magenta, in seven separate sprites, each where its grey placeholder is and as large as it.\n\nThe man is not painted. The roots form a knotted mound where his feet and lower legs would be, hiding them completely, and climb no higher than his knees; the top of the mound stays open where his thighs would come out.\nTop row, left to right, living and growing: 1: roots just breaking through the soil around the feet, ankle high, clods of earth thrown up; 2: roots climbing and twisting to the middle of the shins; 3: fully grown: a tight tangle of roots and thorny vines spiralling up to the knees, with small leaves.\nSecond row, left to right, the same roots withering: 1: dried and brown, sagging; 2: collapsing, strands breaking and falling outward; 3: fallen: a low litter of dry broken root pieces lying on the ground.\nBottom strip: one long living runner of twisted root and vine lying along the ground, the same thickness all along, with a few small leaves, filling the strip from end to end, for a rope texture.\nLiving roots: bark brown with deep green vines; withered roots: dry grey-brown, ochre and dead-leaf brown, with no green.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every root, thorn and leaf, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\nLoam's colours: living bark-brown roots, deep moss and forest greens (#244F22 to #00674B) with a few small yellow-green highlights (#A6D96A) on leaves and shoots.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "L2.guide.png",
+    "01.webp",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 1609,
+    "candidatesTokenCount": 1514,
+    "totalTokenCount": 3368,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 835
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 245,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.6,
+  "modelText": [],
+  "approved": null
+}

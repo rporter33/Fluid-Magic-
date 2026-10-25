@@ -1,0 +1,47 @@
+{
+  "file": "treant02.back.cfix.nb21.png",
+  "sha256": "75bdea9a23c833b26d9b4fda231d880b29f24bf311c15874188ede7737814be9",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted game cutout of a treant, a walking tree, on a flat pure magenta background. The painting was cut off at its top: the willow crown of its crown ran past the top edge, and a band of the same flat magenta has been added above it, so the crown now has room.\n\nComplete the willow crown that runs off the top edge into its natural top with small twigs and leaves, all inside the frame, with 30 px of clean magenta above. Change nothing else: every outline, colour and the background stay exactly as they are.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; other creatures or people.",
+  "references": [
+    "treant02.back.cfix.base.png"
+  ],
+  "aspect": "2:3",
+  "usage": {
+    "promptTokenCount": 1321,
+    "candidatesTokenCount": 1439,
+    "totalTokenCount": 3338,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 201
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 578,
+    "serviceTier": "standard"
+  },
+  "seconds": 12.7,
+  "modelText": [],
+  "approved": null,
+  "job": "treant02.back.cfix",
+  "item": "R2",
+  "purpose": "C fix: R2 Treant 02 back idle: nb21 edit of the current raw sheet (treant02.back.redress.v2.r2.nb21.png) with 18% more background above, the crown cut by the top edge completed (critique fix 5)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/prompts/treant02.back.cfix.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/bases/treant02.back.cfix.base.png"
+  ],
+  "route": "edit",
+  "logKey": "C fix"
+}

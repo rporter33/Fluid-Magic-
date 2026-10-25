@@ -1,0 +1,40 @@
+{
+  "file": "L6s.b.g3pro.png",
+  "sha256": "10a5534b4363c59136df34569805b6da6e980ef8e12e0c1e286a4fc5f2a1aa79",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is an approved effects sheet from this game (smoke in greys on black): it shows how smoke and haze are painted for the game's effects. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: the spore dust in a great forest wyrm's breath, painted in greys on black: four frames of the same cloud in a 2 by 2 grid at the top and five spore puffs in a row at the bottom, each exactly where its grey placeholder is and as large as it.\n\nIn every frame the cloud leaves the wyrm's jaws at the left of the cell and rolls to the right along the ground, widening as it goes: soft, billowing, powdery dust, denser near the jaws and thinning into wisps at the right end. The four frames are one loop: the billows roll forward from frame to frame while the cloud's length and width stay the same.\nSpores are painted in greys only: a light warm grey where the dust is thick, fading through dark grey into the black at its edges. No colour, no glow, no pure white. In the game its brightness becomes its opacity and the game tints it, so keep the black background clean.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThe dust is matter, not light: it does not glow.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "L6s.guide.png",
+    "E5.a.nb21.png",
+    "01.webp"
+  ],
+  "aspect": "16:9",
+  "usage": {
+    "promptTokenCount": 1427,
+    "candidatesTokenCount": 1365,
+    "totalTokenCount": 3052,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 653
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 260,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.6,
+  "modelText": [],
+  "approved": null
+}

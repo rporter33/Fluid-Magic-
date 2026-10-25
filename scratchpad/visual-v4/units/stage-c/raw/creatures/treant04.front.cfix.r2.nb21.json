@@ -1,0 +1,47 @@
+{
+  "file": "treant04.front.cfix.r2.nb21.png",
+  "sha256": "2746622e64814100935848b04fe7bc44692bcda487ad7797dd4f2b9bfe008d63",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a finished painted game cutout of a treant, a walking tree, on a flat pure magenta background. The painting was cut off at its top: the two forked birch stems of its crown ran past the top edge, and a band of the same flat magenta has been added above it, so the crown now has room.\n\nComplete the two forked birch stems that run off the top edge into their natural tops with small twigs and leaves, all inside the frame, with 30 px of clean magenta above. Change nothing else: every outline, colour and the background stay exactly as they are.\n\nCorrections from the previous attempt, which must be fixed: the previous attempt carried both stems straight up to the new top edge, so they were cut flat again. This time each stem ends inside the image: a short way above the place where it was cut, each stem tapers and divides into a crown of thinner branches and fine twigs with small yellow-brown leaves, and every tip of the crown stops at least 40 pixels below the top edge of the image, with only flat magenta above it. The stems never touch the top edge.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; other creatures or people.",
+  "references": [
+    "treant04.front.cfix.r2.base.png"
+  ],
+  "aspect": "2:3",
+  "usage": {
+    "promptTokenCount": 1439,
+    "candidatesTokenCount": 1417,
+    "totalTokenCount": 3331,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 319
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 475,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.1,
+  "modelText": [],
+  "approved": null,
+  "job": "treant04.front.cfix.r2",
+  "item": "R2",
+  "purpose": "C fix: R2 Treant 04 front idle: nb21 edit of the current raw sheet (treant04.front.redress.nb21.png) with 24% more background above, the crown cut by the top edge completed (critique fix 5) [re-roll: the stems end inside the frame]",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/prompts/treant04.front.cfix.r2.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/bases/treant04.front.cfix.r2.base.png"
+  ],
+  "route": "edit",
+  "logKey": "C fix"
+}

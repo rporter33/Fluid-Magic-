@@ -1,0 +1,38 @@
+{
+  "file": "cmdCaster.back.body.r2.nb21.png",
+  "sha256": "908782e1677c87b6371874381772d560bc1affea64e437d11a214b49f490e892",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\n\nMake it the plain body sheet of a fire mage of the Cinder Horde, onto which each mage's own face is painted later. Change only these details, the same in every cell: the dull ember-red trim on the robe and on the edge of the mantle becomes plain charcoal and smoke-grey cloth like the rest; the braids at the temples become short plain dark hair; the circlet becomes a plain thin band of blackened iron with no prongs; the top of the staff gets a plain knob of dark iron. Everything else stays exactly as Image 1 draws it: the long charcoal robe to the ground, the short charcoal mantle over one shoulder, every pose, every outline, the staff in the same hand at the same angle. Painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right).\n\nFacing, again: every figure in every one of the cells faces the same way, away from us toward the upper right, including the figure that is hit and the falling one: we see the back, the grey mantle, the long robe and the back of the head, never the face; only the two fleeing figures turn and run toward us.\n\nClosed shapes: the pure green (#00FF00) background shows only through the large gaps between the limbs, the body and the staff or haft, and there it is exactly the same flat colour as everywhere else. Every small opening inside the outline is closed: an iron cage or lantern is packed full with its dull ember or coals, a ring holds its coal or stone, the curl of a horn lies tight against the helm with no hole in it. Nothing inside the figure is tinted pure green.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "ea05.back.redress.nb21.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1642,
+    "candidatesTokenCount": 1521,
+    "totalTokenCount": 4257,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 522
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1094,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.9,
+  "modelText": [],
+  "approved": null
+}

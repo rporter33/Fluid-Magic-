@@ -1,0 +1,39 @@
+{
+  "file": "hu04.front.redress.nb21.png",
+  "sha256": "28fd4646d06ccdbdfb45dfe4136f8a0faeb4befcf13aa185334fe00a945b7822",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure blue (#0000FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. He has these marks, and each one must be clearly visible at full size: (1) the heavy dark brown leather hood with a thick shaggy bearskin ruff around the face and over the shoulders; (2) the full untrimmed white beard; (3) the large antler toggle at the chest; (4) his bushy white eyebrows on a deeply lined face; (5) the dark brown leather and bearskin over the back; (6) the plain straight sword with a simple cross guard. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing. He wears a hunter captain's kit instead of the iron cap and the padded jerkin of Image 1: his own fur-trimmed hood worn up as the portrait shows it, a brown leather jerkin with straps and buckles, a short brown cloak over the shoulders and back, a quiver of arrows on the back, brown breeches and soft leather boots; he keeps the plain straight sword of Image 1 in the same hand.\n\nFacing, again: every figure in every one of the cells faces the same way, toward us and to the lower left, including the figure that is hit and the falling one; the fleeing figures alone turn away.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor or shadow; no blue anywhere on the figures: no blue cloth, no blue light, no blue reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdLevy.front.body.g3pro.png",
+    "04.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2790,
+    "candidatesTokenCount": 1651,
+    "totalTokenCount": 5346,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 550
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 905,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.8,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,39 @@
+{
+  "file": "sal.back.nb21.png",
+  "sha256": "977022940cdf58c2444ad763d3b9007f7899d55a045a36e1022516268636d826",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is the camera and pose guide: a grey clay maquette rendered from the game's battle camera. Copy from it exactly the camera angle, the direction the creature faces, its pose and its size in the frame. Do not copy its smooth clay surfaces, its simplified shapes or the thickness of its limbs: the anatomy follows Image 2 and the description.\nImage 2 is this creature's own approved painted portrait: paint the same creature, with the same head, scales, colours, cracks, horns and marks, now seen full body from above, in the same painting style. Do not copy its dark background, its candlelight or its framing.\n\nOne large painted creature, full body, alone in the image on a perfectly flat, uniform pure green (#00FF00) background, as a game cutout. Pose: standing at rest on all four legs, the head raised on its neck and looking ahead, the mouth closed, the tail curved behind it.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, with no perspective. The creature faces away from us, toward the upper right of the image: we see its back, its right flank and the top of its head from behind; its face is mostly hidden. It is foreshortened as seen from above: its back and head are large, its legs short.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top of the head, the back and the upper-left side of the creature with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; a muted earthy palette of charcoal, ash grey, dull iron, bark brown, leather and bone, with the creature's own colours as the portrait shows them; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of the creature. The creature has a strong, simple, readable silhouette that still reads when the creature is shrunk to 120 pixels long. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe creature: A Salamander, the great fire lizard of the reference portrait, summoned by Cinder Horde mages (size 3): a heavy low-slung lizard about two and a half men long, on four short, thick, splayed legs with blunt claws, with a long thick tail; the broad flat heavy head of a giant river salamander with a wide lipless mouth, a thick neck with loose folds of skin, dull obsidian-black scales with a fine net of dull ember-orange cracks between them, small deep-set dark eyes, a row of short stubby horn nubs along each side of the jaw, three blunt bony knobs on the brow, a pale healed scrape across the snout. No flame on its body and no fire in the image: the game draws its fire breath separately.\n\nSize: the creature fills about 85% of the image along its longest side, centred, with at least 24 pixels of clean background all around.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No green anywhere on the creature: no green cloth, no green glow, no green reflections.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped creature.\n",
+  "references": [
+    "salamander-01.idle.back.png",
+    "01.webp"
+  ],
+  "aspect": "3:4",
+  "usage": {
+    "promptTokenCount": 3063,
+    "candidatesTokenCount": 1747,
+    "totalTokenCount": 5375,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 823
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 565,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.4,
+  "modelText": [],
+  "approved": null
+}

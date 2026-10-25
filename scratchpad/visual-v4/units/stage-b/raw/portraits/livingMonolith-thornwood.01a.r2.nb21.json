@@ -1,0 +1,38 @@
+{
+  "file": "livingMonolith-thornwood.01a.r2.nb21.png",
+  "sha256": "f6fd006ba1544d1801fc9dc546804c68868e783d1abba6d0747c3babc9decada",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the pigment in the carved glyphs (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the pigment in the carved glyphs. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.\n\nCorrections from the previous attempt, which must be fixed: the side's colour must show clearly and broadly on the pigment in the carved glyphs: a deep bottle green, the green of jade in shade (#1F6A50), clearly coloured, never grey, slate, olive or yellow-green (the previous attempt failed: side window 0.0023 < 0.01); the glyph pigment came out olive and yellow-green; it must be a deep, blue-leaning bottle green like jade (#1F6A50), clearly coloured and easy to see against the pale stone.",
+  "references": [
+    "livingMonolith-cinderHorde.01a.r2.nb21.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1433,
+    "candidatesTokenCount": 1402,
+    "totalTokenCount": 3163,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 313
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 328,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.3,
+  "modelText": [],
+  "approved": null
+}

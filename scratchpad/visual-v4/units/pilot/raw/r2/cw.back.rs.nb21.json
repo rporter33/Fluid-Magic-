@@ -1,0 +1,40 @@
+{
+  "file": "cw.back.rs.nb21.png",
+  "sha256": "e27b98f74c38d145c5086c8bccbb8b9b7ac10a65deca9128dad54b9517bef114",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the grid, and the flat pure green background.\nImages 2 and 3 are painted portraits from the same game: repaint every figure of Image 1 in their hand. Do not copy their dark backgrounds, their candlelight, their framing or the people in them.\n\nRepaint every figure of Image 1, a Cinder Horde line warrior as painterly oil on a wood panel: visible directional brushwork, a muted earthy palette of charcoal, ash grey, dull iron with rusted edges, leather and bone in which the side's dull ember-orange cloth is the one clear hue; soft painterly edges with small crisp highlights on metal and a thin bright rim of light along the upper-left edges. Outdoor daylight from the upper left, a cool fill on the lower right, no cast shadows. Not a cartoon: no cel shading, no thick outlines, no glossy 3D render.\n\nThe soldier, the same in every cell: A Cinder Warrior: a shirt of blackened iron scales with rusted edges over a charcoal tunic, a rounded dark iron helm with a nasal and a short stiff dull ember-orange horsehair crest running front to back, arms covered by dark iron scale sleeves and dark leather bracers so that almost no skin shows, a short dull ember-orange cloth mantle over both shoulders that covers the tops of the shoulders and the top of the chest in front and falls to the shoulder blades behind, a dull ember-orange tabard over the scales from the chest to mid-thigh, front and back, a round shield whose whole face is painted solid dull ember orange (#C4532C), with only a small black flame sigil at its centre, a thin dark iron rim and a dark iron boss; the shield face is the largest patch of colour on the figure, a jagged single-bit dark iron axe with a notched edge, ash-grey skin.\n\nDetail: at full size each figure is a finished small painting, not a flat icon: individual iron scales with rusted edges and small bright highlights, rivets, leather straps and buckles, cloth folds and frayed hems, wood grain and dents on the shield, worn metal on the axe; varied, visible brush strokes. The values stay simple enough that the figure reads at 40 pixels: a light top (helm, shoulders, cloth) against darker legs.\n\nChanges to make while repainting: paint the arms in dark iron scale sleeves and leather bracers instead of bare grey skin; paint the whole face of every shield solid dull ember orange with a small black flame sigil; make the shoulder mantle and the tabard clearly dull ember orange; the knocked-back figure (row 3, column 1) shows its face in Image 1: repaint it seen from behind like the others, with the same outline\n\nFacing, again: every figure in every one of the cells faces the same way, away from us toward the upper right, including the figure that is hit, the falling one and the fleeing ones; no face is seen anywhere on this sheet.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.\n",
+  "references": [
+    "cw.back.g3pro.png",
+    "05.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 4100,
+    "candidatesTokenCount": 1809,
+    "totalTokenCount": 7213,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 740
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1304,
+    "serviceTier": "standard"
+  },
+  "seconds": 17.8,
+  "modelText": [],
+  "approved": null
+}

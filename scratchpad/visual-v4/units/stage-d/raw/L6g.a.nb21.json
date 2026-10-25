@@ -1,0 +1,41 @@
+{
+  "file": "L6g.a.nb21.png",
+  "sha256": "a5c9a09630f96328ef7095cee72d50373383202bddd2f9c17a708f618363c12a",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved effects sheet from this game (leaves, petals and flowers on magenta): it shows how leaves are painted for the game's effects, at the same scale. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 4 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: the breath of a great forest wyrm, a gale of thorned seeds and torn leaves, painted on magenta: four frames of the same gale in a 2 by 2 grid at the top, and ten loose particles in a row at the bottom, each exactly where its grey placeholder is and as large as it.\n\nIn every frame the gale leaves the wyrm's jaws at the small point at the left of the cell and blasts to the right along the ground, widening as it goes: a dense stream of spiked seed pods, burrs, thorns, torn green and brown leaves and twigs, packed tight near the jaws and scattering apart toward the right end. The pale spore dust that rides with it is a separate sheet: leave it out, keep the magenta clean between the pieces. The four frames are one loop: the pieces move along the stream from frame to frame while its length and width stay the same.\nBottom row, left to right: four spiked seed pods and burrs, each different; three torn leaves, ragged, each a different shape; three small clumps of pale green-grey spores.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every root, thorn and leaf, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\nLoam's colours: living bark-brown roots, deep moss and forest greens (#244F22 to #00674B) with a few small yellow-green highlights (#A6D96A) on leaves and shoots.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "L6g.guide.png",
+    "01.webp",
+    "L4.a.nb21.png",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "16:9",
+  "usage": {
+    "promptTokenCount": 5323,
+    "candidatesTokenCount": 1802,
+    "totalTokenCount": 8165,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 4480
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 843
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1040,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.9,
+  "modelText": [],
+  "approved": null
+}

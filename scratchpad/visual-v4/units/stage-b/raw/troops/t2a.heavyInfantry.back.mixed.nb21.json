@@ -1,0 +1,47 @@
+{
+  "file": "t2a.heavyInfantry.back.mixed.nb21.png",
+  "sha256": "e64681f7414888e98daaf782f5b82105e0ee19e5ca2012fde6bf3e4daf9e7588",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nMost cells of Image 1 already show this soldier, painted as he must stay. In 3 cells a figure of another soldier was laid in only for its pose: row 3, column 1 (the recoil); row 3, column 3 (the deadA); row 3, column 4 (the deadB). Repaint each of those figures as this same soldier, in his kit and his colours, keeping the pose, the position of the arms, legs and weapon, the outline, the size and the place in the cell exactly as they are, so that all 16 cells show one and the same soldier.\nImage 2 is a painted portrait from the same game, a reference for the painting hand and the materials only: do not paint that person, and do not copy its dark background, its candlelight or its framing.\n\nThe soldier: A Heavy Infantry veteran of a free company, sworn to no nation: a long mail hauberk with dull steel plates at the shoulders, elbows and knees, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; a broad-brimmed iron kettle hat over a mail coif; steel gauntlets; a straight arming sword; a long kite-shaped shield whose face is painted plain pale grey, with an iron rim. Grim, heavy and well kept; no colours but grey, tan, leather brown and steel.\n\nSide colour: the grey surcoat and the plain shield face are undyed grey wool (#8C8A80), lighter grey-beige where the sun strikes it; these fighters belong to no nation and wear no dyed colour: no orange, red, green or blue anywhere. These are large, clean, unbroken areas that face the sky and the camera, so that a packed block of these soldiers reads as that colour from far away.\n\nIn the laid-in cells he wears his full kit: the long mail hauberk with steel plates, the broad-brimmed iron kettle hat over a mail coif, the long undyed grey surcoat, the long kite shield (its back toward us, wood, rim and straps, on the same arm as in the other cells) and the straight arming sword; in the dead cells the shield and sword lie by him.\n\nThe cells, for reference (keep each figure's pose as Image 1 has it):\n1. (row 1, column 1) standing ready, weight on both feet.\n2. (row 1, column 2) standing at ease, weight shifted onto one leg, head turned a little to one side.\n3. (row 1, column 3) marching: left foot forward in a long stride, right foot pushing off behind.\n4. (row 1, column 4) marching: right foot forward in a long stride, left foot pushing off behind.\n5. (row 2, column 1) attack windup: the weapon drawn far back, body twisted and coiled.\n6. (row 2, column 2) the strike: the weapon fully extended into the blow, lunging forward on the front foot.\n7. (row 2, column 3) follow-through: the weapon swept past the target and low, body turned with the swing.\n8. (row 2, column 4) braced: shield raised in front, knees bent, weapon cocked.\n9. (row 3, column 1) hit from the front: the soldier lurches backward toward us with his back still turned to us, shoulders hunched, arms thrown out to the sides, head bowed forward; we see only the back of his head or helmet and his back, never his face.\n10. (row 3, column 2) falling backward toward us, knees buckling, about halfway to the ground; still seen from behind and above: the back of the head or helmet and the back toward us.\n11. (row 3, column 3) lying dead on the ground on its back, limbs loose.\n12. (row 3, column 4) lying dead on the ground face down, a different sprawl.\n13. (row 4, column 1) fleeing in panic away from the enemy: running hard, weapon and shield dropped, looking back over the shoulder.\n14. (row 4, column 2) fleeing: the other foot forward, arms pumping, looking back.\n15. (row 4, column 3) victory cheer: weapon raised high overhead, other fist raised, shouting.\n16. (row 4, column 4) no person: only the weapon and the shield lying flat on the ground, as dropped.\n\nPaint him in the hand of the game's painted portraits: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette, small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges; nothing glows unless the description says so. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right). Realistic adult proportions; no cartoon, no thick outlines.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back and the back of the head, never a face.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow. No magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "hi.back.mixed.png",
+    "04.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 3553,
+    "candidatesTokenCount": 1715,
+    "totalTokenCount": 6614,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 1313
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1346,
+    "serviceTier": "standard"
+  },
+  "seconds": 19.9,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/hi.back.mixed.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-levy/04.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/prompts/a.heavyInfantry.back.mixed.txt",
+  "job": "heavyInfantry.back",
+  "purpose": "B troops2: heavyInfantry back sheet (stand-in re-roll: nb21 edit of r2 with recoil, deadA, deadB laid in)",
+  "logKey": "troops2"
+}

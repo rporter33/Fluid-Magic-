@@ -1,0 +1,40 @@
+{
+  "file": "G1l.a.nb21.png",
+  "sha256": "dcf3e83ab2e397142a733cb411a26fb5e777566da4e16ef951497086b8622560",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure magenta background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Treant: it shows how bark, moss, roots and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is an approved painted portrait from the same game, a great tree: it shows how roots, bark and leaves are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet: the leaf mana ring, painted on magenta, two separate sprites, each exactly where its grey placeholder is and as large as it.\n\nTop: a ring of leaves and young vines lying on the ground, seen from high above at 40 degrees, so the ring is a flat ellipse about two thirds as tall as it is wide: small fresh leaves and thin twining vine stems along the ring line, even all around. At the front of the ring, its foot on the ring's near edge, stands the leaf glyph: the game's leaf symbol, the bold leaf silhouette of the grey placeholder (a pointed leaf with a straight midrib running from its stem), painted as a living leaf, larger and brighter than the ring's leaves.\nBottom: the leaf glyph alone, the same symbol, as a bold, simple living leaf that still reads as the leaf symbol when it is shrunk to 20 pixels.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nLight: outdoor daylight from a high sun in the upper left of the image: warm highlights on the upper-left sides of every root, thorn and leaf, a cool blue-grey fill in the shadows on the lower right; nothing glows; no cast shadow on the background.\nLoam's colours: living bark-brown roots, deep moss and forest greens (#244F22 to #00674B) with a few small yellow-green highlights (#A6D96A) on leaves and shoots.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure magenta (#FF00FF), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\nNo magenta, pink or purple anywhere in the painted elements.\n",
+  "references": [
+    "G1l.guide.png",
+    "01.webp",
+    "01b-r2-512.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 4103,
+    "candidatesTokenCount": 2093,
+    "totalTokenCount": 7189,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 743
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 993,
+    "serviceTier": "standard"
+  },
+  "seconds": 29.6,
+  "modelText": [],
+  "approved": null
+}

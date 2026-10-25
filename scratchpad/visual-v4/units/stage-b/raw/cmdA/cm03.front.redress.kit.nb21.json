@@ -1,0 +1,39 @@
+{
+  "file": "cm03.front.redress.kit.nb21.png",
+  "sha256": "c6331984b89e89d2ba5dc48a986af34594d0229ef8cdfa3fb542504b542b4c88",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure green (#00FF00) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. He has these marks, and each one must be clearly visible at full size: (1) the tall, straight, peaked charcoal cowl that does not droop, bound in a spiral by a thin band of dark iron from the brow up to the tip; (2) his very old sunken face, bald, with wispy white stubble and a band of black soot painted across the forehead; (3) the heavy mantle of layered smoke-grey cloth over the shoulders; (4) the pendant of a black iron sun disc on the chest; (5) the long charcoal robe to the ground; (6) the tall staff of blackened wood with a hooked top, a small iron cage with a dull ember hanging beneath it. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure in every one of the cells faces the same way, toward us and to the lower left, including the figure that is hit and the falling one; the fleeing figures alone turn away.\n\nThe last attempt drifted in these cells: cell 14 (fleeing). In every cell, and in these above all, keep the figure as Image 1 draws it: the same pose, the same facing, the same size, the same length and breadth of the body on the ground, and the same place in its cell.\n\nClosed shapes: the pure green (#00FF00) background shows only through the large gaps between the limbs, the body and the staff or haft, and there it is exactly the same flat colour as everywhere else. Every small opening inside the outline is closed: an iron cage or lantern is packed full with its dull ember or coals, a ring holds its coal or stone, the curl of a horn lies tight against the helm with no hole in it. Nothing inside the figure is tinted pure green.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor or shadow; no green anywhere on the figures: no green cloth, no green glow, no green reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdCaster.front.body.g3pro.png",
+    "03.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2919,
+    "candidatesTokenCount": 1784,
+    "totalTokenCount": 4953,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 679
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 250,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.8,
+  "modelText": [],
+  "approved": null
+}

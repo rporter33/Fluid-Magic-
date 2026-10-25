@@ -1,0 +1,39 @@
+{
+  "file": "ed06.back.redress.nb21.png",
+  "sha256": "8efbaff34bd196a57aeff62d9e3ae55f3a1ef069561af76522e72b16151774ec",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the dark bark-brown leather hood with small antlers wrapped in ivy; (2) the collar of overlapping oak leaves over the shoulders; (3) the tall staff of dark wood topped with a knot of roots holding a smooth grey river stone. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows, not even the eyes. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow; no magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "twDruid.back.body.edit.r2.nb21.png",
+    "06.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2697,
+    "candidatesTokenCount": 1767,
+    "totalTokenCount": 4989,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 457
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 525,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.0,
+  "modelText": [],
+  "approved": null
+}

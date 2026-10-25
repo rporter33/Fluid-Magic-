@@ -1,0 +1,39 @@
+{
+  "file": "titan.front.nb21.r2.png",
+  "sha256": "a0a5548e7628c232d3be883bf47fd3b73579543dbf2e43f8afe2b3828299e1fd",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the camera and pose guide: a grey clay maquette rendered from the game's battle camera, with the tabard painted in the god's colour. Copy from it exactly the camera angle, the direction the figure faces, its pose, and its size and place in the frame. Do not copy its smooth clay surfaces, its simplified shapes or the thickness of its limbs: the anatomy, the face and every ornament follow Image 2 and the description.\nImage 2 is this god's own approved painted portrait: paint the same figure, with the same shapes, colours, materials and marks, now seen full length from above at the battle camera, in the same painting style. Do not copy its dark background, its candlelight or its framing.\n\nOne large painted figure, full length, alone in the image on a perfectly flat, uniform pure green (#00FF00) background, as a game cutout. Pose: standing at rest with the feet apart, both gauntleted hands resting on the pommel of the great sword, whose point rests on the ground before its feet.\n\nCamera: high above and in front, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, with no perspective. The figure faces toward us and toward the lower left of the image: we see its face from above, its chest and its left side. It is foreshortened as seen from above: the top of its head, its shoulders and its upper body are large, its legs short.\n\nLight: outdoor daylight; the figure stays as dark and as muted as in its portrait, lit only by small warm and cool highlights, never washed out or brightened. A high sun in the upper left of the image lights the top of the head, the upper surfaces and the upper-left side of the figure with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait; a muted earthy palette with the god's own colours as its portrait shows them, in which the tabard in dull ember-orange (#C4532C), the Cinder Horde's colour is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of the figure. The figure has a strong, simple, readable silhouette that still reads when it is shrunk to 120 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe god: the Titan, a giant warrior-god, a strong general in armour, massive and broad. Colours: muted and earthy. The one clear colour of the figure is its long tabard: dull ember-orange cloth (#C4532C), the Cinder Horde's colour. All metal is dull old gold (#C9A23E), darkened and worn. Nothing in the image glows. No other saturated area larger than a small clasp or trim.\nHeadgear: a great helm of dull old gold (#C9A23E), darkened and worn, closed and flat-topped, with a narrow eye slit and small breathing holes, no crest, no horns, no crown. Armour: plain heavy plate of dull old gold (#C9A23E), darkened and worn over dark mail, with no engraving, no runes and no device; massive rounded pauldrons; armoured gauntlets and greaves. A long tabard of dull ember-orange cloth (#C4532C), the Cinder Horde's colour hangs from the chest to the knees over the armour, its edges trimmed with a narrow lichen grey-green (#909080) band; no mantle, no cape. Weapon: a straight two-handed great sword with a plain, broad, straight blade of dark steel and a gold crossguard. Ash-grey skin (#8F8C88) shows only at the throat. Proportions: tall and heroic, a towering figure with long legs (the legs about half of its height) and the head about one eighth of its height; never squat, stocky, short-legged or dwarf-like.\n\nSize: the figure fills about 86% of the image along its longest side, placed as in Image 1, with at least 24 pixels of clean background all around; nothing is cropped.\n\nBackground: one flat pure green (#00FF00) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No green anywhere on the figure: no green cloth, no green glow, no green reflections; any lichen grey-green trim stays a pale grey.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped figure; smoke, flames, sparks, floating embers or mist.\n\nCorrections from the previous attempt, which must be fixed: the figure's head sat too far to the left of its feet (the camera check's head offset failed): it stands straight and upright with its helm directly above its feet, its weight even on both legs, exactly as Image 1 stands; keep everything else as before\n",
+  "references": [
+    "titan.idle.front.png",
+    "titan-cinderHorde.01a.r2.nb21.png"
+  ],
+  "aspect": "3:4",
+  "usage": {
+    "promptTokenCount": 3412,
+    "candidatesTokenCount": 2180,
+    "totalTokenCount": 6739,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1172
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1147,
+    "serviceTier": "standard"
+  },
+  "seconds": 21.9,
+  "modelText": [],
+  "approved": null
+}

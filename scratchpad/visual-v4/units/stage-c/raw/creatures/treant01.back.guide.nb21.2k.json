@@ -1,0 +1,49 @@
+{
+  "file": "treant01.back.guide.nb21.2k.png",
+  "sha256": "2deb7248ab8c7419aa438f196df0be2c0842523ef3db71c335492a23daa4bd0f",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the camera and pose guide: a grey clay maquette rendered from the game's battle camera. Copy from it exactly the camera angle, the direction the creature faces, its pose and its size in the frame. Do not copy its smooth clay surfaces, its simplified shapes, its round knobs or the thickness of its limbs: the anatomy follows Image 2 and the description.\n\nImage 2 is this creature's own approved painted portrait: paint the same treant, with the same bark, moss, face, crown and marks, now seen full body from above, in the same painting style. Do not copy its dark background, its candlelight or its framing.\n\nOne large painted creature, full body, alone in the image on a perfectly flat, uniform pure magenta (#FF00FF) background, as a game cutout. Pose: standing at rest on its two root-legs, its long branch arms hanging at its sides, its head (the top of the trunk) level and looking ahead.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, no perspective. The treant faces away from us, toward the upper right of the image: we see its back, its right side and the top of its head from behind. It is foreshortened as seen from above: its back and head large, its legs short.\n\nThe creature: a Treant, the walking tree of the reference portrait, summoned by Thornwood druids (size 4, about three and a half men tall): its trunk is its body and head, two long branch arms ending in knotted twig fingers, two short stumpy legs that splay into roots; its face is in the bark near the top of the trunk. It is a treant only a century old: a thick knotted trunk of grey-green alder bark furred with moss; its face is formed in the bark, not a human face: a broad brow ridge of bark, a low rounded bulge where a nose would be, two small dark hollow knotholes for eyes, a mouth that is only a dark crooked split low in the trunk; no beard. Its marks, every one painted clearly: a low crown of short thick budding twigs with a few small pale-green leaves; curled young fern fronds growing from the moss on its shoulders; grey-green alder bark furred with moss; two small dark knothole eyes under a broad brow ridge of bark. The low crown of short budding twigs, the moss and the curled fern fronds on its shoulders show from behind and above; its face is hidden.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the treant with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the treant's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 190 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nSize: the creature fills about 86% of the image's height, centred, with at least 24 pixels of clean background all around.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped treant.",
+  "references": [
+    "treant-01.idle.back.png",
+    "01.webp"
+  ],
+  "aspect": "3:4",
+  "imageSize": "2K",
+  "usage": {
+    "promptTokenCount": 3106,
+    "candidatesTokenCount": 2213,
+    "totalTokenCount": 6695,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 866
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1680
+      }
+    ],
+    "thoughtsTokenCount": 1376,
+    "serviceTier": "standard"
+  },
+  "seconds": 22.8,
+  "modelText": [],
+  "approved": null,
+  "job": "treant01.back.guide.2k",
+  "purpose": "C creatures: Treant 01 back idle from its clay guide with portrait 01 (nb21, 2K output test)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/treant01.back.guide.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/sbx/refs/guides/treant-01.idle.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/01.webp"
+  ],
+  "route": "guide",
+  "logKey": "C creatures"
+}

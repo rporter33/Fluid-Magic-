@@ -1,0 +1,49 @@
+{
+  "file": "b1.lightInfantry.bust.nb21.png",
+  "sha256": "119fa98d9b3bd3b63c7fc80e56e21b4ce69faca66f1a79d51d95074891f5bdf2",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\nImage 2 is a painted portrait of an independent captain from the same set, a reference for the materials only (plain iron, quilted linen, undyed wool, leather): do not paint that person, and do not give the soldier a captain's ornaments or rich trim.\nImage 3 shows this exact soldier as he is painted small on the battlefield, from the front and from behind: his headgear, his cloth and its colour, his armour and his kit must be the ones in Image 3, now seen close as a portrait. Do not copy its tiny size, its camera from above, its pose or its flat coloured background.\n\nHead-and-shoulders portrait bust of one soldier, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. Nothing behind the head or the shoulders: no shield, no sword hilt, no spear, no bow, no hands, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy: undyed grey wool, tan linen, leather brown and plain iron. This soldier belongs to no nation and wears no dyed colour at all: no orange, red, green or blue anywhere. Nothing in the image glows.\n\nSubject: A free fighter of the independent villages, sworn to no nation: weathered skin, undyed grey wool, tan linen, leather and plain iron.\nA Light Infantry levy of the free villages, sworn to no nation: a padded jack of undyed tan linen, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; padded sleeves and leather bracers; a plain rounded iron skullcap over a padded coif; a short grey wool shoulder cape; wrapped legs and soft boots; a long ash-wood spear with a leaf-shaped iron head; a small round wooden shield whose face is painted plain pale grey, with a thin iron rim and a boss. Plain, practical, worn; no colours but grey, tan, leather brown and iron.\nPerson: a common village levy, not a leader; an ordinary weathered face, short beard.",
+  "references": [
+    "anchor-style.webp",
+    "01.webp",
+    "lightInfantry.kit.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 4101,
+    "candidatesTokenCount": 1638,
+    "totalTokenCount": 7268,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 741
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1529,
+    "serviceTier": "standard"
+  },
+  "seconds": 17.6,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-levy/01.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/kitcards/lightInfantry.kit.png"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/prompts/b1.lightInfantry.bust.txt",
+  "job": "lightInfantry.bust",
+  "purpose": "B troops2: gallery lightInfantry card bust (b1, nb21, anchor + nation portrait + the passed sheet as kit card)",
+  "logKey": "troops2"
+}

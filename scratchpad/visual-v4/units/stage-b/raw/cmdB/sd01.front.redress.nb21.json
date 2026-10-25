@@ -1,0 +1,39 @@
+{
+  "file": "sd01.front.redress.nb21.png",
+  "sha256": "045cf32da63d0dc7dacff1de5e171bfd2b588208c37e06f6c5403901faf09d9a",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. He has these marks, and each one must be clearly visible at full size: (1) the circlet of woven pale willow withies on short tousled light-brown hair; (2) the moss-green wool cloak, its hood down, edged with a band of undyed cream wool; (3) his soft young beardless face; (4) the plain wooden toggle clasp; (5) the tall gnarled staff of dark wood. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing. He is a young druid in a Sapling Druid's kit instead of the hooded elder's kit of Image 1: no hood over the head (the cloak's hood lies down on the shoulders and the head is bare under his circlet of twigs), a moss-green wool cloak over a long bark-brown tunic of leaf-shaped leather, both falling to the ankles like the robe of Image 1 so every figure keeps its outline, and the staff named in the marks above, held where Image 1 holds its staff. He is young, slim and upright.\n\nFacing, again: every figure in every one of the cells faces the same way, toward us and to the lower left, including the figure that is hit and the falling one; the fleeing figures alone turn away.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow; no magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdDruid.front.body.g3pro.png",
+    "01.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2801,
+    "candidatesTokenCount": 1803,
+    "totalTokenCount": 4994,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 561
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 390,
+    "serviceTier": "standard"
+  },
+  "seconds": 13.8,
+  "modelText": [],
+  "approved": null
+}

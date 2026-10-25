@@ -1,0 +1,39 @@
+{
+  "file": "ts07.back.redress.nb21.png",
+  "sha256": "8cb8df1636ac64fe33d851253803eda969659c055582bf60dce522d7adbdf96e",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure magenta (#FF00FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the hood of large overlapping heart-shaped linden leaves in dull olive and dry tan, each leaf clearly a leaf; (2) the twine-wrapped leather collar; (3) the long knife of dark iron with a bone grip. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing. He wears a Thornwood scout's kit instead of the kit of Image 1: his own hood of overlapping leaves worn up as the portrait shows it, joined to a short cape of the same leaves over the shoulders; a bark-brown leather jerkin with plain straps over a moss-green tunic; brown breeches and soft wrapped boots; weathered bark-brown skin; a long knife held in the hand that holds the weapon in Image 1, pointing the same way. He is lean and light: no helmet, no iron cap, no padded jerkin, no armour, no sword.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow; no magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdLevy.back.onmagenta.png",
+    "07.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2812,
+    "candidatesTokenCount": 1668,
+    "totalTokenCount": 5729,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 572
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1249,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.6,
+  "modelText": [],
+  "approved": null
+}

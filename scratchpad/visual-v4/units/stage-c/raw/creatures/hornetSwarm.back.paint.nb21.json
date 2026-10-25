@@ -1,0 +1,47 @@
+{
+  "file": "hornetSwarm.back.paint.nb21.png",
+  "sha256": "d9d1247e52ddcd349cf4b7bd730e6c203d88b70f15e0b79a5ad4288a566e81a3",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the grid of grey clay figures to paint over: keep every figure exactly where it is, at exactly its size, pose, facing and camera, and paint each one as the hornet of Image 2 seen from above; no clay may remain. Keep the 4 by 3 layout of Image 1, with no grid lines drawn, and its flat pure magenta (#FF00FF) background.\nImage 2 is the approved painted portrait of this hornet: use it only for its identity, its colours, its materials and its marks, painted in the same hand. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing; every figure is the whole hornet, small in its cell, exactly as large as its clay figure.\n\nA game sprite sheet: 12 full-length painted figures of one giant forest hornet of a Hornet Swarm, seen from above, one figure in each cell of a 4 by 3 grid, on a perfectly flat, uniform pure magenta (#FF00FF) background. The same hornet, the same colours and the same scale in every cell; only the pose changes.\n\nCamera: high above, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, no perspective, so every figure is the same size. Each hornet points exactly as its clay figure points; we see its back, its wings from above and the top of its head.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the hornet with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the hornet's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe hornet: One giant forest hornet of a Hornet Swarm summoned by Thornwood druids, as big as a sparrow: the lean dark hornet of Image 2, deep umber and charcoal with narrow dull ochre bands across its head, thorax and long tapering abdomen, huge dark compound eyes, jagged mandibles, long antennae swept back over the head, a thorax furred in dark umber, a long black sting, and two pairs of smoky wings with a torn edge, painted pale smoky grey and opaque, not see-through. The swarm is made in the game from many single hornets; each cell shows one hornet. Its marks, every one painted clearly: the narrow dull ochre bands; the jagged mandibles; the long swept-back antennae; the torn wing edge.\n\nScale: Each painted hornet covers its clay figure's outline and no more.\n\nThe cells, left to right, row by row (the poses of the clay figures):\n1. (row 1, column 1) flying, the wings raised high.\n2. (row 1, column 2) flying, the wings swept down.\n3. (row 1, column 3) flying, turned, the wings raised high.\n4. (row 1, column 4) flying, turned, the wings swept down.\n5. (row 2, column 1) flying, turned the other way, the wings raised high.\n6. (row 2, column 2) flying, turned the other way, the wings swept down.\n7. (row 2, column 3) stinging: the abdomen curled forward under the body, the sting thrust out.\n8. (row 2, column 4) stinging, turned: the abdomen curled forward, the sting thrust out.\n9. (row 3, column 1) gliding, the wings held out flat.\n10. (row 3, column 2) gliding, turned, the wings held out flat.\n11. (row 3, column 3) lying dead on its back on the ground, legs curled, wings crumpled.\n12. (row 3, column 4) lying dead on its side, a different sprawl.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "hornetSwarm.back.png",
+    "01b.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3332,
+    "candidatesTokenCount": 1826,
+    "totalTokenCount": 5158,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1092
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "seconds": 9.5,
+  "modelText": [],
+  "approved": null,
+  "job": "hornetSwarm.back.paint",
+  "purpose": "C creatures: hornetSwarm back sheet: nb21 paint-over of its clay guide with its approved portrait",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/hornetSwarm.back.paint.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/sbx/refs/guides/hornetSwarm.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/hornetSwarm/01b.webp"
+  ],
+  "route": "paint",
+  "logKey": "C creatures"
+}

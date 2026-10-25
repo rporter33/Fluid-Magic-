@@ -1,0 +1,39 @@
+{
+  "file": "lv07.back.redress.nb21.png",
+  "sha256": "1f6456dd9348365c770c3203bae38a7493188c817af912d9b270af2c7839ee64",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet of a leader whose drawing is right: keep exactly its camera (high above and behind, looking down at about 40 degrees), the direction every figure faces, every figure's pose, size and position in its cell, the 4 by 4 grid and the flat pure blue (#0000FF) background.\nImage 2 is this leader's own approved painted portrait. Every figure of Image 1 must become the man of the portrait, seen full length from above.\n\nRepaint every figure of Image 1 as the man of Image 2, the same in every cell. Keep each figure's pose, the position of its arms, legs and weapon, and its outline as close as the new kit allows. Seen from behind, he shows these marks, and each one must be clearly visible at full size: (1) the iron cap worn over a rolled linen arming cap whose pale edge shows under the rim; (2) the grey-brown padded jerkin laced at the side; (3) the broad leather baldric over one shoulder; (4) the plain straight sword with a simple cross guard. Face-only details stay hidden, because the face is turned away. He carries no shield. Paint the marks in the portrait's hand: painterly oil on a wood panel, visible directional brushwork, a muted earthy palette; nothing glows. Keep the daylight of Image 1 (a high sun from the upper left, a cool fill on the lower right); do not copy the portrait's candlelight, its dark background or its framing.\n\nFacing, again: every figure faces exactly as in Image 1, away from us toward the upper right, the hit and falling figures included: we see the back, the shoulders and the back of the head or headgear, and we never see the face; only the two fleeing figures turn toward us.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor or shadow; no blue anywhere on the figures: no blue cloth, no blue light, no blue reflections. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "cmdLevy.back.body.g3pro.png",
+    "07.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2712,
+    "candidatesTokenCount": 1649,
+    "totalTokenCount": 4562,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 472
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 201,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.9,
+  "modelText": [],
+  "approved": null
+}

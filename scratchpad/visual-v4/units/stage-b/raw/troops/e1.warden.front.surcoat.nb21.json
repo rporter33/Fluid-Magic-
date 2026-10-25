@@ -1,0 +1,47 @@
+{
+  "file": "e1.warden.front.surcoat.nb21.png",
+  "sha256": "c2ec8cd8e3d980d0924c32b3eec37f1c59796740138f9c65d6f7b6c35113796c",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid, the flat pure magenta background, and its painting: the same brushwork, the same bark-plate helmets with their tall leaf crests, the same mantles of cloth leaves, the same swords and the same green shields with their small pale blossom sigil.\nImage 2 is a painted portrait from the same game, a reference for the painting hand only: do not copy its dark background, its candlelight, its framing or the person in it.\n\nChange only the soldier's body clothing, the same way in every cell. His green surcoat now lies over his bark armour, not under it: a sleeveless surcoat of deep green cloth covers his whole chest and belly, from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride, and held at the waist by a dark leather belt. No bark plates show on the chest or the belly any more: the bark plates show only on the shoulders, the arms and the legs. The leaf mantle stays over both shoulders. Seen from this camera, the green surcoat, the mantle, the crest and the shield face together make up about a third of each standing figure, so that a packed block of these soldiers reads as green from far away.\n\nThe cloth is the same deep green as the soldier's mantle and shield, clean and clearly coloured, never grey or blackish; it is painted with the same brushwork as the rest: folds that follow each pose, a frayed hem.\n\nFacing, again: every figure faces exactly as in Image 1, toward us and to the lower left, the hit and the falling figures included; the fleeing figures run as in Image 1. Nothing else changes: no antlers, no new weapons, no new people.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow; no magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "wd.front.g3pro.png",
+    "anchor-style.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2733,
+    "candidatesTokenCount": 1540,
+    "totalTokenCount": 5037,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 493
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 764,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.1,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/wd.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/prompts/e1.warden.front.surcoat.txt",
+  "job": "warden.front.surcoat",
+  "purpose": "B troops: warden front: surcoat over the chest, nb21 edit of the kept Pro sheet (review change 9)",
+  "logKey": "troops"
+}

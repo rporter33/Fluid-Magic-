@@ -1,0 +1,49 @@
+{
+  "file": "wildSpirit.back.nb21.cfix.png",
+  "sha256": "06ad6bdd5f88c4020f977b3fd6a5968addb914f5da95886e88a8182275d932a7",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the camera and pose guide: a grey clay maquette rendered from the game's battle camera, with the leaf ruff painted in the god's colour. Copy from it exactly the camera angle, the direction the beast faces, its pose, and its size and place in the frame. Do not copy its smooth clay surfaces, its simplified shapes or the thickness of its limbs: the anatomy, the face and every ornament follow Image 2 and the description.\nImage 2 is this god's own approved painted portrait: paint the same beast, with the same shapes, colours, materials and marks, now seen full length from above at the battle camera, in the same painting style. Do not copy its dark background, its candlelight or its framing.\n\nOne large painted beast, full length, alone in the image on a perfectly flat, uniform pure magenta (#FF00FF) background, as a game cutout. Pose: standing with the right forefoot lifted, the long neck raised and the head up under the tall antlers.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at a miniature on a table; orthographic, with no perspective. The beast faces away from us, toward the upper right of the image: we see its back, its right flank and the top of its head from behind; its face is mostly hidden. It is foreshortened as seen from above: its back and head are large, its legs short.\n\nLight: outdoor daylight; the beast stays as dark and as muted as in its portrait, lit only by small warm and cool highlights, never washed out or brightened. A high sun in the upper left of the image lights the top of the head, the upper surfaces and the upper-left side of the beast with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait; a muted earthy palette with the god's own colours as its portrait shows them, in which the leaf ruff in deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of the beast. The beast has a strong, simple, readable silhouette that still reads when it is shrunk to 120 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe god: the Wild Spirit, an elusive god of the deep wood: a great stag-like beast-spirit, hard to catch. Colours: muted and earthy. The one clear colour of the beast is its leaf ruff: deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Nothing in the image glows. No other saturated area larger than a small clasp or trim.\nBody: a lean, long-legged, deer-like beast the size of a horse, with a wolf's deep chest and a long tail; its hide is brown (#7A5638) with stripes of lichen grey-green (#909080) across the flanks and the legs. Head: a long, narrow, deer-like head with dark eyes. Antlers: tall, wide, branching antlers. Ruff: a thick collar of overlapping leaves around the neck and the chest, the leaves deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour.\nIts outline is clean and solid, with no mist and no wisps: the game draws its flicker and its mist.\n\nSize: the beast fills about 86% of the image along its longest side, placed as in Image 1, with at least 24 pixels of clean background all around; nothing is cropped.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow. No pink, purple or magenta anywhere on the figure: no pink cloth, no pink glow, no pink reflections; its greens stay green.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; other creatures or people; a cropped figure; smoke, flames, sparks, floating embers or mist.\n\nCorrections from the previous attempt, which must be fixed: Standing on all four hooves, the body level and the hind legs under the hips, seen from behind and above, turned to the upper right as the mirror of the front view. The antlers and the leaf ruff in the nation's green. Not rearing, not leaping, never upright.\n",
+  "references": [
+    "wildSpirit.idle.back.png",
+    "wildSpirit-thornwood.01b.r2.nb21.png"
+  ],
+  "aspect": "9:16",
+  "usage": {
+    "promptTokenCount": 3337,
+    "candidatesTokenCount": 1769,
+    "totalTokenCount": 6354,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 1097
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1248,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.7,
+  "modelText": [],
+  "approved": null,
+  "job": "wildSpirit.back.cfix",
+  "item": "R3",
+  "purpose": "C fix: R3 wildSpirit back idle cutout (nb21: maquette + approved portrait wildSpirit-thornwood.01b.r2, pick B) [re-roll: Standing on all four hooves, the body level and the hind legs under the hips, seen from behind and a]",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/fix/prompts/wildSpirit.back.cfix.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/gods/guides/wildSpirit.idle.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/portraits/wildSpirit-thornwood.01b.r2.nb21.png"
+  ],
+  "route": "gods",
+  "logKey": "C fix"
+}

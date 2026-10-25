@@ -1,0 +1,48 @@
+{
+  "file": "wolf.front.fill.nb21.png",
+  "sha256": "8f4e0074a34d02e583cd588b7fd6778377d48ef361529acce8420b97754852ca",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a sprite sheet of one wolf, seen from in front, in a 4 by 3 grid on a flat pure blue (#0000FF) background. 6 of its figures are finished paintings whose camera, size and pose are right. The figures in 6 cells (row 2, column 3; row 3, column 4; row 2, column 4; row 1, column 3; row 1, column 4; row 3, column 1) are grey clay figures. Keep every finished painted figure exactly as it is: its place, size, pose, outline and camera. Paint each grey clay figure as the same wolf, keeping exactly the clay figure's place, size, outline, pose, facing and camera, so that it matches the painted figures beside it in colours, light, scale and hand; no clay may remain. Keep the flat pure blue background, with no grid lines.\n\nImage 2 is the approved painted portrait of this wolf: use it only for its identity, its colours, its materials and its marks. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing.\n\nCamera: high above and in front, looking down at about 40 degrees; orthographic, no perspective. Every figure faces toward us and to the lower left, exactly as in Image 1: we see its face from above, its chest and its left side; never at eye level, never seen from the side.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the wolf with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background. The coat stays dark, as dark as the darkest grey in the portrait along the back.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the wolf's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 36 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figures: A Wolf, an old, heavy grey wolf of the deep wood, wild, with no harness, collar, saddle or cloth: the wolf of Image 2, a big real timber wolf, long legs, a deep narrow chest, a long muzzle, pointed ears half back, a bushy tail; a dark smoky grey coat that is darker charcoal along the spine, the top of the neck and the tail, grizzled paler grey on the flanks and legs, going pale on the muzzle; amber eyes under a heavy brow; a hard look. The fur is grey and dark grey, never pink, violet or blue. Its marks, every one painted clearly: the grizzled pale muzzle; a healed scar across the near eye; one long fang showing; a thick shaggy ruff. Seen from in front and above, the amber eyes, the scar across the near eye, the one fang and the pale grizzled muzzle read clearly.\n\nThe clay cells to paint, and their poses:\n7. (row 2, column 3) the wolf biting: head lunged forward and low, jaws wide open.\n12. (row 3, column 4) the wolf lying dead, curled on its other side, a different sprawl.\n8. (row 2, column 4) the wolf howling: head thrown up, the muzzle to the sky.\n3. (row 1, column 3) the wolf loping, front paws reaching.\n4. (row 1, column 4) the wolf loping, legs gathered under it.\n9. (row 3, column 1) the wolf hit: flinching back, rearing a little, head thrown up.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No blue, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "wolf.front.fill.base.png",
+    "01b.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3228,
+    "candidatesTokenCount": 1693,
+    "totalTokenCount": 5286,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 988
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 365,
+    "serviceTier": "standard"
+  },
+  "seconds": 12.1,
+  "modelText": [],
+  "approved": null,
+  "job": "wolf.front.fill",
+  "purpose": "C creatures: wolf front sheet re-roll: nb21 re-dress of the first sheet with its 6 failing cells laid in as clay (cells: bite, deadB, howl, lopeA, lopeB, recoil)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/wolf.front.fill.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/bases/wolf.front.fill.base.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/common/wolf/01b.webp"
+  ],
+  "route": "fill",
+  "logKey": "C creatures"
+}

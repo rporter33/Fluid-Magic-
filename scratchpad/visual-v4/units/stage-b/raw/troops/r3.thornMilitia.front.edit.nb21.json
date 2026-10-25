@@ -1,0 +1,47 @@
+{
+  "file": "r3.thornMilitia.front.edit.nb21.png",
+  "sha256": "961784d0dcdec18619d3b8c786bcec01441c704d8c4e53c9b9318f420fc598e1",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a finished game sprite sheet whose drawing is right: keep exactly its camera (high above and in front, looking down at about 40 degrees), the direction every figure faces, every figure's pose, outline, size and position in its cell, the 4 by 4 grid, the flat pure magenta (#FF00FF) background, and its painting: the same brushwork, the same soldier, the same weapon.\nImage 2 is a painted portrait from the same game, a reference for the painting hand only: do not copy its dark background, its candlelight, its framing or the person in it.\n\nChange only the soldier's body clothing, the same way in every cell, to match the hit and the cheering cells (row 3, column 1 and row 4, column 3): the long deep bottle-green surcoat covers his whole chest and belly from the collar down to just below the knees, over the brown leather jerkin, belted at the waist with a knotted rope; only his sleeves are brown leather. The short green hooded cloak stays over his shoulders, the hood up. In the first four cells too, the chest is green cloth, not brown leather.\n\nFacing, again: every figure faces exactly as in Image 1, toward us and to the lower left, the hit and the falling figures included; the fleeing figures run as in Image 1. Nothing else changes: no new weapons, no new people.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor or shadow. No magenta, pink or purple anywhere on the figures. Never: text, labels, grid lines, borders, a floor, cast shadows, blood, extra people, cropped or overlapping figures.",
+  "references": [
+    "r1.thornMilitia.front.g3pro.png",
+    "01.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 2611,
+    "candidatesTokenCount": 2061,
+    "totalTokenCount": 5148,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 371
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 476,
+    "serviceTier": "standard"
+  },
+  "seconds": 20.6,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.thornMilitia.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/01.webp"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/prompts/r3.thornMilitia.front.edit.txt",
+  "job": "thornMilitia.front",
+  "purpose": "B troops2: R17 thornMilitia front sheet (re-roll, nb21 edit of its own r1 sheet: surcoat over the chest in every cell)",
+  "logKey": "troops2"
+}

@@ -1,0 +1,49 @@
+{
+  "file": "b1.flameArcher.bust.nb21.png",
+  "sha256": "8e4341e86398d1efed0b6f81e68aead020a9483528864afca0616f1f3154a0d4",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\nImage 2 is a painted portrait of a Cinder Horde leader from the same set, a reference for the nation's materials only (blackened iron, rusted edges, charcoal cloth, ash-grey skin): do not paint that person, and do not give the soldier a leader's ornaments, crown, horns, antlers or rich trim.\nImage 3 shows this exact soldier as he is painted small on the battlefield, from the front and from behind: his headgear, his cloth and its colour, his armour and his kit must be the ones in Image 3, now seen close as a portrait. Do not copy its tiny size, its camera from above, its pose or its flat coloured background.\n\nHead-and-shoulders portrait bust of one soldier, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. Nothing behind the head or the shoulders: no shield, no sword hilt, no spear, no bow, no hands, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy, except the side's dull ember orange cloth (#C4532C), which shows clearly on the raised hood, the hooded shoulder cape and the long surcoat where the bust shows them, as on the figure, so the card reads as that side at a glance. Nothing in the image glows.\n\nSubject: A warrior of the Cinder Horde, ash-born clans who worship fire: ash-grey skin with soot markings, charcoal and smoke-grey clothing, armor of dark iron with rusted edges.\nA Flame Archer: a padded smoke-grey jack, worn under a sleeveless surcoat of dull ember-orange cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; leather bracers; a deep dull ember-orange hood worn up with a short hooded cape over the shoulders; a soot-black scarf over the lower face; a short recurve bow of dark horn; a leather quiver on the back with arrows whose heads are wrapped in black pitch-soaked rag; a long knife at the belt for melee. No horns. The arrow heads are not lit in the image (the game draws their flame); in the windup and strike cells the bow is slung on the back and the knife is in hand.\nPerson: a common archer, not a leader; only the eyes and the brow show between the hood and the soot-black scarf.",
+  "references": [
+    "anchor-style.webp",
+    "05.webp",
+    "flameArcher.kit.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 4165,
+    "candidatesTokenCount": 1552,
+    "totalTokenCount": 7740,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 805
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 2023,
+    "serviceTier": "standard"
+  },
+  "seconds": 20.5,
+  "modelText": [],
+  "approved": null,
+  "referencePaths": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/kitcards/flameArcher.kit.png"
+  ],
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/prompts/b1.flameArcher.bust.txt",
+  "job": "flameArcher.bust",
+  "purpose": "B troops2: R25 flameArcher card bust (b1, nb21, anchor + nation portrait + the passed sheet as kit card)",
+  "logKey": "troops2"
+}

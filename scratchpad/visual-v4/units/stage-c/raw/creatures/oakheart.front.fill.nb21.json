@@ -1,0 +1,47 @@
+{
+  "file": "oakheart.front.fill.nb21.png",
+  "sha256": "ed8f0a7bdbdef872921d05591371c430dc5d45e5c81304c72e5fe192b065645f",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a sprite sheet of one Oakheart warrior, seen from in front, in a 4 by 4 grid on a flat pure magenta (#FF00FF) background. 13 of its figures are finished paintings whose camera, size and pose are right. The figures in 3 cells (row 3, column 3; row 2, column 3; row 1, column 4) are grey clay figures. Keep every finished painted figure exactly as it is: its place, size, pose, outline and camera. Paint each grey clay figure as the same Oakheart, keeping exactly the clay figure's place, size, outline, pose, facing and camera, so that it matches the painted figures beside it in colours, light, scale and hand; no clay may remain. Keep the flat pure magenta background, with no grid lines.\n\nImage 2 is the approved painted portrait of this Oakheart: use it only for its identity, its colours, its materials and its marks. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing.\n\nCamera: high above and in front, looking down at about 40 degrees; orthographic, no perspective. Every figure faces toward us and to the lower left, exactly as in Image 1: we see its face from above, its chest and its left side; never at eye level, never seen from the side.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the Oakheart with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the Oakheart's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 60 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figures: An Oakheart, a walking oak under thornplate, a sacred warrior of the Thornwood: the warrior of Image 2, a broad, heavy, broad-shouldered warrior whose whole body is living grey oak wood, deeply furrowed, with moss in the furrows, armoured in grown thornplate of dark bark plates; not a tree with a face, but a warrior made of oak. Its head is a block of grey furrowed oak with a face only suggested in the grain: two deep dark knotholes for eyes, a long crack running down from the brow across the cheek, a jaw of bark knots. A high helm of dark grown bark plates crowned with a ring of long curved thorns and a fringe of lobed oak leaves around its rim; heavy thornplate pauldrons studded with thorns. It wields an Oak Maul in both hands or one: a long haft of dark oak ending in a huge head of knotted oak root bound with dark iron bands. No shield. Its marks, every one painted clearly: the crown of long curved thorns on the helm; the fringe of lobed oak leaves around the helm's rim; the crack down the face; the moss in the furrows of the grey oak; the bottle-green mantle. Seen from in front and above, the knothole eyes, the crack down the face, the thorn crown and the green mantle across the chest read clearly.\n\nSide colour: a mantle of deep bottle-green cloth (#1F6A50) over both shoulders, under the pauldrons, wrapped across the chest in front and hanging down the back to the backs of the knees: large, clean, unbroken areas that face the sky and the camera, so that a block of Oakhearts reads as that colour from far away; about a third of what the camera sees of each standing figure is this cloth. The green is a deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green, never blackish or teal-blue. The rest of the figure stays muted grey oak and dark bark.\n\nAlso, on every figure of the sheet, painted or clay, keeping its outline: make the bottle-green mantle larger, wrapped broadly across the whole chest and both shoulders and hanging to the knees in front, so that green cloth covers about a third of each standing figure.\n\nThe clay cells to paint, and their poses:\n11. (row 3, column 3) lying dead on the ground on its back, limbs loose.\n7. (row 2, column 3) follow-through: the maul swept past and low, body turned with the swing.\n4. (row 1, column 4) marching: right foot forward in a long stride, left foot pushing off behind.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "oakheart.front.fill.base.png",
+    "01b.webp"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 3422,
+    "candidatesTokenCount": 1765,
+    "totalTokenCount": 5187,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1182
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "serviceTier": "standard"
+  },
+  "seconds": 13.1,
+  "modelText": [],
+  "approved": null,
+  "job": "oakheart.front.fill",
+  "purpose": "C creatures: oakheart front sheet re-roll: nb21 re-dress of the first sheet with its 3 failing cells laid in as clay (cells: deadA, follow, marchB)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/oakheart.front.fill.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/bases/oakheart.front.fill.base.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/oakheart/01b.webp"
+  ],
+  "route": "fill",
+  "logKey": "C creatures"
+}

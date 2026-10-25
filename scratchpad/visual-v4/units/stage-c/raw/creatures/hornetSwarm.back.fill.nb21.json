@@ -1,0 +1,48 @@
+{
+  "file": "hornetSwarm.back.fill.nb21.png",
+  "sha256": "3e47fb5f43b410a64ba3572f011c34c6ab23e5d452a0948c885351e885062fa5",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is a sprite sheet of one giant forest hornet of a Hornet Swarm, seen from above, in a 4 by 3 grid on a flat pure magenta (#FF00FF) background. 8 of its figures are finished paintings whose camera, size and pose are right. The figures in 4 cells (row 3, column 3; row 3, column 4; row 3, column 2; row 1, column 3) are grey clay figures. Keep every finished painted figure exactly as it is: its place, size, pose, outline and camera. Paint each grey clay figure as the same hornet, keeping exactly the clay figure's place, size, outline, pose, facing and camera, so that it matches the painted figures beside it in colours, light, scale and hand; no clay may remain. Keep the flat pure magenta background, with no grid lines.\n\nImage 2 is the approved painted portrait of this hornet: use it only for its identity, its colours, its materials and its marks. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing.\n\nCamera: high above, looking down at about 40 degrees; orthographic, no perspective. Each hornet points exactly as its figure in Image 1 points.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the hornet with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the hornet's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 20 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe hornet: One giant forest hornet of a Hornet Swarm summoned by Thornwood druids, as big as a sparrow: the lean dark hornet of Image 2, deep umber and charcoal with narrow dull ochre bands across its head, thorax and long tapering abdomen, huge dark compound eyes, jagged mandibles, long antennae swept back over the head, a thorax furred in dark umber, a long black sting, and two pairs of smoky wings with a torn edge, painted pale smoky grey and opaque, not see-through. The swarm is made in the game from many single hornets; each cell shows one hornet. Its marks, every one painted clearly: the narrow dull ochre bands; the jagged mandibles; the long swept-back antennae; the torn wing edge.\n\nAlso, on every figure of the sheet, painted or clay, keeping its outline: make every hornet's wings opaque: painted solid pale smoky grey-brown, with no background colour showing through them anywhere.\n\nThe clay cells to paint, and their poses:\n11. (row 3, column 3) lying dead on its back on the ground, legs curled, wings crumpled.\n12. (row 3, column 4) lying dead on its side, a different sprawl.\n10. (row 3, column 2) gliding, turned, the wings held out flat.\n3. (row 1, column 3) flying, turned, the wings raised high.\n\nBackground: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No pink, magenta, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "hornetSwarm.back.fill.base.png",
+    "01b.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3133,
+    "candidatesTokenCount": 1893,
+    "totalTokenCount": 5272,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 893
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 246,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.4,
+  "modelText": [],
+  "approved": null,
+  "job": "hornetSwarm.back.fill",
+  "purpose": "C creatures: hornetSwarm back sheet re-roll: nb21 re-dress of the first sheet with its 4 failing cells laid in as clay (cells: deadA, deadB, glide90, up90)",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/hornetSwarm.back.fill.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/bases/hornetSwarm.back.fill.base.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/thornwood/hornetSwarm/01b.webp"
+  ],
+  "route": "fill",
+  "logKey": "C creatures"
+}

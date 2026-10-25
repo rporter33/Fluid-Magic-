@@ -1,0 +1,48 @@
+{
+  "file": "fireSprite.back.paint.r2.nb21.png",
+  "sha256": "c95666d4596992294323ec802b8d2c11aa6dda2d312ddfaabec06fc9a67104ed",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-24",
+  "prompt": "Image 1 is the grid of grey clay figures to paint over: keep every figure exactly where it is, at exactly its size, pose, facing and camera, and paint each one as the fire sprite of Image 2 seen from behind; no clay may remain. Keep the 4 by 3 layout of Image 1, with no grid lines drawn, and its flat pure blue (#0000FF) background.\nImage 2 is the approved painted portrait of this fire sprite: use it only for its identity, its colours, its materials and its marks, painted in the same hand. Do not copy its head-and-shoulders framing, its dark background, its candlelight or its facing; every figure is the whole fire sprite, small in its cell, exactly as large as its clay figure.\n\nA game sprite sheet: 12 full-length painted figures of one Fire Sprite, seen from behind, one figure in each cell of a 4 by 3 grid, on a perfectly flat, uniform pure blue (#0000FF) background. The same fire sprite, the same colours and the same scale in every cell; only the pose changes.\n\nCamera: high above and behind, looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective, so every figure is the same size. Every figure faces away from us, toward the upper right of the image, exactly as its clay figure does: we see its back, its right side and the top of its head; no face is seen. The figures are foreshortened as seen from above: the top of the head and the back large, the legs short; never at eye level, never seen from the side.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the top and the upper-left side of the fire sprite with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description says so. No cast shadow on the background. The sprite is fire: its core is bright yellow and orange and it lights itself, but its outer flames and smoky tips stay dark ember red and charcoal so its silhouette reads on a light ground.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait reference; a muted earthy palette with the fire sprite's own colours exactly as its portrait shows them; soft painterly edges, small crisp highlights and a thin bright rim of light along the upper-left edges. A strong, simple, readable silhouette that still reads when shrunk to 40 pixels. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figures: A Fire Sprite, a flicker of living flame summoned by Cinder Horde mages, with no will of its own: its head is the flame face of Image 2, a narrow head of fire whose flames sweep back from the brow like wind-blown hair, two short flame points rising like small horns above the brow, two narrow slanted dark eye-slits and a mouth that is only a ragged dark gap in the flame, open as if roaring, set in a brighter yellow core; below the head the fire tapers into a long flickering tail of flame, and two broad tongues of flame spread from behind the head like short wings (they rise and fall from cell to cell); no arms, no legs, no hands, no body other than the tapering tail of flame; the outer flames deep ember red going to smoky charcoal at their tips, a thin trail of grey smoke streaming back. A wild, roaring, mindless look; never cute, never a cartoon, no grin, no teeth. Its marks, every one painted clearly: the swept-back flame hair; the two small horn-like flame points above the brow; the slanted dark eye-slits; the ragged roaring mouth; no body or limbs: only the flame tail and the two flame wings. Seen from behind, the face is hidden: we see the back of the flame head with its swept-back flame hair and the two horn points, the flame wings and the tail.\n\nCorrections from the previous attempt, which must be fixed: the previous attempt painted every sprite about one and a half times the size of its clay figure, with long trailing tails and wide spread wings the clay figure does not have, so its outline did not follow the clay; its smoke turned blue at the tips; and its flames were a brighter orange and yellow than the portrait. This time each sprite covers its clay figure's outline and no more: the flame tail no longer than the clay figure's tapered body, the two flame wings exactly where the clay figure's wings are and no wider; the colours are those of Image 2: deep ember red and dark orange flames with smoky charcoal tips and only a small bright yellow core around the face, the sprite overall as dark as the portrait; the smoke charcoal grey, never blue or violet.\n\nFacing, again: every figure in every cell faces the same way as its clay figure, away from us toward the upper right, including the hit figure and the falling one; no face is seen anywhere on this sheet.\n\nScale: A sprite is about two thirds of a man's height; each painted sprite covers its clay figure's outline and no more.\n\nThe cells, left to right, row by row (the poses of the clay figures):\n1. (row 1, column 1) hovering, the two flame wings swept fully up.\n2. (row 1, column 2) hovering, the flame wings level.\n3. (row 1, column 3) hovering, the flame wings swept fully down.\n4. (row 1, column 4) gliding forward, the flame wings swept back.\n5. (row 2, column 1) diving steeply at a target, head first, the tail streaming behind.\n6. (row 2, column 2) striking: the flame head lunging forward, the mouth wide, the wings flared.\n7. (row 2, column 3) recoiling from a hit, the flames knocked back and torn.\n8. (row 2, column 4) dying: the flame body breaking apart into large glowing embers and smoke.\n9. (row 3, column 1) dying: only a few small fading embers and a wisp of smoke left.\n10. (row 3, column 2) no creature: only a small blackened scorch mark on the ground.\n11. (row 3, column 3) hovering, turned a little, the flame wings up.\n12. (row 3, column 4) hovering, turned a little, the flame wings down.\n\nBackground: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No blue, violet or purple anywhere on the creature.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra figures; cropped or overlapping figures.",
+  "references": [
+    "fireSprite.back.png",
+    "01b-r3.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 3796,
+    "candidatesTokenCount": 1937,
+    "totalTokenCount": 6456,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 2240
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 1556
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 723,
+    "serviceTier": "standard"
+  },
+  "seconds": 14.6,
+  "modelText": [],
+  "approved": null,
+  "job": "fireSprite.back.paint.r2",
+  "purpose": "C creatures: fireSprite back sheet: nb21 paint-over of its clay guide with its approved portrait [re-roll, failure named]",
+  "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/prompts/fireSprite.back.paint.r2.txt",
+  "referencePaths": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/sbx/refs/guides/fireSprite.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/portraits/cinderHorde/fireSprite/01b-r3.webp"
+  ],
+  "route": "paint",
+  "logKey": "C creatures"
+}

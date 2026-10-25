@@ -1,0 +1,40 @@
+{
+  "file": "wr.front.nb21.png",
+  "sha256": "7e09d308f91b79062b6c15a63a45e3fc5e8318f5a675f646ddf8eb5c26b4da66",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is the camera and pose guide: grey clay maquettes in exactly this grid, rendered from the game's battle camera; the coloured areas on them mark where the side's cloth goes. Copy from it exactly the camera angle, the direction every figure faces, the pose in each cell, the size of the figure in its cell and the grid. Do not copy its smooth grey clay surfaces, its simple shapes or its toy-like proportions.\nImage 2 is a painted portrait from the same game, a reference for the painting style and for the nation's materials and colours only: do not paint that person, and do not copy its dark background, its candlelight or its head-and-shoulders framing.\nImage 3 is a second painting-style reference from the same set; the same rules apply.\n\nA game sprite sheet: 16 full-length painted figures of one rider on his wolf, one figure in each cell of a 4 by 4 grid, on a perfectly flat, uniform pure magenta (#FF00FF) background. The same rider and the same wolf, the same equipment, the same colours and the same scale in every cell; only the pose changes.\n\nCamera: high above and in front, looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, with no perspective, so every figure is the same size. Every figure faces toward us and toward the lower left of the image: we see its face from above, the top of its helmet or hood, its chest and its left side. The figures are foreshortened as seen from above: the top of the head and the shoulders are large, the legs short.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the tops of helmets and hoods, the shoulders and the upper-left side of every figure with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; a muted earthy palette of charcoal, ash grey, dull iron, bark brown, leather and bone, in which the side's cloth is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of every figure. Each figure has a strong, simple, readable silhouette that still reads when the figure is shrunk to 40 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe rider and his mount: A Wolf Rider: the rider in bark armor with a deep pine-green hooded cloak (hood up) and a spear with a leaf-shaped head. The mount: a huge grey timber wolf, its shoulder as high as a man's chest, shaggy grey-brown fur darker along the spine, a deep pine-green saddle blanket over its back under a small bark saddle, a bark-plate harness across its chest.\n\nSide colour: deep pine green (#1F6A50) cloth on the wolf's saddle blanket, the rider's hood and cloak. These are large, clean, unbroken areas that face the sky and the camera, so that a pack of these riders reads as that colour from far away: about a third of what the camera sees of each standing figure is this cloth. The rest of the figure stays muted.\n\nProportions and scale: realistic adult proportions, the head with its helmet or hood about one sixth of the standing height; weapons at true size. The wolf is a real, huge timber wolf in true proportion to its rider, not a horse and not a dog: long legs, a deep narrow chest, a long muzzle, pointed ears, a bushy tail. A rider and his standing wolf together are about 62% of the cell's height; riderless and lying figures keep the same scale.\n\nThe cells, left to right, row by row (the poses of the camera and pose guide):\n1. (row 1, column 1) the wolf standing square on all four paws, head up and ears forward; the rider sitting upright in the saddle, the spear held upright.\n2. (row 1, column 2) the wolf loping, front paws reaching.\n3. (row 1, column 3) the wolf loping, legs gathered.\n4. (row 1, column 4) the wolf leaping, front paws off the ground, the rider low.\n5. (row 2, column 1) the wolf landing from a leap, front paws down, hind legs high.\n6. (row 2, column 2) the charge: the mount at full gallop, the rider leaning forward behind the couched weapon, aimed at the enemy.\n7. (row 2, column 3) the rider rising in the saddle, the spear drawn far back over the shoulder to thrust; the wolf crouched, about to spring.\n8. (row 2, column 4) the rider thrusting the spear down and forward past the wolf's head; the wolf lunging.\n9. (row 3, column 1) the wolf biting: head lunged forward, jaws wide open, the rider holding on.\n10. (row 3, column 2) hit: the rider knocked back in the saddle, arms thrown out; the wolf flinching sideways.\n11. (row 3, column 3) the rider tumbling backward off the wolf's back; the wolf stumbling.\n12. (row 3, column 4) the wolf lying dead on its side, the rider lying dead beside it.\n13. (row 4, column 1) the wolf and the rider lying dead, a different sprawl.\n14. (row 4, column 2) the mount alone without its rider, bolting at a gallop, extended.\n15. (row 4, column 3) the mount alone without its rider, bolting at a gallop, gathered.\n16. (row 4, column 4) the wolf with its head thrown up, howling; the rider raising the spear high overhead.\n\nBackground and separation: one flat pure magenta (#FF00FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No magenta, pink or purple anywhere on the figures.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra people; cropped or overlapping figures.\n",
+  "references": [
+    "wolfRider.front.png",
+    "02.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 4833,
+    "candidatesTokenCount": 1987,
+    "totalTokenCount": 8315,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 3360
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 1473
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1495,
+    "serviceTier": "standard"
+  },
+  "seconds": 18.2,
+  "modelText": [],
+  "approved": null
+}

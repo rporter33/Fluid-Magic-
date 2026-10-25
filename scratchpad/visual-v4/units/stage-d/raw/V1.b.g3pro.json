@@ -1,0 +1,40 @@
+{
+  "file": "V1.b.g3pro.png",
+  "sha256": "c58049d79ab47c22e585b7446dae00d96c2f21c5631e00bb3fddcdd88715305f",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-25",
+  "prompt": "Image 1 is the layout guide: flat grey placeholder shapes on a pure black background, one for each element of this sheet. Keep every element exactly where its placeholder is, at exactly its size, and paint it as described below; no grey placeholder may remain. Copy only the layout and the sizes from Image 1, never its flat grey shading.\nImage 2 is the approved painted portrait of the game's Fire Sprite, a creature of living flame: it shows how fire, embers and smoke are painted in this game. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\nImage 3 is a painted portrait from the same game, the approved style anchor. Copy its hand, its brushwork and its palette, but nothing of its subject, framing, lighting or background.\n\nA game effects sheet of glowing veins, painted on black: eight vein overlays in a 4 by 2 grid at the top and two long vein strips at the bottom, each exactly where its grey placeholder is and as large as it.\n\nEach overlay is a branching network of veins of light, as if burning under a warrior's skin: thick trunks that split into thinner and thinner branches, brightest along the trunks and fading at the fine tips. The odd ones (first, third, fifth, seventh) grow up from the bottom of their cell like the veins of a leg and a torso; the even ones spread out from the middle in all directions like a web. Each is a different shape.\nBottom: two long single veins running across the whole width, the same thickness from end to end, with short side branches, for a rope texture.\nThe veins are pale: warm white light lines, almost without colour, because the game tints them (red for blood fury). No red, no orange flame, no fire, no sparks.\n\nCamera: the game's battle camera, high above the field and looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, no perspective. Anything lying on the ground is foreshortened: a round shape on the ground appears as a flat ellipse about two thirds as tall as it is wide.\n\nThese sprites are light: in the game they are added onto the battle field, so anything that is not black glows and pure black disappears. Paint them as glowing fire on the black, never on a coloured or grey background; no ground, no figures, no scenery, no cast shadows.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; soft painterly edges with a few crisp strokes. Each element has a strong, simple, readable shape that still reads when it is shrunk to 24 pixels. It is not a cartoon: no cel shading, no thick black outlines, no glossy 3D render, no vector shapes, no airbrushed gradients, no pixel art, no photograph.\n\nBackground: perfectly flat pure black (#000000), completely uniform from edge to edge, with no texture, no vignette, no grid lines, no frames, no labels, no numbers and no text. Every element stands apart from the others with clear background between them, and none touches the edge of the image.\n",
+  "references": [
+    "V1.guide.png",
+    "01b-r3.webp",
+    "anchor-style.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 1461,
+    "candidatesTokenCount": 1425,
+    "totalTokenCount": 3138,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 687
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 252,
+    "serviceTier": "standard"
+  },
+  "seconds": 16.2,
+  "modelText": [],
+  "approved": null
+}

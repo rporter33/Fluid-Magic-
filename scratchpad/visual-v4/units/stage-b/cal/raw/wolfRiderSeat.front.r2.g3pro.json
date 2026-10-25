@@ -1,0 +1,40 @@
+{
+  "file": "wolfRiderSeat.front.r2.g3pro.png",
+  "sha256": "9f0f216be77d349976e2ce5035ca732c5b5eab146d25a7ed37053f1b6f044300",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-3-pro-image",
+  "date": "2026-10-23",
+  "prompt": "Image 1 is the camera and pose guide: grey clay maquettes in exactly this grid, rendered from the game's battle camera; the coloured areas on them mark where the side's cloth goes. Copy from it exactly the camera angle, the direction every figure faces, the pose in each cell, the size and the position of the figure in its cell and the grid. Do not copy its smooth grey clay surfaces, its simple shapes or its toy-like proportions.\nImage 2 is a finished sprite sheet of the whole Wolf Rider, rider and wolf together, painted at the right camera: match its camera, its daylight, its painting and the size of the rider in each cell; paint no wolf: the rider alone.\nImage 3 is a painted portrait from the same game, a reference for the painting style only: do not paint that person or copy its background, candlelight or framing.\n\nA game sprite sheet: 16 full-length painted figures of one wolf rider, one figure in each cell of a 4 by 4 grid, on a perfectly flat, uniform pure blue (#0000FF) background. The same wolf rider, the same equipment, the same colours and the same scale in every cell; only the pose changes.\n\nThe last attempt changed the riding poses. Keep every rider exactly in the pose, size and place of Images 1 and 2, seen from high above and in front. \n\nCamera: high above and in front, looking down at about 40 degrees, the way a player looks down at miniatures on a table; orthographic, with no perspective, so every figure is the same size. Every figure faces toward us and toward the lower left of the image. The figures are foreshortened as seen from above.\n\nLight: outdoor daylight. A high sun in the upper left of the image lights the tops of helmets and hoods, the shoulders and the upper-left side of every figure with warm highlights; a cool blue-grey sky fill lies in the shadows on the lower-right side. No candlelight, no dramatic dark shadows, nothing glows unless the description below says so. No cast shadow on the background.\n\nPainting style: painterly oil on a wood panel, visible directional brushwork, moderate detail, the same hand as the painted portrait references; a muted earthy palette of charcoal, ash grey, dull iron, bark brown, leather and bone, in which the side's cloth is the one clear hue; soft painterly edges, with small crisp highlights on metal edges and a thin bright rim of light along the upper-left edges of every figure. Each figure has a strong, simple, readable silhouette that still reads when the figure is shrunk to 40 pixels tall. It is not a cartoon: no cel shading, no thick black outlines, no chibi or big-headed proportions, no glossy 3D render, no pixel art.\n\nThe figure: a Wolf Rider of the Thornwood, painted without his wolf: a man in bark armour under a hooded cloak of clear pine green, hood up, the cloak spread over his shoulders and back, a pine-green tabard over his chest, leather riding boots, and a spear with a leaf-shaped head that flies a long pine-green pennon edged in pale bone-coloured cord. The green is a clean, clearly coloured pine green that catches the sun, like fresh fir needles, never blackish, olive, grey or teal-blue.\n\nHe rides a wolf that is NOT painted: in the riding cells he sits in the air exactly as in the guide, knees bent and spread wide apart around where the wolf's body would be, as if astride it; there is no wolf, no saddle, no animal, nothing under him and no ground. The two dismounted cells and the two dead cells are on the ground. Facing, again: every figure faces toward us and to the lower left, the hit and falling ones included.\n\nThe cells, left to right, row by row (the poses of the camera and pose guide):\n1. (row 1, column 1) sitting upright astride the invisible wolf, the spear held upright with its pennon.\n2. (row 1, column 2) riding at a lope, leaning a little forward, the spear held upright.\n3. (row 1, column 3) riding at a lope, upright again, the spear held upright.\n4. (row 1, column 4) riding low, leaning far forward over the invisible wolf's neck as it leaps.\n5. (row 2, column 1) rising in the seat, leaning back a little as the wolf lands.\n6. (row 2, column 2) the charge: leaning forward, the spear couched and aimed toward the lower left.\n7. (row 2, column 3) rising in the seat, the spear drawn far back over the shoulder to thrust.\n8. (row 2, column 4) thrusting the spear down and forward toward the lower left.\n9. (row 3, column 1) holding on, leaning back, the spear held high.\n10. (row 3, column 2) knocked back in the seat, arms thrown out.\n11. (row 3, column 3) tumbling backward off the mount, the legs still apart.\n12. (row 3, column 4) lying dead on the ground, on his back.\n13. (row 4, column 1) lying dead on the ground face down, a different sprawl.\n14. (row 4, column 2) dismounted, standing on his own feet on the ground, the spear upright: an unhorsed rider.\n15. (row 4, column 3) dismounted, marching on foot, left foot forward, the spear upright.\n16. (row 4, column 4) sitting astride the invisible wolf, the spear raised high overhead in victory.\n\nBackground and separation: one flat pure blue (#0000FF) colour fills the whole image with no gradient, texture, floor, vignette or shadow; at least 24 pixels of clean background between any two figures and around the edges. No blue, violet or purple anywhere on the figures.\n\nNever: text, letters, numbers, labels, grid lines, borders, frames, signatures, logos; a floor, ground, scenery or cast shadows; blood; extra people; cropped or overlapping figures.",
+  "references": [
+    "wolfRiderSeat.front.png",
+    "wr.front.blue.g3pro.png",
+    "02.webp"
+  ],
+  "aspect": "4:3",
+  "usage": {
+    "promptTokenCount": 2142,
+    "candidatesTokenCount": 1487,
+    "totalTokenCount": 3853,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 1368
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 774
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 224,
+    "serviceTier": "standard"
+  },
+  "seconds": 15.5,
+  "modelText": [],
+  "approved": null
+}
