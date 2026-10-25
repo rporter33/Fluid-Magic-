@@ -1263,6 +1263,11 @@ consecutive seeds).
   footprints, the mana glyph, fire wounds, burning kills, the Entangle hold and the brief form.
 - No code changed. The renderer takes these when Phase 10 builds `render/effects/`.
 
+## Paused 2026-10-25 (resuming 2026-10-29)
+
+Work paused at a clean point. `docs/HANDOFF.md` is the pickup guide: where the art workspace is saved (branch
+`claude/art-workspace`), the state of stage D and map pass 4, how to resume each, and the owner's open decisions.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
