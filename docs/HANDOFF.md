@@ -68,12 +68,13 @@ The Elder Wyrm is the weakest figure: its back bite and trample are close to its
 
 **In flight (stopped before any motion code; the mockup is unchanged):**
 - `visual-v4/units/stage-d/anim-work/split-src/`: the mockup's modules split under 400 lines, with the light code in
-  its own module. The timeline is identical; the pixel comparison is not yet run.
+  its own module. The timeline is identical, and the pixel comparison passed: 266 frames, 0 differing
+  (`anim-work/split/hash-split.log`). It is not yet copied into `src/`.
 - `visual-v4/units/stage-d/anim-work/rebundle-ashrider/`: the Ash Rider re-bundle.
 - `visual-v4/units/stage-d/anim-tools/`: the tools.
 
 **Resume:** read `visual-v4/units/stage-d/anim-handoff.md`, then `art-report.md` ("What the code part needs").
-1. Copy `split-src/*` into `src/`, run `python3 build.py`, and run the pixel-hash guard. It must report 0 differing
+1. Copy `split-src/*` into `src/`, run `python3 build.py`, and re-run the pixel-hash guard to confirm 0 differing
    frames.
 2. Move the mockup's assets to separate files, loaded per battle.
 3. Load the action cutouts with their mesh weights.
