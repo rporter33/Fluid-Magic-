@@ -26,7 +26,9 @@ workspace there, or links that path to where you restored it. Atlas pages are st
 ## Testing pages
 
 - **Playwright with Chromium.** Use a system Chromium if one exists. Otherwise install Playwright's Chromium in the
-  environment's setup step.
+  environment's setup step. In Codex cloud the setup script installs Playwright 1.56.1 and its Chromium under
+  `/opt/pw`. Run Node scripts with `NODE_PATH=/opt/pw/node_modules` (set in the environment's variables) so
+  `require('playwright')` resolves.
 - **PixiJS offline.** If the sandbox has no network, route `https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.js`
   to `vendor/pixi.min.js` with `page.route`.
 - **Look at the screenshots yourself.** Checks alone do not prove a visual.
