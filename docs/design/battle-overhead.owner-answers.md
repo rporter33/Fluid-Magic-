@@ -139,3 +139,29 @@ Read as: `docs/12`'s beats, durations and particle counts stand for the eleven M
 color grammar, the glow container rules, the readability rules, the three-effect cap, numbers above effects,
 `content/fx.ts`, the effects gallery and the 2x short form are adopted (`docs/02`, `06`, `09`, `10` carry both); a
 unit never glows at rest, and a creature's emissive parts light only during its own fire ability.
+
+## 2026-10-25, the stage D magic pilot verdict (Fireball and Entangle)
+
+> Stage D magic pilot verdict. Fireball: Keep. Entangle: Keep. Questions: Light on the troops Right; Brief form Keep;
+> Footprints Keep; Shockwave Dust ring; Release flash Keep; Mana glyph Yes; Entangle timing Right.
+
+Read as:
+
+1. **Both spells kept as built.** Their numbers are recorded in `docs/09-balance.md` ("Battle presentation: the
+   magic pilot"), and the rules in `docs/12-battle-presentation.md` S2.10 ("As approved in the magic pilot").
+2. **Every question settled on its recommended answer:**
+   - The light on the troops is right. Each figure in a fire spell's light takes an added copy of its own frame in
+     the light's colour, up to 0.5 at the peak, and only while the light is on it.
+   - The brief form stays: 0.5 s, from a caster's third cast of the same spell (`docs/12` S2.7), with the burst, the
+     smoke and the scorch played in full.
+   - The gold footprints stay. For the last 250 ms before the impact a ring marks each troop the sim chose; inside a
+     block the ring is drawn over the figures in front.
+   - The shockwave is a ring of dust rolling over the ground to 140 wu with a faint glowing edge, not the thin gold
+     ring it replaced.
+   - Entangle's green release flash stays at 0.15 of the full scene, through the flash limiter and off under reduced
+     motion.
+   - The mana glyph shows over the caster during the charge, then at the front of the release ring.
+   - Entangle's timing is right: the 0.29 s furrow and the 0.2 s growth.
+3. Next is the rest of stage D (art plan sections 6 and 7): the animation layer, action cutouts for every big body,
+   the other nine spells and the abilities, then every battle replayed with each creature and god animated beside its
+   standing figure (owner review 3).

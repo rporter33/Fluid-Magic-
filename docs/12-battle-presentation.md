@@ -1481,6 +1481,19 @@ form is in parentheses.
 | Regrowth | soil light 0.8 s; a green wave crosses its side over 0.8 s; flowers sprout; "+n" per squad; curses dissolve into petals | 2.0 s | — |
 | Bless | sun-disc 0.3 s; a column of gold light 0.5 s; halo; "+1 MOR" | 1.0 s (0.6) | — |
 
+**As approved in the magic pilot** (owner, 2026-10-25, `docs/design/battle-overhead.owner-answers.md`; the
+numbers are in `docs/09-balance.md`, "Battle presentation: the magic pilot"):
+
+- A fire spell's light falls on the figures. Each figure in it takes an added copy of its own frame in the light's
+  color, only while lit, and casts a short shadow away from the light. The pool under a lob falls off steeply with
+  height, so at the apex only the orb's ground shadow marks the ground.
+- Gold footprint rings mark the troops the sim chose for the last 250 ms before the impact.
+- The color's mana glyph shows over the caster during the charge, then at the front of the release ring.
+- Fireball's shockwave is a ring of the ground's dust with a faint glowing edge, and its burst is sized to the struck
+  group. Fire wounds flash orange, not white, and burning kills carry flames.
+- Entangle's vines coil to the hips, with anchor tendrils, so a held block reads at play zoom. A held commander's ring
+  dims.
+
 **Buffs and debuffs by stat**, so that chips are not the only signal:
 
 | Stat | Buff | Debuff |

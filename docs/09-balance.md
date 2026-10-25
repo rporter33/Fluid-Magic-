@@ -170,6 +170,26 @@ presentation" table (Phases 8 to 11).
 | 2026-10-22 | 07 | Commander panel portrait | 64 px | 96 px | Leaders need faces (owner direction 2026-10-21: "leaders certainly need portraits") |
 | 2026-10-22 | 09 | Raster art | — | at most 2 MB (2,000,000 bytes) in the bundle; a portrait set needs 8 images, 4 for a summoned commander (QA sweep 2026-10-22); 256 px WebP ≤ 24 KB and 64 px ≤ 4 KB each | Keeps criterion 1's 5 MB bundle. The WebP rasters total 1,987,716 bytes (2026-10-22), 12 KB under the cap, so the next raster must displace one; `tests/assets/portraits.test.ts` checks all of it |
 
+### Battle presentation: the magic pilot
+
+Approved by the owner on 2026-10-25 (`docs/design/battle-overhead.owner-answers.md`). Measured and built in the
+battle mockup's effects data table, the future `content/fx.ts` (`docs/06`). Durations and beats are `docs/12` S2.10's
+and do not change here.
+
+| Date | Doc | Field | From | To | Reason |
+|------|-----|-------|------|----|--------|
+| 2026-10-25 | 12 S2.10 | Spell light on figures | a tint toward the light's colour, up to 35% at the peak (art plan 7.1) | an added copy of the figure's own frame in the light's colour (#FFB347 for Ember), 0.5 × the light's strength at the peak, falling off from the centre, only while lit; big bodies keep a multiply tint until they get a copy of their own; shadows pushed away from the light, 14 + 22 k wu long at alpha 0.55 k (k the light's strength) | A tint on painted figures did not show. Owner: "Light on the troops Right" |
+| 2026-10-25 | 12 S2.10 | Fireball light pool under the orb | falls off as (1 − h/260) | (1 − h/260)^4, a 40 wu pool at alpha 0.18 under a half-size added core; the 20 wu ground shadow stays at the apex | At the linear rate the pool read as a tan disc far below the orb at the apex |
+| 2026-10-25 | 12 S2.10 | Shockwave | a thin gold ring | 20 dust puffs, 8 to 20 wu, alpha 0.4, tinted #F0E4C8, rolling out on the ground to 140 wu, with an added edge at 0.25 | Owner: "Shockwave Dust ring". A tint darker than the plains vanished; dust lighter than the ground reads |
+| 2026-10-25 | 12 S2.10 | Fireball burst | 120 wu | clamp(2.2 × the struck troops' radius, 120, 180) wu; on a big body at least 2.2 × its foot radius, sorted just in front of it, the lob ending at 0.45 of its height; a fragment to a troop apart from the group: a 24 wu orb with a 40 wu glow and trail, a landing burst of at least 70 wu | A fixed 120 wu missed wide groups, and a far fragment read as an unconnected dot |
+| 2026-10-25 | 12 S2.9 | Fire wounds | a white flash | one frame of #FFB347 at 0.9, 4 sparks and a smoke wisp; under reduced motion no flash frame, a #D0605A tint fading over 0.15 s; other wounds keep the white flash | White cut-outs on top of the fire |
+| 2026-10-25 | 12 S2.9 | Burning kills | burn-out tint and embers | char over 0.3 s, 12 embers, and 2 to 3 flame licks 8 to 12 wu tall riding the body for 1.5 s | Burning kills showed no flames |
+| 2026-10-25 | 12 S2.10 | Footprints | — | a 7 wu ring under each struck troop for the last 250 ms before the impact, drawn over the figures in front inside a block | Owner: "Footprints Keep" |
+| 2026-10-25 | 12 S2.10 | Mana glyph | — | 16 wu, about 45 wu above the caster's feet during the charge, then at the front of the release ring | Owner: "Mana glyph Yes" |
+| 2026-10-25 | 12 S2.10 | Entangle hold | coils to the knees | thorns erupt 48 wu wide and settle to 38 wu while held (shrunk to the room in a block, down to 0.55); coils 20 wu tall, to the hips; 4 anchor tendrils 12 to 20 wu from each held man's feet; the commander's ring dims to 0.3 while he is held; the crack is a 16 wu furrow whose head throws 8 clods | At play zoom the hold read only through the dashed ring and the ticker |
+| 2026-10-25 | 12 S2.10 | Entangle timing | — | furrow 0.29 s, growth 0.2 s, release flash #A6D96A at 0.15 for 0.06 s | Owner: "Entangle timing Right", "Release flash Keep" |
+| 2026-10-25 | 12 S2.7 | Brief form | — | 0.5 s (charge 0.10, release 0.04, travel 0.22 with a 60 wu apex, impact 0.14), with the burst, smoke and scorch in full | Owner: "Brief form Keep" |
+
 ### Officers prototype (Phase 9b, proposed; design values ahead of their code)
 
 Starting values from `docs/design/three-kingdoms.md` and the Phase 9b lines in docs/01, 03, 04,

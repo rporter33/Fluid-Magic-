@@ -1254,6 +1254,15 @@ consecutive seeds).
 - Docs: `docs/01` Implementation decisions (fields, placement caps), `docs/09-balance.md` (the two
   caps), `docs/06` layout (`terrain.ts`).
 
+## Docs: the stage D magic pilot verdict (docs only)
+
+- The owner kept Fireball and Entangle as built in the battle mockup's magic pilot and answered every question with
+  its recommended option (2026-10-25, `docs/design/battle-overhead.owner-answers.md`).
+- The approved rules are in `docs/12` S2.10 ("As approved in the magic pilot"). Their numbers are in
+  `docs/09-balance.md` ("Battle presentation: the magic pilot"): the light on figures, the dust shockwave, the
+  footprints, the mana glyph, fire wounds, burning kills, the Entangle hold and the brief form.
+- No code changed. The renderer takes these when Phase 10 builds `render/effects/`.
+
 ## Deviations from the docs
 
 - TypeScript is pinned to 6.0 because typescript-eslint does not support 7 yet.
