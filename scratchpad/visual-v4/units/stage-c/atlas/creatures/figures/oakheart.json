@@ -1,0 +1,537 @@
+{
+ "figure": "oakheart",
+ "unit": "oakheart",
+ "nation": "thornwood",
+ "key": "magenta",
+ "layout": "melee",
+ "body": "large",
+ "cloth": "#1F6A50",
+ "hueLocked": true,
+ "portrait": "stage-b/portraits/thornwood/oakheart/01b.webp",
+ "kit": "An Oakheart: a walking oak under thornplate, a sacred warrior of the Thornwood (size 2, an oak maul).",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "oakheart-S",
+     "scale": 0.4308,
+     "standPx": 84,
+     "bodyHeightSrc": 195,
+     "frames": [
+      "oakheart.back.stand",
+      "oakheart.back.stand.white",
+      "oakheart.back.idle2",
+      "oakheart.back.marchA",
+      "oakheart.back.marchB",
+      "oakheart.back.windup",
+      "oakheart.back.strike",
+      "oakheart.back.follow",
+      "oakheart.back.brace",
+      "oakheart.back.recoil",
+      "oakheart.back.recoil.white",
+      "oakheart.back.fall",
+      "oakheart.back.deadA",
+      "oakheart.back.deadB",
+      "oakheart.back.fleeA",
+      "oakheart.back.fleeB",
+      "oakheart.back.cheer",
+      "oakheart.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "oakheart-H",
+     "scale": 0.8615,
+     "standPx": 168,
+     "bodyHeightSrc": 195,
+     "frames": [
+      "oakheart.back.stand",
+      "oakheart.back.stand.white",
+      "oakheart.back.idle2",
+      "oakheart.back.marchA",
+      "oakheart.back.marchB",
+      "oakheart.back.windup",
+      "oakheart.back.strike",
+      "oakheart.back.follow",
+      "oakheart.back.brace",
+      "oakheart.back.recoil",
+      "oakheart.back.recoil.white",
+      "oakheart.back.fall",
+      "oakheart.back.deadA",
+      "oakheart.back.deadB",
+      "oakheart.back.fleeA",
+      "oakheart.back.fleeB",
+      "oakheart.back.cheer",
+      "oakheart.back.dropped"
+     ]
+    }
+   },
+   "frames": "frames/oakheart.back/",
+   "sheet": "stage-c/raw/creatures/oakheart.back.cfix.r2.nb21.png",
+   "sha256": "27e8982c4550169edc535e10b418a6c5502e232316d0297d3e283761e1a76b99",
+   "model": "gemini-nano-banana-2.1",
+   "job": "oakheart.back.cfix.r2",
+   "route": "edit",
+   "references": [
+    "stage-c/raw/creatures/oakheart.back.fill.nb21.png",
+    "stage-b/portraits/thornwood/oakheart/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "note": "hue lock redone from 135 degrees with the pale fade (the yellow-green helm leaves kept as leaves); keycast magthin: key-cast pixels max 12.96% -> 12.38% of a frame; magenta edge pass: 34938 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.1296,
+    "castShareAfter": 0.1238
+   },
+   "otherAttempts": [
+    "oakheart.back.fill (shipped before the fix pass: a low flat cap)",
+    "oakheart.back.cfix (R1 fill route: the painted figures kept their caps)",
+    "oakheart.back.paint"
+   ],
+   "checks": {
+    "cameraCells": "6/15",
+    "cameraFailing": [
+     "brace",
+     "cheer",
+     "deadB",
+     "fall",
+     "fleeB",
+     "follow",
+     "recoil",
+     "strike",
+     "windup"
+    ],
+    "cells": {
+     "stand": [
+      0.587,
+      0.053
+     ],
+     "idle2": [
+      0.643,
+      0.085
+     ],
+     "marchA": [
+      0.569,
+      0.121
+     ],
+     "marchB": [
+      0.577,
+      0.217
+     ],
+     "windup": [
+      0.529,
+      -0.021
+     ],
+     "strike": [
+      0.386,
+      -0.047
+     ],
+     "follow": [
+      0.18,
+      -0.234
+     ],
+     "brace": [
+      0.508,
+      0.115
+     ],
+     "recoil": [
+      0.46,
+      -0.023
+     ],
+     "fall": [
+      0.157,
+      0.02
+     ],
+     "deadA": [
+      0.665,
+      0.642
+     ],
+     "deadB": [
+      0.212,
+      0.21
+     ],
+     "fleeA": [
+      0.635,
+      0.206
+     ],
+     "fleeB": [
+      0.509,
+      0.198
+     ],
+     "cheer": [
+      0.547,
+      0.083
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "marchA~marchB": 0.727
+     },
+     "mostAlike": [
+      "marchA~marchB",
+      0.727
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.01,
+      "marchA": 1.01,
+      "marchB": 0.995
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.354,
+     "histMin": [
+      "fall",
+      0.743
+     ],
+     "maxDE": [
+      "fall",
+      3.4
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 0.5,
+     "afterMax": 0.0
+    },
+    "side": {
+     "fPx": 42.0,
+     "f28": {
+      "neutral": {
+       "share": 0.146,
+       "worstBelow": 35.4
+      },
+      "sideKeyline": {
+       "share": 0.321,
+       "worstBelow": 33.5
+      }
+     },
+     "neutral": {
+      "share": 0.191,
+      "worstBelow": 36.5,
+      "below": {
+       "plains": 45.2,
+       "farmland": 44.8,
+       "swamp": 36.5,
+       "forest": 36.8
+      }
+     },
+     "sideKeyline": {
+      "share": 0.367,
+      "worstBelow": 34.7,
+      "below": {
+       "plains": 43.5,
+       "farmland": 43.1,
+       "swamp": 34.7,
+       "forest": 34.9
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 14.658,
+     "keyInUnitPct": 0.343,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.34,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "tall helm of upright bark planks": true,
+     "crown of curved thorns on the helm": true,
+     "fringe of oak leaves": true,
+     "crack across the face": "hidden in this view",
+     "moss in the furrows": "partly",
+     "bottle-green mantle": true
+    },
+    "note": "R1 re-roll (plain edit): the tall plank helm and thorn ring seen from behind on every cell",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "oakheart-S",
+     "scale": 0.4912,
+     "standPx": 84,
+     "bodyHeightSrc": 171,
+     "frames": [
+      "oakheart.front.stand",
+      "oakheart.front.stand.white",
+      "oakheart.front.idle2",
+      "oakheart.front.marchA",
+      "oakheart.front.marchB",
+      "oakheart.front.windup",
+      "oakheart.front.strike",
+      "oakheart.front.follow",
+      "oakheart.front.brace",
+      "oakheart.front.recoil",
+      "oakheart.front.recoil.white",
+      "oakheart.front.fall",
+      "oakheart.front.deadA",
+      "oakheart.front.deadB",
+      "oakheart.front.fleeA",
+      "oakheart.front.fleeB",
+      "oakheart.front.cheer",
+      "oakheart.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "oakheart-H",
+     "scale": 0.9825,
+     "standPx": 168,
+     "bodyHeightSrc": 171,
+     "frames": [
+      "oakheart.front.stand",
+      "oakheart.front.stand.white",
+      "oakheart.front.idle2",
+      "oakheart.front.marchA",
+      "oakheart.front.marchB",
+      "oakheart.front.windup",
+      "oakheart.front.strike",
+      "oakheart.front.follow",
+      "oakheart.front.brace",
+      "oakheart.front.recoil",
+      "oakheart.front.recoil.white",
+      "oakheart.front.fall",
+      "oakheart.front.deadA",
+      "oakheart.front.deadB",
+      "oakheart.front.fleeA",
+      "oakheart.front.fleeB",
+      "oakheart.front.cheer",
+      "oakheart.front.dropped"
+     ]
+    }
+   },
+   "frames": "frames/oakheart.front/",
+   "sheet": "stage-c/raw/creatures/oakheart.front.cfix.r2.nb21.png",
+   "sha256": "4fdb876e9533f8b38d9f8c58eb5cf78e41bf0405203ec808b497d843ad4f59c5",
+   "model": "gemini-nano-banana-2.1",
+   "job": "oakheart.front.cfix.r2",
+   "route": "edit",
+   "references": [
+    "stage-c/raw/creatures/oakheart.front.fill.nb21.png",
+    "stage-b/portraits/thornwood/oakheart/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "side"
+   ],
+   "note": "hue lock redone from 135 degrees with the pale fade (the yellow-green helm leaves kept as leaves); keycast magthin: key-cast pixels max 43.60% -> 32.08% of a frame; magenta edge pass: 24531 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.436,
+    "castShareAfter": 0.3208
+   },
+   "otherAttempts": [
+    "oakheart.front.fill (shipped before the fix pass: a low flat cap)",
+    "oakheart.front.cfix (R1 fill route: the painted figures kept their caps)",
+    "oakheart.front.paint"
+   ],
+   "checks": {
+    "cameraCells": "7/15",
+    "cameraFailing": [
+     "brace",
+     "fall",
+     "fleeA",
+     "idle2",
+     "marchA",
+     "marchB",
+     "recoil",
+     "strike"
+    ],
+    "cells": {
+     "stand": [
+      0.574,
+      0.009
+     ],
+     "idle2": [
+      0.466,
+      0.324
+     ],
+     "marchA": [
+      0.499,
+      0.008
+     ],
+     "marchB": [
+      0.462,
+      -0.011
+     ],
+     "windup": [
+      0.601,
+      0.151
+     ],
+     "strike": [
+      0.377,
+      0.106
+     ],
+     "follow": [
+      0.599,
+      0.263
+     ],
+     "brace": [
+      0.532,
+      0.145
+     ],
+     "recoil": [
+      0.525,
+      0.006
+     ],
+     "fall": [
+      0.517,
+      0.189
+     ],
+     "deadA": [
+      0.646,
+      0.383
+     ],
+     "deadB": [
+      0.672,
+      0.626
+     ],
+     "fleeA": [
+      0.521,
+      0.07
+     ],
+     "fleeB": [
+      0.577,
+      0.218
+     ],
+     "cheer": [
+      0.616,
+      0.119
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "marchA~marchB": 0.663
+     },
+     "mostAlike": [
+      "stand~marchA",
+      0.768
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.994,
+      "marchA": 0.994,
+      "marchB": 1.023
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.142,
+     "histMin": [
+      "fall",
+      0.829
+     ],
+     "maxDE": [
+      "follow",
+      2.0
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 16.9,
+     "afterMax": 0.2
+    },
+    "side": {
+     "fPx": 42.0,
+     "f28": {
+      "neutral": {
+       "share": 0.043,
+       "worstBelow": 31.1
+      },
+      "sideKeyline": {
+       "share": 0.178,
+       "worstBelow": 29.6
+      }
+     },
+     "neutral": {
+      "share": 0.053,
+      "worstBelow": 32.3,
+      "below": {
+       "plains": 41.3,
+       "farmland": 40.9,
+       "swamp": 32.3,
+       "forest": 32.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.179,
+      "worstBelow": 30.9,
+      "below": {
+       "plains": 39.9,
+       "farmland": 39.5,
+       "swamp": 30.9,
+       "forest": 31.1
+      }
+     },
+     "pass": false
+    },
+    "fringe": {
+     "spillEdgePct": 13.99,
+     "keyInUnitPct": 0.193,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.77,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": false,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "tall helm of upright bark planks": true,
+     "crown of curved thorns on the helm": true,
+     "fringe of oak leaves": true,
+     "crack across the face": "partly",
+     "moss in the furrows": "partly",
+     "bottle-green mantle": true
+    },
+    "note": "R1 re-roll (plain edit): the low cap became the portrait's tall plank helm on every cell; the skull mask reads, its crack only at 4x",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  }
+ },
+ "approved": null
+}

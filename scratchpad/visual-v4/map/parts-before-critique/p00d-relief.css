@@ -1,0 +1,22 @@
+
+/* ================================================================ v4: the relief map (map-design-final.md) */
+/* Army miniatures: DOM pieces over the map (click selects, the army card on hover, focusable); stacks fan out on hover */
+.mini { position: absolute; pointer-events: auto; cursor: pointer; line-height: 0; }
+.mini canvas { display: block; }
+.mini:focus-visible { outline: 2px solid #F4EEDF; outline-offset: 1px; border-radius: 8px; }
+.mini.fanned { z-index: 2; }
+.mini .cplate { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); font: 600 11.5px/1 var(--font-num); color: #F4EEDF; background: rgba(20,18,15,.92); border: 1px solid rgba(184,145,74,.6); padding: 2px 5px; border-radius: 3px; white-space: nowrap; pointer-events: none; }
+/* The mockup controls and the Try this list follow the Map look */
+body.look-relief .v3only { display: none !important; }
+body.look-v3 .rlonly { display: none !important; }
+/* Owner question 6 (default): the right dock starts collapsed to its 48 px rail at every width; Outliner and Feed one click away */
+.app.railed .rail { display: flex; }
+.app.railed .dock.right { right: 48px; display: none; }
+.app.railed .dock.right.fly { display: flex; }
+.app.railed .modes { right: 56px; }
+.app.railed .pausechip, .app.railed .toasts { right: 56px; }
+.app.railed .strip { right: 48px; }
+.app.railed .dock.right.fly ~ .modes { right: 356px; } /* the open dock is never under the mode buttons */
+
+/* the controls' summary wraps at phone width under Relief (Painted (v3) keeps its frame as it was) */
+body.look-relief .headmore > summary { width: auto; max-width: 100%; }

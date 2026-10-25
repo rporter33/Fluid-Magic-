@@ -1,0 +1,394 @@
+{
+ "figure": "archer",
+ "unit": "archer",
+ "nation": "independent",
+ "key": "magenta",
+ "cloth": "#8C8A80",
+ "hueLocked": false,
+ "kit": "An Archer of the free villages, sworn to no nation: a padded jack of undyed tan linen, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; a grey wool hood worn up with a short shoulder cape; leather bracers; a short wooden hunting bow; a leather quiver of grey-fletched arrows on the back; a long knife at the belt (in the windup and strike cells the bow is slung on the back and the knife is in hand). No colours but grey, tan, leather brown and iron.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.4029,
+     "standPx": 56,
+     "frames": [
+      "archer.back.stand",
+      "archer.back.stand.white",
+      "archer.back.marchA",
+      "archer.back.marchB",
+      "archer.back.nock",
+      "archer.back.draw",
+      "archer.back.loose",
+      "archer.back.windup",
+      "archer.back.strike",
+      "archer.back.recoil",
+      "archer.back.recoil.white",
+      "archer.back.fall",
+      "archer.back.deadA",
+      "archer.back.deadB",
+      "archer.back.fleeA",
+      "archer.back.fleeB",
+      "archer.back.cheer",
+      "archer.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.8058,
+     "standPx": 112,
+     "frames": [
+      "archer.back.stand",
+      "archer.back.stand.white",
+      "archer.back.marchA",
+      "archer.back.marchB",
+      "archer.back.nock",
+      "archer.back.draw",
+      "archer.back.loose",
+      "archer.back.windup",
+      "archer.back.strike",
+      "archer.back.recoil",
+      "archer.back.recoil.white",
+      "archer.back.fall",
+      "archer.back.deadA",
+      "archer.back.deadB",
+      "archer.back.fleeA",
+      "archer.back.fleeB",
+      "archer.back.cheer",
+      "archer.back.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.archer.back.g3pro.png",
+   "sha256": "a9a48a2fe49ec60d2cfba53bed814f0aded055d91173fb5d117de03cd8d8be8a",
+   "model": "gemini-3-pro-image",
+   "job": "archer.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/archer.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.back.from-cw.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-hunter/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.881,
+      0.184
+     ],
+     "marchA": [
+      0.848,
+      0.23
+     ],
+     "marchB": [
+      0.893,
+      0.436
+     ],
+     "nock": [
+      0.814,
+      0.17
+     ],
+     "draw": [
+      0.809,
+      0.099
+     ],
+     "loose": [
+      0.778,
+      0.141
+     ],
+     "windup": [
+      0.759,
+      0.088
+     ],
+     "strike": [
+      0.844,
+      0.479
+     ],
+     "recoil": [
+      0.81,
+      0.154
+     ],
+     "fall": [
+      0.879,
+      0.138
+     ],
+     "deadA": [
+      0.792,
+      0.42
+     ],
+     "deadB": [
+      0.792,
+      0.58
+     ],
+     "fleeA": [
+      0.861,
+      0.491
+     ],
+     "fleeB": [
+      0.885,
+      0.619
+     ],
+     "cheer": [
+      0.826,
+      0.116
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.666,
+     "marchLegsIoU": 0.462,
+     "mostAlike": [
+      "draw~loose",
+      0.802
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.094,
+      "marchB": 1.029
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.009,
+     "histMin": [
+      "fall",
+      0.617
+     ],
+     "maxDE": [
+      "fall",
+      9.3
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 42.1,
+     "afterMax": 1.2
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.001,
+      "foreignBy": {
+       "cinderHorde": 0.001,
+       "thornwood": 0.0
+      },
+      "worstBelow": 18.9
+     },
+     "sideKeyline": {
+      "foreign": 0.001,
+      "foreignBy": {
+       "cinderHorde": 0.001,
+       "thornwood": 0.0
+      },
+      "worstBelow": 18.9
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 8.577,
+     "keyInUnitPct": 0.094,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.66,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.381,
+     "standPx": 56,
+     "frames": [
+      "archer.front.stand",
+      "archer.front.stand.white",
+      "archer.front.marchA",
+      "archer.front.marchB",
+      "archer.front.nock",
+      "archer.front.draw",
+      "archer.front.loose",
+      "archer.front.windup",
+      "archer.front.strike",
+      "archer.front.recoil",
+      "archer.front.recoil.white",
+      "archer.front.fall",
+      "archer.front.deadA",
+      "archer.front.deadB",
+      "archer.front.fleeA",
+      "archer.front.fleeB",
+      "archer.front.cheer",
+      "archer.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.7619,
+     "standPx": 112,
+     "frames": [
+      "archer.front.stand",
+      "archer.front.stand.white",
+      "archer.front.marchA",
+      "archer.front.marchB",
+      "archer.front.nock",
+      "archer.front.draw",
+      "archer.front.loose",
+      "archer.front.windup",
+      "archer.front.strike",
+      "archer.front.recoil",
+      "archer.front.recoil.white",
+      "archer.front.fall",
+      "archer.front.deadA",
+      "archer.front.deadB",
+      "archer.front.fleeA",
+      "archer.front.fleeB",
+      "archer.front.cheer",
+      "archer.front.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.archer.front.g3pro.png",
+   "sha256": "c72e58abcea75d31fe5f7ec70e7488205b303821b5cc05e87499fa3509b67a38",
+   "model": "gemini-3-pro-image",
+   "job": "archer.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/archer.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.front.from-wd.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-hunter/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.793,
+      0.063
+     ],
+     "marchA": [
+      0.823,
+      0.19
+     ],
+     "marchB": [
+      0.822,
+      0.222
+     ],
+     "nock": [
+      0.843,
+      0.183
+     ],
+     "draw": [
+      0.833,
+      0.087
+     ],
+     "loose": [
+      0.822,
+      0.139
+     ],
+     "windup": [
+      0.769,
+      0.18
+     ],
+     "strike": [
+      0.775,
+      0.327
+     ],
+     "recoil": [
+      0.793,
+      0.212
+     ],
+     "fall": [
+      0.782,
+      0.573
+     ],
+     "deadA": [
+      0.761,
+      0.466
+     ],
+     "deadB": [
+      0.891,
+      0.74
+     ],
+     "fleeA": [
+      0.817,
+      0.197
+     ],
+     "fleeB": [
+      0.881,
+      0.556
+     ],
+     "cheer": [
+      0.774,
+      0.069
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.525,
+     "marchLegsIoU": 0.402,
+     "mostAlike": [
+      "draw~loose",
+      0.874
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.014,
+      "marchB": 0.946
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.0,
+     "histMin": [
+      "fleeB",
+      0.831
+     ],
+     "maxDE": [
+      "fleeB",
+      4.6
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 26.1,
+     "afterMax": 0.2
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.002,
+      "foreignBy": {
+       "cinderHorde": 0.002,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.3
+     },
+     "sideKeyline": {
+      "foreign": 0.002,
+      "foreignBy": {
+       "cinderHorde": 0.002,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.3
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 8.451,
+     "keyInUnitPct": 0.057,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.43,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

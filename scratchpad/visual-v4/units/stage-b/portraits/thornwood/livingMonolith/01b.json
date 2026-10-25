@@ -1,0 +1,108 @@
+{
+ "id": "livingMonolith-01b",
+ "unit": "livingMonolith",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "livingMonolith",
+ "promptFile": "stage-b/work/portraits/prompts-used/livingMonolith-thornwood.01b.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 26784,
+  "game": 9144,
+  "small": 1826
+ },
+ "sourceFile": "stage-b/raw/portraits/livingMonolith-thornwood.01b.nb21.png",
+ "sourceSha256": "337a47a23e60fd00d922980e082ce8da4482138cde52d2481a1cb82316d21331",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the pigment in the carved glyphs (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the pigment in the carved glyphs. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "livingMonolith-cinderHorde.01b.nb21.png"
+ ],
+ "route": "edit of livingMonolith-cinderHorde.01b",
+ "swatches": {
+  "material": "stone granite #7D7A75",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: no capstone; no overgrowth; no face; runic glyphs; rooted base",
+ "pose": "regal",
+ "tintZone": "the pigment in the carved glyphs",
+ "cardCrop": {
+  "box512": [
+   143,
+   19,
+   363,
+   239
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "plain broken top, no capstone",
+   "read": true
+  },
+  {
+   "mark": "carved runic glyphs filled with the nation's colour",
+   "read": true
+  },
+  {
+   "mark": "no face",
+   "read": true
+  },
+  {
+   "mark": "no overgrowth",
+   "read": true
+  },
+  {
+   "mark": "root-gripped base",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.2,
+   "bgSpread": 2.6,
+   "floor": 6.5,
+   "top": 0.064,
+   "low": 0.975,
+   "bottomCut": 0.0,
+   "cx": 0.485,
+   "subject": 0.339,
+   "light": 8.9,
+   "rim": 0.474,
+   "read48": 27.0,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.0112,
+    "lock": 0.0865
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Same body; green glyphs, just over the gate (window 0.011).",
+  "marks": {
+   "plain broken top, no capstone": true,
+   "carved runic glyphs filled with the nation's colour": true,
+   "no face": true,
+   "no overgrowth": true,
+   "root-gripped base": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

@@ -1,0 +1,2 @@
+cd .. && timeout 3600 node seedprobe3b.cjs s58 > ../out/logs/seed3b-s58.txt 2>&1
+cd .. && timeout 3600 node rest.cjs final 1 > ../out/logs/rest-final-1.txt 2>&1

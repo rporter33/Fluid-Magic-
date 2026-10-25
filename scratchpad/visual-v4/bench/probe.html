@@ -1,0 +1,12 @@
+<!doctype html><html><body style="margin:0;background:#000"><script type="module">
+import * as PIXI from './pixi.mjs';
+const app = new PIXI.Application();
+await app.init({ width: 800, height: 600, preference: 'webgl', antialias: false, autoStart: false });
+document.body.appendChild(app.canvas);
+const gl = app.renderer.gl;
+const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+window.__result = { pixi: PIXI.VERSION, renderer: app.renderer.name, glVersion: gl.getParameter(gl.VERSION),
+  vendor: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : 'n/a', maxTex: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+  maxTexUnits: gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS), floatRT: !!gl.getExtension('EXT_color_buffer_float'),
+  batcherMaxTextures: app.renderer.limits?.maxBatchableTextures };
+</script></body></html>

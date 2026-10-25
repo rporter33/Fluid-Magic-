@@ -1,0 +1,16 @@
+cd .. && timeout 7200 node wfocus.cjs natural 1 > ../out/logs/wfocus-natural-1.txt 2>&1
+cd .. && timeout 7200 node wfocus.cjs natural 2 > ../out/logs/wfocus-natural-2.txt 2>&1
+cd .. && timeout 7200 node wfocus.cjs natural 3 390 844 > ../out/logs/wfocus-natural-3-phone.txt 2>&1
+cd .. && timeout 3600 node rest.cjs final 1 > ../out/logs/rest-final-1.txt 2>&1
+cd .. && timeout 3600 node rest.cjs final 2 > ../out/logs/rest-final-2.txt 2>&1
+cd .. && timeout 3600 node rest.cjs final 3 390 844 > ../out/logs/rest-final-3-phone.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs clear 1 > ../out/logs/wfocus-clear-1.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs terrain 1 > ../out/logs/wfocus-terrain-1.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs mode:dominion 1 > ../out/logs/wfocus-dominion-1.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs mode:springs 2 > ../out/logs/wfocus-springs-2.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs clear 2 > ../out/logs/wfocus-clear-2.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs terrain 3 390 844 > ../out/logs/wfocus-terrain-3-phone.txt 2>&1
+cd .. && timeout 3600 node ptrfocus.cjs 1 > ../out/logs/ptrfocus-1.txt 2>&1
+cd .. && timeout 3600 node ptrfocus.cjs 2 > ../out/logs/ptrfocus-2.txt 2>&1
+cd .. && timeout 3600 node ptrfocus.cjs 3 390 844 > ../out/logs/ptrfocus-3-phone.txt 2>&1
+cd .. && timeout 3600 node wfocus.cjs mode:supply 3 390 844 > ../out/logs/wfocus-supply-3-phone.txt 2>&1

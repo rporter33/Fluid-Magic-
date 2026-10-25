@@ -1,0 +1,277 @@
+{
+ "figure": "cmdLevy",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.777,
+  "iouMirrored": 0.626,
+  "aspectRatio": 1.004,
+  "headDx": -0.079,
+  "guideHeadDx": -0.063,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.47,
+  "marchLegsIoU": 0.313,
+  "mostAlike": [
+   "stand~marchA",
+   0.748
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.993,
+   "marchA": 0.986,
+   "marchB": 0.911
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 8.996,
+  "keyInUnitPct": 0.098,
+  "fringePct": 0.0,
+  "edgeDevPct": 7.29,
+  "pass_": true,
+  "edgeDevThickPct": 1.84,
+  "deviatingChromaShift": 0.003
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.754
+  ],
+  "maxDE": [
+   "cheer",
+   2.6
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.777,
+    0.152
+   ],
+   "idle2": [
+    0.692,
+    0.009
+   ],
+   "marchA": [
+    0.837,
+    0.24
+   ],
+   "marchB": [
+    0.795,
+    0.284
+   ],
+   "windup": [
+    0.656,
+    0.072
+   ],
+   "strike": [
+    0.694,
+    0.288
+   ],
+   "follow": [
+    0.756,
+    0.288
+   ],
+   "recoil": [
+    0.726,
+    0.191
+   ],
+   "actA": [
+    0.716,
+    0.15
+   ],
+   "actB": [
+    0.759,
+    0.286
+   ],
+   "fall": [
+    0.58,
+    0.311
+   ],
+   "deadA": [
+    0.596,
+    0.239
+   ],
+   "deadB": [
+    0.763,
+    0.664
+   ],
+   "fleeA": [
+    0.823,
+    0.261
+   ],
+   "fleeB": [
+    0.83,
+    0.579
+   ],
+   "cheer": [
+    0.664,
+    0.038
+   ]
+  },
+  "medianIoU": 0.741,
+  "medianMargin": 0.251,
+  "follow": "16/16",
+  "followShare": 1.0
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.735,
+    0.13,
+    0.732
+   ],
+   "idle2": [
+    0.668,
+    -0.019,
+    0.725
+   ],
+   "marchA": [
+    0.816,
+    0.211,
+    0.877
+   ],
+   "marchB": [
+    0.778,
+    0.28,
+    0.81
+   ],
+   "windup": [
+    0.666,
+    0.088,
+    0.7
+   ],
+   "strike": [
+    0.635,
+    0.232,
+    0.685
+   ],
+   "follow": [
+    0.652,
+    0.199,
+    0.619
+   ],
+   "recoil": [
+    0.71,
+    0.181,
+    0.73
+   ],
+   "actA": [
+    0.697,
+    0.132,
+    0.707
+   ],
+   "actB": [
+    0.672,
+    0.215,
+    0.693
+   ],
+   "fall": [
+    0.592,
+    0.324,
+    0.59
+   ],
+   "deadA": [
+    0.591,
+    0.233,
+    0.576
+   ],
+   "deadB": [
+    0.757,
+    0.657,
+    0.798
+   ],
+   "fleeA": [
+    0.762,
+    0.193,
+    0.792
+   ],
+   "fleeB": [
+    0.756,
+    0.512,
+    0.826
+   ],
+   "cheer": [
+    0.67,
+    0.052,
+    0.699
+   ]
+  },
+  "follow": "15/16",
+  "followN": 15,
+  "failing": [
+   "idle2"
+  ],
+  "medianIoU": 0.684,
+  "inheritMedian": 0.716,
+  "inheritMin": [
+   0.576,
+   "deadA"
+  ]
+ },
+ "rim": {
+  "beforeMax": 4.9,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": null,
+  "worstBelow": 28.9,
+  "grounds": {
+   "plains": {
+    "share": 0.002,
+    "below": 37.5
+   },
+   "farmland": {
+    "share": 0.002,
+    "below": 37.1
+   },
+   "swamp": {
+    "share": 0.0,
+    "below": 28.9
+   },
+   "forest": {
+    "share": 0.002,
+    "below": 29.1
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 3.4,
+  "upperThirdLab": [
+   27.6,
+   6.0,
+   10.4
+  ],
+  "portraitLab": [
+   30.4,
+   5.8,
+   14.1
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/hu01.front.redress.nb21.png"
+}

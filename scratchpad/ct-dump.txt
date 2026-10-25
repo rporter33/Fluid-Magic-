@@ -1,0 +1,577 @@
+===== mut-62 | src/ai/defense.ts 166 | high | tests
+TITLE: No test checks that Defense handles the capital first; a mutant that defends it last survives
+SCEN: Green armies threaten Red's capital p48 (from p57) and Red's p45 (from p3). Red has one free army, in p50, next to both. docs/08 Defense says 'the capital first, then owned Wellsprings, then the other owned provinces by index'. With the capital ranked last, the only helper goes to another province (p17) and the capital, threat 350 against a local defense of 25, gets nothing.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -166 +166 @@ function defenseOrder(plan: Plan): ProvinceState[] {
+-    if (p.id === plan.capital.id) return 0;
++    if (p.id === plan.capital.id) return 3;
+Verdict: SURVIVED tests/ai/*.test.ts, tests/sim/movement.test.ts, tests/content/ai.test.ts, then the whole suite. defense.test.ts 'sends the nearest group whose power covers the threat' has only one threatened province, so the order is never tested.
+Repro (/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/review7/repro/r62.mts, run with review7/mut/withmut.py mut-62 <script>):
+original: p48: threat 350.3, local 25.3 / p45: threat 350.3, local 0.0 / helper c177 power 519.5 / Defense commands: [move c177 path [p48]]
+mutant: Defense commands: [move c177 path [p17]]
+
+
+FIX: In defense.test.ts, add a test with two threatened provinces, the capital and another, and one helper that can reach both. Assert that the helper is sent to the capital.
+VERDICT: {'id': 'mut-62', 'verdict': 'confirmed', 'reasoning': "docs/08 Defense says 'the capital first, then owned Wellsprings, then the other owned provinces by index'. defense.test has no case with two threatened provinces, so nothing tests the order. With rank 3 for the capital, the one helper goes elsewhere and the capital (threat 350.3 against local 25.3) gets nothing.", 'repro': 'My copy is verify-tests/repo. The mutant passed the whole suite there: 1110/1110. With tools/withmut.py mut-62 repro/r62.mts, the original gives Defense [move c177 path [p48]] and the mutant gives [move c177 path [p17]].', 'fix': 'In defense.test.ts, threaten both the capital and another owned province, with one helper that reaches both. Assert that defendProvinces sends the helper to the capital.'}
+===== mut-147 | src/ai/military.ts 44 | high | tests
+TITLE: No test checks that Expansion takes only independent provinces; a mutant that attacks enemy provinces past the War gate survives
+SCEN: Red's army stands in p50, next to Green's empty p45, and a Green army in p3 keeps the War odds shut. The mutant's Expansion attacks the Green province anyway. That gets around the aggression gate. Because Expansion runs at any month, it also gets around Easy's 'no War step until month 12'. docs/08 Expansion and ruling #130 both rule this out.
+EV: Diff:
+--- a/src/ai/military.ts
++++ b/src/ai/military.ts
+@@ -44 +44 @@ export function expansionTarget(
+-    if (plan.copy.provinces[p]?.owner !== null || taken.has(p)) continue;
++    if (plan.copy.provinces[p]?.owner === plan.nation || taken.has(p)) continue;
+Verdict: SURVIVED stages 1 and 2 and the whole suite.
+Repro review7/repro/r147.mts:
+original: moves: [[c3] -> p17, owner null]
+mutant: moves: [[c3] -> p45, owner n1 (Green)]
+FIX: In military.test.ts, add a test with an enemy province, weaker than any independent, next to a free army while the odds are shut. Assert that expansionTarget never returns it.
+VERDICT: {'id': 'mut-147', 'verdict': 'confirmed', 'reasoning': "docs/08 Expansion says 'candidates are every independent province a group's paths reach'. The mutant also takes enemy provinces. That goes around the aggression gate and around Easy's warFromMonth, because Expansion runs in every month. military.test never puts an enemy province in reach.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r147: the original moves [c3] to p17 (owner null). The mutant moves [c3] to p45 (owner n1, Green), while a Green army in p3 keeps the War odds shut.', 'fix': 'In military.test.ts, put an empty enemy province beside a free army and keep the War odds shut. Assert that expansionTarget never returns it and that planArmies sends no move there.'}
+===== mut-22 | src/ai/recruit.ts 235 | medium | tests
+TITLE: No test covers the pretender's summons hand-off to the garrison; only the mage's is tested
+SCEN: A Living Monolith pretender, the Deep Root preset, casts a summons ritual and receives troops in the capital. docs/08 says 'A mage or the pretender holding troops (summons) beside its nation's garrison holder hands every squad to it'. In the mutant, the immobile pretender keeps the summoned squads forever. They never count toward the reserve and never reach leaders.
+EV: Diff:
+--- a/src/ai/recruit.ts
++++ b/src/ai/recruit.ts
+@@ -235 +235 @@ function handOffSquads(plan: Plan): void {
+-    if ((role !== 'mage' && role !== 'pretender') || c.transit || c.squads.length === 0) continue;
++    if (role !== 'mage' || c.transit || c.squads.length === 0) continue;
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r22.mts (Living Monolith with 8 Fire Sprites in Red's capital, runAi):
+original: transfers from the Monolith to the garrison holder: [{transferSquad from c173 to c2 squad sq174}]
+mutant: []
+FIX: In recruit.test.ts ('hand a mage's summons to the garrison'), add a pretender holding a squad beside the garrison holder. Assert that a transferSquad to the holder is issued.
+VERDICT: {'id': 'mut-22', 'verdict': 'confirmed', 'reasoning': "docs/08 says 'A mage or the pretender holding troops (summons) beside its nation's garrison holder hands every squad to it'. A Living Monolith casts the war summons, and summoned troops join the caster. In the mutant those troops stay on the immobile pretender for good. They never count toward the reserve and never reach leaders. recruit.test covers only the mage's hand-off.", 'repro': "The mutant passed the whole suite: 1110/1110. Repro r22 puts a Monolith with 8 Fire Sprites in Red's capital and calls runAi. Original: [transferSquad from c173 to c2 squad sq174]. Mutant: [].", 'fix': "In recruit.test.ts ('hand a mage's summons to the garrison'), add a pretender holding a squad beside the garrison holder. Assert a transferSquad to the holder."}
+===== mut-26 | src/ai/magic.ts 41 | medium | tests
+TITLE: No test catches a second ritual started while one is under way
+SCEN: Three researchers stand in the capital lab and one of them is casting Forge of Cinders. docs/08 Rituals says 'one ritual at a time for the nation'. The mutant has no nation-wide check, so a second researcher begins another ritual. This happens with Thornwood at 3 mages (ceil(3 x 0.7) = 3 researchers), or with a Monolith plus 2 researchers. The existing test has only two researchers, and the casters rule already leaves the second one studying.
+EV: Diff:
+--- a/src/ai/magic.ts
++++ b/src/ai/magic.ts
+@@ -41 +41 @@ export function planRituals(plan: Plan): void {
+-  if (plan.own().some((c) => c.order.kind === 'castRitual')) return;
++  if (plan.own().some((c) => c.order.kind === 'castRitual' && c.id === '')) return;
+Verdict: SURVIVED all stages and the whole suite. The timing-test failure passed alone.
+Repro review7/repro/r26.mts:
+researchers: c7:emberAdept:castRitual c173:cinderMagus:idle c174:cinderMagus:idle
+original: new castRitual commands: []
+mutant: [{castRitual commander c173 spell forgeOfCinders}]
+FIX: In magic.test 'runs one ritual at a time', use three ready researchers (or a Monolith and two researchers), with one casting. Assert that no castRitual is issued.
+VERDICT: {'id': 'mut-26', 'verdict': 'confirmed', 'reasoning': "docs/08 Rituals says 'one ritual at a time for the nation'. The sim does not enforce this: the copy accepted the second castRitual. In the existing test the casters rule alone already blocks the second caster, so the nation-wide guard is never exercised.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r26 has researchers c7 (castRitual), c173 and c174 (idle). Original: no castRitual. Mutant: [castRitual c173 forgeOfCinders].', 'fix': "In magic.test 'runs one ritual at a time', use three ready researchers (or a Monolith and two researchers), one of them already casting. Assert that no castRitual is issued."}
+===== mut-45 | src/ai/defense.ts 104 | medium | tests
+TITLE: No test probes the relief ratio between 1x and AI.reliefRatio
+SCEN: Red's capital is besieged by a Green army of 222.8 power. Red's army outside has 262 (1.18x). docs/08 Relief says the group must have 'AI.reliefRatio times the besiegers' power', so it should wait at the gather point. The mutant sends it in alone.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -104 +104 @@ function relieve(pass: ArmyPass, fort: ProvinceState): void {
+-    AI.reliefRatio * armyPower(plan.at(fort.id).filter((c) => c.owner === siege.attacker));
++    armyPower(plan.at(fort.id).filter((c) => c.owner === siege.attacker));
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r45.mts:
+relief army power 262.0, besiegers 222.8, ratio 1.176 (AI.reliefRatio 1.2)
+original: gather point p50, commands []
+mutant: [move c3 path [p48]]
+FIX: In defense.test.ts relief, add a group with 1.1x the besiegers. Assert that it does not go in and is sent to or held at the gather point.
+VERDICT: {'id': 'mut-45', 'verdict': 'confirmed', 'reasoning': "docs/08 Relief says the group that goes in needs 'AI.reliefRatio times the besiegers' power'. A group at 1.176x the besiegers must wait at the gather point. The relief tests only use groups below 1x or well above 1.2x.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r45: relief army 262.0 against besiegers 222.8 (ratio 1.176). Original: gather point p50, no commands. Mutant: [move c3 path [p48]].', 'fix': 'In defense.test relief, add a lone outside group at 1.1x the besiegers. Assert that it is not sent into the fort and is sent to, or held at, the gather point.'}
+===== mut-51 | src/ai/war.ts 80 | medium | tests
+TITLE: The storm test never probes odds between 1x and AI.stormRatio
+SCEN: Red besieges Green's capital, the walls are down, and the besiegers have 1.10x the defenders. docs/08 Sieges says to storm only with 'AI.stormRatio times the defenders' power' (1.3), so the AI should hold. The mutant storms. The test goes from 0.5x straight to 1.3x or more.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -80 +80 @@ export function holdSieges(pass: ArmyPass): void {
+-      defenders <= 0 || (wallsDown(siege.wallHp) && armyPower(own) >= AI.stormRatio * defenders);
++      defenders <= 0 || (wallsDown(siege.wallHp) && armyPower(own) >= defenders);
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r51.mts:
+besiegers 332.5 vs defenders 301.3: ratio 1.104 (AI.stormRatio 1.3), walls down
+original: storm commands: []
+mutant: [{storm p59}]
+FIX: In war.test 'storms breached walls only with AI.stormRatio', add a besieger between 1.0x and 1.3x the defenders. Assert that no storm is issued.
+VERDICT: {'id': 'mut-51', 'verdict': 'confirmed', 'reasoning': "docs/08 Sieges says to storm breached walls only with 'AI.stormRatio times the defenders' power'. war.test jumps from 0.5x straight to at least 1.3x, so the 1.0x to 1.3x band is never probed.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r51: walls down, besiegers 332.5 against defenders 301.3 (1.104x). Original: no storm. Mutant: [storm p59].', 'fix': "In war.test 'storms breached walls only with AI.stormRatio', add besiegers between 1.0x and 1.3x the defenders with the walls down. Assert that no storm is issued."}
+===== mut-59 | src/ai/defense.ts 218 | medium | tests
+TITLE: No test needs the local defense to cover a threat; a covering rule that ignores PD and garrison survives
+SCEN: A Green army (350.3) threatens Red's p45, which holds PD 10 (156.5). Red's army in p50 (196.5) is weaker than the threat alone, but together with the PD it covers it. docs/08 Defense says 'the nearest group ... whose power and the local defense together exceed the threat comes'. The mutant ignores the local defense and sends nobody.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -218 +218 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-  const helper = nearest(plan, candidates, p.id, (g) => power(g) + local > danger);
++  const helper = nearest(plan, candidates, p.id, (g) => power(g) > danger);
+Verdict: SURVIVED all stages and the whole suite. In defense.test 'sends the nearest group whose power covers the threat', the helper beats the threat on its own.
+Repro review7/repro/r59.mts:
+threat 350.3, local (PD 10) 156.5, helper 196.5: helper + local 353.0 > threat, helper alone < threat
+original: Defense commands: [move c175 path [p45]]
+mutant: []
+FIX: In defense.test.ts, add a case where the PD or garrison plus a group weaker than the threat covers it. Assert that the group is sent.
+VERDICT: {'id': 'mut-59', 'verdict': 'confirmed', 'reasoning': "docs/08 Defense sends 'the nearest group ... whose power and the local defense together exceed the threat'. The mutant ignores the PD and garrison, so a group that covers the threat together with the PD is never sent. In the existing test the helper beats the threat on its own.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r59: threat 350.3, PD-10 local defense 156.5, helper 196.5. Original: [move c175 path [p45]]. Mutant: [].', 'fix': 'In defense.test.ts, give the threatened province PD (or garrison troops) so that only helper + local exceeds the threat. Assert that the helper is sent.'}
+===== mut-61 | src/ai/defense.ts 209 | medium | tests
+TITLE: No test checks that only the needed groups are held at a province whose threat is covered
+SCEN: Two Red armies (349.5 and 264.5) stand in p45. A weak Green army (95.3) in p3 threatens it. docs/08 Defense says 'the groups there stay as far as they are needed'. The stronger army covers the threat, so the other is free; in the original it goes on to War. The mutant holds both, so the second army is wasted.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -209 +208,0 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-      if (local - spare >= danger) break;
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r61.mts:
+original: after Defense c175 held true, c177 held false; army pass moves: [[c177] -> p3]
+mutant: c175 held true, c177 held true; moves: []
+FIX: In defense.test 'keeps a covering group standing there', add a second group in the province. Assert that it is not assigned by Defense.
+VERDICT: {'id': 'mut-61', 'verdict': 'confirmed', 'reasoning': "docs/08 says 'the groups there stay as far as they are needed', and the design says 'the strongest first, as far as it needs them'. Groups beyond what covers the threat are free for later steps. The mutant holds every group there, so the spare army is wasted. defense.test has only one group in the covered province.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r61: threat 95.3, armies 349.5 and 264.5 in p45. Original: c175 held, c177 free, and the army pass moves [c177] to p3. Mutant: both held, no moves.', 'fix': "In defense.test 'keeps a covering group standing there', add a second group in the province. Assert that it is not in plan.assigned after defendProvinces and that a later step can take it."}
+===== mut-64 | src/ai/defense.ts 200 | medium | tests
+TITLE: No test checks that Defense counts groups sent to a province earlier in the call
+SCEN: A priest walks to claim Red's Wellspring p51, and escortClaims sends the escort (264.5) from p42. A weak Green army (95.3) is next to p51. docs/08 Defense counts 'the groups sent there earlier this call' as local defense, so p51 is covered. The mutant ignores the escort on its way and also sends Red's other army to p51. In the original, that army defends p42 instead.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -200 +200 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-    armyPower(coming);
++    0 * armyPower(coming);
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r64.mts:
+original: army pass moves: [[c173] -> p51, [c3] -> p42]
+mutant: [[c173] -> p51, [c3] -> p51]
+FIX: In defense.test.ts, send a group to a threatened province in an earlier step (an escort or relief). Assert that Defense sends no second group there.
+VERDICT: {'id': 'mut-64', 'verdict': 'confirmed', 'reasoning': "docs/08 counts 'the groups sent there earlier this call' as local defense. Without that, the escort already on its way to the Wellspring is ignored, and a second army is pulled to p51 while p42 is left uncovered.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r64: the escort c173 (264.5) is sent from p42 to p51; the threat at p51 is 95.3. Original: moves [[c173] -> p51, [c3] -> p42]. Mutant: [[c173] -> p51, [c3] -> p51].', 'fix': 'In defense.test.ts, assign a group to a threatened province in an earlier step (escortClaims or relief) with enough power to cover it. Assert that Defense sends no second group there.'}
+===== mut-66 | src/ai/war.ts 183 | medium | tests
+TITLE: No test of the War odds gate depends on aggression
+SCEN: Cinder Horde (aggression 0.8) has field power 262. The enemy power near is 180.3: 262 > 1.2 x 180.3, but 0.8 x 262 = 209.6 <= 216.3. docs/08 War says a new target needs 'aggression x the nation's field power > AI.warRatio x the enemy power', so the gate should be shut. The mutant drops aggression and attacks. The existing test is shut with or without aggression.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -183 +183 @@ function warTargets(pass: ArmyPass): Targets {
+-    open: aggression * fieldPower > AI.warRatio * enemyPowerNearby(plan),
++    open: fieldPower > AI.warRatio * enemyPowerNearby(plan),
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r66.mts:
+field power 262.0, enemy army 180.3 (20 troops): 0.8 F = 209.6 <= 1.2 E = 216.3
+original: War commands: []
+mutant: [move c3 path [p45]]
+FIX: In war.test 'the odds gate', add a case where fieldPower > 1.2 x enemy but aggression x fieldPower <= 1.2 x enemy. Assert that no new target is chosen.
+VERDICT: {'id': 'mut-66', 'verdict': 'confirmed', 'reasoning': "docs/08 War allows a new target only 'while aggression x the nation's field power > AI.warRatio x the enemy power near it'. The existing gate test is shut with or without aggression, so dropping the factor goes unnoticed.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r66: F 262.0 and E 180.3, so F > 1.2E but 0.8F = 209.6 <= 1.2E = 216.3. Original: no War commands. Mutant: [move c3 path [p45]].', 'fix': "In war.test 'the odds gate', add a case with fieldPower > AI.warRatio x enemy but aggression x fieldPower <= AI.warRatio x enemy. Assert that no new target is chosen."}
+===== mut-71 | src/ai/war.ts 189 | medium | tests
+TITLE: No test checks AI.warRatio on non-siege War targets
+SCEN: Red's army A marches on Green's p45 (defenders 350.3). Red's army B has 375 (1.07x). docs/08 War says 'Every target but a siege needs AI.warRatio times its defenders', so B should not join. The mutant's canTake accepts 1.0x, and B joins the march.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -189 +189 @@ function canTake(plan: Plan, strength: number, province: ProvinceId): boolean {
+-  return strength >= AI.warRatio * defenderPower(plan.copy, province);
++  return strength >= defenderPower(plan.copy, province);
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r7175.mts with K=1.05:
+defenders of p45 350.3; B c177 375.0 = 1.071 x; A c175 marching to p45
+original: War commands: []
+mutant: [move c177 path [p45]]
+FIX: In war.test.ts, add a target defended at between 1/1.2 and 1 of the army's power. Assert that it is not taken, both as a march and as a new target.
+VERDICT: {'id': 'mut-71', 'verdict': 'confirmed', 'reasoning': "docs/08 says 'Every target but a siege needs AI.warRatio times its defenders'. canTake at 1.0x lets an army join a march, or take a new or denial target, at 1.0x to 1.2x. No test probes that band.", 'repro': "The mutant passed the whole suite: 1110/1110. Repro r7175 with K=1.05: p45's defenders are 350.3, army B has 375.0 (1.071x), and A marches on p45. Original: no War commands. Mutant: [move c177 path [p45]].", 'fix': "In war.test.ts, add a target whose defenders lie between 1/1.2 and 1 times the army's power. Assert that it is taken neither as a march nor as a new target."}
+===== mut-74 | src/ai/war.ts 154 | medium | tests
+TITLE: No test checks that enemy border garrisons and PD count against the War odds
+SCEN: No Green army is near Red, but two Green provinces on Red's border hold PD 10 (167.1 each). docs/08 War says the enemy power near includes 'the garrison troops and PD of enemy provinces on the border': 0.8 x 262 = 209.6 < 1.2 x 334.2, so the gate is shut. The mutant leaves them out and attacks p45.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -154 +153,0 @@ function enemyPowerNearby(plan: Plan): number {
+-  for (const p of border) total += fixedDefense(copy, p);
+Verdict: SURVIVED all stages and the whole suite. The battle/resolve 50 ms timing failure passed alone.
+Repro review7/repro/r74.mts:
+own field power 262.0 x 0.8 = 209.6; border fixed defense 0.0 + 167.1 + 167.1 x 1.2 = 400.9
+original: War commands: []
+mutant: [move c3 path [p45]]
+FIX: In war.test 'the odds gate', add a case with no enemy army near but strong border PD or garrison. Assert that the gate stays shut.
+VERDICT: {'id': 'mut-74', 'verdict': 'confirmed', 'reasoning': "docs/08 defines the enemy power near as including 'the garrison troops and PD of enemy provinces on the border'. Without the border term, strong border PD no longer shuts the gate. Every gate test uses an enemy army.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r74 has no Green army and two Green border provinces at PD 10 (167.1 each); 0.8 x 262 = 209.6 < 400.9. Original: no War commands. Mutant: [move c3 path [p45]].', 'fix': "In war.test 'the odds gate', add a case with no enemy commander near but border enemy provinces whose PD or garrison shuts the gate. Assert that no new target is chosen."}
+===== mut-75 | src/ai/war.ts 276 | medium | tests
+TITLE: No test checks that joining a march needs the odds
+SCEN: Red's army A marches on Green's p45 (defenders 350.3). Free army B has 213.5 (0.61x). docs/08 War says marches are targets but 'Every target but a siege needs AI.warRatio times its defenders'. The mutant sends B into a losing battle. war.test 'joins a march ... when it can take it' never tests the 'cannot take' side.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -276 +276 @@ function chooseTarget(
+-  const march = targets.marches.find((p) => reach(p) && canTake(plan, strength, p));
++  const march = targets.marches.find((p) => reach(p));
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r7175.mts with K=0.6:
+B c177 213.5 = 0.610 x; A c175 marching to p45
+original: War commands: []
+mutant: [move c177 path [p45]]
+FIX: In war.test 'joins a march', add a weak free army. Assert that it does not join.
+VERDICT: {'id': 'mut-75', 'verdict': 'confirmed', 'reasoning': "docs/08 says 'Every target but a siege needs AI.warRatio times its defenders', so joining a march needs the odds. The mutant sends a 0.61x army into the battle. war.test's 'joins a march ... when it can take it' never tests the side where it cannot.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r7175 with K=0.6: B has 213.5 (0.610x) and A marches on p45. Original: no War commands. Mutant: [move c177 path [p45]].', 'fix': "In war.test 'joins a march', add a free army below AI.warRatio x the march target's defenders. Assert that it is not sent."}
+===== mut-85 | src/ai/military.ts 73 | medium | tests
+TITLE: No test covers the combined Expansion attempt by armies standing together
+SCEN: Two Red armies of 137 stand together in the capital. The weakest independent neighbor has defenders of 99 (x1.5 = 148.5). docs/08 Expansion says 'Groups standing together that none takes alone try once more as one', so they go together (274). The mutant never tries the combined attempt, and both stay home.
+EV: Diff:
+--- a/src/ai/military.ts
++++ b/src/ai/military.ts
+@@ -73 +73 @@ function expand(pass: ArmyPass): void {
+-    if (left.length > 1) go(membersOf(left));
++
+Verdict: SURVIVED all stages and the whole suite. Only War's combine is tested (war.test 'combines armies standing together').
+Repro review7/repro/r85.mts:
+original: moves: [move [c3, c173] path [p50]]
+mutant: moves: []
+FIX: In military.test.ts, add two co-located armies, each short of 1.5x the defenders and together above it. Assert one move listing both.
+VERDICT: {'id': 'mut-85', 'verdict': 'confirmed', 'reasoning': "docs/08 Expansion says 'Groups standing together that none takes alone try once more as one'. Only War's combine is tested. Without the combined attempt, two co-located armies that together have 1.5x the defenders stay home.", 'repro': "The full run failed only tick.test '2 ms budget'. That test does not touch src/ai, and it passed when re-run alone with the mutant applied (16/16 with military.test). Repro r85: weakest independent 99.0 (x1.5 = 148.5), armies 137.0 + 137.0. Original: [move [c3, c173] path [p50]]. Mutant: no moves.", 'fix': 'In military.test.ts, add two armies in one province, each short of AI.expansionRatio x the weakest reachable independent and together above it. Assert one move listing both.'}
+===== mut-126 | src/ai/war.ts 244 | medium | tests
+TITLE: No test checks that a new War target is discounted by path days
+SCEN: The odds are open. Green's p45 (value 19, 4 days) is near and Green's p9 (value 20.92, 25 days) is far. docs/08 War picks 'the enemy province worth most by Expansion's value, discounted by path days', which is p45 (18.27 against 16.73). The mutant has no discount and marches 25 days to p9.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -244 +244 @@ function newTarget(plan: Plan, members: readonly CommanderState[]): ProvinceId |
+-    const w = provinceValue(plan.copy, p) * distanceFactor(plan, paths.days(p) ?? 0);
++    const w = provinceValue(plan.copy, p) * distanceFactor(plan, 0);
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r126.mts with VARIANT=far:
+p45: value 19.00, 4 days, worth 18.269; p9: value 20.92, 25 days, worth 16.734
+original: War target [p45]
+mutant: [p9]
+FIX: In war.test 'new targets', add two takeable non-capital enemy provinces where the value and the discounted worth disagree. Assert the discounted choice.
+VERDICT: {'id': 'mut-126', 'verdict': 'confirmed', 'reasoning': "docs/08 War: a new target is 'the enemy province worth most by Expansion's value, discounted by path days'. war.test 'new targets' only checks that the enemy capital comes first, so the discount is never tested.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r126 with VARIANT=far: p45 has value 19.00, 4 days, worth 18.269; p9 has value 20.92, 25 days, worth 16.734. Original: target p45. Mutant: target p9.', 'fix': "In war.test 'new targets', add two takeable non-capital enemy provinces where the raw value and the discounted worth disagree. Assert the discounted choice."}
+===== mut-127 | src/ai/war.ts 244 | medium | tests
+TITLE: No test checks that a new War target is chosen by value
+SCEN: The odds are open. Green's p45 (value 19, 4 days) is near and Green's p9 (value 57, 25 days) is far. docs/08 says the target is 'worth most by Expansion's value', which is p9 (45.6 against 18.3). The mutant ranks by distance alone and takes p45.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -244 +244 @@ function newTarget(plan: Plan, members: readonly CommanderState[]): ProvinceId |
+-    const w = provinceValue(plan.copy, p) * distanceFactor(plan, paths.days(p) ?? 0);
++    const w = distanceFactor(plan, paths.days(p) ?? 0);
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r126.mts with VARIANT=rich:
+p45 worth 18.269; p9: value 57.00, 25 days, worth 45.600
+original: War target [p9]
+mutant: [p45]
+FIX: In war.test.ts, add a far, rich enemy province against a near, poor one. Assert that the rich one is chosen.
+VERDICT: {'id': 'mut-127', 'verdict': 'confirmed', 'reasoning': 'Same rule: new targets go by value discounted by days, not by distance alone. No test sets a rich far province against a poor near one.', 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r126 with VARIANT=rich: p45 is worth 18.269; p9 has value 57.00, 25 days, worth 45.600. Original: target p9. Mutant: target p45.', 'fix': 'In war.test.ts, add a far, rich enemy province against a near, poor one. Assert that the rich one is chosen.'}
+===== mut-128 | src/ai/defense.ts 151 | medium | tests
+TITLE: No test treats a group marching to the Wellspring as its escort
+SCEN: A priest walks to claim Red's Wellspring p51, and Red's army A is already marching there. docs/08 Escorts says 'one army stands there: a group already there or marching there, else the nearest free army is sent'. The mutant counts only groups standing there, so it also sends free army B: two armies for one claim.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -151 +151 @@ export function escortClaims(pass: ArmyPass): void {
+-      (g) => !g.lone && !isAssigned(plan, g) && destinationOf(g.leader) === spring,
++      (g) => !g.lone && !isAssigned(plan, g) && !isMoving(g.leader) && g.province === spring,
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r128.mts:
+original: escort commands (A c173, B c175): []
+mutant: [move c175 path [p51]]
+FIX: In defense.test escortClaims, add a case with an army already marching to the spring. Assert that nothing is issued.
+VERDICT: {'id': 'mut-128', 'verdict': 'confirmed', 'reasoning': "docs/08 Escorts: 'a group already there or marching there, else the nearest free army is sent'. The mutant counts only groups standing there, so it sends a second army for one claim. The escort tests have no army already marching to the spring.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r128: the priest walks to p51 and A (c173) marches there. Original: no escort commands. Mutant: [move c175 path [p51]].', 'fix': 'In defense.test escortClaims, give an army a move to the spring before the call. Assert that nothing is issued and that the marching army is in pass.escorts.'}
+===== mut-129 | src/ai/defense.ts 229 | medium | tests
+TITLE: No test checks that Defense passes over besieged provinces
+SCEN: Green besieges Red's capital (350.3, so relief needs 420.3) and holds p17. Red's army in p50 (262) cannot reach the gather point p57. docs/08 Defense says 'a besieged one is relief's', so relief holds back. The mutant's Defense sends the 262 army into the besieged capital, because its covering rule adds the fort's PD.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -229 +229 @@ export function defendProvinces(pass: ArmyPass): void {
+-    if (p.siege === null) defendProvince(pass, p);
++    defendProvince(pass, p);
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r129.mts:
+relief: gather p57, commands []
+original Defense: [buyPd p17, buyPd p50, buyPd p57]
+mutant: [move c3 path [p48], buyPd p17, buyPd p50, buyPd p57]
+FIX: In defense.test.ts, besiege an own fort with a group outside that is short of the relief ratio but covers the threat with the fort's PD. Assert that Defense issues nothing for that fort.
+VERDICT: {'id': 'mut-129', 'verdict': 'confirmed', 'reasoning': "docs/08 Defense: '(a besieged one is relief's)'. Defense must pass over besieged forts. The mutant's Defense sends an army that relief held back into the besieged capital, because its covering rule adds the fort's PD.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r129: besiegers 350.3 (relief needs 420.3), army c3 262.0 in p50, capital fixed defense 156.5, gather point p57. Original Defense: [buyPd p17, buyPd p50, buyPd p57]. Mutant: [move c3 path [p48], buyPd p17, buyPd p50, buyPd p57].', 'fix': "In defense.test.ts, besiege an own fort and place a group outside that is short of AI.reliefRatio but covers the threat together with the fort's PD. Assert that defendProvinces issues nothing for that fort."}
+===== mut-130 | src/ai/defense.ts 220 | medium | tests
+TITLE: No test checks that the groups at a defended province stay when help is sent
+SCEN: A Green army threatens p45, where Red's G1 (149.5) stands, too weak alone. G2 (392) is sent from p50. docs/08 Defense says 'the groups there stay with it'. In the mutant G1 is left unassigned and walks home from the front as G2 arrives.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -220 +219,0 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-    for (const g of here) hold(plan, g.members);
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r130.mts:
+original: army pass moves: [[c177] path [p45]]
+mutant: [[c177] path [p45], [c175] path [p50, p48]]
+FIX: In defense.test 'sends the nearest group', put a weak group in the threatened province. Assert that it is assigned and not moved by planArmies.
+VERDICT: {'id': 'mut-130', 'verdict': 'confirmed', 'reasoning': "docs/08 Defense: when help is sent, 'the groups there stay with it'. In the mutant, the weak group standing in the threatened province is left unassigned and walks home just as help arrives.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r130: threat 350.3, G1 (149.5) in p45, G2 (392.0) in p50. Original: army pass moves [[c177] path [p45]]. Mutant: [[c177] path [p45], [c175] path [p50, p48]].', 'fix': "In defense.test 'sends the nearest group', put a weak group in the threatened province. Assert that it is in plan.assigned and that planArmies gives it no move."}
+===== mut-132 | src/ai/faith.ts 93 | medium | tests
+TITLE: No test covers a walking priest that needs a new destination
+SCEN: Priest P1 claims Red's Wellspring p51 while priest P2 walks to the same spring. docs/08 says free priests go to a Wellspring 'no other priest has, and the rest preach in the capital'. The original sends P2 home. The mutant drops move from the free orders, so P2 keeps walking to the spring P1 already claims. A priest walking to a spring that has been lost would likewise keep walking into enemy land.
+EV: Diff:
+--- a/src/ai/faith.ts
++++ b/src/ai/faith.ts
+@@ -93 +93 @@ function claimSprings(plan: Plan): void {
+-    if (kind === 'idle' || kind === 'preach' || kind === 'move') free.push(c);
++    if (kind === 'idle' || kind === 'preach') free.push(c);
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r132.mts:
+original: priest commands: [move c173 path [p42, p37, p7, p17, p48], makeProphet c8]
+mutant: [makeProphet c8]
+FIX: In faith.test 'leaves a priest walking to a Wellspring be', add a priest walking to a spring that another priest claims, or that is no longer owned. Assert that it is redirected home.
+VERDICT: {'id': 'mut-132', 'verdict': 'confirmed', 'reasoning': "docs/08 Priests: a priest claims where it stands, free priests walk to a Wellspring no other priest has, and 'the rest preach in the capital'. In the mutant, a walking priest whose target is taken or lost does none of these: it keeps walking. In my own repro the spring is lost, and the mutant's priest keeps walking into the enemy-owned province. faith.test's 'leaves a priest walking ... be' uses a preaching priest, so the move case is untested.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r132 (P2 walking to a spring that P1 claims). Original: [move c173 path [p42, p37, p7, p17, p48], makeProphet]. Mutant: [makeProphet]. My repro verify-tests/repro/r132b.mts has the priest walking p17-p7-p37-p42-p51 when Green takes p51. Original: [move c8 path [p48]]. Mutant: [].', 'fix': 'In faith.test.ts, give a priest a move to a Wellspring that another priest claims, or that the nation no longer owns. Assert that it is redirected to a free spring or home to preach.'}
+===== mut-133 | src/ai/magic.ts 198 | medium | tests
+TITLE: No test checks the war-front rule for strike rituals
+SCEN: Green owns p17 next to Red's capital (pop 9000) and p6 two hops out (pop 20000), within Burn the Fields' 3 hops. docs/08 Rituals says to strike 'the most populous enemy province next to an own one'. The mutant drops the front check and burns p6.
+EV: Diff:
+--- a/src/ai/magic.ts
++++ b/src/ai/magic.ts
+@@ -198 +197,0 @@ function strikeTarget(plan: Plan, targets: readonly (ProvinceId | null)[]): Prov
+-      front(q) &&
+Verdict: SURVIVED all stages and the whole suite. In the strike test, both enemy provinces lie next to the capital.
+Repro review7/repro/r133.mts:
+original: [castRitual c173 burnTheFields target p17]
+mutant: [castRitual c173 burnTheFields target p6]
+FIX: In magic.test 'strikes the most populous front province', add a more populous enemy province in range but not on the front. Assert that it is not the target.
+VERDICT: {'id': 'mut-133', 'verdict': 'confirmed', 'reasoning': "docs/08 Rituals: strike 'the most populous enemy province next to an own one where no own commander stands'. Without the front check, Burn the Fields lands on a deeper, more populous province. In the existing strike test both enemy provinces touch the capital.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r133: front p17 (pop 9000), deep p6 (pop 20000, not next to Red). Original: [castRitual c173 burnTheFields target p17]. Mutant: target p6.', 'fix': "In magic.test 'strikes the most populous front province', add a more populous enemy province within the ritual's hops that touches no own province. Assert that it is not the target."}
+===== mut-136 | src/ai/magic.ts 123 | medium | tests
+TITLE: No test checks that the Monolith casts before the researchers
+SCEN: A Living Monolith pretender and two researchers stand in the capital lab. docs/08 Rituals says the casters are 'the Living Monolith, then the researchers'. The mutant lets a researcher take the ritual and leaves the Monolith, which can do nothing else, idle.
+EV: Diff:
+--- a/src/ai/magic.ts
++++ b/src/ai/magic.ts
+@@ -123 +123 @@ export function ritualCasters(plan: Plan): CommanderState[] {
+-  return [...pretender, ...researchers.sort((a, b) => rate(a) - rate(b))];
++  return [...researchers.sort((a, b) => rate(a) - rate(b)), ...pretender];
+Verdict: SURVIVED all stages and the whole suite. The existing Monolith test removes the researchers first.
+Repro review7/repro/r136.mts:
+original: casters c175:livingMonolith c7 c173; ritual begun by c175 (forgeOfCinders)
+mutant: ritual begun by c173 (cinderMagus)
+FIX: In magic.test 'planRituals casters', add a Monolith alongside two ready researchers. Assert that the Monolith begins the ritual.
+VERDICT: {'id': 'mut-136', 'verdict': 'confirmed', 'reasoning': "docs/08 Rituals: 'the casters ... the Living Monolith, then the researchers'. The mutant lets a researcher take the ritual, which slows research, while the Monolith, which can do nothing else, stands idle. The Monolith test removes the researchers first.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r136. Original casters: c175 livingMonolith, c7, c173; c175 begins forgeOfCinders. Mutant casters: c7, c173, c175; c173 (cinderMagus) begins it.', 'fix': "In magic.test 'planRituals casters', put a Monolith in the capital lab alongside two ready researchers. Assert that the Monolith begins the ritual."}
+===== mut-137 | src/ai/magic.ts 213 | medium | tests
+TITLE: No test checks that Fertile Season goes only on own provinces
+SCEN: Thornwood is at peace. An independent province within 2 hops of the capital (pop 31000) is more populous than its best own province p33 (pop 26000). docs/08 Rituals says 'Fertile Season on the most populous own province in reach'. The mutant aims at the independent province, ritualTargets rejects it, and Fertile Season is dropped: Bounty of the Loam is cast instead.
+EV: Diff:
+--- a/src/ai/magic.ts
++++ b/src/ai/magic.ts
+@@ -213 +213 @@ function bestOwnProvince(
+-    (q) => plan.copy.provinces[q]?.owner === plan.nation,
++    (q) => plan.copy.provinces[q] !== undefined,
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r137.mts:
+at war false; own p33 pop 26000; independent p38 pop 31000
+original: [castRitual c173 fertileSeason target p33]
+mutant: [castRitual c173 bountyOfTheLoam target p59]
+FIX: In magic.test 'grows the best own province', make a non-owned province in reach more populous. Assert that Fertile Season still targets the own one.
+VERDICT: {'id': 'mut-137', 'verdict': 'confirmed', 'reasoning': "docs/08 Rituals at peace: 'Fertile Season on the most populous own province in reach'. In the mutant, a more populous non-owned province in reach is chosen, ritualTargets rejects it, and Fertile Season drops out of the options even though it was the cheapest.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r137 (Thornwood at peace): own p33 pop 26000, independent p38 pop 31000. Original: [castRitual c173 fertileSeason target p33]. Mutant: [castRitual c173 bountyOfTheLoam target p59].', 'fix': "In magic.test 'grows the best own province', make a non-owned province in reach more populous than every own one. Assert that Fertile Season still targets the own province."}
+===== mut-138 | src/ai/economy.ts 193 | medium | tests
+TITLE: No test checks that a researcher walks to the nearest own lab while the capital is lost
+SCEN: Red's capital is lost and Red owns labs in p50 (3 days away) and p51 (13 days). docs/08 Research says researchers 'study in the capital lab (the nearest own lab while the capital is lost)'. The mutant picks p51.
+EV: Diff:
+--- a/src/ai/economy.ts
++++ b/src/ai/economy.ts
+@@ -193 +193 @@ export function homeLab(plan: Plan, commander: CommanderState): ProvinceId | nul
+-    if (days !== undefined && days < bestDays) {
++    if (days !== undefined && (bestDays === Infinity || days > bestDays)) {
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r138.mts:
+researcher in p17: p50 3 days, p51 13 days
+original: home lab p50
+mutant: home lab p51
+FIX: In economy.test planResearch, take the capital and give the nation two labs at different distances. Assert homeLab and the walk to the nearer one.
+VERDICT: {'id': 'mut-138', 'verdict': 'confirmed', 'reasoning': "docs/08 Research: researchers study in 'the nearest own lab while the capital is lost'. The mutant picks the farthest lab. No test takes the capital away while the nation owns two labs.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r138: researcher in p17, p50 is 3 days away, p51 is 13 days. Original: homeLab p50. Mutant: p51.', 'fix': "In economy.test planResearch, give the capital to another nation and give Red two labs at different path distances. Assert homeLab and the researcher's walk to the nearer one."}
+===== mut-141 | src/ai/economy.ts 100 | medium | tests
+TITLE: No test makes a besieged province's next PD level unaffordable
+SCEN: Red's E, next to Green, is besieged and its next PD level costs 150; only 30 spare gold is left. The Wellspring W and the border province S wait for levels the gold pays. docs/08 Economy says 'besieged provinces are passed over'. Without the siege skip, E's unaffordable level ends the buying first, and W and S get nothing.
+EV: Diff:
+--- a/src/ai/economy.ts
++++ b/src/ai/economy.ts
+@@ -100 +100 @@ function buyDefenses(plan: Plan): void {
+-    if (!p || raised.has(id) || p.pd >= level || p.siege !== null) continue;
++    if (!p || raised.has(id) || p.pd >= level) continue;
+Verdict: SURVIVED all stages and the whole suite. The existing besieged case is cheap, so the copy's refusal hides the missing skip.
+Repro review7/repro/r141.mts:
+E p17 besieged, next level costs 150; spare gold 30
+original: PD bought [p1 (W), p50 (S)]
+mutant: []
+FIX: In economy.test 'passes over a besieged province', make the besieged province first in budget order with a level above the spare gold. Assert that later provinces still buy.
+VERDICT: {'id': 'mut-141', 'verdict': 'confirmed', 'reasoning': "docs/08 Economy: 'The first level the gold cannot pay ends the buying, and besieged provinces are passed over'. Without the skip, a besieged province whose level is unaffordable ends all buying, so later Wellspring and border provinces get nothing. The existing besieged case is cheap, and the copy's refusal hides the missing skip.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r141: E p17 is besieged, its next level costs 150, spare gold is 30. Original: PD bought at [p1 (W), p50 (S)]. Mutant: [].', 'fix': "In economy.test 'passes over a besieged province', make the besieged province first in budget order, with a next level above the spare gold. Assert that the later provinces still buy."}
+===== mut-144 | src/ai/war.ts 151 | medium | tests
+TITLE: No test checks that garrison holders away from the border stay out of the War odds
+SCEN: No Green army is near Red. Green's capital, two hops from Red's army and not on Red's border, holds a 30-troop garrison. docs/08 says the enemy power near is other nations' commanders within warHops 'plus the garrison troops and PD of enemy provinces on the border'. Only border garrisons count, and the original attacks Green's p33. The mutant counts the garrison holder as a commander and shuts the gate. It would also count a border garrison twice.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -151 +151 @@ function enemyPowerNearby(plan: Plan): number {
+-    if (c.owner === null || c.owner === plan.nation || !takesPart(c)) continue;
++    if (c.owner === null || c.owner === plan.nation) continue;
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r144.mts:
+Red army in p34; Green p33 between; Green capital p59 (2 hops away) garrison 30 troops; own power 262.0
+original: War commands: [move c3 path [p33]]
+mutant: []
+FIX: In war.test 'the odds gate', put a garrisoned enemy fort 2 hops out, off the border. Assert that the gate stays open.
+VERDICT: {'id': 'mut-144', 'verdict': 'confirmed', 'reasoning': "docs/08 counts 'other nations' commanders within AI.warHops ... plus the garrison troops and PD of enemy provinces on the border'. The design reads 'enemy groups within AI.warHops ... plus defenders of border enemy provinces'. So garrisons count only on the border, and counting holders as commanders would double-count border garrisons. The mutant lets an off-border garrison shut the gate.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r144: Red army in p34, Green p33 between, Green capital p59 two hops away with 30 garrison troops, own power 262.0. Original: War [move c3 path [p33]]. Mutant: [].', 'fix': "In war.test 'the odds gate', put a garrisoned enemy fort within AI.warHops of an own province but off the border, with no enemy army near. Assert that the gate stays open."}
+===== mut-148 | src/ai/military.ts 65 | medium | tests
+TITLE: No test of Expansion starts with an army already marching
+SCEN: Red's army A already marches on p50, the best independent target. Free army B stands in the capital. docs/08 Expansion says the group attacks the best 'where ... no own move already ends'. The original sends B to p17. The mutant only tracks moves made this call and sends B to p50 as well.
+EV: Diff:
+--- a/src/ai/military.ts
++++ b/src/ai/military.ts
+@@ -65 +65 @@ function expand(pass: ArmyPass): void {
+-  const taken = new Set<ProvinceId>(plan.own().filter(isMoving).map(destinationOf));
++  const taken = new Set<ProvinceId>();
+Verdict: SURVIVED all stages and the whole suite. military.test 'never both to one' covers only two moves made in the same call.
+Repro review7/repro/r148.mts:
+best target for c3: p50; A c173 marches there
+original: moves [[c3] -> p17]
+mutant: [[c3] -> p50]
+FIX: In military.test.ts, give one army a move order to the best target before planning. Assert that the other free army picks another province.
+VERDICT: {'id': 'mut-148', 'verdict': 'confirmed', 'reasoning': "docs/08 Expansion attacks the best target 'where ... no own move already ends'. That includes moves issued in earlier calls. military.test 'never both to one' only covers two moves made in the same call.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r148: the best target is p50, and A (c173) already marches there. Original: [[c3] -> p17]. Mutant: [[c3] -> p50].', 'fix': 'In military.test.ts, give one army a move to the best independent target before planning. Assert that the other free army picks a different province.'}
+===== mut-153 | src/ai/war.ts 270 | medium | tests
+TITLE: No test counts commanders on the way when deciding whether a siege is short of the storm odds
+SCEN: Red besieges Green's p45 (defenders 265.3, storm odds 344.8) with 52 standing. Army A is marching there, which brings the siege to 401.5. Free army B (262) cannot take p45 itself (it would need 318.3). docs/08 War says join a siege 'whose commanders there and on the way are short of the storm odds'. The siege is not short, so the original sends nothing. The mutant counts only those standing and sends B.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -270 +270 @@ function chooseTarget(
+-    const there = armyPower(plan.own().filter((c) => destinationOf(c) === siege.id));
++    const there = armyPower(plan.own().filter((c) => c.location === siege.id && c.transit === null));
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r153.mts:
+defenders 265.3 x 1.3 = 344.8; standing besieger 52.0; with A on the way 401.5; B c3 262.0 vs 1.2 x defenders 318.3
+original: War commands: []
+mutant: [move c3 path [p45]]
+FIX: In war.test 'sieges first', add an army marching to the siege that lifts it above the storm odds. Assert that a further weak free army is not sent.
+VERDICT: {'id': 'mut-153', 'verdict': 'confirmed', 'reasoning': "docs/08 War joins a siege 'whose commanders there and on the way are short of the storm odds'. The mutant counts only those standing there, so it sends an extra army to a siege that marching armies already bring past the storm odds.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r153: defenders 265.3 x 1.3 = 344.8; standing besieger 52.0; 401.5 with A on the way; B 262.0 < 318.3. Original: no War commands. Mutant: [move c3 path [p45]].', 'fix': "In war.test 'sieges first', add an army marching to the siege that lifts it above AI.stormRatio x the defenders. Assert that a further free army that cannot take the fort itself is not sent."}
+===== mut-156 | src/ai/defense.ts 105 | medium | tests
+TITLE: No test re-paths a moving group for relief
+SCEN: A lone Green captain besieges Red's capital while Red's army walks p50 to p17 to p57, its leg ending in Red's own p17. docs/08 Free field armies says 'relief and Defense may also take ... moving groups whose leg does not end among hostiles, re-pathed from the leg's end'. The original re-paths it to the capital. The mutant leaves the siege unanswered.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -105 +105 @@ function relieve(pass: ArmyPass, fort: ProvinceState): void {
+-  const candidates = eligibleGroups(pass, { anySize: true, moving: true, escorts: true });
++  const candidates = eligibleGroups(pass, { anySize: true, escorts: true });
+Verdict: SURVIVED all stages and the whole suite. Only Defense has a re-path test.
+Repro review7/repro/r156.mts:
+army c3 transit p50 -> p17, progress 0/8
+original: relief commands: [move c3 path [p48]]
+mutant: []
+FIX: In defense.test relief, add a besieged capital with the only army on a leg ending in an own province. Assert that it is re-pathed to the fort.
+VERDICT: {'id': 'mut-156', 'verdict': 'confirmed', 'reasoning': "docs/08 Free field armies: 'relief and Defense may also take ... moving groups whose leg does not end among hostiles, re-pathed from the leg's end'. And 'any siege of an own fort is answered'. The mutant leaves the siege unanswered when the only army is on the move. Only Defense has a re-path test.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r156: army c3 has transit p50 -> p17 and a lone captain besieges p48. Original: relief [move c3 path [p48]]. Mutant: [].', 'fix': 'In defense.test relief, besiege the capital while the only army walks a leg that ends in an own province. Assert that it is re-pathed to the fort.'}
+===== mut-158 | src/ai/defense.ts 215 | medium | tests
+TITLE: No test lets Defense take an escort
+SCEN: A priest walks to claim Red's Wellspring p51, and Red's only field army (519.5) stands there as escort. A Green army (350.3) threatens the capital. docs/08 Escorts says 'relief and Defense may take it'. The original sends the escort to the capital. The mutant leaves the capital uncovered.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -215 +215 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-  const candidates = eligibleGroups(pass, { moving: true, escorts: true }).filter(
++  const candidates = eligibleGroups(pass, { moving: true }).filter(
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r158.mts:
+capital threat 350.3; escort c173 519.5 in p51; escort held as escort: true
+original: Defense commands: [move c173 path [p42, p37, p7, p17, p48]]
+mutant: []
+FIX: In defense.test defendProvinces, run escortClaims first so the only covering group is an escort. Assert that Defense sends it.
+VERDICT: {'id': 'mut-158', 'verdict': 'confirmed', 'reasoning': "docs/08 Escorts: 'relief and Defense may take it'. The design for Defense lists 'free armies, escorts, or moving groups'. In the mutant, when the only covering army is an escort, the capital is left uncovered.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r158: capital threat 350.3, escort c173 (519.5) in p51, held as escort. Original: Defense [move c173 path [p42, p37, p7, p17, p48]]. Mutant: [].', 'fix': 'In defense.test defendProvinces, run escortClaims first so that the only covering group is an escort. Assert that Defense sends it.'}
+===== mut-58 | src/ai/assess.ts 74 | medium | tests
+TITLE: No test checks that an enemy garrison holder is no threat for Defense
+SCEN: Red owns p33 next to Green's capital, where only Green's garrison holder (20 troops) stands. docs/08 priority 5 asks about 'an enemy army adjacent', and ruling #23 counts non-hidden armies. threat()'s own doc says 'hidden commanders and garrisons count nothing'. With the takesPart check removed, the garrison counts as a threat of 190. Every province next to an enemy fort then looks threatened forever: Defense buys PD there each call or pulls armies.
+EV: Diff:
+--- a/src/ai/assess.ts
++++ b/src/ai/assess.ts
+@@ -74 +74 @@ export function threat(state: GameState, nation: NationId, province: ProvinceId)
+-    if (c.owner === null || c.owner === nation || !near.has(c.location) || !takesPart(c)) continue;
++    if (c.owner === null || c.owner === nation || !near.has(c.location)) continue;
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone). assess.test 'threat' checks a hidden scout, which counts 0 through commanderPower anyway, but no garrison.
+Repro review7/repro/r58.mts:
+Green garrison holder c9 in p59 with 20 troops; Red owns p33
+original: threat 0.0, Defense commands []
+mutant: threat 190.0, Defense commands [buyPd p33]
+FIX: In assess.test 'threat', add an enemy fort with garrison troops next to the province. Assert that the threat is 0.
+VERDICT: {'id': 'mut-58', 'verdict': 'confirmed', 'reasoning': "Priority 5 asks about 'an enemy army adjacent', and the design's threat counts 'non-hidden groups'. threat()'s own doc says garrisons count nothing, and a garrison holder 'never acts'. docs/08's word 'commanders' alone could be read to include a holder, but the design and priority 5 settle it. The mutant treats every enemy fort's garrison as a threat, so Defense buys PD or pulls armies beside enemy forts on every call. assess.test checks only a hidden scout, which counts 0 through commanderPower anyway.", 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r58: Green holder c9 in p59 with 20 troops; Red owns p33. Original: threat 0.0, Defense []. Mutant: threat 190.0, Defense [buyPd p33].', 'fix': "In assess.test 'threat', put garrison troops in an enemy fort next to the province with no other enemy commander. Assert that the threat is 0."}
+===== mut-55 | src/ai/war.ts 58 | medium | tests
+TITLE: The pillage test never moves a leader to a second fort
+SCEN: The same 300 Red leaders besiege Green's capital and then Green's p45. docs/08 Pillage says 'Each besieging leader draws once per (leader, fort) pair ... keyed by ... the two ids'. In the original, 150 leaders draw differently at the two forts. The mutant keys by leader only: 0 differ, so a leader that lost its draw never pillages any fort.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -58 +58 @@ function drawPillage(plan: Plan, province: ProvinceId, own: readonly CommanderSt
+-    const want = chance(keyedRng(plan.copy, plan.nation, c.id, province), odds)
++    const want = chance(keyedRng(plan.copy, plan.nation, c.id), odds)
+Verdict: SURVIVED all stages and the whole suite (the battle/resolve timing failure passed alone).
+Repro review7/repro/r55.mts:
+original: pillage at p59 186/300; at p45 172/300; leaders whose draw differs: 150
+mutant: 164/300 and 164/300; differ: 0
+FIX: In war.test 'draws each besieging leader its pillage once', draw the same leaders at a second fort. Assert that the two sets of draws differ.
+VERDICT: {'id': 'mut-55', 'verdict': 'confirmed', 'reasoning': "docs/08 Pillage: 'Each besieging leader draws once per (leader, fort) pair, on a stream keyed by ... the two ids'. Keying by leader alone makes every fort draw the same: a leader that loses once never pillages anywhere. war.test draws at one fort only.", 'repro': "The full run failed only tick.test '2 ms budget', which does not touch src/ai. It passed alone with the mutant applied (33/33 with war and defense tests). Repro r55 with 300 leaders. Original: 186/300 pillage at p59 and 172/300 at p45, 150 draws differ. Mutant: 164/300 at both, 0 differ.", 'fix': "In war.test 'draws each besieging leader its pillage once', draw the same leaders at a second fort. Assert that the two sets of draws differ."}
+===== mut-44 | src/ai/defense.ts 158 | low | tests
+TITLE: The escort test cannot tell the nearest free army from the oldest
+SCEN: A priest walks to claim p51. Red's older army is in the capital (26 days away) and a newer one is in p42 (6 days). docs/08 Escorts says 'the nearest free army is sent'. The mutant takes the first in group order, the older one, which marches 26 days. The existing test's nearest army is also the oldest.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -158 +158 @@ export function escortClaims(pass: ArmyPass): void {
+-    const g = nearest(plan, free, spring);
++    const [g] = free;
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r44.mts:
+older army c3 in p48: 26 days to p51; newer army c173 in p42: 6 days
+original: escort sent [move c173 path [p51]]
+mutant: [move c3 path [p17, p7, p37, p42, p51]]
+FIX: In defense.test 'sends the nearest free army', make the nearest army the newer one.
+VERDICT: {'id': 'mut-44', 'verdict': 'confirmed', 'reasoning': "docs/08 Escorts: 'else the nearest free army is sent'. The mutant takes the first free group in group (age) order. The existing test's nearest army is also the oldest, so it cannot tell the two apart.", 'repro': 'The full run failed only the tick timing test, which passed alone with the mutant applied. Repro r44: older c3 in p48 is 26 days from p51, newer c173 in p42 is 6 days. Original: [move c173 path [p51]]. Mutant: [move c3 path [p17, p7, p37, p42, p51]].', 'fix': "In defense.test 'sends the nearest free army', make the nearest army newer than a farther one. Assert that the nearer one is sent."}
+===== mut-47 | src/ai/defense.ts 85 | low | tests
+TITLE: No test has the gather point tie between exits
+SCEN: Red's capital is besieged, and its strongest army outside stands in p6, 8 days from both exits p17 and p50. docs/08 Relief says 'the fort's free neighbor nearest the strongest group outside, ties by index', which is p17. The mutant takes the last tied exit, p50, by a different road.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -85 +85 @@ function gatherPoint(pass: ArmyPass, fort: ProvinceId, outside: readonly Group[]
+-    if (days !== undefined && days < bestDays) {
++    if (days !== undefined && days <= bestDays) {
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r47.mts:
+army in p6: exits tied at 8 days: p17, p50 (lowest index p17)
+original: gather point p17, move [[p17]]
+mutant: gather point p50, move [[p45, p50]]
+FIX: In defense.test relief, add a case with the strongest outside group equidistant from two exits. Assert the lower-index exit.
+VERDICT: {'id': 'mut-47', 'verdict': 'confirmed', 'reasoning': "docs/08 Relief: the gather point is 'the fort's free neighbor nearest the strongest group outside, ties by index'. No test has a tie. Taking the last tied exit sends the group by another road to the other exit. Note: the original breaks ties by the order of the exit list, which matched index order here.", 'repro': 'The full run failed only the tick timing test, which passed alone with the mutant applied. Repro r47: army in p6, exits p17 and p50 tied at 8 days. Original: gather p17, move [[p17]]. Mutant: gather p50, move [[p45, p50]].', 'fix': 'In defense.test relief, put the strongest outside group at equal path days from two exits. Assert that the gather point is the lower-index exit.'}
+===== mut-60 | src/ai/defense.ts 206 | low | tests
+TITLE: No test of Defense has the threat exactly equal to the local defense
+SCEN: Red's army in p45 matches the Green army next door unit for unit (349.5 each). docs/08 Defense says 'While the threat is no greater, the groups there stay', so no help is needed. The mutant treats equality as uncovered and pulls a second army in from p50.
+EV: Diff:
+--- a/src/ai/defense.ts
++++ b/src/ai/defense.ts
+@@ -206 +206 @@ function defendProvince(pass: ArmyPass, p: ProvinceState): void {
+-  if (danger <= local) {
++  if (danger < local) {
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r60.mts:
+threat at p45 349.5, local 349.5
+original: Defense commands []; second army taken: false
+mutant: [move c177 path [p45]]; second army taken: true
+FIX: In defense.test.ts, add a case with equal mirrored armies. Assert that nothing is sent.
+VERDICT: {'id': 'mut-60', 'verdict': 'confirmed', 'reasoning': "docs/08 Defense: 'While the threat is no greater, the groups there stay'. A threat equal to the local defense needs no help. The mutant pulls a second army anyway, and no test has the two equal.", 'repro': 'The full run failed only the tick timing test, which passed alone with the mutant applied. Repro r60: threat 349.5 = local 349.5. Original: Defense [], second army not taken. Mutant: [move c177 path [p45]], second army taken.', 'fix': 'In defense.test.ts, mirror the enemy army exactly with the army standing in the province and add another free army. Assert that nothing is sent.'}
+===== mut-79 | src/ai/military.ts 48 | low | tests
+TITLE: No test pins the score's max(defenders, 1) term
+SCEN: Two independent neighbors: A is emptied of defenders (score 1.873), and B is held by a lone captain (defenders 8, value / 8 = 1.983). docs/08 Expansion divides by max(defenders, 1), so B is the target. The mutant divides by defenders + 1 (1.763) and picks A.
+EV: Diff:
+--- a/src/ai/military.ts
++++ b/src/ai/military.ts
+@@ -48 +48 @@ export function expansionTarget(
+-      (provinceValue(plan.copy, p) / Math.max(defenders, 1)) *
++      (provinceValue(plan.copy, p) / (defenders + 1)) *
+Verdict: SURVIVED all stages and the whole suite (timing-only failure passed alone).
+Repro review7/repro/r79.mts:
+A=p17: defenders 0, score 1.873; B=p50: defenders 8.00, score by max(d,1) 1.983, by d+1 1.763
+original: expansion target p50
+mutant: p17
+FIX: In military.test 'is the best reached independent', assert the exact score ordering for a small nonzero defender against an empty province.
+VERDICT: {'id': 'mut-79', 'verdict': 'confirmed', 'reasoning': 'docs/08 Expansion divides by max(defenders, 1). Dividing by defenders + 1 ranks a lightly held province below an empty one where the formula ranks it above. military.test checks only orderings that both formulas agree on.', 'repro': 'The mutant passed the whole suite: 1110/1110. Repro r79: A=p17 has defenders 0, score 1.873; B=p50 has defenders 8.00, score 1.983 by max(d,1) and 1.763 by d+1. Original: target p50. Mutant: p17.', 'fix': "In military.test 'is the best reached independent', set up an empty province and one with small nonzero defenders whose order flips between the two formulas. Assert the max(defenders, 1) choice."}
+===== mut-146 | src/ai/war.ts 56 | low | tests
+TITLE: No test checks that only leaders draw a pillage
+SCEN: Red besieges Green's capital with a leader, summoned Salamanders, and Ember Adepts. docs/08 Pillage says 'Each besieging leader draws'. The mutant draws for every own commander there, and summoned and mage commanders get Pillage orders.
+EV: Diff:
+--- a/src/ai/war.ts
++++ b/src/ai/war.ts
+@@ -56 +56 @@ function drawPillage(plan: Plan, province: ProvinceId, own: readonly CommanderSt
+-    if (plan.role(c) !== 'leader' || c.transit !== null) continue;
++    if (c.transit !== null) continue;
+Verdict: SURVIVED all stages and the whole suite.
+Repro review7/repro/r146.mts (leader c173, Salamanders c175 to c180, Ember Adepts c181 to c186):
+original: pillage orders []
+mutant: [[c179, pillage], [c182, pillage], [c183, pillage]] (c179 a Salamander, c182 and c183 Ember Adepts)
+FIX: In war.test's pillage test, add non-leader besiegers. Assert that they receive no setOrder.
+VERDICT: {'id': 'mut-146', 'verdict': 'confirmed', 'reasoning': "docs/08 Pillage: 'Each besieging leader draws'. The mutant gives Pillage orders to summoned and mage commanders. A rider holding pillage is no longer idle, and groups() takes only idle riders (assess.ts idleStanding), so such a rider is never grouped or walked home. war.test's pillage case has only leaders.", 'repro': "The mutant passed the whole suite: 1110/1110. Repro r146: leader c173, Salamanders c175-c180, Ember Adepts c181-c186 at Green's capital. Original: no setOrder. Mutant: [[c179, pillage], [c182, pillage], [c183, pillage]].", 'fix': "In war.test's pillage test, add summoned and mage commanders to the siege. Assert that they receive no setOrder."}

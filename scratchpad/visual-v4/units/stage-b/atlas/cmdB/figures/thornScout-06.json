@@ -1,0 +1,1057 @@
+{
+ "figure": "thornScout-06",
+ "unit": "thornScout",
+ "face": "06",
+ "nation": "thornwood",
+ "body": "twScout",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdB",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdB/ts06.front.redress.nb21.png",
+   "sheetSha256": "fc2563be811674b8df6e2cf583572fb16520bd2f1bb4be9d02a3f6c7e61d37fa",
+   "body": "stage-b/work/cmdB/refs/cmdScout.front.onmagenta.png",
+   "bodySha256": "fc9742d23babaa176492dc5f2d86cc517c271022a7761e28b54c9b4c4be313be",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.47407,
+    "H": 0.94815
+   },
+   "scaleFrom": {
+    "bodyH": 135,
+    "from_": "body twScout.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "thornScout-06.front.stand",
+     "srcBox": [
+      72,
+      72,
+      181,
+      219
+     ],
+     "srcAnchor": [
+      71.5,
+      144.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6462,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.6523,
+       "y": 0.9688
+      }
+     }
+    },
+    "idle2": {
+     "frame": "thornScout-06.front.idle2",
+     "srcBox": [
+      338,
+      74,
+      436,
+      219
+     ],
+     "srcAnchor": [
+      61.6,
+      142.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6292,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.6227,
+       "y": 0.9691
+      }
+     }
+    },
+    "marchA": {
+     "frame": "thornScout-06.front.marchA",
+     "srcBox": [
+      582,
+      84,
+      694,
+      229
+     ],
+     "srcAnchor": [
+      73.2,
+      142.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6491,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.6491,
+       "y": 0.9691
+      }
+     }
+    },
+    "marchB": {
+     "frame": "thornScout-06.front.marchB",
+     "srcBox": [
+      840,
+      83,
+      961,
+      216
+     ],
+     "srcAnchor": [
+      48.8,
+      130.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4091,
+       "y": 0.9635
+      },
+      "H": {
+       "x": 0.4056,
+       "y": 0.9635
+      }
+     }
+    },
+    "windup": {
+     "frame": "thornScout-06.front.windup",
+     "srcBox": [
+      92,
+      280,
+      187,
+      477
+     ],
+     "srcAnchor": [
+      53.3,
+      194.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5589,
+       "y": 0.9786
+      },
+      "H": {
+       "x": 0.5589,
+       "y": 0.9735
+      }
+     }
+    },
+    "strike": {
+     "frame": "thornScout-06.front.strike",
+     "srcBox": [
+      329,
+      343,
+      436,
+      486
+     ],
+     "srcAnchor": [
+      70.0,
+      140.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.645,
+       "y": 0.9624
+      },
+      "H": {
+       "x": 0.6511,
+       "y": 0.9624
+      }
+     }
+    },
+    "follow": {
+     "frame": "thornScout-06.front.follow",
+     "srcBox": [
+      613,
+      343,
+      691,
+      483
+     ],
+     "srcAnchor": [
+      43.1,
+      137.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5496,
+       "y": 0.9698
+      },
+      "H": {
+       "x": 0.5496,
+       "y": 0.9627
+      }
+     }
+    },
+    "recoil": {
+     "frame": "thornScout-06.front.recoil",
+     "srcBox": [
+      798,
+      322,
+      986,
+      473
+     ],
+     "srcAnchor": [
+      120.9,
+      148.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6408,
+       "y": 0.9617
+      },
+      "H": {
+       "x": 0.6408,
+       "y": 0.9682
+      }
+     }
+    },
+    "actA": {
+     "frame": "thornScout-06.front.actA",
+     "srcBox": [
+      112,
+      526,
+      205,
+      728
+     ],
+     "srcAnchor": [
+      32.1,
+      199.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3526,
+       "y": 0.9729
+      },
+      "H": {
+       "x": 0.3526,
+       "y": 0.9729
+      }
+     }
+    },
+    "actB": {
+     "frame": "thornScout-06.front.actB",
+     "srcBox": [
+      304,
+      591,
+      435,
+      726
+     ],
+     "srcAnchor": [
+      96.7,
+      132.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7319,
+       "y": 0.9633
+      },
+      "H": {
+       "x": 0.7319,
+       "y": 0.9633
+      }
+     }
+    },
+    "fall": {
+     "frame": "thornScout-06.front.fall",
+     "srcBox": [
+      623,
+      526,
+      762,
+      725
+     ],
+     "srcAnchor": [
+      31.7,
+      196.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2357,
+       "y": 0.9783
+      },
+      "H": {
+       "x": 0.2357,
+       "y": 0.9732
+      }
+     }
+    },
+    "deadA": {
+     "frame": "thornScout-06.front.deadA",
+     "srcBox": [
+      875,
+      578,
+      1022,
+      679
+     ],
+     "srcAnchor": [
+      73.5,
+      74.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4978,
+       "y": 0.7216
+      },
+      "H": {
+       "x": 0.5013,
+       "y": 0.7216
+      }
+     }
+    },
+    "deadB": {
+     "frame": "thornScout-06.front.deadB",
+     "srcBox": [
+      3,
+      900,
+      161,
+      1017
+     ],
+     "srcAnchor": [
+      95.4,
+      86.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6003,
+       "y": 0.7328
+      },
+      "H": {
+       "x": 0.6003,
+       "y": 0.7264
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "thornScout-06.front.fleeA",
+     "srcBox": [
+      338,
+      865,
+      437,
+      999
+     ],
+     "srcAnchor": [
+      59.2,
+      131.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5932,
+       "y": 0.9561
+      },
+      "H": {
+       "x": 0.5932,
+       "y": 0.9634
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "thornScout-06.front.fleeB",
+     "srcBox": [
+      615,
+      868,
+      694,
+      989
+     ],
+     "srcAnchor": [
+      14.1,
+      118.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.197,
+       "y": 0.9651
+      },
+      "H": {
+       "x": 0.1945,
+       "y": 0.957
+      }
+     }
+    },
+    "cheer": {
+     "frame": "thornScout-06.front.cheer",
+     "srcBox": [
+      876,
+      792,
+      949,
+      984
+     ],
+     "srcAnchor": [
+      36.8,
+      189.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4985,
+       "y": 0.9742
+      },
+      "H": {
+       "x": 0.5054,
+       "y": 0.9742
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "15/16",
+    "failing": [
+     "fall"
+    ],
+    "inherit": 0.831,
+    "variety": true,
+    "marchIoU": 0.501,
+    "rimAfter": 0.9,
+    "edgeDev": 1.42,
+    "keyIn": 0.061,
+    "side": 0.149,
+    "valueBelow": 27.7,
+    "identityDE": 6.0,
+    "consHist": [
+     "follow",
+     0.625
+    ],
+    "consDE": [
+     "follow",
+     5.5
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ts06.front.redress.nb21.png",
+    "marks": "yypppy"
+   },
+   "status": "pass",
+   "failedGates": [],
+   "rolls": 1,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0178,
+    "meanShare": 0.0061
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.085,
+    "lockedShareMean": 0.051,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdB/ts06.back.redress.nb21.png",
+   "sheetSha256": "82c18c6721d384ed2aeb512947219907112a7f2cce94fc056a92bdf159fb75eb",
+   "body": "stage-b/work/cmdB/refs/cmdLevy.back.onmagenta.png",
+   "bodySha256": "9e2eda2e86329148d4d58bf47a233388b2a6a95f5ee279c016030e70b782849b",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.52033,
+    "H": 1.04065
+   },
+   "scaleFrom": {
+    "bodyH": 123,
+    "from_": "body twScout.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "thornScout-06.back.stand",
+     "srcBox": [
+      87,
+      39,
+      173,
+      173
+     ],
+     "srcAnchor": [
+      33.4,
+      131.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.391,
+       "y": 0.9606
+      },
+      "H": {
+       "x": 0.3952,
+       "y": 0.9673
+      }
+     }
+    },
+    "idle2": {
+     "frame": "thornScout-06.back.idle2",
+     "srcBox": [
+      345,
+      41,
+      434,
+      174
+     ],
+     "srcAnchor": [
+      31.8,
+      130.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3655,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.3618,
+       "y": 0.9668
+      }
+     }
+    },
+    "marchA": {
+     "frame": "thornScout-06.back.marchA",
+     "srcBox": [
+      601,
+      43,
+      689,
+      188
+     ],
+     "srcAnchor": [
+      18.6,
+      142.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2225,
+       "y": 0.9725
+      },
+      "H": {
+       "x": 0.2225,
+       "y": 0.9663
+      }
+     }
+    },
+    "marchB": {
+     "frame": "thornScout-06.back.marchB",
+     "srcBox": [
+      853,
+      44,
+      943,
+      180
+     ],
+     "srcAnchor": [
+      10.4,
+      133.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1308,
+       "y": 0.9617
+      },
+      "H": {
+       "x": 0.1308,
+       "y": 0.9617
+      }
+     }
+    },
+    "windup": {
+     "frame": "thornScout-06.back.windup",
+     "srcBox": [
+      73,
+      292,
+      164,
+      435
+     ],
+     "srcAnchor": [
+      46.0,
+      140.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5089,
+       "y": 0.9717
+      },
+      "H": {
+       "x": 0.5037,
+       "y": 0.9653
+      }
+     }
+    },
+    "strike": {
+     "frame": "thornScout-06.back.strike",
+     "srcBox": [
+      348,
+      301,
+      436,
+      444
+     ],
+     "srcAnchor": [
+      14.5,
+      140.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.178,
+       "y": 0.9717
+      },
+      "H": {
+       "x": 0.178,
+       "y": 0.9653
+      }
+     }
+    },
+    "follow": {
+     "frame": "thornScout-06.back.follow",
+     "srcBox": [
+      603,
+      301,
+      679,
+      443
+     ],
+     "srcAnchor": [
+      18.1,
+      139.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.248,
+       "y": 0.9648
+      },
+      "H": {
+       "x": 0.251,
+       "y": 0.9648
+      }
+     }
+    },
+    "recoil": {
+     "frame": "thornScout-06.back.recoil",
+     "srcBox": [
+      814,
+      304,
+      988,
+      440
+     ],
+     "srcAnchor": [
+      64.5,
+      133.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3716,
+       "y": 0.9617
+      },
+      "H": {
+       "x": 0.3736,
+       "y": 0.9617
+      }
+     }
+    },
+    "actA": {
+     "frame": "thornScout-06.back.actA",
+     "srcBox": [
+      59,
+      529,
+      144,
+      685
+     ],
+     "srcAnchor": [
+      60.6,
+      153.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7072,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.7072,
+       "y": 0.9712
+      }
+     }
+    },
+    "actB": {
+     "frame": "thornScout-06.back.actB",
+     "srcBox": [
+      345,
+      552,
+      458,
+      686
+     ],
+     "srcAnchor": [
+      32.1,
+      131.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2902,
+       "y": 0.9606
+      },
+      "H": {
+       "x": 0.2902,
+       "y": 0.9673
+      }
+     }
+    },
+    "fall": {
+     "frame": "thornScout-06.back.fall",
+     "srcBox": [
+      536,
+      618,
+      662,
+      758
+     ],
+     "srcAnchor": [
+      118.6,
+      137.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.9222,
+       "y": 0.9638
+      },
+      "H": {
+       "x": 0.929,
+       "y": 0.9638
+      }
+     }
+    },
+    "deadA": {
+     "frame": "thornScout-06.back.deadA",
+     "srcBox": [
+      782,
+      616,
+      916,
+      757
+     ],
+     "srcAnchor": [
+      67.1,
+      104.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4988,
+       "y": 0.7349
+      },
+      "H": {
+       "x": 0.5023,
+       "y": 0.73
+      }
+     }
+    },
+    "deadB": {
+     "frame": "thornScout-06.back.deadB",
+     "srcBox": [
+      99,
+      791,
+      241,
+      895
+     ],
+     "srcAnchor": [
+      58.7,
+      76.2
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.415,
+       "y": 0.7259
+      },
+      "H": {
+       "x": 0.415,
+       "y": 0.7259
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "thornScout-06.back.fleeA",
+     "srcBox": [
+      341,
+      811,
+      428,
+      958
+     ],
+     "srcAnchor": [
+      17.9,
+      144.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2194,
+       "y": 0.9734
+      },
+      "H": {
+       "x": 0.2171,
+       "y": 0.9672
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "thornScout-06.back.fleeB",
+     "srcBox": [
+      592,
+      811,
+      666,
+      951
+     ],
+     "srcAnchor": [
+      7.9,
+      137.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1246,
+       "y": 0.9638
+      },
+      "H": {
+       "x": 0.1262,
+       "y": 0.9638
+      }
+     }
+    },
+    "cheer": {
+     "frame": "thornScout-06.back.cheer",
+     "srcBox": [
+      850,
+      781,
+      917,
+      941
+     ],
+     "srcAnchor": [
+      37.6,
+      157.0
+     ],
+     "atlas": {
+      "S": "thornScout.S.0.png",
+      "H": "thornScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5558,
+       "y": 0.9728
+      },
+      "H": {
+       "x": 0.5558,
+       "y": 0.9671
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "14/16",
+    "failing": [
+     "deadB",
+     "fall"
+    ],
+    "inherit": 0.897,
+    "variety": true,
+    "marchIoU": 0.537,
+    "rimAfter": 0.3,
+    "edgeDev": 1.14,
+    "keyIn": 0.095,
+    "side": 0.129,
+    "valueBelow": 26.3,
+    "identityDE": 3.1,
+    "consHist": [
+     "cheer",
+     0.778
+    ],
+    "consDE": [
+     "cheer",
+     3.2
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ts06.back.redress.nb21.png",
+    "marks": "yn-p-y"
+   },
+   "status": "pass",
+   "failedGates": [],
+   "rolls": 1,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0239,
+    "meanShare": 0.0044
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.058,
+    "lockedShareMean": 0.024,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  }
+ },
+ "marks": [
+  {
+   "mark": "the hood of overlapping small dry russet-brown birch leaves",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his long white hair escaping the hood over the shoulders",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his old weathered face with a thin white moustache and no beard",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the cloak of patched brown wool",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the string of small antler-tip charms at the chest",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the long knife of dark iron with a bone grip",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": null,
+ "approved": null,
+ "productionKit": {
+  "weapon": "the long knife of dark iron with a bone grip",
+  "weaponChanged": false,
+  "mantle": null,
+  "note": "unchanged"
+ }
+}

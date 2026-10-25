@@ -1,0 +1,113 @@
+{
+ "id": "cinderIdol-01a-r3",
+ "unit": "cinderIdol",
+ "nation": "cinderHorde",
+ "group": "gods",
+ "subject": "cinderIdol",
+ "promptFile": "stage-b/work/portraits/prompts-used/cinderIdol-cinderHorde.01a.r3.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a-r3",
+ "files": {
+  "master": "01a-r3-512.webp",
+  "game": "01a-r3.webp",
+  "small": "01a-r3-64.webp"
+ },
+ "bytes": {
+  "master": 22078,
+  "game": 7394,
+  "small": 1522
+ },
+ "sourceFile": "stage-b/raw/portraits/cinderIdol-cinderHorde.01a.r3.nb21.png",
+ "sourceSha256": "80a6c8284801a8ab6abc6da3ef6e300907e993f76027fc59c31fae10a62b7911",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a grey clay maquette of this figure: follow its pose, its parts and its framing, the whole figure from head to foot filling the square as it does, seen three-quarter front from a little above. It is a crude blockout: take its pose, its parts and its framing, not its stubby proportions. Paint over it completely: no grey clay and no plain smooth shapes may remain. Image 2 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 2.\n\nA full-length painted portrait of the Cinder Idol, an immobile god of stone and old fire, worshipped with dread, in a regal pose: upright and perfectly still. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the brazier and its smoke about 6% from the top edge and the plinth about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the brazier, the smoke and the top edges of the slab that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the plinth.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the tall upright slab with the brazier face carved into its upper front, and the stepped plinth against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the stone is the pigment in its carved glyphs: dull ember-orange (#C4532C), the Cinder Horde's colour. All metal is dull old gold (#C9A23E), darkened and worn. Nothing in the image glows except the low dull coals in the brazier, the eye-holes and the mouth; there are no flames. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a tall, upright, roughly squared slab of grey granite (#7D7A75), about three times as tall as it is wide, with no arms, no legs and no carved body: a standing stone like the maquette, blackened with soot and crossed by cracks crusted with soot. Face: a brazier face: the upper third of the slab's front is carved into one broad, stern, flat face whose eye-holes and open mouth are dark hollows with dull coals glowing low inside the stone, and the top of the slab is hollowed into a brazier bowl holding a bed of dull red coals that send up a thin, short wisp of grey smoke that fades out well below the top edge of the image; no tall flames. Metal: a band of dull old gold (#C9A23E), darkened and worn around the brazier's rim. Base: it sits on a square, stepped stone plinth. Glyphs: broad, deeply carved glyphs that cover much of the slab's front below the face and the front of the plinth, their wide grooves filled with a pigment of dull ember-orange (#C4532C), the Cinder Horde's colour, so that the colour shows clearly.\nPaint it as described, the whole figure clearly in view.\n\nCorrections from the previous attempt, which must be fixed: the idol must be a standing slab like Image 1, with no arms, no legs, no shoulders and no seated body: its face is carved flat into the slab's upper front; the smoke must fade out well below the top edge; the glyph pigment must show clearly and broadly.",
+ "references": [
+  "cinderIdol.png",
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "stone granite #7D7A75",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: brazier face; plinth base; soot-and-crack veins; glyphs; smoke",
+ "pose": "regal",
+ "tintZone": "the pigment in the carved glyphs",
+ "cardCrop": {
+  "box512": [
+   155,
+   0,
+   369,
+   214
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "brazier face with a carved stern face",
+   "read": true
+  },
+  {
+   "mark": "column of grey smoke",
+   "read": "partly"
+  },
+  {
+   "mark": "soot-crusted cracks",
+   "read": true
+  },
+  {
+   "mark": "stepped plinth",
+   "read": true
+  },
+  {
+   "mark": "carved glyphs in ember-orange pigment",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.0,
+   "bgSpread": 0.4,
+   "floor": 0.3,
+   "top": 0.051,
+   "low": 0.971,
+   "bottomCut": 0.0,
+   "cx": 0.445,
+   "subject": 0.168,
+   "light": 5.8,
+   "rim": 0.646,
+   "read48": 19.4,
+   "muted": 0.0053,
+   "satAll": 0.0082,
+   "side": {
+    "window": 0.0299
+   }
+  },
+  "failed": [],
+  "overridden": [
+   {
+    "gate": "side window 0.0299 < 0.03",
+    "reason": "fix2: window 0.0299 against 0.03, inside the measure's noise; by eye the two rows of carved glyphs on the slab and the row on the plinth read clearly ember-orange at 64 px"
+   }
+  ],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Now a standing slab like its maquette: no arms, no legs; a stern carved face in the upper front with coals glowing in the eyes and mouth, a gold-rimmed brazier of coals on top, two rows of ember glyphs and a glyph band on the stepped plinth. The slab is a little rounded and the face more naturalistic than flat. Side window 0.0299 overridden (the glyphs read ember at 64 px).",
+  "marks": {
+   "brazier face with a carved stern face": true,
+   "column of grey smoke": "partly",
+   "soot-crusted cracks": true,
+   "stepped plinth": true,
+   "carved glyphs in ember-orange pigment": true
+  },
+  "by": "art director (stage B fix2)"
+ }
+}

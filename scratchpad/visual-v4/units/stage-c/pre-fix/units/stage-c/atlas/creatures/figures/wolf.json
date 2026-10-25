@@ -1,0 +1,414 @@
+{
+ "figure": "wolf",
+ "unit": "wolf",
+ "nation": "common",
+ "key": "blue",
+ "layout": "beast",
+ "body": "beast",
+ "cloth": null,
+ "hueLocked": false,
+ "portrait": "stage-b/portraits/common/wolf/01b.webp",
+ "kit": "A Wolf of the deep wood: an old, heavy grey wolf, wild, with no harness, collar, saddle or cloth.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "wolf-S",
+     "scale": 0.3118,
+     "standPx": 58,
+     "bodyHeightSrc": 186,
+     "frames": [
+      "wolf.back.stand",
+      "wolf.back.stand.white",
+      "wolf.back.idle2",
+      "wolf.back.lopeA",
+      "wolf.back.lopeB",
+      "wolf.back.leapA",
+      "wolf.back.leapB",
+      "wolf.back.bite",
+      "wolf.back.howl",
+      "wolf.back.recoil",
+      "wolf.back.recoil.white",
+      "wolf.back.fall",
+      "wolf.back.deadA",
+      "wolf.back.deadB"
+     ]
+    },
+    "H": {
+     "prefix": "wolf-H",
+     "scale": 0.6237,
+     "standPx": 116,
+     "bodyHeightSrc": 186,
+     "frames": [
+      "wolf.back.stand",
+      "wolf.back.stand.white",
+      "wolf.back.idle2",
+      "wolf.back.lopeA",
+      "wolf.back.lopeB",
+      "wolf.back.leapA",
+      "wolf.back.leapB",
+      "wolf.back.bite",
+      "wolf.back.howl",
+      "wolf.back.recoil",
+      "wolf.back.recoil.white",
+      "wolf.back.fall",
+      "wolf.back.deadA",
+      "wolf.back.deadB"
+     ]
+    }
+   },
+   "frames": "frames/wolf.back/",
+   "sheet": "stage-c/raw/creatures/wolf.back.paint.nb21.png",
+   "sha256": "243e392de4790e6f6e1598c940e7e2f3dd6199c38a54afbf0b795678f0e992ec",
+   "model": "gemini-nano-banana-2.1",
+   "job": "wolf.back.paint",
+   "route": "paint",
+   "references": [
+    "stage-c/work/creatures/sbx/refs/guides/wolf.back.png",
+    "stage-b/portraits/common/wolf/01b.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "blue edge pass: 22578 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "cameraCells": "11/12",
+    "cameraFailing": [
+     "bite"
+    ],
+    "cells": {
+     "stand": [
+      0.761,
+      0.617
+     ],
+     "idle2": [
+      0.722,
+      0.593
+     ],
+     "lopeA": [
+      0.731,
+      0.665
+     ],
+     "lopeB": [
+      0.728,
+      0.575
+     ],
+     "leapA": [
+      0.718,
+      0.658
+     ],
+     "leapB": [
+      0.696,
+      0.508
+     ],
+     "bite": [
+      0.472,
+      0.388
+     ],
+     "howl": [
+      0.725,
+      0.612
+     ],
+     "recoil": [
+      0.679,
+      0.567
+     ],
+     "fall": [
+      0.654,
+      0.522
+     ],
+     "deadA": [
+      0.685,
+      0.568
+     ],
+     "deadB": [
+      0.714,
+      0.591
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "lopeA~lopeB": 0.43
+     },
+     "mostAlike": [
+      "lopeA~leapA",
+      0.742
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.933
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.0,
+     "histMin": [
+      "leapB",
+      0.851
+     ],
+     "maxDE": [
+      "leapB",
+      2.3
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 0.0,
+     "afterMax": 0.0
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 29.1,
+     "neutral": {
+      "worstBelow": 22.5,
+      "below": {
+       "plains": 28.5,
+       "farmland": 28.3,
+       "swamp": 22.5,
+       "forest": 22.7
+      },
+      "minContrast": 22.5
+     },
+     "pass": true,
+     "rule": "block 15 L* below every ground"
+    },
+    "fringe": {
+     "spillEdgePct": 7.866,
+     "keyInUnitPct": 0.056,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.59,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "grizzled pale muzzle": "hidden in this view",
+     "scar across the near eye": "hidden in this view",
+     "one fang showing": "hidden in this view",
+     "shaggy ruff": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-wolf.png)"
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "wolf-S",
+     "scale": 0.358,
+     "standPx": 58,
+     "bodyHeightSrc": 162,
+     "frames": [
+      "wolf.front.stand",
+      "wolf.front.stand.white",
+      "wolf.front.idle2",
+      "wolf.front.lopeA",
+      "wolf.front.lopeB",
+      "wolf.front.leapA",
+      "wolf.front.leapB",
+      "wolf.front.bite",
+      "wolf.front.howl",
+      "wolf.front.recoil",
+      "wolf.front.recoil.white",
+      "wolf.front.fall",
+      "wolf.front.deadA",
+      "wolf.front.deadB"
+     ]
+    },
+    "H": {
+     "prefix": "wolf-H",
+     "scale": 0.716,
+     "standPx": 116,
+     "bodyHeightSrc": 162,
+     "frames": [
+      "wolf.front.stand",
+      "wolf.front.stand.white",
+      "wolf.front.idle2",
+      "wolf.front.lopeA",
+      "wolf.front.lopeB",
+      "wolf.front.leapA",
+      "wolf.front.leapB",
+      "wolf.front.bite",
+      "wolf.front.howl",
+      "wolf.front.recoil",
+      "wolf.front.recoil.white",
+      "wolf.front.fall",
+      "wolf.front.deadA",
+      "wolf.front.deadB"
+     ]
+    }
+   },
+   "frames": "frames/wolf.front/",
+   "sheet": "stage-c/raw/creatures/wolf.front.fill.nb21.png",
+   "sha256": "8f4e0074a34d02e583cd588b7fd6778377d48ef361529acce8420b97754852ca",
+   "model": "gemini-nano-banana-2.1",
+   "job": "wolf.front.fill",
+   "route": "fill",
+   "references": [
+    "stage-c/work/creatures/bases/wolf.front.fill.base.png",
+    "stage-b/portraits/common/wolf/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "note": "blue edge pass: 21234 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [
+    "wolf.front.paint"
+   ],
+   "checks": {
+    "cameraCells": "8/12",
+    "cameraFailing": [
+     "bite",
+     "deadB",
+     "howl",
+     "recoil"
+    ],
+    "cells": {
+     "stand": [
+      0.61,
+      0.272
+     ],
+     "idle2": [
+      0.554,
+      0.189
+     ],
+     "lopeA": [
+      0.58,
+      0.425
+     ],
+     "lopeB": [
+      0.554,
+      0.263
+     ],
+     "leapA": [
+      0.6,
+      0.488
+     ],
+     "leapB": [
+      0.647,
+      0.391
+     ],
+     "bite": [
+      0.461,
+      0.344
+     ],
+     "howl": [
+      0.377,
+      -0.024
+     ],
+     "recoil": [
+      0.352,
+      0.204
+     ],
+     "fall": [
+      0.752,
+      0.556
+     ],
+     "deadA": [
+      0.717,
+      0.504
+     ],
+     "deadB": [
+      0.35,
+      0.177
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "lopeA~lopeB": 0.59
+     },
+     "mostAlike": [
+      "lopeA~bite",
+      0.688
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.963
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.0,
+     "histMin": [
+      "lopeA",
+      0.686
+     ],
+     "maxDE": [
+      "lopeA",
+      6.1
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 0.0,
+     "afterMax": 0.0
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 29.1,
+     "neutral": {
+      "worstBelow": 27.5,
+      "below": {
+       "plains": 35.4,
+       "farmland": 35.1,
+       "swamp": 27.5,
+       "forest": 27.7
+      },
+      "minContrast": 27.5
+     },
+     "pass": true,
+     "rule": "block 15 L* below every ground"
+    },
+    "fringe": {
+     "spillEdgePct": 10.385,
+     "keyInUnitPct": 0.081,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.06,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "grizzled pale muzzle": "partly",
+     "scar across the near eye": false,
+     "one fang showing": "partly",
+     "shaggy ruff": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-wolf.png)"
+   }
+  }
+ },
+ "approved": null
+}

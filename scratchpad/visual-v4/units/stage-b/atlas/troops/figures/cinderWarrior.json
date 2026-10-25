@@ -1,0 +1,401 @@
+{
+ "figure": "cinderWarrior",
+ "unit": "cinderWarrior",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "A Cinder Warrior: a shirt of blackened iron scales with rusted edges over a charcoal tunic, a rounded dark iron helm with a nasal and a short stiff dull ember-orange horsehair crest running front to back, a short dull ember-orange cape over both shoulders down to the shoulder blades, a dull ember-orange tabard over the scales from the chest to mid-thigh, front and back, a round wooden shield whose face is painted dull ember orange with a black flame sigil, with a dark iron rim and boss, a jagged single-bit dark iron axe with a notched edge, ash-grey skin.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4029,
+     "standPx": 56,
+     "frames": [
+      "cinderWarrior.back.stand",
+      "cinderWarrior.back.stand.white",
+      "cinderWarrior.back.idle2",
+      "cinderWarrior.back.marchA",
+      "cinderWarrior.back.marchB",
+      "cinderWarrior.back.windup",
+      "cinderWarrior.back.strike",
+      "cinderWarrior.back.follow",
+      "cinderWarrior.back.brace",
+      "cinderWarrior.back.recoil",
+      "cinderWarrior.back.recoil.white",
+      "cinderWarrior.back.fall",
+      "cinderWarrior.back.deadA",
+      "cinderWarrior.back.deadB",
+      "cinderWarrior.back.fleeA",
+      "cinderWarrior.back.fleeB",
+      "cinderWarrior.back.cheer",
+      "cinderWarrior.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.8058,
+     "standPx": 112,
+     "frames": [
+      "cinderWarrior.back.stand",
+      "cinderWarrior.back.stand.white",
+      "cinderWarrior.back.idle2",
+      "cinderWarrior.back.marchA",
+      "cinderWarrior.back.marchB",
+      "cinderWarrior.back.windup",
+      "cinderWarrior.back.strike",
+      "cinderWarrior.back.follow",
+      "cinderWarrior.back.brace",
+      "cinderWarrior.back.recoil",
+      "cinderWarrior.back.recoil.white",
+      "cinderWarrior.back.fall",
+      "cinderWarrior.back.deadA",
+      "cinderWarrior.back.deadB",
+      "cinderWarrior.back.fleeA",
+      "cinderWarrior.back.fleeB",
+      "cinderWarrior.back.cheer",
+      "cinderWarrior.back.dropped"
+     ]
+    }
+   },
+   "sheet": "pilot/raw/r3/cw.back.g3pro.png",
+   "sha256": "d4c744555bdd9bc391213e037bc658ac6cac7468b1e7ad41403ba1f993e7b7ca",
+   "model": "gemini-3-pro-image",
+   "job": null,
+   "references": [
+    "cinderWarrior.back.png",
+    "05.webp",
+    "anchor-style.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "14/15",
+    "cells": {
+     "stand": [
+      0.8,
+      0.159
+     ],
+     "idle2": [
+      0.803,
+      0.145
+     ],
+     "marchA": [
+      0.77,
+      0.206
+     ],
+     "marchB": [
+      0.759,
+      0.25
+     ],
+     "windup": [
+      0.644,
+      0.035
+     ],
+     "strike": [
+      0.761,
+      0.348
+     ],
+     "follow": [
+      0.565,
+      0.04
+     ],
+     "brace": [
+      0.83,
+      0.227
+     ],
+     "recoil": [
+      0.756,
+      0.116
+     ],
+     "fall": [
+      0.839,
+      0.527
+     ],
+     "deadA": [
+      0.409,
+      0.286
+     ],
+     "deadB": [
+      0.659,
+      0.307
+     ],
+     "fleeA": [
+      0.822,
+      0.404
+     ],
+     "fleeB": [
+      0.803,
+      0.504
+     ],
+     "cheer": [
+      0.819,
+      0.171
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.64,
+     "marchLegsIoU": 0.501,
+     "mostAlike": [
+      "marchA~strike",
+      0.665
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.986,
+      "marchA": 1.094,
+      "marchB": 1.043
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.495,
+     "histMin": [
+      "fall",
+      0.724
+     ],
+     "maxDE": [
+      "strike",
+      8.6
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 32.4,
+     "afterMax": 0.5
+    },
+    "side": {
+     "neutral": {
+      "share": 0.377,
+      "worstBelow": 26.5,
+      "below": {
+       "plains": 35.1,
+       "farmland": 34.7,
+       "swamp": 26.5,
+       "forest": 26.8
+      }
+     },
+     "sideKeyline": {
+      "share": 0.63,
+      "worstBelow": 23.6,
+      "below": {
+       "plains": 32.3,
+       "farmland": 31.9,
+       "swamp": 23.6,
+       "forest": 23.8
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 9.127,
+     "keyInUnitPct": 0.029,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.34,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.3415,
+     "standPx": 56,
+     "frames": [
+      "cinderWarrior.front.stand",
+      "cinderWarrior.front.stand.white",
+      "cinderWarrior.front.idle2",
+      "cinderWarrior.front.marchA",
+      "cinderWarrior.front.marchB",
+      "cinderWarrior.front.windup",
+      "cinderWarrior.front.strike",
+      "cinderWarrior.front.follow",
+      "cinderWarrior.front.brace",
+      "cinderWarrior.front.recoil",
+      "cinderWarrior.front.recoil.white",
+      "cinderWarrior.front.fall",
+      "cinderWarrior.front.deadA",
+      "cinderWarrior.front.deadB",
+      "cinderWarrior.front.fleeA",
+      "cinderWarrior.front.fleeB",
+      "cinderWarrior.front.cheer",
+      "cinderWarrior.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.6829,
+     "standPx": 112,
+     "frames": [
+      "cinderWarrior.front.stand",
+      "cinderWarrior.front.stand.white",
+      "cinderWarrior.front.idle2",
+      "cinderWarrior.front.marchA",
+      "cinderWarrior.front.marchB",
+      "cinderWarrior.front.windup",
+      "cinderWarrior.front.strike",
+      "cinderWarrior.front.follow",
+      "cinderWarrior.front.brace",
+      "cinderWarrior.front.recoil",
+      "cinderWarrior.front.recoil.white",
+      "cinderWarrior.front.fall",
+      "cinderWarrior.front.deadA",
+      "cinderWarrior.front.deadB",
+      "cinderWarrior.front.fleeA",
+      "cinderWarrior.front.fleeB",
+      "cinderWarrior.front.cheer",
+      "cinderWarrior.front.dropped"
+     ]
+    }
+   },
+   "sheet": "pilot/raw/ad/cw.front.rs.nb21.png",
+   "sha256": "2cb26e2ccc75dc900e9e913dc8d8807f95739d5bc3bd3b473fbbcd045a0eb5cf",
+   "model": "gemini-nano-banana-2.1",
+   "job": null,
+   "references": [
+    "cw.front.nb21.png",
+    "anchor-style.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.75,
+      0.098
+     ],
+     "idle2": [
+      0.707,
+      0.261
+     ],
+     "marchA": [
+      0.73,
+      0.111
+     ],
+     "marchB": [
+      0.759,
+      0.204
+     ],
+     "windup": [
+      0.821,
+      0.303
+     ],
+     "strike": [
+      0.563,
+      0.244
+     ],
+     "follow": [
+      0.452,
+      0.055
+     ],
+     "brace": [
+      0.508,
+      -0.003
+     ],
+     "recoil": [
+      0.718,
+      0.195
+     ],
+     "fall": [
+      0.789,
+      0.598
+     ],
+     "deadA": [
+      0.826,
+      0.529
+     ],
+     "deadB": [
+      0.876,
+      0.763
+     ],
+     "fleeA": [
+      0.723,
+      0.192
+     ],
+     "fleeB": [
+      0.811,
+      0.512
+     ],
+     "cheer": [
+      0.767,
+      0.202
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.624,
+     "marchLegsIoU": 0.487,
+     "mostAlike": [
+      "stand~marchA",
+      0.808
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.994,
+      "marchA": 0.988,
+      "marchB": 0.945
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.484,
+     "histMin": [
+      "fleeB",
+      0.742
+     ],
+     "maxDE": [
+      "fleeA",
+      11.9
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 29.1,
+     "afterMax": 0.3
+    },
+    "side": {
+     "neutral": {
+      "share": 0.373,
+      "worstBelow": 27.3,
+      "below": {
+       "plains": 35.8,
+       "farmland": 35.4,
+       "swamp": 27.3,
+       "forest": 27.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.608,
+      "worstBelow": 24.2,
+      "below": {
+       "plains": 32.8,
+       "farmland": 32.3,
+       "swamp": 24.2,
+       "forest": 24.4
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 9.917,
+     "keyInUnitPct": 0.116,
+     "fringePct": 0.0,
+     "edgeDevPct": 4.49,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

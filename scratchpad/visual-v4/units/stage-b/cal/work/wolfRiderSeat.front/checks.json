@@ -1,0 +1,252 @@
+{
+ "figure": "wolfRiderSeat",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.298,
+  "iouMirrored": 0.282,
+  "aspectRatio": 0.864,
+  "headDx": -0.437,
+  "guideHeadDx": -0.057,
+  "pass": false
+ },
+ "variety": {
+  "mostAlike": [
+   "stand~windup",
+   0.625
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 14.714,
+  "keyInUnitPct": 0.408,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.18,
+  "pass_": true
+ },
+ "side": {
+  "plains": {
+   "share": 0.0,
+   "blockL": 48.5,
+   "groundL": 67.7,
+   "below": 19.3
+  },
+  "farmland": {
+   "share": 0.0,
+   "blockL": 48.2,
+   "groundL": 67.3,
+   "below": 19.1
+  },
+  "swamp": {
+   "share": 0.0,
+   "blockL": 43.2,
+   "groundL": 58.5,
+   "below": 15.3
+  },
+  "forest": {
+   "share": 0.0,
+   "blockL": 43.3,
+   "groundL": 58.7,
+   "below": 15.4
+  },
+  "share": 0.0,
+  "pass": false
+ },
+ "thresholds": {
+  "cameraIoU": 0.6,
+  "aspectRatio": [
+   0.75,
+   1.33
+  ],
+  "headDx": 0.1,
+  "facingMargin": 0.03,
+  "marchIoU": 0.86,
+  "marchLegsIoU": 0.72,
+  "distinctIoU": 0.92,
+  "marchIoURobe": 0.95,
+  "distinctIoURobe": 0.95,
+  "scaleSpread": 0.15,
+  "fringePct": 0.2,
+  "keyInUnitPct": 0.5,
+  "edgeDevPct": 8.0,
+  "sideShare": 0.3,
+  "valueBelowGround": 15.0
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "frames": {
+   "lopeA": {
+    "hist": 0.925,
+    "de": 1.1,
+    "cloth": 0.0
+   },
+   "lopeB": {
+    "hist": 0.936,
+    "de": 0.6,
+    "cloth": 0.0
+   },
+   "leapA": {
+    "hist": 0.905,
+    "de": 1.3,
+    "cloth": 0.0
+   },
+   "leapB": {
+    "hist": 0.916,
+    "de": 0.7,
+    "cloth": 0.0
+   },
+   "charge": {
+    "hist": 0.891,
+    "de": 2.4,
+    "cloth": 0.0
+   },
+   "windup": {
+    "hist": 0.905,
+    "de": 1.2,
+    "cloth": 0.0
+   },
+   "strike": {
+    "hist": 0.89,
+    "de": 1.9,
+    "cloth": 0.0
+   },
+   "bite": {
+    "hist": 0.856,
+    "de": 1.1,
+    "cloth": 0.002
+   },
+   "recoil": {
+    "hist": 0.866,
+    "de": 1.3,
+    "cloth": 0.001
+   },
+   "fall": {
+    "hist": 0.87,
+    "de": 2.2,
+    "cloth": 0.0
+   },
+   "deadA": {
+    "hist": 0.86,
+    "de": 1.6,
+    "cloth": 0.0
+   },
+   "deadB": {
+    "hist": 0.576,
+    "de": 13.3,
+    "cloth": 0.0
+   },
+   "boltA": {
+    "hist": 0.905,
+    "de": 0.8,
+    "cloth": 0.0
+   },
+   "boltB": {
+    "hist": 0.905,
+    "de": 1.0,
+    "cloth": 0.0
+   },
+   "cheer": {
+    "hist": 0.927,
+    "de": 0.4,
+    "cloth": 0.0
+   }
+  },
+  "histMin": [
+   "deadB",
+   0.576
+  ],
+  "maxDE": [
+   "deadB",
+   13.3
+  ],
+  "clothRatio": [
+   0.0,
+   2000.0
+  ],
+  "pass": false
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.298,
+    0.017
+   ],
+   "lopeA": [
+    0.246,
+    -0.015
+   ],
+   "lopeB": [
+    0.252,
+    0.009
+   ],
+   "leapA": [
+    0.543,
+    0.081
+   ],
+   "leapB": [
+    0.684,
+    0.136
+   ],
+   "charge": [
+    0.562,
+    0.55
+   ],
+   "windup": [
+    0.521,
+    0.105
+   ],
+   "strike": [
+    0.261,
+    0.239
+   ],
+   "bite": [
+    0.628,
+    0.105
+   ],
+   "recoil": [
+    0.41,
+    0.066
+   ],
+   "fall": [
+    0.475,
+    0.099
+   ],
+   "deadA": [
+    0.495,
+    0.264
+   ],
+   "deadB": [
+    0.832,
+    0.079
+   ],
+   "boltA": [
+    0.667,
+    0.068
+   ],
+   "boltB": [
+    0.708,
+    0.185
+   ],
+   "cheer": [
+    0.503,
+    0.108
+   ]
+  },
+  "medianIoU": 0.512,
+  "medianMargin": 0.102,
+  "follow": "6/16",
+  "followShare": 0.38
+ },
+ "rim": {
+  "beforeMax": 1.6,
+  "afterMax": 0.4
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/wolfRiderSeat.front.g3pro.png"
+}

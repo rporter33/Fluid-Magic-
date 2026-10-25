@@ -1,0 +1,52 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Dominions 6 Manual"
+  subtitle: "An unofficial web edition of the Dominions 6 manual"
+  search: true
+  page-navigation: true
+  sidebar:
+    style: docked
+    collapse-level: 999
+  chapters:
+    - index.qmd
+    - part: "Core Rules"
+      chapters:
+        - chapters/01-introduction.qmd
+        - chapters/02-the-basics.qmd
+        - chapters/03-the-pretender.qmd
+        - chapters/04-units.qmd
+        - chapters/05-movement.qmd
+        - chapters/06-combat.qmd
+        - chapters/07-magic.qmd
+        - chapters/08-dominion.qmd
+    - part: "Nations"
+      chapters:
+        - chapters/09-the-origins-of-nations.qmd
+    - part: "Magic Reference"
+      chapters:
+        - chapters/10-magic-items.qmd
+        - chapters/11-path-boosters.qmd
+        - chapters/12-battlefield-spells.qmd
+        - chapters/13-summoning-rituals.qmd
+        - chapters/14-global-enchantments.qmd
+        - chapters/15-other-rituals.qmd
+    - part: "Nation Index"
+      chapters:
+        - chapters/16-nation-index.qmd
+    - part: "Appendix"
+      chapters:
+        - chapters/17-launch-options.qmd
+
+format:
+  html:
+    theme:
+      - superhero
+      - assets/css/custom.scss
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    grid:
+      sidebar-width: 320px

@@ -1,0 +1,395 @@
+{
+ "figure": "swampFighter",
+ "unit": "swampFighter",
+ "nation": "independent",
+ "key": "magenta",
+ "cloth": "#8C8A80",
+ "hueLocked": false,
+ "kit": "A Swamp Fighter of the reed marshes, sworn to no nation: a short cape of woven dry straw-coloured reeds over the shoulders, a hood of undyed grey wool worn up, a padded jerkin of tan linen, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; forearms wrapped in strips of cloth; legs wrapped to the knee in mud-stained leather; a long fishing spear with a barbed iron head, its shaft bound with reed cord. No shield. The reeds are dry and tan, never green; no colours but grey, tan, straw, leather brown and iron.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.487,
+     "standPx": 56,
+     "frames": [
+      "swampFighter.back.stand",
+      "swampFighter.back.stand.white",
+      "swampFighter.back.idle2",
+      "swampFighter.back.marchA",
+      "swampFighter.back.marchB",
+      "swampFighter.back.windup",
+      "swampFighter.back.strike",
+      "swampFighter.back.follow",
+      "swampFighter.back.brace",
+      "swampFighter.back.recoil",
+      "swampFighter.back.recoil.white",
+      "swampFighter.back.fall",
+      "swampFighter.back.deadA",
+      "swampFighter.back.deadB",
+      "swampFighter.back.fleeA",
+      "swampFighter.back.fleeB",
+      "swampFighter.back.cheer",
+      "swampFighter.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.9739,
+     "standPx": 112,
+     "frames": [
+      "swampFighter.back.stand",
+      "swampFighter.back.stand.white",
+      "swampFighter.back.idle2",
+      "swampFighter.back.marchA",
+      "swampFighter.back.marchB",
+      "swampFighter.back.windup",
+      "swampFighter.back.strike",
+      "swampFighter.back.follow",
+      "swampFighter.back.brace",
+      "swampFighter.back.recoil",
+      "swampFighter.back.recoil.white",
+      "swampFighter.back.fall",
+      "swampFighter.back.deadA",
+      "swampFighter.back.deadB",
+      "swampFighter.back.fleeA",
+      "swampFighter.back.fleeB",
+      "swampFighter.back.cheer",
+      "swampFighter.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.swampFighter.back.g3pro.png",
+   "sha256": "346604ecf376636fe2eff065c6ef505446e9c04cbe39e01ada6d9a7597730ba9",
+   "model": "gemini-3-pro-image",
+   "job": "swampFighter.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/swampFighter.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.back.from-cw.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-reedman/01.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.7,
+      0.041
+     ],
+     "idle2": [
+      0.76,
+      0.039
+     ],
+     "marchA": [
+      0.66,
+      0.054
+     ],
+     "marchB": [
+      0.742,
+      0.199
+     ],
+     "windup": [
+      0.521,
+      0.025
+     ],
+     "strike": [
+      0.72,
+      0.22
+     ],
+     "follow": [
+      0.747,
+      0.345
+     ],
+     "brace": [
+      0.732,
+      0.128
+     ],
+     "recoil": [
+      0.824,
+      0.176
+     ],
+     "fall": [
+      0.766,
+      0.761
+     ],
+     "deadA": [
+      0.805,
+      0.803
+     ],
+     "deadB": [
+      0.371,
+      0.37
+     ],
+     "fleeA": [
+      0.843,
+      0.456
+     ],
+     "fleeB": [
+      0.764,
+      0.403
+     ],
+     "cheer": [
+      0.815,
+      0.124
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.604,
+     "marchLegsIoU": 0.476,
+     "mostAlike": [
+      "marchA~strike",
+      0.68
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.017,
+      "marchA": 1.087,
+      "marchB": 1.017
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.063,
+     "histMin": [
+      "recoil",
+      0.649
+     ],
+     "maxDE": [
+      "recoil",
+      7.8
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 49.2,
+     "afterMax": 0.3
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 16.5
+     },
+     "sideKeyline": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 16.5
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.539,
+     "keyInUnitPct": 0.052,
+     "fringePct": 0.0,
+     "edgeDevPct": 6.34,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.4341,
+     "standPx": 56,
+     "frames": [
+      "swampFighter.front.stand",
+      "swampFighter.front.stand.white",
+      "swampFighter.front.idle2",
+      "swampFighter.front.marchA",
+      "swampFighter.front.marchB",
+      "swampFighter.front.windup",
+      "swampFighter.front.strike",
+      "swampFighter.front.follow",
+      "swampFighter.front.brace",
+      "swampFighter.front.recoil",
+      "swampFighter.front.recoil.white",
+      "swampFighter.front.fall",
+      "swampFighter.front.deadA",
+      "swampFighter.front.deadB",
+      "swampFighter.front.fleeA",
+      "swampFighter.front.fleeB",
+      "swampFighter.front.cheer",
+      "swampFighter.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.8682,
+     "standPx": 112,
+     "frames": [
+      "swampFighter.front.stand",
+      "swampFighter.front.stand.white",
+      "swampFighter.front.idle2",
+      "swampFighter.front.marchA",
+      "swampFighter.front.marchB",
+      "swampFighter.front.windup",
+      "swampFighter.front.strike",
+      "swampFighter.front.follow",
+      "swampFighter.front.brace",
+      "swampFighter.front.recoil",
+      "swampFighter.front.recoil.white",
+      "swampFighter.front.fall",
+      "swampFighter.front.deadA",
+      "swampFighter.front.deadB",
+      "swampFighter.front.fleeA",
+      "swampFighter.front.fleeB",
+      "swampFighter.front.cheer",
+      "swampFighter.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r2.swampFighter.front.dress.nb21.png",
+   "sha256": "85312b7a95e4a635942af25aed928b04d2af1b76691e5c0d2bd16ed107edd790",
+   "model": "gemini-nano-banana-2.1",
+   "job": "swampFighter.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.lightInfantry.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-reedman/01.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.756,
+      0.058
+     ],
+     "idle2": [
+      0.611,
+      0.54
+     ],
+     "marchA": [
+      0.785,
+      0.147
+     ],
+     "marchB": [
+      0.605,
+      0.231
+     ],
+     "windup": [
+      0.648,
+      0.093
+     ],
+     "strike": [
+      0.451,
+      0.244
+     ],
+     "follow": [
+      0.812,
+      0.38
+     ],
+     "brace": [
+      0.743,
+      0.281
+     ],
+     "recoil": [
+      0.759,
+      0.211
+     ],
+     "fall": [
+      0.47,
+      0.201
+     ],
+     "deadA": [
+      0.568,
+      0.251
+     ],
+     "deadB": [
+      0.69,
+      0.676
+     ],
+     "fleeA": [
+      0.729,
+      0.048
+     ],
+     "fleeB": [
+      0.727,
+      0.476
+     ],
+     "cheer": [
+      0.66,
+      0.114
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.468,
+     "marchLegsIoU": 0.486,
+     "mostAlike": [
+      "stand~windup",
+      0.712
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.0,
+      "marchA": 0.984,
+      "marchB": 0.922
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.003,
+     "histMin": [
+      "brace",
+      0.782
+     ],
+     "maxDE": [
+      "cheer",
+      4.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 68.0,
+     "afterMax": 0.4
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 17.7
+     },
+     "sideKeyline": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 17.7
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.943,
+     "keyInUnitPct": 0.124,
+     "fringePct": 0.0,
+     "edgeDevPct": 5.02,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

@@ -1,0 +1,253 @@
+{
+ "figure": "longbowHunter",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.76,
+  "iouMirrored": 0.701,
+  "aspectRatio": 1.354,
+  "headDx": -0.044,
+  "guideHeadDx": -0.066,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.524,
+  "marchLegsIoU": 0.377,
+  "mostAlike": [
+   "draw~loose",
+   0.871
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.027,
+   "marchB": 0.966
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 0.208,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 0.0,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.372,
+  "histMin": [
+   "strike",
+   0.831
+  ],
+  "maxDE": [
+   "recoil",
+   2.2
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.857,
+    "de": 0.7,
+    "cloth": 0.34
+   },
+   "deadB": {
+    "hist": 0.797,
+    "de": 5.0,
+    "cloth": 0.458
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.76,
+    0.059
+   ],
+   "marchA": [
+    0.734,
+    0.141
+   ],
+   "marchB": [
+    0.76,
+    0.21
+   ],
+   "nock": [
+    0.811,
+    0.143
+   ],
+   "draw": [
+    0.793,
+    0.042
+   ],
+   "loose": [
+    0.793,
+    0.06
+   ],
+   "windup": [
+    0.763,
+    0.192
+   ],
+   "strike": [
+    0.837,
+    0.374
+   ],
+   "recoil": [
+    0.643,
+    0.161
+   ],
+   "fall": [
+    0.651,
+    0.479
+   ],
+   "deadA": [
+    0.845,
+    0.587
+   ],
+   "deadB": [
+    0.802,
+    0.653
+   ],
+   "fleeA": [
+    0.895,
+    0.311
+   ],
+   "fleeB": [
+    0.883,
+    0.536
+   ],
+   "cheer": [
+    0.688,
+    0.017
+   ]
+  },
+  "medianIoU": 0.793,
+  "medianMargin": 0.192,
+  "follow": "15/15",
+  "followShare": 1.0
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.619,
+    -0.014
+   ],
+   "marchA": [
+    0.657,
+    0.063
+   ],
+   "marchB": [
+    0.685,
+    0.163
+   ],
+   "nock": [
+    0.784,
+    0.118
+   ],
+   "draw": [
+    0.802,
+    0.05
+   ],
+   "loose": [
+    0.75,
+    0.02
+   ],
+   "windup": [
+    0.844,
+    0.246
+   ],
+   "strike": [
+    0.814,
+    0.35
+   ],
+   "recoil": [
+    0.649,
+    0.168
+   ],
+   "fall": [
+    0.804,
+    0.628
+   ],
+   "fleeA": [
+    0.894,
+    0.304
+   ],
+   "fleeB": [
+    0.889,
+    0.548
+   ],
+   "cheer": [
+    0.845,
+    0.143
+   ]
+  },
+  "follow": "12/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.035,
+   "marchB": 0.958
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 1.5,
+  "afterMax": 0.3
+ },
+ "side": {
+  "neutral": {
+   "share": 0.254,
+   "worstBelow": 28.5,
+   "below": {
+    "plains": 37.0,
+    "farmland": 36.6,
+    "swamp": 28.5,
+    "forest": 28.8
+   }
+  },
+  "sideKeyline": {
+   "share": 0.404,
+   "worstBelow": 27.2,
+   "below": {
+    "plains": 35.8,
+    "farmland": 35.4,
+    "swamp": 27.2,
+    "forest": 27.4
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "longbowHunter.front.cheer.png": 0.351,
+  "longbowHunter.front.deadA.png": 0.306,
+  "longbowHunter.front.deadB.png": 0.421,
+  "longbowHunter.front.draw.png": 0.205,
+  "longbowHunter.front.dropped.png": 0.0,
+  "longbowHunter.front.fall.png": 0.314,
+  "longbowHunter.front.fleeA.png": 0.234,
+  "longbowHunter.front.fleeB.png": 0.294,
+  "longbowHunter.front.loose.png": 0.231,
+  "longbowHunter.front.marchA.png": 0.309,
+  "longbowHunter.front.marchB.png": 0.282,
+  "longbowHunter.front.nock.png": 0.279,
+  "longbowHunter.front.recoil.png": 0.377,
+  "longbowHunter.front.stand.png": 0.32,
+  "longbowHunter.front.strike.png": 0.2,
+  "longbowHunter.front.windup.png": 0.349
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/lbh.front.from-flameArcher.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": true
+}

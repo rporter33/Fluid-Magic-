@@ -1,0 +1,3 @@
+(async () => { const H = () => { const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let v = 0x811c9dc5; for (let k = 0; k < d.length; k++) { v ^= d[k]; v = Math.imul(v, 0x01000193); } return (v >>> 0).toString(16); };
+  view.reduced = true; const sl = (ms) => new Promise((r) => setTimeout(r, ms)), st = async () => { for (let k = 0; k < 200 && (RL_SEAS.gen != null || RL_SEAS.shown !== rlSeasonWant()); k++) { draw(); await sl(40); } hoverProv = -1; RL_LINK.prov = -1; fit(); RCK = null; draw(); return H() + ':' + RL_SEAS.shown; }; const out = {};
+  setMonth(3); setMonth(40); out.fresh = await st(); setMonth(64); setMonth(40); out.scrub = await st(); setMonth(3); setMonth(40); out.fresh3 = await st(); return out; })()

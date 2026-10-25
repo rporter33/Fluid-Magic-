@@ -1,0 +1,23 @@
+import { capitalOf, nationIds, runDays, twoNationGame } from '/home/user/Fluid-Magic-/tests/sim/fixtures';
+import { fortMaterials } from '/home/user/Fluid-Magic-/src/sim/selectors';
+const state = twoNationGame();
+const [red, green] = nationIds(state);
+const cap = capitalOf(state, red!);
+runDays(state, 240);
+console.log('pool before siege', cap.materials, 'cap', fortMaterials(state, cap.id).cap);
+cap.siege = { attacker: green!, wallHp: 300 };
+runDays(state, 1);
+console.log('pool after 1 besieged day', cap.materials);
+cap.siege = null;
+// neighbor capture case
+const s2 = twoNationGame();
+const [r2] = nationIds(s2);
+const c2 = capitalOf(s2, r2!);
+const nb = s2.map.provinces[c2.id]!.neighbors;
+for (const n of nb) s2.provinces[n]!.owner = r2!;
+runDays(s2, 240);
+console.log('pool w/ neighbors', c2.materials, 'cap', fortMaterials(s2, c2.id).cap);
+s2.provinces[nb[0]!]!.owner = null;
+s2.provinces[nb[1]!]!.owner = null;
+runDays(s2, 1);
+console.log('pool after losing 2 neighbors', c2.materials, 'cap', fortMaterials(s2, c2.id).cap);

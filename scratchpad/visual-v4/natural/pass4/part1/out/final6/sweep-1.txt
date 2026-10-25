@@ -1,0 +1,18 @@
+dpr 1 sweep {"views":33,"samples":16904,"fails":0,"under110":0,"min":1.135,"worst":"sweep 20 The Greyteeth The Greyteeth/Marholt","pans":[{"view":"start","positions":5,"fails":0,"decisionChanged":0},{"view":"mid","positions":5,"fails":0,"decisionChanged":0},{"view":"Ashspine Near","positions":5,"fails":0,"decisionChanged":0}],"pass":true}
+footprint {"landHashBefore":"75770385","landHashAfter":"75770385","landTexelsWrittenByWildPass":0,"wildTexelsOutsideCells":0,"landShadowTexelsMoved":18225,"pass":true}
+interact {"edges":30,"hitInside":30,"hitOutsideNamesTerrain":30,"cardsImpassable":3,"pathsRefused":30,"problems":[],"pass":true}
+pageErrors 0
+node:fs:2437
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open '/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass4/part1/out/final/sweep-dpr1.json'
+    at Object.writeFileSync (node:fs:2437:20)
+    at /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass4/part1/tools/sweep.cjs:8:6 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass4/part1/out/final/sweep-dpr1.json'
+}
+
+Node.js v22.22.0

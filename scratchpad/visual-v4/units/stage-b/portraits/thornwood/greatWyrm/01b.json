@@ -1,0 +1,113 @@
+{
+ "id": "greatWyrm-01b",
+ "unit": "greatWyrm",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "greatWyrm",
+ "promptFile": "stage-b/work/portraits/prompts-used/greatWyrm-thornwood.01b.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 36080,
+  "game": 12830,
+  "small": 1900
+ },
+ "sourceFile": "stage-b/raw/portraits/greatWyrm-thornwood.01b.nb21.png",
+ "sourceSha256": "8ecb9e593086d877ef2b9c1289c5a6ce6c01ebe41fb365556ba9e3e79de92604",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the wing membranes (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the wing membranes. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "greatWyrm-cinderHorde.01b.nb21.png"
+ ],
+ "route": "edit of greatWyrm-cinderHorde.01b",
+ "swatches": {
+  "material": "scale bronze #8A6A3E",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: swept horns; smooth wing membranes; spade tail; banded scales; breath in the nation's colour",
+ "pose": "regal",
+ "tintZone": "the wing membranes",
+ "cardCrop": {
+  "box512": [
+   206,
+   29,
+   422,
+   245
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "swept-back horns",
+   "read": true
+  },
+  {
+   "mark": "smooth wing membranes in the nation's colour",
+   "read": "partly"
+  },
+  {
+   "mark": "banded bronze scales",
+   "read": true
+  },
+  {
+   "mark": "spade-tipped tail",
+   "read": true
+  },
+  {
+   "mark": "four legs and two wings",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.2,
+   "bgSpread": 2.8,
+   "floor": 9.7,
+   "top": 0.082,
+   "low": 1.0,
+   "bottomCut": 0.247,
+   "cx": 0.507,
+   "subject": 0.436,
+   "light": -1.5,
+   "rim": 0.344,
+   "read48": 14.5,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.132,
+    "lock": 0.203
+   }
+  },
+  "failed": [],
+  "overridden": [
+   {
+    "gate": "framing: lowest row 1.0 outside [0.8, 0.995]",
+    "reason": "same body as greatWyrm-cinderHorde.01b (checked by eye): the claws and tail at about 0.92"
+   }
+  ],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "strong",
+  "note": "Same body as the Cinder candidate; the tint zone repainted bottle green.",
+  "marks": {
+   "swept-back horns": true,
+   "smooth wing membranes in the nation's colour": "partly",
+   "banded bronze scales": true,
+   "spade-tipped tail": true,
+   "four legs and two wings": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

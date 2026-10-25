@@ -1,0 +1,211 @@
+# Packs the picked pilot effect cuts into one effects atlas (art plan 7.2, skills audit stage D item 3): one page of at
+# most 2048 x 2048, 2 px gutters with the colour bled into them, premultiplied-correct Lanczos downscales, plus the few
+# procedural frames the layer needs (a keylined ground ring and its dashed twin, a footprint ring, a soft disc, white).
+#   fire (E2, E3, E4): the alpha is raised x1.7 and the premultiplied colour kept, so one frame serves both passes: its
+#   body in normal blend (the saturated paint holds on the light grounds) and its glow in additive blend (the same light).
+#   decals (E6, L3): the multiply form of fx_process.py (alpha 1 - min(m), colour (m - min) / alpha), drawn in normal
+#   blend inside the decal render group: exact for grey stains, within a few levels for the brown ones.
+# Writes atlas/fx/fx-atlas.png, fx-atlas.webp, fx-atlas.json (Pixi spritesheet: frame, anchor, sourceSize; meta: picks,
+# blends, nominal world sizes) and the sandbox build's fx-data.json.
+# Usage: python3 -I fx_pack.py
+import base64, io, json, math, os, sys
+import numpy as np
+from PIL import Image, ImageDraw, ImageFilter
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from fx_layouts import SHEETS, SQ  # noqa: E402
+WORK = os.path.abspath(os.path.join(HERE, '..'))
+STAGE = os.path.abspath(os.path.join(WORK, '..'))
+OUT = os.path.join(STAGE, 'atlas', 'fx')
+PICKS = {'E2': 'a', 'E3': 'r2', 'E4': 'a', 'E5': 'a', 'E6': 'a', 'L1': 'a', 'L2': 'a', 'L3': 'a', 'L4': 'a'}
+FIRE = {'E2', 'E3', 'E4'}
+BOOST = 1.7
+# stored size: ('w', px) width, ('h', px) height, ('max', px) longer side, ('group', ref, px): the group shares the scale
+# that brings its reference element to px wide (a flip-book or growth stages keep their relative sizes)
+SIZE = {
+    'orbS': ('max', 56), 'orbM': ('max', 88), 'orbL': ('max', 136), 'glow': ('max', 128), 'trail': ('w', 512), 'meteor': ('w', 224),
+    'burst*': ('group', 'burst3', 352),
+    'ember*': ('max', 40), 'spark*': ('max', 72), 'lick*': ('h', 56), 'dot*': ('max', 56), 'star*': ('max', 64),
+    'puff*': ('max', 116), 'column*': ('h', 300),
+    'scorchRing': ('w', 352), 'crater': ('w', 128), 'scorchDot': ('w', 72), 'burnPatch': ('w', 160), 'burntTrack': ('w', 320),
+    'thornA*': ('group', 'thornA3', 120), 'thornB*': ('group', 'thornB3', 120), 'thornC*': ('group', 'thornC3', 120),
+    'coil*': ('group', 'coil3', 104), 'wither*': ('group', 'coil3', 104), 'vineStrip': ('w', 512),
+    'crackThin': ('w', 896), 'crackWide': ('w', 896), 'splitGround': ('w', 256), 'rootScar*': ('w', 96),
+    'leaf*': ('max', 36), 'petal*': ('max', 28), 'flowers*': ('w', 104), 'litter': ('w', 192),
+}
+# anchors: 'ground' = the centre of the base ellipse (a burst, a thorn cluster, a coil, smoke columns' foot); 'centre'
+GROUND_ANCHOR = ('burst', 'thorn', 'coil', 'wither', 'column', 'flowers')
+
+
+def size_rule(name):
+    if name in SIZE: return SIZE[name]
+    for k, v in SIZE.items():
+        if k.endswith('*') and name.startswith(k[:-1]): return v
+    return ('max', 128)
+
+
+def load(sheet, name):
+    p = os.path.join(WORK, 'cut', f'{sheet}.{PICKS[sheet]}', name + '.png')
+    return np.asarray(Image.open(p).convert('RGBA')).astype(np.float32) / 255
+
+
+def boost(c):
+    a = c[..., 3:4]
+    a2 = np.clip(a * BOOST, 0, 1)
+    rgb = np.where(a2 > 1e-4, c[..., :3] * a / np.maximum(a2, 1e-4), 0)
+    return np.dstack([np.clip(rgb, 0, 1), a2[..., 0]])
+
+
+def resize(c, w, h):
+    w, h = max(1, int(round(w))), max(1, int(round(h)))
+    pm = c.copy(); pm[..., :3] *= pm[..., 3:4]
+    im = Image.fromarray((np.clip(pm, 0, 1) * 255 + 0.5).astype(np.uint8), 'RGBA').resize((w, h), Image.LANCZOS)
+    o = np.asarray(im).astype(np.float32) / 255
+    a = o[..., 3:4]
+    o[..., :3] = np.where(a > 1e-4, o[..., :3] / np.maximum(a, 1e-4), 0)
+    return np.clip(o, 0, 1)
+
+
+def ground_anchor(c):
+    """The centre of a ground-standing element's base ellipse: its lowest quarter's horizontal extent gives rx; the base
+    ellipse is centred rx * 0.643 above the lowest painted row."""
+    a = c[..., 3]
+    ys, xs = np.nonzero(a > 0.25)
+    if len(xs) < 4: return 0.5, 0.5
+    y1 = np.percentile(ys, 99.0)
+    y0 = y1 - (ys.max() - ys.min()) * 0.25
+    sel = ys >= y0
+    rx = (np.percentile(xs[sel], 97) - np.percentile(xs[sel], 3)) / 2
+    cx = (np.percentile(xs[sel], 97) + np.percentile(xs[sel], 3)) / 2
+    cy = y1 - rx * SQ
+    return float(cx / c.shape[1]), float(np.clip(cy / c.shape[0], 0.3, 0.97))
+
+
+def proc_frames():
+    """Procedural frames (white with a dark keyline, tinted by the game): the ground ring, the dashed curse ring, the
+    footprint ring, a soft disc, an elongated soft shadow and white."""
+    out = {}
+    S = 4  # supersample
+
+    def ring(R, width, dashes=0, key=0.6):
+        n = 2 * R + 8
+        im = Image.new('RGBA', (n * S, n * S), (0, 0, 0, 0))
+        d = ImageDraw.Draw(im)
+        c = n * S / 2
+        def arc_band(r0, r1, col):
+            if dashes:
+                for k in range(dashes):
+                    a0 = 360 * k / dashes; a1 = a0 + 360 / dashes * 0.58
+                    d.pieslice([c - r1, c - r1, c + r1, c + r1], a0, a1, fill=col)
+            else:
+                d.ellipse([c - r1, c - r1, c + r1, c + r1], fill=col)
+            d.ellipse([c - r0, c - r0, c + r0, c + r0], fill=(0, 0, 0, 0))
+        kw = width * 0.55
+        arc_band((R - width / 2 - kw) * S, (R + width / 2 + kw) * S, (28, 26, 23, int(255 * key)))   # the keyline (#1C1A17)
+        top = Image.new('RGBA', im.size, (0, 0, 0, 0)); d2 = ImageDraw.Draw(top)
+        d = d2
+        arc_band((R - width / 2) * S, (R + width / 2) * S, (255, 255, 255, 255))
+        im.alpha_composite(top)
+        im = im.resize((n, n), Image.LANCZOS)
+        return np.asarray(im).astype(np.float32) / 255
+    out['ring'] = ring(92, 3.6)
+    out['ringDash'] = ring(92, 4.4, dashes=18)
+    out['footRing'] = ring(28, 5)
+    yy, xx = np.mgrid[0:64, 0:64].astype(np.float32)
+    dd = np.sqrt((xx - 31.5) ** 2 + (yy - 31.5) ** 2) / 31.5
+    a = np.clip(1 - dd, 0, 1) ** 1.4
+    out['disc'] = np.dstack([np.ones((64, 64, 3), np.float32), a])
+    yy, xx = np.mgrid[0:48, 0:96].astype(np.float32)
+    dd = np.sqrt(((xx - 47.5) / 47.5) ** 2 + ((yy - 23.5) / 23.5) ** 2)
+    a = np.clip(1 - dd, 0, 1) ** 1.2
+    out['shadowLong'] = np.dstack([np.zeros((48, 96, 3), np.float32), a])
+    out['white'] = np.ones((8, 8, 4), np.float32)
+    return out
+
+
+def bleed(c, iters=3):
+    """Colour into transparent pixels (alpha stays 0) so bilinear sampling never pulls black into an edge."""
+    a = c[..., 3]
+    known = a > 0.004
+    col = np.where(known[..., None], c[..., :3], 0)
+    w = known.astype(np.float32)
+    for _ in range(iters):
+        pc = np.pad(col * w[..., None], ((1, 1), (1, 1), (0, 0))); pw = np.pad(w, 1)
+        s = sum(pc[1 + dy:pc.shape[0] - 1 + dy, 1 + dx:pc.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1))
+        n = sum(pw[1 + dy:pw.shape[0] - 1 + dy, 1 + dx:pw.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1))
+        grow = (~known) & (n > 0)
+        col[grow] = s[grow] / n[grow][:, None]
+        w = np.where(grow, 1.0, w); known = known | grow
+    return np.dstack([col, a])
+
+
+def main():
+    items = []
+    groups = {}
+    for sheet, cand in PICKS.items():
+        S = SHEETS[sheet]
+        cuts = {e['name']: load(sheet, e['name']) for e in S['els']}
+        for e in S['els']:
+            n = e['name']
+            c = cuts[n]
+            if sheet in FIRE: c = boost(c)
+            rule = size_rule(n)
+            if rule[0] == 'group':
+                ref = cuts[rule[1]]
+                k = rule[2] / ref.shape[1] if not n.startswith(('coil', 'wither')) else rule[2] / ref.shape[0]
+            elif rule[0] == 'w': k = rule[1] / c.shape[1]
+            elif rule[0] == 'h': k = rule[1] / c.shape[0]
+            else: k = rule[1] / max(c.shape[:2])
+            k = min(k, 1.0)
+            r = resize(c, c.shape[1] * k, c.shape[0] * k)
+            if n.startswith(GROUND_ANCHOR): ax, ay = ground_anchor(r)
+            else: ax, ay = 0.5, 0.5
+            items.append({'name': n, 'sheet': sheet, 'img': r, 'ax': ax, 'ay': ay, 'blend': S['blend'], 'scale': round(k, 4)})
+    for n, img in proc_frames().items():
+        items.append({'name': n, 'sheet': 'proc', 'img': img, 'ax': 0.5, 'ay': 0.5, 'blend': 'any', 'scale': 1})
+    # shelf packing, tallest first, 2 px gutters
+    W, gut = 2048, 2
+    items.sort(key=lambda it: (-it['img'].shape[0], -it['img'].shape[1]))
+    x = y = shelf = 0
+    for it in items:
+        h, w = it['img'].shape[:2]
+        if x + w + gut > W: x = 0; y += shelf + gut; shelf = 0
+        it['x'], it['y'] = x + gut, y + gut
+        x += w + gut; shelf = max(shelf, h + gut)
+    H = y + shelf + gut
+    Hp = 1 << int(math.ceil(math.log2(H)))
+    assert Hp <= 2048, ('atlas too tall', H)
+    page = np.zeros((Hp, W, 4), np.float32)
+    frames = {}
+    for it in items:
+        h, w = it['img'].shape[:2]
+        pad = 2
+        b = bleed(np.pad(it['img'], ((pad, pad), (pad, pad), (0, 0))))
+        X0, Y0 = it['x'] - pad, it['y'] - pad
+        reg = page[Y0:Y0 + h + 2 * pad, X0:X0 + w + 2 * pad]
+        m = reg[..., 3:4] <= 0.004
+        reg[:] = np.where(m, b, reg)
+        frames[it['name']] = {'frame': {'x': it['x'], 'y': it['y'], 'w': w, 'h': h}, 'anchor': {'x': round(it['ax'], 4), 'y': round(it['ay'], 4)},
+                              'sourceSize': {'w': w, 'h': h}, 'sheet': it['sheet'], 'blend': it['blend'], 'scale': it['scale']}
+    os.makedirs(OUT, exist_ok=True)
+    img = Image.fromarray((np.clip(page, 0, 1) * 255 + 0.5).astype(np.uint8), 'RGBA')
+    img.save(os.path.join(OUT, 'fx-atlas.png'), optimize=True)
+    img.save(os.path.join(OUT, 'fx-atlas.webp'), quality=90, method=6, alpha_quality=100)
+    used = sum(it['img'].shape[0] * it['img'].shape[1] for it in items)
+    raw = {}
+    for s in PICKS:
+        f = [x for x in os.listdir(os.path.join(STAGE, 'raw')) if x.startswith(f'{s}.{PICKS[s]}.') and x.endswith('.json')][0]
+        raw[s] = {'candidate': PICKS[s], 'file': 'stage-d/raw/' + f, 'sha256': json.load(open(os.path.join(STAGE, 'raw', f)))['sha256'], 'title': SHEETS[s]['title'],
+                  'blend': SHEETS[s]['blend']}
+    meta = {'app': 'stage D magic pilot, fx_pack.py', 'image': 'fx-atlas.png', 'size': {'w': W, 'h': Hp}, 'format': 'RGBA8888', 'scale': 1,
+            'fill': round(used / (W * Hp), 3), 'fireAlphaBoost': BOOST, 'picks': raw}
+    json.dump({'frames': frames, 'meta': meta}, open(os.path.join(OUT, 'fx-atlas.json'), 'w'), indent=1)
+    webp = open(os.path.join(OUT, 'fx-atlas.webp'), 'rb').read()
+    fx = {'version': 1, 'image': 'data:image/webp;base64,' + base64.b64encode(webp).decode(), 'w': W, 'h': Hp,
+          'frames': {k: [v['frame']['x'], v['frame']['y'], v['frame']['w'], v['frame']['h'], v['anchor']['x'], v['anchor']['y']] for k, v in frames.items()}}
+    json.dump(fx, open(os.path.join(WORK, 'sbx', 'fx-data.json'), 'w'))
+    print(json.dumps({'items': len(items), 'size': [W, Hp], 'fill': meta['fill'], 'pngBytes': os.path.getsize(os.path.join(OUT, 'fx-atlas.png')), 'webpBytes': len(webp)}))
+
+
+if __name__ == '__main__':
+    main()

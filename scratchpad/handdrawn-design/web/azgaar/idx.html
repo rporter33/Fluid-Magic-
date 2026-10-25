@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Azgaar's Fantasy Map Generator</title>
+    <meta name="application-name" content="Azgaar's Fantasy Map Generator" />
+    <meta name="author" content="Azgaar" />
+    <meta
+      name="description"
+      content="Free web app that helps fantasy writers, game masters, and cartographers create and edit fantasy maps"
+    />
+    <meta property="og:url" content="https://azgaar.github.io/Fantasy-Map-Generator" />
+    <meta property="og:title" content="Azgaar's Fantasy Map Generator" />
+    <meta
+      property="og:description"
+      content="Free web app that helps fantasy writers, game masters, and cartographers create and edit fantasy maps"
+    />
+    <meta property="og:image" content="images/preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="azgaar.github.io" />
+    <meta property="twitter:url" content="https://azgaar.github.io/Fantasy-Map-Generator/" />
+    <meta name="twitter:title" content="Azgaar's Fantasy Map Generator" />
+    <meta
+      name="twitter:description"
+      content="Free web app that helps fantasy writers, game masters, and cartographers create and edit fantasy maps"
+    />
+    <meta name="twitter:image" content="images/preview.png" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VJL3J26W7R"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-VJL3J26W7R");
+    </script>
+    <link rel="icon" type="image/png" href="images/icons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="images/icons/favicon-16x16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="images/icons/maskable_icon_x192.png" />
+    <link rel="canonical" href="https://azgaar.github.io/Fantasy-Map-Generator/" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <!-- inline css for loading screen -->
+    <style type="text/css">
+      body {
+        margin: 0;
+        top: 0 !important;
+        font-size: 10px;
+        overflow: hidden;
+      }
+      #map {
+        position: absolute;
+      }
+      #loading > * {
+        pointer-events: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #loading > #loading-rose > use {
+        fill: none;
+        stroke: black;
+        opacity: 0.7;
+        transform-origin: center;
+        animation: 20s linear 0s infinite spin;
+      }
+      #loading > #loading-typography {
+        opacity: 1;
+        font-size: 11px;
+        color: #fff5da;
+        text-align: center;
+        text-shadow: 0px 1px 4px #4c3a35;
+        width: 80vw;
+        max-width: 540px;
+      }
+      @media screen and (max-width: 600px) {
+        #loading > #loading-typography {
+          font-size: 8px;
+        }
+      }
+      #titleName {
+        text-align: left;
+        font-size: 3em;
+      }
+      #title {
+        font-size: 7em;
+      }
+      #versionText {
+        text-align: right;
+        font-size: 2em;
+      }
+      #loading-text {
+        font-size: 2em;
+        margin: 0.2em;
+      }
+      #loading-text > span {
+        font-size: 1.3em;
+        padding-left: 1px;
+        line-height: 0px;
+      }
+      #loading-text > span,
+      #mapOverlay > span {
+        animation: 3s infinite both blink;
+      }
+      #loading-text span:nth-child(2),
+      #mapOverlay > span:nth-child(2) {
+        animation-delay: 1s;
+      }
+      #loading-text span:nth-child(3),
+      #mapOverlay > span:nth-child(3) {
+        animation-delay: 2s;
+      }
+      @keyframes blink {
+        0% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.1;
+        }
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+    </style>
+    <link
+      rel="preload"
+      href="index.css?v=61a87fe3"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <link
+      rel="preload"
+      href="icons.css?v=1421ad39"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <link
+      rel="preload"
+      href="libs/jquery-ui.css?v=f2ff5e58"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+  </head>
+  <body>
+    <svg
+      id="map" data-layer="map"
+      width="100%"
+      height="100%"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:svg="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <g id="filters">
+          <filter id="blurFilter" name="Blur 0.2" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" />
+          </filter>
+          <filter id="blur1" name="Blur 1" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+          </filter>
+          <filter id="blur3" name="Blur 3" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+          </filter>
+          <filter id="blur5" name="Blur 5" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
+          </filter>
+          <filter id="blur7" name="Blur 7" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
+          </filter>
+          <filter id="blur10" name="Blur 10" x="-1" y="-1" width="100" height="100">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+          </filter>
+          <filter id="splotch" name="Splotch">
+            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" />
+            <feColorMatrix values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 -0.9 1.2" result="texture" />
+            <feComposite in="SourceGraphic" in2="texture" operator="in" />
+          </filter>
+          <filter id="bluredSplotch" name="Blurred Splotch">
+            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" />
+            <feColorMatrix values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 -0.9 1.2" result="texture" />
+            <feComposite in="SourceGraphic" in2="texture" operator="in" />
+            <feGaussianBlur stdDeviation="4" />
+          </filter>
+          <filter id="dropShadow" name="Shadow 2">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+            <feOffset dx="1" dy="2" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="dropShadow01" name="Shadow 0.1">
+            <feGaussianBlur in="SourceAlpha" stdDeviation=".1" />
+            <feOffset dx=".2" dy=".3" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="dropShadow05" name="Shadow 0.5">
+            <feGaussianBlur in="SourceAlpha" stdDeviation=".5" />
+            <feOffset dx=".5" dy=".7" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="outline" name="Outline">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="pencil" name="Pencil">
+            <feTurbulence baseFrequency="0.03" numOctaves="6" type="fractalNoise" />
+            <feDisplacementMap scale="3" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="turbulence" name="Turbulence">
+            <feTurbulence baseFrequency="0.1" numOctaves="3" type="fractalNoise" />
+            <feDisplacementMap scale="10" in="SourceGraphic" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter
+            id="paper"
+            name="Paper"
+            filterUnits="objectBoundingBox"
+            primitiveUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur stdDeviation="1 1" in="SourceGraphic" edgeMode="none" result="blur" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.05 0.05"
+              numOctaves="4"
+              seed="1"
+              stitchTiles="stitch"
+              result="turbulence"
+            />
+            <feDiffuseLighting
+              surfaceScale="2"
+              diffuseConstant="1"
+              lighting-color="#707070"
+              in="turbulence"
+              result="diffuseLighting"
+            >
+              <feDistantLight azimuth="45" elevation="20" />
+            </feDiffuseLighting>
+            <feComposite in="diffuseLighting" in2="blur" operator="lighter" result="composite" />
+            <feComposite in="composite" in2="SourceGraphic" operator="in" result="composite1" />
+          </filter>
+          <filter
+            id="crumpled"
+            name="Crumpled"
+            filterUnits="objectBoundingBox"
+            primitiveUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur stdDeviation="2 2" in="SourceGraphic" edgeMode="none" result="blur" />
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.05 0.05"
+              numOctaves="4"
+              seed="1"
+              stitchTiles="stitch"
+              result="turbulence"
+            />
+            <feDiffuseLighting
+              surfaceScale="2"
+              diffuseConstant="1"
+              lighting-color="#828282"
+              in="turbulence"
+              result="diffuseLighting"
+            >
+              <feDistantLight azimuth="320" elevation="10" />
+            </feDiffuseLighting>
+            <feComposite in="diffuseLighting" in2="blur" operator="lighter" result="composite" />
+            <feComposite in="composite" in2="SourceGraphic" operator="in" result="composite1" />
+          </filter>
+          <filter id="filter-grayscale" name="Grayscale">
+            <feColorMatrix
+              values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"
+            />
+          </filter>
+          <filter id="filter-sepia" name="Sepia">
+            <feColorMatrix values="0.393 0.769 0.189 0 0 0.349 0.686 0.168 0 0 0.272 0.534 0.131 0 0 0 0 0 1 0" />
+          </filter>
+          <filter id="filter-dingy" name="Dingy">
+            <feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0.3 0.3 0 0 0 0 0 1 0"></feColorMatrix>
+          </filter>
+          <filter id="filter-tint" name="Tint">
+            <feColorMatrix values="1.1 0 0 0 0  0 1.1 0 0 0  0 0 0.9 0 0  0 0 0 1 0"></feColorMatrix>
+          </filter>
+        </g>
+        <g id="deftemp">
+          <g id="featurePaths"></g>
+          <g id="textPaths"></g>
+          <g id="statePaths"></g>
+          <g id="defs-emblems"></g>
+          <mask id="land"></mask>
+          <mask id="water"></mask>
+          <mask id="fog" style="stroke-width: 10; stroke: black; stroke-linejoin: round; stroke-opacity: 0.1">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" stroke="none" />
+          </mask>
+        </g>
+        <mask id="vignette-mask">
+          <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+          <rect id="vignette-rect" fill="black"></rect>
+        </mask>
+      </defs>
+      <g id="viewbox"></g>
+      <g id="scaleBar">
+        <rect id="scaleBarBack" data-group="back"></rect>
+      </g>
+    </svg>
+    <div id="loading">
+      <svg width="100%" height="100%">
+        <pattern id="loading-pattern" width="100" height="100" patternUnits="userSpaceOnUse">
+          <image href="./images/pattern1.png" width="100" height="100" opacity="0.2"></image>
+        </pattern>
+        <rect x="-1%" y="-1%" width="102%" height="102%" fill="#466eab" />
+        <rect x="-1%" y="-1%" width="102%" height="102%" fill="url(#loading-pattern)" />
+      </svg>
+      <svg id="loading-rose" width="100%" height="100%" viewBox="0 0 700 700">
+        <use href="#defs-compass-rose" x="50%" y="50%" />
+      </svg>
+      <div id="loading-typography">
+        <div id="titleName">Azgaar's</div>
+        <div id="title">Fantasy Map Generator</div>
+        <div id="versionText">‎ ‎</div>
+        <p id="loading-text">LOADING<span>.</span><span>.</span><span>.</span></p>
+      </div>
+    </div>
+    <div id="optionsContainer" style="opacity: 0">
+      <div id="collapsible">
+        <button
+          id="optionsTrigger"
+          data-tip="Click to show the Menu"
+          data-shortcut="Tab"
+          class="options glow"
+          onclick="showOptions(event)"
+        >
+          ►
+        </button>
+        <button
+          id="regenerate"
+          data-tip="Click to generate a new map"
+          data-shortcut="F2"
+          onclick="regeneratePrompt()"
+          class="options"
+          style="display: none"
+        >
+          New Map!
+        </button>
+      </div>
+      <div id="options" style="display: none">
+        <div class="drag-trigger" data-tip="Drag to move the Menu"></div>
+        <div class="tab">
+          <button
+            id="optionsHide"
+            data-tip="Click to hide the Menu"
+            data-shortcut="Tab or Esc"
+            class="options"
+            onclick="hideOptions(event)"
+          >
+            ◄
+          </button>
+          <button id="layersTab" data-tip="Click to change map layers" class="options active">Layers</button>
+          <button id="styleTab" data-tip="Click to open style editor" class="options">Style</button>
+          <button id="optionsTab" data-tip="Click to change generation and UI options" class="options">Options</button>
+          <button id="toolsTab" data-tip="Click to open tools menu" class="options">Tools</button>
+          <button id="aboutTab" data-tip="Click to see Generator info" class="options">About</button>
+        </div>
+        <div id="layersContent" class="tabcontent" style="display: block"></div>
+        <div id="styleContent" class="tabcontent"></div>
+        <div id="optionsContent" class="tabcontent"></div>
+        <div id="toolsContent" class="tabcontent"></div>
+        <div id="customizationMenu" class="tabcontent"></div>
+        <div id="aboutContent" class="tabcontent"></div>
+        <div id="sticked">
+          <button id="newMapButton" data-tip="Generate a new map based on options" data-shortcut="F2">New Map</button>
+          <button id="exportButton" data-tip="Select format to download image or export map data">Export</button>
+          <button id="saveButton" data-tip="Save fully-functional map file">Save</button>
+          <button id="loadButton" data-tip="Load fully-functional map (.map or .gz formats)">Load</button>
+          <button id="zoomReset" data-tip="Reset map zoom" data-shortcut="0 (zero)">Zoom out</button>
+          <button id="searchButton" data-tip="Search map and commands" data-shortcut="Space">Search</button>
+        </div>
+      </div>
+    </div>
+    <div id="exitCustomization">
+      <div data-tip="Drag to move the pane">
+        <button data-tip="Finalize the heightmap and exit the edit mode" id="finalizeHeightmap">
+          Exit Customization
+        </button>
+      </div>
+    </div>
+    <button id="assistantBubble" type="button" data-tip="Open Azgaar Assistant"
+      aria-label="Open Azgaar Assistant" aria-expanded="false" style="display: none">
+      <span class="assistantBubbleBadge">
+        <span class="icon-help"></span>
+        <span class="assistantBubbleMinimize"></span>
+      </span>
+    </button>
+    <div id="dialogs">
+      <div id="exportMapData" style="display: none" class="dialog">
+        <div style="margin-bottom: 0.3em; font-weight: bold">Download image</div>
+        <div>
+          <button
+            onclick="window.Services.ExportMap.exportToSvg()"
+            data-tip="Download the map as vector image (open directly in browser or Inkscape)"
+          >
+            .svg
+          </button>
+          <button onclick="window.Services.ExportMap.exportToPng()" data-tip="Download visible part of the map as .png (lossless compressed)">
+            .png
+          </button>
+          <button
+            onclick="window.Services.ExportMap.exportToJpeg()"
+            data-tip="Download visible part of the map as .jpeg (lossy compressed) image"
+          >
+            .jpeg
+          </button>
+          <button
+            onclick="openExportToPngTiles()"
+            data-tip="Split map into smaller png tiles and download as zip archive"
+          >
+            tiles
+          </button>
+          <span data-tip="Check to not allow system to automatically hide labels">
+            <input id="showLabels" class="checkbox" type="checkbox" />
+            <label for="showLabels" class="checkbox-label">Show all labels</label>
+          </span>
+        </div>
+        <div
+          data-tip="Define scale of a saved png/jpeg image (e.g. 5x). Saving big images is slow and may cause a browser crash!"
+          style="margin-bottom: 0.3em"
+        >
+          PNG / JPEG scale:
+          <input
+            id="pngResolutionInput"
+            data-stored="pngResolution"
+            type="range"
+            min="1"
+            max="8"
+            value="1"
+            style="width: 10em"
+          />
+          <input id="pngResolutionOutput" data-stored="pngResolution" type="number" min="1" max="8" value="1" />
+        </div>
+        <p>Generator uses pop-up window to download files. Please ensure your browser does not block popups.</p>
+        <div style="margin: 1em 0 0.3em; font-weight: bold">Export to GeoJSON</div>
+        <div>
+          <button onclick="window.Services.ExportMap.saveGeoJsonCells()" data-tip="Download cells data in GeoJSON format">cells</button>
+          <button onclick="window.Services.ExportMap.saveGeoJsonRoutes()" data-tip="Download routes data in GeoJSON format">routes</button>
+          <button onclick="window.Services.ExportMap.saveGeoJsonRivers()" data-tip="Download rivers data in GeoJSON format">rivers</button>
+          <button onclick="window.Services.ExportMap.saveGeoJsonMarkers()" data-tip="Download markers data in GeoJSON format">markers</button>
+          <button onclick="window.Services.ExportMap.saveGeoJsonZones()" data-tip="Download zones data in GeoJSON format">zones</button>
+        </div>
+        <p>
+          GeoJSON format is used in GIS tools such as QGIS. Check out
+          <a href="https://github.com/Azgaar/Fantasy-Map-Generator/wiki/GIS-data-export" target="_blank">wiki-page</a>
+          for guidance.
+        </p>
+        <div style="margin: 1em 0 0.3em; font-weight: bold">Export To JSON</div>
+        <div>
+          <button onclick="exportToJson('Full')" data-tip="Download full data in JSON">full</button>
+          <button onclick="exportToJson('Minimal')" data-tip="Download minimal data in JSON">minimal</button>
+          <button onclick="exportToJson('PackCells')" data-tip="Download map metadata and pack cells data in JSON">
+            pack cells
+          </button>
+          <button onclick="exportToJson('GridCells')" data-tip="Download map metadata and grid cells data in JSON">
+            grid cells
+          </button>
+        </div>
+        <p>Export in JSON format can be used as an API replacement.</p>
+      </div>
+      <div id="saveMapData" style="display: none" class="dialog">
+        <div style="margin-top: 0.3em">
+          <strong>Save map to</strong>
+          <button
+            onclick="window.Services.Save.toMachine(event.shiftKey)"
+            data-tip="Save to the chosen file; Shift-click to choose another filename or location"
+            data-shortcut="Ctrl + S"
+            style="font-weight: 600"
+          >
+            machine
+          </button>
+          <button
+            id="saveToDropboxButton"
+            onclick="window.Services.Save.toDropbox()"
+            data-tip="Save map file to your Dropbox"
+            data-shortcut="Ctrl + C"
+          >
+            dropbox
+          </button>
+          <button onclick="window.Services.Save.toStorage()" data-tip="Save the project to browser storage only" data-shortcut="F6">
+            browser
+          </button>
+        </div>
+        <p>
+          When supported by your browser, Save updates the chosen file. Shift-click machine or press Ctrl + Shift + S
+          to save a separate copy.
+        </p>
+        <p>
+          Maps are saved in <i>.map</i> format, that can be loaded back via the <i>Load</i> in menu. There is no way to
+          restore the progress if file is lost. Please keep old save files on your machine or cloud storage as backups.
+        </p>
+      </div>
+      <div id="loadMapData" style="display: none" class="dialog">
+        <div>
+          <strong>Load map from</strong>
+          <button id="loadMapFromMachine" data-tip="Load map file (.map or .gz) from your local disk">
+            machine
+          </button>
+          <button
+            onclick="loadURL()"
+            data-tip="Load map file (.map or .gz) file from URL. Note that the server should allow CORS"
+          >
+            URL
+          </button>
+          <button onclick="window.Services.Load.quickLoad()" data-tip="Load map from browser storage (if saved before)">storage</button>
+        </div>
+        <p>Click on <i>storage</i> to open the last saved map.</p>
+        <div id="loadFromDropbox">
+          <p style="margin-bottom: 0.3em">
+            Or load from your Dropbox account
+            <button
+              id="dropboxConnectButton"
+              onclick="connectToDropbox()"
+              data-tip="Connect your Dropbox account to be able to load maps from it"
+            >
+              Connect
+            </button>
+          </p>
+          <select id="loadFromDropboxSelect" style="width: 22em"></select>
+          <div id="loadFromDropboxButtons" style="margin-bottom: 0.6em">
+            <button onclick="window.Services.Load.loadFromDropbox()" data-tip="Load map file (.map or .gz) from your Dropbox">Load</button>
+            <button
+              onclick="window.Services.Load.createSharableDropboxLink()"
+              data-tip="Select file and create a link to share with your friends"
+            >
+              Share
+            </button>
+          </div>
+          <div style="margin-top: 0.3em">
+            <div id="sharableLinkContainer" style="display: none">
+              <a id="sharableLink" target="_blank"></a>
+              <i data-tip="Copy link to the clipboard" onclick="copyLinkToClipboard()" class="icon-clone pointer"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="exportToPngTilesScreen" style="display: none" class="dialog">
+        <p>Map will be split into tiles and downloaded as a single zip file. Avoid saving too large images</p>
+        <div data-tip="Number of columns" style="margin-bottom: 0.3em">
+          <div class="label">Columns:</div>
+          <input
+            id="tileColsInput"
+            data-stored="tileCols"
+            type="range"
+            min="2"
+            max="26"
+            value="8"
+            style="width: 10em"
+          />
+          <input id="tileColsOutput" data-stored="tileCols" type="number" min="2" value="8" />
+        </div>
+        <div data-tip="Number of rows" style="margin-bottom: 0.3em">
+          <div class="label">Rows:</div>
+          <input
+            id="tileRowsInput"
+            data-stored="tileRows"
+            type="range"
+            min="2"
+            max="26"
+            value="8"
+            style="width: 10em"
+          />
+          <input id="tileRowsOutput" data-stored="tileRows" type="number" min="2" value="8" />
+        </div>
+        <div data-tip="Image scale relative to image size (e.g. 5x)" style="margin-bottom: 0.3em">
+          <div class="label">Scale:</div>
+          <input
+            id="tileScaleInput"
+            data-stored="tileScale"
+            type="range"
+            min="1"
+            max="4"
+            value="1"
+            style="width: 10em"
+          />
+          <input id="tileScaleOutput" data-stored="tileScale" type="number" min="1" value="1" />
+        </div>
+        <div data-tip="Calculated size of image if combined" style="margin-bottom: 0.3em">
+          <div class="label">Total size:</div>
+          <div id="tileSize" style="display: inline-block">1000 x 1000 px</div>
+        </div>
+        <div id="tileStatus" style="font-style: italic"></div>
+      </div>
+      <div id="alert" style="display: none" class="dialog">
+        <p id="alertMessage">Warning!</p>
+      </div>
+      <div id="prompt" style="display: none" class="dialog">
+        <form id="promptForm">
+          <div id="promptText"></div>
+          <input id="promptInput" type="number" step=".01" placeholder="type value" autocomplete="off" />
+          <button type="submit">Confirm</button>
+          <button type="button" id="promptCancel" formnovalidate>Cancel</button>
+        </form>
+      </div>
+    </div>
+    <div id="notes">
+      <div id="notesHeader"></div>
+      <div id="notesBody"></div>
+    </div>
+    <div
+      id="tooltip"
+      style="opacity: 0"
+      data-main="Сlick the arrow button for options. Zoom in to see the map in details"
+    ></div>
+    <div id="mapOverlay" style="display: none">Drop a map file to open</div>
+    <div id="tourPromptButton" style="display: none" data-tip="Take an interactive tour of the map generator">
+      <button type="button" aria-label="Launch UI Tour">
+        <svg preserveAspectRatio="xMidYMid" viewBox="0 0 58 52" height="30px" width="30px">
+          <path d="M20 10 L20 42 L42 26 Z" />
+        </svg>
+      </button>
+    </div>
+    <!-- reusable svg elements -->
+    <svg id="defElements" width="0" height="0" style="position: absolute">
+      <defs>
+        <marker id="end-arrow" viewBox="0 -5 10 10" refX="6" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0,-5L10,0L0,5" fill="#000" />
+        </marker>
+        <marker id="end-arrow-small" viewBox="0 -5 10 10" refX="6" markerWidth="2" markerHeight="2" orient="auto">
+          <path d="M0,-5L10,0L0,5" fill="#555" />
+        </marker>
+        <marker id="journey-start" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.4" markerHeight="2.4">
+          <circle cx="5" cy="5" r="4" fill="context-stroke" stroke="#fff" stroke-width="1" />
+        </marker>
+        <marker
+          id="journey-arrow"
+          viewBox="0 0 10 10"
+          refX="8"
+          refY="5"
+          markerWidth="3"
+          markerHeight="3"
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke" />
+        </marker>
+        <g id="defs-compass-rose" stroke-width="1.1">
+          <g id="rose-coord-line" stroke="#3f3f3f">
+            <line id="sL1" x1="0" y1="-20000" x2="0" y2="20000" />
+            <line id="sL2" x1="-20000" y1="0" x2="20000" y2="0" />
+          </g>
+          <use href="#rose-coord-line" transform="rotate(45)" />
+          <use href="#rose-coord-line" transform="rotate(22.5)" />
+          <use href="#rose-coord-line" transform="rotate(-22.5)" />
+          <use href="#rose-coord-line" transform="rotate(11.25)" />
+          <use href="#rose-coord-line" transform="rotate(-11.25)" />
+          <use href="#rose-coord-line" transform="rotate(56.25)" />
+          <use href="#rose-coord-line" transform="rotate(-56.25)" />
+          <g stroke-width="8" stroke-opacity="1" shape-rendering="geometricprecision">
+            <circle r="9" stroke="#000" fill="#1b1b1b" />
+            <circle r="75" stroke="#008000" fill="#ffffff" fill-opacity=".1" />
+            <circle r="212" stroke="#1b1b1b" />
+            <circle r="211" stroke="#008000" fill="#ffffff" fill-opacity=".1" />
+          </g>
+          <g stroke="#1b1b1b" stroke-opacity="1" shape-rendering="geometricprecision">
+            <circle r="71" />
+            <circle r="79" />
+            <circle r="94" />
+            <circle r="152" />
+            <circle r="164" />
+            <circle r="207" />
+          </g>
+          <g id="s3" stroke-opacity="1" shape-rendering="geometricprecision">
+            <g id="s2">
+              <g id="s1" stroke="#1b1b1b">
+                <path
+                  d="M 39.416,95.16 C 33.65,103.95 30.76,110.5 28.93,117.18 C 15.24,113.43 13.54,127.15 23.04,131 C 13.71,145.8 7.84,173.93 0,212 L 0,103 A 103,103 0 0,0 39.416,95.16 z"
+                  fill="#47a3d1"
+                />
+                <path
+                  d="M 39.416,95.16 C 33.65,103.95 30.76,110.5 28.93,117.18 C 15.24,113.43 13.54,127.15 23.04,131 C 13.71,145.8 7.84,173.93 0,212 L 0,103 A 103,103 0 0,0 39.416,95.16 z"
+                  fill="black"
+                  transform="scale(-1,1)"
+                />
+                <path
+                  d="M -31.995,160.849 A 164,164 0 0,0 31.995,160.849 C 18.9,170.1 8.4,176.3 0,207 C -8.4,176.3 -18.9,170.1 -31.995,160.849 z"
+                  fill="#c2390f"
+                  transform="rotate(22.5)"
+                />
+              </g>
+              <use href="#s1" transform="rotate(45)" />
+            </g>
+            <use href="#s2" transform="rotate(90)" />
+          </g>
+          <use href="#s3" transform="scale(-1)" />
+        </g>
+        <g id="coas"></g>
+        <g id="gridPatterns">
+          <pattern id="pattern_square" width="25" height="25" patternUnits="userSpaceOnUse" fill="none">
+            <path d="M 25 0 L 0 0 0 25" />
+          </pattern>
+          <pattern id="pattern_pointyHex" width="25" height="43.4" patternUnits="userSpaceOnUse" fill="none">
+            <path d="M 0,0 12.5,7.2 25,0 M 12.5,21.7 V 7.2 Z M 0,43.4 V 28.9 L 12.5,21.7 25,28.9 v 14.5" />
+          </pattern>
+          <pattern id="pattern_flatHex" width="43.4" height="25" patternUnits="userSpaceOnUse" fill="none">
+            <path d="M 43.4,0 36.2,12.5 43.4,25 M 21.7,12.5 H 36.2 Z M 0,0 H 14.5 L 21.7,12.5 14.5,25 H 0" />
+          </pattern>
+          <pattern id="pattern_square45deg" width="35.355" height="35.355" patternUnits="userSpaceOnUse" fill="none">
+            <path d="M 0 0 L 35.355 35.355 M 0 35.355 L 35.355 0" />
+          </pattern>
+          <pattern id="pattern_squareTruncated" width="25" height="25" patternUnits="userSpaceOnUse" fill="none">
+            <path
+              d="M 8.33 25 L 0 16.66 V 8.33 L 8.33 0 16.66 0 25 8.33  M 16.66 25 L 25 16.66 L 25 8.33 M 8.33 25 L 16.66 25"
+            />
+          </pattern>
+          <pattern id="pattern_squareTetrakis" width="25" height="25" patternUnits="userSpaceOnUse" fill="none">
+            <path
+              d="M 25 0 L 0 0 0 25 M 0 0 L 25 25 M 0 25 L 25 0 M 12.5 0 L 12.5 25 M 0 12.5 L 25 12.5 M 0 25 L 25 25 L 25 0"
+            />
+          </pattern>
+          <pattern
+            id="pattern_triangleHorizontal"
+            width="41.76"
+            height="72.33"
+            patternUnits="userSpaceOnUse"
+            fill="none"
+          >
+            <path
+              d="M 41.76 36.165 H 0 L 20.88 0 41.76 36.165 20.88 72.33 0 36.165 M 0 0 H 72.33 M 0 72.33 L 41.76 72.33"
+            />
+          </pattern>
+          <pattern id="pattern_triangleVertical" width="72.33" height="41.76" patternUnits="userSpaceOnUse" fill="none">
+            <path
+              d="M 36.165 0 L 0 20.88 36.165 41.76 72.33 20.88 36.165 0 V 41.76 M 0 0 V 72.33 M 72.33 0 L 72.33 41.76"
+            />
+          </pattern>
+          <pattern id="pattern_trihexagonal" width="25" height="43.4" patternUnits="userSpaceOnUse" fill="none">
+            <path d="M 25 10.85 H 0 L 18.85 43.4 25 32.55 H 0 L 18.85 0 25 10.85" />
+          </pattern>
+          <pattern id="pattern_rhombille" width="82.5" height="50" patternUnits="userSpaceOnUse" fill="none">
+            <path
+              d="M 13.8 50 L 0 25 13.8 0 H 41.2 L 27.5 25 41.2 50 55 25 41.2 0 68.8 0 82.5 25 68.8 50 M 0 25 H 27.5 M 55 25 H 82.5 M 13.8 50 H 41.2 L 68.8 50"
+            />
+          </pattern>
+        </g>
+        <g id="defs-hatching">
+          <pattern id="hatch0" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch1" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch2" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch3" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch4" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch5" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch6" patternUnits="userSpaceOnUse" width="5" height="5">
+            <circle cx="2.5" cy="2.5" r="1" style="fill: black" />
+          </pattern>
+          <pattern id="hatch7" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" transform="rotate(-45 0 0)" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch8" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 2.5" />
+          </pattern>
+          <pattern id="hatch9" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 2.5" />
+          </pattern>
+          <pattern id="hatch10" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 2.5" />
+          </pattern>
+          <pattern id="hatch11" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 2.5" />
+          </pattern>
+          <pattern id="hatch12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="1" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch13" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch14" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch15" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch16" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch17" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch18" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch19" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch20" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch21" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch22" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="2" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch23" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch24" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="2" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch25" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch26" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch27" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch28" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="2" y1="0" x2="0" y2="2" style="stroke: black; stroke-width: 2" />
+          </pattern>
+          <pattern id="hatch29" patternTransform="rotate(30 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="1" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch30" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch31" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="1" y1="0" x2="0" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="1" y1="0" x2="3" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch32" patternUnits="userSpaceOnUse" width="5" height="5">
+            <circle cx="2.5" cy="2.5" r="0.5" style="fill: black" />
+          </pattern>
+          <pattern id="hatch33" patternUnits="userSpaceOnUse" width="5" height="5">
+            <circle cx="2.5" cy="2.5" r="1.5" style="fill: black" />
+          </pattern>
+          <pattern id="hatch34" patternUnits="userSpaceOnUse" width="5" height="5">
+            <circle cx="3" cy="3" r="1" style="fill: black" />
+            <circle cx="1" cy="1" r="1" style="fill: black" />
+          </pattern>
+          <pattern id="hatch35" patternUnits="userSpaceOnUse" width="5" height="5">
+            <circle cx="3" cy="3" r="1.5" style="fill: black" />
+            <circle cx="1" cy="1" r="1.5" style="fill: black" />
+          </pattern>
+          <pattern id="hatch36" patternTransform="rotate(-45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" transform="rotate(-45 0 0)" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch37" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="0" y2="3" transform="rotate(-45 0 0)" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch38" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="4" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch39" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="4" y2="4" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch40" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="3" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+          <pattern id="hatch41" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="4" height="4">
+            <line x1="0" y1="0" x2="3" y2="3" style="stroke: black; stroke-width: 1.5" />
+            <line x1="0" y1="0" x2="4" y2="0" style="stroke: black; stroke-width: 1.5" />
+          </pattern>
+        </g>
+        <g id="trade-markers"></g>
+      </defs>
+    </svg>
+    <script src="libs/jquery-3.1.1.min.js"></script>
+    <script src="libs/jquery-ui.min.js"></script>
+    <script src="libs/d3.min.js"></script>
+    <script src="libs/flatqueue.js"></script>
+    <script src="libs/delaunator.min.js"></script>
+    <script src="libs/indexedDB.js?v=84a8bb23"></script>
+
+    <script type="module" src="main.ts"></script>
+    <script defer src="libs/alea.min.js?v1.105.0"></script>
+    <script defer src="libs/polylabel.min.js?v1.105.0"></script>
+    <script defer src="libs/simplify.js?v1.105.6"></script>
+    <script defer src="libs/rgbquant.min.js"></script>
+    <script defer src="libs/jquery.ui.touch-punch.min.js"></script>
+  </body>
+</html>

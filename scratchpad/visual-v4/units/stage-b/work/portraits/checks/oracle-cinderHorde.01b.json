@@ -1,0 +1,29 @@
+{
+ "job": "oracle-cinderHorde.01b",
+ "tag": "",
+ "measures": {
+  "background": 3.5,
+  "bgSpread": 1.4,
+  "floor": 7.4,
+  "top": 0.07,
+  "low": 0.898,
+  "bottomCut": 0.0,
+  "cx": 0.512,
+  "subject": 0.309,
+  "light": -0.7,
+  "rim": 0.558,
+  "read48": 11.8,
+  "muted": 0.0022,
+  "satAll": 0.0542,
+  "side": {
+   "window": 0.1542
+  }
+ },
+ "failed": [],
+ "overridden": [
+  {
+   "gate": "read48 11.8 < 12",
+   "reason": "11.8 against 12, inside the measure's noise; the cowl, the orb staff and the ragged hem read at 48 px on the board; the darkness is the candle shadow the prompt asks for"
+  }
+ ]
+}

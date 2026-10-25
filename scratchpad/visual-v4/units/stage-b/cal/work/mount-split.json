@@ -1,0 +1,174 @@
+{
+ "cells": {
+  "stand": {
+   "containWolf": 0.997,
+   "containRider": 0.979,
+   "recomposeIoU": 0.953,
+   "lightJoint": 0.056,
+   "lightWolf": 0.108,
+   "lightRider": 0.082,
+   "dLwolf": 0.013,
+   "dLrider": -0.007
+  },
+  "lopeA": {
+   "containWolf": 0.99,
+   "containRider": 0.99,
+   "recomposeIoU": 0.948,
+   "lightJoint": 0.03,
+   "lightWolf": 0.062,
+   "lightRider": 0.063,
+   "dLwolf": 0.022,
+   "dLrider": -0.004
+  },
+  "lopeB": {
+   "containWolf": 0.989,
+   "containRider": 0.989,
+   "recomposeIoU": 0.941,
+   "lightJoint": 0.046,
+   "lightWolf": 0.082,
+   "lightRider": 0.061,
+   "dLwolf": 0.016,
+   "dLrider": -0.006
+  },
+  "leapA": {
+   "containWolf": 0.988,
+   "containRider": 0.992,
+   "recomposeIoU": 0.956,
+   "lightJoint": 0.047,
+   "lightWolf": 0.064,
+   "lightRider": 0.059,
+   "dLwolf": 0.021,
+   "dLrider": -0.004
+  },
+  "leapB": {
+   "containWolf": 0.994,
+   "containRider": null,
+   "recomposeIoU": 0.97,
+   "lightJoint": 0.016,
+   "lightWolf": 0.019,
+   "lightRider": null,
+   "dLwolf": -0.014,
+   "dLrider": null
+  },
+  "charge": {
+   "containWolf": 0.992,
+   "containRider": 1.0,
+   "recomposeIoU": 0.95,
+   "lightJoint": 0.038,
+   "lightWolf": 0.048,
+   "lightRider": 0.065,
+   "dLwolf": 0.018,
+   "dLrider": -0.011
+  },
+  "windup": {
+   "containWolf": 0.851,
+   "containRider": 0.992,
+   "recomposeIoU": 0.81,
+   "lightJoint": 0.054,
+   "lightWolf": 0.101,
+   "lightRider": 0.093,
+   "dLwolf": 0.012,
+   "dLrider": -0.015
+  },
+  "strike": {
+   "containWolf": 0.996,
+   "containRider": 0.999,
+   "recomposeIoU": 0.956,
+   "lightJoint": 0.049,
+   "lightWolf": 0.075,
+   "lightRider": 0.066,
+   "dLwolf": 0.023,
+   "dLrider": -0.007
+  },
+  "bite": {
+   "containWolf": 0.994,
+   "containRider": 0.994,
+   "recomposeIoU": 0.947,
+   "lightJoint": 0.02,
+   "lightWolf": 0.048,
+   "lightRider": 0.057,
+   "dLwolf": 0.005,
+   "dLrider": -0.01
+  },
+  "recoil": {
+   "containWolf": 0.988,
+   "containRider": 0.992,
+   "recomposeIoU": 0.947,
+   "lightJoint": 0.071,
+   "lightWolf": 0.087,
+   "lightRider": 0.09,
+   "dLwolf": 0.002,
+   "dLrider": -0.016
+  },
+  "fall": {
+   "containWolf": 0.993,
+   "containRider": 0.995,
+   "recomposeIoU": 0.951,
+   "lightJoint": 0.049,
+   "lightWolf": 0.072,
+   "lightRider": 0.087,
+   "dLwolf": 0.02,
+   "dLrider": -0.016
+  },
+  "deadA": {
+   "containWolf": 0.99,
+   "containRider": 0.992,
+   "recomposeIoU": 0.957,
+   "lightJoint": 0.136,
+   "lightWolf": 0.01,
+   "lightRider": 0.061,
+   "dLwolf": -0.007,
+   "dLrider": -0.006
+  },
+  "deadB": {
+   "containWolf": 0.979,
+   "containRider": 0.979,
+   "recomposeIoU": 0.953,
+   "lightJoint": -0.11,
+   "lightWolf": null,
+   "lightRider": null,
+   "dLwolf": -0.004,
+   "dLrider": 0.006
+  },
+  "boltA": {
+   "containWolf": 0.991,
+   "containRider": 0.451,
+   "recomposeIoU": 0.604,
+   "lightJoint": 0.007,
+   "lightWolf": -0.004,
+   "lightRider": 0.05,
+   "dLwolf": -0.01,
+   "dLrider": -0.015
+  },
+  "boltB": {
+   "containWolf": 0.995,
+   "containRider": 0.517,
+   "recomposeIoU": 0.632,
+   "lightJoint": 0.041,
+   "lightWolf": 0.032,
+   "lightRider": 0.054,
+   "dLwolf": -0.005,
+   "dLrider": -0.019
+  },
+  "cheer": {
+   "containWolf": 0.992,
+   "containRider": 0.985,
+   "recomposeIoU": 0.944,
+   "lightJoint": 0.084,
+   "lightWolf": 0.164,
+   "lightRider": 0.069,
+   "dLwolf": 0.022,
+   "dLrider": 0.007
+  }
+ },
+ "summary": {
+  "containWolfMedian": 0.9915,
+  "containRiderMedian": 0.992,
+  "recomposeIoUMedian": 0.949,
+  "lightJointMedian": 0.0465,
+  "lightWolfMedian": 0.064,
+  "lightRiderMedian": 0.064,
+  "dLwolfMedian": 0.0125,
+  "dLriderMedian": -0.007
+ }
+}

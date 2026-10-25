@@ -1,0 +1,284 @@
+{
+ "figure": "cmdLevy",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.82,
+  "iouMirrored": 0.636,
+  "aspectRatio": 0.893,
+  "headDx": -0.079,
+  "guideHeadDx": -0.077,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.53,
+  "marchLegsIoU": 0.262,
+  "mostAlike": [
+   "marchA~strike",
+   0.673
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.008,
+   "marchA": 1.083,
+   "marchB": 1.023
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 14.953,
+  "keyInUnitPct": 0.176,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.38,
+  "pass_": true,
+  "edgeDevThickPct": 1.66,
+  "deviatingChromaShift": 0.003
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "cheer",
+   0.855
+  ],
+  "maxDE": [
+   "marchA",
+   1.0
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.82,
+    0.184
+   ],
+   "idle2": [
+    0.794,
+    0.129
+   ],
+   "marchA": [
+    0.778,
+    0.334
+   ],
+   "marchB": [
+    0.781,
+    0.482
+   ],
+   "windup": [
+    0.655,
+    0.04
+   ],
+   "strike": [
+    0.777,
+    0.492
+   ],
+   "follow": [
+    0.702,
+    0.318
+   ],
+   "recoil": [
+    0.599,
+    0.053
+   ],
+   "actA": [
+    0.777,
+    0.172
+   ],
+   "actB": [
+    0.796,
+    0.181
+   ],
+   "fall": [
+    0.507,
+    0.498
+   ],
+   "deadA": [
+    0.816,
+    0.814
+   ],
+   "deadB": [
+    0.749,
+    0.407
+   ],
+   "fleeA": [
+    0.818,
+    0.487
+   ],
+   "fleeB": [
+    0.736,
+    0.562
+   ],
+   "cheer": [
+    0.852,
+    0.127
+   ]
+  },
+  "medianIoU": 0.778,
+  "medianMargin": 0.326,
+  "follow": "15/16",
+  "followShare": 0.94
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.791,
+    0.172,
+    0.885
+   ],
+   "idle2": [
+    0.818,
+    0.148,
+    0.878
+   ],
+   "marchA": [
+    0.783,
+    0.348,
+    0.874
+   ],
+   "marchB": [
+    0.8,
+    0.491,
+    0.885
+   ],
+   "windup": [
+    0.667,
+    0.04,
+    0.914
+   ],
+   "strike": [
+    0.775,
+    0.49,
+    0.908
+   ],
+   "follow": [
+    0.693,
+    0.312,
+    0.933
+   ],
+   "recoil": [
+    0.72,
+    0.15,
+    0.861
+   ],
+   "actA": [
+    0.793,
+    0.181,
+    0.914
+   ],
+   "actB": [
+    0.786,
+    0.175,
+    0.945
+   ],
+   "fall": [
+    0.504,
+    0.494,
+    0.658
+   ],
+   "deadA": [
+    0.794,
+    0.792,
+    0.88
+   ],
+   "deadB": [
+    0.754,
+    0.412,
+    0.639
+   ],
+   "fleeA": [
+    0.818,
+    0.487,
+    0.932
+   ],
+   "fleeB": [
+    0.736,
+    0.562,
+    0.913
+   ],
+   "cheer": [
+    0.873,
+    0.149,
+    0.945
+   ]
+  },
+  "follow": "15/16",
+  "followN": 15,
+  "failing": [
+   "fall"
+  ],
+  "medianIoU": 0.784,
+  "inheritMedian": 0.897,
+  "inheritMin": [
+   0.639,
+   "deadB"
+  ]
+ },
+ "rim": {
+  "beforeMax": 3.1,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.156,
+  "worstBelow": 32.0,
+  "grounds": {
+   "plains": {
+    "share": 0.156,
+    "below": 40.4
+   },
+   "farmland": {
+    "share": 0.193,
+    "below": 40.0
+   },
+   "swamp": {
+    "share": 0.144,
+    "below": 32.0
+   },
+   "forest": {
+    "share": 0.158,
+    "below": 32.2
+   }
+  },
+  "fPx": 32.0,
+  "pass": true,
+  "nationFrom": "face (cmdA2 fix_side)"
+ },
+ "identity": {
+  "dE2000": 5.7,
+  "upperThirdLab": [
+   22.6,
+   -0.5,
+   3.0
+  ],
+  "portraitLab": [
+   28.6,
+   0.7,
+   6.8
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cs03.back.redress.r2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdLevy.back.body.g3pro.png",
+  "ownKit": false,
+  "kit": "as the passing other view (unchanged)",
+  "job": "cs03.back.redress.r2"
+ }
+}

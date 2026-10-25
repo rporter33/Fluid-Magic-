@@ -1,0 +1,131 @@
+</style>
+
+<header class="page-head">
+  <script>document.body.classList.add(new URLSearchParams(location.search).get('look') === 'v3' ? 'look-v3' : 'look-relief');</script>
+  <div class="row1">
+    <h1>Fluid Magic · game screen</h1>
+    <ol class="try desk rlonly" id="tryListRelief">
+      <li class="lead">Try this:</li>
+      <li>Lean back with the wheel: the terrain model on the oak, its cliff and brass plaque.</li>
+      <li>Hover a granite massif; select <b>Varo</b>, right-click <b class="tryAcross">…</b>: the path bends around it.</li>
+      <li>Push in to Near: every name, walls, guards and spring stones.</li>
+      <li>Drag the time-lapse: <b>Ashfen</b> changes faith; captures move the rails and the glow.</li>
+      <li>Hold <b>Shift</b> with nothing selected, or press <kbd>`</kbd>: every name and the numbers.</li>
+      <li>Hover a place name in the feed: it lights up on the land.</li>
+      <li>Hover the pieces in <b>Kharnath</b>: the stack fans out.</li>
+      <li>Switch <b>Map look</b> to Painted (v3), <b>Realm tint</b> to 8%.</li>
+      <li>Open <b>Portraits</b>; switch <b>Table</b>, <b>Vision</b>.</li>
+    </ol>
+    <ol class="try desk v3only" id="tryList">
+      <li class="lead">Try this:</li>
+      <li>Lean back with the wheel: the table and the tavern.</li>
+      <li>Hover a dark massif; select <b>Varo</b>, right-click <b id="tryAcross">…</b>: the path bends around it.</li>
+      <li>Drag the time-lapse: <b>Ashfen</b> changes faith (contested faith).</li>
+      <li>Open <b>Portraits</b>.</li>
+      <li>Switch <b>Table</b>, <b>Chrome</b>, <b>Vision</b>.</li>
+      <li>Switch <b>Hand</b>, <b>Labels</b>, <b>Borders</b> and <b>Bands</b> to compare with v2.</li>
+      <li><b>Try your art</b>: put a ChatGPT sheet on the map.</li>
+      <li>Switch <b>Palette</b> to <b>Painted</b> land.</li>
+    </ol>
+    <p class="touch">The war table, as Cinder Horde. Tap anything for details; drag to pan, pinch to zoom, long-press a province to march the selected army there.</p>
+  </div>
+  <details class="headmore" id="headMore" open>
+    <summary><span class="v3only">Mockup controls (table, detail, time-lapse, chrome, vision, portraits, hand, labels, borders, palette, art) ▸</span><span class="rlonly">Mockup controls (map look, realm tint, table, detail, time-lapse, chrome, vision, portraits, art) ▸</span></summary>
+    <div class="inner">
+      <div class="mockctl" id="mockctl" role="group" aria-label="Mockup controls">
+        <span class="lbl">Mockup<br>controls</span>
+        <span class="grp" title="Relief: the terrain model (map-design-final.md). Painted (v3): the painted cloth exactly as before; open with ?look=v3 to start on it.">Map look <span class="seg" data-ctl="look"><button data-v="relief" class="on">Relief</button><button data-v="v3">Painted (v3)</button></span></span>
+        <span class="grp rlonly" title="Owner question 1: tint all owned land 8% toward its banner, as the references do. Between owners it drops terrain pairs to 13.4 / 4.6 (354 of 3,024 pairs under 20 / 12): a color-blind player can mistake one terrain for another across a border.">Realm tint <span class="seg" data-ctl="tint"><button data-v="off" class="on">Off</button><button data-v="on">8%</button></span></span>
+        <span class="grp">Table <span class="seg" data-ctl="table"><button data-v="full" class="on">Full</button><button data-v="simple">Simple</button><button data-v="off">Off</button></span></span>
+        <span class="grp">Detail <span class="seg" data-ctl="detail"><button data-v="full" class="on">Full</button><button data-v="reduced">Reduced</button></span></span>
+        <span class="grp tlgrp"><span class="tlrow">Time-lapse <input type="range" id="tl" min="3" max="70" step="1" value="3" aria-label="Time-lapse month"><span class="tlv num" id="tlv">Y1 M3</span><label class="v3only"><input type="checkbox" id="wipe"> Wipe</label></span><span class="note">Mockup: jumps the clock; in the game slow looks change once a month</span></span>
+        <span class="grp">Chrome <span class="seg" data-ctl="chrome"><button data-v="approved" class="on">Approved</button><button data-v="warm">Warm (rejected)</button></span></span>
+        <span class="grp">Parchment <span class="seg" data-ctl="parch"><button data-v="off" class="on">Off</button><button data-v="on">Report + Codex</button></span></span>
+        <span class="grp">Vision <select id="vision" aria-label="Vision preview"><option value="normal">Normal</option><option value="protan">Protan</option><option value="deutan">Deutan</option><option value="tritan">Tritan</option></select><span class="note" id="visionNote" hidden>approximate preview</span></span>
+        <span class="grp"><label><input type="checkbox" id="rmotion"> Reduced motion</label></span>
+        <span class="grp"><button class="mbtn" id="btnPortraits">Portraits</button><button class="mbtn" id="btnPass" aria-pressed="false">Passability</button></span>
+        <span class="grp v3only">Hand <span class="seg" data-ctl="hand"><button data-v="painted" class="on">Painted</button><button data-v="v2">v2</button></span></span>
+        <span class="grp v3only">Labels <span class="seg" data-ctl="labels"><button data-v="ink" class="on">Ink</button><button data-v="approved">Approved</button></span></span>
+        <span class="grp v3only">Borders <span class="seg" data-ctl="borders"><button data-v="wobble" class="on">Wobble</button><button data-v="straight">Straight</button></span></span>
+        <span class="grp v3only">Bands <span class="seg" data-ctl="bandCap"><button data-v="capped" class="on">Capped</button><button data-v="v2">v2</button></span></span>
+        <span class="grp v3only">Tracks <span class="seg" data-ctl="tracks"><button data-v="full" class="on">Full</button><button data-v="crossings">Crossings</button></span></span>
+        <span class="grp v3only">Farmland <span class="seg" data-ctl="farm"><button data-v="approved" class="on">Approved</button><button data-v="deep">#EDB141</button></span></span>
+        <span class="grp v3only" title="Land. Bright: the approved fills and v3 drawing. Painted: muted fills that keep the colorblind rule, plus the art director's drawing fixes (fuller forest canopy, green trees on Plains, grass, peaks and banks on Mountains). Open with ?palette=painted to start on Painted.">Palette <span class="seg" data-ctl="palette"><button data-v="bright" class="on">Bright</button><button data-v="painted">Painted</button></span></span>
+        <span class="grp"><button class="mbtn" id="btnTryArt" aria-expanded="false">Try your art</button></span>
+                <span class="swatches" id="warmNote" hidden></span>
+      </div>
+    </div>
+  </details>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="cvd-protan" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="0.152286 1.052583 -0.204868 0 0  0.114503 0.786281 0.099216 0 0  -0.003882 -0.048116 1.051998 0 0  0 0 0 1 0"/></filter>
+  <filter id="cvd-deutan" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="0.367322 0.860646 -0.227968 0 0  0.280085 0.672501 0.047413 0 0  -0.01182 0.04294 0.968881 0 0  0 0 0 1 0"/></filter>
+  <filter id="cvd-tritan" color-interpolation-filters="linearRGB"><feColorMatrix type="matrix" values="1.255528 -0.076749 -0.178779 0 0  -0.078411 0.930809 0.147602 0 0  0.004733 0.691367 0.3039 0 0  0 0 0 1 0"/></filter>
+</svg>
+
+<div class="app hw" id="app">
+  <canvas id="map" aria-label="The war table: map of the provinces on an oak table"></canvas>
+  <canvas id="amb" aria-hidden="true"></canvas>
+  <div class="layer" id="layer"></div>
+  <div class="cursorlbl" id="cursorLbl"></div>
+  <div class="reviewchip" id="reviewChip">Passability · Review only: not a game mode</div>
+
+  <div class="topbar" id="topbar" role="toolbar" aria-label="Nation readouts">
+    <div class="readout nationbtn" tabindex="0" data-tip="nation"><span class="banner" id="bannerSvg"></span><span style="font:400 15px var(--font-display);letter-spacing:.03em">Cinder Horde</span></div>
+    <div class="sep"></div>
+    <div class="readout" tabindex="0" data-tip="pop"><span class="ic" data-icon="pop"></span><span class="v" id="popV">84.2k</span><span class="r up">▲0.3k/mo</span></div>
+    <div class="readout" tabindex="0" data-tip="gold"><span class="ic" data-icon="gold"></span><span class="v" id="goldV">1,240</span><span class="r up">▲38/mo</span></div>
+    <div class="readout" tabindex="0" data-tip="materials"><span class="ic" data-icon="anvil"></span><span class="v">212<span class="dimtxt">/360</span></span><span class="r up">▲60/mo</span></div>
+    <div class="sep"></div>
+    <div class="mana" id="mana"></div>
+    <div class="sep"></div>
+    <div class="readout" tabindex="0" data-tip="research"><span class="ic" data-icon="book"></span><span class="v">L2</span><span class="r dimtxt">▸ 47d</span></div>
+    <div class="readout" tabindex="0" data-tip="dominion"><span class="ic" data-icon="candle"></span><span class="v">5</span></div>
+    <div class="readout" tabindex="0" data-tip="wells"><span class="ic" data-icon="well"></span><span class="v" id="wellV">◇◇</span><span class="r dimtxt" id="wellR">0/2</span></div>
+    <div class="spacer"></div>
+    <button class="screenbtn" data-tip="btnR" id="btnR"><span data-icon="book"></span><span class="hidephone">Research</span><kbd>R</kbd></button>
+    <button class="screenbtn" data-tip="btnL" id="btnL"><span data-icon="ledger"></span><span class="hidephone">Ledger</span><kbd>L</kbd></button>
+    <button class="screenbtn" data-tip="btnF" id="btnF"><span data-icon="codex"></span><span class="hidephone">Codex</span><kbd>F</kbd></button>
+    <div class="clock paused" id="clock" data-tip="clock">
+      <span class="pausedword" id="pausedWord">PAUSED</span>
+      <span class="date" id="date">Y1 M3 D14</span>
+      <div class="speed" id="speed">
+        <button class="pausebtn" id="pauseBtn" aria-label="Pause or resume">❚❚</button>
+        <button data-s="1" aria-label="Speed 1" class="on"></button><button data-s="2" aria-label="Speed 2"></button><button data-s="3" aria-label="Speed 3"></button><button data-s="4" aria-label="Speed 4"></button>
+      </div>
+      <div class="hair"><i id="hair" style="width:45%"></i></div>
+    </div>
+  </div>
+
+  <div class="ribbon" id="ribbon" aria-label="Alerts"></div>
+  <div class="pausechip" id="pausechip" tabindex="0"></div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <aside class="dock left" id="leftDock" hidden aria-label="Selection"></aside>
+
+  <aside class="dock right" id="rightDock" aria-label="Outliner and messages">
+    <div class="outliner" id="outliner"></div>
+    <div class="splitter"></div>
+    <div class="feed">
+      <div class="chips" id="chips"></div>
+      <div class="msgs" id="msgs"></div>
+    </div>
+  </aside>
+  <div class="rail" id="rail">
+    <button class="iconbtn" id="railOut" aria-label="Outliner" data-tip="railOut">☰</button>
+    <button class="iconbtn" id="railFeed" aria-label="Messages" data-tip="railFeed">✉</button>
+    <button class="iconbtn" id="railMode" aria-label="Next map mode" data-tip="raw:railMode">◐</button>
+  </div>
+
+  <div class="strip" id="strip" aria-label="Selected commander"></div>
+
+  <div class="modes" id="modes"></div>
+
+  <div class="scrim" id="scrim" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(() => {
+'use strict';

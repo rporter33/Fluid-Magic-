@@ -1,0 +1,38 @@
+{
+  "file": "C1-06-A.png",
+  "sha256": "596bdcf50a75160cde5f3f36d19db224772197a265c8c4f823ac288c949f038d",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-22",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows, except where the subject below says a mage's eyes glow. No saturated red, orange, green or blue area larger than a small clasp or trim.\n\nSubject: A warrior of the Cinder Horde, ash-born clans who worship fire: ash-grey skin with soot markings, charcoal and smoke-grey clothing, armor of dark iron with rusted edges.\nA Cinder Scout: a low charcoal hood and a scarf that can cover the lower face, alert eyes.\nPerson: a woman about fifty, a long lean hawkish face with a thin sharp nose and hollow cheeks, pale ash-grey skin, deep lines at the corners of the eyes and mouth, a few strands of iron-grey hair at the temple, a narrow old burn scar along the jaw, the scarf pulled down loose around the neck so the whole face shows, cool measuring pale grey eyes and thin pressed lips. Kit: a deep hood with a stiffened front edge that juts a little forward over the brow like a short peak; the scarf hanging in loose folds at the throat; a small rusted iron gorget plate at the neck; a short smoke-grey cloak pinned at the shoulder with a plain iron pin.",
+  "references": [
+    "p0-gpt-rim.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1707,
+    "candidatesTokenCount": 1574,
+    "totalTokenCount": 3557,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 587
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 276,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.2,
+  "modelText": [],
+  "approved": null
+}

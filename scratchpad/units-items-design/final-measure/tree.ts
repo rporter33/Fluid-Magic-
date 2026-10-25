@@ -1,0 +1,24 @@
+// World Tree (pretender A.4) defending alone, fire -5 or none, against Cinder armies.
+import { unitDef, type UnitTypeId } from './src/content';
+import { setProto } from './src/sim/battle/proto';
+import type { BattleSideSetup, CombatStats } from './src/sim/battle/types';
+import { commander, fightOnce, side, squad, statsOf } from './tests/sim/battle/fixtures';
+const U = (id: string) => id as UnitTypeId;
+const RES: Record<string, Record<string, number>> = { flamebrand: { fire: 3 } };
+const st = (u: string, x: Partial<CombatStats> = {}) => statsOf(U(u), { size: unitDef(U(u)).tags.includes('mounted') ? 2 : unitDef(U(u)).size, resist: RES[u] ?? {}, ...x } as Partial<CombatStats>);
+const sq = (r: string, u: string, n: number, l: string) => squad(r, U(u), n, { leader: l, stats: st(u) });
+const hold = (r: string, u: string) => commander(r, U(u), { stats: st(u), script: Array.from({ length: 5 }, () => ({ kind: 'hold' as const })) });
+const tree = (fire: number) => side([], [commander('god', U('livingMonolith'), { stats: st('livingMonolith', { hp: 250, str: 20, att: 10, def: 4, prot: 20, mor: 50, size: 6, mapSpeed: 0, tags: ['immobile'], weapons: [{ name: 'Lashing Boughs', dmg: 8 }], regeneration: 0.1, resist: fire ? { fire } : {} }), script: Array.from({ length: 5 }, () => ({ kind: 'hold' as const })) })]);
+const start = () => side([sq('w', 'cinderWarrior', 20, 'c'), sq('a', 'flameArcher', 10, 'c')], [hold('c', 'ashChieftain')]);
+const elite = () => side([sq('w', 'cinderWarrior', 20, 'c'), sq('a', 'flameArcher', 10, 'c'), sq('f', 'flamebrand', 10, 'c')], [hold('c', 'ashChieftain')]);
+const big = () => side([sq('w', 'cinderWarrior', 40, 'c'), sq('a', 'flameArcher', 20, 'c'), sq('f', 'flamebrand', 20, 'c')], [hold('c', 'ashChieftain')]);
+setProto({ sizeMelee: true, sizeRanged: true, reach: true, resist: true, startMods: [] });
+const N = 400;
+const rate = (a: () => BattleSideSetup, d: () => BattleSideSetup) => { let w = 0; for (let s = 0; s < N; s++) if (fightOnce(a(), d(), s).winner === 'attacker') w++; return Math.round(1000 * w / N) / 10; };
+console.log('| Cinder army attacks a lone World Tree | fire −5 | no resistance |\n|---|---|---|');
+for (const [n, a] of [['start (20 CW, 10 FA)', start], ['elite (20 CW, 10 FA, 10 Flamebrands)', elite], ['double elite (40 CW, 20 FA, 20 Flamebrands)', big]] as [string, () => BattleSideSetup][]) console.log(`| ${n} | ${rate(a, () => tree(-5))} | ${rate(a, () => tree(0))} |`);
+console.log('\n| Cinder elite attacks a lone World Tree, by fire value | win |\n|---|---|');
+for (const f of [-5, -4, -3, -2, -1, 0]) console.log(`| fire ${f} | ${rate(elite, () => tree(f))} |`);
+console.log('\n| Cinder elite attacks a lone Living Monolith (prot 25, size 6), by fire value | win |\n|---|---|');
+const mono = (fire: number) => side([], [commander('god', U('livingMonolith'), { stats: st('livingMonolith', { size: 6, resist: fire ? { fire } : {} }), script: Array.from({ length: 5 }, () => ({ kind: 'hold' as const })) })]);
+for (const f of [0]) console.log(`| fire ${f} | ${rate(elite, () => mono(f))} |`);

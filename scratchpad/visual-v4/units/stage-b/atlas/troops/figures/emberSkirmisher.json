@@ -1,0 +1,403 @@
+{
+ "figure": "emberSkirmisher",
+ "unit": "emberSkirmisher",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "An Ember Skirmisher, a light runner: a sleeveless dull ember-orange tunic from the collar down to just above the knees, front and back, belted with dark leather; a wide dull ember-orange scarf wound over the head and around the shoulders with two long tails flying behind; lean arms and legs whose ash-grey skin is blackened with soot, painted as living skin with warm lights and cool shadows, never as grey clay; dark charcoal cloth wrapped tightly round the forearms and from the knees to the ankles; a dark leather harness across the chest; a bundle of three short iron-tipped javelins in the off hand and one ready in the throwing hand; a long knife at the belt (in the windup and strike cells the knife is in hand). No armour, no shield, no horns.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4211,
+     "standPx": 56,
+     "frames": [
+      "emberSkirmisher.back.stand",
+      "emberSkirmisher.back.stand.white",
+      "emberSkirmisher.back.runA",
+      "emberSkirmisher.back.runB",
+      "emberSkirmisher.back.aim",
+      "emberSkirmisher.back.throw",
+      "emberSkirmisher.back.follow",
+      "emberSkirmisher.back.windup",
+      "emberSkirmisher.back.strike",
+      "emberSkirmisher.back.recoil",
+      "emberSkirmisher.back.recoil.white",
+      "emberSkirmisher.back.fall",
+      "emberSkirmisher.back.deadA",
+      "emberSkirmisher.back.deadB",
+      "emberSkirmisher.back.fleeA",
+      "emberSkirmisher.back.fleeB",
+      "emberSkirmisher.back.cheer",
+      "emberSkirmisher.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.8421,
+     "standPx": 112,
+     "frames": [
+      "emberSkirmisher.back.stand",
+      "emberSkirmisher.back.stand.white",
+      "emberSkirmisher.back.runA",
+      "emberSkirmisher.back.runB",
+      "emberSkirmisher.back.aim",
+      "emberSkirmisher.back.throw",
+      "emberSkirmisher.back.follow",
+      "emberSkirmisher.back.windup",
+      "emberSkirmisher.back.strike",
+      "emberSkirmisher.back.recoil",
+      "emberSkirmisher.back.recoil.white",
+      "emberSkirmisher.back.fall",
+      "emberSkirmisher.back.deadA",
+      "emberSkirmisher.back.deadB",
+      "emberSkirmisher.back.fleeA",
+      "emberSkirmisher.back.fleeB",
+      "emberSkirmisher.back.cheer",
+      "emberSkirmisher.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.emberSkirmisher.back.g3pro.png",
+   "sha256": "73a8a06475aaa873874132bc8216fc4cf76bf0c53fe2f9b12147064ec3209822",
+   "model": "gemini-3-pro-image",
+   "job": "emberSkirmisher.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/emberSkirmisher.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/r3/cw.back.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/06.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "side",
+    "fringe"
+   ],
+   "checks": {
+    "cameraAll": "10/15",
+    "cells": {
+     "stand": [
+      0.625,
+      0.045
+     ],
+     "runA": [
+      0.713,
+      0.336
+     ],
+     "runB": [
+      0.672,
+      0.362
+     ],
+     "aim": [
+      0.596,
+      0.033
+     ],
+     "throw": [
+      0.484,
+      0.179
+     ],
+     "follow": [
+      0.421,
+      -0.095
+     ],
+     "windup": [
+      0.78,
+      0.102
+     ],
+     "strike": [
+      0.766,
+      0.41
+     ],
+     "recoil": [
+      0.773,
+      0.109
+     ],
+     "fall": [
+      0.397,
+      0.102
+     ],
+     "deadA": [
+      0.28,
+      0.256
+     ],
+     "deadB": [
+      0.364,
+      0.025
+     ],
+     "fleeA": [
+      0.777,
+      0.368
+     ],
+     "fleeB": [
+      0.765,
+      0.437
+     ],
+     "cheer": [
+      0.802,
+      0.127
+     ]
+    },
+    "variety": {
+     "mostAlike": [
+      "stand~windup",
+      0.594
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.398,
+     "histMin": [
+      "fall",
+      0.652
+     ],
+     "maxDE": [
+      "fall",
+      7.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 34.6,
+     "afterMax": 1.4
+    },
+    "side": {
+     "neutral": {
+      "share": 0.222,
+      "worstBelow": 13.8,
+      "below": {
+       "plains": 19.1,
+       "farmland": 18.9,
+       "swamp": 13.8,
+       "forest": 14.0
+      }
+     },
+     "sideKeyline": {
+      "share": 0.455,
+      "worstBelow": 12.3,
+      "below": {
+       "plains": 18.0,
+       "farmland": 17.7,
+       "swamp": 12.3,
+       "forest": 12.5
+      }
+     },
+     "pass": false
+    },
+    "fringe": {
+     "spillEdgePct": 12.629,
+     "keyInUnitPct": 0.963,
+     "fringePct": 0.0,
+     "edgeDevPct": 7.04,
+     "pass_": false
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "green",
+    "scope": "whole",
+    "maxShare": 0.15,
+    "meanShare": 0.1008
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4029,
+     "standPx": 56,
+     "frames": [
+      "emberSkirmisher.front.stand",
+      "emberSkirmisher.front.stand.white",
+      "emberSkirmisher.front.runA",
+      "emberSkirmisher.front.runB",
+      "emberSkirmisher.front.aim",
+      "emberSkirmisher.front.throw",
+      "emberSkirmisher.front.follow",
+      "emberSkirmisher.front.windup",
+      "emberSkirmisher.front.strike",
+      "emberSkirmisher.front.recoil",
+      "emberSkirmisher.front.recoil.white",
+      "emberSkirmisher.front.fall",
+      "emberSkirmisher.front.deadA",
+      "emberSkirmisher.front.deadB",
+      "emberSkirmisher.front.fleeA",
+      "emberSkirmisher.front.fleeB",
+      "emberSkirmisher.front.cheer",
+      "emberSkirmisher.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.8058,
+     "standPx": 112,
+     "frames": [
+      "emberSkirmisher.front.stand",
+      "emberSkirmisher.front.stand.white",
+      "emberSkirmisher.front.runA",
+      "emberSkirmisher.front.runB",
+      "emberSkirmisher.front.aim",
+      "emberSkirmisher.front.throw",
+      "emberSkirmisher.front.follow",
+      "emberSkirmisher.front.windup",
+      "emberSkirmisher.front.strike",
+      "emberSkirmisher.front.recoil",
+      "emberSkirmisher.front.recoil.white",
+      "emberSkirmisher.front.fall",
+      "emberSkirmisher.front.deadA",
+      "emberSkirmisher.front.deadB",
+      "emberSkirmisher.front.fleeA",
+      "emberSkirmisher.front.fleeB",
+      "emberSkirmisher.front.cheer",
+      "emberSkirmisher.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r2.emberSkirmisher.front.pro.g3pro.png",
+   "sha256": "056ad6b6b85065062ac5df267d1241fea05c55325eee7b78aafdd66d7cebe8ef",
+   "model": "gemini-3-pro-image",
+   "job": "emberSkirmisher.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/emberSkirmisher.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/cw.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/06.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.809,
+      0.096
+     ],
+     "runA": [
+      0.789,
+      0.173
+     ],
+     "runB": [
+      0.812,
+      0.581
+     ],
+     "aim": [
+      0.868,
+      0.239
+     ],
+     "throw": [
+      0.813,
+      0.32
+     ],
+     "follow": [
+      0.879,
+      0.351
+     ],
+     "windup": [
+      0.834,
+      0.222
+     ],
+     "strike": [
+      0.842,
+      0.344
+     ],
+     "recoil": [
+      0.856,
+      0.285
+     ],
+     "fall": [
+      0.796,
+      0.571
+     ],
+     "deadA": [
+      0.708,
+      0.437
+     ],
+     "deadB": [
+      0.87,
+      0.792
+     ],
+     "fleeA": [
+      0.84,
+      0.23
+     ],
+     "fleeB": [
+      0.843,
+      0.619
+     ],
+     "cheer": [
+      0.86,
+      0.211
+     ]
+    },
+    "variety": {
+     "mostAlike": [
+      "stand~windup",
+      0.673
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.305,
+     "histMin": [
+      "aim",
+      0.807
+     ],
+     "maxDE": [
+      "fall",
+      3.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 22.0,
+     "afterMax": 0.5
+    },
+    "side": {
+     "neutral": {
+      "share": 0.209,
+      "worstBelow": 18.9,
+      "below": {
+       "plains": 24.7,
+       "farmland": 24.4,
+       "swamp": 18.9,
+       "forest": 19.0
+      }
+     },
+     "sideKeyline": {
+      "share": 0.388,
+      "worstBelow": 17.6,
+      "below": {
+       "plains": 23.7,
+       "farmland": 23.4,
+       "swamp": 17.6,
+       "forest": 17.7
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 8.442,
+     "keyInUnitPct": 0.159,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.6,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

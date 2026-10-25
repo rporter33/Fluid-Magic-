@@ -1,0 +1,289 @@
+{
+ "figure": "oakheart",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.612,
+  "iouMirrored": 0.549,
+  "aspectRatio": 0.84,
+  "headDx": 0.136,
+  "guideHeadDx": 0.41,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.705,
+  "marchLegsIoU": 0.566,
+  "mostAlike": [
+   "marchA~marchB",
+   0.705
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.922,
+   "marchA": 0.979,
+   "marchB": 0.927
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 12.187,
+  "keyInUnitPct": 0.233,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.49,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.398,
+  "histMin": [
+   "fall",
+   0.766
+  ],
+  "maxDE": [
+   "recoil",
+   3.8
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.79,
+    "de": 4.3,
+    "cloth": 0.459
+   },
+   "deadB": {
+    "hist": 0.75,
+    "de": 14.8,
+    "cloth": 0.597
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.612,
+    0.063
+   ],
+   "idle2": [
+    0.7,
+    0.143
+   ],
+   "marchA": [
+    0.595,
+    0.124
+   ],
+   "marchB": [
+    0.608,
+    0.215
+   ],
+   "windup": [
+    0.473,
+    -0.022
+   ],
+   "strike": [
+    0.276,
+    -0.108
+   ],
+   "follow": [
+    0.159,
+    -0.217
+   ],
+   "brace": [
+    0.556,
+    0.14
+   ],
+   "recoil": [
+    0.573,
+    0.061
+   ],
+   "fall": [
+    0.165,
+    0.024
+   ],
+   "deadA": [
+    0.705,
+    0.679
+   ],
+   "deadB": [
+    0.357,
+    0.35
+   ],
+   "fleeA": [
+    0.703,
+    0.258
+   ],
+   "fleeB": [
+    0.556,
+    0.211
+   ],
+   "cheer": [
+    0.592,
+    0.1
+   ]
+  },
+  "medianIoU": 0.573,
+  "medianMargin": 0.124,
+  "follow": "10/15",
+  "followShare": 0.67
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.605,
+    0.048
+   ],
+   "idle2": [
+    0.704,
+    0.143
+   ],
+   "marchA": [
+    0.61,
+    0.142
+   ],
+   "marchB": [
+    0.598,
+    0.207
+   ],
+   "windup": [
+    0.521,
+    0.018
+   ],
+   "strike": [
+    0.275,
+    -0.112
+   ],
+   "follow": [
+    0.157,
+    -0.229
+   ],
+   "brace": [
+    0.563,
+    0.134
+   ],
+   "recoil": [
+    0.598,
+    0.087
+   ],
+   "fall": [
+    0.232,
+    0.066
+   ],
+   "fleeA": [
+    0.688,
+    0.249
+   ],
+   "fleeB": [
+    0.574,
+    0.22
+   ],
+   "cheer": [
+    0.587,
+    0.1
+   ]
+  },
+  "follow": "9/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.006,
+   "marchA": 1.012,
+   "marchB": 0.983
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 0.4,
+  "afterMax": 0.0
+ },
+ "side": {
+  "fPx": 42.0,
+  "f28": {
+   "neutral": {
+    "share": 0.189,
+    "worstBelow": 35.3
+   },
+   "sideKeyline": {
+    "share": 0.384,
+    "worstBelow": 33.3
+   }
+  },
+  "neutral": {
+   "share": 0.219,
+   "worstBelow": 36.6,
+   "below": {
+    "plains": 45.3,
+    "farmland": 44.9,
+    "swamp": 36.6,
+    "forest": 36.9
+   }
+  },
+  "sideKeyline": {
+   "share": 0.379,
+   "worstBelow": 34.6,
+   "below": {
+    "plains": 43.4,
+    "farmland": 43.0,
+    "swamp": 34.6,
+    "forest": 34.9
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "oakheart.back.brace.png": 0.423,
+  "oakheart.back.cheer.png": 0.354,
+  "oakheart.back.deadA.png": 0.444,
+  "oakheart.back.deadB.png": 0.578,
+  "oakheart.back.dropped.png": 0.0,
+  "oakheart.back.fall.png": 0.274,
+  "oakheart.back.fleeA.png": 0.386,
+  "oakheart.back.fleeB.png": 0.417,
+  "oakheart.back.follow.png": 0.38,
+  "oakheart.back.idle2.png": 0.398,
+  "oakheart.back.marchA.png": 0.358,
+  "oakheart.back.marchB.png": 0.361,
+  "oakheart.back.recoil.png": 0.304,
+  "oakheart.back.stand.png": 0.392,
+  "oakheart.back.strike.png": 0.411,
+  "oakheart.back.windup.png": 0.381
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/oakheart.back.fill.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false,
+ "cameraGate": {
+  "follow": "10/15",
+  "excluded": [],
+  "missing": [],
+  "failing": [
+   "deadB",
+   "fall",
+   "follow",
+   "strike",
+   "windup"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "marchA~marchB": 0.705
+  },
+  "mostAlike": [
+   "marchA~marchB",
+   0.705
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

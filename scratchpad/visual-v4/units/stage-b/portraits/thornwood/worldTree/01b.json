@@ -1,0 +1,104 @@
+{
+ "id": "worldTree-01b",
+ "unit": "worldTree",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "worldTree",
+ "promptFile": "stage-b/work/portraits/prompts-used/worldTree-thornwood.01b.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 31040,
+  "game": 11168,
+  "small": 988
+ },
+ "sourceFile": "stage-b/raw/portraits/worldTree-thornwood.01b.nb21.png",
+ "sourceSha256": "9f4966dfc88ec3a29bb12d0e17f7a060028b5c65c19d611f5763898a00a7312b",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing: this painting shows a whole figure from head to foot. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 1.\n\nA full-length painted portrait of the World Tree, an immobile god that is one vast, ancient tree, in a regal pose: upright and perfectly still. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the canopy about 6% from the top edge and the roots about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the canopy and the trunk that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the roots.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the round canopy, the massive trunk and the roots against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the tree is its leaves: deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Nothing in the image glows. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a vast, ancient tree with a thick, straight, massive trunk of ridged dark oak-brown bark (#6B4A2B) in deep vertical ridges; no face, no eyes and no carved features anywhere in the trunk. Canopy: a round, dense, dome-shaped crown of foliage, its leaves deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour, lit warm on the upper left; no blossom and no fruit. Roots: huge roots spread out from the base of the trunk and grip the ground.\nPaint it as described, the whole figure clearly in view; a little more weathered and ancient in its surfaces, with a heavier, more imposing stance.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "bark oak #6B4A2B",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: round canopy; no trunk face; no blossom; ridged bark; roots",
+ "pose": "regal",
+ "tintZone": "the leaves",
+ "cardCrop": {
+  "box512": [
+   0,
+   0,
+   512,
+   512
+  ],
+  "source": "override",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "round dome canopy in the nation's colour",
+   "read": null
+  },
+  {
+   "mark": "ridged bark",
+   "read": null
+  },
+  {
+   "mark": "faceless trunk",
+   "read": null
+  },
+  {
+   "mark": "spreading roots",
+   "read": null
+  },
+  {
+   "mark": "no blossom, no fruit",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.5,
+   "bgSpread": 2.3,
+   "floor": 1.5,
+   "top": 0.045,
+   "low": 0.914,
+   "bottomCut": 0.0,
+   "cx": 0.423,
+   "subject": 0.163,
+   "light": 7.6,
+   "rim": 0.24,
+   "read48": 13.8,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.4696,
+    "lock": 0.7507
+   }
+  },
+  "failed": [
+   "rim 0.24 < 0.3"
+  ],
+  "overridden": [],
+  "passed": false
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "A near copy of 01a with almost no rim light; re-rolled.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

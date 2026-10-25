@@ -1,0 +1,292 @@
+{
+ "figure": "cmdChief",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "deadB"
+ ],
+ "camera": {
+  "iou": 0.73,
+  "iouMirrored": 0.596,
+  "aspectRatio": 1.077,
+  "headDx": -0.083,
+  "guideHeadDx": -0.061,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.524,
+  "marchLegsIoU": 0.535,
+  "mostAlike": [
+   "stand~marchA",
+   0.797
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.007,
+   "marchA": 1.007,
+   "marchB": 0.928
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 10.659,
+  "keyInUnitPct": 0.006,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.17,
+  "pass_": true,
+  "edgeDevThickPct": 1.73,
+  "deviatingChromaShift": 0.004
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.769
+  ],
+  "maxDE": [
+   "fall",
+   1.4
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.73,
+    0.134
+   ],
+   "idle2": [
+    0.779,
+    0.211
+   ],
+   "marchA": [
+    0.766,
+    0.212
+   ],
+   "marchB": [
+    0.726,
+    0.333
+   ],
+   "windup": [
+    0.645,
+    0.084
+   ],
+   "strike": [
+    0.689,
+    0.3
+   ],
+   "follow": [
+    0.639,
+    0.197
+   ],
+   "recoil": [
+    0.653,
+    0.146
+   ],
+   "actA": [
+    0.631,
+    0.07
+   ],
+   "actB": [
+    0.684,
+    0.218
+   ],
+   "fall": [
+    0.451,
+    0.149
+   ],
+   "deadA": [
+    0.545,
+    0.193
+   ],
+   "deadB": [
+    0.728,
+    0.637
+   ],
+   "fleeA": [
+    0.712,
+    0.152
+   ],
+   "fleeB": [
+    0.752,
+    0.597
+   ],
+   "cheer": [
+    0.633,
+    0.05
+   ]
+  },
+  "medianIoU": 0.686,
+  "medianMargin": 0.195,
+  "follow": "14/16",
+  "followShare": 0.88
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.718,
+    0.129,
+    0.945
+   ],
+   "idle2": [
+    0.783,
+    0.22,
+    0.934
+   ],
+   "marchA": [
+    0.762,
+    0.203,
+    0.951
+   ],
+   "marchB": [
+    0.735,
+    0.346,
+    0.926
+   ],
+   "windup": [
+    0.647,
+    0.082,
+    0.966
+   ],
+   "strike": [
+    0.689,
+    0.3,
+    0.967
+   ],
+   "follow": [
+    0.639,
+    0.197,
+    0.945
+   ],
+   "recoil": [
+    0.662,
+    0.159,
+    0.92
+   ],
+   "actA": [
+    0.631,
+    0.071,
+    0.946
+   ],
+   "actB": [
+    0.697,
+    0.233,
+    0.974
+   ],
+   "fall": [
+    0.451,
+    0.149,
+    0.915
+   ],
+   "deadA": [
+    0.545,
+    0.193,
+    0.97
+   ],
+   "deadB": [
+    0.728,
+    0.637,
+    0.929
+   ],
+   "fleeA": [
+    0.718,
+    0.162,
+    0.961
+   ],
+   "fleeB": [
+    0.757,
+    0.595,
+    0.963
+   ],
+   "cheer": [
+    0.634,
+    0.049,
+    0.957
+   ]
+  },
+  "follow": "14/16",
+  "followN": 14,
+  "failing": [
+   "deadA",
+   "fall"
+  ],
+  "medianIoU": 0.693,
+  "inheritMedian": 0.948,
+  "inheritMin": [
+   0.915,
+   "fall"
+  ]
+ },
+ "rim": {
+  "beforeMax": 0.0,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.139,
+  "worstBelow": 31.7,
+  "grounds": {
+   "plains": {
+    "share": 0.139,
+    "below": 40.3
+   },
+   "farmland": {
+    "share": 0.176,
+    "below": 39.9
+   },
+   "swamp": {
+    "share": 0.125,
+    "below": 31.7
+   },
+   "forest": {
+    "share": 0.156,
+    "below": 32.0
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 4.9,
+  "upperThirdLab": [
+   27.4,
+   -0.4,
+   4.2
+  ],
+  "portraitLab": [
+   29.0,
+   2.5,
+   7.7
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/ac03.front.redress.kit.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdChief.front.zonesonly.g3pro.png",
+  "ownKit": true,
+  "kit": {
+   "face": "ac03",
+   "weapon": "the long-hafted great axe of dark iron held in both hands, its haft as tall as his chest",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "ac03.front.redress.kit"
+ }
+}

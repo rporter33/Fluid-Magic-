@@ -1,0 +1,293 @@
+{
+ "figure": "cmdCaster",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.769,
+  "iouMirrored": 0.688,
+  "aspectRatio": 0.874,
+  "headDx": -0.024,
+  "guideHeadDx": 0.127,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.685,
+  "marchLegsIoU": 0.601,
+  "mostAlike": [
+   "marchA~strike",
+   0.723
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.007,
+   "marchA": 1.028,
+   "marchB": 0.979
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.149,
+  "keyInUnitPct": 0.002,
+  "fringePct": 0.0,
+  "edgeDevPct": 3.25,
+  "pass_": true,
+  "edgeDevThickPct": 2.19,
+  "deviatingChromaShift": 0.003
+ },
+ "consistency": {
+  "standCloth": 0.001,
+  "histMin": [
+   "actA",
+   0.797
+  ],
+  "maxDE": [
+   "fall",
+   3.2
+  ],
+  "clothRatio": [
+   0.0,
+   18.65
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.769,
+    0.08
+   ],
+   "idle2": [
+    0.787,
+    0.054
+   ],
+   "marchA": [
+    0.756,
+    0.104
+   ],
+   "marchB": [
+    0.671,
+    0.051
+   ],
+   "windup": [
+    0.611,
+    0.005
+   ],
+   "strike": [
+    0.705,
+    0.206
+   ],
+   "follow": [
+    0.74,
+    0.142
+   ],
+   "recoil": [
+    0.576,
+    -0.01
+   ],
+   "actA": [
+    0.7,
+    0.05
+   ],
+   "actB": [
+    0.663,
+    0.103
+   ],
+   "fall": [
+    0.528,
+    0.505
+   ],
+   "deadA": [
+    0.559,
+    0.538
+   ],
+   "deadB": [
+    0.698,
+    0.352
+   ],
+   "fleeA": [
+    0.724,
+    0.187
+   ],
+   "fleeB": [
+    0.633,
+    0.179
+   ],
+   "cheer": [
+    0.701,
+    0.042
+   ]
+  },
+  "medianIoU": 0.699,
+  "medianMargin": 0.103,
+  "follow": "14/16",
+  "followShare": 0.88
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.774,
+    0.082,
+    0.89
+   ],
+   "idle2": [
+    0.791,
+    0.058,
+    0.908
+   ],
+   "marchA": [
+    0.752,
+    0.104,
+    0.905
+   ],
+   "marchB": [
+    0.67,
+    0.057,
+    0.917
+   ],
+   "windup": [
+    0.601,
+    0.002,
+    0.914
+   ],
+   "strike": [
+    0.707,
+    0.214,
+    0.909
+   ],
+   "follow": [
+    0.737,
+    0.139,
+    0.698
+   ],
+   "recoil": [
+    0.59,
+    -0.002,
+    0.928
+   ],
+   "actA": [
+    0.704,
+    0.052,
+    0.918
+   ],
+   "actB": [
+    0.509,
+    0.027,
+    0.571
+   ],
+   "fall": [
+    0.525,
+    0.5,
+    0.453
+   ],
+   "deadA": [
+    0.533,
+    0.512,
+    0.483
+   ],
+   "deadB": [
+    0.678,
+    0.334,
+    0.475
+   ],
+   "fleeA": [
+    0.723,
+    0.19,
+    0.884
+   ],
+   "fleeB": [
+    0.623,
+    0.176,
+    0.908
+   ],
+   "cheer": [
+    0.745,
+    0.058,
+    0.912
+   ]
+  },
+  "follow": "12/16",
+  "followN": 12,
+  "failing": [
+   "actB",
+   "deadA",
+   "fall",
+   "recoil"
+  ],
+  "medianIoU": 0.691,
+  "inheritMedian": 0.907,
+  "inheritMin": [
+   0.453,
+   "fall"
+  ]
+ },
+ "rim": {
+  "beforeMax": 3.4,
+  "afterMax": 0.3
+ },
+ "sideCmd": {
+  "share": 0.153,
+  "worstBelow": 28.0,
+  "grounds": {
+   "plains": {
+    "share": 0.153,
+    "below": 36.5
+   },
+   "farmland": {
+    "share": 0.178,
+    "below": 36.1
+   },
+   "swamp": {
+    "share": 0.144,
+    "below": 28.0
+   },
+   "forest": {
+    "share": 0.16,
+    "below": 28.2
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 4.8,
+  "upperThirdLab": [
+   23.9,
+   0.7,
+   7.2
+  ],
+  "portraitLab": [
+   28.8,
+   2.9,
+   9.1
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": false,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": false,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/ea07.back.redress.kit2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdCaster.back.body.edit.nb21.png",
+  "ownKit": true,
+  "kit": {
+   "face": "ea07",
+   "weapon": "the slender staff of blackened wood capped with iron and a short spike",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "ea07.back.redress.kit2"
+ }
+}

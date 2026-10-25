@@ -1,0 +1,18 @@
+#!/bin/sh
+# the polish pass's own runs on the live page (and the page before it where a before is wanted), three lanes at a time: out/final/p-*.txt
+cd /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/polish/tools; O=../out/final; B=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/polish/before/game-screen-v4.before.html
+timeout 1500 node polishprobe.cjs 1440 900 > $O/p-probe-1440.txt 2>&1 & timeout 1500 node polishprobe.cjs 1280 720 > $O/p-probe-1280.txt 2>&1 & timeout 1500 node polishprobe.cjs 390 844 > $O/p-probe-390.txt 2>&1 & wait
+timeout 1500 node polishprobe.cjs 1920 1080 > $O/p-probe-1920.txt 2>&1 & timeout 1500 node polishprobe.cjs 1440 900 2 > $O/p-probe-1440-2.txt 2>&1 & Q='?terrain=clear' TAG=clear timeout 1500 node polishprobe.cjs 1440 900 > $O/p-probe-1440-clear.txt 2>&1 & wait
+timeout 1500 node chipsweep.cjs 390 844 > $O/p-chips-390.txt 2>&1 & timeout 1500 node chipsweep.cjs 1440 900 > $O/p-chips-1440.txt 2>&1 & timeout 1500 node chipsweep.cjs 1280 720 > $O/p-chips-1280.txt 2>&1 & wait
+timeout 1500 node chipsweep.cjs 1440 900 2 > $O/p-chips-1440-2.txt 2>&1 & PAGEFILE=$B TAG=before timeout 1500 node chipsweep.cjs 390 844 > $O/p-chips-390-before.txt 2>&1 & timeout 900 node v-chipocc.cjs 390 844 > $O/p-chipocc-390.txt 2>&1 & wait
+python3 -I v-chipshare.py ../out/chipocc-390x844.json > $O/p-chipocc-390-shares.txt 2>&1
+timeout 900 node v-ui.cjs 390 844 > $O/p-ui-390.txt 2>&1 & SWEEP=1 timeout 1500 node v-ui.cjs 1440 900 > $O/p-ui-sweep-1440.txt 2>&1 & SWEEP=1 timeout 1500 node v-ui.cjs 1280 720 > $O/p-ui-sweep-1280.txt 2>&1 & wait
+timeout 900 node v-wildnames.cjs > $O/p-wildnames.txt 2>&1 & timeout 900 node v-cliff.cjs natural > $O/p-cliff.txt 2>&1 & timeout 900 node qeperf2.cjs 1 > $O/p-qeperf2.txt 2>&1 & wait
+IDLE=0 timeout 900 node qeperf2.cjs 1 > $O/p-qeperf2-idle0.txt 2>&1 & IDLE=0 PAGEFILE=$B TAG=before timeout 900 node qeperf2.cjs 1 > $O/p-qeperf2-idle0-before.txt 2>&1 & timeout 900 node qesame.cjs > $O/p-qesame.txt 2>&1 & wait
+timeout 1800 node preaders.cjs 1 > $O/p-preaders-1.txt 2>&1 & TAG=now timeout 1800 node preaders.cjs 2 > $O/p-preaders-2.txt 2>&1 & CFGS='[["",""],["fS-","RL_DBG.fog = null"],["fU-","RL_DBG.fog = \"unexplored\""]]' timeout 900 node v-dumpcfg.cjs natural 1 far > $O/p-dump-far.txt 2>&1 & wait
+timeout 900 node v-dump.cjs natural 1 mid,midE,midSW,midNE,midNW,midSE > $O/p-dump-mid.txt 2>&1 & CFGS='[["",""],["fS-","RL_DBG.fog = null"],["fU-","RL_DBG.fog = \"unexplored\""]]' timeout 900 node v-dumpcfg.cjs natural 2 far > $O/p-dump-far-2.txt 2>&1 & timeout 900 node geo.cjs 1280 720 > $O/p-geo-1280.txt 2>&1 & wait
+{ python3 -I vrecon.py natural-dpr1-1440x900-far fS-natural-dpr1-1440x900-far fU-natural-dpr1-1440x900-far; python3 -I vrecon.py natural-dpr2-1440x900-far fS-natural-dpr2-1440x900-far fU-natural-dpr2-1440x900-far; python3 -I vread-detail.py natural-dpr1-1440x900-far | head -5; } > $O/p-vreaders-far.txt 2>&1
+python3 -I v-readers.py final-midpool natural-dpr1-1440x900-mid natural-dpr1-1440x900-midE natural-dpr1-1440x900-midSW natural-dpr1-1440x900-midNE natural-dpr1-1440x900-midNW natural-dpr1-1440x900-midSE > $O/p-vreaders-midpool.txt 2>&1; python3 -I v-readers.py final-mid natural-dpr1-1440x900-mid > $O/p-vreaders-mid.txt 2>&1
+timeout 2400 node focus.cjs natural 1 > $O/p-linesweep-natural-1.txt 2>&1 & timeout 2400 node focus.cjs clear 1 > $O/p-linesweep-clear-1.txt 2>&1 & timeout 1500 node v3checks.cjs > $O/p-v3checks.txt 2>&1 & wait
+timeout 2400 node focus.cjs natural 2 > $O/p-linesweep-natural-2.txt 2>&1 & timeout 2400 node focus.cjs clear 2 > $O/p-linesweep-clear-2.txt 2>&1 & wait
+echo done > $O/PDONE

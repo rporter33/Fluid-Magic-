@@ -1,0 +1,1065 @@
+{
+ "figure": "pyrePriest-04",
+ "unit": "pyrePriest",
+ "face": "04",
+ "nation": "cinderHorde",
+ "body": "cmdCaster",
+ "layout": "commander",
+ "act": "cast",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA (+ cmdA2 fixes and own kits)",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/pp04.front.redress.nb21.png",
+   "sheetSha256": "1e672a6f196d424d1e112a0107c0a9e036dbf72a083c7d6fc64fb53e9095a3f6",
+   "body": "stage-b/cal/raw/cmdCaster.front.body.g3pro.png",
+   "bodySha256": "925f5a0dea2eaeace278408b7c6e5e198b5d7cda1cc6662cf8f4d26f0539ee0f",
+   "key": "green",
+   "keyer": "a2key",
+   "dir": "pp04.front.k2",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.4507,
+    "H": 0.90141
+   },
+   "scaleFrom": {
+    "bodyH": 142,
+    "from_": "body cmdCaster.front.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "pyrePriest-04.front.stand",
+     "srcBox": [
+      72,
+      70,
+      188,
+      220
+     ],
+     "srcAnchor": [
+      76.2,
+      147.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6545,
+       "y": 0.9608
+      },
+      "H": {
+       "x": 0.6485,
+       "y": 0.9677
+      }
+     }
+    },
+    "idle2": {
+     "frame": "pyrePriest-04.front.idle2",
+     "srcBox": [
+      327,
+      71,
+      442,
+      220
+     ],
+     "srcAnchor": [
+      69.0,
+      146.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5944,
+       "y": 0.9682
+      },
+      "H": {
+       "x": 0.5944,
+       "y": 0.9682
+      }
+     }
+    },
+    "marchA": {
+     "frame": "pyrePriest-04.front.marchA",
+     "srcBox": [
+      579,
+      74,
+      700,
+      221
+     ],
+     "srcAnchor": [
+      80.6,
+      144.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6549,
+       "y": 0.9691
+      },
+      "H": {
+       "x": 0.6607,
+       "y": 0.9621
+      }
+     }
+    },
+    "marchB": {
+     "frame": "pyrePriest-04.front.marchB",
+     "srcBox": [
+      836,
+      74,
+      955,
+      221
+     ],
+     "srcAnchor": [
+      79.9,
+      144.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6609,
+       "y": 0.9691
+      },
+      "H": {
+       "x": 0.6669,
+       "y": 0.9621
+      }
+     }
+    },
+    "windup": {
+     "frame": "pyrePriest-04.front.windup",
+     "srcBox": [
+      91,
+      269,
+      193,
+      476
+     ],
+     "srcAnchor": [
+      59.6,
+      204.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5805,
+       "y": 0.9784
+      },
+      "H": {
+       "x": 0.5805,
+       "y": 0.9732
+      }
+     }
+    },
+    "strike": {
+     "frame": "pyrePriest-04.front.strike",
+     "srcBox": [
+      323,
+      337,
+      441,
+      475
+     ],
+     "srcAnchor": [
+      71.0,
+      135.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6,
+       "y": 0.9663
+      },
+      "H": {
+       "x": 0.6,
+       "y": 0.9663
+      }
+     }
+    },
+    "follow": {
+     "frame": "pyrePriest-04.front.follow",
+     "srcBox": [
+      616,
+      338,
+      696,
+      474
+     ],
+     "srcAnchor": [
+      42.5,
+      133.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5304,
+       "y": 0.9674
+      },
+      "H": {
+       "x": 0.5304,
+       "y": 0.9597
+      }
+     }
+    },
+    "recoil": {
+     "frame": "pyrePriest-04.front.recoil",
+     "srcBox": [
+      793,
+      317,
+      987,
+      476
+     ],
+     "srcAnchor": [
+      121.9,
+      156.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6285,
+       "y": 0.9636
+      },
+      "H": {
+       "x": 0.625,
+       "y": 0.9702
+      }
+     }
+    },
+    "actA": {
+     "frame": "pyrePriest-04.front.actA",
+     "srcBox": [
+      109,
+      527,
+      188,
+      732
+     ],
+     "srcAnchor": [
+      41.0,
+      202.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5126,
+       "y": 0.9792
+      },
+      "H": {
+       "x": 0.5194,
+       "y": 0.974
+      }
+     }
+    },
+    "actB": {
+     "frame": "pyrePriest-04.front.actB",
+     "srcBox": [
+      306,
+      594,
+      443,
+      730
+     ],
+     "srcAnchor": [
+      96.1,
+      133.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6924,
+       "y": 0.9674
+      },
+      "H": {
+       "x": 0.6978,
+       "y": 0.9597
+      }
+     }
+    },
+    "fall": {
+     "frame": "pyrePriest-04.front.fall",
+     "srcBox": [
+      619,
+      522,
+      762,
+      732
+     ],
+     "srcAnchor": [
+      44.6,
+      207.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3197,
+       "y": 0.9721
+      },
+      "H": {
+       "x": 0.3173,
+       "y": 0.9772
+      }
+     }
+    },
+    "deadA": {
+     "frame": "pyrePriest-04.front.deadA",
+     "srcBox": [
+      867,
+      563,
+      1024,
+      697
+     ],
+     "srcAnchor": [
+      74.2,
+      98.8
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4718,
+       "y": 0.7343
+      },
+      "H": {
+       "x": 0.4718,
+       "y": 0.7285
+      }
+     }
+    },
+    "deadB": {
+     "frame": "pyrePriest-04.front.deadB",
+     "srcBox": [
+      4,
+      889,
+      177,
+      1021
+     ],
+     "srcAnchor": [
+      102.5,
+      97.2
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.59,
+       "y": 0.7346
+      },
+      "H": {
+       "x": 0.59,
+       "y": 0.7286
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "pyrePriest-04.front.fleeA",
+     "srcBox": [
+      342,
+      855,
+      441,
+      989
+     ],
+     "srcAnchor": [
+      62.2,
+      131.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6177,
+       "y": 0.9684
+      },
+      "H": {
+       "x": 0.6244,
+       "y": 0.9607
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "pyrePriest-04.front.fleeB",
+     "srcBox": [
+      620,
+      855,
+      700,
+      982
+     ],
+     "srcAnchor": [
+      34.7,
+      124.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4379,
+       "y": 0.9642
+      },
+      "H": {
+       "x": 0.4379,
+       "y": 0.9642
+      }
+     }
+    },
+    "cheer": {
+     "frame": "pyrePriest-04.front.cheer",
+     "srcBox": [
+      875,
+      781,
+      957,
+      987
+     ],
+     "srcAnchor": [
+      42.3,
+      203.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5145,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.5145,
+       "y": 0.9736
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "16/16",
+    "failing": [],
+    "inherit": 0.925,
+    "variety": true,
+    "marchIoU": 0.925,
+    "rimAfter": 0.2,
+    "edgeDev": 1.66,
+    "keyIn": 0.0,
+    "side": 0.136,
+    "valueBelow": 28.5,
+    "identityDE": 4.6,
+    "consHist": [
+     "deadB",
+     0.543
+    ],
+    "consDE": [
+     "deadB",
+     12.1
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "pp04.front.redress.nb21.png",
+    "marksFront": "yyppyy",
+    "dir": "pp04.front.k2",
+    "ownKit": false,
+    "keyer": "a2key",
+    "body": "cmdCaster.front.body.g3pro.png"
+   },
+   "pass": true
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/pp04.back.redress.nb21.png",
+   "sheetSha256": "d5b2e65db5db4982e7b295883c08e6d88a989aed516b23819ce58cfeaae43225",
+   "body": "stage-b/raw/cmdA/cmdCaster.back.body.edit.nb21.png",
+   "bodySha256": "09e9addfd92246dd31ea856a414c24d0e0311a039219a9844957b00b2d925918",
+   "key": "green",
+   "keyer": "a2key",
+   "dir": "pp04.back.k2",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.46043,
+    "H": 0.92086
+   },
+   "scaleFrom": {
+    "bodyH": 139,
+    "from_": "body cmdCaster.back.body.edit.nb21.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "pyrePriest-04.back.stand",
+     "srcBox": [
+      87,
+      37,
+      177,
+      183
+     ],
+     "srcAnchor": [
+      34.1,
+      143.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3884,
+       "y": 0.9687
+      },
+      "H": {
+       "x": 0.3839,
+       "y": 0.9687
+      }
+     }
+    },
+    "idle2": {
+     "frame": "pyrePriest-04.back.idle2",
+     "srcBox": [
+      344,
+      38,
+      451,
+      183
+     ],
+     "srcAnchor": [
+      34.0,
+      142.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3266,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.3234,
+       "y": 0.962
+      }
+     }
+    },
+    "marchA": {
+     "frame": "pyrePriest-04.back.marchA",
+     "srcBox": [
+      597,
+      37,
+      699,
+      187
+     ],
+     "srcAnchor": [
+      29.4,
+      147.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2967,
+       "y": 0.9674
+      },
+      "H": {
+       "x": 0.2967,
+       "y": 0.9674
+      }
+     }
+    },
+    "marchB": {
+     "frame": "pyrePriest-04.back.marchB",
+     "srcBox": [
+      840,
+      37,
+      955,
+      179
+     ],
+     "srcAnchor": [
+      35.4,
+      139.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3145,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.3145,
+       "y": 0.963
+      }
+     }
+    },
+    "windup": {
+     "frame": "pyrePriest-04.back.windup",
+     "srcBox": [
+      73,
+      274,
+      204,
+      437
+     ],
+     "srcAnchor": [
+      47.7,
+      160.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3704,
+       "y": 0.9697
+      },
+      "H": {
+       "x": 0.3674,
+       "y": 0.9697
+      }
+     }
+    },
+    "strike": {
+     "frame": "pyrePriest-04.back.strike",
+     "srcBox": [
+      332,
+      295,
+      447,
+      443
+     ],
+     "srcAnchor": [
+      38.4,
+      145.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3396,
+       "y": 0.968
+      },
+      "H": {
+       "x": 0.3396,
+       "y": 0.968
+      }
+     }
+    },
+    "follow": {
+     "frame": "pyrePriest-04.back.follow",
+     "srcBox": [
+      601,
+      298,
+      688,
+      441
+     ],
+     "srcAnchor": [
+      34.4,
+      140.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4009,
+       "y": 0.9627
+      },
+      "H": {
+       "x": 0.4009,
+       "y": 0.9627
+      }
+     }
+    },
+    "recoil": {
+     "frame": "pyrePriest-04.back.recoil",
+     "srcBox": [
+      815,
+      299,
+      991,
+      441
+     ],
+     "srcAnchor": [
+      71.3,
+      139.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4076,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.4076,
+       "y": 0.963
+      }
+     }
+    },
+    "actA": {
+     "frame": "pyrePriest-04.back.actA",
+     "srcBox": [
+      59,
+      522,
+      151,
+      684
+     ],
+     "srcAnchor": [
+      60.8,
+      159.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.659,
+       "y": 0.9637
+      },
+      "H": {
+       "x": 0.6516,
+       "y": 0.97
+      }
+     }
+    },
+    "actB": {
+     "frame": "pyrePriest-04.back.actB",
+     "srcBox": [
+      327,
+      549,
+      468,
+      685
+     ],
+     "srcAnchor": [
+      50.6,
+      133.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3627,
+       "y": 0.9575
+      },
+      "H": {
+       "x": 0.3627,
+       "y": 0.9649
+      }
+     }
+    },
+    "fall": {
+     "frame": "pyrePriest-04.back.fall",
+     "srcBox": [
+      534,
+      617,
+      676,
+      761
+     ],
+     "srcAnchor": [
+      125.9,
+      141.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.8801,
+       "y": 0.9694
+      },
+      "H": {
+       "x": 0.8736,
+       "y": 0.9623
+      }
+     }
+    },
+    "deadA": {
+     "frame": "pyrePriest-04.back.deadA",
+     "srcBox": [
+      781,
+      619,
+      928,
+      760
+     ],
+     "srcAnchor": [
+      74.5,
+      104.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5043,
+       "y": 0.7296
+      },
+      "H": {
+       "x": 0.5079,
+       "y": 0.7296
+      }
+     }
+    },
+    "deadB": {
+     "frame": "pyrePriest-04.back.deadB",
+     "srcBox": [
+      97,
+      792,
+      250,
+      901
+     ],
+     "srcAnchor": [
+      62.5,
+      80.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4136,
+       "y": 0.7276
+      },
+      "H": {
+       "x": 0.4107,
+       "y": 0.7276
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "pyrePriest-04.back.fleeA",
+     "srcBox": [
+      329,
+      805,
+      450,
+      956
+     ],
+     "srcAnchor": [
+      39.3,
+      148.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3292,
+       "y": 0.9603
+      },
+      "H": {
+       "x": 0.3321,
+       "y": 0.967
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "pyrePriest-04.back.fleeB",
+     "srcBox": [
+      585,
+      806,
+      692,
+      950
+     ],
+     "srcAnchor": [
+      24.8,
+      141.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2435,
+       "y": 0.9694
+      },
+      "H": {
+       "x": 0.2411,
+       "y": 0.9623
+      }
+     }
+    },
+    "cheer": {
+     "frame": "pyrePriest-04.back.cheer",
+     "srcBox": [
+      851,
+      776,
+      927,
+      940
+     ],
+     "srcAnchor": [
+      39.3,
+      161.0
+     ],
+     "atlas": {
+      "S": "pyrePriest.S.0.png",
+      "H": "pyrePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5161,
+       "y": 0.9632
+      },
+      "H": {
+       "x": 0.5161,
+       "y": 0.9694
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "15/16",
+    "failing": [
+     "follow"
+    ],
+    "inherit": 0.918,
+    "variety": true,
+    "marchIoU": 0.637,
+    "rimAfter": 0.0,
+    "edgeDev": 3.14,
+    "keyIn": 0.0,
+    "side": 0.141,
+    "valueBelow": 29.0,
+    "identityDE": 5.3,
+    "consHist": [
+     "marchB",
+     0.853
+    ],
+    "consDE": [
+     "fall",
+     3.3
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "pp04.back.redress.nb21.png",
+    "marksFront": null,
+    "dir": "pp04.back.k2",
+    "ownKit": false,
+    "keyer": "a2key",
+    "body": "cmdCaster.back.body.edit.nb21.png"
+   },
+   "pass": true
+  }
+ },
+ "marks": [
+  {
+   "mark": "the charcoal hood with an ash-dusted veil hanging down at the sides of the face",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the cropped black beard and the burn scar across the jaw",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the iron sun-disc clasp on the chest",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the layered dark iron collar plates",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the long charcoal robe to the ground",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the staff of blackened wood topped with a small iron brazier of dull unlit coals",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the charcoal hood with an ash-dusted veil hanging down at the sides of the face",
+    "tick": "y"
+   },
+   {
+    "mark": "the cropped black beard and the burn scar across the jaw",
+    "tick": "y"
+   },
+   {
+    "mark": "the iron sun-disc clasp on the chest",
+    "tick": "p"
+   },
+   {
+    "mark": "the layered dark iron collar plates",
+    "tick": "p"
+   },
+   {
+    "mark": "the long charcoal robe to the ground",
+    "tick": "y"
+   },
+   {
+    "mark": "the staff of blackened wood topped with a small iron brazier of dull unlit coals",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "pp04",
+  "weapon": "the staff of blackened wood topped with an iron brazier ringed with short spikes, its coals dull and unlit",
+  "weaponChanged": true,
+  "mantle": null,
+  "mantleFrom": "portrait"
+ }
+}

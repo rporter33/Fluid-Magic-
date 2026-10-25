@@ -1,0 +1,141 @@
+{
+ "01-start": {
+  "samples": 305,
+  "fails": 0,
+  "share": 0.831,
+  "worst": null,
+  "ex": []
+ },
+ "02-far": {
+  "samples": 164,
+  "fails": 0,
+  "share": 0.983,
+  "worst": null,
+  "ex": []
+ },
+ "02b-min": {
+  "samples": 138,
+  "fails": 0,
+  "share": 0.983,
+  "worst": null,
+  "ex": []
+ },
+ "03-mid-ash": {
+  "samples": 304,
+  "fails": 0,
+  "share": 0.597,
+  "worst": null,
+  "ex": []
+ },
+ "04-mid-grey-mere": {
+  "samples": 341,
+  "fails": 0,
+  "share": 0.597,
+  "worst": null,
+  "ex": []
+ },
+ "05-near-ash": {
+  "samples": 367,
+  "fails": 0,
+  "share": 0.588,
+  "worst": null,
+  "ex": []
+ },
+ "06-near-grey": {
+  "samples": 509,
+  "fails": 0,
+  "share": 0.638,
+  "worst": null,
+  "ex": []
+ },
+ "07-near-mere": {
+  "samples": 431,
+  "fails": 0,
+  "share": 0.605,
+  "worst": null,
+  "ex": []
+ },
+ "08-max-ash": {
+  "samples": 700,
+  "fails": 0,
+  "share": 0.589,
+  "worst": null,
+  "ex": []
+ },
+ "09-max-grey": {
+  "samples": 380,
+  "fails": 0,
+  "share": 0.589,
+  "worst": null,
+  "ex": []
+ },
+ "10-max-mere": {
+  "samples": 497,
+  "fails": 0,
+  "share": 0.589,
+  "worst": null,
+  "ex": []
+ },
+ "look": {
+  "peaks": {
+   "texels": 65834,
+   "Lp5": 11.3,
+   "Lp50": 27.2,
+   "Lp95": 49.6,
+   "Lmax": 77.6,
+   "textelsOutsideTheirCells": 0,
+   "cap": 54.85,
+   "passableRockP999": 52.35,
+   "overCap": 0,
+   "rockOverCap": 0,
+   "snowShare": 0.0535,
+   "snowOverCapShare": 0.0241,
+   "snowLmax": 77.6,
+   "snowMax": 80,
+   "snowShareMax": 0.08,
+   "rule": "pass 3 prototype: rock under the cap; snow on the top crests to snowMax on at most snowShareMax",
+   "snowPass": true
+  },
+  "mere": {
+   "texels": 14159,
+   "Lp5": 27.9,
+   "Lp50": 32.7,
+   "Lp95": 43.2,
+   "Lmax": 52.7,
+   "textelsOutsideTheirCells": 0,
+   "waterMeanLab": [
+    30.2,
+    -20.4,
+    -6
+   ],
+   "naturalWaterLab": [
+    36.8,
+    -23.8,
+    -3.1
+   ],
+   "waterDE": 6.2,
+   "fringeShare": 0.48
+  },
+  "pass": true
+ },
+ "times": {
+  "bakeCpu": 11378,
+  "nat": {
+   "wilds": 2055.5,
+   "coverBlend": 542.4,
+   "covers": 741,
+   "canopyShadow": 149.9,
+   "materials": 3244.8,
+   "wildTexels": 2562.8,
+   "corners": 39.6,
+   "canvas": 745.6
+  }
+ },
+ "msT": {
+  "landHeight": 184,
+  "low": 383.7,
+  "fine": 645.8,
+  "cast": 686.7,
+  "landShadow": 146.8
+ }
+}

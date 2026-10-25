@@ -1,0 +1,7 @@
+// p89 reliefLinesHover at four views and the wild sweep: node hoverq.cjs [dpr] [w h]
+const { launch, open, ev, mev } = require('./lib.cjs');
+(async () => { const dpr = +(process.argv[2] || 1), w = +(process.argv[3] || 1440), h = +(process.argv[4] || 900); const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, dpr, w, h, settle: 1500 }); await p.mouse.move(w / 2, h - 4);
+  for (const [v, src] of [['start', null], ['mid', 'm.setScale(1.0, 640, 480)'], ['near', 'm.setScale(m.maxScale() * 0.8, 300, 300)'], ['near1180', 'm.setScale(m.maxScale() * 0.8, 1180, 300)']]) { if (src) await ev(p, src); await p.waitForTimeout(1500);
+    const r = await ev(p, `(() => { const H = m.reliefLinesHover({ max: 200 }); return [H.provinces, H.hairMin, H.intMin, H.pass, H.rows.filter((q) => !q.pass).map((q) => q.how + ' ' + q.prov + ' ' + q.hairMin + '/' + q.intMin + ' ' + q.under.join('; ')).slice(0, 4)]; })()`); console.log('hover', v, JSON.stringify(r)); }
+  if (!process.env.NOSWEEP) { await ev(p, 'm.ev("fit(); draw()")'); await p.waitForTimeout(1500); const S = await ev(p, `(() => { const S = m.reliefWildSweep(); return { views: S.views, samples: S.samples, fails: S.fails, min: S.minRatio, worst: S.worst, pans: S.pans, pass: S.pass }; })()`); console.log('sweep', JSON.stringify(S)); }
+  console.log('pageErrors', log.pageErrors.length, log.pageErrors.slice(0, 2)); await b.close(); })();

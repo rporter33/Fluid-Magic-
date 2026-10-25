@@ -1,0 +1,38 @@
+{
+  "file": "T4-02-B.png",
+  "sha256": "de38a09e8ca6b67a92da7dc24598e1548bfcf4e7544d570c20a640c1c9b34887",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-22",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one Treant, an ancient summoned walking tree (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the branch crown about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the branch crown and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and branch crown and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows; the knot eyes are dark and do not glow. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Treant, an ancient walking tree summoned by Thornwood druids: a face formed in deep bark, moss and lichen, small branches like a crown, two dark knot eyes.\nCreature: a gnarled old pine treant, a tree first and a creature second; its face is only what a traveller might imagine in the bark of an old tree: two dark holes side by side and a crack below them, and nothing else. The top of the trunk is a plain rough rounded column of bark with no brow, no nose, no cheeks, no lips, no ears and no jaw; between the eye holes and the crack the bark continues flat and unbroken: thick scaly pine bark broken into flat grey-brown plates and crusted almost everywhere with pale grey-green and dull ochre lichen; the crack is a narrow dark gap between two bark plates; a stern, enduring presence. Eyes: two black knotholes where old branches broke away, ringed by swollen rims of bark, simply empty dark holes with nothing inside them. Marks: a crown of a few crooked pine branches with dense dark muted green needle tufts and two or three small brown cones, rising to an uneven pointed top; a broken branch stub jutting from the far shoulder.",
+  "references": [
+    "p0-gpt-rim.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1770,
+    "candidatesTokenCount": 2049,
+    "totalTokenCount": 4559,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 650
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 740,
+    "serviceTier": "standard"
+  },
+  "seconds": 24.4,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,10 @@
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(); const p = await open(b, PAGE, { settle: 1500 }); await mev(p, "setMode('dominion')"); await p.waitForTimeout(1500);
+  const r = await mev(p, String.raw`(() => { const A = names.indexOf('Redbarrow'), B = names.indexOf('Ashmoor'), e = [...EDGE.values()].find((q) => (q.i === A && q.j === B) || (q.i === B && q.j === A));
+    const ctx0 = rlLineCtx(); RL_LINES.cache.clear(); const BV = RL_P.bevel; const orig = rlBevelGuard; let log = [];
+    rlBevelGuard = function (S, U, Lr, soft, up, wUL, o) { const s = 2; const wu0 = wUL(s); const gr = (side, wpx, key) => { const x = rlPosExt(S[s][side + 'A'], 0.5 / dpr, wpx - 0.5 / dpr); return key === 'light' ? x.lo : x.hi; };
+      const lipCR = (side, key, a, wpx) => gr(side, wpx, key).map((q) => (q == null ? 'n' : +rlWorst([q], RL_KEYS[key], a, o.cov).toFixed(2)));
+      log.push({ soft, up: up[s], U: [U.key, U.al[s]], L: [Lr.key, Lr.al[s]], wu0, cov: o.cov, ulCR: lipCR('ul', U.key, U.al[s], wu0).join(' '), lrCR: lipCR('lr', Lr.key, Lr.al[s], 2 * BV.w - wu0).join(' ') });
+      const g = orig(S, U, Lr, soft, up, wUL, o); const wu1 = wUL(s); log.push({ after: true, up: up[s], U: [U.key, U.al[s]], L: [Lr.key, Lr.al[s]], wu1, g, ulCR: lipCR('ul', U.key, U.al[s], wu1).join(' '), lrCR: lipCR('lr', Lr.key, Lr.al[s], 2 * BV.w - wu1).join(' ') }); return g; };
+    const st = rlSegStyles(e, 'hair', ctx0); rlBevelGuard = orig; return log; })()`);
+  console.log(JSON.stringify(r, null, 1)); await b.close(); })();

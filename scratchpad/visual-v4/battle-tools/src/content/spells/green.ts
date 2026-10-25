@@ -1,0 +1,153 @@
+// Green (Loam) spells, docs/02-magic.md section 6: five battle spells and five rituals.
+import type { BattleSpellDef, RitualSpellDef } from './types';
+
+const battle = { kind: 'battle', color: 'G', holy: 0, carriedMana: {} } as const;
+const ritual = { kind: 'ritual', color: 'G', holy: 0 } as const;
+
+export const GREEN_SPELLS = {
+  thornSpray: {
+    ...battle,
+    id: 'thornSpray',
+    name: 'Thorn Spray',
+    level: 1,
+    requirement: 'G',
+    description: 'Thorns lash three enemies.',
+    fatigue: 10,
+    effects: [
+      { kind: 'damage', amount: 8, element: 'nature', targets: { kind: 'area', count: 3 } },
+    ],
+  },
+  barkSkin: {
+    ...battle,
+    id: 'barkSkin',
+    name: 'Bark Skin',
+    level: 2,
+    requirement: 'G',
+    description: 'One friendly squad gains 3 protection for the battle.',
+    fatigue: 15,
+    effects: [
+      {
+        kind: 'buff',
+        stat: 'prot',
+        delta: 3,
+        duration: { kind: 'battle' },
+        targets: { kind: 'friendlySquad' },
+      },
+    ],
+  },
+  entangle: {
+    ...battle,
+    id: 'entangle',
+    name: 'Entangle',
+    level: 3,
+    requirement: 'GG',
+    description: 'Roots bind one enemy squad: 3 defense and 1 attack less for 5 rounds.',
+    fatigue: 25,
+    effects: [
+      {
+        kind: 'debuff',
+        stat: 'def',
+        delta: -3,
+        duration: { kind: 'rounds', rounds: 5 },
+        targets: { kind: 'enemySquad' },
+      },
+      {
+        kind: 'debuff',
+        stat: 'att',
+        delta: -1,
+        duration: { kind: 'rounds', rounds: 5 },
+        targets: { kind: 'enemySquad' },
+      },
+    ],
+  },
+  swarm: {
+    ...battle,
+    id: 'swarm',
+    name: 'Swarm',
+    level: 4,
+    requirement: 'GG',
+    description: 'Twenty Hornet Swarms join the battle on your side. Uses 1 carried Green mana.',
+    fatigue: 35,
+    carriedMana: { G: 1 },
+    effects: [{ kind: 'summon', unit: 'hornetSwarm', count: 20, side: 'friendly' }],
+  },
+  regrowth: {
+    ...battle,
+    id: 'regrowth',
+    name: 'Regrowth',
+    level: 5,
+    requirement: 'GGG',
+    description: 'Every friendly squad heals 10 and sheds one curse. Uses 1 carried Green mana.',
+    fatigue: 50,
+    carriedMana: { G: 1 },
+    effects: [
+      { kind: 'heal', amount: 10, targets: { kind: 'allFriendlySquads' }, removeDebuffs: 1 },
+    ],
+  },
+
+  callOfTheWild: {
+    ...ritual,
+    id: 'callOfTheWild',
+    name: 'Call of the Wild',
+    level: 1,
+    requirement: 'G',
+    description: 'Six Wolves join the caster.',
+    cost: { mana: { G: 2 }, generic: 0 },
+    castDays: 5,
+    target: { kind: 'caster' },
+    effects: [{ kind: 'summonToProvince', unit: 'wolf', count: 6, commander: false }],
+  },
+  fertileSeason: {
+    ...ritual,
+    id: 'fertileSeason',
+    name: 'Fertile Season',
+    level: 2,
+    requirement: 'GG',
+    description: 'An own province within 2 provinces grows as if 2 steps more Growth for 6 months.',
+    cost: { mana: { G: 3 }, generic: 1 },
+    castDays: 10,
+    target: { kind: 'owned', hops: 2 },
+    effects: [{ kind: 'provinceGrowth', deltaScale: 2, months: 6 }],
+  },
+  awakenTreant: {
+    ...ritual,
+    id: 'awakenTreant',
+    name: 'Awaken Treant',
+    level: 3,
+    requirement: 'GGG',
+    description: 'A Treant, a huge living tree and Green mage, joins the nation.',
+    cost: { mana: { G: 6 }, generic: 3 },
+    castDays: 15,
+    target: { kind: 'caster' },
+    effects: [{ kind: 'summonToProvince', unit: 'treant', count: 1, commander: true }],
+  },
+  bountyOfTheLoam: {
+    ...ritual,
+    id: 'bountyOfTheLoam',
+    name: 'Bounty of the Loam',
+    level: 4,
+    requirement: 'GG',
+    description:
+      'An own province within 2 provinces doubles its supply and gathers 15 more materials a month for 6 months.',
+    cost: { mana: { G: 5 }, generic: 2 },
+    castDays: 10,
+    target: { kind: 'owned', hops: 2 },
+    effects: [
+      { kind: 'provinceSupply', deltaPct: 1, months: 6 },
+      { kind: 'provinceMaterials', delta: 15, months: 6 },
+    ],
+  },
+  rootwall: {
+    ...ritual,
+    id: 'rootwall',
+    name: 'Rootwall',
+    level: 5,
+    requirement: 'GGG',
+    description:
+      'An own province within 2 provinces: its defenders gain 2 protection and 1 defense for 12 months.',
+    cost: { mana: { G: 8 }, generic: 4 },
+    castDays: 15,
+    target: { kind: 'owned', hops: 2 },
+    effects: [{ kind: 'provinceDefenseBuff', prot: 2, def: 1, months: 12 }],
+  },
+} satisfies Record<string, BattleSpellDef | RitualSpellDef>;

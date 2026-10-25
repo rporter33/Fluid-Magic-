@@ -1,0 +1,5 @@
+const { launch, open, ev, mev } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, settle: 1500, w: 1920, h: 1080 }); await p.mouse.move(960, 1076);
+  const r = await mev(p, `(() => { const a = names.indexOf('Redholt'), c = names.indexOf('Kharnath'), k = ekey(a, c), e = EDGE.get(k), ctx = rlCtxTinted(rlLineCtx(), a, false), st = rlBankStyle(e, k, a, ctx), st0 = rlBankStyle(e, k, a, rlLineCtx()); const R = rlRiverGeo()[RL_WAT.edge.get(k).r], idx = RL_WAT.edge.get(k).idx, w = rlW();
+    return { faint: rlFaintOn(), waterOK0: st0.waterOK, key: st.key, segs: st.seg.map((s, m) => [m, toScreen(...R.S[idx[m]]).map(Math.round), s.i && [s.i[0], +s.i[1].toFixed(2)], s.o && [s.o[0], +s.o[1].toFixed(2)], s.served + '/' + s.of]), segs0: st0.seg.map((s, m) => [m, s.i && [s.i[0], +s.i[1].toFixed(2)], s.o && [s.o[0], +s.o[1].toFixed(2)]]), cov: rlCovBest(w.h * dpr, 0.5, 0.86) }; })()`);
+  console.log(JSON.stringify(r)); await b.close(); })();

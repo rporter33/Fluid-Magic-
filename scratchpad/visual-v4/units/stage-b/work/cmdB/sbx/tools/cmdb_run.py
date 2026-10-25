@@ -1,0 +1,53 @@
+# Runs cmdB jobs through cmdgen.py (logged, capped at 150 for key "cmdB"), a few at a time. A rate-limited or upstream
+# failure backs off and retries (each retry is a logged call); a third failure is reported, not retried.
+# HTTP 402 (the API's prepaid credits are used up) stops the whole run at once: every further call would fail the same
+# way within a second and still count against the cap. The stop is written to ../../STOPPED-402 with the time.
+# Usage: python3 cmdb_run.py JOBS.json [JOB ...] [--par 3]
+import json, os, subprocess, sys, threading, time
+from concurrent.futures import ThreadPoolExecutor
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+STOP = os.path.join(HERE, '..', '..', 'STOPPED-402')
+halt = threading.Event()
+
+
+def run(j):
+    args = [sys.executable, os.path.join(HERE, 'cmdgen.py'), '--purpose', 'B cmdB: ' + j['purpose'], j['model'], j['out'],
+            j['promptFile']] + j['refs'] + ['--aspect', j.get('aspect', '1:1')]
+    for attempt in range(3):
+        if halt.is_set():
+            return j['job'], 'SKIPPED (stopped on HTTP 402)'
+        if os.path.exists(j['out']):
+            return j['job'], 'exists'
+        p = subprocess.run(args, capture_output=True, text=True)
+        if p.returncode == 0:
+            return j['job'], p.stdout.strip()[-160:]
+        msg = (p.stdout + p.stderr)[-300:]
+        if 'REFUSED' in msg:
+            return j['job'], msg
+        if 'HTTP 402' in msg:
+            halt.set()
+            open(STOP, 'a').write(time.strftime('%H:%M:%S') + ' ' + j['job'] + '\n')
+            return j['job'], 'FAILED HTTP 402 (credits depleted): run stopped'
+        if any(s in msg for s in ('HTTP 429', 'HTTP 503', 'HTTP 500', 'HTTP 502', 'HTTP 504', 'timed out', 'NO IMAGE', 'Connection reset',
+                                   'ConnectionResetError', 'RemoteDisconnected', 'URLError', 'IncompleteRead')) and attempt < 2:
+            time.sleep(40 * (attempt + 1)); continue
+        return j['job'], 'FAILED ' + msg
+    return j['job'], 'FAILED after retries'
+
+
+def main():
+    args = sys.argv[1:]
+    par = 2
+    if '--par' in args:
+        i = args.index('--par'); par = int(args[i + 1]); del args[i:i + 2]
+    jobs = json.load(open(args[0]))
+    if args[1:]:
+        jobs = [j for j in jobs if j['job'] in args[1:]]
+    with ThreadPoolExecutor(par) as ex:
+        for name, res in ex.map(run, jobs):
+            print(name, '->', res, flush=True)
+
+
+if __name__ == '__main__':
+    main()

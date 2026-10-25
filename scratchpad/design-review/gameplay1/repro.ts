@@ -1,0 +1,21 @@
+import { twoNationGame, nationIds, capitalOf, runDays } from '/home/user/Fluid-Magic-/tests/sim/fixtures';
+import { fortMaterials } from '/home/user/Fluid-Magic-/src/sim/selectors';
+const s = twoNationGame();
+const [red] = nationIds(s);
+const cap = capitalOf(s, red!);
+runDays(s, 180);
+console.log('after 180 days', cap.materials.toFixed(1), 'cap', fortMaterials(s, cap.id).cap.toFixed(1));
+cap.siege = { attacker: nationIds(s)[1]!, wallHp: 300 };
+runDays(s, 1);
+console.log('after 1 day siege', cap.materials.toFixed(1));
+cap.siege = null;
+runDays(s, 1);
+console.log('siege lifted next day', cap.materials.toFixed(1));
+// effect expiry: add a materials effect then let it expire
+const s2 = twoNationGame();
+const c2 = capitalOf(s2, nationIds(s2)[0]!);
+s2.provinceEffects.push({ province: c2.id, kind: 'materials', delta: 25, untilDay: 180 } as never);
+runDays(s2, 179);
+console.log('with Forge effect day 179', c2.materials.toFixed(1), 'cap', fortMaterials(s2, c2.id).cap.toFixed(1));
+runDays(s2, 2);
+console.log('after expiry', c2.materials.toFixed(1), 'cap', fortMaterials(s2, c2.id).cap.toFixed(1));

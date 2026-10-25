@@ -1,0 +1,35 @@
+<!doctype html><html><body style="margin:0;background:#222"><script type="module">
+import { PIXI, makeApp, done, qn } from './harness.js';
+import { buildAtlas, CELL } from './figures.js';
+const ctx = await makeApp({ width: 1920, height: 1080, background: 0xc8b48a });
+const { app } = ctx;
+// time three cold builds (fresh Graphics each time) and one separate-texture build
+const runs = [];
+for (let r = 0; r < 3; r++) { const a = buildAtlas(app.renderer); ctx.sync(); runs.push(a.timing); if (r < 2) a.rt.destroy(true); }
+const atlas = buildAtlas(app.renderer); ctx.sync();
+const sepT0 = performance.now(); const sep = buildAtlas(app.renderer, { separate: true }); ctx.sync(); const sepMs = performance.now() - sepT0;
+// show the atlas at 1x (top) and a formation sample at zoom 1 and 2
+const atl = new PIXI.Sprite(new PIXI.Texture({ source: atlas.rt.source }));
+atl.scale.set(0.5); app.stage.addChild(atl);
+const F = atlas.frames;
+const block = (x0, y0, kind, nat, flip, z) => {
+  const c = new PIXI.Container(); c.position.set(x0, y0); c.scale.set(z * 0.5);
+  const items = [];
+  for (let r = 0; r < 6; r++) for (let k = 0; k < 10; k++) {
+    const pose = (r + k) % 3 === 0 ? 'attack' : 'walk';
+    const arr = F[kind][nat][flip < 0 ? 'se' : 'se'][pose];
+    const s = new PIXI.Sprite(arr[(r * 3 + k) % arr.length]);
+    s.scale.x = flip; s.position.set(k * (kind === 'cav' ? 34 : 24) + (r % 2) * 6, r * 15); items.push(s);
+  }
+  items.sort((a, b) => a.y - b.y).forEach((s) => c.addChild(s));
+  app.stage.addChild(c);
+};
+const y0 = atlas.atlasH * 0.5 + 40;
+block(40, y0, 'spear', 'cinder', 1, 1); block(330, y0, 'sword', 'thorn', -1, 1); block(620, y0, 'archer', 'indep', 1, 1); block(910, y0, 'cav', 'cinder', 1, 1);
+block(40, y0 + 160, 'axe', 'cinder', 1, 2); block(620, y0 + 160, 'spear', 'thorn', -1, 2);
+app.renderer.render(app.stage); ctx.sync();
+const big = new PIXI.Sprite(new PIXI.Texture({ source: atlas.rt.source })); // full-res extract for the report
+const canvas = app.renderer.extract.canvas({ target: big });
+window.__atlasPng = canvas.toDataURL('image/png');
+done({ frames: atlas.count, atlasSize: [2048, atlas.atlasH], cell: CELL, builds: runs, separateTexturesMs: +sepMs.toFixed(1), atlasMB: +(2048 * atlas.atlasH * 4 / 1048576).toFixed(1) });
+</script></body></html>

@@ -1,0 +1,32 @@
+
+ RUN  v5.0.5 /home/user/fm-p7f
+
+ ❯ tests/ai/match.test.ts (19 tests | 1 failed) 16509ms
+   ❯ runMatch (6)
+     × plays the headless runner's games for three years without a refusal (acceptance 15) 6254ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/ai/match.test.ts > runMatch > plays the headless runner's games for three years without a refusal (acceptance 15)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/ai/match.test.ts:367:3
+    365|   });
+    366|
+    367|   it("plays the headless runner's games for three years without a refu…
+       |   ^
+    368|     const maxDays = 1080;
+    369|     const hashes = new Set<string>();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 86 passed (87)
+      Tests  1 failed | 1109 passed (1110)
+   Start at  22:37:13
+   Duration  63.01s (tests 90%, import 9%, transform 1%, worker 1%)
+
+    Isolate  87 workers spawned · ~370ms startup each (spawn + environment, per file)
+             at least ~10.36s faster with isolate: false — reuses workers across files instead of one per file
+
+EXIT 1

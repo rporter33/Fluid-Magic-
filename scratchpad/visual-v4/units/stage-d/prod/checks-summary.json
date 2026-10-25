@@ -1,0 +1,2226 @@
+{
+ "frames": 260,
+ "framesTintedCopies": 60,
+ "images": 96,
+ "gates": {
+  "varietySteps": [
+   20,
+   0
+  ],
+  "varietyIdle": [
+   191,
+   2
+  ],
+  "fringe": [
+   82,
+   14
+  ],
+  "rimAtPost": [
+   203,
+   57
+  ],
+  "rimShipped": [
+   257,
+   3
+  ],
+  "value": [
+   260,
+   0
+  ],
+  "identity": [
+   258,
+   2
+  ],
+  "camera": [
+   171,
+   89
+  ],
+  "cutoff": [
+   255,
+   5
+  ],
+  "scale": [
+   40,
+   0
+  ]
+ },
+ "failures": {
+  "identity": [
+   "ascendedHero-cinderHorde.back.stepA: {'dE_whole': 11.5, 'dE_upperThird': 4.2, 'pass_': False}",
+   "ascendedHero-cinderHorde.back.strike: {'dE_whole': 12.6, 'dE_upperThird': 4.0, 'pass_': False}"
+  ],
+  "camera": [
+   "ascendedHero-cinderHorde.back.strike: {'iou': 0.435, 'facingMargin': 0.055}",
+   "ascendedHero-cinderHorde.back.hit: {'iou': 0.597, 'facingMargin': -0.019}",
+   "ascendedHero-cinderHorde.back.fall: {'iou': 0.368, 'facingMargin': -0.192}",
+   "ascendedHero-cinderHorde.front.fall: {'iou': 0.585, 'facingMargin': -0.023}",
+   "ashColossus-cinderHorde.back.stepA: {'iou': 0.588, 'facingMargin': -0.035}",
+   "ashColossus-cinderHorde.back.strike: {'iou': 0.446, 'facingMargin': -0.06}",
+   "ashColossus-cinderHorde.front.windup: {'iou': 0.52, 'facingMargin': 0.009}",
+   "ashPhoenix-cinderHorde.back.glide: {'iou': 0.417, 'facingMargin': 0.274}",
+   "ashPhoenix-cinderHorde.back.wingsUp: {'iou': 0.428, 'facingMargin': 0.321}",
+   "ashPhoenix-cinderHorde.back.wingsDown: {'iou': 0.152, 'facingMargin': -0.257}",
+   "ashPhoenix-cinderHorde.back.dive: {'iou': 0.129, 'facingMargin': -0.069}",
+   "ashPhoenix-cinderHorde.back.burnOutA: {'iou': 0.18, 'facingMargin': -0.187}",
+   "ashPhoenix-cinderHorde.front.wingsUp: {'iou': 0.224, 'facingMargin': 0.069}",
+   "ashPhoenix-cinderHorde.front.wingsDown: {'iou': 0.34, 'facingMargin': 0.231}",
+   "ashPhoenix-cinderHorde.front.rake: {'iou': 0.252, 'facingMargin': -0.074}",
+   "ashPhoenix-cinderHorde.front.hit: {'iou': 0.294, 'facingMargin': 0.04}",
+   "ashPhoenix-cinderHorde.front.dive: {'iou': 0.39, 'facingMargin': 0.016}",
+   "elderWyrm-thornwood.back.bite: {'iou': 0.395, 'facingMargin': 0.253}",
+   "elderWyrm-thornwood.back.trample: {'iou': 0.389, 'facingMargin': 0.237}",
+   "elderWyrm-thornwood.front.trample: {'iou': 0.409, 'facingMargin': 0.134}",
+   "emberHierophant-cinderHorde.back.stepB: {'iou': 0.588, 'facingMargin': 0.022}",
+   "emberHierophant-cinderHorde.back.castA: {'iou': 0.648, 'facingMargin': 0.001}",
+   "emberHierophant-cinderHorde.back.castB: {'iou': 0.456, 'facingMargin': 0.021}",
+   "emberHierophant-cinderHorde.front.stepA: {'iou': 0.563, 'facingMargin': -0.097}",
+   "emberHierophant-cinderHorde.front.stepB: {'iou': 0.572, 'facingMargin': -0.073}",
+   "emberHierophant-cinderHorde.front.strike: {'iou': 0.403, 'facingMargin': -0.089}",
+   "emberHierophant-cinderHorde.front.hit: {'iou': 0.468, 'facingMargin': 0.004}",
+   "emberHierophant-cinderHorde.front.castB: {'iou': 0.5, 'facingMargin': -0.148}",
+   "giant-01.back.stepA: {'iou': 0.291, 'facingMargin': -0.215}",
+   "giant-01.back.stepB: {'iou': 0.321, 'facingMargin': -0.193}",
+   "giant-01.back.follow: {'iou': 0.4, 'facingMargin': -0.108}",
+   "giant-01.front.windup: {'iou': 0.281, 'facingMargin': 0.012}",
+   "giant-02.back.stepA: {'iou': 0.314, 'facingMargin': -0.26}",
+   "giant-02.front.stepA: {'iou': 0.427, 'facingMargin': 0.248}",
+   "greatWyrm-cinderHorde.back.flight: {'iou': 0.297, 'facingMargin': 0.188}",
+   "greatWyrm-cinderHorde.front.flight: {'iou': 0.403, 'facingMargin': 0.241}",
+   "hornedHunter-thornwood.back.stepA: {'iou': 0.555, 'facingMargin': -0.03}",
+   "hornedHunter-thornwood.back.stepB: {'iou': 0.441, 'facingMargin': -0.002}",
+   "hornedHunter-thornwood.back.windup: {'iou': 0.494, 'facingMargin': 0.007}",
+   "hornedHunter-thornwood.back.strike: {'iou': 0.417, 'facingMargin': -0.025}",
+   "hornedHunter-thornwood.back.fall: {'iou': 0.186, 'facingMargin': -0.151}",
+   "hornedHunter-thornwood.front.strike: {'iou': 0.132, 'facingMargin': -0.002}",
+   "motherOfBeasts-thornwood.back.stepA: {'iou': 0.607, 'facingMargin': 0.007}",
+   "motherOfBeasts-thornwood.back.stepB: {'iou': 0.602, 'facingMargin': 0.002}",
+   "motherOfBeasts-thornwood.back.fall: {'iou': 0.548, 'facingMargin': 0.018}",
+   "motherOfBeasts-thornwood.front.stepA: {'iou': 0.549, 'facingMargin': -0.048}",
+   "motherOfBeasts-thornwood.front.strike: {'iou': 0.527, 'facingMargin': -0.074}",
+   "motherOfBeasts-thornwood.front.hit: {'iou': 0.52, 'facingMargin': -0.015}",
+   "oracle-cinderHorde.back.strike: {'iou': 0.669, 'facingMargin': -0.054}",
+   "oracle-cinderHorde.front.stepB: {'iou': 0.576, 'facingMargin': -0.11}",
+   "oracle-cinderHorde.front.windup: {'iou': 0.401, 'facingMargin': -0.047}",
+   "oracle-cinderHorde.front.strike: {'iou': 0.331, 'facingMargin': -0.166}",
+   "oracle-cinderHorde.front.hit: {'iou': 0.37, 'facingMargin': 0.002}",
+   "pyreLord-cinderHorde.back.stepB: {'iou': 0.528, 'facingMargin': 0.026}",
+   "pyreLord-cinderHorde.back.windup: {'iou': 0.669, 'facingMargin': 0.018}",
+   "pyreLord-cinderHorde.back.call: {'iou': 0.427, 'facingMargin': 0.141}",
+   "pyreLord-cinderHorde.front.windup: {'iou': 0.407, 'facingMargin': 0.013}",
+   "pyreLord-cinderHorde.front.strike: {'iou': 0.055, 'facingMargin': -0.003}",
+   "pyreLord-cinderHorde.front.hit: {'iou': 0.397, 'facingMargin': 0.04}",
+   "pyreLord-cinderHorde.front.call: {'iou': 0.382, 'facingMargin': 0.03}",
+   "pyreLord-cinderHorde.front.fall: {'iou': 0.423, 'facingMargin': -0.1}",
+   "salamander-01.front.tailLash: {'iou': 0.352, 'facingMargin': 0.068}",
+   "salamander-02.back.tailLash: {'iou': 0.414, 'facingMargin': 0.282}",
+   "salamander-02.front.tailLash: {'iou': 0.404, 'facingMargin': 0.075}",
+   "salamander-03.back.hit: {'iou': 0.288, 'facingMargin': 0.088}",
+   "salamander-03.front.hit: {'iou': 0.417, 'facingMargin': -0.038}",
+   "salamander-04.back.hit: {'iou': 0.348, 'facingMargin': 0.165}",
+   "titan-cinderHorde.back.stepB: {'iou': 0.504, 'facingMargin': -0.041}",
+   "titan-cinderHorde.back.windup: {'iou': 0.629, 'facingMargin': -0.011}",
+   "titan-cinderHorde.back.fall: {'iou': 0.307, 'facingMargin': -0.005}",
+   "titan-cinderHorde.front.stepA: {'iou': 0.513, 'facingMargin': -0.014}",
+   "titan-cinderHorde.front.stepB: {'iou': 0.722, 'facingMargin': 0.028}",
+   "titan-cinderHorde.front.windup: {'iou': 0.364, 'facingMargin': -0.05}",
+   "titan-cinderHorde.front.strike: {'iou': 0.3, 'facingMargin': -0.129}",
+   "titan-cinderHorde.front.hit: {'iou': 0.393, 'facingMargin': 0.005}",
+   "titan-cinderHorde.front.follow: {'iou': 0.55, 'facingMargin': 0.022}",
+   "titan-cinderHorde.front.fall: {'iou': 0.537, 'facingMargin': 0.014}",
+   "treant-01.back.windup: {'iou': 0.433, 'facingMargin': 0.014}",
+   "treant-01.back.slam: {'iou': 0.325, 'facingMargin': 0.031}",
+   "treant-02.back.windup: {'iou': 0.409, 'facingMargin': 0.033}",
+   "treant-02.back.slam: {'iou': 0.36, 'facingMargin': -0.052}",
+   "treant-03.back.windup: {'iou': 0.448, 'facingMargin': 0.009}",
+   "treant-03.back.slam: {'iou': 0.399, 'facingMargin': -0.045}",
+   "treant-03.front.slam: {'iou': 0.385, 'facingMargin': 0.053}",
+   "treant-04.back.windup: {'iou': 0.484, 'facingMargin': 0.024}",
+   "treant-04.back.slam: {'iou': 0.273, 'facingMargin': -0.09}",
+   "wildSpirit-thornwood.back.rake: {'iou': 0.289, 'facingMargin': 0.001}",
+   "wildSpirit-thornwood.front.hit: {'iou': 0.446, 'facingMargin': 0.157}",
+   "worldTree-thornwood.back.windup: {'iou': 0.658, 'facingMargin': -0.011}"
+  ],
+  "rimAtPost": [
+   "ascendedHero-cinderHorde.back.dead: 3.94",
+   "ascendedHero-cinderHorde.back.follow: 3.14",
+   "ascendedHero-cinderHorde.back.fall: 2.13",
+   "ascendedHero-cinderHorde.front.hit: 8.77",
+   "ascendedHero-cinderHorde.front.dead: 5.23",
+   "ashPhoenix-cinderHorde.back.glide: 2.8",
+   "ashPhoenix-cinderHorde.back.wingsUp: 5.02",
+   "ashPhoenix-cinderHorde.back.wingsDown: 2.31",
+   "ashPhoenix-cinderHorde.back.rake: 4.73",
+   "ashPhoenix-cinderHorde.back.hit: 5.41",
+   "ashPhoenix-cinderHorde.back.dive: 3.1",
+   "ashPhoenix-cinderHorde.back.burnOutA: 2.32",
+   "ashPhoenix-cinderHorde.front.glide: 6.31",
+   "ashPhoenix-cinderHorde.front.wingsUp: 4.73",
+   "ashPhoenix-cinderHorde.front.wingsDown: 5.28",
+   "ashPhoenix-cinderHorde.front.rake: 4.82",
+   "ashPhoenix-cinderHorde.front.hit: 2.99",
+   "elderWyrm-thornwood.back.bite: 2.61",
+   "elderWyrm-thornwood.front.bite: 3.48",
+   "emberHierophant-cinderHorde.back.stepA: 3.12",
+   "emberHierophant-cinderHorde.back.stepB: 2.51",
+   "emberHierophant-cinderHorde.back.strike: 2.2",
+   "emberHierophant-cinderHorde.back.castB: 2.3",
+   "emberHierophant-cinderHorde.front.hit: 2.59",
+   "greatWyrm-cinderHorde.back.dead: 3.18",
+   "greatWyrm-cinderHorde.front.flight: 2.72",
+   "oracle-cinderHorde.back.stepA: 4.5",
+   "oracle-cinderHorde.back.stepB: 4.71",
+   "oracle-cinderHorde.back.windup: 3.84",
+   "oracle-cinderHorde.back.strike: 10.19",
+   "oracle-cinderHorde.back.hit: 3.87",
+   "oracle-cinderHorde.back.dead: 5.9",
+   "oracle-cinderHorde.back.castA: 3.51",
+   "oracle-cinderHorde.back.castB: 3.31",
+   "oracle-cinderHorde.front.stepA: 2.22",
+   "oracle-cinderHorde.front.windup: 2.36",
+   "oracle-cinderHorde.front.strike: 2.57",
+   "oracle-cinderHorde.front.hit: 3.22",
+   "oracle-cinderHorde.front.dead: 2.9",
+   "primordial-cinderHorde.back.dead: 3.56",
+   "primordial-cinderHorde.front.bite: 11.18",
+   "primordial-cinderHorde.front.dead: 5.38",
+   "pyreLord-cinderHorde.front.hit: 2.44",
+   "pyreLord-cinderHorde.front.call: 2.54",
+   "titan-cinderHorde.back.dead: 8.12",
+   "titan-cinderHorde.back.follow: 3.71",
+   "titan-cinderHorde.front.stepA: 3.72",
+   "titan-cinderHorde.front.stepB: 5.44",
+   "titan-cinderHorde.front.windup: 2.57",
+   "titan-cinderHorde.front.follow: 6.25",
+   "titan-cinderHorde.front.fall: 2.78",
+   "wildSpirit-thornwood.front.leap: 3.08",
+   "wildSpirit-thornwood.front.rake: 4.65",
+   "wildSpirit-thornwood.front.hit: 3.09",
+   "wildSpirit-thornwood.front.dissolving: 2.13",
+   "worldTree-thornwood.back.windup: 5.99",
+   "worldTree-thornwood.back.slam: 5.76"
+  ],
+  "fringe": [
+   "stage-d/raw/act.ashColossus-cinderHorde.back.stepB.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.004, 'edgeDevPct': 10.03, 'pass_': False}",
+   "stage-d/raw/act.ashColossus-cinderHorde.back.strike.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.0, 'edgeDevPct': 10.91, 'pass_': False}",
+   "stage-d/raw/act.ashPhoenix-cinderHorde.back.A.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.47, 'edgeDevPct': 10.36, 'pass_': False}",
+   "stage-d/raw/act.ashPhoenix-cinderHorde.back.B.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.372, 'edgeDevPct': 8.44, 'pass_': False}",
+   "stage-d/raw/act.ashPhoenix-cinderHorde.front.B.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.523, 'edgeDevPct': 2.96, 'pass_': False}",
+   "stage-d/raw/act.emberHierophant-cinderHorde.back.A.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.016, 'edgeDevPct': 9.0, 'pass_': False}",
+   "stage-d/raw/act.greatWyrm-cinderHorde.back.dead.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 5.649, 'edgeDevPct': 2.08, 'pass_': False}",
+   "stage-d/raw/act.hornedHunter-thornwood.back.A.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 0.03, 'edgeDevPct': 12.93, 'pass_': False}",
+   "stage-d/raw/act.hornedHunter-thornwood.back.B.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 0.004, 'edgeDevPct': 12.48, 'pass_': False}",
+   "stage-d/raw/act.salamander-02.front.S.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 1.199, 'edgeDevPct': 0.23, 'pass_': False}",
+   "stage-d/raw/act.treant-02.back.S.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 0.557, 'edgeDevPct': 0.58, 'pass_': False}",
+   "stage-d/raw/act.treant-02.front.S.nb21.2k.png: {'fringePct': 0.0, 'keyInUnitPct': 0.622, 'edgeDevPct': 0.4, 'pass_': False}",
+   "stage-d/raw/act.wildSpirit-thornwood.back.S.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.158, 'edgeDevPct': 11.75, 'pass_': False}",
+   "stage-d/raw/act.wildSpirit-thornwood.front.S.nb21.png: {'fringePct': 0.0, 'keyInUnitPct': 0.045, 'edgeDevPct': 14.62, 'pass_': False}"
+  ],
+  "varietyIdle": [
+   "elderWyrm-thornwood.back.bite: IoU with the idle 0.92 > 0.92",
+   "elderWyrm-thornwood.back.trample: IoU with the idle 0.93 > 0.92"
+  ],
+  "rimShipped": [
+   "primordial-cinderHorde.back.bite: 3.03",
+   "primordial-cinderHorde.back.trample: 2.24",
+   "wildSpirit-thornwood.front.rake: 2.58"
+  ],
+  "cutoff": [
+   "titan-cinderHorde.back.stepA: True",
+   "titan-cinderHorde.back.stepB: True",
+   "titan-cinderHorde.back.strike: True",
+   "titan-cinderHorde.front.strike: True",
+   "treant-04.back.slam: True"
+  ]
+ },
+ "interventions": {
+  "groundFixSoles": [
+   "ascendedHero-cinderHorde.back.stepA (+4.7 wu)",
+   "ascendedHero-cinderHorde.back.stepB (+8.1 wu)",
+   "ascendedHero-cinderHorde.back.strike (+4.1 wu)",
+   "ascendedHero-cinderHorde.back.hit (+5.6 wu)",
+   "ascendedHero-cinderHorde.back.fall (-7.1 wu)",
+   "ascendedHero-cinderHorde.front.stepA (+3.3 wu)",
+   "ascendedHero-cinderHorde.front.stepB (+8.5 wu)",
+   "ascendedHero-cinderHorde.front.strike (+11.1 wu)",
+   "ascendedHero-cinderHorde.front.follow (+5.6 wu)",
+   "ashColossus-cinderHorde.back.stepA (-4.6 wu)",
+   "ashColossus-cinderHorde.back.stepB (+12.1 wu)",
+   "ashColossus-cinderHorde.back.windup (+5.5 wu)",
+   "ashColossus-cinderHorde.back.strike (-22.6 wu)",
+   "ashColossus-cinderHorde.front.stepB (+6.0 wu)",
+   "ashColossus-cinderHorde.front.windup (-2.9 wu)",
+   "ashColossus-cinderHorde.front.strike (+14.8 wu)",
+   "emberHierophant-cinderHorde.back.stepB (-3.6 wu)",
+   "emberHierophant-cinderHorde.back.windup (-5.2 wu)",
+   "emberHierophant-cinderHorde.back.hit (+7.0 wu)",
+   "emberHierophant-cinderHorde.front.stepA (-11.6 wu)",
+   "emberHierophant-cinderHorde.front.stepB (-7.8 wu)",
+   "emberHierophant-cinderHorde.front.strike (-2.0 wu)",
+   "emberHierophant-cinderHorde.front.castB (-10.2 wu)",
+   "giant-01.back.stepA (-11.0 wu)",
+   "giant-01.back.stepB (-6.0 wu)",
+   "giant-01.back.windup (-10.4 wu)",
+   "giant-01.back.strike (-2.3 wu)",
+   "giant-01.back.follow (-10.4 wu)",
+   "giant-01.front.stepA (+3.0 wu)",
+   "giant-01.front.stepB (+9.3 wu)",
+   "giant-01.front.windup (-3.7 wu)",
+   "giant-01.front.strike (+6.8 wu)",
+   "giant-01.front.hit (-2.9 wu)",
+   "giant-01.front.follow (+7.2 wu)",
+   "giant-01.front.fall (-10.2 wu)",
+   "giant-02.back.stepA (-8.9 wu)",
+   "giant-02.back.windup (+4.9 wu)",
+   "giant-02.back.strike (+5.6 wu)",
+   "giant-02.back.hit (+9.6 wu)",
+   "giant-02.back.follow (+8.2 wu)",
+   "giant-02.front.stepA (-2.9 wu)",
+   "giant-02.front.windup (+8.5 wu)",
+   "giant-02.front.hit (-4.4 wu)",
+   "giant-02.front.fall (-10.4 wu)",
+   "hornedHunter-thornwood.back.stepA (+7.5 wu)",
+   "hornedHunter-thornwood.back.stepB (+2.5 wu)",
+   "hornedHunter-thornwood.back.windup (-7.3 wu)",
+   "hornedHunter-thornwood.back.hit (+12.4 wu)",
+   "hornedHunter-thornwood.back.fall (-25.3 wu)",
+   "hornedHunter-thornwood.front.stepA (+2.5 wu)",
+   "hornedHunter-thornwood.front.stepB (+4.4 wu)",
+   "hornedHunter-thornwood.front.hit (-3.4 wu)",
+   "hornedHunter-thornwood.front.call (+4.9 wu)",
+   "hornedHunter-thornwood.front.fall (-31.7 wu)",
+   "motherOfBeasts-thornwood.back.stepA (+10.3 wu)",
+   "motherOfBeasts-thornwood.back.stepB (-3.5 wu)",
+   "motherOfBeasts-thornwood.back.windup (-7.8 wu)",
+   "motherOfBeasts-thornwood.back.strike (+3.0 wu)",
+   "motherOfBeasts-thornwood.back.hit (+10.1 wu)",
+   "motherOfBeasts-thornwood.back.fall (-14.1 wu)",
+   "motherOfBeasts-thornwood.front.stepA (-9.1 wu)",
+   "motherOfBeasts-thornwood.front.strike (-4.0 wu)",
+   "motherOfBeasts-thornwood.front.hit (+2.4 wu)",
+   "motherOfBeasts-thornwood.front.follow (+7.3 wu)",
+   "motherOfBeasts-thornwood.front.fall (-14.0 wu)",
+   "oracle-cinderHorde.back.stepA (+3.0 wu)",
+   "oracle-cinderHorde.back.strike (+4.0 wu)",
+   "oracle-cinderHorde.back.hit (+2.7 wu)",
+   "oracle-cinderHorde.back.castB (+2.5 wu)",
+   "oracle-cinderHorde.front.stepA (+2.1 wu)",
+   "oracle-cinderHorde.front.windup (+2.4 wu)",
+   "pyreLord-cinderHorde.back.stepB (+4.1 wu)",
+   "pyreLord-cinderHorde.back.strike (-8.4 wu)",
+   "pyreLord-cinderHorde.back.hit (+11.2 wu)",
+   "pyreLord-cinderHorde.back.call (-3.5 wu)",
+   "pyreLord-cinderHorde.front.stepA (+3.9 wu)",
+   "pyreLord-cinderHorde.front.stepB (+12.0 wu)",
+   "pyreLord-cinderHorde.front.strike (+3.7 wu)",
+   "pyreLord-cinderHorde.front.hit (+6.2 wu)",
+   "pyreLord-cinderHorde.front.call (+8.5 wu)",
+   "pyreLord-cinderHorde.front.fall (-45.0 wu)",
+   "titan-cinderHorde.back.stepA (+8.3 wu)",
+   "titan-cinderHorde.back.stepB (-2.7 wu)",
+   "titan-cinderHorde.back.windup (-3.8 wu)",
+   "titan-cinderHorde.back.hit (+8.8 wu)",
+   "titan-cinderHorde.back.follow (+7.0 wu)",
+   "titan-cinderHorde.back.fall (-23.5 wu)",
+   "titan-cinderHorde.front.stepB (+5.5 wu)",
+   "titan-cinderHorde.front.windup (-7.0 wu)",
+   "titan-cinderHorde.front.strike (+4.8 wu)",
+   "titan-cinderHorde.front.hit (+5.2 wu)",
+   "titan-cinderHorde.front.follow (+8.5 wu)",
+   "titan-cinderHorde.front.fall (-32.0 wu)",
+   "treant-01.back.windup (+2.3 wu)",
+   "treant-01.back.hit (+6.6 wu)",
+   "treant-02.back.windup (-14.5 wu)",
+   "treant-02.back.hit (+11.8 wu)",
+   "treant-02.front.slam (-6.5 wu)",
+   "treant-02.front.hit (-4.6 wu)",
+   "treant-03.back.slam (+4.1 wu)",
+   "treant-03.front.windup (+3.9 wu)",
+   "treant-03.front.slam (+6.3 wu)",
+   "treant-04.back.windup (+2.0 wu)",
+   "treant-04.back.slam (-2.8 wu)",
+   "treant-04.back.hit (+6.6 wu)",
+   "treant-04.front.slam (-2.1 wu)"
+  ],
+  "anchorSetByArtDirector": [
+   "cinderIdol-cinderHorde.back.shattered (-20.0 wu)",
+   "cinderIdol-cinderHorde.front.shattered (-12.9 wu)",
+   "elderWyrm-thornwood.front.trample (-227.2 wu)",
+   "primordial-cinderHorde.back.trample (+27.8 wu)",
+   "primordial-cinderHorde.front.trample (-40.0 wu)",
+   "pyreLord-cinderHorde.back.fall (-45.6 wu)"
+  ],
+  "scaleFactor": [
+   "cinderIdol-cinderHorde.back.shattered (area x1.2 (art director))",
+   "cinderIdol-cinderHorde.front.shattered (area x1.2 (art director))",
+   "elderWyrm-thornwood.front.trample (median x1.3 (art director))",
+   "giant-02.back.stepB (median x0.86 (art director))",
+   "hornedHunter-thornwood.back.stepB (median x0.85 (art director))",
+   "livingMonolith-cinderHorde.back.shattered (area x1.2 (art director))",
+   "livingMonolith-cinderHorde.front.shattered (area x1.24 (art director))",
+   "treant-01.back.slam (median x0.8 (art director))"
+  ],
+  "anchorAlignedToIdle": [
+   "elderWyrm-thornwood.back.bite (+4.3 wu)",
+   "elderWyrm-thornwood.back.trample (-82.7 wu)",
+   "elderWyrm-thornwood.front.bite (+8.1 wu)",
+   "greatWyrm-cinderHorde.front.breath (-45.4 wu)"
+  ],
+  "eraseClay": [
+   "elderWyrm-thornwood.back.trample"
+  ],
+  "warmClay": [
+   "elderWyrm-thornwood.back.trample"
+  ],
+  "baseMatch": [
+   "livingMonolith-cinderHorde.back.shattered (-13.3 wu)",
+   "livingMonolith-cinderHorde.front.shattered (+7.6 wu)"
+  ],
+  "fadeEdge": [
+   "titan-cinderHorde.back.stepA",
+   "titan-cinderHorde.back.stepB",
+   "titan-cinderHorde.back.strike",
+   "titan-cinderHorde.front.strike"
+  ],
+  "fadeTop": [
+   "treant-04.back.slam"
+  ],
+  "heldBack": [
+   "ascendedHero-cinderHorde.front.A/windup",
+   "elderWyrm-thornwood.front.dead",
+   "emberHierophant-cinderHorde.front.A/windup",
+   "emberHierophant-cinderHorde.front.B/castA",
+   "giant-01.back.B/fall",
+   "giant-02.back.B/fall",
+   "giant-02.front.B/follow",
+   "hornedHunter-thornwood.front.A/windup",
+   "motherOfBeasts-thornwood.front.A/windup",
+   "oracle-cinderHorde.front.B/castA"
+  ]
+ },
+ "perFigure": {
+  "ascendedHero-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.468,
+    "heightWu": 50.52,
+    "scaleRule": "median",
+    "flags": [
+     "identity"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.486,
+    "heightWu": 51.67,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.windup": {
+    "iouWithIdle": 0.557,
+    "heightWu": 45.44,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.387,
+    "heightWu": 46.98,
+    "scaleRule": "median",
+    "flags": [
+     "identity",
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.544,
+    "heightWu": 42.0,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.follow": {
+    "iouWithIdle": 0.533,
+    "heightWu": 41.35,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.fall": {
+    "iouWithIdle": 0.559,
+    "heightWu": 38.67,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.584,
+    "heightWu": 45.76,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.506,
+    "heightWu": 50.25,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.strike": {
+    "iouWithIdle": 0.474,
+    "heightWu": 47.11,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.432,
+    "heightWu": 54.6,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.follow": {
+    "iouWithIdle": 0.669,
+    "heightWu": 44.75,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.fall": {
+    "iouWithIdle": 0.545,
+    "heightWu": 36.44,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 37.36,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.dead": {
+    "heightWu": 38.43,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   }
+  },
+  "ashColossus-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.667,
+    "heightWu": 145.45,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.656,
+    "heightWu": 146.47,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.windup": {
+    "iouWithIdle": 0.529,
+    "heightWu": 136.1,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.569,
+    "heightWu": 143.4,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.546,
+    "heightWu": 135.29,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.791,
+    "heightWu": 142.36,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.732,
+    "heightWu": 145.33,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.527,
+    "heightWu": 138.97,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 97.71,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 111.5,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "ashPhoenix-cinderHorde": {
+   "back.glide": {
+    "heightWu": 61.85,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.wingsUp": {
+    "heightWu": 83.3,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.wingsDown": {
+    "heightWu": 64.39,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.rake": {
+    "heightWu": 74.96,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.hit": {
+    "heightWu": 83.46,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.dive": {
+    "heightWu": 50.94,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.burnOutA": {
+    "heightWu": 52.89,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.burnOutB": {
+    "heightWu": 46.16,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.glide": {
+    "heightWu": 49.75,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.wingsUp": {
+    "heightWu": 64.16,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.wingsDown": {
+    "heightWu": 64.82,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.rake": {
+    "heightWu": 67.88,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "heightWu": 54.31,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.dive": {
+    "heightWu": 47.26,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.burnOutA": {
+    "heightWu": 31.99,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.burnOutB": {
+    "heightWu": 43.83,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "cinderIdol-cinderHorde": {
+   "back.shattered": {
+    "heightWu": 206.66,
+    "scaleRule": "area x1.2 (art director)",
+    "flags": []
+   },
+   "front.shattered": {
+    "heightWu": 232.09,
+    "scaleRule": "area x1.2 (art director)",
+    "flags": []
+   }
+  },
+  "elderWyrm-thornwood": {
+   "back.bite": {
+    "iouWithIdle": 0.922,
+    "heightWu": 346.36,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.trample": {
+    "iouWithIdle": 0.932,
+    "heightWu": 355.76,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.bite": {
+    "iouWithIdle": 0.878,
+    "heightWu": 321.71,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.trample": {
+    "iouWithIdle": 0.421,
+    "heightWu": 237.14,
+    "scaleRule": "median x1.3 (art director)",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 387.23,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "emberHierophant-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.679,
+    "heightWu": 43.15,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.654,
+    "heightWu": 42.99,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.625,
+    "heightWu": 43.28,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.641,
+    "heightWu": 41.46,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.52,
+    "heightWu": 45.41,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.castA": {
+    "iouWithIdle": 0.744,
+    "heightWu": 54.98,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.castB": {
+    "iouWithIdle": 0.56,
+    "heightWu": 43.57,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.574,
+    "heightWu": 41.41,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.562,
+    "heightWu": 42.95,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.456,
+    "heightWu": 47.61,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.631,
+    "heightWu": 46.53,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.castB": {
+    "iouWithIdle": 0.607,
+    "heightWu": 38.49,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 44.45,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 38.49,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "giant-01": {
+   "back.stepA": {
+    "iouWithIdle": 0.555,
+    "heightWu": 94.87,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.679,
+    "heightWu": 96.61,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.55,
+    "heightWu": 94.2,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.563,
+    "heightWu": 100.31,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.723,
+    "heightWu": 94.57,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.follow": {
+    "iouWithIdle": 0.322,
+    "heightWu": 94.97,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.685,
+    "heightWu": 93.53,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.594,
+    "heightWu": 93.28,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.506,
+    "heightWu": 117.71,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.595,
+    "heightWu": 92.73,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.5,
+    "heightWu": 108.36,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.follow": {
+    "iouWithIdle": 0.553,
+    "heightWu": 89.86,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.fall": {
+    "iouWithIdle": 0.514,
+    "heightWu": 72.85,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 87.4,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 90.08,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "giant-02": {
+   "back.stepA": {
+    "iouWithIdle": 0.738,
+    "heightWu": 92.53,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.518,
+    "heightWu": 97.69,
+    "scaleRule": "median x0.86 (art director)",
+    "flags": []
+   },
+   "back.windup": {
+    "iouWithIdle": 0.527,
+    "heightWu": 98.22,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.518,
+    "heightWu": 105.13,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.66,
+    "heightWu": 97.2,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.follow": {
+    "iouWithIdle": 0.473,
+    "heightWu": 104.94,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.605,
+    "heightWu": 85.19,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.606,
+    "heightWu": 97.99,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.443,
+    "heightWu": 153.52,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.strike": {
+    "iouWithIdle": 0.592,
+    "heightWu": 86.69,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.522,
+    "heightWu": 110.81,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.fall": {
+    "iouWithIdle": 0.566,
+    "heightWu": 77.92,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 89.72,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 87.48,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "greatWyrm-cinderHorde": {
+   "back.breath": {
+    "iouWithIdle": 0.416,
+    "heightWu": 345.51,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.breath": {
+    "iouWithIdle": 0.726,
+    "heightWu": 238.35,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.flight": {
+    "heightWu": 387.97,
+    "scaleRule": "area",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 254.58,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.flight": {
+    "heightWu": 240.01,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.dead": {
+    "heightWu": 228.25,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "hornedHunter-thornwood": {
+   "back.stepA": {
+    "iouWithIdle": 0.592,
+    "heightWu": 110.03,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.504,
+    "heightWu": 114.5,
+    "scaleRule": "median x0.85 (art director)",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.415,
+    "heightWu": 97.53,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.strike": {
+    "iouWithIdle": 0.495,
+    "heightWu": 96.59,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.557,
+    "heightWu": 102.05,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.call": {
+    "iouWithIdle": 0.65,
+    "heightWu": 103.25,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.fall": {
+    "iouWithIdle": 0.439,
+    "heightWu": 95.31,
+    "scaleRule": "area",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.523,
+    "heightWu": 101.09,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.41,
+    "heightWu": 99.09,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.strike": {
+    "iouWithIdle": 0.322,
+    "heightWu": 108.16,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.487,
+    "heightWu": 104.47,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.call": {
+    "iouWithIdle": 0.664,
+    "heightWu": 103.78,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.fall": {
+    "iouWithIdle": 0.276,
+    "heightWu": 87.63,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 80.55,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 73.59,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "livingMonolith-cinderHorde": {
+   "back.shattered": {
+    "heightWu": 176.16,
+    "scaleRule": "area x1.2 (art director)",
+    "flags": []
+   },
+   "front.shattered": {
+    "heightWu": 186.56,
+    "scaleRule": "area x1.24 (art director)",
+    "flags": []
+   }
+  },
+  "motherOfBeasts-thornwood": {
+   "back.stepA": {
+    "iouWithIdle": 0.645,
+    "heightWu": 105.59,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.658,
+    "heightWu": 99.88,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.554,
+    "heightWu": 92.4,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.strike": {
+    "iouWithIdle": 0.549,
+    "heightWu": 112.2,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.557,
+    "heightWu": 105.08,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.follow": {
+    "iouWithIdle": 0.662,
+    "heightWu": 99.16,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.fall": {
+    "iouWithIdle": 0.52,
+    "heightWu": 96.48,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.498,
+    "heightWu": 108.65,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.572,
+    "heightWu": 100.31,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.strike": {
+    "iouWithIdle": 0.531,
+    "heightWu": 91.39,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.577,
+    "heightWu": 105.39,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.follow": {
+    "iouWithIdle": 0.617,
+    "heightWu": 95.43,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.fall": {
+    "iouWithIdle": 0.453,
+    "heightWu": 69.17,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 96.51,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 76.89,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "oracle-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.58,
+    "heightWu": 44.44,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.7,
+    "heightWu": 43.52,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.609,
+    "heightWu": 43.38,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.strike": {
+    "iouWithIdle": 0.618,
+    "heightWu": 43.42,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.6,
+    "heightWu": 42.91,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.castA": {
+    "iouWithIdle": 0.657,
+    "heightWu": 57.53,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.castB": {
+    "iouWithIdle": 0.586,
+    "heightWu": 52.14,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.648,
+    "heightWu": 42.16,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.48,
+    "heightWu": 42.17,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.windup": {
+    "iouWithIdle": 0.586,
+    "heightWu": 50.49,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.442,
+    "heightWu": 38.85,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.474,
+    "heightWu": 46.81,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.castB": {
+    "iouWithIdle": 0.631,
+    "heightWu": 40.55,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 36.94,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.dead": {
+    "heightWu": 35.1,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   }
+  },
+  "primordial-cinderHorde": {
+   "back.bite": {
+    "iouWithIdle": 0.705,
+    "heightWu": 267.16,
+    "scaleRule": "area",
+    "flags": [
+     "rimShipped"
+    ]
+   },
+   "back.trample": {
+    "iouWithIdle": 0.58,
+    "heightWu": 300.88,
+    "scaleRule": "area",
+    "flags": [
+     "rimShipped"
+    ]
+   },
+   "front.bite": {
+    "iouWithIdle": 0.604,
+    "heightWu": 318.56,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.trample": {
+    "iouWithIdle": 0.324,
+    "heightWu": 264.72,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 202.66,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.dead": {
+    "heightWu": 273.49,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   }
+  },
+  "pyreLord-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.65,
+    "heightWu": 128.76,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.59,
+    "heightWu": 139.5,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.558,
+    "heightWu": 120.64,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.strike": {
+    "iouWithIdle": 0.598,
+    "heightWu": 117.11,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.537,
+    "heightWu": 130.41,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.call": {
+    "iouWithIdle": 0.566,
+    "heightWu": 114.11,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.fall": {
+    "iouWithIdle": 0.655,
+    "heightWu": 139.08,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.562,
+    "heightWu": 112.02,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.641,
+    "heightWu": 120.56,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.64,
+    "heightWu": 143.48,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.454,
+    "heightWu": 108.23,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.498,
+    "heightWu": 138.02,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.call": {
+    "iouWithIdle": 0.621,
+    "heightWu": 110.57,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.fall": {
+    "iouWithIdle": 0.361,
+    "heightWu": 100.97,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 121.55,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 115.23,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "salamander-01": {
+   "back.breath": {
+    "iouWithIdle": 0.882,
+    "heightWu": 101.64,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.tailLash": {
+    "iouWithIdle": 0.599,
+    "heightWu": 73.62,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.651,
+    "heightWu": 100.84,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.breath": {
+    "iouWithIdle": 0.764,
+    "heightWu": 66.19,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.tailLash": {
+    "iouWithIdle": 0.489,
+    "heightWu": 60.25,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.367,
+    "heightWu": 62.66,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 62.96,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 76.32,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "salamander-02": {
+   "back.breath": {
+    "iouWithIdle": 0.856,
+    "heightWu": 102.02,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.tailLash": {
+    "iouWithIdle": 0.39,
+    "heightWu": 67.11,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.635,
+    "heightWu": 104.73,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.breath": {
+    "iouWithIdle": 0.669,
+    "heightWu": 66.43,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.tailLash": {
+    "iouWithIdle": 0.438,
+    "heightWu": 76.67,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.38,
+    "heightWu": 59.56,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 71.73,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 72.0,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "salamander-03": {
+   "back.breath": {
+    "iouWithIdle": 0.7,
+    "heightWu": 100.73,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.tailLash": {
+    "iouWithIdle": 0.571,
+    "heightWu": 74.38,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.553,
+    "heightWu": 100.67,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.breath": {
+    "iouWithIdle": 0.703,
+    "heightWu": 70.49,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.tailLash": {
+    "iouWithIdle": 0.468,
+    "heightWu": 60.0,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.402,
+    "heightWu": 67.03,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 93.19,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 66.99,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "salamander-04": {
+   "back.breath": {
+    "iouWithIdle": 0.811,
+    "heightWu": 100.62,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.tailLash": {
+    "iouWithIdle": 0.571,
+    "heightWu": 74.45,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.hit": {
+    "iouWithIdle": 0.561,
+    "heightWu": 105.52,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.breath": {
+    "iouWithIdle": 0.64,
+    "heightWu": 63.72,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.tailLash": {
+    "iouWithIdle": 0.574,
+    "heightWu": 62.9,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.393,
+    "heightWu": 63.88,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 75.03,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 77.64,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "titan-cinderHorde": {
+   "back.stepA": {
+    "iouWithIdle": 0.634,
+    "heightWu": 117.2,
+    "scaleRule": "median",
+    "flags": [
+     "cutoff"
+    ]
+   },
+   "back.stepB": {
+    "iouWithIdle": 0.674,
+    "heightWu": 110.21,
+    "scaleRule": "area",
+    "flags": [
+     "camera",
+     "cutoff"
+    ]
+   },
+   "back.windup": {
+    "iouWithIdle": 0.735,
+    "heightWu": 102.41,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.strike": {
+    "iouWithIdle": 0.442,
+    "heightWu": 115.7,
+    "scaleRule": "median",
+    "flags": [
+     "cutoff"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.802,
+    "heightWu": 104.61,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.follow": {
+    "iouWithIdle": 0.635,
+    "heightWu": 108.13,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "back.fall": {
+    "iouWithIdle": 0.535,
+    "heightWu": 118.86,
+    "scaleRule": "area",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.stepA": {
+    "iouWithIdle": 0.653,
+    "heightWu": 95.64,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.stepB": {
+    "iouWithIdle": 0.723,
+    "heightWu": 104.01,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.windup": {
+    "iouWithIdle": 0.518,
+    "heightWu": 159.19,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.strike": {
+    "iouWithIdle": 0.491,
+    "heightWu": 122.08,
+    "scaleRule": "median",
+    "flags": [
+     "camera",
+     "cutoff"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.454,
+    "heightWu": 144.84,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.follow": {
+    "iouWithIdle": 0.489,
+    "heightWu": 118.35,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "front.fall": {
+    "iouWithIdle": 0.35,
+    "heightWu": 83.66,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.dead": {
+    "heightWu": 93.21,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.dead": {
+    "heightWu": 107.39,
+    "scaleRule": "median",
+    "flags": []
+   }
+  },
+  "treant-01": {
+   "back.windup": {
+    "iouWithIdle": 0.608,
+    "heightWu": 99.4,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.slam": {
+    "iouWithIdle": 0.381,
+    "heightWu": 95.38,
+    "scaleRule": "median x0.8 (art director)",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.507,
+    "heightWu": 98.7,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.475,
+    "heightWu": 127.64,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.slam": {
+    "iouWithIdle": 0.485,
+    "heightWu": 85.87,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.391,
+    "heightWu": 105.65,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 87.95,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 85.12,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "treant-02": {
+   "back.windup": {
+    "iouWithIdle": 0.529,
+    "heightWu": 115.2,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.slam": {
+    "iouWithIdle": 0.518,
+    "heightWu": 107.19,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.584,
+    "heightWu": 98.41,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.581,
+    "heightWu": 119.33,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.slam": {
+    "iouWithIdle": 0.501,
+    "heightWu": 85.75,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.451,
+    "heightWu": 101.03,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 104.57,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 88.0,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "treant-03": {
+   "back.windup": {
+    "iouWithIdle": 0.677,
+    "heightWu": 99.86,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.slam": {
+    "iouWithIdle": 0.575,
+    "heightWu": 96.81,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.573,
+    "heightWu": 95.5,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.521,
+    "heightWu": 114.26,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.slam": {
+    "iouWithIdle": 0.471,
+    "heightWu": 91.65,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.437,
+    "heightWu": 105.27,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 94.05,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 85.01,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "treant-04": {
+   "back.windup": {
+    "iouWithIdle": 0.546,
+    "heightWu": 108.95,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.slam": {
+    "iouWithIdle": 0.38,
+    "heightWu": 106.69,
+    "scaleRule": "median",
+    "flags": [
+     "camera",
+     "cutoff"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.443,
+    "heightWu": 107.2,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.windup": {
+    "iouWithIdle": 0.38,
+    "heightWu": 130.55,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.slam": {
+    "iouWithIdle": 0.439,
+    "heightWu": 92.75,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.hit": {
+    "iouWithIdle": 0.291,
+    "heightWu": 111.94,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 94.19,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 87.3,
+    "scaleRule": "area",
+    "flags": []
+   }
+  },
+  "wildSpirit-thornwood": {
+   "back.leap": {
+    "iouWithIdle": 0.401,
+    "heightWu": 63.44,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.rake": {
+    "iouWithIdle": 0.289,
+    "heightWu": 26.92,
+    "scaleRule": "median",
+    "flags": [
+     "camera"
+    ]
+   },
+   "back.hit": {
+    "iouWithIdle": 0.327,
+    "heightWu": 56.19,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.leap": {
+    "iouWithIdle": 0.41,
+    "heightWu": 39.89,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.rake": {
+    "iouWithIdle": 0.577,
+    "heightWu": 39.17,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost",
+     "rimShipped"
+    ]
+   },
+   "front.hit": {
+    "iouWithIdle": 0.39,
+    "heightWu": 43.04,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.dissolving": {
+    "heightWu": 39.75,
+    "scaleRule": "median",
+    "flags": []
+   },
+   "front.dissolving": {
+    "heightWu": 26.03,
+    "scaleRule": "area",
+    "flags": [
+     "rimAtPost"
+    ]
+   }
+  },
+  "worldTree-thornwood": {
+   "back.windup": {
+    "iouWithIdle": 0.648,
+    "heightWu": 236.39,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost",
+     "camera"
+    ]
+   },
+   "back.slam": {
+    "iouWithIdle": 0.412,
+    "heightWu": 269.92,
+    "scaleRule": "median",
+    "flags": [
+     "rimAtPost"
+    ]
+   },
+   "front.windup": {
+    "iouWithIdle": 0.771,
+    "heightWu": 230.87,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.slam": {
+    "iouWithIdle": 0.713,
+    "heightWu": 209.71,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "back.dead": {
+    "heightWu": 195.05,
+    "scaleRule": "area",
+    "flags": []
+   },
+   "front.dead": {
+    "heightWu": 188.81,
+    "scaleRule": "area",
+    "flags": []
+   }
+  }
+ }
+}

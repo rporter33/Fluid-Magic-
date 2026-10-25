@@ -1,0 +1,110 @@
+// Syllables for province names, per terrain. A name is an onset, an optional middle, and
+// a terrain suffix: "Har" + "wood" = "Harwood", "Sel" + "en" + "holt" = "Selenholt".
+import type { TerrainId } from './terrain';
+
+export interface NameSyllables {
+  onsets: readonly string[];
+  suffixes: readonly string[];
+}
+
+/** Shared connective syllables, used in a fraction of names. */
+export const NAME_MIDDLES: readonly string[] = ['a', 'e', 'i', 'o', 'en', 'ar', 'el', 'or'];
+
+/** Probability that a name gets a middle syllable. */
+export const NAME_MIDDLE_CHANCE = 0.35;
+
+export const NAME_SYLLABLES: Readonly<Record<TerrainId, NameSyllables>> = {
+  plains: {
+    onsets: ['Al', 'Bar', 'Cal', 'Dun', 'Ev', 'Har', 'Mar', 'Sel', 'Tor', 'Val', 'Wen', 'Ost'],
+    suffixes: ['mead', 'field', 'stead', 'ford', 'dale', 'lea', 'mere', 'wold'],
+  },
+  farmland: {
+    onsets: ['Bram', 'Cor', 'Ed', 'Fen', 'Gil', 'Hol', 'Lin', 'Mil', 'Os', 'Rye', 'Sun', 'Wil'],
+    suffixes: ['ham', 'wick', 'thorpe', 'acre', 'by', 'ton', 'garth', 'croft'],
+  },
+  forest: {
+    onsets: [
+      'Ash',
+      'Bel',
+      'Elm',
+      'Fern',
+      'Hawk',
+      'Ivy',
+      'Lind',
+      'Oak',
+      'Rook',
+      'Sil',
+      'Thorn',
+      'Wyl',
+    ],
+    suffixes: ['wood', 'holt', 'glade', 'shaw', 'hurst', 'grove', 'weald', 'bower'],
+  },
+  hills: {
+    onsets: [
+      'Ard',
+      'Ben',
+      'Cairn',
+      'Dor',
+      'Glen',
+      'Kel',
+      'Mor',
+      'Pen',
+      'Ross',
+      'Strath',
+      'Tal',
+      'Ul',
+    ],
+    suffixes: ['tor', 'brae', 'crag', 'knoll', 'ridge', 'fell', 'down', 'law'],
+  },
+  mountains: {
+    onsets: [
+      'Drak',
+      'Grim',
+      'Hald',
+      'Ir',
+      'Jot',
+      'Krag',
+      'Nor',
+      'Skar',
+      'Storm',
+      'Thar',
+      'Vor',
+      'Zar',
+    ],
+    suffixes: ['peak', 'horn', 'spire', 'crown', 'gard', 'fang', 'helm', 'mount'],
+  },
+  swamp: {
+    onsets: [
+      'Bog',
+      'Dim',
+      'Gloam',
+      'Hag',
+      'Mur',
+      'Nar',
+      'Quag',
+      'Rush',
+      'Sedge',
+      'Slo',
+      'Wick',
+      'Yar',
+    ],
+    suffixes: ['fen', 'mire', 'moss', 'marsh', 'sump', 'slough', 'carr', 'reed'],
+  },
+  wasteland: {
+    onsets: [
+      'Ash',
+      'Bleak',
+      'Char',
+      'Dread',
+      'Gall',
+      'Grey',
+      'Hollow',
+      'Rust',
+      'Salt',
+      'Scour',
+      'Sear',
+      'Ves',
+    ],
+    suffixes: ['waste', 'scar', 'reach', 'flats', 'pan', 'barrow', 'drift', 'heath'],
+  },
+};

@@ -1,0 +1,245 @@
+{
+ "figure": "longbowHunter",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "nock",
+  "draw"
+ ],
+ "camera": {
+  "iou": 0.581,
+  "iouMirrored": 0.691,
+  "aspectRatio": 1.022,
+  "headDx": 0.078,
+  "guideHeadDx": -0.066,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.668,
+  "marchLegsIoU": 0.431,
+  "mostAlike": [
+   "marchB~loose",
+   0.762
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.004,
+   "marchB": 0.956
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 13.124,
+  "keyInUnitPct": 0.187,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.51,
+  "pass_": true
+ },
+ "side": {
+  "plains": {
+   "share": 0.012,
+   "blockL": 29.4,
+   "groundL": 67.7,
+   "below": 38.3
+  },
+  "farmland": {
+   "share": 0.012,
+   "blockL": 29.4,
+   "groundL": 67.3,
+   "below": 38.0
+  },
+  "swamp": {
+   "share": 0.012,
+   "blockL": 28.5,
+   "groundL": 58.5,
+   "below": 29.9
+  },
+  "forest": {
+   "share": 0.012,
+   "blockL": 28.5,
+   "groundL": 58.7,
+   "below": 30.2
+  },
+  "share": 0.012,
+  "pass": false
+ },
+ "thresholds": {
+  "cameraIoU": 0.6,
+  "aspectRatio": [
+   0.75,
+   1.33
+  ],
+  "headDx": 0.1,
+  "facingMargin": 0.03,
+  "marchIoU": 0.86,
+  "marchLegsIoU": 0.72,
+  "distinctIoU": 0.92,
+  "marchIoURobe": 0.95,
+  "distinctIoURobe": 0.95,
+  "scaleSpread": 0.15,
+  "fringePct": 0.2,
+  "keyInUnitPct": 0.5,
+  "edgeDevPct": 8.0,
+  "sideShare": 0.3,
+  "valueBelowGround": 15.0
+ },
+ "consistency": {
+  "standCloth": 0.004,
+  "frames": {
+   "marchA": {
+    "hist": 0.921,
+    "de": 1.1,
+    "cloth": 0.008
+   },
+   "marchB": {
+    "hist": 0.928,
+    "de": 0.8,
+    "cloth": 0.002
+   },
+   "nock": {
+    "hist": 0.872,
+    "de": 2.1,
+    "cloth": 0.001
+   },
+   "loose": {
+    "hist": 0.933,
+    "de": 1.2,
+    "cloth": 0.001
+   },
+   "windup": {
+    "hist": 0.909,
+    "de": 1.5,
+    "cloth": 0.001
+   },
+   "strike": {
+    "hist": 0.882,
+    "de": 2.1,
+    "cloth": 0.01
+   },
+   "recoil": {
+    "hist": 0.929,
+    "de": 0.7,
+    "cloth": 0.002
+   },
+   "fall": {
+    "hist": 0.862,
+    "de": 4.2,
+    "cloth": 0.008
+   },
+   "deadA": {
+    "hist": 0.822,
+    "de": 4.8,
+    "cloth": 0.007
+   },
+   "deadB": {
+    "hist": 0.872,
+    "de": 2.4,
+    "cloth": 0.004
+   },
+   "fleeA": {
+    "hist": 0.858,
+    "de": 2.8,
+    "cloth": 0.002
+   },
+   "fleeB": {
+    "hist": 0.929,
+    "de": 0.8,
+    "cloth": 0.007
+   },
+   "cheer": {
+    "hist": 0.913,
+    "de": 0.9,
+    "cloth": 0.004
+   }
+  },
+  "histMin": [
+   "deadA",
+   0.822
+  ],
+  "maxDE": [
+   "deadA",
+   4.8
+  ],
+  "clothRatio": [
+   0.26,
+   2.6
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.581,
+    -0.11
+   ],
+   "marchA": [
+    0.615,
+    0.065
+   ],
+   "marchB": [
+    0.601,
+    -0.065
+   ],
+   "nock": [
+    0.54,
+    -0.004
+   ],
+   "draw": [
+    0.0,
+    0.0
+   ],
+   "loose": [
+    0.61,
+    0.031
+   ],
+   "windup": [
+    0.579,
+    0.054
+   ],
+   "strike": [
+    0.349,
+    -0.146
+   ],
+   "recoil": [
+    0.494,
+    0.074
+   ],
+   "fall": [
+    0.183,
+    -0.254
+   ],
+   "deadA": [
+    0.233,
+    -0.306
+   ],
+   "deadB": [
+    0.303,
+    -0.24
+   ],
+   "fleeA": [
+    0.529,
+    0.052
+   ],
+   "fleeB": [
+    0.35,
+    -0.276
+   ],
+   "cheer": [
+    0.564,
+    -0.021
+   ]
+  },
+  "medianIoU": 0.529,
+  "medianMargin": -0.021,
+  "follow": "3/15",
+  "followShare": 0.2
+ },
+ "rim": {
+  "beforeMax": 20.6,
+  "afterMax": 0.7
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/longbowHunter.front.green.r2.g3pro.png"
+}

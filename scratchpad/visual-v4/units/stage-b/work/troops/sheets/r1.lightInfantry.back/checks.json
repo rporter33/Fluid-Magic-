@@ -1,0 +1,235 @@
+{
+ "figure": "lightInfantry",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.804,
+  "iouMirrored": 0.586,
+  "aspectRatio": 1.0,
+  "headDx": 0.093,
+  "guideHeadDx": 0.385,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.584,
+  "marchLegsIoU": 0.481,
+  "mostAlike": [
+   "stand~marchB",
+   0.622
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.852,
+   "marchA": 1.056,
+   "marchB": 0.958
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 11.266,
+  "keyInUnitPct": 0.098,
+  "fringePct": 0.0,
+  "edgeDevPct": 3.95,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.014,
+  "histMin": [
+   "fall",
+   0.71
+  ],
+  "maxDE": [
+   "windup",
+   3.1
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.752,
+    "de": 3.0,
+    "cloth": 0.031
+   },
+   "deadB": {
+    "hist": 0.655,
+    "de": 3.7,
+    "cloth": 0.084
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.804,
+    0.218
+   ],
+   "idle2": [
+    0.775,
+    0.079
+   ],
+   "marchA": [
+    0.767,
+    0.255
+   ],
+   "marchB": [
+    0.831,
+    0.325
+   ],
+   "windup": [
+    0.603,
+    0.023
+   ],
+   "strike": [
+    0.797,
+    0.312
+   ],
+   "follow": [
+    0.709,
+    0.302
+   ],
+   "brace": [
+    0.751,
+    0.152
+   ],
+   "recoil": [
+    0.666,
+    0.092
+   ],
+   "fall": [
+    0.551,
+    0.533
+   ],
+   "deadA": [
+    0.545,
+    0.543
+   ],
+   "deadB": [
+    0.078,
+    0.059
+   ],
+   "fleeA": [
+    0.812,
+    0.371
+   ],
+   "fleeB": [
+    0.837,
+    0.555
+   ],
+   "cheer": [
+    0.612,
+    0.04
+   ]
+  },
+  "medianIoU": 0.751,
+  "medianMargin": 0.255,
+  "follow": "13/15",
+  "followShare": 0.87
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.768,
+    0.159
+   ],
+   "idle2": [
+    0.784,
+    0.088
+   ],
+   "marchA": [
+    0.824,
+    0.292
+   ],
+   "marchB": [
+    0.828,
+    0.342
+   ],
+   "windup": [
+    0.826,
+    0.131
+   ],
+   "strike": [
+    0.822,
+    0.34
+   ],
+   "follow": [
+    0.574,
+    0.2
+   ],
+   "brace": [
+    0.783,
+    0.167
+   ],
+   "recoil": [
+    0.695,
+    0.098
+   ],
+   "fall": [
+    0.496,
+    0.47
+   ],
+   "fleeA": [
+    0.813,
+    0.381
+   ],
+   "fleeB": [
+    0.831,
+    0.554
+   ],
+   "cheer": [
+    0.843,
+    0.205
+   ]
+  },
+  "follow": "12/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.026,
+   "marchA": 1.095,
+   "marchB": 1.034
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 28.0,
+  "afterMax": 0.3
+ },
+ "side": {
+  "kind": "independent",
+  "neutral": {
+   "foreign": 0.0,
+   "foreignBy": {
+    "cinderHorde": 0.0,
+    "thornwood": 0.0
+   },
+   "worstBelow": 19.0
+  },
+  "sideKeyline": {
+   "foreign": 0.0,
+   "foreignBy": {
+    "cinderHorde": 0.0,
+    "thornwood": 0.0
+   },
+   "worstBelow": 19.0
+  },
+  "pass": true
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.lightInfantry.back.g3pro.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": true
+}

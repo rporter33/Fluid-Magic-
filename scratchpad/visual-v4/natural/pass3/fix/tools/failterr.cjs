@@ -1,0 +1,5 @@
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.argv[2] || PAGE, { log, settle: 1200 });
+  for (const [v, src] of [['start', null], ['min', 'm.setScale(m.minScale(), 720, 450)'], ['mid', 'm.setScale(1.0, 640, 480)'], ['near', 'm.setScale(m.maxScale() * 0.8, 640, 600)']]) { if (src) await ev(p, src); await p.waitForTimeout(1000);
+    console.log(v, JSON.stringify(await mev(p, `(() => { RL_WRIM.lru.clear(); RCK = null; draw(); const o = {}; for (const w of WILDS) for (const e of rlWildOutline(w)) { const E = RL_WRIM.map.get(e.c + ':' + e.j); if (!E) continue; const sn = E.seen.reduce((a, v) => a + v, 0), f = E.fail.reduce((a, v) => a + v, 0); if (!sn) continue; const k = w.kind[0] + ':' + terr[e.j] + (fogOf(e.j) ? '/' + fogOf(e.j)[0] : ''); o[k] = o[k] || [0, 0]; o[k][0] += f; o[k][1] += sn; } for (const k in o) o[k] = o[k][0] + '/' + o[k][1]; return o; })()`))); }
+  await b.close(); })();

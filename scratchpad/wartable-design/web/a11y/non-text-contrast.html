@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Understanding Non-text Contrast</title>
+	</head>
+	<body>
+		<h1>Understanding Non-text Contrast</h1>
+
+		<section id="brief">
+			<h2>In brief</h2>
+			<dl>
+				<dt>Goal</dt><dd>Important visual information meets the same minimum contrast required for larger text.</dd>
+				<dt>What to do</dt><dd>Ensure meaningful visual cues achieve 3:1 against the background.</dd>
+				<dt>Why it's important</dt><dd>Some people cannot see elements with low contrast.</dd>
+			</dl>
+
+		</section>
+		<section id="intent">
+			<h2>Intent</h2>
+
+			<p>The intent of this success criterion is to ensure that user interface components (i.e., controls) and meaningful graphics are distinguishable by people with moderately low vision. The requirements and rationale are similar to those for large text in <a href="contrast-minimum">1.4.3 Contrast (Minimum)</a>. Note that this requirement does not apply to <em>inactive</em> user interface components.</p>
+
+			<p>Low contrast controls are more difficult to perceive, and may be completely missed by people with a visual impairment. Similarly, if a graphic is needed to understand the content or functionality of the web page then it should be perceivable by people with low vision or other impairments without the need for contrast-enhancing assistive technology.</p>
+
+			<div class="note">
+				<p>The 3:1 contrast ratios referenced in this success criterion is intended to be treated as threshold values. When comparing the computed contrast ratio to the success criterion ratio, the computed values should not be rounded (e.g. 2.999:1 would not meet the 3:1 threshold).</p>
+			</div>
+
+			<div class="note">
+				<p>Because authors do not have control over user settings for font smoothing and anti-aliasing, when evaluating this
+					Success Criterion, refer to the colors obtained from the user agent, or the underlying
+					markup and stylesheets, rather than the non-text elements as presented on screen.</p>
+				<p>Due to anti-aliasing, particularly thin lines and shapes of non-text elements may be rendered by user agents with
+					a much fainter color than the actual color defined in the underlying CSS. This can lead to situations where
+					non-text elements have a contrast ratio that nominally passes the Success Criterion, but have a much lower contrast
+					in practice. Although not normatively required, in these cases authors are encouraged to avoid particularly thin lines and shapes,
+					or to use a combination of colors that exceeds the normative requirements of this success criterion.
+				</p>
+			</div>
+
+			<section id="user-interface-components">
+				<h3>User Interface Components</h3>
+
+				<p>Unless the control is <em>inactive</em>, any visual information provided that is necessary for a user to identify that a control is present and how to operate it must have a minimum 3:1 contrast ratio with the adjacent colors. Also, any visual information necessary to indicate state, such as whether a component is selected or focused must also ensure that the information used to identify the control in that state has a minimum 3:1 contrast ratio.</p>
+
+				<p>This success criterion does not require that changes in color that differentiate between states of an individual component meet the 3:1 contrast ratio when they do not appear next to each other. For example, there is not a new requirement that visited links contrast with the default color, or that mouse hover indicators contrast with the default state. However, the component must not lose contrast with the adjacent colors, and non-text indicators such as the check in a checkbox, or an arrow graphic indicating a menu is selected or open must have sufficient contrast to the adjacent colors.</p>
+
+				<h4>Boundaries</h4>
+
+				<p>This success criterion does not require that controls have a visual boundary indicating the hit area. If a control has visible content (such as text or a sufficiently contrasting icon), which helps users identify the presence of the control, then a border or other indication of the overall boundary of the hit area is not required, as is therefore not subject to non-text contrast requirements. Having a visual boundary indicating the hit area is only required when there is no other visual way to identify the presence of the control – and in those cases, the boundary must have sufficient non-text contrast in order to pass this success criterion.</p>
+				<p class="note">Even when a control does not need to have a visual boundary indicating its hit area, it will still need to have a sufficiently contrasting focus indication.</p>
+				<p class="note">While not normatively required, authors are still encouraged to delineate the boundary of all controls, even those that have visible content, to aid people with cognitive disabilities in the recognition of controls and the completion of activities.</p>
+
+				<figure id="figure-buttons-no-visual-indicator">
+					{% include "./img/1.4.11-ntc-minimal-button.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> A button without a visual boundary – the button's text is sufficient to indicate the presence of the control. The same button, when focused, still has a sufficiently contrasting focus indicator (grey <code>#949494</code> against white, with a contrast ratio of 3:1).</figcaption>
+				</figure>
+
+				<h4>Adjacent colors</h4>
+				<p>For user interface components 'adjacent colors' means the colors adjacent to the component. For example, if an input has a white internal background, dark border, and white external background the 'adjacent color' to the component would be the white external background.</p>
+				<figure id="figure-standard-text-adjacent-white">
+					{% include "./img/1.4.11-ntc-text-input-default.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> A standard text input with a grey border (<code>#767676</code>) and white adjacent color outside the component</figcaption>
+				</figure>
+
+				<p>If components use several colors, any color which does not interfere with identifying the component can be ignored for the purpose of measuring contrast ratio. For example, a 3D drop-shadow on an input, or a dark border line between contrasting backgrounds is considered to be subsumed into the color closest in brightness (perceived luminance).</p>
+
+				<p>The following example shows an input that has a light background on the inside and a dark background around it. The input also has a dark grey border which is considered to be subsumed into the dark background. The border does not interfere with identifying the component, so the contrast ratio is taken between the white background and dark blue background.</p>
+
+				<figure id="figure-text-box-dark-bg-light-border">
+					{% include "./img/1.4.11-ntc-text-input-background-border.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> The contrast of the input background (white) and color adjacent to the control (dark blue <code>#003366</code>) is sufficient. There is also a border (silver) on the component that is not required to contrast with either.</figcaption>
+				</figure>
+
+				<p>For visual information required to identify a state, such as the check in a checkbox or the thumb of a slider, that part might be within the component so the adjacent color might be another part of the component.</p>
+
+				<figure id="figure-purple-box-light-check">
+					{% include "./img/1.4.11-ntc-checkbox-purple.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> A customized checkbox with light grey check (<code>#E5E5E5</code>), which has a contrast ratio of 5.6:1 with the purple box (<code>#6221EA</code>).</figcaption>
+				</figure>
+
+				<p>It is possible to use a flat design where the status indicator fills the component and does not contrast with the component, but does contrast with the colors adjacent to the component.</p>
+
+				<figure id="figure-three-radios">
+					{% include "./img/1.4.11-ntc-radio-custom.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> The first radio button shows the default state with a grey (<code>#949494</code>) circle. The second and third show the radio button selected and filled with a color that contrasts with the color adjacent to the component. The last example shows the state indicator contrasting with the component colors.</figcaption>
+				</figure>
+
+				<h4 id="related-color">Relationship with Use of Color</h4>
+
+				<p>The <a href="use-of-color">Use of Color</a> success criterion addresses changing <strong>only the color</strong> (hue) of an object or text without otherwise altering the object's form. The principle is that contrast ratio (the difference in brightness) can be used to distinguish text or graphics. For example, <a href="../Techniques/general/G183.html">G183</a> is a technique to use a contrast ratio of 3:1 with surrounding text to distinguish links and controls. In that case the Working Group regards a link color that meets the 3:1 contrast ratio relative to the non-linked text color as satisfying the Success Criterion <a href="use-of-color">1.4.1 Use of color</a> since it is relying on contrast ratio as well as color (hue) to convey that the text is a link.</p>
+
+				<p>Non-text information within controls that uses a change of hue alone to convey the value or state of an input, such as a 1-5 star indicator with a black outline for each star filled with either yellow (full) or white (empty) is likely to fail the Use of color criterion rather than this one.</p>
+
+				<figure id="figure-two-star-ratings">
+					{% include "./img/1.4.11-ntc-star-examples-pass.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> Two examples which pass this success criterion, using either a solid fill to indicate a checked-state that has contrast, or a thicker border as well as yellow fill.
+					</figcaption>
+				</figure>
+				<figure id="figure-two-star-ratings-failing">
+					{% include "./img/1.4.11-ntc-star-examples-fail.svg" %}
+					<figcaption>
+						<strong>Fail:</strong> The first example fails the Use of color criterion due to relying on yellow and white hues. The second example fails the Non-text contrast criterion due to the yellow (<code>#FFF000</code>) to white contrast ratio of 1.2:1.
+					</figcaption>
+				</figure>
+
+				<p>Using a change of contrast for focus and other states is a technique to differentiate the states. This is the basis for <a href="../Techniques/general/G195.html" class="general">G195: Using an author-supplied, highly visible focus indicator</a>, and more techniques are being added.</p>
+
+
+				<h4 id="related-focus">Relationship with Focus Visible</h4>
+
+				<p>In combination with <a href="focus-visible" class="sc">2.4.7 Focus Visible</a>, the visual focus indicator for a component <em>must</em> have sufficient contrast against the adjacent background when the component is focused, except where the appearance of the component is determined by the user agent and not modified by the author.</p>
+
+				<p>Most focus indicators appear outside the component - in that case it needs to contrast with the background that the component is on. Other cases include focus indicators which are:</p>
+
+				<ul>
+					<li>only inside the component and need to contrast with the adjacent color(s) within the component.</li>
+					<li>the border of the component (inside the component and adjacent to the outside) and need to contrast with both adjacent colors.</li>
+					<li>partly inside and partly outside, where either part of the focus indicator can contrast with the adjacent colors.</li>
+				</ul>
+
+				<figure id="figure-focus-inner">
+					{% include "./img/1.4.11-ntc-focus-inner.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> The internal yellow indicator (<code>#FFFF00</code>) contrasts with the blue button background (<code>#4189B9</code>).
+					</figcaption>
+				</figure>
+
+
+				<figure id="figure-focus-outer-yellow">
+					{% include "./img/1.4.11-ntc-focus-outer-yellow.svg" %}
+					<figcaption>
+						<strong>Fail:</strong> The external yellow indicator (<code>#FFFF00</code>) does not contrast with the white background (<code>#FFF</code>) which the component is on.
+					</figcaption>
+				</figure>
+
+				<figure id="figure-focus-outer-green">
+					{% include "./img/1.4.11-ntc-focus-outer-green.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> The external green indicator (<code>#008000</code>) does contrast with the white background (<code>#FFF</code>) which the component is on. It does not need to contrast with both the component background and the component, as visually the effect is that the button is noticeably larger, and it's not necessary for a user to be able to discern this extra border in isolation. Although this passes non-text contrast, it is not a good indicator unless it is very thick. <span class="wcag22">There is a AAA criterion in WCAG 2.2 that addresses this aspect, <a href="focus-appearance.html">Focus Appearance</a></span>.
+					</figcaption>
+				</figure>
+
+				<p>If an indicator is partly inside and partly outside the component, either part of the indicator could provide contrast.</p>
+
+				<figure id="figure-focus-outer-inner">
+					{% include "./img/1.4.11-ntc-focus-inner-outer.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> The focus indicator is partially inside, partially outside the button. The internal part of the yellow indicator (<code>#FFFF00</code>) contrasts with the blue button background (<code>#4189B9</code>).
+					</figcaption>
+				</figure>
+
+				<p>If the focus indicator changes the border of the component within the visible boundary it must contrast with the component. Typically an outline goes around (outside) the visible boundary of the component, in this case changing the border is just inside the visible edge of the component.</p>
+
+				<figure id="figure-focus-border">
+					{% include "./img/1.4.11-ntc-focus-border.svg" %}
+					<figcaption>
+						<strong>Fail:</strong> The border of the control changes from blue (<code>#4189B9</code>) to green (<code>#4B933A</code>). This is within the component and does not contrast with the inside background of the component.
+					</figcaption>
+				</figure>
+
+				<figure id="figure-focus-inner-green">
+					{% include "./img/1.4.11-ntc-focus-inner-border.svg" %}
+					<figcaption>
+						<strong>Fail:</strong> An inner border of dark green (<code>#008000</code>) does contrast with the black border, but does not contrast with the blue component background.
+					</figcaption>
+				</figure>
+
+				<figure id="figure-focus-inner-white">
+					{% include "./img/1.4.11-ntc-focus-inner-white.svg" %}
+					<figcaption>
+						<strong>Pass:</strong> An inner border of white contrasts with the black border and the blue component background.
+					</figcaption>
+				</figure>
+
+				<p>Note that this success criterion does not directly compare the focused and unfocused states of a control - if the focus state relies on a change of color (e.g., changing <em>only</em> the background color of a button), this success criterion does not define any requirement for the difference in contrast between the two states.</p>
+
+				<figure id="figure-focus-background">
+					{% include "./img/1.4.11-ntc-focus-background.svg" %}
+					<figcaption>
+						<strong>Not in scope:</strong> The change of background within the component is not in scope of non-text contrast. However, this would not pass <a href="use-of-color.html">Use of color</a>.
+					</figcaption>
+				</figure>
+
+				<section id="hover-states">
+					<h4>Hover states</h4>
+					<p>The language of Non-text Contrast specifically calls out "visual information required to identify...states." When users talk about a hover state, they are normally referring to a visual effect that takes place when the pointer is positioned over a control. However, there are a number of HTML components (such as buttons, checkboxes, radio buttons, and selects) which do not by default display any additional visual effects when the user moves a pointer control over them. The pointer itself, via its location, is the indicator of whether the user is hovering on a component. Therefore, additional author-supplied visual treatments for hover are not "required to identify" the hover state. Those treatments can be considered supplemental and do not themselves need to contrast 3:1 against the background.</p>
+
+					<p>This is not to say that other hover effects are discouraged. For instance, some native components alter the shape of the pointer when it is hovering over a control; the pointer becomes an I-beam when it hovers over text inputs and text areas. There will be cases where some users may benefit from additional visual hover effects, such as bolding text or use of drop shadows. However, other users may find strong hover effects distracting. The key consideration for any hover effect is that it does not cause a component itself to lose sufficient contrast against adjacent colors, or cause the visual indicators for other states, such as focus or selection, to lose sufficient contrast.</p>
+				</section>
+
+				<section id="inactive-controls">
+					<h4>Inactive User Interface Components</h4>
+
+					<p>User Interface Components that are not available for user interaction (e.g., a disabled control in HTML) are not required to meet contrast requirements. An inactive user interface component is visible but not currently operable. An example would be a submit button at the bottom of a form that is visible but cannot be activated until all the required fields in the form are completed.</p>
+					<figure id="figure-grey-button-and-text">
+						{% include "./img/1.4.11-ntc-button-inactive.svg" %}
+						<figcaption> An inactive button using default browser styles</figcaption>
+					</figure>
+					<p>Inactive components, such as disabled controls in HTML, are not available for user interaction. The decision to exempt inactive controls from the contrast requirements was based on a number of considerations. Although it would be beneficial to some people to discern inactive controls, a one-size-fits-all solution has been very difficult to establish. A method of varying the presentation of disabled controls, such as adding an icon for disabled controls, based on user preferences is anticipated as an advancement in the future.</p>
+				</section>
+			</section><!-- end user-interface-component section -->
+
+
+			<section id="graphical-objects">
+				<h3>Graphical Objects</h3>
+
+				<p>The term &quot;graphical object&quot; applies to stand-alone icons such as a print icon (with no text), and the important parts of a more complex diagram such as each line in a graph. For simple graphics such as single-color icons the entire image is a graphical object. Images made up of multiple lines, colors and shapes will be made of multiple graphical objects, some of which are required for understanding.</p>
+
+				<p>Not every graphical object needs to contrast with its surroundings - only those that are required for a user to understand what the graphic is conveying. <a href="https://en.wikipedia.org/wiki/Gestalt_psychology#Pr.C3.A4gnanz">Gestalt principles</a> such as the &quot;law of continuity&quot; can be used to ignore minor overlaps with other graphical objects or colors.</p>
+
+				<div class="figure-collection" data-specimen-size="small">
+
+					<article>
+						<figure>
+							<div class="specimen">
+								<img src="img/contrast-phone.png" alt="An orange circle with a white telephone icon in the middle." height="80">
+							</div>
+							<figcaption>
+								<p>
+									The phone icon is a simple shape within the orange
+									(<code>#E3660E</code>) circle. The meaning can be understood
+									from that icon alone, the background behind the circle is
+									irrelevant. The orange background and the white icon have a
+									contrast ratio greater than 3:1, which passes.
+								</p>
+								<p>The graphical object is the white phone icon.</p>
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<figure>
+							<div class="specimen">
+								<img src="img/contrast-magnet.png" alt="A red magnet with grey tips and a black outline." height="80">
+							</div>
+							<figcaption>
+								<p>
+									A magnet can be understood by the "U" shape with lighter colored
+									tips. Therefore to understand this graphic you should be able to
+									discern the overall shape (against the background) and the
+									lighter colored tips (against the rest of the U shape and the
+									background).
+								</p>
+								<p>
+									The graphical objects are the "U" shape (by outline or by the
+									solid red color <code>#D0021B</code>), and each tip of the magnet.
+								</p>
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<figure>
+							<div class="specimen">
+								<img src="img/contrast-currency-down.png" alt="A yellow arrow pointing down with a pound sign (currency) in the middle." height="80">
+							</div>
+							<figcaption>
+								<p>
+									The symbol to show a currency (the £) going down can be
+									understood with recognition of the shape (down arrow) and the
+									currency symbol (pound icon with the shape which is part of the
+									graphic). To understand this graphic you need to discern the
+									arrow shape against the white background, and the pound icon
+									against the yellow background (<code>#F5A623</code>).
+								</p>
+								<p>
+									The graphical objects are the shape and the currency symbol.
+								</p>
+							</figcaption>
+						</figure>
+					</article>
+
+				</div>
+
+				<p>Taking the magnet image above as an example, the process for establishing the graphical object(s) is to:</p>
+				<ul>
+					<li>Assess what part of each image is needed to understand what it represents.<br>
+						The magnet's "U" shape can be conveyed by the outline or by the red background (either is acceptable). The white tips are also important (otherwise it would be a horseshoe), which needs to contrast with the red background.</li>
+					<li>Assume that the user could only see those aspects. Do they contrast with the adjacent colors?<br>
+						The outline of the magnet contrasts with the surrounding text (black/white), and the red and white between the tips also has sufficient contrast.</li>
+				</ul>
+
+				<p>Due to the strong contrast of the red and white, it would also be possible to only put the outline around the white tips of the magnet and it would still conform.</p>
+
+				<figure>
+					<!-- Sourced from wikipedia under CC sharealike license https://en.wikipedia.org/wiki/File:Simple_line_graph_of_ACE_2012_results_by_candidate_sj01.png -->
+					<a href="img/simple-line-graph.png"><img src="img/simple-line-graph.png" alt="A line chart of votes across a region, with 4 lines of different colors tracking over time." width="958"></a>
+					<figcaption>
+						<p>
+							In order to understand the graph you need to discern the lines
+							and shapes for each condition. To perceive the values of each
+							line along the chart you need to discern the grey lines marking
+							the graduated 100 value increments.
+						</p>
+						<p>
+							The graphical objects are the lines in the graph, including the
+							background lines for the values, and the colored lines with
+							shapes.
+						</p>
+						<p>
+							The lines should have 3:1 contrast against their background, but
+							as there is little overlap with other lines they do not need to
+							contrast with each other or the graduated lines. (See the
+							<a href="#testing-principles">testing principles</a> below.)
+						</p>
+					</figcaption>
+				</figure>
+
+				<figure>
+					<a href="img/graphics-contrast_pie-chart_pass.png"><img src="img/graphics-contrast_pie-chart_pass.png" alt="A pie chart with small gaps between each slice showing the white background, and a dark outline around light colored slices." width="500"></a>
+					<figcaption>
+						<p>
+							To understand the pie chart you have to discern each slice of
+							the pie chart from the others.
+						</p>
+						<p>The graphical objects are the slices of the pie (chart).</p>
+						<p>
+							Note: If the values of the pie chart slices were also presented
+							in a conforming manner (see the <a href="#pie-charts">Pie Charts example</a> for details),
+							the slices would not be required for understanding.
+						</p>
+					</figcaption>
+				</figure>
+
+				<section>
+					<h4>Required for understanding</h4>
+
+					<p>The term &quot;required for understanding&quot; is used in the success criterion as many graphics do not need to meet the contrast requirements. If a person needs to perceive a graphic, or part of a graphic (a graphical object) in order to understand the content it should have sufficient contrast. However, that is not a requirement when:</p>
+					<ul>
+						<li>
+							<p>A graphic with text embedded or overlaid conveys the same information, such as labels <em>and</em> values on a chart.</p>
+							<p class="note">Text within a graphic must meet <a href="contrast-minimum" class="sc">1.4.3 Contrast (Minimum)</a>.</p>
+						</li>
+						<li>The graphic is for aesthetic purposes that does not require the user to see or understand it to understand the content or use the functionality.</li>
+						<li>The information is available in another form, such as in a table that follows the graph, which becomes visible when a "Long Description" button is pressed.</li>
+						<li>The graphic's presentation falls under the <a href="#essential-exception">essential exception</a>.</li>
+					</ul>
+				</section>
+
+				<section>
+  				<h4>Logos</h4>
+
+	  			<p>Logos are exempted from contrast requirements, under the assumption that they must comply with stricter color choices mandated
+		  		by corporate identity or brand guidelines. However, this can be problematic when logos act as <a>user interface components</a>
+		  		(such as a link or other interactive control). In these cases, as a best practice, authors should consider choosing a variant of
+		  		the logo that has sufficient contrast, if allowed by the corporate identity or brand guidelines.
+		  		Alternatively, authors should consider providing an equivalent <a>user interface component</a> which serves the same purpose and meets
+		  		contrast requirements.</p>
+
+  				<p>If logos normally have sufficient contrast but are presented with an insufficient contrast as an author choice,
+          rather than because of corporate identity or brand guidelines, then that particular low contrast
+          presentation is <em>not</em> "essential", and the logo is <em>not</em> exempt from the contrast requirements.</p>
+
+		  		<figure id="figure-low-contrast-logos-author-choice">
+			  		<img src="img/1.4.11-ntc-author-choice-logos.png" alt="A heading: 'ACME tool is trusted by the world's most innovative companies.'; below the heading, a series of nine company logos, all presented as very dark grey logos on the page's black background, with very low contrast; one logo is hovered with the mouse, and is displayed in white, with high contrast against the page background.">
+			  		<figcaption>An author chooses to present company logos with low contrast by default, until they are hovered; the fact that these are logos doesn't exempt this scenario from failing the requirements of this success criterion, as the initial low contrast presentation is not "essential"</figcaption>
+			  	</figure>
+				</section>
+				<section>
+					<h4>Gradients</h4>
+
+					<p>Gradients can reduce the apparent contrast between areas, and make it more difficult to test. The general principles is to identify the graphical object(s) required for understanding, and take the central color of that area. If you remove the adjacent color which does not have sufficient contrast, can you still identify and understand the graphical object?</p>
+					<figure id="figure-blue-circle-i-versions">
+						<img src="img/contrast-gradient.png" alt="Two versions of a blue circle with an 'i' indicating information. The first example has a blue gradient background, the second is missing the upper half of the background which obscures the i." width="300">
+					<figcaption>Removing the background which does not have sufficient contrast highlights that the graphical object (the &quot;i&quot;) is not then understandable.</figcaption></figure>
+					</section>
+					<section>
+					<h4>Interactive changes in contrast</h4>
+
+					<p>Some graphics may have interactions that either vary the contrast, or display the information as text when you mouseover/tap/focus each graphical object. In order for someone to discern the graphics exist at all, the unfocused default version must already have sufficiently contrasting colors or text. For the area that receives focus, information can then be made available dynamically as pop-up text, or be foregrounded dynamically by increasing the contrast.</p>
+
+					<!-- example from http://www.oracle.com/webfolder/technetwork/jet/jetCookbook.html?component=pieChart&demo=default -->
+					<figure id="figure-pie-slice-hover-data">
+						<img alt="A pie chart with one slice highlighted and a box hovering next to it that shows the data and indicates the source in the key." src="img/dynamic-pie-chart.png" width="350">
+						<figcaption>A dynamic chart where the current 'slice' is hovered or focused, which activates the associated text display of the values and highlights the series</figcaption>
+					</figure>
+				</section>
+				<section>
+					<h4>Infographics</h4>
+
+					<p>Infographics can mean any graphic conveying data, such as a chart or diagram. On the web it is often used to indicate a large graphic with lots of statements, pictures, charts or other ways of conveying data. In the context of graphics contrast, each item within such an infographic should be treated as a set of graphical objects, regardless of whether it is in one file or separate files.</p>
+
+					<p>Infographics often fail to meet several WCAG level AA criteria including:</p>
+
+					<ul>
+						<li><a href="non-text-content" class="sc">1.1.1 Non-text Content</a></li>
+						<li><a href="use-of-color" class="sc">1.4.1 Use of Color</a></li>
+						<li><a href="contrast-minimum" class="sc">1.4.3 Contrast (Minimum)</a></li>
+						<li><a href="images-of-text" class="sc">1.4.5 Images of Text</a></li>
+					</ul>
+
+					<p>An infographic can use text which meets the other criteria to minimize the number of graphical objects required for understanding. For example, using text with sufficient contrast to provide the values in a chart. A long description would also be sufficient because then the infographic is not relied upon for understanding.</p>
+
+				</section>
+
+				<section>
+					<h4>Symbolic or graphical text characters</h4>
+					<p>There are cases where text is heavily stylized – for instance, using a very ornate or distorted typeface – to the point where it acts more as a graphic, rather than text. Similarly, there are situations where text characters are used as symbols – used for their visual appearance, rather than <q>expressing something in human language</q>. These cases fall under the definition of <a>non-text content</a>.</p>
+					<figure id="figure-text-stylized">
+						{% include "./img/1.4.11-stylized-text.svg" %}
+						<figcaption>Text using a geometric typeface – arguably acting as an image/non-text content.</figcaption>
+					</figure>
+					<figure id="figure-text-symbols">
+						{% include "./img/1.4.11-ntc-buttons-text-symbols.svg" %}
+						<figcaption>Even though the two buttons use text characters — an uppercase <q>X</q>, often used for "Close" buttons, and a <q>&gt;</q> character, to act as a right-pointing arrow — they count as non-text characters/symbols. Their contrast ratio of just above 3:1 passes this success criterion.</figcaption>
+					</figure>
+				</section>
+
+				<section>
+					<h4>Essential exception</h4>
+
+					<p>Graphical objects do not have to meet the contrast requirements when &quot;a particular presentation of graphics is essential to the information being conveyed&quot;. The <a>essential</a> exception is intended to apply when there is no way of presenting the graphic with sufficient contrast without undermining the meaning. For example:</p>
+					<ul>
+						<li><strong>Logos and logotypes</strong>: The brand logo of an organization or product is the representation of that organization, and is generally
+							presented in the brand's specific colors; it is therefore exempt.</li>
+						<li><strong>Flags</strong>: Flags may not be identifiable if the colors are changed to have sufficient contrast.</li>
+						<li><strong>Sensory</strong>: There is no requirement to change pictures of real life scenes such as photos of people or scenery.</li>
+						<li><strong>Representing other things</strong>: If you cannot represent the graphic in any other way, it is essential. Examples include:
+							<ul>
+								<li>Screenshots to demonstrate how a website appeared.</li>
+								<li>Diagrams of medical information that use the colors found in biology (<a href="https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_it.svg">example medical schematic from Wikipedia</a>).</li>
+								<li>color gradients that represent a measurement, such as heat maps (<a href="https://commons.wikimedia.org/wiki/File:Eyetracking_heat_map_Wikipedia.jpg">example heatmap from Wikipedia</a>).</li>
+							</ul>
+						</li>
+					</ul>
+
+					<p>However, this exemption can be problematic when these graphical objects also act as <a>user interface components</a> (or are the only visible content of a <a>user interface component</a>).
+					While normatively the exemption "carries over" to the <a>user interface component</a>, authors are encouraged (but not required) to make sure that there is an aspect of the user interface components that allows users to identify the components.</p>
+
+					<p>In the case of logos, authors are encouraged to choose a variant of the logo that has sufficient contrast, if variants are allowed by the
+					relevant corporate identity or brand guidelines. Otherwise, authors should consider providing an additional visual element with sufficient
+					contrast that helps identify the user interface component, such as additional text.</p>
+
+					<p>Alternatively, authors may provide an equivalent <a>user interface component</a> which serves the same purpose
+					and meets contrast requirements.</p>
+
+					<p>Note that even when graphical objects acting as user interface components are exempted, the user interface components are <em>not</em> exempted from other aspects of this success criterion, such as the requirement to have sufficient contrast for the control's focus indicator.</p>
+
+					<h5>Essential exception and author choice</h5>
+
+					<p>If exempted graphical objects (such as logos) are presented with an insufficient contrast, but their low contrast presentation
+					was an author choice, then that particular low contrast	presentation is	<em>not</em> "essential", and the graphical object
+					is <em>not</em> exempt from the contrast requirements.</p>
+
+					<figure id="figure-low-contrast-logos-author-choice">
+						<img src="img/1.4.11-ntc-author-choice-logos.png" alt="A heading: 'ACME tool is trusted by the world's most innovative companies.'; below the heading, a series of nine company logos, all presented as very dark grey logos on the page's black background, with very low contrast; one logo is hovered with the mouse, and is displayed in white, with high contrast against the page background.">
+						<figcaption>An author chooses to present company logos with low contrast by default, until they are hovered; the fact that these are logos doesn't exempt this scenario from failing the requirements of this success criterion, as the initial low contrast presentation is not "essential" (since it's not mandated by corporate identity or brand guidelines).</figcaption>
+					</figure>
+			</section>
+
+			<section id="testing-principles">
+					<h3>Testing principles</h3>
+					<p>A summary of the high-level process for finding and assessing non-text content on a web page:</p>
+					<ul>
+						<li>Identify each user-interface component (link, button, form control) on the page and:
+							<ul>
+								<li>Identify the visual (non-text) indicators of the component that are required to identify that a control exists, and indicate the current state. In the default (on page load) state, test the contrast ratio against the adjacent colors.</li>
+								<li>Test those contrast indicators in each state.</li>
+							</ul>
+						</li>
+						<li>Identify each graphic on the page that includes information required for understanding the content (i.e., excluding graphics which have visible text for the same information, or are decorative) and:
+							<ul>
+								<li>Check the contrast of the graphical object against its adjacent colors;</li>
+								<li>If there are multiple colors and/or a gradient, choose the least contrasting area to test;</li>
+								<li>If it passes, move to the next graphical object;</li>
+								<li>If the least-contrasting area is less than 3:1, assume that area is invisible, is the graphical object still understandable?</li>
+								<li>If there is enough of the graphical object to understand, it passes, else fail.</li>
+							</ul>
+						</li>
+					</ul>
+					<p>The techniques below each have testing criteria, and the related criteria for <a href="focus-visible">Focus visible (2.4.7)</a>, <a href="use-of-color">Use of color (1.4.1)</a>, and <a href="contrast-minimum">Contrast minimum</a> also have techniques.</p>
+			</section>
+
+			</section>
+
+		</section><!-- end Intent -->
+
+		<section id="benefits">
+			<h2>Benefits</h2>
+			<p>People with low vision often have difficulty perceiving graphics that have insufficient contrast. This can be exacerbated if the person has a color vision deficiency that lowers the contrast even further. Providing a <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef">relative luminance</a> (lightness difference) of 3:1 or greater can make these items more distinguishable when the person does not see a full range of colors.</p>
+		</section>
+
+		<section id="examples">
+			<h2>Examples</h2>
+
+			<section>
+				<h3>User Interface Component examples</h3>
+				<p>For designing focus indicators, selection indicators and user interface components that need to be perceived clearly, the following are examples that have sufficient contrast.</p>
+
+				<h4>Passing User Interface Component examples</h4>
+
+				<div class="figure-collection">
+
+					<article>
+						<h5>Link text</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-default-link-text.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> The browser's default link text color
+								is covered by <a href="contrast-minimum">1.4.3 Contrast
+								(Minimum)</a>. Since the underline is the same color as the
+								text, which must meet at least 3:1 to pass, the default
+								underline will always pass the requirements of Non-text
+								Contrast.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Default focus style</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-default-link-focus.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> Links are required to have a visible
+								focus indicator by <a href="focus-visible.html">2.4.7 Focus
+								Visible</a>. Where the focus style of the user agent is not
+								adjusted on interactive controls (such as links, form fields
+								or buttons) by the website (author), the default focus style
+								is exempt from contrast requirements (but must still be
+								visible).
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Buttons</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-button-background.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> A button which has a distinguishing
+								indicator such as position, text style, or context does not
+								need a <em>contrasting</em> visual indicator to show that it
+								is a button, although some users are likely to identify a
+								button with an outline that meets contrast requirements more
+								easily.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input (minimal)</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-minimal.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> Where a text-input has a visual
+								indicator to show it is an input, such as a bottom border
+								(<code>#767676</code>), that indicator must meet 3:1 contrast
+								ratio.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-default.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> Where a text-input has an indicator
+								such as a complete border (<code>#767676</code>), that
+								indicator must meet 3:1 contrast ratio.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input focus style</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-focus.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> A focus indicator is required. While in
+								this case the additional gray (<code>#CCC</code>) outline has
+								an insufficient contrast of 1.6:1 against the white
+								(<code>#FFF</code>) background, the cursor/caret which is
+								displayed when the input receives focus <em>does</em> provide
+								a sufficiently strong visual indication.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input using background color</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-background.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> Text inputs that have no border and are
+								differentiated only by a background color must have a 3:1
+								contrast ratio to the adjacent background
+								(<code>#043464</code>).
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Toggle button</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-toggle.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> The toggle button's internal background
+								(<code>#070CD5</code>) has a good contrast with the external
+								white background. Also, the round toggle within
+								(<code>#7AC2FF</code>) contrasts with the internal background.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Dropdown indicator</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-dropdown.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> The down-arrow is required to
+								understand that there is drop-down functionality, it has a
+								contrast of 4.7:1 for the white icon on dark gray
+								(<code>#6E747B</code>).
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Dropdown indicator</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-dropdown2.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> The down-arrow is required to
+								understand that there is drop-down functionality, it has a
+								contrast of 21:1 for the black icon on white.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Checkbox - empty</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-checkbox-example1.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> A black border on a white background
+								indicates the checkbox.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Checkbox - checked</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-checkbox-example2.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> A black border on a white background
+								indicates the checkbox, the black tick shape indicates the
+								state of checked.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Checkbox - Subtle hover style</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-checkbox-example4.svg" %}
+							</div>
+							<figcaption>
+								<strong>Pass:</strong> A checkbox is visually identified by
+								its black border against a white background, but when the
+								mouse pointer hovers on the checkbox, a subtle grey background
+								is added (<code>#DEDEDE</code>). The black border has a 15:1
+								contrast ratio with the grey background, so the checkbox
+								continues to have good contrast. Note that the grey hover
+								effect does not itself need to contrast 3:1 with the page
+								background, since the pointer position is the primary
+								indicator of the hover state.
+							</figcaption>
+						</figure>
+					</article>
+				</div>
+
+				<h4>Failing User Interface Component examples</h4>
+
+				<p>The following are examples that have insufficient contrast.</p>
+
+				<div class="figure-collection">
+					<article>
+						<h5>Colored underline is the only indicator of a link</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-link-underline-only.svg" %}
+							</div>
+							<figcaption>
+								<strong>Fail:</strong> Link and non-link text are both white
+								on an almost-black (<code>#0D0F13</code>) background. The
+								link's custom underline (<code>#B1262B</code>) is the only way
+								to identify the link. The red underline contrasts less than
+								3:1 with the background color.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Checkbox - border color</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-checkbox-example3.svg" %}
+							</div>
+							<figcaption>
+								<strong>Fail:</strong> The grey border color of the checkbox
+								(<code>#9D9D9D</code>) has a contrast ratio of 2.7:1 with the
+								white background, which is not sufficient for the visual
+								information required to identify the checkbox.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Checkbox - subtle focus style</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-checkbox-example5.svg" %}
+							</div>
+							<figcaption>
+								<strong>Fail:</strong> A focus indicator is required. If the
+								focus indicator is styled by the author, it must meet the 3:1
+								contrast ratio with adjacent colors. In this case, the gray
+								(<code>#AAA</code>) indicator has an insufficient ratio of
+								2.3:1 with the white (<code>#FFF</code>) adjacent background.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input - low contrast customized caret as only focus indication</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-custom-caret-fail.svg" %}
+							</div>
+							<figcaption>
+								<strong>Fail:</strong> The only focus
+								indication provided by the input is the
+								customized caret / cursor; the light-blue
+								color (<code>#00C7FD</code>) has a contrast
+								lower than 3:1 against the interior white
+								background color of the input, so the focus
+								indication fails this criterion.
+							</figcaption>
+						</figure>
+					</article>
+
+					<article>
+						<h5>Text input - no label or other indication, low contrast border</h5>
+						<figure>
+							<div class="specimen">
+								{% include "./img/1.4.11-ntc-text-input-low-contrast-border-no-label-fail.svg" %}
+							</div>
+							<figcaption>
+								<strong>Fail:</strong> The text input lacks
+								any form of label to hint at its presence.
+								The border color (<code>#AAA</code>) has
+								contrast lower than 3:1 against its adjacent
+								white background. As the border here is
+								required to identify the presence of the
+								input, it must have sufficient contrast to
+								pass this criterion.
+							</figcaption>
+						</figure>
+					</article>
+				</div>
+			</section><!-- end UIC examples -->
+
+			<section>
+				<h3>Graphical Object examples</h3>
+				<ul>
+					<li>Status icons on an application's dashboard (without associated text) have a 3:1 minimum contrast ratio.</li>
+					<li>A text input has a dark border around the white editable area.</li>
+					<li>A graph uses a light background and ensures that the colors for each line have a 3:1 contrast ratio against the background.</li>
+				</ul>
+				<section class="example">
+					<h4>Pie charts</h4>
+					<p>Pie charts make a good case study for the graphical objects part of this success criterion, the following pie charts are intended to convey the proportion of market share each browser has. Please Note: The actual figures are made up, these are not actual market shares. </p>
+					<figure id="figure-failing-pie-chart">
+						<img src="img/graphics-contrast_pie-chart_fail.png" alt="Failing pie chart">
+						<figcaption>
+							<p><strong>Fail:</strong> The pie chart has labels for each slice (so passes 1.4.1 Use of Color), but in order to understand the proportions of the slices you must discern the edges of the slices (the graphical objects conveying essential information), and the contrast between the slices is not  3:1 or greater. </p>
+						</figcaption>
+					</figure>
+					<figure id="figure-not-applicable-pie-chart">
+						<img src="img/graphics-contrast_pie-chart_na.png" alt="Not applicable pie chart">
+						<figcaption>
+							<p><strong>Not applicable:</strong> The pie chart has visible labels <em>and</em> values that convey equivalent information to the graphical objects (the pie slices). </p>
+						</figcaption>
+					</figure>
+					<figure id="figure-passing-pie-chart">
+						<img src="img/graphics-contrast_pie-chart_pass.png" alt="Passing pie chart">
+						<figcaption>
+							<p><strong>Pass:</strong> The pie chart has visible labels, and sufficient contrast around and between the slices of the pie chart (the graphical objects). A darker border has been added around the yellow slice in order to achieve the contrast level.</p>
+						</figcaption>
+					</figure>
+				</section>
+				<section class="example">
+					<h4>Infographics</h4>
+					<figure id="figure-infographic-light-circles">
+						<img src="img/infographic-fail.png" alt="An infographic showing lightly colored circles of various sizes to indicate the size of five different social networks">
+						<figcaption>
+							<p><strong>Fail:</strong> Discerning the circles is required to understand the size of network and discerning the icons in each circle is required to identify which network it shows.</p>
+						</figcaption>
+					</figure>
+					<p>The graphical objects are the circles (measured against the background) and the icons in each circle (measured against the circle's background).</p>
+					<figure id="figure-infographic-contrasting-text">
+						<img src="img/infographic-pass.png" alt="The same infographic with contrasting text, dark borders around the circles, and contrasting icons.">
+						<figcaption>
+							<p><strong>Pass:</strong> The circles have contrasting borders and the icons are a contrasting dark color against the light circle backgrounds.</p>
+						</figcaption>
+					</figure>
+					<p>There are many possible solutions to ensuring contrast, the example shows the use of borders. Other techniques are to use darker colors for the circle backgrounds, or to add text labels &amp; values for each item.</p>
+				</section>
+			</section><!-- end graphic-object-examples -->
+		</section><!-- end examples -->
+
+		<section id="resources">
+			<h2>Resources</h2>
+			<ul>
+				<li><a href="http://w3c.github.io/low-vision-a11y-tf/requirements.html">Accessibility Requirements for People with Low Vision</a>.</li>
+				<li><a href="https://lists.w3.org/Archives/Public/public-low-vision-a11y-tf/2017May/0007.html">Smith Kettlewell Eye Research Institute</a> -  &quot;If the text is better understood with the graphics, they should be equally visible as the text&quot;.</li>
+				<li><a href="https://lists.w3.org/Archives/Public/public-low-vision-a11y-tf/2017Jun/0054.html">Gordon Legge</a> - &quot;Contrast requirements for form controls should be equivalent to contrast requirements for text&quot;.</li>
+			</ul>
+		</section>
+		{% # Data for associated techniques is defined in understanding/understanding.11tydata.js %}
+		{% include "understanding/techniques.html" %}
+	</body>
+</html>

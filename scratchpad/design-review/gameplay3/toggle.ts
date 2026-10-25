@@ -1,0 +1,22 @@
+import { addArmy, capitalOf, nationIds, runDays, twoNationGame } from '/home/user/Fluid-Magic-/tests/sim/fixtures';
+import { nationEconomy, unpaidMoralePenalty } from '/home/user/Fluid-Magic-/src/sim/selectors';
+
+const state = twoNationGame();
+const [red] = nationIds(state);
+if (!red) throw new Error('no red');
+const nation = state.nations[red];
+if (!nation) throw new Error('no nation');
+for (const n of [80, 80, 80, 60]) addArmy(state, red, nation.capital, 'cinderWarrior', n);
+nation.gold = 0;
+const e0 = nationEconomy(state, red);
+console.log('income', e0.gold.toFixed(1), 'upkeep', e0.upkeep.toFixed(1));
+runDays(state, 300);
+const e1 = nationEconomy(state, red);
+console.log('after 300d: income', e1.gold.toFixed(1), 'upkeep', e1.upkeep.toFixed(1), 'unpaidDays', nation.unpaidDays.toFixed(1), 'penalty', unpaidMoralePenalty(nation.unpaidDays), 'gold', nation.gold.toFixed(2));
+const cap = capitalOf(state, red);
+cap.taxRate = 'high';
+runDays(state, 1);
+console.log('after 1 high-tax day: unpaidDays', nation.unpaidDays.toFixed(1), 'unrest', cap.unrest.toFixed(3));
+cap.taxRate = 'normal';
+runDays(state, 1);
+console.log('next normal day: unpaidDays', nation.unpaidDays.toFixed(1));

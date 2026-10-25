@@ -1,0 +1,1093 @@
+<title>Fluid Magic Game Screen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+/* Layout: one game window framed on the page. A full-window map canvas, with quiet dark chrome
+   floating over it: top bar, left context dock, right outliner and feed, bottom commander strip,
+   a fixed alerts ribbon and a map-mode column. Single dark look by design (the game's chrome). */
+:root {
+  color-scheme: dark;
+  --chrome-0: #1C1A17; --chrome-1: #24211D; --chrome-2: #2E2A25; --chrome-3: #3A352E;
+  --line: #4A433A; --text: #F4EEDF; --dim: #B7AD9A; --faint: #7F7767;
+  --up: #E8A75D; --down: #87B5D7;
+  --urgent: #D9493B; --important: #E2B843; --opportunity: #61AF6C; --hint: #4D8FD3;
+  --red: #FD6533; --red-deep: #7A1E12; --green: #00674B; --green-hi: #4FB38C;
+  --font-display: 'Marcellus SC', Georgia, 'Times New Roman', serif;
+  --font-body: 'Alegreya Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-num: 'IBM Plex Sans Condensed', 'Arial Narrow', system-ui, sans-serif;
+}
+html, body { height: 100%; }
+body {
+  background: var(--chrome-0); color: var(--text); font-family: var(--font-body); font-size: 15px;
+  margin: 0; overflow: hidden; display: flex; flex-direction: column; gap: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px; box-sizing: border-box;
+}
+.page-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.page-head h1 { font-family: var(--font-display); font-weight: 400; font-size: 20px; margin: 0; letter-spacing: .04em; text-wrap: balance; }
+.page-head p { margin: 0; color: var(--dim); font-size: 13.5px; min-width: 0; }
+kbd { font-family: var(--font-num); font-size: 11.5px; padding: 0 5px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 3px; color: var(--text); background: var(--chrome-2); }
+
+/* ---------------------------------------------------------------- the game window */
+.app { position: relative; flex: 1; min-height: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #15130F; }
+canvas#map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: default; touch-action: none; }
+.page-head .touch { display: none; }
+@media (max-width: 720px) { .page-head .desk { display: none; } .page-head .touch { display: block; } }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.dimtxt { color: var(--dim); }
+.up { color: var(--up); } .down { color: var(--down); }
+
+/* Top bar */
+.topbar { position: absolute; left: 0; right: 0; top: 0; height: 44px; background: linear-gradient(#26231E, #1E1B17); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 2px; padding: 0 8px; z-index: 20; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.topbar::-webkit-scrollbar { display: none; }
+.readout { display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 8px; border-radius: 4px; cursor: pointer; white-space: nowrap; flex: none; }
+.readout:hover, .readout:focus-visible { background: var(--chrome-3); outline: none; }
+.readout .v { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 500; }
+.readout .r { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 12.5px; }
+.sep { width: 1px; height: 24px; background: var(--line); margin: 0 4px; flex: none; }
+.nationbtn { gap: 8px; }
+.banner { width: 22px; height: 28px; position: relative; flex: none; }
+.mana { display: flex; gap: 1px; flex: none; }
+.mana .readout { padding: 0 6px; gap: 4px; }
+.mana .zero { opacity: .42; }
+.screenbtn { display: inline-flex; align-items: center; gap: 4px; height: 30px; padding: 0 8px; border-radius: 4px; color: var(--dim); background: none; border: none; font: inherit; font-size: 13.5px; cursor: pointer; flex: none; }
+.screenbtn:hover, .screenbtn:focus-visible { background: var(--chrome-3); color: var(--text); outline: none; }
+.screenbtn kbd { font-size: 10.5px; }
+.spacer { flex: 1; min-width: 8px; }
+.clock { display: flex; align-items: center; gap: 8px; padding: 0 10px; height: 34px; border-radius: 4px; flex: none; position: relative; }
+.clock .date { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 15px; letter-spacing: .02em; }
+.clock .hair { position: absolute; left: 10px; right: 10px; bottom: 3px; height: 2px; background: var(--chrome-3); border-radius: 1px; }
+.clock .hair i { display: block; height: 100%; background: var(--dim); border-radius: 1px; }
+.speed { display: flex; align-items: center; gap: 3px; }
+.speed button { width: 14px; height: 18px; border: 1px solid var(--line); background: var(--chrome-2); border-radius: 2px; padding: 0; cursor: pointer; }
+.speed button.on { background: var(--text); border-color: var(--text); }
+.speed .pausebtn { width: 26px; height: 22px; color: var(--text); font-size: 11px; display: grid; place-items: center; }
+.clock.paused { background: rgba(217,73,59,.18); box-shadow: inset 0 0 0 1px rgba(217,73,59,.55); }
+.clock.paused .speed button:not(.pausebtn) { background: repeating-linear-gradient(135deg, var(--chrome-3) 0 3px, var(--chrome-1) 3px 6px); border-color: var(--line); }
+.pausedword { font-family: var(--font-num); font-weight: 600; font-size: 11.5px; letter-spacing: .12em; color: #FFB4A9; }
+
+/* Alerts ribbon, fixed x */
+.ribbon { position: absolute; top: 52px; left: 372px; display: flex; gap: 6px; z-index: 15; }
+.alert { position: relative; width: 34px; height: 34px; display: grid; place-items: center; cursor: pointer; background: none; border: none; padding: 0; }
+.alert svg { filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.alert .count { position: absolute; right: -3px; bottom: -3px; min-width: 15px; height: 15px; border-radius: 8px; background: var(--chrome-0); border: 1px solid var(--line); font: 600 10.5px/13px var(--font-num); color: var(--text); text-align: center; padding: 0 2px; }
+.alert:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 4px; }
+.alert.pulse svg { animation: pulse 0.6s ease-in-out 2; }
+@keyframes pulse { 50% { transform: scale(1.18); } }
+.pausechip { position: absolute; top: 52px; right: 316px; z-index: 15; display: none; align-items: center; gap: 8px; padding: 6px 10px; background: var(--chrome-1); border: 1px solid rgba(217,73,59,.6); border-radius: 4px; font-size: 13.5px; cursor: pointer; }
+.pausechip.show { display: flex; }
+
+/* Docks */
+.dock { position: absolute; top: 44px; background: var(--chrome-0); border-color: var(--line); border-style: solid; z-index: 12; display: flex; flex-direction: column; min-height: 0; }
+.dock.left { left: 0; width: 360px; bottom: 0; border-width: 0 1px 0 0; }
+.dock.right { right: 0; width: 300px; bottom: 0; border-width: 0 0 0 1px; }
+.app.strip-on .dock.left { bottom: 128px; }
+.dock[hidden] { display: none !important; }
+.dockhead { display: flex; align-items: center; gap: 10px; padding: 10px 12px 8px; border-bottom: 1px solid var(--line); }
+.dockhead h2 { font-family: var(--font-display); font-weight: 400; font-size: 19px; margin: 0; letter-spacing: .03em; min-width: 0; text-wrap: balance; }
+.dockhead .sub { color: var(--dim); font-size: 13px; }
+.iconbtn { width: 26px; height: 26px; display: grid; place-items: center; border: none; background: none; color: var(--dim); border-radius: 3px; cursor: pointer; font-size: 14px; flex: none; }
+.iconbtn:hover, .iconbtn:focus-visible { background: var(--chrome-3); color: var(--text); outline: none; }
+.crumb { padding: 6px 12px 0; font-size: 12.5px; color: var(--faint); }
+.crumb a { color: var(--dim); cursor: pointer; text-decoration: none; }
+.tabs { display: flex; gap: 2px; padding: 6px 10px 0; border-bottom: 1px solid var(--line); }
+.tab { border: none; background: none; color: var(--dim); font: 500 14px var(--font-body); padding: 7px 10px 8px; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); }
+.tab:focus-visible { outline: 1px solid var(--dim); }
+.dockbody { overflow-y: auto; padding: 10px 12px 16px; display: flex; flex-direction: column; gap: 14px; min-height: 0; flex: 1; }
+.section h3 { font: 600 11.5px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin: 0 0 6px; }
+.stat { display: grid; grid-template-columns: 22px 1fr auto auto; align-items: center; gap: 8px; padding: 4px 6px; border-radius: 3px; cursor: default; }
+.stat:hover { background: var(--chrome-2); }
+.stat .lbl { color: var(--dim); }
+.stat .val { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 15px; }
+.stat .dl { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 12.5px; min-width: 64px; text-align: right; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg button { border: none; background: none; color: var(--dim); font: 500 13px var(--font-body); padding: 4px 10px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--chrome-3); color: var(--text); }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; font: 500 13.5px var(--font-body); color: var(--text); background: var(--chrome-3); border: 1px solid #CFC5B0; border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.btn:hover { background: #47413A; }
+.btn:focus-visible { outline: 2px solid var(--text); outline-offset: 1px; }
+.btn .cost { font-family: var(--font-num); font-variant-numeric: tabular-nums; color: var(--dim); font-size: 12.5px; }
+.btn.nav { background: none; border-color: transparent; color: var(--dim); }
+.btn.nav:hover { color: var(--text); background: var(--chrome-2); }
+.btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.building { display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; align-items: center; padding: 4px 6px; }
+.scale { display: grid; grid-template-columns: 76px 1fr 76px; align-items: center; gap: 8px; font-size: 13px; color: var(--dim); padding: 2px 6px; }
+.scale .bar { position: relative; height: 8px; background: var(--chrome-3); border-radius: 4px; }
+.scale .bar i { position: absolute; top: -2px; width: 4px; height: 12px; background: var(--text); border-radius: 2px; }
+.scale .bar::after { content: ""; position: absolute; left: 50%; top: -1px; width: 1px; height: 10px; background: var(--faint); }
+.scale span:last-child { text-align: right; }
+
+/* Unit cards (Recruit tab) */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.ucard { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--chrome-1); cursor: pointer; text-align: left; padding: 0; color: inherit; font: inherit; }
+.ucard:hover, .ucard:focus-visible { border-color: #CFC5B0; outline: none; }
+.ucard .band { background: var(--red-deep); padding: 5px 8px; font: 600 13.5px var(--font-body); display: flex; justify-content: space-between; }
+.ucard .body { padding: 6px 8px 8px; display: grid; gap: 4px; }
+.ucard .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; font-family: var(--font-num); font-size: 12.5px; color: var(--dim); }
+.ucard .stats b { display: block; color: var(--text); font-size: 14px; font-weight: 500; }
+.ucard .costs { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--dim); display: flex; gap: 8px; }
+.queue { display: grid; gap: 6px; }
+.qitem { display: grid; grid-template-columns: 1fr auto; gap: 4px 8px; font-size: 13.5px; padding: 6px 8px; background: var(--chrome-1); border-radius: 4px; }
+.qitem .prog { grid-column: 1 / -1; height: 3px; background: var(--chrome-3); border-radius: 2px; }
+.qitem .prog i { display: block; height: 100%; background: var(--dim); border-radius: 2px; }
+
+/* Outliner and feed */
+.outliner { overflow-y: auto; flex: 1 1 55%; min-height: 0; padding: 6px 0; }
+.osec > button { width: 100%; display: flex; align-items: center; gap: 6px; border: none; background: none; color: var(--faint); font: 600 11.5px var(--font-body); letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; cursor: pointer; }
+.osec > button:hover { color: var(--text); }
+.osec > button .cnt { margin-left: auto; font-family: var(--font-num); letter-spacing: 0; }
+.orow { display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 8px; padding: 3px 12px 3px 18px; font-size: 13.5px; cursor: pointer; min-height: 24px; }
+.orow:hover, .orow.sel { background: var(--chrome-2); }
+.orow .meta { font-family: var(--font-num); font-variant-numeric: tabular-nums; color: var(--dim); font-size: 12.5px; white-space: nowrap; }
+.orow .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.splitter { height: 5px; background: var(--chrome-2); border-block: 1px solid var(--line); flex: none; }
+.feed { flex: 1 1 45%; min-height: 0; display: flex; flex-direction: column; }
+.chips { display: flex; gap: 4px; padding: 8px 10px 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line); background: none; color: var(--dim); border-radius: 11px; font: 500 12px var(--font-body); padding: 2px 9px; cursor: pointer; }
+.chip.on { background: var(--chrome-3); color: var(--text); border-color: #6A6255; }
+.msgs { overflow-y: auto; min-height: 0; flex: 1; }
+.msg { display: grid; grid-template-columns: 18px 46px 1fr; gap: 6px; padding: 5px 10px; font-size: 13.5px; align-items: start; position: relative; }
+.msg:hover { background: var(--chrome-2); }
+.msg .when { font-family: var(--font-num); color: var(--faint); font-size: 12px; padding-top: 1px; }
+.msg .acts { position: absolute; right: 6px; top: 3px; display: none; gap: 2px; background: var(--chrome-2); }
+.msg:hover .acts, .msg:focus-within .acts { display: flex; }
+.msg .acts button { border: 1px solid var(--line); background: var(--chrome-1); color: var(--text); font: 500 12px var(--font-body); border-radius: 3px; padding: 1px 7px; cursor: pointer; }
+.link { color: var(--text); text-decoration: underline; text-decoration-color: rgba(244,238,223,.25); text-underline-offset: 2px; cursor: pointer; }
+.link:hover { text-decoration-color: var(--text); }
+
+/* Bottom strip */
+.strip { position: absolute; left: 0; bottom: 0; right: 340px; height: 128px; background: var(--chrome-0); border-top: 1px solid var(--line); border-right: 1px solid var(--line); z-index: 13; display: none; gap: 14px; padding: 10px 12px; align-items: stretch; }
+.app.strip-on .strip { display: flex; }
+.portrait { width: 84px; flex: none; display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.portrait .face { width: 66px; height: 66px; border-radius: 6px; background: var(--red-deep); display: grid; place-items: center; font: 30px var(--font-display); position: relative; border: 2px solid #C9A47D; }
+.portrait .hp { width: 66px; height: 5px; background: var(--chrome-3); border-radius: 3px; }
+.portrait .hp i { display: block; height: 100%; background: #C55B4E; border-radius: 3px; }
+.sinfo { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 260px; }
+.sinfo .name { font: 400 18px var(--font-display); letter-spacing: .02em; }
+.squads { display: flex; gap: 6px; flex-wrap: wrap; }
+.sq { border: 1px solid var(--line); border-radius: 4px; padding: 3px 8px; font-size: 13px; display: flex; gap: 6px; align-items: center; background: var(--chrome-1); }
+.script { display: flex; gap: 4px; align-items: center; cursor: pointer; }
+.slot { width: 26px; height: 26px; border: 1px solid var(--line); border-radius: 4px; display: grid; place-items: center; background: var(--chrome-1); font-size: 13px; }
+.orders { display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; flex: 1 1 320px; min-width: 0; }
+.eta { flex: none; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 2px; padding-right: 4px; }
+.eta .big { font: 500 22px var(--font-num); }
+
+/* Map mode column */
+.modes { position: absolute; right: 308px; bottom: 8px; display: flex; flex-direction: column; gap: 4px; z-index: 14; align-items: flex-end; }
+.modes .legend { background: rgba(28,26,23,.92); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; font-size: 12.5px; color: var(--dim); max-width: 210px; }
+.app.strip-on .modes { bottom: 136px; }
+.modebtn { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 4px; background: rgba(28,26,23,.92); color: var(--dim); display: grid; place-items: center; cursor: pointer; }
+.modebtn.on { color: var(--text); border-color: #CFC5B0; background: var(--chrome-3); }
+.modebtn:focus-visible { outline: 2px solid var(--text); }
+
+/* Army badges and map labels */
+.layer { position: absolute; inset: 44px 0 0 0; pointer-events: none; z-index: 5; overflow: hidden; }
+.badge { position: absolute; pointer-events: auto; transform: translate(-50%, -100%); cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+.badge .plate { font: 600 12.5px/1 var(--font-num); color: #fff; padding: 2px 5px; border-radius: 3px; margin-top: -2px; border: 1px solid rgba(0,0,0,.5); }
+.badge.sel svg { filter: drop-shadow(0 0 4px #fff); }
+.badge .eta { font: 600 11px var(--font-num); color: var(--text); background: rgba(28,26,23,.85); padding: 1px 4px; border-radius: 3px; margin-top: 2px; }
+
+/* Tooltips */
+.tip { position: absolute; z-index: 60; min-width: 220px; max-width: 340px; background: #191714; border: 1px solid #6B6355; border-radius: 5px; box-shadow: 0 8px 24px rgba(0,0,0,.55); padding: 10px 12px 0; font-size: 13.5px; pointer-events: none; }
+.tip.locked { pointer-events: auto; border-color: #CFC5B0; }
+.tip h4 { margin: 0 0 2px; font: 600 15px var(--font-body); display: flex; justify-content: space-between; gap: 10px; }
+.tip .meaning { color: var(--dim); margin: 0 0 8px; line-height: 1.35; }
+.tip table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
+.tip td { padding: 2px 0; }
+.tip td:last-child { text-align: right; font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+.tip tr.total td { border-top: 1px solid var(--line); font-weight: 600; padding-top: 4px; }
+.tip tr.more { display: none; }
+.app.shift .tip tr.more { display: table-row; }
+.tip .proj { margin: 0 0 8px; color: var(--text); font-size: 13px; }
+.tip .why { margin: 0 0 8px; color: #FFB4A9; font-size: 13px; }
+.tip .foot { margin: 0 -12px; padding: 5px 12px; border-top: 1px solid var(--line); color: var(--faint); font-size: 11.5px; display: flex; justify-content: space-between; gap: 8px; }
+.tip .lockbar { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--dim); width: 0; }
+.tip.locking .lockbar { width: 100%; transition: width .8s linear; }
+.term { text-decoration: underline dotted rgba(244,238,223,.6); text-underline-offset: 3px; cursor: help; }
+
+/* Toasts, modals */
+.toasts { position: absolute; top: 92px; right: 316px; z-index: 30; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.toast { background: var(--chrome-1); border: 1px solid var(--line); border-left: 3px solid var(--dim); border-radius: 4px; padding: 7px 10px; font-size: 13.5px; max-width: 320px; animation: tin .2s ease-out; }
+@keyframes tin { from { opacity: 0; transform: translateY(-4px); } }
+.scrim { position: absolute; inset: 0; background: rgba(10,9,7,.66); z-index: 50; display: grid; place-items: center; padding: 16px; }
+.scrim[hidden] { display: none !important; }
+.modal { background: var(--chrome-1); border: 1px solid #6B6355; border-radius: 8px; width: min(760px, 100%); max-height: 100%; overflow: auto; box-shadow: 0 18px 60px rgba(0,0,0,.6); }
+.modal header { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.modal header h2 { font: 400 22px var(--font-display); margin: 0; flex: 1; min-width: 0; text-wrap: balance; }
+.modal .mbody { padding: 14px 16px 18px; display: grid; gap: 14px; }
+.sides { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.side { background: var(--chrome-0); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; display: grid; gap: 6px; min-width: 0; }
+.side h3 { margin: 0; font: 600 15px var(--font-body); display: flex; gap: 8px; align-items: center; }
+.cas { display: grid; grid-template-columns: 1fr auto auto; gap: 2px 10px; font-size: 13.5px; }
+.cas span:nth-child(3n+2), .cas span:nth-child(3n) { font-family: var(--font-num); font-variant-numeric: tabular-nums; text-align: right; }
+.moments { margin: 0; padding-left: 18px; display: grid; gap: 4px; color: var(--dim); font-size: 14px; }
+.moments b { color: var(--text); font-weight: 500; }
+.codex { display: grid; grid-template-columns: 210px 1fr; min-height: 420px; }
+.codex nav { border-right: 1px solid var(--line); padding: 10px; display: flex; flex-direction: column; gap: 2px; overflow: auto; min-width: 0; }
+.codex nav input { background: var(--chrome-0); border: 1px solid var(--line); border-radius: 4px; color: var(--text); font: inherit; padding: 5px 8px; margin-bottom: 6px; }
+.codex nav button { text-align: left; border: none; background: none; color: var(--dim); font: inherit; font-size: 14px; padding: 4px 8px; border-radius: 3px; cursor: pointer; }
+.codex nav button.on, .codex nav button:hover { background: var(--chrome-3); color: var(--text); }
+.codex nav .grp { font: 600 11px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); padding: 8px 8px 2px; }
+.codex article { padding: 14px 18px; max-width: 62ch; line-height: 1.5; min-width: 0; }
+.codex article h3 { font: 400 22px var(--font-display); margin: 0 0 8px; }
+
+/* Responsive frames: medium (rail for the right dock), phone (sheet). */
+.rail { position: absolute; top: 44px; right: 0; bottom: 0; width: 48px; background: var(--chrome-0); border-left: 1px solid var(--line); z-index: 12; display: none; flex-direction: column; gap: 4px; padding-top: 8px; align-items: center; }
+.app.mid .rail, .app.phone .rail { display: flex; }
+.app.mid .dock.right, .app.phone .dock.right { right: 48px; display: none; }
+.app.mid .dock.right.fly, .app.phone .dock.right.fly { display: flex; }
+.app.mid .modes, .app.phone .modes { right: 56px; }
+.app.mid .pausechip, .app.mid .toasts, .app.phone .pausechip, .app.phone .toasts { right: 56px; }
+.app.mid .strip, .app.phone .strip { right: 48px; }
+.app.mid .dock.left { width: 320px; }
+.app.mid .ribbon { left: 332px; }
+.app.phone .dock.left { width: auto; right: 48px; top: auto; height: 58%; border-width: 1px 0 0; }
+.app.phone.strip-on .dock.left { bottom: 0; }
+.app.phone .ribbon { left: 8px; }
+.app.phone .strip { height: auto; max-height: 44%; flex-wrap: wrap; overflow-y: auto; gap: 8px; padding: 8px; }
+.app.phone .portrait { width: 52px; }
+.app.phone .portrait .face { width: 48px; height: 48px; font-size: 22px; }
+.app.phone .portrait .hp { width: 48px; }
+.app.phone .sinfo { flex: 1 1 200px; }
+.app.phone .orders { flex: 1 1 100%; }
+.app.phone .orders .btn { padding: 4px 8px; }
+.app.phone .eta { flex: 1 1 100%; align-items: flex-start; }
+.app.phone .modes { display: none; }
+.app.phone.strip-on .modes { display: none; }
+#railMode { display: none; }
+.app.phone #railMode { display: grid; }
+.app.phone .clock .pausedword { display: none; }
+.app.phone .hidephone { display: none; }
+.app.hidden-ui > :not(canvas):not(.topbar):not(.layer) { display: none !important; }
+.app.hidden-ui .topbar > :not(.clock) { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) { .toast, .alert.pulse svg { animation: none; } .tip.locking .lockbar { transition: none; } }
+</style>
+
+<header class="page-head">
+  <h1>Fluid Magic · game screen</h1>
+  <p class="desk">Clickable mockup of the layered UI. Hover anything; dotted words open nested tooltips (lock with <kbd>T</kbd> or hold 0.8 s). Click provinces and army badges, right-click to move, <kbd>Space</kbd> pause, <kbd>1</kbd>–<kbd>4</kbd> speed, <kbd>F</kbd> Codex, <kbd>H</kbd> hide UI, <kbd>Shift</kbd> for more detail. Example state: Cinder Horde, month 3.</p>
+  <p class="touch">Clickable mockup of the layered UI, as Cinder Horde in month 3. Tap anything for its details; drag to pan, pinch to zoom, long-press a province to march the selected army there. Best on a wide screen.</p>
+</header>
+
+<div class="app" id="app">
+  <canvas id="map" aria-label="Map of the provinces"></canvas>
+  <div class="layer" id="layer"></div>
+
+  <div class="topbar" id="topbar" role="toolbar" aria-label="Nation readouts">
+    <div class="readout nationbtn" tabindex="0" data-tip="nation"><span class="banner" id="bannerSvg"></span><span style="font:400 15px var(--font-display);letter-spacing:.03em">Cinder Horde</span></div>
+    <div class="sep"></div>
+    <div class="readout" tabindex="0" data-tip="pop"><span class="ic" data-icon="pop"></span><span class="v" id="popV">84.2k</span><span class="r up">▲0.3k/mo</span></div>
+    <div class="readout" tabindex="0" data-tip="gold"><span class="ic" data-icon="gold"></span><span class="v" id="goldV">1,240</span><span class="r up">▲38/mo</span></div>
+    <div class="readout" tabindex="0" data-tip="materials"><span class="ic" data-icon="anvil"></span><span class="v">212<span class="dimtxt">/360</span></span><span class="r up">▲60/mo</span></div>
+    <div class="sep"></div>
+    <div class="mana" id="mana"></div>
+    <div class="sep"></div>
+    <div class="readout" tabindex="0" data-tip="research"><span class="ic" data-icon="book"></span><span class="v">L2</span><span class="r dimtxt">▸ 47d</span></div>
+    <div class="readout" tabindex="0" data-tip="dominion"><span class="ic" data-icon="candle"></span><span class="v">5</span></div>
+    <div class="readout" tabindex="0" data-tip="wells"><span class="ic" data-icon="well"></span><span class="v">◇◇</span><span class="r dimtxt">0/2</span></div>
+    <div class="spacer"></div>
+    <button class="screenbtn" data-tip="btnR" id="btnR"><span data-icon="book"></span><span class="hidephone">Research</span><kbd>R</kbd></button>
+    <button class="screenbtn" data-tip="btnL" id="btnL"><span data-icon="ledger"></span><span class="hidephone">Ledger</span><kbd>L</kbd></button>
+    <button class="screenbtn" data-tip="btnF" id="btnF"><span data-icon="codex"></span><span class="hidephone">Codex</span><kbd>F</kbd></button>
+    <div class="clock paused" id="clock" data-tip="clock">
+      <span class="pausedword" id="pausedWord">PAUSED</span>
+      <span class="date" id="date">Y1 M3 D14</span>
+      <div class="speed" id="speed">
+        <button class="pausebtn" id="pauseBtn" aria-label="Pause or resume">❚❚</button>
+        <button data-s="1" aria-label="Speed 1" class="on"></button><button data-s="2" aria-label="Speed 2"></button><button data-s="3" aria-label="Speed 3"></button><button data-s="4" aria-label="Speed 4"></button>
+      </div>
+      <div class="hair"><i id="hair" style="width:45%"></i></div>
+    </div>
+  </div>
+
+  <div class="ribbon" id="ribbon" aria-label="Alerts"></div>
+  <div class="pausechip" id="pausechip" tabindex="0"></div>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <aside class="dock left" id="leftDock" hidden aria-label="Selection"></aside>
+
+  <aside class="dock right" id="rightDock" aria-label="Outliner and messages">
+    <div class="outliner" id="outliner"></div>
+    <div class="splitter"></div>
+    <div class="feed">
+      <div class="chips" id="chips"></div>
+      <div class="msgs" id="msgs"></div>
+    </div>
+  </aside>
+  <div class="rail" id="rail">
+    <button class="iconbtn" id="railOut" aria-label="Outliner" data-tip="railOut">☰</button>
+    <button class="iconbtn" id="railFeed" aria-label="Messages" data-tip="railFeed">✉</button>
+    <button class="iconbtn" id="railMode" aria-label="Next map mode" data-tip="raw:railMode">◐</button>
+  </div>
+
+  <div class="strip" id="strip" aria-label="Selected commander"></div>
+
+  <div class="modes" id="modes"></div>
+
+  <div class="scrim" id="scrim" hidden><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+(() => {
+'use strict';
+// ------------------------------------------------------------------ icons (monoline 24x24)
+const ICON = {
+  pop: '<path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM2 20c0-3.3 2.7-6 6-6s6 2.7 6 6M12 20c0-3.3 1.8-6 4-6s6 2.7 6 6"/>',
+  gold: '<circle cx="12" cy="12" r="8"/><path d="M12 7v10M9 9.5h4.5a2 2 0 0 1 0 4H10a2 2 0 0 0 0 4H15"/>',
+  anvil: '<path d="M3 8h14l4-2v4a4 4 0 0 1-4 4h-2l1 4H8l1-4H7A4 4 0 0 1 3 10z"/>',
+  book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7"/>',
+  candle: '<path d="M10 10h4v11h-4zM12 3c1.5 2 2 3 0 5-2-2-1.5-3 0-5z"/>',
+  well: '<path d="M4 12h16v8H4zM6 12V9a6 3 0 0 1 12 0v3M12 4v3M9 2l3 2 3-2"/>',
+  ledger: '<path d="M4 4h16v16H4zM4 9h16M4 14h16M10 4v16"/>',
+  codex: '<path d="M5 4h11l3 3v13H5zM9 9h6M9 13h6M9 17h4"/>',
+  supply: '<path d="M12 21V9M12 9c0-3 2-5 5-5 0 3-2 5-5 5zm0 4c0-3-2-5-5-5 0 3 2 5 5 5zm0 4c0-2.5 2-4.5 4.5-4.5"/>',
+  fist: '<path d="M7 11V7a1.5 1.5 0 0 1 3 0v3M10 10V6a1.5 1.5 0 0 1 3 0v4M13 10V7a1.5 1.5 0 0 1 3 0v4M16 11V9a1.5 1.5 0 0 1 3 0v4c0 4-3 7-7 7s-6-3-6-6v-2a1.5 1.5 0 0 1 3 0"/>',
+  growth: '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
+  fort: '<path d="M4 20V9l2-2 2 2V5h8v4l2-2 2 2v11zM10 20v-4a2 2 0 0 1 4 0v4"/>',
+  temple: '<path d="M3 9l9-5 9 5M5 9v10M19 9v10M9 9v10M15 9v10M3 20h18"/>',
+  lab: '<path d="M9 3h6M10 3v6l-6 10a1.5 1.5 0 0 0 1.3 2h13.4a1.5 1.5 0 0 0 1.3-2L14 9V3M7 15h10"/>',
+  shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+  pd: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/>',
+  tax: '<path d="M6 4h12v16l-3-2-3 2-3-2-3 2zM9 9h6M9 13h6"/>',
+  dominion: '<path d="M10 10h4v11h-4zM12 3c1.5 2 2 3 0 5-2-2-1.5-3 0-5z"/>',
+  ownership: '<path d="M5 21V4M5 4h12l-2 4 2 4H5"/>',
+  sword: '<path d="M14 4h6v6L9 21l-3-3zM6 15l3 3M4 20l2-2"/>',
+  hold: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+  bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  springs: '<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
+};
+function svgIcon(name, size = 18, stroke = 'currentColor') {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] ?? ''}</svg>`;
+}
+document.querySelectorAll('[data-icon]').forEach((el) => { el.innerHTML = svgIcon(el.dataset.icon, 18); el.style.display = 'inline-flex'; el.style.color = 'var(--dim)'; });
+
+// Mana symbols: shape + letter + hue, never hue alone.
+const MANA = {
+  W: { name: 'Radiance', fill: '#F3E6B8', ink: '#5A4A1C', shape: '<circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>' },
+  U: { name: 'Tide', fill: '#3A7BD5', ink: '#fff', shape: '<path d="M3 14c3-4 6-4 9 0s6 4 9 0M3 18c3-3 6-3 9 0s6 3 9 0M8 9c2-3 6-3 8 0"/>' },
+  B: { name: 'Umbra', fill: '#3D2B4F', ink: '#E6D6F5', shape: '<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/><circle cx="10" cy="14" r="1"/><circle cx="14" cy="14" r="1"/>' },
+  R: { name: 'Ember', fill: '#FD6533', ink: '#2A0A04', shape: '<path d="M12 21c-4 0-6-3-6-6 0-4 3-6 4-10 1 3 3 4 3 6 1-1 2-2 2-4 2 2 3 5 3 8 0 3-2 6-6 6z"/>' },
+  G: { name: 'Loam', fill: '#00674B', ink: '#DFF5E8', shape: '<path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14zM5 19l8-8"/>' },
+};
+function manaSym(c, size = 18) {
+  const m = MANA[c];
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-label="${m.name} (${c})"><circle cx="12" cy="12" r="11" fill="${m.fill}" stroke="rgba(0,0,0,.45)"/><g fill="none" stroke="${m.ink}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" transform="translate(4.8 4.8) scale(.6)">${m.shape}</g></svg>`;
+}
+document.getElementById('bannerSvg').innerHTML = `<svg width="22" height="28" viewBox="0 0 22 28"><path d="M1 1h20v20l-10 6-10-6z" fill="#FD6533" stroke="#7A1E12"/><g transform="translate(4 4) scale(.58)" fill="none" stroke="#2A0A04" stroke-width="2" stroke-linejoin="round">${MANA.R.shape}</g></svg>`;
+
+// ------------------------------------------------------------------ the example map
+function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const rnd = mulberry32(11);
+const W = 1600, H = 1000, COLS = 10, ROWS = 6;
+let pts = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  pts.push([(c + 0.5) / COLS * W + (rnd() - 0.5) * (W / COLS) * 0.8, (r + 0.5) / ROWS * H + (rnd() - 0.5) * (H / ROWS) * 0.8]);
+}
+let delaunay, voronoi;
+for (let k = 0; k < 2; k++) {
+  delaunay = d3.Delaunay.from(pts); voronoi = delaunay.voronoi([0, 0, W, H]);
+  pts = pts.map((p, i) => d3.polygonCentroid(voronoi.cellPolygon(i)));
+}
+delaunay = d3.Delaunay.from(pts); voronoi = delaunay.voronoi([0, 0, W, H]);
+const N = pts.length;
+const TERRAIN = {
+  plains: { name: 'Plains', fill: '#C1D29F' }, farmland: { name: 'Farmland', fill: '#EEBA3A' },
+  forest: { name: 'Forest', fill: '#374C2B' }, hills: { name: 'Hills', fill: '#856824' },
+  mountains: { name: 'Mountains', fill: '#8DA4AD' }, swamp: { name: 'Swamp', fill: '#1A727A' },
+  wasteland: { name: 'Wasteland', fill: '#AE897F' },
+};
+const noise = (x, y) => Math.sin(x * 0.0042 + 1.3) + Math.sin(y * 0.0063 + 0.4) + 0.6 * Math.sin((x + y) * 0.0101 + 2.1) + 0.4 * Math.sin((x - 2 * y) * 0.007);
+const order = [...Array(N).keys()].sort((a, b) => noise(...pts[a]) - noise(...pts[b]));
+const shares = [['swamp', .08], ['forest', .22], ['farmland', .14], ['plains', .24], ['wasteland', .1], ['hills', .14], ['mountains', .08]];
+const terr = new Array(N); { let i = 0; for (const [t, s] of shares) { const n = Math.round(s * N); for (let k = 0; k < n && i < N; k++) terr[order[i++]] = t; } while (i < N) terr[order[i++]] = 'plains'; }
+const nearest = (x, y) => delaunay.find(x, y);
+const redCap = nearest(230, 520), greenCap = nearest(1380, 470);
+terr[redCap] = 'plains'; terr[greenCap] = 'forest';
+const nbrs = (i) => [...delaunay.neighbors(i)];
+function bfs(from) { const d = new Array(N).fill(Infinity); d[from] = 0; const q = [from]; while (q.length) { const v = q.shift(); for (const w of nbrs(v)) if (d[w] === Infinity) { d[w] = d[v] + 1; q.push(w); } } return d; }
+const dRed = bfs(redCap), dGreen = bfs(greenCap);
+const owner = new Array(N).fill(null);
+[...Array(N).keys()].sort((a, b) => dRed[a] - dRed[b]).slice(0, 9).forEach((i) => (owner[i] = 'red'));
+[...Array(N).keys()].filter((i) => owner[i] === null).sort((a, b) => dGreen[a] - dGreen[b]).slice(0, 8).forEach((i) => (owner[i] = 'green'));
+const A = ['Ash', 'Cin', 'Kar', 'Vel', 'Mor', 'Thorn', 'Fen', 'Oak', 'Briar', 'Gall', 'Rook', 'Hale', 'Sun', 'Dusk', 'Bram', 'Wyr', 'Elm', 'Cold', 'Red', 'Stag', 'Gor', 'Lan', 'Tor', 'Mar'];
+const B = ['fen', 'reach', 'vale', 'moor', 'hold', 'mere', 'ford', 'wick', 'march', 'barrow', 'holt', 'crag', 'stead', 'dale', 'gate', 'brook'];
+const used = new Set(['Kharnath', 'Deepmoss']); const names = new Array(N);
+for (let i = 0; i < N; i++) { let nm; do { nm = A[Math.floor(rnd() * A.length)] + B[Math.floor(rnd() * B.length)]; } while (used.has(nm)); used.add(nm); names[i] = nm; }
+names[redCap] = 'Kharnath'; names[greenCap] = 'Deepmoss';
+// A red border province facing Thornwood becomes Ashfen.
+const redBorder = [...Array(N).keys()].filter((i) => owner[i] === 'red' && nbrs(i).some((w) => owner[w] !== 'red')).sort((a, b) => dGreen[a] - dGreen[b]);
+const ashfen = redBorder[0]; names[ashfen] = 'Ashfen'; terr[ashfen] = 'swamp';
+const prov = [...Array(N).keys()].map((i) => {
+  const t = terr[i];
+  const cap = i === redCap || i === greenCap;
+  return {
+    i, name: names[i], terrain: t, owner: owner[i], cap,
+    pop: cap ? 25000 : Math.round((2000 + rnd() * 9000) / 100) * 100,
+    unrest: owner[i] === 'red' ? Math.round(rnd() * 22) : Math.round(rnd() * 40),
+    dom: owner[i] === 'red' ? { n: 'red', s: i === redCap ? 5 : 1 + Math.floor(rnd() * 3) } : owner[i] === 'green' ? { n: 'green', s: i === greenCap ? 5 : 1 + Math.floor(rnd() * 3) } : { n: null, s: 0 },
+    springs: rnd() < 0.45 ? [['W', 'U', 'B', 'R', 'G'][Math.floor(rnd() * 5)]] : [],
+    indep: owner[i] === null ? 8 + Math.floor(rnd() * 26) : 0,
+    buildings: cap ? ['fort', 'temple', 'lab'] : [],
+    well: false, pd: cap ? 6 : owner[i] ? Math.floor(rnd() * 3) : 0,
+  };
+});
+prov[ashfen].unrest = 31; prov[ashfen].dom = { n: 'green', s: 2 }; prov[ashfen].pop = 7400;
+// Wellsprings: three provinces far from both capitals; one already Cinder Horde's.
+const wellCands = [...Array(N).keys()].filter((i) => !prov[i].cap && dRed[i] >= 3 && dGreen[i] >= 3).sort((a, b) => Math.abs(dRed[a] - dGreen[a]) - Math.abs(dRed[b] - dGreen[b]));
+const wells = []; for (const i of wellCands) { if (wells.every((w) => !nbrs(w).includes(i))) wells.push(i); if (wells.length === 3) break; }
+wells.forEach((i) => { prov[i].well = true; prov[i].indep = 30; });
+const ownWell = [...Array(N).keys()].filter((i) => owner[i] === 'red' && !prov[i].cap && i !== ashfen && dRed[i] >= 2).sort((a, b) => dRed[b] - dRed[a])[0];
+prov[ownWell].well = true; prov[ownWell].name = 'Sunmere'; names[ownWell] = 'Sunmere';
+const cells = prov.map((p) => voronoi.cellPolygon(p.i));
+const cent = prov.map((p) => d3.polygonCentroid(cells[p.i]));
+
+// Commanders
+const greenTarget = ashfen;
+const greenFrom = nbrs(ashfen).find((w) => owner[w] === 'green') ?? nbrs(ashfen).find((w) => owner[w] !== 'red') ?? greenCap;
+const scoutAt = redBorder[1] ?? redCap;
+const cmd = {
+  varo: { id: 'varo', name: 'Varo', unit: 'Ash Chieftain', side: 'red', at: ashfen, hp: [14, 14], mor: 13, lead: 80, pips: '', order: 'Guard', squads: [['Cinder Warriors', 30, 100], ['Flame Archers', 18, 92]], script: ['hold', 'hold', 'sword', 'sword', 'sword'] },
+  titan: { id: 'titan', name: 'The Ashen Titan', unit: 'Titan (pretender)', side: 'red', at: redCap, hp: [60, 60], mor: 18, lead: 100, pips: 'RRRR', order: 'Idle', squads: [], script: ['bolt', 'bolt', 'bolt', 'sword', 'sword'], crown: true },
+  seren: { id: 'seren', name: 'Seren', unit: 'Ember Adept', side: 'red', at: redCap, hp: [10, 10], mor: 10, lead: 10, pips: 'R', order: 'Research', squads: [], script: ['bolt', 'bolt', 'bolt', 'bolt', 'bolt'] },
+  ondra: { id: 'ondra', name: 'Ondra', unit: 'Pyre Priest', side: 'red', at: redCap, hp: [10, 10], mor: 11, lead: 20, pips: 'R', holy: 2, order: 'Preach', squads: [], script: ['bolt', 'bolt', 'bolt', 'bolt', 'bolt'] },
+  kesh: { id: 'kesh', name: 'Kesh', unit: 'Cinder Scout', side: 'red', at: scoutAt, hp: [10, 10], mor: 10, lead: 10, pips: '', order: 'Idle', squads: [], script: ['hold', 'hold', 'hold', 'hold', 'hold'] },
+  ilsa: { id: 'ilsa', name: 'Ilsa Oakhand', unit: 'Warden Captain', side: 'green', at: greenFrom, to: greenTarget, eta: 4, hp: [14, 14], mor: 12, lead: 80, squads: [['Wardens', 34, 100], ['Longbow Hunters', 18, 100]] },
+};
+
+// ------------------------------------------------------------------ sample economy and tooltips
+const fmt = (n) => n.toLocaleString('en-US');
+const state = { day: 14, month: 3, year: 1, gold: 1240, speed: 1, paused: true, mode: 'ownership', sel: null, filter: 'All', pauseReason: null, autoPaused: false };
+const CONCEPTS = {
+  upkeep: ['Upkeep', 'Every troop and commander costs gold each month. Unpaid troops lose morale, one point per 10 unpaid days.'],
+  taxrate: ['Tax rate', 'Low, Normal, or High per province. High collects 50% more gold and adds 4 unrest a month.'],
+  unrest: ['Unrest', 'From 0 to 100. It lowers gold by its share. Above 50 the province cannot recruit.'],
+  supply: ['Supply', 'Food a province gives armies each day: terrain base plus population ÷ 50. Armies that eat more than it gives start to starve.'],
+  dominion: ['Dominion', 'Your god\'s presence in a province, 0 to 10. It spreads from your capital, temples, pretender, prophet, and preaching priests, and it carries your scales.'],
+  scales: ['Scales', 'Five two-pole axes your pretender sets the world toward, such as Order against Turmoil. They apply where your dominion holds, scaled by its strength.'],
+  pip: ['Pip', 'One point of a color on a commander. Pips decide which spells it can cast and how cheaply.'],
+  materials: ['Materials', 'Built up in each fort from its own and its neighbors\' land, up to six months of production. Troops and buildings spend them.'],
+  fort: ['Fort', 'The only place troops are recruited. In this milestone every capital has one.'],
+  research: ['Research', 'Mages in a lab earn points toward the next level of your active color. Levels unlock spells.'],
+  wellspring: ['Wellspring', 'A source of all five colors. A priest claims an owned one in 10 uninterrupted days. Claim 2 of 3 to win.'],
+  godless: ['Godless', 'When neither your capital nor any temple you own is under your own dominion: no rituals, and your pretender leaves the map.'],
+  morale: ['Morale', 'How long a squad holds. Losses, fear, and hunger test it each round; a squad that fails routs.'],
+  leadership: ['Leadership', 'How many troops a commander can lead into battle.'],
+  pd: ['Provincial defense', 'Militia and archers that defend the province, from 0 to 30. Each level costs more than the last.'],
+  script: ['Script', 'Five orders a commander follows in the first five rounds of a battle: cast a spell, attack, hold, or retreat.'],
+  growth: ['Growth', 'Population change each month: about 1% plus the Growth scale, minus losses to pillage and battle.'],
+  inbound: ['Hostile inbound', 'A visible enemy army whose march ends where you have troops, a fort, or your capital. Battles resolve the moment armies meet, so you are warned before.'],
+};
+const term = (k, text) => `<span class="term" data-concept="${k}">${text ?? CONCEPTS[k][0].toLowerCase()}</span>`;
+const FOOT = '<span>Shift more · T lock · Click open</span><span>Ctrl+click Codex</span>';
+function tipHTML(t) {
+  let h = `<h4><span>${t.title}</span>${t.value ? `<span class="num">${t.value}</span>` : ''}</h4>`;
+  if (t.meaning) h += `<p class="meaning">${t.meaning}</p>`;
+  if (t.rows) {
+    h += '<table>';
+    for (const r of t.rows) h += `<tr class="${r[2] ?? ''}"><td>${r[0]}</td><td>${r[1]}</td></tr>`;
+    h += '</table>';
+  }
+  if (t.why) h += `<p class="why">${t.why}</p>`;
+  if (t.proj) h += `<p class="proj">${t.proj}</p>`;
+  return h + `<div class="foot">${t.foot ?? FOOT}</div><div class="lockbar"></div>`;
+}
+const TIPS = {
+  nation: () => ({ title: 'Cinder Horde', meaning: `Red. Pretender: <b>The Ashen Titan</b>, awake in Kharnath. Not ${term('godless', 'godless')}.`, rows: [['Order ◀ ▶ Turmoil', 'Turmoil 2'], ['Lore ◀ ▶ Fury', 'Fury 3'], ['Growth ◀ ▶ Rot', '0'], ['Wild ◀ ▶ Artifice', '0'], ['Sanctity ◀ ▶ Dread', '0']], proj: `Your ${term('scales')} apply where your dominion holds.` }),
+  pop: () => ({ title: 'Population', value: '84.2k', meaning: `People under your rule. They pay tax, give ${term('supply')}, and fill your ranks.`, rows: [['Kharnath', '25,000'], ['Ashfen', '7,400'], ['Six others', '51,800'], ['Growth per month', '+0.3k'], ['Recruits waiting for people', '0', 'more']], proj: `${term('growth', 'Growth')}: +0.4% a month.` }),
+  gold: () => ({ title: 'Gold', value: fmt(Math.round(state.gold)), meaning: 'Treasury and its net monthly change.', rows: [['Kharnath (tax Normal)', '+250'], ['Ashfen', '+52'], ['Six other provinces', '+188'], ['Troop and commander ' + term('upkeep'), '−452'], ['Varo\'s army', '−192', 'more'], ['Garrison of Kharnath', '−164', 'more'], ['Pretender and mages', '−96', 'more'], ['Net', '+38 /mo', 'total']], proj: `At this rate: ${fmt(Math.round(state.gold) + 38)} in 30 days.` }),
+  materials: () => ({ title: 'Materials at Kharnath', value: '212 / 360', meaning: `The capital ${term('fort')}'s ${term('materials')} pool. Troops spend it when queued.`, rows: [['Kharnath\'s own land', '+38'], ['Neighbors (half each)', '+22'], ['Net', '+60 /mo', 'total'], ['Cap (6 months)', '360']], proj: 'Full in 2.5 months.' }),
+  research: () => ({ title: 'Research: Ember', value: 'L2 ▸ 47 days', meaning: `${term('research', 'Research')} goes to Red. Level 3 unlocks Fireball and Blood Fury.`, rows: [['Seren (Ember Adept, R1, in Kharnath\'s lab)', '+5.6 /mo'], ['Fury 3 on research', '−30%'], ['Total', '+3.9 /mo', 'total'], ['Points to level 3', '61']] }),
+  dominion: () => ({ title: 'Dominion score', value: '5', meaning: `How far and how strongly your ${term('dominion')} spreads. Each check rolls d10; at or below 5 it pushes.`, rows: [['Pretender', '5'], ['Claimed Wellsprings', '+0'], ['Checks per month', '9', 'total'], ['Capital', '3', 'more'], ['Temple', '1', 'more'], ['Pretender', '2', 'more'], ['Preaching priest (Ondra, holy 2, temple)', '3', 'more']], proj: 'Next spread on the last day of the month (16 days).' }),
+  wells: () => ({ title: 'Wellsprings', value: '0 / 2', meaning: `Claim 2 of the 3 ${term('wellspring', 'Wellsprings')} to win.`, rows: [['Sunmere', 'yours, unclaimed'], [names[wells[0]], 'independent'], [names[wells[1]], 'independent'], ['Thornwood', '0 claimed']], proj: 'Click to center the map on the next one.' }),
+  clock: () => ({ title: `Y${state.year} M${state.month} D${state.day}`, meaning: 'Dominion spreads and Godless is checked on the last day of each month. Every other rate is paid daily.', rows: [['Today', '+1.3 gold, +0.1 R']], foot: '<span>Space pause · 1–4 speed · + / − step</span><span></span>' }),
+  btnR: () => ({ title: 'Research', meaning: 'Levels per color, unlocks, and who researches.', foot: '<span>Key R</span><span></span>' }),
+  btnL: () => ({ title: 'Ledger', meaning: 'Sortable tables of provinces, commanders, magic, battles, and nations.', foot: '<span>Key L</span><span></span>' }),
+  btnF: () => ({ title: 'Codex', meaning: 'Every unit, spell, building, and rule, linked from every tooltip.', foot: '<span>Key F</span><span></span>' }),
+  railOut: () => ({ title: 'Outliner', meaning: 'Everything you own or are doing.' }),
+  railFeed: () => ({ title: 'Messages', meaning: 'Events as they happen; battles open their report.' }),
+};
+for (const c of 'WUBRG') {
+  const stock = { W: 0, U: 0, B: 0, R: 14, G: 2 }[c], rate = { W: 0, U: 0, B: 0, R: 3, G: 1 }[c];
+  TIPS['mana' + c] = () => ({ title: `${MANA[c].name} mana (${c})`, value: String(stock), meaning: stock || rate ? `Spent on rituals and carried into battle by mages.` : `You have no source of ${MANA[c].name} yet. Springs and Wellsprings give it.`, rows: rate ? (c === 'R' ? [['Springs: Kharnath, ' + names[redBorder[2] ?? redCap]], ['Dominion tint (Red)', '+1'], ['Springs', '+2'], ['Net', '+3 /mo', 'total']] : [['Spring: ' + names[redBorder[3] ?? redCap], '+1'], ['Net', '+1 /mo', 'total']]).map((r) => (r.length === 1 ? [r[0], ''] : r)) : null });
+}
+const manaEl = document.getElementById('mana');
+for (const c of 'WUBRG') {
+  const stock = { W: 0, U: 0, B: 0, R: 14, G: 2 }[c], rate = { W: 0, U: 0, B: 0, R: 3, G: 1 }[c];
+  manaEl.insertAdjacentHTML('beforeend', `<div class="readout ${stock || rate ? '' : 'zero'}" tabindex="0" data-tip="mana${c}">${manaSym(c, 18)}<span class="v">${stock}</span>${rate ? `<span class="r up hidephone">▲${rate}</span>` : ''}</div>`);
+}
+
+function provTip(i) {
+  const p = prov[i];
+  const supply = Math.round(({ plains: 60, farmland: 80, forest: 50, hills: 40, mountains: 20, swamp: 30, wasteland: 15 })[p.terrain] + p.pop / 50);
+  const eat = p.i === ashfen ? 50 : p.i === redCap ? 4 : 0;
+  const own = p.owner === 'red' ? 'Cinder Horde' : p.owner === 'green' ? 'Thornwood' : 'Independent';
+  const rows = [['Owner', own], ['Terrain', TERRAIN[p.terrain].name], ['Population', fmt(p.pop)], [term('supply', 'Supply') + ' (eaten / given)', `${eat} / ${supply}`], [term('unrest', 'Unrest'), String(p.unrest)], [term('dominion', 'Dominion'), p.dom.n ? `${p.dom.n === 'red' ? 'Cinder Horde' : 'Thornwood'} ${p.dom.s}` : 'none']];
+  if (p.springs.length) rows.push(['Spring', p.springs.map((c) => MANA[c].name).join(', ')]);
+  if (p.well) rows.push([term('wellspring', 'Wellspring'), p.i === ownWell ? 'yours, unclaimed' : 'unclaimed']);
+  if (p.owner === null) rows.push(['Defenders', p.indep < 15 ? 'weak' : p.indep < 25 ? 'moderate' : 'strong']);
+  const sel = state.sel && state.sel.type === 'cmd' && cmd[state.sel.id].side === 'red' ? cmd[state.sel.id] : null;
+  let proj = null;
+  if (sel && i !== sel.at) {
+    const d = pathTo(sel.at, i);
+    proj = d ? `Right-click: ${sel.name} marches here in <b>${d.days} days</b>${p.owner !== 'red' ? ', then fights for it' : ''}.` : `${sel.name} has no path here through your land.`;
+  }
+  return { title: p.name, value: p.cap ? 'capital' : '', rows, proj };
+}
+
+// ------------------------------------------------------------------ paths (BFS by days)
+const DAYS = { plains: 2, farmland: 2, forest: 3, hills: 3, mountains: 5, swamp: 4, wasteland: 2 };
+function pathTo(from, to) {
+  const dist = new Array(N).fill(Infinity), prev = new Array(N).fill(-1); dist[from] = 0;
+  const open = new Set([from]);
+  while (open.size) {
+    let v = -1; for (const o of open) if (v < 0 || dist[o] < dist[v]) v = o;
+    open.delete(v); if (v === to) break;
+    if (v !== from && prov[v].owner !== 'red') continue; // paths cross only friendly land; the last step may be hostile
+    for (const w of nbrs(v)) { const d = dist[v] + DAYS[prov[w].terrain]; if (d < dist[w]) { dist[w] = d; prev[w] = v; open.add(w); } }
+  }
+  if (dist[to] === Infinity) return null;
+  const path = []; for (let v = to; v !== from; v = prev[v]) path.unshift(v);
+  return { path, days: dist[to] };
+}
+
+// ------------------------------------------------------------------ canvas, camera, drawing
+const app = document.getElementById('app');
+const canvas = document.getElementById('map'), ctx = canvas.getContext('2d');
+const layer = document.getElementById('layer');
+const cam = { s: 1, x: 0, y: 0 };
+let dpr = 1, cw = 0, ch = 0, moveLine = null, hoverProv = -1;
+function fit() {
+  const r = canvas.getBoundingClientRect(); dpr = window.devicePixelRatio || 1;
+  cw = r.width; ch = r.height; canvas.width = Math.round(cw * dpr); canvas.height = Math.round(ch * dpr);
+  const v = viewRect(), pad = 14, phone = app.classList.contains('phone');
+  const s = Math.max(Math.min((v.r - v.l - 2 * pad) / W, (v.b - v.t - 2 * pad) / H), phone ? 0.5 : 0);
+  // a phone starts zoomed in on the selected army; wider screens show the whole map
+  const [fx, fy] = phone ? cent[cmd.varo.at] : [W / 2, H / 2];
+  const clamp = (c, lo, hi, size) => (size > hi - lo ? Math.min(lo, Math.max(hi - size, c)) : c);
+  cam.s = s; cam.x = clamp((v.l + v.r) / 2 - fx * s, v.l, v.r, W * s); cam.y = clamp((v.t + v.b) / 2 - fy * s, v.t + 40, v.b, H * s); // 40: room for top-row army badges
+}
+function viewRect() { // the part of the map the panels leave uncovered
+  const shown = (id) => { const el = document.getElementById(id); return el && !el.hidden && getComputedStyle(el).display !== 'none' ? el : null; };
+  const phone = app.classList.contains('phone'), ld = shown('leftDock'), rd = shown('rightDock'), rail = shown('rail');
+  const l = ld && !phone ? ld.offsetWidth : 0;
+  const r = cw - (rd && !rd.classList.contains('fly') ? rd.offsetWidth : 0) - (rail ? rail.offsetWidth : 0);
+  const b = ch - (app.classList.contains('strip-on') ? document.getElementById('strip').offsetHeight : 0) - (ld && phone ? ld.offsetHeight : 0);
+  return { l, r, t: 84, b }; // 84: top bar plus the alerts ribbon
+}
+const toScreen = (x, y) => [x * cam.s + cam.x, y * cam.s + cam.y];
+const toWorld = (sx, sy) => [(sx - cam.x) / cam.s, (sy - cam.y) / cam.s];
+const BAN = { red: '#FD6533', green: '#00674B' };
+function heat(t) { // 0..1 -> a lightness-carrying ramp (dark blue to pale yellow), readable without hue
+  const stops = [[24, 30, 60], [64, 60, 120], [150, 80, 110], [220, 140, 80], [250, 230, 160]];
+  const x = Math.max(0, Math.min(.9999, t)) * (stops.length - 1), k = Math.floor(x), f = x - k;
+  const a = stops[k], b = stops[k + 1]; return `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * f)).join(',')})`;
+}
+function fillFor(p) {
+  switch (state.mode) {
+    case 'dominion': return p.dom.n ? (p.dom.n === 'red' ? `rgba(253,101,51,${0.25 + p.dom.s * 0.07})` : `rgba(0,103,75,${0.35 + p.dom.s * 0.07})`) : '#3B3832';
+    case 'supply': { const s = ({ plains: 60, farmland: 80, forest: 50, hills: 40, mountains: 20, swamp: 30, wasteland: 15 })[p.terrain] + p.pop / 50; return heat(s / 320); }
+    case 'unrest': return heat(p.unrest / 60);
+    case 'population': return heat(Math.log(p.pop) / Math.log(26000) * 1.15 - 0.55);
+    default: return TERRAIN[p.terrain].fill;
+  }
+}
+function polyPath(poly) { ctx.beginPath(); poly.forEach(([x, y], k) => { const [sx, sy] = toScreen(x, y); k ? ctx.lineTo(sx, sy) : ctx.moveTo(sx, sy); }); ctx.closePath(); }
+function draw() {
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.fillStyle = '#15130F'; ctx.fillRect(0, 0, cw, ch);
+  for (const p of prov) {
+    const poly = cells[p.i]; polyPath(poly); ctx.fillStyle = fillFor(p); ctx.fill();
+    if (state.mode === 'ownership' && p.owner) {
+      ctx.save(); polyPath(poly); ctx.clip(); ctx.lineWidth = Math.max(5, 11 * cam.s); ctx.strokeStyle = BAN[p.owner]; ctx.stroke();
+      ctx.lineWidth = 1; ctx.strokeStyle = p.owner === 'green' ? '#F4EEDF' : '#1C1A17'; ctx.globalAlpha = .7;
+      // keyline on the band's inner edge
+      ctx.beginPath(); const c = cent[p.i]; poly.forEach(([x, y], k) => { const ix = c[0] + (x - c[0]) * 0.86, iy = c[1] + (y - c[1]) * 0.86; const [sx, sy] = toScreen(ix, iy); k ? ctx.lineTo(sx, sy) : ctx.moveTo(sx, sy); }); ctx.closePath(); ctx.stroke(); ctx.restore();
+    }
+    polyPath(poly); ctx.lineWidth = 2; ctx.strokeStyle = '#2B2620'; ctx.stroke();
+  }
+  if (hoverProv >= 0) { polyPath(cells[hoverProv]); ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(244,238,223,.55)'; ctx.stroke(); }
+  if (state.sel && state.sel.type === 'prov') { polyPath(cells[state.sel.id]); ctx.lineWidth = 3; ctx.strokeStyle = '#F4EEDF'; ctx.stroke(); }
+  // the inbound Thornwood march
+  arrow(cent[cmd.ilsa.at], cent[cmd.ilsa.to], '#9FE0C2', `${cmd.ilsa.eta}d`);
+  if (moveLine) { let a = cent[moveLine.from]; for (const v of moveLine.path) { arrow(a, cent[v], '#FFD2B8', v === moveLine.path.at(-1) ? `${moveLine.days}d` : null); a = cent[v]; } }
+  // labels
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const fs = Math.max(10, Math.min(15, 15 * cam.s * 1.4));
+  for (const p of prov) {
+    const [sx, sy] = toScreen(...cent[p.i]);
+    ctx.font = `${p.cap ? 600 : 500} ${p.cap ? fs + 1 : fs}px 'Alegreya Sans', 'Segoe UI', sans-serif`;
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(20,18,15,.85)'; ctx.strokeText(p.name, sx, sy - 6); ctx.fillStyle = '#F4EEDF'; ctx.fillText(p.name, sx, sy - 6);
+    let gx = sx - 14; const gy = sy + 10;
+    if (p.dom.n) { chipCandle(gx, gy, p.dom.n, p.dom.s); gx += 26; }
+    if (p.unrest >= 25 && p.owner) { glyph('fist', gx, gy, '#FFB4A9'); gx += 18; }
+    if (p.buildings.length) { glyph('fort', gx, gy, '#F4EEDF'); gx += 18; }
+    if (p.well) { glyph('well', gx, gy, '#CFE8FF'); gx += 18; }
+    if (state.mode === 'springs') p.springs.forEach((c, k) => { const img = manaImg[c]; if (img.complete) ctx.drawImage(img, sx - 9 + k * 20, sy + 22, 18, 18); });
+    if (state.mode === 'population' || state.mode === 'unrest' || state.mode === 'supply') {
+      const v = state.mode === 'population' ? (p.pop / 1000).toFixed(1) + 'k' : state.mode === 'unrest' ? p.unrest : Math.round(({ plains: 60, farmland: 80, forest: 50, hills: 40, mountains: 20, swamp: 30, wasteland: 15 })[p.terrain] + p.pop / 50);
+      ctx.font = `600 12px 'IBM Plex Sans Condensed', sans-serif`; ctx.strokeText(String(v), sx, sy + 26); ctx.fillStyle = '#FFF'; ctx.fillText(String(v), sx, sy + 26);
+    }
+  }
+  placeBadges();
+}
+const glyphCache = {};
+function glyph(name, x, y, color) {
+  const key = name + color; let img = glyphCache[key];
+  if (!img) { img = new Image(); img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svgIcon(name, 16, color).replace('aria-hidden="true"', 'xmlns="http://www.w3.org/2000/svg"')); img.onload = () => draw(); glyphCache[key] = img; }
+  if (img.complete && img.naturalWidth) { ctx.fillStyle = 'rgba(20,18,15,.7)'; ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fill(); ctx.drawImage(img, x - 8, y - 8, 16, 16); }
+}
+const manaImg = {}; for (const c of 'WUBRG') { manaImg[c] = new Image(); manaImg[c].src = 'data:image/svg+xml;utf8,' + encodeURIComponent(manaSym(c, 18).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ')); }
+function chipCandle(x, y, n, s) {
+  ctx.fillStyle = 'rgba(20,18,15,.82)'; roundRect(x - 12, y - 8, 24, 16, 4); ctx.fill();
+  ctx.fillStyle = BAN[n] === '#00674B' ? '#4FB38C' : BAN[n]; ctx.fillRect(x - 8, y - 3, 3, 8); ctx.beginPath(); ctx.arc(x - 6.5, y - 5, 2, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#F4EEDF'; ctx.font = `600 11px 'IBM Plex Sans Condensed', sans-serif`; ctx.fillText(String(s), x + 4, y + 1);
+}
+function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function arrow(a, b, color, label) {
+  const [ax, ay] = toScreen(...a), [bx, by] = toScreen(...b);
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.setLineDash([8, 6]); ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke(); ctx.setLineDash([]);
+  const ang = Math.atan2(by - ay, bx - ax); ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - 12 * Math.cos(ang - .4), by - 12 * Math.sin(ang - .4)); ctx.lineTo(bx - 12 * Math.cos(ang + .4), by - 12 * Math.sin(ang + .4)); ctx.closePath(); ctx.fill();
+  if (label) { const mx = (ax + bx) / 2, my = (ay + by) / 2; ctx.fillStyle = 'rgba(20,18,15,.9)'; roundRect(mx - 16, my - 10, 32, 20, 4); ctx.fill(); ctx.fillStyle = '#F4EEDF'; ctx.font = `600 12px 'IBM Plex Sans Condensed', sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(label, mx, my + 1); }
+  ctx.restore();
+}
+function badgeSVG(side, sel) {
+  const f = side === 'red' ? '#FD6533' : '#00674B', ink = side === 'red' ? '#2A0A04' : '#DFF5E8';
+  const sym = side === 'red' ? MANA.R.shape : MANA.G.shape;
+  return `<svg width="30" height="34" viewBox="0 0 30 34"><path d="M15 2l12 4v9c0 8-5.5 13-12 16C8.5 28 3 23 3 15V6z" fill="${f}" stroke="${sel ? '#fff' : 'rgba(0,0,0,.55)'}" stroke-width="${sel ? 2 : 1.2}"/><g transform="translate(8 7) scale(.58)" fill="none" stroke="${ink}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">${sym}</g></svg>`;
+}
+function placeBadges() {
+  layer.innerHTML = '';
+  const byProv = {};
+  for (const c of Object.values(cmd)) (byProv[c.at] ??= []).push(c);
+  for (const [at, list] of Object.entries(byProv)) {
+    list.forEach((c, k) => {
+      const [sx, sy] = toScreen(...cent[at]);
+      const troops = c.squads.reduce((n, s) => n + s[1], 0);
+      const el = document.createElement('div'); el.className = 'badge' + (state.sel && state.sel.id === c.id ? ' sel' : '');
+      el.style.left = (sx + (k - (list.length - 1) / 2) * 30) + 'px'; el.style.top = (sy - 18 - 44) + 'px';
+      el.innerHTML = badgeSVG(c.side, state.sel && state.sel.id === c.id) + `<span class="plate" style="background:${c.side === 'red' ? '#7A1E12' : '#244F22'}">${troops || (c.crown ? '♛' : '·')}</span>` + (c.eta ? `<span class="eta">${c.eta}d ▸ ${prov[c.to].name}</span>` : '');
+      el.dataset.tip = 'cmd:' + c.id; el.tabIndex = 0; el.setAttribute('role', 'button'); el.setAttribute('aria-label', `${c.name}, ${troops} troops`);
+      el.addEventListener('click', (e) => { e.stopPropagation(); selectCmd(c.id); });
+      layer.appendChild(el);
+    });
+  }
+}
+TIPS['cmd'] = (id) => {
+  const c = cmd[id]; const troops = c.squads.reduce((n, s) => n + s[1], 0);
+  const rows = c.squads.map((s) => [s[0], `${s[1]} · ${s[2]}% HP`]);
+  rows.push([term('morale', 'Morale'), String(c.mor)], [term('leadership', 'Leadership'), `${troops} / ${c.lead}`]);
+  if (c.side === 'green') return { title: `${c.name} (Thornwood)`, value: `${troops} troops`, meaning: `${term('inbound', 'Hostile')}: marching on ${prov[c.to].name}, arrives in ${c.eta} days.`, rows: rows.slice(0, 2), proj: 'Our estimate: about 1.1 times Varo\'s army. A guess, not a forecast.' };
+  return { title: c.name, value: c.unit, meaning: `Order: ${c.order}.${c.pips ? ' Pips: ' + c.pips + '.' : ''}`, rows };
+};
+
+// ------------------------------------------------------------------ tooltips: L1 hover, L2 nested terms, lock
+const tips = []; let hoverTimer = null, lockTimer = null, hoverTarget = null;
+function resolveTip(key) {
+  if (key.startsWith('cmd:')) return TIPS.cmd(key.slice(4));
+  if (key.startsWith('prov:')) return provTip(Number(key.slice(5)));
+  if (key.startsWith('concept:')) { const [t, m] = CONCEPTS[key.slice(8)]; return { title: t, meaning: m, foot: '<span>Click a term to go deeper</span><span>Ctrl+click Codex</span>' }; }
+  if (key.startsWith('raw:')) return RAW[key.slice(4)];
+  const f = TIPS[key]; return f ? f() : null;
+}
+const RAW = {};
+function showTip(key, anchorRect, level) {
+  const t = resolveTip(key); if (!t) return;
+  while (tips.length > level) tips.pop().el.remove();
+  const el = document.createElement('div'); el.className = 'tip'; el.innerHTML = tipHTML(t); el.dataset.key = key;
+  app.appendChild(el);
+  const ar = app.getBoundingClientRect();
+  const w = el.offsetWidth, h = el.offsetHeight;
+  let x, y;
+  if (level === 0) { x = anchorRect.left - ar.left; y = anchorRect.bottom - ar.top + 8; if (y + h > ar.height - 6) y = anchorRect.top - ar.top - h - 8; }
+  else { x = anchorRect.right - ar.left + 10; y = anchorRect.top - ar.top - 10; if (x + w > ar.width - 6) x = anchorRect.left - ar.left - w - 10; }
+  x = Math.max(6, Math.min(x, ar.width - w - 6)); y = Math.max(46, Math.min(y, ar.height - h - 6));
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  tips.push({ el, key, locked: false });
+  // lock after 0.8 s so the pointer can travel into the tooltip and reach its terms
+  clearTimeout(lockTimer);
+  requestAnimationFrame(() => el.classList.add('locking'));
+  lockTimer = setTimeout(() => lockTop(), 800);
+  el.addEventListener('mouseleave', (e) => { if (!tips.some((x) => x.el.contains(e.relatedTarget)) && !(hoverTarget && hoverTarget.contains(e.relatedTarget))) closeFrom(tips.findIndex((x) => x.el === el)); });
+  el.querySelectorAll('.term').forEach((tm) => {
+    tm.addEventListener('mouseenter', () => { if (tips.length >= 3 && tips.findIndex((x) => x.el === el) >= 2) return; clearTimeout(hoverTimer); hoverTimer = setTimeout(() => showTip('concept:' + tm.dataset.concept, tm.getBoundingClientRect(), tips.findIndex((x) => x.el === el) + 1), 250); });
+    tm.addEventListener('click', (e) => { if (e.ctrlKey || e.metaKey) openCodex(tm.dataset.concept); });
+  });
+}
+function lockTop() { const t = tips.at(-1); if (t) { t.locked = true; t.el.classList.add('locked'); } }
+function closeFrom(i) { if (i < 0) return; while (tips.length > i) tips.pop().el.remove(); }
+function closeAll() { clearTimeout(hoverTimer); clearTimeout(lockTimer); closeFrom(0); }
+function bindTips(root) {
+  root.addEventListener('mouseover', (e) => {
+    const t = e.target.closest('[data-tip]'); if (!t || t === hoverTarget || tips.some((x) => x.el.contains(t))) return;
+    hoverTarget = t; clearTimeout(hoverTimer);
+    hoverTimer = setTimeout(() => showTip(t.dataset.tip, t.getBoundingClientRect(), 0), 400);
+  });
+  root.addEventListener('mouseout', (e) => {
+    const t = e.target.closest('[data-tip]'); if (!t || t.contains(e.relatedTarget)) return;
+    if (tips.some((x) => x.el.contains(e.relatedTarget))) return;
+    clearTimeout(hoverTimer); hoverTarget = null;
+    if (!(tips[0] && tips[0].locked && tips[0].el.matches(':hover'))) closeAll();
+  });
+  root.addEventListener('focusin', (e) => { const t = e.target.closest('[data-tip]'); if (t) showTip(t.dataset.tip, t.getBoundingClientRect(), 0); });
+  root.addEventListener('focusout', () => closeAll());
+}
+bindTips(app);
+
+// ------------------------------------------------------------------ alerts ribbon
+const TIER = {
+  urgent: (c) => `<svg width="30" height="30" viewBox="0 0 30 30"><path d="M10 2h10l8 8v10l-8 8H10l-8-8V10z" fill="${c}" stroke="rgba(0,0,0,.5)"/>`,
+  important: (c) => `<svg width="30" height="30" viewBox="0 0 30 30"><path d="M15 2l13 25H2z" fill="${c}" stroke="rgba(0,0,0,.5)"/>`,
+  opportunity: (c) => `<svg width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="${c}" stroke="rgba(0,0,0,.5)"/>`,
+  hint: (c) => `<svg width="30" height="30" viewBox="0 0 30 30"><rect x="2" y="2" width="26" height="26" rx="7" fill="${c}" stroke="rgba(0,0,0,.5)"/>`,
+};
+const ALERTS = [
+  { id: 'inbound', tier: 'urgent', color: 'var(--urgent)', glyph: 'sword', title: 'Hostile armies inbound', cases: [[`Ilsa Oakhand (52) → <b>Ashfen</b>, ${cmd.ilsa.eta} days`, () => selectCmd('ilsa')]], meaning: 'A visible enemy march ends where you have troops. Battles resolve the moment armies meet.' },
+  { id: 'enemydom', tier: 'important', color: 'var(--important)', glyph: 'candle', title: 'Enemy dominion in your land', cases: [['<b>Ashfen</b>: Thornwood 2', () => selectProv(ashfen)]], meaning: 'Their scales apply here and unrest rises. Preach or build a temple to push back.' },
+  { id: 'idle', tier: 'important', color: 'var(--important)', glyph: 'hold', title: 'Idle commanders', cases: [['<b>The Ashen Titan</b> in Kharnath, could lead an army', () => selectCmd('titan')], ['<b>Kesh</b> (scout), idle', () => selectCmd('kesh')]], meaning: 'Commanders without an order. Guard tells the game a wait is on purpose.' },
+  { id: 'well', tier: 'opportunity', color: 'var(--opportunity)', glyph: 'well', title: 'Wellspring claimable', cases: [['<b>Sunmere</b> is yours and unclaimed. A priest claims it in 10 days.', () => selectProv(ownWell)]], meaning: 'Claim 2 of 3 Wellsprings to win.' },
+  { id: 'hint', tier: 'hint', color: 'var(--hint)', glyph: 'codex', title: 'Moving armies', cases: [['Select an army, then right-click a province.', () => selectCmd('varo')]], meaning: 'The path and its arrival day show before you commit.' },
+];
+const ribbon = document.getElementById('ribbon');
+function renderAlerts() {
+  ribbon.innerHTML = '';
+  ALERTS.forEach((a, k) => {
+    if (a.dismissed) return;
+    const b = document.createElement('button'); b.className = 'alert' + (a.tier === 'urgent' && !a.seen ? ' pulse' : ''); a.seen = true;
+    b.innerHTML = TIER[a.tier](a.color) + `<g transform="translate(7 ${a.tier === 'important' ? 10 : 7}) scale(.67)" fill="none" stroke="#1C1A17" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">${ICON[a.glyph]}</g></svg><span class="count">${a.cases.length}</span>`;
+    b.setAttribute('aria-label', `${a.title}, ${a.cases.length}`);
+    RAW['alert' + k] = { title: a.title, meaning: a.meaning, rows: a.cases.map((c) => [c[0], '']), foot: '<span>Click go · Right-click dismiss · Shift+right-click mute</span><span></span>' };
+    b.dataset.tip = 'raw:alert' + k;
+    let cycle = 0;
+    b.addEventListener('click', () => { closeAll(); a.cases[cycle % a.cases.length][1](); cycle++; });
+    b.addEventListener('contextmenu', (e) => { e.preventDefault(); closeAll(); a.dismissed = true; renderAlerts(); toast(`${a.title}: dismissed until it changes${e.shiftKey ? ' (muted for this game)' : ''}.`); });
+    ribbon.appendChild(b);
+  });
+}
+
+// ------------------------------------------------------------------ outliner and messages
+const outliner = document.getElementById('outliner');
+const SECTIONS = [
+  { key: 'pinned', title: 'Pinned', open: true, rows: () => [['well', 'Sunmere', 'Wellspring', () => selectProv(ownWell)]] },
+  { key: 'armies', title: 'Armies', open: true, rows: () => [['shield', 'Varo · Guard · Ashfen', '48', () => selectCmd('varo')]] },
+  { key: 'pretender', title: 'Pretender', open: true, rows: () => [['shield', 'The Ashen Titan · Idle', 'Kharnath', () => selectCmd('titan')]] },
+  { key: 'mages', title: 'Mages', open: true, rows: () => [['book', 'Seren · Researching', 'L2', () => selectCmd('seren')]] },
+  { key: 'priests', title: 'Priests', open: false, rows: () => [['candle', 'Ondra · Preaching', 'holy 2', () => selectCmd('ondra')]] },
+  { key: 'scouts', title: 'Scouts', open: false, rows: () => [['codex', 'Kesh · Idle', names[scoutAt], () => selectCmd('kesh')]] },
+  { key: 'provinces', title: 'Provinces', open: true, rows: () => [['fist', 'Ashfen · unrest 31 · enemy dominion', '', () => selectProv(ashfen)]] },
+  { key: 'acts', title: 'Activities', open: false, rows: () => [['fort', 'Kharnath recruits 10 Cinder Warriors', '6d', () => selectProv(redCap)], ['book', 'Research Ember L3', '47d', () => openResearch()]] },
+  { key: 'wells', title: 'Wellsprings', open: true, rows: () => wells.map((w) => ['well', names[w] + ' · independent', '', () => selectProv(w)]).concat([['well', 'Sunmere · yours', 'unclaimed', () => selectProv(ownWell)]]) },
+];
+function renderOutliner() {
+  outliner.innerHTML = '';
+  for (const s of SECTIONS) {
+    const rows = s.rows();
+    const sec = document.createElement('div'); sec.className = 'osec';
+    sec.innerHTML = `<button aria-expanded="${s.open}"><span>${s.open ? '▾' : '▸'}</span>${s.title}<span class="cnt">${rows.length}</span></button>`;
+    sec.firstChild.addEventListener('click', () => { s.open = !s.open; renderOutliner(); });
+    if (s.open) for (const [ic, nm, meta, go] of rows) {
+      const r = document.createElement('div'); r.className = 'orow'; r.tabIndex = 0;
+      r.innerHTML = `<span style="color:var(--dim);display:inline-flex">${svgIcon(ic, 16)}</span><span class="nm">${nm}</span><span class="meta">${meta}</span>`;
+      r.addEventListener('click', go); r.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+      sec.appendChild(r);
+    }
+    outliner.appendChild(sec);
+  }
+}
+const MSGS = [
+  { cat: 'Battles', icon: 'sword', when: 'M3 D12', html: `Victory at <span class="link" data-go="${redBorder[2] ?? redCap}">${names[redBorder[2] ?? redCap]}</span>: Varo routs 22 independents. We lose 4.`, battle: true },
+  { cat: 'Military', icon: 'shield', when: 'M3 D12', html: `<span class="link" data-go="${redBorder[2] ?? redCap}">${names[redBorder[2] ?? redCap]}</span> is ours.` },
+  { cat: 'Military', icon: 'sword', when: 'M3 D11', html: `Thornwood army sighted at <span class="link" data-go="${greenFrom}">${names[greenFrom]}</span>.` },
+  { cat: 'Dominion', icon: 'candle', when: 'M2 D30', html: `<span class="link" data-go="${ashfen}">Ashfen</span> is now under the dominion of Thornwood.` },
+  { cat: 'Economy', icon: 'fort', when: 'M2 D24', html: '10 Flame Archers recruited in <span class="link" data-go="' + redCap + '">Kharnath</span>.' },
+  { cat: 'Magic', icon: 'book', when: 'M2 D18', html: 'Ember research reaches level 2: Warcry.' },
+  { cat: 'Economy', icon: 'fort', when: 'M2 D09', html: 'Temple completed in <span class="link" data-go="' + redCap + '">Kharnath</span>.' },
+];
+const chips = document.getElementById('chips'), msgs = document.getElementById('msgs');
+function renderFeed() {
+  chips.innerHTML = ['All', 'Battles', 'Military', 'Economy', 'Magic', 'Dominion'].map((c) => `<button class="chip ${state.filter === c ? 'on' : ''}" data-c="${c}">${c}</button>`).join('');
+  chips.querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => { state.filter = b.dataset.c; renderFeed(); }));
+  msgs.innerHTML = '';
+  MSGS.filter((m) => state.filter === 'All' || m.cat === state.filter).forEach((m) => {
+    const r = document.createElement('div'); r.className = 'msg';
+    r.innerHTML = `<span style="color:var(--dim);display:inline-flex">${svgIcon(m.icon, 16)}</span><span class="when">${m.when}</span><span>${m.html}</span><span class="acts">${m.battle ? '<button data-a="report">Report</button><button data-a="watch">Watch ▸</button>' : ''}<button data-a="gear" aria-label="Message settings">⚙</button></span>`;
+    r.querySelectorAll('[data-go]').forEach((l) => l.addEventListener('click', () => selectProv(Number(l.dataset.go))));
+    r.querySelector('[data-a="gear"]').addEventListener('click', () => toast(`${m.cat} messages: Display = Feed, Pause = off. Change it here or in Settings → Messages.`));
+    if (m.battle) { r.querySelector('[data-a="report"]').addEventListener('click', openReport); r.querySelector('[data-a="watch"]').addEventListener('click', openReport); }
+    msgs.appendChild(r);
+  });
+}
+
+// ------------------------------------------------------------------ selection: province panel and commander strip
+const leftDock = document.getElementById('leftDock'), strip = document.getElementById('strip');
+let provTab = 'Overview';
+function selectProv(i) {
+  state.sel = { type: 'prov', id: i }; app.classList.remove('strip-on'); moveLine = null;
+  renderProvince(); draw(); renderOutlinerSel();
+}
+function renderOutlinerSel() {}
+function statRow(icon, label, val, delta, tipKey, cls = '') {
+  return `<div class="stat" ${tipKey ? `data-tip="${tipKey}"` : ''}><span style="color:var(--dim);display:inline-flex">${svgIcon(icon, 17)}</span><span class="lbl">${label}</span><span class="val">${val}</span><span class="dl ${cls}">${delta ?? ''}</span></div>`;
+}
+function renderProvince() {
+  const p = prov[state.sel.id];
+  const own = p.owner === 'red';
+  leftDock.hidden = false;
+  const ownerName = p.owner === 'red' ? 'Cinder Horde' : p.owner === 'green' ? 'Thornwood' : 'Independent';
+  const supply = Math.round(({ plains: 60, farmland: 80, forest: 50, hills: 40, mountains: 20, swamp: 30, wasteland: 15 })[p.terrain] + p.pop / 50);
+  const gold = Math.round(p.pop / 100 * (p.unrest ? 1 - p.unrest / 200 : 1));
+  RAW.pGold = { title: `Gold from ${p.name}`, value: `+${gold} /mo`, rows: [['Population ÷ 100', String(Math.round(p.pop / 100))], [term('taxrate', 'Tax rate') + ' Normal', '×1.0'], ['Turmoil 2', '−4%'], [term('unrest', 'Unrest') + ` ${p.unrest}`, `−${Math.round(p.unrest / 2)}%`], ['Net', `+${gold} /mo`, 'total']] };
+  RAW.pSupply = { title: `Supply in ${p.name}`, value: `${p.i === ashfen ? 50 : 0} / ${supply}`, meaning: `Food for armies standing here each day.`, rows: [[`${TERRAIN[p.terrain].name} base`, String(({ plains: 60, farmland: 80, forest: 50, hills: 40, mountains: 20, swamp: 30, wasteland: 15 })[p.terrain])], ['Population ÷ 50', String(Math.round(p.pop / 50))], ['Varo\'s army eats', p.i === ashfen ? '−50' : '0'], ['Left over', String(supply - (p.i === ashfen ? 50 : 0)), 'total']] };
+  RAW.pUnrest = { title: `Unrest in ${p.name}`, value: String(p.unrest), meaning: CONCEPTS.unrest[1], rows: [['Enemy dominion (Thornwood 2)', '+0.7 /mo'], ['Garrison and priests', '−1.0 /mo'], ['Trend', '−0.3 /mo', 'total']], proj: p.unrest > 25 ? 'Above 50 recruiting stops here.' : null };
+  RAW.pPop = { title: 'Population', value: fmt(p.pop), rows: [['Growth', '+0.4% /mo'], ['Recruits waiting', '0', 'more']] };
+  RAW.taxLow = { title: 'Tax: Low', rows: [['Gold', `−${Math.round(gold * 0.5)} /mo`], [term('unrest', 'Unrest'), '−2 /mo']] };
+  RAW.taxNormal = { title: 'Tax: Normal', meaning: 'The default rate.' };
+  RAW.taxHigh = { title: 'Tax: High', rows: [['Gold', `+${Math.round(gold * 0.5)} /mo`], [term('unrest', 'Unrest'), '+4 /mo']], proj: `Unrest would reach 50 in about ${Math.max(1, Math.round((50 - p.unrest) / 4))} months.` };
+  RAW.pd = { title: `${term('pd', 'Provincial defense')} ${p.pd}`, rows: [[`Level ${p.pd + 1}`, `${(p.pd + 1) * 15} gold`], ['Fields', `${(p.pd + 1) * 2} militia, ${Math.floor((p.pd + 1) / 5)} archers`]], foot: '<span>Shift+click buys 5 levels</span><span></span>' };
+  RAW.temple = { title: 'Build a Temple', rows: [['Gold', '200'], ['Days', '30'], ['Builder', `Kesh (scout) walks here: 3 days`]], proj: '+1 dominion check a month; priests preach better here.' };
+  RAW.claim = { title: 'Claim this Wellspring', why: 'No priest stands here. Ondra could walk from Kharnath in 9 days.' };
+  const scale = (l, r, v) => `<div class="scale"><span>${l}</span><div class="bar"><i style="left:calc(${50 + v * 16.6}% - 2px)"></i></div><span>${r}</span></div>`;
+  let body = '';
+  if (provTab === 'Overview') {
+    body += `<div class="section"><h3>Province</h3>${statRow('pop', 'Population', fmt(p.pop), '▲0.4%', 'raw:pPop', 'up')}${own ? statRow('gold', 'Gold', `+${gold}`, '/mo', 'raw:pGold') : ''}${statRow('supply', 'Supply', `${p.i === ashfen ? 50 : 0} / ${supply}`, 'eaten / given', 'raw:pSupply')}${statRow('fist', 'Unrest', String(p.unrest), p.unrest > 25 ? '▼0.3/mo' : '', 'raw:pUnrest', 'down')}${own && p.buildings.includes('fort') ? statRow('anvil', 'Materials', '212 / 360', '▲60/mo', 'materials', 'up') : ''}</div>`;
+    if (own) {
+      body += `<div class="section"><h3>Orders</h3><div class="row" style="justify-content:space-between"><span class="dimtxt">${term('taxrate', 'Tax rate')}</span><div class="seg" role="group" aria-label="Tax rate"><button data-tip="raw:taxLow">Low</button><button class="on" data-tip="raw:taxNormal">Normal</button><button data-tip="raw:taxHigh">High</button></div></div>
+        <div class="row" style="justify-content:space-between;margin-top:8px"><span class="dimtxt">${term('pd', 'Defense')} level <b class="num" style="color:var(--text)">${p.pd}</b></span><button class="btn" data-tip="raw:pd" id="pdBtn">+1 PD <span class="cost">${(p.pd + 1) * 15}g</span></button></div></div>`;
+      body += `<div class="section"><h3>Buildings</h3>${['fort', 'temple', 'lab'].map((b) => p.buildings.includes(b) ? `<div class="building"><span style="color:var(--dim);display:inline-flex">${svgIcon(b, 17)}</span><span>${b[0].toUpperCase() + b.slice(1)}</span><span class="dimtxt">built</span></div>` : b === 'fort' ? `<div class="building" style="opacity:.6"><span style="display:inline-flex;color:var(--dim)">${svgIcon('fort', 17)}</span><span>Fort</span><span class="dimtxt">capitals only</span></div>` : `<div class="building"><span style="color:var(--dim);display:inline-flex">${svgIcon(b, 17)}</span><span>${b[0].toUpperCase() + b.slice(1)}</span><button class="btn" data-tip="raw:${b === 'temple' ? 'temple' : 'temple'}">Build <span class="cost">${b === 'temple' ? '200g · 30d' : '300g · 30d'}</span></button></div>`).join('')}</div>`;
+    }
+    body += `<div class="section"><h3>${term('scales', 'Scales')} here <span style="text-transform:none;letter-spacing:0;font-weight:400">(${p.dom.n ? (p.dom.n === 'red' ? 'Cinder Horde' : 'Thornwood') + ' ' + p.dom.s : 'no dominion'})</span></h3>${p.dom.n === 'red' ? scale('Order', 'Turmoil', p.dom.s >= 4 ? 1 : 0) + scale('Lore', 'Fury', p.dom.s >= 2 ? 1 : 0) : p.dom.n === 'green' ? scale('Growth', 'Rot', -1) + scale('Wild', 'Artifice', -0) : ''}${scale('Sanctity', 'Dread', 0)}</div>`;
+    if (p.well) body += `<div class="section"><h3>${term('wellspring', 'Wellspring')}</h3><div class="row" style="justify-content:space-between"><span>${p.i === ownWell ? 'Unclaimed. Claim 2 of 3 to win.' : 'Held by independents (strong).'}</span>${p.i === ownWell ? '<button class="btn" aria-disabled="true" data-tip="raw:claim">Claim</button>' : ''}</div></div>`;
+  } else if (provTab === 'Recruit') {
+    const units = [['Ash Militia', 8, 3, 8, [10, 10, 9, 9, 0], ''], ['Cinder Warrior', 12, 8, 10, [10, 11, 11, 10, 3], ''], ['Flame Archer', 13, 6, 10, [10, 10, 10, 9, 1], 'ranged'], ['Berserker', 18, 10, 12, [13, 13, 12, 7, 2], 'berserk'], ['Ash Rider', 28, 18, 14, [12, 11, 11, 11, 4], 'mounted'], ['Flamebrand', 32, 14, 16, [13, 13, 12, 11, 6], 'sacred']];
+    body += `<div class="section"><h3>Recruit at Kharnath · batch <span class="seg" style="vertical-align:middle;text-transform:none"><button class="on">10</button><button>20</button></span></h3><div class="cards">${units.map(([n, g, m, d, s, tag], k) => { RAW['u' + k] = { title: n, value: tag || 'infantry', rows: [['HP', s[0]], ['Strength', s[1]], ['Attack', s[2]], ['Defense', s[3]], ['Protection', s[4]], [term('morale', 'Morale'), 10 + k % 3], [term('upkeep', 'Upkeep'), `${Math.round(g / 6)} /mo`]], proj: `10 cost ${g * 10} gold and ${m * 10} materials; ready in ${d} days.` }; return `<button class="ucard" data-tip="raw:u${k}"><div class="band"><span>${n}</span><span class="num">${tag ? '◆' : ''}</span></div><div class="body"><div class="stats"><span>HP<b>${s[0]}</b></span><span>Att<b>${s[2]}</b></span><span>Def<b>${s[3]}</b></span><span>Prot<b>${s[4]}</b></span></div><div class="costs"><span>${g * 10}g</span><span>${m * 10}m</span><span>${d}d</span></div></div></button>`; }).join('')}</div></div>
+      <div class="section"><h3>Queue</h3><div class="queue"><div class="qitem"><span>10 Cinder Warriors</span><span class="num dimtxt">6d</span><div class="prog"><i style="width:40%"></i></div></div><div class="qitem"><span>Ember Adept</span><span class="num dimtxt">waits</span><div class="prog"><i style="width:0"></i></div></div></div></div>`;
+  } else if (provTab === 'Forces') {
+    const here = Object.values(cmd).filter((c) => c.at === p.i);
+    body += `<div class="section"><h3>Commanders here</h3>${here.length ? here.map((c) => `<div class="orow" data-c="${c.id}" style="padding-left:6px"><span style="display:inline-flex;color:${c.side === 'red' ? 'var(--red)' : 'var(--green-hi)'}">${svgIcon('shield', 16)}</span><span class="nm">${c.name} · ${c.unit}</span><span class="meta">${c.squads.reduce((n, s) => n + s[1], 0)}</span></div>`).join('') : '<p class="dimtxt" style="margin:0">None.</p>'}</div>${p.buildings.includes('fort') ? '<div class="section"><h3>Garrison</h3><div class="orow" style="padding-left:6px"><span></span><span class="nm">20 Ash Militia</span><span class="meta">reserve</span></div></div>' : ''}`;
+  } else {
+    body += `<div class="section"><h3>History</h3>${MSGS.filter((m) => m.html.includes(p.name)).map((m) => `<div class="msg" style="padding-left:0"><span style="color:var(--dim);display:inline-flex">${svgIcon(m.icon, 16)}</span><span class="when">${m.when}</span><span>${m.html}</span></div>`).join('') || '<p class="dimtxt" style="margin:0">Nothing has happened here yet.</p>'}</div>`;
+  }
+  const tabs = own && p.buildings.includes('fort') ? ['Overview', 'Recruit', 'Forces', 'History'] : ['Overview', 'Forces', 'History'];
+  if (!tabs.includes(provTab)) provTab = 'Overview';
+  leftDock.innerHTML = `<div class="dockhead"><span class="banner">${p.owner ? `<svg width="20" height="26" viewBox="0 0 22 28"><path d="M1 1h20v20l-10 6-10-6z" fill="${BAN[p.owner]}"/></svg>` : ''}</span><div style="min-width:0;flex:1"><h2>${p.name}</h2><div class="sub">${TERRAIN[p.terrain].name} · ${ownerName}${p.cap ? ' · capital' : ''}</div></div><button class="iconbtn" aria-label="Pin" data-tip="raw:pin">⚲</button><button class="iconbtn" id="closeDock" aria-label="Close">✕</button></div>
+    <div class="tabs" role="tablist">${tabs.map((t) => `<button class="tab" role="tab" aria-selected="${t === provTab}">${t}</button>`).join('')}</div><div class="dockbody">${body}</div>`;
+  RAW.pin = { title: 'Pin to the outliner', foot: '<span>Key P</span><span></span>' };
+  leftDock.querySelectorAll('.tab').forEach((b) => b.addEventListener('click', () => { provTab = b.textContent; renderProvince(); }));
+  leftDock.querySelector('#closeDock').addEventListener('click', clearSel);
+  leftDock.querySelectorAll('[data-c]').forEach((r) => r.addEventListener('click', () => selectCmd(r.dataset.c)));
+  const pdBtn = leftDock.querySelector('#pdBtn');
+  if (pdBtn) pdBtn.addEventListener('click', (e) => { const n = e.shiftKey ? 5 : 1; let cost = 0; for (let k = 0; k < n; k++) cost += (p.pd + 1 + k) * 15; if (cost > state.gold) { toast('Not enough gold.'); return; } state.gold -= cost; p.pd += n; toast(`${p.name}: defense ${p.pd} (−${cost} gold).`); renderProvince(); updateTop(); });
+  leftDock.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => { b.parentElement.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); }));
+  leftDock.querySelectorAll('.ucard').forEach((b) => b.addEventListener('click', () => toast(`Queued 10 ${b.querySelector('.band span').textContent}s at Kharnath.`)));
+}
+function selectCmd(id) {
+  const c = cmd[id]; state.sel = { type: 'cmd', id }; moveLine = null;
+  leftDock.hidden = true; app.classList.add('strip-on');
+  const troops = c.squads.reduce((n, s) => n + s[1], 0);
+  const orders = c.side === 'red' ? [
+    ['Idle', null], ['Guard', null], ['Pillage', id === 'varo' ? null : 'Needs troops to pillage.'], ['Research', c.pips && !c.crown ? null : c.crown ? 'The Titan cannot research.' : 'Not a mage: no color pips.'],
+    ['Preach', c.holy ? null : 'Not a priest: no holy pips.'], ['Claim', c.holy ? 'Stand in an owned Wellspring to claim it.' : 'Not a priest: no holy pips.'], ['Make Prophet', c.crown ? 'The pretender cannot be its own prophet.' : null],
+  ] : [];
+  orders.forEach(([o, why], k) => { RAW['ord' + k] = why ? { title: o, why } : { title: o, meaning: ({ Idle: 'Waits for orders.', Guard: 'Holds here on purpose; it stays out of the idle alert.', Pillage: 'Takes 2% of the people a day as gold. Unrest +5 a day.', Research: 'Earns research points in a lab.', Preach: 'Spreads dominion: one check per holy pip, +1 at a temple.', 'Make Prophet': 'Holy 3, +1 morale, your bless, one dominion check. One prophet at a time.' })[o] }; });
+  const slot = (g) => `<span class="slot" style="color:${g === 'bolt' ? 'var(--red)' : 'var(--dim)'}">${svgIcon(g, 15)}</span>`;
+  RAW.script = !c.script ? { title: `${term('script', 'Script')}`, meaning: 'Hidden. You learn an enemy commander\'s plan by fighting it.' } : { title: `${term('script', 'Script')}`, rows: c.script.map((g, k) => [`Round ${k + 1}`, ({ hold: 'Hold', sword: 'Attack', bolt: 'Cast (best spell)' })[g]]).concat([['Round 6 on', 'repeats round 5']]), proj: 'Click to open the Battle Plan.' };
+  strip.innerHTML = `<div class="portrait"><div class="face" style="background:${c.side === 'red' ? '#7A1E12' : '#244F22'}">${c.crown ? '♛' : c.name[0]}</div><div class="hp"><i style="width:${(c.hp[0] / c.hp[1]) * 100}%"></i></div><span class="num dimtxt" style="font-size:12px">${c.hp[0]}/${c.hp[1]} HP</span></div>
+    <div class="sinfo"><div class="name">${c.name} <span class="dimtxt" style="font:14px var(--font-body)">${c.unit}${c.pips ? ' · ' + [...c.pips].map(() => manaSym('R', 14)).join('') : ''}</span></div>
+      <div class="squads">${c.squads.length ? c.squads.map((s) => `<span class="sq"><b class="num">${s[1]}</b> ${s[0]} <span class="dimtxt num">${s[2]}%</span></span>`).join('') : '<span class="dimtxt" style="font-size:13.5px">Leads no troops.</span>'}</div>
+      <div class="script" data-tip="raw:script" tabindex="0">${c.script ? c.script.map(slot).join('') + '<span class="dimtxt" style="font-size:12.5px;margin-left:4px">Battle plan ▸</span>' : '<span class="dimtxt" style="font-size:12.5px">Battle plan unknown</span>'}</div></div>
+    <div class="orders">${orders.map(([o, why], k) => `<button class="btn" data-tip="raw:ord${k}" ${why ? 'aria-disabled="true"' : ''} style="${c.order === o ? 'background:#5A5146;' : ''}">${o}</button>`).join('')}${c.side === 'red' && (c.pips) ? '<button class="btn nav" data-tip="raw:cast">Cast ▸</button>' : ''}${c.side === 'green' ? `<span class="dimtxt">Thornwood's army. You see it because it marches next to your land.</span>` : ''}</div>
+    <div class="eta">${c.eta ? `<span class="dimtxt" style="font-size:12.5px">arrives in</span><span class="big">${c.eta}d</span>` : c.side === 'red' ? `<span class="dimtxt" style="font-size:12.5px">${app.classList.contains('phone') ? 'Long-press' : 'Right-click'} a province to move</span>` : ''}</div>`;
+  RAW.cast = { title: 'Rituals', meaning: 'Opens this mage\'s rituals with their costs and targets.', foot: '<span>Key C</span><span></span>' };
+  strip.querySelectorAll('.orders .btn:not(.nav)').forEach((b) => b.addEventListener('click', () => { if (b.getAttribute('aria-disabled') === 'true') return; c.order = b.textContent; selectCmd(id); toast(`${c.name}: ${c.order}.`); renderOutliner(); }));
+  if (c.script) strip.querySelector('.script').addEventListener('click', () => toast('The Battle Plan sheet opens over the map: rows, squads, five script slots, copy and paste to all.'));
+  const castBtn = strip.querySelector('.nav'); if (castBtn) castBtn.addEventListener('click', () => toast('Rituals tab: castable rituals with mana costs; pick a target on the map.'));
+  draw();
+}
+function clearSel() { state.sel = null; moveLine = null; leftDock.hidden = true; app.classList.remove('strip-on'); draw(); }
+
+// ------------------------------------------------------------------ map input
+canvas.addEventListener('mousemove', (e) => {
+  const r = canvas.getBoundingClientRect(); const [x, y] = toWorld(e.clientX - r.left, e.clientY - r.top);
+  if (drag) { cam.x += e.movementX; cam.y += e.movementY; dragMoved += Math.abs(e.movementX) + Math.abs(e.movementY); draw(); return; }
+  if (x < 0 || y < 0 || x > W || y > H) { if (hoverProv !== -1) { hoverProv = -1; draw(); closeAll(); } return; }
+  const i = nearest(x, y);
+  if (i !== hoverProv) {
+    hoverProv = i; draw(); closeAll(); clearTimeout(hoverTimer);
+    const sx = e.clientX, sy = e.clientY;
+    hoverTimer = setTimeout(() => { if (hoverProv === i) showTip('prov:' + i, { left: sx + 14, right: sx + 14, top: sy + 6, bottom: sy + 6 }, 0); }, 500);
+  }
+});
+canvas.addEventListener('mouseleave', () => { hoverProv = -1; drag = false; draw(); });
+let drag = false, dragMoved = 0;
+canvas.addEventListener('mousedown', (e) => { if (e.button === 0) { drag = true; dragMoved = 0; } });
+window.addEventListener('mouseup', () => { drag = false; });
+canvas.addEventListener('click', (e) => {
+  if (dragMoved > 6) return;
+  const r = canvas.getBoundingClientRect(); const [x, y] = toWorld(e.clientX - r.left, e.clientY - r.top);
+  if (x < 0 || y < 0 || x > W || y > H) { clearSel(); return; }
+  closeAll(); selectProv(nearest(x, y));
+});
+canvas.addEventListener('contextmenu', (e) => { e.preventDefault(); if (e.pointerType !== 'touch') orderMove(e.clientX, e.clientY); });
+function orderMove(cx, cy) {
+  if (!state.sel || state.sel.type !== 'cmd') { toast(`Select one of your armies first, then ${app.classList.contains('phone') ? 'long-press' : 'right-click'} where it should go.`); return; }
+  const c = cmd[state.sel.id]; if (c.side !== 'red') return;
+  const r = canvas.getBoundingClientRect(); const [x, y] = toWorld(cx - r.left, cy - r.top); const i = nearest(x, y);
+  const d = pathTo(c.at, i);
+  if (!d || i === c.at) { toast(`${c.name} has no path there through your land.`); return; }
+  moveLine = { from: c.at, path: d.path, days: d.days }; c.order = 'Move';
+  closeAll(); draw(); toast(`${c.name} marches to ${prov[i].name}: ${d.days} days.`);
+}
+// touch: one finger pans, two fingers pinch, a still long-press orders a march
+const touches = new Map(); let pinch = null, pressTimer = null;
+canvas.addEventListener('pointerdown', (e) => {
+  if (e.pointerType !== 'touch') return;
+  touches.set(e.pointerId, { x: e.clientX, y: e.clientY }); dragMoved = 0; clearTimeout(pressTimer);
+  if (touches.size === 1) pressTimer = setTimeout(() => { if (dragMoved < 8) { dragMoved = 99; orderMove(e.clientX, e.clientY); } }, 550);
+  if (touches.size === 2) { const [a, b] = [...touches.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), s: cam.s }; }
+});
+canvas.addEventListener('pointermove', (e) => {
+  const t = touches.get(e.pointerId); if (!t) return;
+  const dx = e.clientX - t.x, dy = e.clientY - t.y; t.x = e.clientX; t.y = e.clientY;
+  if (touches.size === 1) { cam.x += dx; cam.y += dy; dragMoved += Math.abs(dx) + Math.abs(dy); }
+  else if (pinch) {
+    const [a, b] = [...touches.values()], r = canvas.getBoundingClientRect();
+    const mx = (a.x + b.x) / 2 - r.left, my = (a.y + b.y) / 2 - r.top;
+    const ns = Math.max(0.2, Math.min(2.6, pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d)), k = ns / cam.s;
+    cam.x = mx - (mx - cam.x) * k; cam.y = my - (my - cam.y) * k; cam.s = ns; dragMoved = 99;
+  }
+  if (dragMoved > 8) { clearTimeout(pressTimer); closeAll(); draw(); }
+});
+const endTouch = (e) => { touches.delete(e.pointerId); if (touches.size < 2) pinch = null; clearTimeout(pressTimer); };
+canvas.addEventListener('pointerup', endTouch); canvas.addEventListener('pointercancel', endTouch);
+canvas.addEventListener('wheel', (e) => {
+  e.preventDefault(); const r = canvas.getBoundingClientRect(); const mx = e.clientX - r.left, my = e.clientY - r.top;
+  const f = Math.exp(-e.deltaY * 0.0012); const ns = Math.max(0.35, Math.min(2.6, cam.s * f)); const k = ns / cam.s;
+  cam.x = mx - (mx - cam.x) * k; cam.y = my - (my - cam.y) * k; cam.s = ns; closeAll(); draw();
+}, { passive: false });
+
+// ------------------------------------------------------------------ map modes
+const MODES = [['ownership', 'ownership', 'Ownership', 'Owner bands over terrain.'], ['dominion', 'dominion', 'Dominion', 'Who dominates each province, and how strongly.'], ['supply', 'supply', 'Supply', 'Food given per day. Lighter is more.'], ['unrest', 'fist', 'Unrest', 'Lighter is more unrest. Above 50 recruiting stops.'], ['population', 'pop', 'Population', 'Lighter is more people.'], ['springs', 'springs', 'Mana springs', 'Springs by color, with their symbols.']];
+const modesEl = document.getElementById('modes');
+function renderModes() {
+  const cur = MODES.find((m) => m[0] === state.mode);
+  modesEl.innerHTML = `<div class="legend"><b style="color:var(--text)">${cur[2]}</b> · ${cur[3]}</div>` + MODES.map((m, k) => `<button class="modebtn ${m[0] === state.mode ? 'on' : ''}" data-m="${m[0]}" data-tip="raw:mode${k}" aria-label="${m[2]} map mode">${svgIcon(m[1], 18)}</button>`).join('');
+  MODES.forEach((m, k) => { RAW['mode' + k] = { title: m[2] + ' map', meaning: m[3], foot: `<span>Shift+${k + 1} · M cycles</span><span></span>` }; });
+  modesEl.querySelectorAll('.modebtn').forEach((b) => b.addEventListener('click', () => { state.mode = b.dataset.m; renderModes(); draw(); }));
+}
+
+// ------------------------------------------------------------------ time, pause, toasts
+const clock = document.getElementById('clock'), pauseBtn = document.getElementById('pauseBtn'), pausechip = document.getElementById('pausechip');
+function updateTop() {
+  document.getElementById('date').textContent = `Y${state.year} M${state.month} D${state.day}`;
+  document.getElementById('hair').style.width = (state.day / 30) * 100 + '%';
+  document.getElementById('goldV').textContent = fmt(Math.round(state.gold));
+  clock.classList.toggle('paused', state.paused); document.getElementById('pausedWord').style.visibility = state.paused ? 'visible' : 'hidden';
+  pauseBtn.textContent = state.paused ? '▶' : '❚❚';
+  document.querySelectorAll('#speed [data-s]').forEach((b) => b.classList.toggle('on', Number(b.dataset.s) <= state.speed));
+}
+function setPaused(p, reason) {
+  state.paused = p; updateTop();
+  if (reason) { pausechip.innerHTML = `<span style="color:#FFB4A9">Paused:</span> ${reason} <span class="dimtxt">▸</span>`; pausechip.classList.add('show'); }
+  else if (!p) pausechip.classList.remove('show');
+}
+pausechip.addEventListener('click', () => { pausechip.classList.remove('show'); selectCmd('ilsa'); });
+pauseBtn.addEventListener('click', () => setPaused(!state.paused));
+document.querySelectorAll('#speed [data-s]').forEach((b) => b.addEventListener('click', () => { state.speed = Number(b.dataset.s); updateTop(); }));
+let acc = 0, last = performance.now();
+function tick(now) {
+  const dt = (now - last) / 1000; last = now;
+  if (!state.paused && document.getElementById('scrim').hidden) {
+    acc += dt * [0, 1, 2, 4, 8][state.speed];
+    while (acc >= 1) {
+      acc -= 1; state.day++; state.gold += 38 / 30;
+      if (state.day > 30) { state.day = 1; state.month++; if (state.month > 12) { state.month = 1; state.year++; } toast('Month end: dominion spreads. Kharnath\'s dominion holds at 5.'); }
+      if (cmd.ilsa.eta > 0) { cmd.ilsa.eta = Math.max(0, cmd.ilsa.eta - 1); if (cmd.ilsa.eta === 1 && !state.autoPaused) { state.autoPaused = true; setPaused(true, 'Ilsa Oakhand reaches Ashfen tomorrow'); toast('Auto-pause: a hostile army reaches your troops tomorrow. Set which events pause in Settings → Messages.'); } }
+      updateTop(); placeBadges();
+      if (state.paused) break;
+    }
+  }
+  requestAnimationFrame(tick);
+}
+const toasts = document.getElementById('toasts');
+function toast(text) { const t = document.createElement('div'); t.className = 'toast'; t.textContent = text; toasts.prepend(t); setTimeout(() => t.remove(), 4200); while (toasts.children.length > 4) toasts.lastChild.remove(); }
+
+// ------------------------------------------------------------------ modals: battle report, Codex, research
+const scrim = document.getElementById('scrim'), modal = document.getElementById('modal');
+function openModal(html) { closeAll(); modal.innerHTML = html; scrim.hidden = false; modal.querySelector('[data-close]')?.addEventListener('click', closeModal); modal.querySelector('[data-close]')?.focus(); }
+function closeModal() { scrim.hidden = true; }
+scrim.addEventListener('click', (e) => { if (e.target === scrim) closeModal(); });
+function openReport() {
+  const place = names[redBorder[2] ?? redCap];
+  openModal(`<header><span style="color:var(--opportunity);display:inline-flex">${svgIcon('sword', 22)}</span><h2>Victory at ${place}</h2><span class="dimtxt num">Y1 M3 D12 · 7 rounds</span><button class="iconbtn" data-close aria-label="Close">✕</button></header>
+    <div class="mbody"><div class="sides"><div class="side"><h3><span class="banner"><svg width="16" height="20" viewBox="0 0 22 28"><path d="M1 1h20v20l-10 6-10-6z" fill="#FD6533"/></svg></span>Cinder Horde (you)</h3><div class="cas"><span>Varo, Ash Chieftain</span><span>14 → 14</span><span>HP</span><span>Cinder Warriors</span><span>32 → 30</span><span>−2</span><span>Flame Archers</span><span>20 → 18</span><span>−2</span></div></div>
+    <div class="side"><h3><span class="banner"><svg width="16" height="20" viewBox="0 0 22 28"><path d="M1 1h20v20l-10 6-10-6z" fill="#8C8A80"/></svg></span>Independents</h3><div class="cas"><span>Captain</span><span>12 → 0</span><span>slain</span><span>Spearmen</span><span>14 → 3</span><span>routed</span><span>Bowmen</span><span>8 → 6</span><span>fled</span></div></div></div>
+    <div><h3 style="font:600 11.5px var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 6px">Key moments</h3><ol class="moments"><li><b>Round 2</b>: the Flame Archers' volley drops 4 Spearmen.</li><li><b>Round 4</b>: the lines meet; Cinder Warriors cut down 6 more.</li><li><b>Round 5</b>: the independent Captain falls to Varo's axe. The Spearmen break.</li><li><b>Round 7</b>: the last Bowmen flee into the marsh.</li></ol></div>
+    <div class="row" style="justify-content:flex-end"><button class="btn nav" data-close>Close</button><button class="btn" id="watch">Watch replay ▸</button></div></div>`);
+  modal.querySelector('#watch').addEventListener('click', () => openModal(`<header><h2>Replay · ${place}</h2><button class="iconbtn" data-close aria-label="Close">✕</button></header><div class="mbody"><p style="margin:0;max-width:62ch;line-height:1.5">The replay opens here on a full stage: the player's side on the left, three rows a side, every blow, every death, spells with their own effects and sound. Pause, 0.5× to 4×, Beats mode, and skip to the end. It is being built in the battle presentation track and lands in this modal in Phase 10.</p><div class="row" style="justify-content:flex-end"><button class="btn" data-close>Back to the map</button></div></div>`));
+}
+const CODEX_UNITS = { cinderWarrior: ['Cinder Warrior', 'Heavy infantry of the Cinder Horde. hp 11, str 11, att 11, def 10, prot 3, morale 11, map speed 2. Hand axe 6. Costs 12 gold, 8 materials, 10 people; 10 recruit days per 10.'] };
+function openCodex(key) {
+  const entries = { ...Object.fromEntries(Object.entries(CONCEPTS).map(([k, v]) => [k, v])), ...CODEX_UNITS };
+  let cur = key && entries[key] ? key : 'dominion', q = '';
+  const render = () => {
+    const list = Object.entries(entries).filter(([, v]) => v[0].toLowerCase().includes(q.toLowerCase()));
+    modal.querySelector('.codex').innerHTML = `<nav><input id="cq" placeholder="Search the Codex" value="${q}" aria-label="Search the Codex"><div class="grp">Concepts</div>${list.filter(([k]) => CONCEPTS[k]).map(([k, v]) => `<button data-k="${k}" class="${k === cur ? 'on' : ''}">${v[0]}</button>`).join('')}<div class="grp">Units</div>${list.filter(([k]) => CODEX_UNITS[k]).map(([k, v]) => `<button data-k="${k}" class="${k === cur ? 'on' : ''}">${v[0]}</button>`).join('')}</nav><article><h3>${entries[cur][0]}</h3><p>${entries[cur][1]}</p><p class="dimtxt">Every Codex page is generated from the game's own rules and content, so it never disagrees with the game.</p></article>`;
+    modal.querySelectorAll('.codex nav button').forEach((b) => b.addEventListener('click', () => { cur = b.dataset.k; render(); }));
+    const inp = modal.querySelector('#cq'); inp.addEventListener('input', () => { q = inp.value; const pos = inp.selectionStart; render(); const n = modal.querySelector('#cq'); n.focus(); n.setSelectionRange(pos, pos); });
+  };
+  openModal(`<header><span style="display:inline-flex;color:var(--dim)">${svgIcon('codex', 22)}</span><h2>Codex</h2><button class="iconbtn" data-close aria-label="Close">✕</button></header><div class="codex"></div>`);
+  render();
+}
+function openResearch() {
+  openModal(`<header><span style="display:inline-flex;color:var(--dim)">${svgIcon('book', 22)}</span><h2>Research</h2><button class="iconbtn" data-close aria-label="Close">✕</button></header><div class="mbody"><div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr))">${'WUBRG'.map((c) => `<div class="side" style="gap:4px"><h3>${manaSym(c, 18)} ${MANA[c].name}</h3><span class="num dimtxt">${c === 'R' ? 'Level 2 · 47 days to L3' : c === 'G' ? 'Level 0' : 'Level 0 · no M1 spells'}</span>${c === 'R' ? '<span style="font-size:13.5px">Next: Fireball, Blood Fury</span><button class="btn" aria-disabled="true">Researching</button>' : c === 'G' ? '<button class="btn">Research this</button>' : ''}</div>`).join('')}</div></div>`);
+}
+document.getElementById('btnF').addEventListener('click', () => openCodex());
+document.getElementById('btnR').addEventListener('click', openResearch);
+document.getElementById('btnL').addEventListener('click', () => toast('The Ledger: sortable tabs for provinces, commanders, magic, battles, and nations.'));
+
+// ------------------------------------------------------------------ keys
+window.addEventListener('keydown', (e) => {
+  if (e.target.matches('input')) return;
+  if (e.key === 'Shift') app.classList.add('shift');
+  if (e.key === 'Escape') { if (!scrim.hidden) closeModal(); else if (tips.length) closeAll(); else clearSel(); return; }
+  if (e.code === 'Space') { e.preventDefault(); setPaused(!state.paused); }
+  if (/^Digit[1-4]$/.test(e.code) && !e.shiftKey) { state.speed = Number(e.code.slice(5)); updateTop(); }
+  if (/^Digit[1-6]$/.test(e.code) && e.shiftKey) { state.mode = MODES[Number(e.code.slice(5)) - 1][0]; renderModes(); draw(); }
+  if (e.key === 't' || e.key === 'T') lockTop();
+  if (e.key === 'f' || e.key === 'F') openCodex();
+  if (e.key === 'r' || e.key === 'R') openResearch();
+  if (e.key === 'h' || e.key === 'H') app.classList.toggle('hidden-ui');
+  if (e.key === 'm' || e.key === 'M') { const k = MODES.findIndex((m) => m[0] === state.mode); state.mode = MODES[(k + 1) % MODES.length][0]; renderModes(); draw(); }
+  if (e.key === '[') leftDock.hidden = !leftDock.hidden;
+  if (e.key === ']') document.getElementById('rightDock').hidden = !document.getElementById('rightDock').hidden;
+});
+window.addEventListener('keyup', (e) => { if (e.key === 'Shift') app.classList.remove('shift'); });
+
+// ------------------------------------------------------------------ responsive frames
+const rightDock = document.getElementById('rightDock');
+document.getElementById('railOut').addEventListener('click', () => { rightDock.classList.toggle('fly'); });
+document.getElementById('railFeed').addEventListener('click', () => { rightDock.classList.toggle('fly'); msgs.scrollIntoView({ block: 'nearest' }); });
+document.getElementById('railMode').addEventListener('click', () => { const k = MODES.findIndex((m) => m[0] === state.mode); state.mode = MODES[(k + 1) % MODES.length][0]; renderModes(); draw(); const m = MODES.find((x) => x[0] === state.mode); toast(`${m[2]} map: ${m[3]}`); });
+RAW.railMode = { title: 'Map mode', meaning: 'Cycles ownership, dominion, supply, unrest, population and mana springs.', foot: '<span>Key M</span><span></span>' };
+function layout() {
+  const w = app.clientWidth;
+  app.classList.toggle('mid', w < 1250 && w >= 720); app.classList.toggle('phone', w < 720);
+  fit(); draw();
+}
+new ResizeObserver(layout).observe(app);
+
+// ------------------------------------------------------------------ start
+renderAlerts(); renderOutliner(); renderFeed(); renderModes(); updateTop();
+document.fonts?.ready?.then(() => draw());
+layout();
+selectCmd('varo');
+layout();
+requestAnimationFrame(tick);
+})();
+</script>

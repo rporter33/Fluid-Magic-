@@ -1,0 +1,32 @@
+1. Mottle (§1.4 ±M L*, blotch peak 0.55 M) against H13's floor 19.5 / 11.0 in every approved state
+   today's amplitudes {"plains":3,"farmland":3,"forest":3,"hills":0,"mountains":1,"swamp":1,"wasteland":0}: 19.5 (forest/hills) / 11.1 (plains/mountains)
+   amplitudes that keep the floor: {"plains":3,"farmland":3,"forest":3,"hills":0,"mountains":1,"swamp":1,"wasteland":0}: 19.5 / 11.1
+   plains: up to ±3 L* with the others as above
+   farmland: up to ±3 L* with the others as above
+   forest: up to ±3 L* with the others as above
+   hills: up to ±0 L* with the others as above
+   mountains: up to ±1 L* with the others as above
+   swamp: up to ±1 L* with the others as above
+   wasteland: up to ±0 L* with the others as above
+
+2. Paper tooth and granulation (soft-light, W3C formula in gamma space as canvas does)
+   tooth 128±20 at 0.5: swing (mean shift) plains 1.5 (mean 0.00), farmland 2.0 (mean 0.00), forest 2.8 (mean 0.35), hills 3.8 (mean 0.00), mountains 2.6 (mean 0.00), swamp 3.6 (mean 0.18), wasteland 3.0 (mean 0.00)
+   tooth 128±28 at 0.5: swing (mean shift) plains 2.2 (mean 0.32), farmland 2.8 (mean 0.00), forest 3.8 (mean 0.32), hills 5.3 (mean 0.00), mountains 3.9 (mean 0.00), swamp 4.7 (mean 0.18), wasteland 4.3 (mean 0.00)
+   tooth 128±20 at 0.7: swing (mean shift) plains 2.1 (mean 0.00), farmland 2.8 (mean 0.00), forest 3.8 (mean 0.32), hills 5.3 (mean 0.00), mountains 3.6 (mean 0.00), swamp 4.7 (mean 0.18), wasteland 4.3 (mean 0.00)
+   tooth 128±28 at 0.65: swing (mean shift) plains 2.7 (mean 0.25), farmland 3.7 (mean 0.46), forest 5.1 (mean 0.32), hills 6.8 (mean 0.36), mountains 4.6 (mean 0.74), swamp 6.2 (mean 0.18), wasteland 5.4 (mean 0.32)
+   tooth 128±34 at 0.6: swing (mean shift) plains 3.1 (mean 0.25), farmland 4.2 (mean 0.46), forest 5.7 (mean 0.32), hills 7.5 (mean 0.00), mountains 5.5 (mean 0.32), swamp 6.9 (mean 0.18), wasteland 6.0 (mean 0.32)
+   granulation 128±26 at today's rec.G: plains 1.1, farmland 0.8, forest 3.2, hills 5.4, mountains 4.6, swamp 2.9, wasteland 6.0
+   granulation 128±26 at plains 0.5, farmland 0.45 (proposed): plains swing 2.0, mean shift 0.00; farmland swing 2.3, mean shift 0.00
+   granulation 128±26 at 0.6 on plains and farmland (yellows granulate little; this is the visibility a light fill needs): plains 2.3, farmland 2.8
+
+3. Edge pool: today's rim darkening per terrain (§1.4 E: plains -7, farmland -7, forest -5, hills -6, mountains -7, swamp -6, wasteland -8) scaled by k; the band rule on E and E-3 for every banner in every state, and two pooled edges across a border (both sides at their own E) in every state, against the H13 floor 19.5 / 11.0
+   pool x1: band-rule fails 0; pooled edge against pooled edge 18.2 (hills/wasteland) / 10.0 (forest/hills)
+   pool x1.25: band-rule fails 0; pooled edge against pooled edge 18.5 (forest/hills) / 9.8 (forest/hills)
+   pool x1.5: band-rule fails 0; pooled edge against pooled edge 18.2 (forest/hills) / 9.4 (forest/hills)
+   pool x2: band-rule fails 0; pooled edge against pooled edge 17.2 (hills/wasteland) / 8.6 (forest/hills)
+   (the mockup pool: shadow f - 28 L* at 0.45, blur 11 band px at Mid; about E -6 to -8 at the rim. f - 34 at 0.55 is about 1.5 x deeper)
+
+4. Ink sets and region ink
+   DARK_T by contrast (light ink, paper-ink tracks, light region ink): forest, hills, swamp (today forest, hills, swamp)
+   region ink at 0.9 on fill, edge pool -8 and -11, every state: plains 5.76, farmland 4.85, forest 7.35, hills 3.95, mountains 3.47, swamp 4.14, wasteland 3.02
+   region ink at 1 on fill, edge pool -8 and -11, every state: plains 6.86, farmland 5.70, forest 8.61, hills 4.44, mountains 3.91, swamp 4.67, wasteland 3.36

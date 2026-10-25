@@ -1,0 +1,230 @@
+{
+ "figure": "emberSkirmisher",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.521,
+  "iouMirrored": 0.523,
+  "aspectRatio": 1.329,
+  "headDx": 0.211,
+  "guideHeadDx": -0.069,
+  "pass": false
+ },
+ "variety": {
+  "mostAlike": [
+   "stand~windup",
+   0.51
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 12.586,
+  "keyInUnitPct": 0.348,
+  "fringePct": 0.0,
+  "edgeDevPct": 5.56,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.367,
+  "histMin": [
+   "fleeB",
+   0.765
+  ],
+  "maxDE": [
+   "fleeB",
+   6.0
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.862,
+    "de": 2.1,
+    "cloth": 0.357
+   },
+   "deadB": {
+    "hist": 0.855,
+    "de": 4.2,
+    "cloth": 0.403
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.521,
+    -0.002
+   ],
+   "runA": [
+    0.421,
+    0.045
+   ],
+   "runB": [
+    0.18,
+    -0.369
+   ],
+   "aim": [
+    0.415,
+    0.016
+   ],
+   "throw": [
+    0.437,
+    0.081
+   ],
+   "follow": [
+    0.266,
+    -0.24
+   ],
+   "windup": [
+    0.413,
+    -0.002
+   ],
+   "strike": [
+    0.227,
+    -0.166
+   ],
+   "recoil": [
+    0.383,
+    -0.04
+   ],
+   "fall": [
+    0.074,
+    -0.153
+   ],
+   "deadA": [
+    0.205,
+    -0.303
+   ],
+   "deadB": [
+    0.26,
+    -0.079
+   ],
+   "fleeA": [
+    0.499,
+    -0.05
+   ],
+   "fleeB": [
+    0.422,
+    0.076
+   ],
+   "cheer": [
+    0.366,
+    0.029
+   ]
+  },
+  "medianIoU": 0.383,
+  "medianMargin": -0.04,
+  "follow": "0/15",
+  "followShare": 0.0
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.509,
+    0.008
+   ],
+   "runA": [
+    0.421,
+    0.045
+   ],
+   "runB": [
+    0.186,
+    -0.349
+   ],
+   "aim": [
+    0.421,
+    0.021
+   ],
+   "throw": [
+    0.41,
+    0.027
+   ],
+   "follow": [
+    0.267,
+    -0.226
+   ],
+   "windup": [
+    0.39,
+    -0.014
+   ],
+   "strike": [
+    0.222,
+    -0.162
+   ],
+   "recoil": [
+    0.353,
+    -0.005
+   ],
+   "fall": [
+    0.078,
+    -0.264
+   ],
+   "fleeA": [
+    0.498,
+    -0.047
+   ],
+   "fleeB": [
+    0.407,
+    0.047
+   ],
+   "cheer": [
+    0.401,
+    0.011
+   ]
+  },
+  "follow": "0/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 22.7,
+  "afterMax": 0.7
+ },
+ "side": {
+  "neutral": {
+   "share": 0.232,
+   "worstBelow": 15.3,
+   "below": {
+    "plains": 20.7,
+    "farmland": 20.5,
+    "swamp": 15.3,
+    "forest": 15.5
+   }
+  },
+  "sideKeyline": {
+   "share": 0.489,
+   "worstBelow": 13.4,
+   "below": {
+    "plains": 19.3,
+    "farmland": 18.9,
+    "swamp": 13.4,
+    "forest": 13.5
+   }
+  },
+  "pass": false
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.emberSkirmisher.front.g3pro.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": false,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

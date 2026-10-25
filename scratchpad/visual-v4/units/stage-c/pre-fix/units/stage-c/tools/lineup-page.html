@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stage C Lineup</title>
+<meta name="description" content="Fluid Magic stage C: every painted creature and god figure standing by size on one ground line, in the battle's camera, beside a painted man.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --chrome-0: #1C1A17; --chrome-1: #24211D; --chrome-2: #2E2A25; --chrome-3: #3A352E; --line: #4A433A;
+  --text: #F4EEDF; --dim: #B7AD9A; --faint: #7F7767; --brass: #B8914A; --brass-hi: #D4B26A; --warn: #E0A05A;
+  --plate: rgba(28, 26, 23, 0.86);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #14120f; color: var(--text); font: 14px/1.35 'Alegreya Sans', system-ui, sans-serif; }
+#app { position: fixed; inset: 0; touch-action: none; }
+#app canvas { display: block; cursor: grab; }
+#app canvas.drag { cursor: grabbing; }
+header { position: fixed; left: 0; right: 0; top: 0; padding: 10px 16px 8px; padding-top: max(10px, env(safe-area-inset-top)); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; background: linear-gradient(var(--plate), rgba(28,26,23,0.0)); pointer-events: none; }
+header > * { pointer-events: auto; }
+h1 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: .01em; }
+h1 small { font-weight: 400; color: var(--dim); font-size: 13px; margin-left: 6px; }
+.seg { display: flex; gap: 2px; background: var(--plate); border: 1px solid rgba(255,255,255,0.08); border-radius: 15px; padding: 2px; }
+.seg .tag { font-size: 10px; color: var(--faint); letter-spacing: .1em; text-transform: uppercase; align-self: center; padding: 0 4px 0 8px; }
+.seg button { border: 0; background: transparent; color: var(--dim); font: 500 13px 'Alegreya Sans', sans-serif; padding: 6px 11px; min-height: 32px; border-radius: 13px; cursor: pointer; white-space: nowrap; }
+.seg button.on { background: var(--chrome-3); color: var(--text); }
+.seg button:focus-visible, #legend li:focus-visible { outline: 2px solid var(--brass-hi); outline-offset: 1px; }
+#labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+.lb { position: absolute; transform: translateX(-50%); text-align: center; white-space: nowrap; font-size: 12px; color: #2a2620; text-shadow: 0 1px 0 rgba(255,255,255,0.25); }
+.lb b { display: block; font-weight: 700; font-size: 13px; color: #1f1c17; }
+.lb .flag { color: #8a3b12; font-weight: 500; }
+.lb.num { font-size: 11px; font-weight: 700; color: #1f1c17; background: rgba(244,238,223,0.55); border-radius: 8px; padding: 0 4px; }
+.lb.man { color: #4a4337; font-style: italic; }
+.lb.nm { white-space: normal; font-size: 11px; line-height: 1.2; }
+.lb.nm b { font-size: 12px; }
+#legend { position: fixed; right: 12px; top: 64px; bottom: 44px; width: 300px; background: var(--plate); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+#legend h2 { margin: 0; padding: 10px 12px 6px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); font-weight: 500; display: flex; justify-content: space-between; }
+#legend h2 button { border: 0; background: none; color: var(--dim); font: inherit; cursor: pointer; padding: 0; }
+#legend ol { list-style: none; margin: 0; padding: 0 6px 8px; overflow-y: auto; }
+#legend li { display: grid; grid-template-columns: 26px 1fr auto; gap: 6px; padding: 5px 6px; border-radius: 6px; cursor: pointer; align-items: baseline; }
+#legend li:hover, #legend li.on { background: var(--chrome-2); }
+#legend li .n { color: var(--faint); font-size: 12px; text-align: right; }
+#legend li .nm small { color: var(--dim); }
+#legend li .sz { color: var(--dim); font-size: 12px; white-space: nowrap; }
+#legend li .fl { grid-column: 2 / 4; color: var(--warn); font-size: 12px; }
+#legend.closed ol { display: none; }
+#legend.closed { bottom: auto; }
+footer { position: fixed; left: 12px; right: 324px; bottom: 8px; margin-bottom: env(safe-area-inset-bottom); font-size: 12px; color: var(--dim); pointer-events: none; background: var(--plate); border-radius: 8px; padding: 5px 10px; }
+@media (max-width: 760px) {
+  header { gap: 6px; padding-left: 8px; padding-right: 8px; background: var(--plate); }
+  h1 { font-size: 16px; width: 100%; }
+  h1 small { display: block; margin: 0; font-size: 12px; }
+  .seg .tag { display: none; }
+  .seg button { padding: 4px 9px; min-height: 34px; font-size: 13px; }
+  #legend, #legend.closed { left: 8px; right: 8px; width: auto; top: auto; bottom: 8px; max-height: 40vh; }
+  footer { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div id="app" aria-label="The lineup: every painted creature and god standing on one ground line"></div>
+<div id="labels" aria-hidden="true"></div>
+<header>
+  <h1>Stage C lineup <small id="sub"></small></h1>
+  <div class="seg" role="group" aria-label="View"><span class="tag">View</span><button data-v="front" class="on">Front</button><button data-v="back">Back</button></div>
+  <div class="seg" role="group" aria-label="Frame"><span class="tag">Frame</span><button data-f="1,2">Size 1–2</button><button data-f="3,4">3–4</button><button data-f="5,6">5–6</button><button data-f="all" class="on">All</button></div>
+  <div class="seg" role="group" aria-label="Zoom"><button data-z="out" aria-label="Zoom out">−</button><button data-z="man" title="A man at play zoom (28 px)">Play zoom</button><button data-z="in" aria-label="Zoom in">+</button></div>
+</header>
+<aside id="legend" aria-label="Figures"><h2><span>Figures, by size</span><button id="legendToggle" aria-expanded="true">Hide</button></h2><ol id="list"></ol></aside>
+<footer id="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.js"></script>
+<script id="lineup-data" type="application/json">/*DATA*/</script>
+<script>
+'use strict';
+// Stage C lineup (owner review 2): the battle's camera (orthographic, pitch 40 degrees, yaw 30; the figures are painted
+// at it) on battle a's own painted ground; every figure's ground anchor on one ground line, at tier S (0.5 wu a px), so
+// each stands at its true height; a painted man (28 wu) opens each size. Rendered on change only.
+const D = JSON.parse(document.getElementById('lineup-data').textContent);
+const GAP = 16, LIFT = 30; // wu between figures; a flier hovers this high over the line (the battle flies them at 40 to 80)
+const state = { view: 'front', cam: { cx: 0, cy: -60, z: 0.3 }, frame: 'all', sel: null };
+const NAT = { cinderHorde: 'Cinder', thornwood: 'Thornwood', independent: 'Independent', common: 'any nation' };
+
+async function main() {
+  const app = new PIXI.Application();
+  await app.init({ resizeTo: window, background: 0x14120f, antialias: false, autoDensity: true, resolution: Math.min(window.devicePixelRatio || 1, 2),
+    preference: 'webgl', eventMode: 'none', eventFeatures: { move: false, globalMove: false, click: false, wheel: false } });
+  app.ticker.stop();
+  document.getElementById('app').appendChild(app.canvas);
+  const loadImg = (url) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = url; });
+  const tex = async (url) => new PIXI.Texture({ source: new PIXI.ImageSource({ resource: await loadImg(url), autoGenerateMipmaps: true, scaleMode: 'linear' }) });
+  const world = new PIXI.Container(); app.stage.addChild(world);
+  // place every entry: slots by the wider of its two views
+  let x = 0, maxH = 0;
+  const E = D.figures.map((e, i) => {
+    const ws = Object.values(e.views).map((v) => v.w * D.wuPerPx), w = Math.max(14, ...ws);
+    const ax = Object.values(e.views)[0].ax * w;
+    const slot = { e, i, x0: x, x: x + ax, x1: x + w, h: Math.max(...Object.values(e.views).map((v) => v.h * D.wuPerPx)) + (e.flier ? LIFT : 0) };
+    x += w + (e.group === 'scale' ? GAP * 0.6 : GAP);
+    maxH = Math.max(maxH, slot.h);
+    return slot;
+  });
+  const total = x;
+  // the ground: battle a's own painted ground tile (0.8 px a screen-plane unit), mirrored so it repeats without seams
+  const gt = await tex(D.ground.url);
+  gt.source.addressMode = 'repeat';
+  const ground = new PIXI.TilingSprite({ texture: gt, width: (total + 16000) * D.groundRes, height: 16000 * D.groundRes });
+  ground.scale.set(1 / D.groundRes); ground.position.set(-8000, -12000); // far past any zoom out
+  world.addChild(ground);
+  const shadows = new PIXI.Container(), figs = new PIXI.Container(); world.addChild(shadows, figs);
+  // a flier's shadow on the ground, as the battle draws it (a soft ellipse)
+  const g = new PIXI.Graphics(); for (let k = 10; k > 0; k--) g.ellipse(0, 0, k * 5, k * 5 * 0.643).fill({ color: 0x000000, alpha: 0.06 });
+  const discTex = app.renderer.generateTexture({ target: g, resolution: 2 });
+  for (const s of E) {
+    s.tex = {};
+    for (const [v, t] of Object.entries(s.e.views)) s.tex[v] = { body: await tex(t.url), shadow: t.shadow ? await tex(t.shadow.url) : null, t };
+    s.sp = new PIXI.Sprite(); s.sh = new PIXI.Sprite(); figs.addChild(s.sp); shadows.addChild(s.sh);
+    s.below = Object.fromEntries(Object.entries(s.e.views).map(([v, t]) => [v, s.e.flier ? 0 : (1 - t.ay) * t.h * D.wuPerPx]));
+  }
+  const labels = document.getElementById('labels');
+  for (const s of E) {
+    const d = document.createElement('div'); d.className = 'lb' + (s.e.group === 'scale' ? ' man' : '');
+    labels.appendChild(d); s.lb = d;
+  }
+  // the legend
+  const list = document.getElementById('list');
+  let n = 0;
+  for (const s of E) {
+    if (s.e.group === 'scale') continue;
+    s.n = ++n;
+    const li = document.createElement('li'); li.tabIndex = 0; s.li = li;
+    li.onclick = () => focusOn(s); li.onkeydown = (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); focusOn(s); } };
+    list.appendChild(li);
+  }
+  document.getElementById('sub').textContent = `${D.counts.creatures} creature figures and ${D.counts.gods} god figures, by size, in the battle's camera`;
+  document.getElementById('foot').textContent = `Tier S art (0.5 wu a px) on ${D.ground.src}; orthographic, pitch 40°, yaw 30°, as the battle. A man stands 28 wu. Fliers hover ${LIFT} wu over the line. Flagged views (gates reported, not passed) are marked.`;
+
+  function setView(v) {
+    state.view = v;
+    for (const s of E) {
+      const t = s.tex[v] || null;
+      s.sp.visible = s.sh.visible = !!t; s.lb.style.display = t ? '' : 'none';
+      if (s.li) s.li.style.display = t ? '' : 'none';
+      if (!t) continue;
+      const k = D.wuPerPx, y = s.e.flier ? -LIFT : 0;
+      s.sp.texture = t.body; s.sp.anchor.set(t.t.ax, t.t.ay); s.sp.scale.set(k); s.sp.position.set(s.x, y);
+      if (t.shadow) { s.sh.texture = t.shadow; s.sh.anchor.set(t.t.shadow.ax, t.t.shadow.ay); s.sh.scale.set(k, 0.9 * k); s.sh.position.set(s.x + 5, 4); s.sh.alpha = 1; s.sh.tint = 0xffffff; }
+      else if (s.e.flier) { s.sh.texture = discTex; s.sh.anchor.set(0.5); s.sh.scale.set(0.12); s.sh.position.set(s.x + 6, 2); s.sh.alpha = 0.35; }
+      else s.sh.visible = false;
+      const flag = t.t.status !== 'pass' ? `<span class="flag">reported: ${t.t.failed.join(', ')}</span>` : '';
+      const sz = s.e.group === 'scale' ? '28 wu' : `size ${s.e.size} · ${t.t.heightWu} wu`;
+      const sub = s.e.subView && s.e.subView !== v ? null : s.e.sub; // the Wolf Rider's front choice says nothing of its back
+      s.full = s.e.group === 'scale' ? `<span>a man</span>` : `<b>${s.n}. ${s.e.name}</b>${sub ? sub + '<br>' : ''}${sz}${flag ? '<br>' + flag : ''}`;
+      if (s.li) s.li.innerHTML = `<span class="n">${s.n}</span><span class="nm">${s.e.name}${sub ? ` <small>${sub}</small>` : ''}</span><span class="sz">size ${s.e.size} · ${t.t.heightWu} wu</span>${flag ? `<span class="fl">${v}: reported (${t.t.failed.join(', ')})</span>` : ''}${s.e.note ? `<span class="fl" style="color:var(--dim)">${s.e.note}</span>` : ''}`;
+    }
+    document.querySelectorAll('[data-v]').forEach((b) => b.classList.toggle('on', b.dataset.v === v));
+    schedule();
+  }
+  function area() {
+    const W = window.innerWidth, H = window.innerHeight, phone = W <= 760;
+    const lg = document.getElementById('legend'), closed = lg.classList.contains('closed');
+    const top = document.querySelector('header').getBoundingClientRect().bottom + 6;
+    const right = phone || closed ? 12 : 324, bottom = phone && !closed ? lg.getBoundingClientRect().height + 16 : 40;
+    return { x0: 12, x1: W - right, y0: top, y1: H - bottom };
+  }
+  function fit(i0, i1) {
+    const A = area(), ss = E.slice(i0, i1 + 1);
+    const X0 = ss[0].x0, X1 = ss[ss.length - 1].x1, hh = Math.max(...ss.map((s) => s.h));
+    const lab = 70; // the labels under the line, in px
+    const z = Math.min((A.x1 - A.x0) / (X1 - X0), (A.y1 - A.y0 - lab) / (hh * 1.08));
+    state.cam = { z, cx: (X0 + X1) / 2, cy: 0 };
+    state.ground = (A.y0 + A.y1 + hh * z - lab) / 2; // the ground line's screen y: the figures and their labels centred
+    state.areaCx = (A.x0 + A.x1) / 2;
+    schedule();
+  }
+  function frameBy(f) {
+    state.frame = f;
+    document.querySelectorAll('[data-f]').forEach((b) => b.classList.toggle('on', b.dataset.f === f));
+    if (f === 'all') return fitAll();
+    const [a, b] = f.split(',').map(Number);
+    const idx = E.map((s, i) => [s, i]).filter(([s]) => s.e.size >= a && s.e.size <= b).map(([, i]) => i);
+    fit(Math.max(0, idx[0] - 1), idx[idx.length - 1]);
+  }
+  function fitAll() {
+    fit(0, E.length - 1);
+    // a phone shows the line too small whole: it starts at a readable zoom at the line's start instead
+    if (state.cam.z * 28 < 7) { const A = area(); state.cam.z = 9 / 28; state.cam.cx = (A.x1 - A.x0) / 2 / state.cam.z - 10; }
+  }
+  function focusOn(s) {
+    const A = area(), lab = 70;
+    const z = Math.min((A.y1 - A.y0 - lab) / (s.h * 1.25), (A.x1 - A.x0) / ((s.x1 - s.x0) * 2.2), 6);
+    state.cam = { z, cx: (s.x0 + s.x1) / 2, cy: 0 }; state.ground = (A.y0 + A.y1 + s.h * z - lab) / 2; state.areaCx = (A.x0 + A.x1) / 2;
+    E.forEach((q) => q.li && q.li.classList.toggle('on', q === s));
+    schedule();
+  }
+  function zoomAt(f, px, py) {
+    const c = state.cam, nz = Math.min(8, Math.max(0.04, c.z * f));
+    const wx = (px - state.areaCx) / c.z + c.cx;
+    c.cx = wx - (px - state.areaCx) / nz; c.z = nz;
+    void py; schedule();
+  }
+  let queued = false;
+  function schedule() { if (!queued) { queued = true; requestAnimationFrame(draw); } }
+  function draw() {
+    queued = false;
+    const c = state.cam;
+    world.scale.set(c.z);
+    world.position.set(state.areaCx - c.cx * c.z, state.ground - c.cy * c.z);
+    app.renderer.render(app.stage);
+    // labels: the full label where its slot is wide enough on screen, else its number
+    for (const s of E) {
+      if (s.lb.style.display === 'none') continue;
+      const X = world.position.x + s.x * c.z, slot = (s.x1 - s.x0 + GAP) * c.z;
+      const on = X > -100 && X < window.innerWidth + 100;
+      s.lb.style.visibility = on ? 'visible' : 'hidden';
+      if (!on) continue;
+      // the whole label where the slot holds it, the number and name where it is narrower, else the number
+      const man = s.e.group === 'scale';
+      const want = man ? (slot >= 40 ? 'full' : 'none') : slot >= 150 ? 'full' : slot >= 84 ? 'name' : 'num';
+      if (s.lbMode !== want + state.view) {
+        s.lb.innerHTML = want === 'full' ? s.full : want === 'name' ? `<b>${s.n}. ${s.e.name}</b>` : want === 'num' ? String(s.n) : '';
+        s.lb.classList.toggle('num', want === 'num'); s.lb.classList.toggle('nm', want === 'name'); s.lbMode = want + state.view;
+      }
+      if (want === 'name') s.lb.style.maxWidth = Math.max(60, slot - 6) + 'px';
+      s.lb.style.left = X + 'px';
+      // under the figure's lowest point (a body's near legs reach below its ground anchor in this camera)
+      s.lb.style.top = (world.position.y + Math.max(8, (s.below[state.view] || 0) * c.z + 4)) + 'px';
+    }
+  }
+  // input: drag to pan, wheel and pinch to zoom, keys
+  const cv = app.canvas, ptrs = new Map();
+  let last = null, pinch = null;
+  cv.addEventListener('pointerdown', (e) => { cv.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); cv.classList.add('drag'); last = { x: e.clientX, y: e.clientY }; });
+  cv.addEventListener('pointermove', (e) => {
+    if (!ptrs.has(e.pointerId)) return;
+    ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (ptrs.size === 2) {
+      const [a, b] = [...ptrs.values()], d = Math.hypot(a.x - b.x, a.y - b.y), mx = (a.x + b.x) / 2;
+      if (pinch) zoomAt(d / pinch, mx, 0);
+      pinch = d; return;
+    }
+    if (last) { state.cam.cx -= (e.clientX - last.x) / state.cam.z; state.ground += e.clientY - last.y; last = { x: e.clientX, y: e.clientY }; schedule(); }
+  });
+  const up = (e) => { ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null; if (!ptrs.size) { last = null; cv.classList.remove('drag'); } };
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  cv.addEventListener('wheel', (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.clientX, e.clientY); }, { passive: false });
+  window.addEventListener('keydown', (e) => {
+    if (e.target && e.target.tagName === 'LI') return;
+    const k = e.key;
+    if (k === 'ArrowLeft') { state.cam.cx -= 80 / state.cam.z; schedule(); }
+    else if (k === 'ArrowRight') { state.cam.cx += 80 / state.cam.z; schedule(); }
+    else if (k === '+' || k === '=') zoomAt(1.25, state.areaCx, 0);
+    else if (k === '-') zoomAt(0.8, state.areaCx, 0);
+    else if (k === '0') frameBy('all');
+    else if (k === 'f' || k === 'F') setView('front');
+    else if (k === 'b' || k === 'B') setView('back');
+  });
+  document.querySelectorAll('[data-v]').forEach((b) => (b.onclick = () => setView(b.dataset.v)));
+  document.querySelectorAll('[data-f]').forEach((b) => (b.onclick = () => frameBy(b.dataset.f)));
+  document.querySelectorAll('[data-z]').forEach((b) => (b.onclick = () => {
+    if (b.dataset.z === 'man') { state.cam.z = 1; schedule(); } else zoomAt(b.dataset.z === 'in' ? 1.25 : 0.8, state.areaCx, 0);
+  }));
+  document.getElementById('legendToggle').onclick = (e) => {
+    const lg = document.getElementById('legend'); lg.classList.toggle('closed');
+    e.target.textContent = lg.classList.contains('closed') ? 'Show' : 'Hide'; e.target.setAttribute('aria-expanded', lg.classList.contains('closed') ? 'false' : 'true');
+    frameBy(state.frame);
+  };
+  window.addEventListener('resize', () => frameBy(state.frame));
+  const q = new URLSearchParams(location.search);
+  if (window.innerWidth <= 760) { const lg = document.getElementById('legend'), bt = document.getElementById('legendToggle'); lg.classList.add('closed'); bt.textContent = 'Show'; bt.setAttribute('aria-expanded', 'false'); }
+  setView(q.get('view') === 'back' ? 'back' : 'front');
+  frameBy(['1,2', '3,4', '5,6'].includes(q.get('frame')) ? q.get('frame') : 'all');
+  window.__lineup = { ready: true, entries: E.length, textures: () => app.renderer.texture.managedTextures.filter(Boolean).length, frameBy, setView, focusOn: (i) => focusOn(E[i]) };
+}
+main().catch((e) => { document.body.insertAdjacentHTML('beforeend', `<p style="position:fixed;top:40%;width:100%;text-align:center">The lineup could not start: ${e.message}</p>`); window.__lineup = { error: e.message }; });
+</script>
+</body>
+</html>

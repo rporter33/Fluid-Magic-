@@ -1,0 +1,9 @@
+/* pass 4 (natural/pass4/design-final.md): every pass-4 control and piece of chrome is hidden in Painted (v3) and with ?p4=off */
+body.look-v3 .p4only, body.p4off .p4only { display: none !important; }
+/* §3.1: the season glyph before the date; the clock pinned to the top bar's right end (the readouts scroll under it), so the date and glyph are always in view */
+.clock .sglyph { display: inline-flex; align-items: center; color: var(--dim); margin-right: -3px; }
+body.look-relief:not(.p4off) .topbar .clock { position: sticky; right: 0; z-index: 3; flex-shrink: 0; background: linear-gradient(#26231E, #1E1B17); box-shadow: -10px 0 8px -4px rgba(14,9,5,.85); }
+body.look-relief:not(.p4off) .topbar .clock.paused { background: linear-gradient(rgba(217,73,59,.18), rgba(217,73,59,.18)), linear-gradient(#26231E, #1E1B17); box-shadow: inset 0 0 0 1px rgba(217,73,59,.55), -10px 0 8px -4px rgba(14,9,5,.85); }
+/* §4: fog as memory, the card's and the province panel's "Out of sight · as of Y1 M3" */
+.asof { color: var(--faint); font-size: 12px; font-style: normal; }
+.tip .meaning .asof { display: block; margin-bottom: 2px; }

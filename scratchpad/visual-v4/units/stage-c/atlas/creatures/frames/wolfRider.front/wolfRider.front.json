@@ -1,0 +1,410 @@
+{
+ "figure": "wolfRider",
+ "view": "front",
+ "sheet": "keyed.png",
+ "grid": [
+  4,
+  4
+ ],
+ "cell": [
+  300.0,
+  224.0
+ ],
+ "frames": [
+  {
+   "name": "stand",
+   "file": "wolfRider.front.stand.png",
+   "kind": "standing",
+   "box": [
+    135,
+    44,
+    226,
+    206
+   ],
+   "size": [
+    91,
+    162
+   ],
+   "anchor": [
+    44.7,
+    159.0
+   ],
+   "height": 158,
+   "width": 87,
+   "area": 5111,
+   "parts": 2
+  },
+  {
+   "name": "lopeA",
+   "file": "wolfRider.front.lopeA.png",
+   "kind": "standing",
+   "box": [
+    427,
+    87,
+    538,
+    215
+   ],
+   "size": [
+    111,
+    128
+   ],
+   "anchor": [
+    36.1,
+    125.0
+   ],
+   "height": 124,
+   "width": 107,
+   "area": 4812,
+   "parts": 1
+  },
+  {
+   "name": "lopeB",
+   "file": "wolfRider.front.lopeB.png",
+   "kind": "standing",
+   "box": [
+    723,
+    85,
+    838,
+    196
+   ],
+   "size": [
+    115,
+    111
+   ],
+   "anchor": [
+    57.2,
+    108.0
+   ],
+   "height": 107,
+   "width": 111,
+   "area": 4656,
+   "parts": 2
+  },
+  {
+   "name": "leapA",
+   "file": "wolfRider.front.leapA.png",
+   "kind": "standing",
+   "box": [
+    1042,
+    97,
+    1145,
+    208
+   ],
+   "size": [
+    103,
+    111
+   ],
+   "anchor": [
+    18.5,
+    108.0
+   ],
+   "height": 107,
+   "width": 99,
+   "area": 4573,
+   "parts": 1
+  },
+  {
+   "name": "leapB",
+   "file": "wolfRider.front.leapB.png",
+   "kind": "standing",
+   "box": [
+    150,
+    271,
+    232,
+    431
+   ],
+   "size": [
+    82,
+    160
+   ],
+   "anchor": [
+    26.0,
+    157.0
+   ],
+   "height": 156,
+   "width": 78,
+   "area": 4176,
+   "parts": 1
+  },
+  {
+   "name": "charge",
+   "file": "wolfRider.front.charge.png",
+   "kind": "standing",
+   "box": [
+    427,
+    321,
+    538,
+    445
+   ],
+   "size": [
+    111,
+    124
+   ],
+   "anchor": [
+    38.0,
+    121.0
+   ],
+   "height": 120,
+   "width": 107,
+   "area": 4853,
+   "parts": 3,
+   "anchorSlicer": [
+    37.5,
+    121.0
+   ],
+   "anchorFrom": "the shipped frame's ground point in sheet px (stage C lance fix)"
+  },
+  {
+   "name": "windup",
+   "file": "wolfRider.front.windup.png",
+   "kind": "standing",
+   "box": [
+    744,
+    237,
+    835,
+    419
+   ],
+   "size": [
+    91,
+    182
+   ],
+   "anchor": [
+    36.3,
+    179.0
+   ],
+   "height": 178,
+   "width": 87,
+   "area": 5236,
+   "parts": 1,
+   "anchorSlicer": [
+    36.6,
+    179.0
+   ],
+   "anchorFrom": "the shipped frame's ground point in sheet px (stage C lance fix)"
+  },
+  {
+   "name": "strike",
+   "file": "wolfRider.front.strike.png",
+   "kind": "standing",
+   "box": [
+    1012,
+    312,
+    1131,
+    424
+   ],
+   "size": [
+    119,
+    112
+   ],
+   "anchor": [
+    64.9,
+    109.0
+   ],
+   "height": 108,
+   "width": 115,
+   "area": 4607,
+   "parts": 2,
+   "anchorSlicer": [
+    57.8,
+    109.0
+   ],
+   "anchorFrom": "the shipped frame's ground point in sheet px (stage C lance fix)"
+  },
+  {
+   "name": "bite",
+   "file": "wolfRider.front.bite.png",
+   "kind": "standing",
+   "box": [
+    129,
+    541,
+    233,
+    669
+   ],
+   "size": [
+    104,
+    128
+   ],
+   "anchor": [
+    35.8,
+    125.0
+   ],
+   "height": 124,
+   "width": 100,
+   "area": 5007,
+   "parts": 1
+  },
+  {
+   "name": "recoil",
+   "file": "wolfRider.front.recoil.png",
+   "kind": "standing",
+   "box": [
+    445,
+    455,
+    551,
+    637
+   ],
+   "size": [
+    106,
+    182
+   ],
+   "anchor": [
+    36.7,
+    179.0
+   ],
+   "height": 178,
+   "width": 102,
+   "area": 5499,
+   "parts": 3,
+   "anchorSlicer": [
+    37.1,
+    179.0
+   ],
+   "anchorFrom": "the shipped frame's ground point in sheet px (stage C lance fix)"
+  },
+  {
+   "name": "fall",
+   "file": "wolfRider.front.fall.png",
+   "kind": "standing",
+   "box": [
+    748,
+    453,
+    840,
+    651
+   ],
+   "size": [
+    92,
+    198
+   ],
+   "anchor": [
+    28.1,
+    195.0
+   ],
+   "height": 194,
+   "width": 88,
+   "area": 5806,
+   "parts": 1,
+   "anchorSlicer": [
+    28.2,
+    195.0
+   ],
+   "anchorFrom": "the shipped frame's ground point in sheet px (stage C lance fix)"
+  },
+  {
+   "name": "deadA",
+   "file": "wolfRider.front.deadA.png",
+   "kind": "lying",
+   "box": [
+    1004,
+    539,
+    1171,
+    646
+   ],
+   "size": [
+    167,
+    107
+   ],
+   "anchor": [
+    70.2,
+    78.5
+   ],
+   "height": 103,
+   "width": 163,
+   "area": 5777,
+   "parts": 1
+  },
+  {
+   "name": "deadB",
+   "file": "wolfRider.front.deadB.png",
+   "kind": "lying",
+   "box": [
+    20,
+    792,
+    281,
+    885
+   ],
+   "size": [
+    261,
+    93
+   ],
+   "anchor": [
+    134.1,
+    68.0
+   ],
+   "height": 89,
+   "width": 257,
+   "area": 6276,
+   "parts": 2
+  },
+  {
+   "name": "boltA",
+   "file": "wolfRider.front.boltA.png",
+   "kind": "standing",
+   "box": [
+    450,
+    782,
+    535,
+    894
+   ],
+   "size": [
+    85,
+    112
+   ],
+   "anchor": [
+    15.5,
+    109.0
+   ],
+   "height": 108,
+   "width": 81,
+   "area": 3114,
+   "parts": 1
+  },
+  {
+   "name": "boltB",
+   "file": "wolfRider.front.boltB.png",
+   "kind": "standing",
+   "box": [
+    754,
+    778,
+    831,
+    878
+   ],
+   "size": [
+    77,
+    100
+   ],
+   "anchor": [
+    26.9,
+    97.0
+   ],
+   "height": 96,
+   "width": 73,
+   "area": 3131,
+   "parts": 1
+  },
+  {
+   "name": "cheer",
+   "file": "wolfRider.front.cheer.png",
+   "kind": "standing",
+   "box": [
+    1053,
+    685,
+    1129,
+    882
+   ],
+   "size": [
+    76,
+    197
+   ],
+   "anchor": [
+    25.6,
+    194.0
+   ],
+   "height": 193,
+   "width": 72,
+   "area": 5361,
+   "parts": 1
+  }
+ ],
+ "missing": [],
+ "overlaps": []
+}

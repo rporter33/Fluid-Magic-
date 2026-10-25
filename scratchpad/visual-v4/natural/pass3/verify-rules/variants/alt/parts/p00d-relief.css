@@ -1,0 +1,53 @@
+
+/* ================================================================ v4: the relief map (map-design-final.md) */
+/* Army miniatures: DOM pieces over the map (click selects, the army card on hover, focusable); stacks fan out on hover */
+/* Only the piece's own silhouette (.hit: base plus figure) takes the pointer; the rest of its box lets the map's wheel, drag and right-click through */
+.mini { position: absolute; pointer-events: none; line-height: 0; }
+.mini canvas { display: block; }
+.mini .hit { position: absolute; pointer-events: auto; cursor: pointer; border-radius: 45%; touch-action: none; }
+.mini .hit:focus-visible { outline: 2px solid #F4EEDF; outline-offset: 1px; }
+.mini.fanned { z-index: 2; }
+.mini .cplate { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); font: 600 11.5px/1 var(--font-num); color: #F4EEDF; background: rgba(20,18,15,.92); border: 1px solid rgba(184,145,74,.6); padding: 2px 5px; border-radius: 3px; white-space: nowrap; pointer-events: none; }
+/* The mockup controls and the Try this list follow the Map look */
+body.look-relief .v3only { display: none !important; }
+body.look-v3 .rlonly { display: none !important; }
+/* Owner question 6 (default): the right dock starts collapsed to its 48 px rail at every width; Outliner and Feed one click away */
+.app.railed .rail { display: flex; }
+.app.railed .dock.right { right: 48px; display: none; }
+.app.railed .dock.right.fly { display: flex; }
+.app.railed .modes { right: 56px; }
+.app.railed .pausechip, .app.railed .toasts { right: 56px; }
+.app.railed .strip { right: 48px; }
+.app.railed .dock.right.fly ~ .modes { right: 356px; } /* the open dock is never under the mode buttons */
+
+/* the controls' summary wraps at phone width under Relief (Painted (v3) keeps its frame as it was) */
+body.look-relief .headmore > summary { width: auto; max-width: 100%; }
+/* Painted (v3) keeps its frame: the extra Map look control pushes Reduced motion (19 px) onto the controls' second row, which made the open header 1 px taller than the
+   original page's and the v3 map canvas 1 px shorter (seen at 800 px tall and more, where the controls start open); held at the row's own 18 px */
+body.look-v3 #mockctl > .grp:has(> label > #rmotion) { height: 18px; }
+/* natural §7: the terrain chip (a swatch in the Clear fill with the terrain's glyph, then the word) on the hover card's title line, the province card and the legend */
+.tsw { display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: 2px; box-shadow: 0 0 0 1px rgba(14,12,10,.55); vertical-align: -1px; }
+.tsw svg { display: block; }
+.tchip { display: inline-flex; align-items: center; gap: 4px; font-weight: 500; white-space: nowrap; }
+.tdot { color: var(--faint); font-weight: 400; white-space: pre; }
+.tip h4 .tt > span:last-child { display: inline-flex; align-items: center; flex-wrap: wrap; }
+.tip h4 .num .tchip { font: 500 13.5px var(--font-body); color: var(--text); }
+.dockhead .sub .tchip { color: var(--text); font-weight: 400; }
+/* natural §6: the Terrain mode's legend (seven swatches with glyphs and names), "Use these colours everywhere", and the button while the colours are prepared */
+.modes .legend .tlegend { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; margin-top: 6px; color: var(--text); font-size: 12px; }
+.modes .legend .tl { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.modes .legend .tuse { margin-top: 6px; font: 500 12px var(--font-body); color: var(--text); background: var(--chrome-3); border: 1px solid var(--line); border-radius: 3px; padding: 3px 7px; cursor: pointer; }
+.modes .legend .tuse:hover { border-color: #CFC5B0; }
+.modes .legend .tnote, .modes .legend .tprep { margin-top: 5px; font-size: 11.5px; }
+.modes .legend .tprep { color: var(--text); }
+.modebtn.prep { position: relative; }
+.modebtn.prep::after { content: ''; position: absolute; right: 3px; top: 3px; width: 6px; height: 6px; border-radius: 50%; background: #B8914A; animation: tprep 1s ease-in-out infinite alternate; }
+@keyframes tprep { from { opacity: .35; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .modebtn.prep::after { animation: none; } }
+/* AD fix 12: the Ownership caption shows for 4 s after a mode change and while the Ownership button is hovered or focused (rlModeCapSync) */
+.modes .legend.captemp:not(.capshow) { display: none; }
+/* pass 2 (verifier: names and towns under the right-edge controls): in the relief look the zoom band and Fit stack in the 34 px mode column, which the camera's view excludes */
+.modes.compact .fitrow { flex-direction: column; align-items: stretch; width: 34px; gap: 4px; }
+.modes.compact .zoomchip { justify-content: center; padding: 0; height: 22px; font-size: 11.5px; }
+.modes.compact .fitbtn { justify-content: center; padding: 0; }
+.modes.compact .fitbtn kbd { display: none; }

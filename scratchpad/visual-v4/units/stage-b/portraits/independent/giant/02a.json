@@ -1,0 +1,86 @@
+{
+ "id": "giant-02a",
+ "unit": "giant",
+ "nation": "independent",
+ "group": "creatures",
+ "subject": "giant",
+ "promptFile": "stage-b/work/portraits/prompts-used/giant.02a.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "02",
+ "candidate": "a",
+ "files": {
+  "master": "02a-512.webp",
+  "game": "02a.webp",
+  "small": "02a-64.webp"
+ },
+ "bytes": {
+  "master": 56786,
+  "game": 18274,
+  "small": 1730
+ },
+ "sourceFile": "stage-b/raw/portraits/giant.02a.nb21.png",
+ "sourceSha256": "656695f9ec931dfb2bcc9688da4762ee3ecf7485be587e47dc56bebbde59b3bb",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one mountain giant (a huge, primitive man of the high mountains, four men tall), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the hair about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One giant only, no other people. No hands, no club raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and hair and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Giant, an independent mountain giant, four men tall, who eats for four and draws every eye and every blow: a giant, not a man: coarse, heavy, massive features, a neck as thick as the head, weathered skin, crude hides and stones for clothing; muted greys and tans.\nPerson: a younger mountain giant, a long heavy face with a massive square jaw, a wild mane of matted dark brown hair and a short rough dark beard, one eye clouded white, a long pale scar from the brow down across the clouded eye, weathered tan skin. Kit: a rough mantle of grey sheep fleece, a thick crude iron chain worn as a necklace, a slab of dark slate tied with rope as a shoulder guard. Marks: the clouded eye with its scar, the wild dark mane, the iron chain, the slate shoulder guard.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "clouded white eye with a scar",
+   "read": null
+  },
+  {
+   "mark": "wild dark mane",
+   "read": null
+  },
+  {
+   "mark": "crude iron chain",
+   "read": null
+  },
+  {
+   "mark": "slate shoulder guard",
+   "read": null
+  },
+  {
+   "mark": "fleece mantle",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.6,
+   "bgSpread": 3.1,
+   "floor": 4.0,
+   "top": 0.043,
+   "low": 1.0,
+   "bottomCut": 0.441,
+   "cx": 0.43,
+   "subject": 0.412,
+   "light": 2.0,
+   "rim": 0.571,
+   "read48": 24.4,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "A rugged, handsome man rather than a giant; re-rolled.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

@@ -1,0 +1,292 @@
+{
+ "figure": "cmdChief",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "deadB"
+ ],
+ "camera": {
+  "iou": 0.712,
+  "iouMirrored": 0.614,
+  "aspectRatio": 0.979,
+  "headDx": -0.066,
+  "guideHeadDx": -0.061,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.467,
+  "marchLegsIoU": 0.502,
+  "mostAlike": [
+   "stand~marchA",
+   0.742
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.981,
+   "marchA": 0.975,
+   "marchB": 0.838
+  },
+  "pass_": false
+ },
+ "fringe": {
+  "spillEdgePct": 10.233,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.79,
+  "pass_": true,
+  "edgeDevThickPct": 1.53,
+  "deviatingChromaShift": 0.004
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "marchB",
+   0.843
+  ],
+  "maxDE": [
+   "fall",
+   2.3
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.712,
+    0.098
+   ],
+   "idle2": [
+    0.727,
+    0.236
+   ],
+   "marchA": [
+    0.731,
+    0.214
+   ],
+   "marchB": [
+    0.76,
+    0.38
+   ],
+   "windup": [
+    0.663,
+    0.131
+   ],
+   "strike": [
+    0.747,
+    0.394
+   ],
+   "follow": [
+    0.684,
+    0.262
+   ],
+   "recoil": [
+    0.724,
+    0.223
+   ],
+   "actA": [
+    0.651,
+    0.122
+   ],
+   "actB": [
+    0.695,
+    0.251
+   ],
+   "fall": [
+    0.448,
+    0.191
+   ],
+   "deadA": [
+    0.527,
+    0.205
+   ],
+   "deadB": [
+    0.79,
+    0.715
+   ],
+   "fleeA": [
+    0.711,
+    0.219
+   ],
+   "fleeB": [
+    0.795,
+    0.64
+   ],
+   "cheer": [
+    0.646,
+    0.061
+   ]
+  },
+  "medianIoU": 0.712,
+  "medianMargin": 0.221,
+  "follow": "14/16",
+  "followShare": 0.88
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.742,
+    0.139,
+    0.785
+   ],
+   "idle2": [
+    0.746,
+    0.245,
+    0.781
+   ],
+   "marchA": [
+    0.749,
+    0.234,
+    0.83
+   ],
+   "marchB": [
+    0.718,
+    0.331,
+    0.809
+   ],
+   "windup": [
+    0.663,
+    0.131,
+    0.863
+   ],
+   "strike": [
+    0.725,
+    0.373,
+    0.809
+   ],
+   "follow": [
+    0.694,
+    0.277,
+    0.854
+   ],
+   "recoil": [
+    0.728,
+    0.229,
+    0.799
+   ],
+   "actA": [
+    0.621,
+    0.089,
+    0.852
+   ],
+   "actB": [
+    0.699,
+    0.253,
+    0.842
+   ],
+   "fall": [
+    0.448,
+    0.191,
+    0.874
+   ],
+   "deadA": [
+    0.541,
+    0.199,
+    0.863
+   ],
+   "deadB": [
+    0.79,
+    0.715,
+    0.831
+   ],
+   "fleeA": [
+    0.726,
+    0.227,
+    0.851
+   ],
+   "fleeB": [
+    0.772,
+    0.614,
+    0.877
+   ],
+   "cheer": [
+    0.613,
+    0.024,
+    0.86
+   ]
+  },
+  "follow": "14/16",
+  "followN": 14,
+  "failing": [
+   "deadA",
+   "fall"
+  ],
+  "medianIoU": 0.722,
+  "inheritMedian": 0.847,
+  "inheritMin": [
+   0.781,
+   "idle2"
+  ]
+ },
+ "rim": {
+  "beforeMax": 3.4,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.179,
+  "worstBelow": 27.9,
+  "grounds": {
+   "plains": {
+    "share": 0.179,
+    "below": 36.4
+   },
+   "farmland": {
+    "share": 0.216,
+    "below": 35.9
+   },
+   "swamp": {
+    "share": 0.179,
+    "below": 27.9
+   },
+   "forest": {
+    "share": 0.186,
+    "below": 28.1
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 2.9,
+  "upperThirdLab": [
+   26.2,
+   1.4,
+   8.2
+  ],
+  "portraitLab": [
+   29.5,
+   2.6,
+   7.9
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/ac05.front.redress.kit.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdChief.front.zonesonly.g3pro.png",
+  "ownKit": true,
+  "kit": {
+   "face": "ac05",
+   "weapon": "the crescent axe of dark iron, its broad blade curved like a waning moon",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "ac05.front.redress.kit"
+ }
+}

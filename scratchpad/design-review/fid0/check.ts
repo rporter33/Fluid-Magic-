@@ -1,0 +1,10 @@
+import { labAs, deltaE2000, VISIONS } from '/home/user/Fluid-Magic-/tests/content/colorMath';
+const d = (a: string, b: string) => VISIONS.map(v => `${v}:${deltaE2000(labAs(a, v), labAs(b, v)).toFixed(1)}`).join(' ');
+console.log('R acc vs R pri', d('#FFB347', '#FD6533'));
+console.log('R sec vs R pri', d('#7A1E12', '#FD6533'));
+console.log('G sec vs G pri', d('#244F22', '#00674B'));
+console.log('G acc vs G pri', d('#A6D96A', '#00674B'));
+console.log('R sec vs G pri', d('#7A1E12', '#00674B'));
+console.log('R sec vs B pri', d('#7A1E12', '#3D2B4F'));
+console.log('G acc vs W pri', d('#A6D96A', '#F3E6B8'));
+console.log('R acc vs W pri', d('#FFB347', '#F3E6B8'));

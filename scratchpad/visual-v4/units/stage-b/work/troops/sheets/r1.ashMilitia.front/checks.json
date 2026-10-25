@@ -1,0 +1,241 @@
+{
+ "figure": "ashMilitia",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "fleeA",
+  "cheer"
+ ],
+ "camera": {
+  "iou": 0.569,
+  "iouMirrored": 0.579,
+  "aspectRatio": 1.148,
+  "headDx": -0.128,
+  "guideHeadDx": -0.07,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.88,
+  "marchLegsIoU": 0.88,
+  "mostAlike": [
+   "marchA~marchB",
+   0.88
+  ],
+  "pass": false
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.054,
+   "marchA": 1.013,
+   "marchB": 1.0
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 10.841,
+  "keyInUnitPct": 0.118,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.94,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.444,
+  "histMin": [
+   "fall",
+   0.799
+  ],
+  "maxDE": [
+   "fall",
+   5.7
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.801,
+    "de": 4.8,
+    "cloth": 0.362
+   },
+   "deadB": {
+    "hist": 0.858,
+    "de": 2.1,
+    "cloth": 0.411
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.569,
+    -0.01
+   ],
+   "idle2": [
+    0.267,
+    0.025
+   ],
+   "marchA": [
+    0.515,
+    0.002
+   ],
+   "marchB": [
+    0.441,
+    -0.081
+   ],
+   "windup": [
+    0.284,
+    0.014
+   ],
+   "strike": [
+    0.398,
+    0.089
+   ],
+   "follow": [
+    0.267,
+    -0.228
+   ],
+   "brace": [
+    0.47,
+    -0.019
+   ],
+   "recoil": [
+    0.396,
+    -0.022
+   ],
+   "fall": [
+    0.319,
+    0.12
+   ],
+   "deadA": [
+    0.341,
+    -0.019
+   ],
+   "deadB": [
+    0.255,
+    -0.088
+   ],
+   "fleeA": [
+    0.413,
+    0.026
+   ],
+   "fleeB": [
+    0.487,
+    0.185
+   ],
+   "cheer": [
+    0.315,
+    -0.017
+   ]
+  },
+  "medianIoU": 0.396,
+  "medianMargin": -0.01,
+  "follow": "0/15",
+  "followShare": 0.0
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.565,
+    -0.012
+   ],
+   "idle2": [
+    0.215,
+    0.018
+   ],
+   "marchA": [
+    0.527,
+    0.008
+   ],
+   "marchB": [
+    0.447,
+    -0.09
+   ],
+   "windup": [
+    0.512,
+    0.056
+   ],
+   "strike": [
+    0.363,
+    0.071
+   ],
+   "follow": [
+    0.255,
+    -0.203
+   ],
+   "brace": [
+    0.469,
+    -0.015
+   ],
+   "recoil": [
+    0.456,
+    -0.008
+   ],
+   "fall": [
+    0.412,
+    0.193
+   ],
+   "fleeA": [
+    0.438,
+    0.046
+   ],
+   "fleeB": [
+    0.504,
+    0.201
+   ],
+   "cheer": [
+    0.504,
+    0.022
+   ]
+  },
+  "follow": "0/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.023,
+   "marchA": 1.0,
+   "marchB": 0.986
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 47.3,
+  "afterMax": 0.2
+ },
+ "side": {
+  "neutral": {
+   "share": 0.274,
+   "worstBelow": 20.8,
+   "below": {
+    "plains": 28.9,
+    "farmland": 28.5,
+    "swamp": 20.8,
+    "forest": 21.1
+   }
+  },
+  "sideKeyline": {
+   "share": 0.578,
+   "worstBelow": 17.9,
+   "below": {
+    "plains": 26.1,
+    "farmland": 25.7,
+    "swamp": 17.9,
+    "forest": 18.1
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.ashMilitia.front.g3pro.png",
+ "gates": {
+  "camera": false,
+  "variety": false,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

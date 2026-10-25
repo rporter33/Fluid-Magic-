@@ -1,0 +1,27 @@
+Phase 6b.3: ten new pretender chassis, monthly summons, Phoenix reform, AI by chassis role, preset matrix and duels
+
+- Content: ten chassis with their bodies, weapons, abilities, prices and
+  aiPower (Ascended Hero, Primordial, Ash Phoenix, Pyre Lord, Cinder Idol,
+  Ember Hierophant, World Tree, Horned Hunter, Elder Wyrm, Mother of
+  Beasts), six new presets, UnitDef.plural, and validation that ties
+  idols to immobile bodies and checks summons and reforms.
+- Sim: N7 monthly summons in tick step 3 after the pretenders settle, with
+  a nation-wide cap; N8 Phoenix reform with its return day and message; an
+  eliminated nation's god is gone for good and a promised return is
+  cancelled with "will not rise again".
+- AI: the pretender step reads the chassis role (fighter is now rider);
+  the god keeps its monthly-summon unit up to the summon's cap, bound to
+  it, and hands the rest to the garrison.
+- Scripts: sim:aivai --presets and --matrix (src/ai/matrix.ts), and
+  sim:duel with pinned bands and --calibrate.
+- Review: three-lens review, verified findings fixed (F3, N8 promise) and
+  every surviving mutant killed by a new test; recruit tests split at the
+  400-line signal.
+- Gate: 1778 tests in 112 files; golden battle pin unchanged; 20-game
+  runner unchanged (10/9/1, 26.8 months, 0 refused). Every duel target is
+  met; the preset matrix misses its 35-65% band for 8 of 10 presets,
+  logged for Phase 12.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01B5sZ5EsP6DWXddt2Nas8fQ
+

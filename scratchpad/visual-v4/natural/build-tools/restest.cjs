@@ -1,0 +1,4 @@
+const { launch, open, OUT, realErrors } = require('./nlib.cjs');
+(async () => { const b = await launch(), errors = []; const p = await open(b, OUT + 'page-residual.html', { errors, settle: 1200, q: '?terrain=clear' });
+  const r = await p.evaluate(() => { const m = window.__mock, d = m.reliefDesign(), M = m.reliefMeans(), S = m.reliefSnow('clear'); return { residual: d.meanResidualL, rules: d.reliefRulesPass, escarp: d.escarpment && Object.values(d.escarpment).map((e) => e.ratio), means: [M.worstDE, M.overBudget, M.pairs.under2012, M.pairs.worstNormal.v, M.pairs.worstCvd.v], snow: S.pass, clampN: m.ev('RB.clampN || (RB.L.clear && RB.L.clear.cpu && RB.L.clear.cpu.clampN) || null') }; });
+  console.log(JSON.stringify(r)); console.log('errors', JSON.stringify(realErrors(errors))); await b.close(); })();

@@ -1,0 +1,498 @@
+Palette: bright. Fills {"plains":"#C1D29F","farmland":"#EEBA3A","forest":"#374C2B","hills":"#856824","mountains":"#8DA4AD","swamp":"#1A727A","wasteland":"#AE897F"}. Data-mode bases {"plains":"#cacdc3","farmland":"#cec0a9","forest":"#79786B","hills":"#7E7767","mountains":"#9da1a3","swamp":"#6F7A77","wasteland":"#98908e"}. Farmland control disabled: false.
+
+Paint check (?paintcheck): each province baked at Mid with stamps, water and settlements off; painted mean against its terrain fill in the active palette (CIEDE2000, budget 2.0).
+[
+ {
+  "terrain": "hills",
+  "fill": "#856824",
+  "n": 7,
+  "meanDE": 0.69,
+  "worstDE": 1.75,
+  "meanDL": -0.2,
+  "lift": 1,
+  "pass": true
+ },
+ {
+  "terrain": "plains",
+  "fill": "#C1D29F",
+  "n": 11,
+  "meanDE": 0.63,
+  "worstDE": 1,
+  "meanDL": -0.36,
+  "lift": 1.7,
+  "pass": true
+ },
+ {
+  "terrain": "forest",
+  "fill": "#374C2B",
+  "n": 13,
+  "meanDE": 0.39,
+  "worstDE": 1.39,
+  "meanDL": -0.37,
+  "lift": 0.8,
+  "pass": true
+ },
+ {
+  "terrain": "wasteland",
+  "fill": "#AE897F",
+  "n": 3,
+  "meanDE": 0.2,
+  "worstDE": 0.22,
+  "meanDL": -0.04,
+  "lift": 1.4,
+  "pass": true
+ },
+ {
+  "terrain": "mountains",
+  "fill": "#8DA4AD",
+  "n": 4,
+  "meanDE": 0.75,
+  "worstDE": 0.85,
+  "meanDL": -0.38,
+  "lift": 2.6,
+  "pass": true
+ },
+ {
+  "terrain": "swamp",
+  "fill": "#1A727A",
+  "n": 6,
+  "meanDE": 0.45,
+  "worstDE": 1.25,
+  "meanDL": -0.03,
+  "lift": 1,
+  "pass": true
+ },
+ {
+  "terrain": "farmland",
+  "fill": "#EEBA3A",
+  "n": 8,
+  "meanDE": 0.3,
+  "worstDE": 0.75,
+  "meanDL": 0.05,
+  "lift": 1.2,
+  "pass": true
+ }
+]
+
+At Far with the full decoration: terrain pairs between the provinces' full means (normal, Protan, Deutan, Tritan); pairs under 20 / 12:
+[]
+[
+ {
+  "pair": "hills/plains",
+  "normal": 34.2,
+  "protan": 32.6,
+  "deutan": 29.7,
+  "tritan": 39.8,
+  "under": false
+ },
+ {
+  "pair": "hills/forest",
+  "normal": 22.2,
+  "protan": 13.9,
+  "deutan": 17.1,
+  "tritan": 32.5,
+  "under": false
+ },
+ {
+  "pair": "hills/wasteland",
+  "normal": 23.7,
+  "protan": 21,
+  "deutan": 18.7,
+  "tritan": 14.6,
+  "under": false
+ },
+ {
+  "pair": "hills/mountains",
+  "normal": 34.4,
+  "protan": 35.3,
+  "deutan": 34,
+  "tritan": 38.8,
+  "under": false
+ },
+ {
+  "pair": "hills/swamp",
+  "normal": 33.4,
+  "protan": 29.8,
+  "deutan": 34,
+  "tritan": 40.7,
+  "under": false
+ },
+ {
+  "pair": "hills/farmland",
+  "normal": 28.7,
+  "protan": 28.7,
+  "deutan": 28.8,
+  "tritan": 28.3,
+  "under": false
+ },
+ {
+  "pair": "plains/forest",
+  "normal": 47.3,
+  "protan": 46.8,
+  "deutan": 47.6,
+  "tritan": 47.4,
+  "under": false
+ },
+ {
+  "pair": "plains/wasteland",
+  "normal": 33.1,
+  "protan": 20.4,
+  "deutan": 16.4,
+  "tritan": 31.5,
+  "under": false
+ },
+ {
+  "pair": "plains/mountains",
+  "normal": 25.3,
+  "protan": 25.4,
+  "deutan": 26.2,
+  "tritan": 14.4,
+  "under": false
+ },
+ {
+  "pair": "plains/swamp",
+  "normal": 39.5,
+  "protan": 38.2,
+  "deutan": 43.1,
+  "tritan": 34.8,
+  "under": false
+ },
+ {
+  "pair": "plains/farmland",
+  "normal": 22.2,
+  "protan": 14.9,
+  "deutan": 14.5,
+  "tritan": 30.4,
+  "under": false
+ },
+ {
+  "pair": "forest/wasteland",
+  "normal": 39.9,
+  "protan": 25.5,
+  "deutan": 28.3,
+  "tritan": 41.2,
+  "under": false
+ },
+ {
+  "pair": "forest/mountains",
+  "normal": 38.3,
+  "protan": 39.3,
+  "deutan": 38.1,
+  "tritan": 33.9,
+  "under": false
+ },
+ {
+  "pair": "forest/swamp",
+  "normal": 23.1,
+  "protan": 24.8,
+  "deutan": 25.7,
+  "tritan": 18.4,
+  "under": false
+ },
+ {
+  "pair": "forest/farmland",
+  "normal": 51,
+  "protan": 45.5,
+  "deutan": 49.6,
+  "tritan": 56.2,
+  "under": false
+ },
+ {
+  "pair": "wasteland/mountains",
+  "normal": 27.6,
+  "protan": 14.8,
+  "deutan": 17.7,
+  "tritan": 35.2,
+  "under": false
+ },
+ {
+  "pair": "wasteland/swamp",
+  "normal": 38,
+  "protan": 18.6,
+  "deutan": 28.2,
+  "tritan": 44.6,
+  "under": false
+ },
+ {
+  "pair": "wasteland/farmland",
+  "normal": 28.7,
+  "protan": 25.9,
+  "deutan": 24,
+  "tritan": 15.4,
+  "under": false
+ },
+ {
+  "pair": "mountains/swamp",
+  "normal": 23.4,
+  "protan": 18.6,
+  "deutan": 21.9,
+  "tritan": 21.6,
+  "under": false
+ },
+ {
+  "pair": "mountains/farmland",
+  "normal": 35.8,
+  "protan": 34.5,
+  "deutan": 36.8,
+  "tritan": 37.8,
+  "under": false
+ },
+ {
+  "pair": "swamp/farmland",
+  "normal": 48.6,
+  "protan": 43.4,
+  "deutan": 51.1,
+  "tritan": 53,
+  "under": false
+ }
+]
+
+Track check at the start zoom (Mountains track halves; median of dot-peak and line-average WCAG ratios), with the R34 footpath on the same ground:
+{
+ "tracks": {
+  "medianPeak": 3.4626284346553695,
+  "medianAvg": 1.658033803731817,
+  "minPeak": 1.8455771092166577,
+  "minAvg": 1.1697448852167691,
+  "n": 11
+ },
+ "footpath": {
+  "medianPeak": 2.4057907408081727,
+  "medianAvg": 1.198537817342798,
+  "minPeak": 1.555046119852025,
+  "minAvg": 1.0902108950515201,
+  "n": 4
+ },
+ "scale": 0.418
+}
+
+Checks: hit tests near wobbling borders, the label test at the start zoom, the zones, a redraw from scratch:
+{
+ "hit": {
+  "samples": 200,
+  "wrong": 0
+ },
+ "labels": {
+  "band": "mid",
+  "scale": 0.418,
+  "visible": 60,
+  "named": 54,
+  "pct": 90,
+  "namesOverTokens": 0
+ },
+ "zones": {
+  "stamps": {
+   "label": 0,
+   "second": 0,
+   "seat": 0,
+   "token": 818,
+   "n": 2324
+  },
+  "water": {
+   "label": 0,
+   "second": 0,
+   "seat": 0,
+   "token": 2947,
+   "n": 5550
+  },
+  "dots": {
+   "label": 0,
+   "second": 0,
+   "token": 614,
+   "n": 3310
+  },
+  "clearance": {
+   "n": 3351,
+   "under": 0,
+   "min": 10.06,
+   "fallbacks": {
+    "bow": 66,
+    "under": 100,
+    "curve": 82,
+    "label": 16
+   },
+   "unit": "u (C = 10 u)"
+  }
+ },
+ "stable": {
+  "first": 814471556,
+  "second": 814471556,
+  "identical": true
+ },
+ "bakes": 312
+}
+
+Density (§5.4; bake times are noisy: the machine is shared with a test job):
+{
+ "bands": {
+  "mid": {
+   "hills": {
+    "n": 7,
+    "itemsPerAvg": 6.38,
+    "itemsMax": 8.27,
+    "covMean": 0.06,
+    "covMax": 0.09,
+    "ranges": 5.79,
+    "partsPerRange": 2.84
+   },
+   "plains": {
+    "n": 11,
+    "itemsPerAvg": 14.59,
+    "itemsMax": 16.48,
+    "covMean": 0.04,
+    "covMax": 0.06
+   },
+   "forest": {
+    "n": 13,
+    "itemsPerAvg": 12.73,
+    "itemsMax": 16.85,
+    "covMean": 0.11,
+    "covMax": 0.16,
+    "crownCovOfFree": 0.49,
+    "crownCovMin": 0.41,
+    "crownCovMax": 0.66,
+    "clumpsMax": 18,
+    "crowns": 26
+   },
+   "wasteland": {
+    "n": 3,
+    "itemsPerAvg": 11.99,
+    "itemsMax": 12.29,
+    "covMean": 0.04,
+    "covMax": 0.05
+   },
+   "mountains": {
+    "n": 4,
+    "itemsPerAvg": 5.86,
+    "itemsMax": 9.35,
+    "covMean": 0.05,
+    "covMax": 0.07,
+    "ranges": 5.08,
+    "partsPerRange": 3.96
+   },
+   "swamp": {
+    "n": 6,
+    "itemsPerAvg": 14.04,
+    "itemsMax": 16.29,
+    "covMean": 0.04,
+    "covMax": 0.05
+   },
+   "farmland": {
+    "n": 8,
+    "itemsPerAvg": 4.82,
+    "itemsMax": 6.77,
+    "covMean": 0.02,
+    "covMax": 0.05
+   }
+  },
+  "near": {
+   "hills": {
+    "n": 7,
+    "itemsPerAvg": 16.01,
+    "itemsMax": 19.29,
+    "covMean": 0.12,
+    "covMax": 0.15,
+    "ranges": 11.4,
+    "partsPerRange": 2.9
+   },
+   "plains": {
+    "n": 11,
+    "itemsPerAvg": 29.23,
+    "itemsMax": 33.87,
+    "covMean": 0.06,
+    "covMax": 0.08
+   },
+   "forest": {
+    "n": 13,
+    "itemsPerAvg": 18.77,
+    "itemsMax": 25.33,
+    "covMean": 0.17,
+    "covMax": 0.26,
+    "crownCovOfFree": 0.58,
+    "crownCovMin": 0.46,
+    "crownCovMax": 0.67,
+    "clumpsMax": 21,
+    "crowns": 54
+   },
+   "wasteland": {
+    "n": 3,
+    "itemsPerAvg": 28.21,
+    "itemsMax": 28.67,
+    "covMean": 0.08,
+    "covMax": 0.08
+   },
+   "mountains": {
+    "n": 4,
+    "itemsPerAvg": 13.25,
+    "itemsMax": 15.58,
+    "covMean": 0.1,
+    "covMax": 0.12,
+    "ranges": 9.36,
+    "partsPerRange": 4.08
+   },
+   "swamp": {
+    "n": 6,
+    "itemsPerAvg": 28.5,
+    "itemsMax": 37,
+    "covMean": 0.06,
+    "covMax": 0.07
+   },
+   "farmland": {
+    "n": 8,
+    "itemsPerAvg": 11.36,
+    "itemsMax": 13.16,
+    "covMean": 0.03,
+    "covMax": 0.06
+   }
+  }
+ },
+ "bake": {
+  "mid": {
+   "mean": 5.24,
+   "p95": 12.5,
+   "max": 17.1
+  },
+  "near": {
+   "mean": 28.06,
+   "p95": 42.5,
+   "max": 44.8
+  }
+ }
+}
+
+Silhouettes:
+Silhouettes · scenery against reserved shapes, greyscale, at 3.2x Mid size. Highest IoU filled 0.65 (clump / house, limit 0.70); line art 0.57 (tufts / cairn, limit 0.60). Masks fitted to their bounding box with the aspect kept, so size and color, which also tell these apart, do not count. Over the limit: none.
+
+Features:
+{
+ "tracks": 264,
+ "fallbacks": {
+  "bow": 66,
+  "under": 100,
+  "curve": 82,
+  "label": 16
+ },
+ "slid": 9,
+ "brooks": 16,
+ "ponds": 7,
+ "bridges": 14,
+ "mines": 5,
+ "windmills": 6,
+ "ruins": 10,
+ "heroes": [
+  "heroFeet@Thornreach",
+  "heroPier@Halebrook"
+ ],
+ "regions": [
+  "The Broad Leas (9)",
+  "The Greyweald (6)",
+  "The Sallow Marsh (5)",
+  "The Barrow Downs (5)",
+  "The Barley Furrows (3)",
+  "The Grey Scarps (3)"
+ ],
+ "vignettes": 34,
+ "init": 136.7
+}
+
+Page errors: []

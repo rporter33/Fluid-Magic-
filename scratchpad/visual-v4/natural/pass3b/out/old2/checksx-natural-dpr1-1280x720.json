@@ -1,0 +1,8731 @@
+{
+ "geo": {
+  "W": 1600,
+  "H": 1000,
+  "D": 175.22162226761878,
+  "max": 2.396964453157084,
+  "min": 0.26919475655430714,
+  "fit": 0.31622085495134616,
+  "s": 0.4793928906314168,
+  "look": "natural",
+  "mode": "ownership",
+  "phone": false
+ },
+ "readyMs": 38193,
+ "start": {
+  "band": "mid",
+  "s": 0.479,
+  "Dpx": 84,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 1092,
+    "median": 1.236,
+    "p90": 1.329,
+    "max": 1.698,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 45,
+   "fails": 0,
+   "worst": 3.45,
+   "worstAt": "Morholt (mountains) against Ashvale",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 84,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 8,
+    "p95Worst": 4.569,
+    "p95Median": 2.548,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.479,
+   "Dpx": 84,
+   "armyBase": 19.3,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 178,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 44,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 32.4,
+   "columns": 623,
+   "stripeIndex": 0.061,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.8,
+    "p50": 14.8,
+    "p95": 33.4,
+    "spread": 28.6,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.61,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 392876994,
+   "second": 392876994,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 961,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 893,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 230,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.913,
+     "pxP90D": 0.083,
+     "light": 0.039,
+     "dark": 0.009,
+     "seam": 3.233,
+     "seamBase": 3.627,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 122,
+     "p50D": 0.024,
+     "p90D": 0.065,
+     "within": 0.893,
+     "pxP90D": 0.06,
+     "light": 0.016,
+     "dark": 0,
+     "seam": 2.8,
+     "seamBase": 4.656,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 138,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.942,
+     "pxP90D": 0.071,
+     "light": 0.043,
+     "dark": 0,
+     "seam": 3.342,
+     "seamBase": 4.003,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 84,
+   "views": 1,
+   "provinces": 49,
+   "pass": true,
+   "farPass": true,
+   "normal": [
+    0.954,
+    1,
+    0.873,
+    1
+   ],
+   "unexplored": [
+    0.93,
+    0.98
+   ],
+   "deutan": [
+    0.95,
+    1,
+    0.864,
+    0.98
+   ],
+   "protan": [
+    0.962,
+    1,
+    0.861,
+    1
+   ],
+   "tritan": [
+    0.954,
+    1,
+    0.864,
+    1
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 25,
+    "all": {
+     "patches": 614,
+     "acc": 0.969
+    },
+    "sight": {
+     "patches": 514,
+     "acc": 0.971
+    },
+    "outofsight": {
+     "patches": 35,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 65,
+     "acc": 0.938
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 65,
+     "acc": 0.892
+    },
+    "forcedUnexplored": {
+     "patches": 614,
+     "acc": 0.953
+    }
+   }
+  },
+  "ms": 16194
+ },
+ "far": {
+  "band": "far",
+  "s": 0.342,
+  "Dpx": 60,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 986,
+    "median": 1.249,
+    "p90": 1.343,
+    "max": 1.527,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "far",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "far",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 38,
+   "fails": 0,
+   "worst": 3.59,
+   "worstAt": "Morholt (mountains) against Ashvale",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "far",
+   "Dpx": 60,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 8,
+    "p95Worst": 4.296,
+    "p95Median": 2.369,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "far",
+   "scale": 0.342,
+   "Dpx": 60,
+   "armyBase": 16,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 1,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 172,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 54,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 23.1,
+   "columns": 441,
+   "stripeIndex": 0.068,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.9,
+    "p50": 14.8,
+    "p95": 32.9,
+    "spread": 28,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.44,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 163520655,
+   "second": 163520655,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 621,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 680,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 148,
+     "p50D": 0.025,
+     "p90D": 0.058,
+     "within": 0.98,
+     "pxP90D": 0.083,
+     "light": 0.047,
+     "dark": 0,
+     "seam": 3.117,
+     "seamBase": 4.969,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 79,
+     "p50D": 0.025,
+     "p90D": 0.058,
+     "within": 0.962,
+     "pxP90D": 0.058,
+     "light": 0,
+     "dark": 0,
+     "seam": 4.87,
+     "seamBase": 2.069,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 115,
+     "p50D": 0.025,
+     "p90D": 0.058,
+     "within": 1,
+     "pxP90D": 0.075,
+     "light": 0.104,
+     "dark": 0,
+     "seam": 3.976,
+     "seamBase": 4.997,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 60,
+   "views": 1,
+   "provinces": 60,
+   "pass": true,
+   "farPass": false,
+   "normal": [
+    0.924,
+    1,
+    0.813,
+    0.967
+   ],
+   "unexplored": [
+    0.929,
+    0.983
+   ],
+   "deutan": [
+    0.924,
+    1,
+    0.818,
+    0.983
+   ],
+   "protan": [
+    0.928,
+    1,
+    0.808,
+    0.967
+   ],
+   "tritan": [
+    0.925,
+    1,
+    0.812,
+    0.967
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 18,
+    "all": {
+     "patches": 698,
+     "acc": 0.924
+    },
+    "sight": {
+     "patches": 585,
+     "acc": 0.928
+    },
+    "outofsight": {
+     "patches": 33,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 80,
+     "acc": 0.863
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere",
+     "Brammere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 80,
+     "acc": 0.825
+    },
+    "forcedUnexplored": {
+     "patches": 698,
+     "acc": 0.937
+    }
+   }
+  },
+  "ms": 15363
+ },
+ "min": {
+  "band": "far",
+  "s": 0.269,
+  "Dpx": 47.2,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 732,
+    "median": 1.249,
+    "p90": 1.347,
+    "max": 1.585,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "far",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "far",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 30,
+   "fails": 0,
+   "worst": 3.38,
+   "worstAt": "Elmgate (plains) against Halebrook",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "far",
+   "Dpx": 47.2,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 8,
+    "p95Worst": 4.043,
+    "p95Median": 2.452,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "far",
+   "scale": 0.269,
+   "Dpx": 47.2,
+   "armyBase": 16,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 1,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 165,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 54,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 18.2,
+   "columns": 345,
+   "stripeIndex": 0.062,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.8,
+    "p50": 13.8,
+    "p95": 30.8,
+    "spread": 26,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.34,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 1487504198,
+   "second": 1487504198,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 582,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.06
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 575,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 101,
+     "p50D": 0.021,
+     "p90D": 0.064,
+     "within": 1,
+     "pxP90D": 0.085,
+     "light": 0.069,
+     "dark": 0,
+     "seam": 4.54,
+     "seamBase": 6.414,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 57,
+     "p50D": 0.032,
+     "p90D": 0.064,
+     "within": 1,
+     "pxP90D": 0.064,
+     "light": 0.018,
+     "dark": 0,
+     "seam": 5.304,
+     "seamBase": 5.669,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 84,
+     "p50D": 0.032,
+     "p90D": 0.064,
+     "within": 1,
+     "pxP90D": 0.085,
+     "light": 0.143,
+     "dark": 0.06,
+     "seam": 3.327,
+     "seamBase": 2.89,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 47.2,
+   "views": 1,
+   "provinces": 60,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.908,
+    1,
+    0.797,
+    0.95
+   ],
+   "unexplored": [
+    0.926,
+    0.983
+   ],
+   "deutan": [
+    0.907,
+    0.983,
+    0.8,
+    0.933
+   ],
+   "protan": [
+    0.912,
+    1,
+    0.793,
+    0.95
+   ],
+   "tritan": [
+    0.912,
+    1,
+    0.798,
+    0.95
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 14,
+    "all": {
+     "patches": 722,
+     "acc": 0.917
+    },
+    "sight": {
+     "patches": 611,
+     "acc": 0.92
+    },
+    "outofsight": {
+     "patches": 31,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 80,
+     "acc": 0.863
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere",
+     "Brammere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 80,
+     "acc": 0.825
+    },
+    "forcedUnexplored": {
+     "patches": 722,
+     "acc": 0.931
+    }
+   }
+  },
+  "ms": 10794
+ },
+ "mid75": {
+  "band": "mid",
+  "s": 0.75,
+  "Dpx": 131.4,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 1127,
+    "median": 1.23,
+    "p90": 1.33,
+    "max": 1.788,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 51,
+   "fails": 0,
+   "worst": 3.77,
+   "worstAt": "Elmgate (plains) against Wyrmarch",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 131.4,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 6,
+    "p95Worst": 3.654,
+    "p95Median": 2.789,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.75,
+   "Dpx": 131.4,
+   "armyBase": 30.2,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 45,
+   "namedInView": 5,
+   "pctNamed": 11.1,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 183,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 30,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 50.7,
+   "columns": 978,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.96,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 3685482308,
+   "second": 3685482308,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 967,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 792,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 903,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "bake",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 182,
+     "p50D": 0.023,
+     "p90D": 0.049,
+     "within": 0.901,
+     "pxP90D": 0.065,
+     "light": 0,
+     "dark": 0,
+     "seam": 3.145,
+     "seamBase": 2.281,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 206,
+     "p50D": 0.027,
+     "p90D": 0.068,
+     "within": 0.811,
+     "pxP90D": 0.057,
+     "light": 0.015,
+     "dark": 0,
+     "seam": 1.599,
+     "seamBase": 3.087,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 193,
+     "p50D": 0.023,
+     "p90D": 0.057,
+     "within": 0.824,
+     "pxP90D": 0.068,
+     "light": 0.031,
+     "dark": 0.005,
+     "seam": 2.878,
+     "seamBase": 1.128,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 131.4,
+   "views": 1,
+   "provinces": 37,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.995,
+    1,
+    0.92,
+    0.946
+   ],
+   "unexplored": [
+    0.995,
+    0.973
+   ],
+   "deutan": [
+    0.992,
+    1,
+    0.914,
+    0.919
+   ],
+   "protan": [
+    0.992,
+    1,
+    0.922,
+    0.919
+   ],
+   "tritan": [
+    0.995,
+    1,
+    0.922,
+    0.946
+   ],
+   "missed": [],
+   "missedU": [
+    "Rookmere (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 39,
+    "all": {
+     "patches": 358,
+     "acc": 0.975
+    },
+    "sight": {
+     "patches": 294,
+     "acc": 0.973
+    },
+    "outofsight": {
+     "patches": 32,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 32,
+     "acc": 0.969
+    },
+    "unexploredProvinces": [
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 32,
+     "acc": 0.938
+    },
+    "forcedUnexplored": {
+     "patches": 358,
+     "acc": 0.98
+    }
+   }
+  },
+  "ms": 16748
+ },
+ "mid": {
+  "band": "mid",
+  "s": 1,
+  "Dpx": 175.2,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 1002,
+    "median": 1.236,
+    "p90": 1.323,
+    "max": 1.469,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 49,
+   "fails": 0,
+   "worst": 3.45,
+   "worstAt": "Torbarrow (farmland) against Stagmarch",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 175.2,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 4,
+    "p95Worst": 3.48,
+    "p95Median": 2.875,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 1,
+   "Dpx": 175.2,
+   "armyBase": 34,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 24,
+   "namedInView": 3,
+   "pctNamed": 12.5,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 183,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 12,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 67.5,
+   "columns": 1039,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 1.28,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 1101772269,
+   "second": 1101772269,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 955,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 792,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 896,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "bake",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 171,
+     "p50D": 0.02,
+     "p90D": 0.051,
+     "within": 0.86,
+     "pxP90D": 0.066,
+     "light": 0.018,
+     "dark": 0,
+     "seam": 2.37,
+     "seamBase": 1.669,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 230,
+     "p50D": 0.029,
+     "p90D": 0.083,
+     "within": 0.757,
+     "pxP90D": 0.066,
+     "light": 0.009,
+     "dark": 0,
+     "seam": 1.944,
+     "seamBase": 2.766,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 196,
+     "p50D": 0.026,
+     "p90D": 0.06,
+     "within": 0.781,
+     "pxP90D": 0.074,
+     "light": 0.041,
+     "dark": 0.005,
+     "seam": 2.89,
+     "seamBase": 1.361,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 175.2,
+   "views": 1,
+   "provinces": 17,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.992,
+    1,
+    0.958,
+    1
+   ],
+   "unexplored": [
+    0.992,
+    1
+   ],
+   "deutan": [
+    0.996,
+    1,
+    0.962,
+    1
+   ],
+   "protan": [
+    0.987,
+    1,
+    0.971,
+    1
+   ],
+   "tritan": [
+    0.992,
+    1,
+    0.971,
+    1
+   ],
+   "missed": [],
+   "missedU": [],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 246,
+     "acc": 0.988
+    },
+    "sight": {
+     "patches": 246,
+     "acc": 0.988
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 246,
+     "acc": 0.992
+    }
+   }
+  },
+  "ms": 15754
+ },
+ "ref": {
+  "band": "near",
+  "s": 1.142,
+  "Dpx": 200.1,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 764,
+    "median": 1.222,
+    "p90": 1.317,
+    "max": 1.979,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 45,
+   "fails": 0,
+   "worst": 3.48,
+   "worstAt": "Elmgate (plains) against Wyrmarch",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 200.1,
+   "limit": 4,
+   "look": "natural",
+   "town": {
+    "seats": 3,
+    "p95Worst": 2.87,
+    "p95Median": 2.687,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.142,
+   "Dpx": 200.1,
+   "armyBase": 34,
+   "names": 9,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 19,
+   "namedInView": 4,
+   "pctNamed": 21.1,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 184,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 9,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 77.1,
+   "columns": 1010,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 1.46,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 2762686351,
+   "second": 2762686351,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 9,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 1382,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 1491,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Still Mere": {
+     "n": 329,
+     "p50D": 0.027,
+     "p90D": 0.075,
+     "within": 0.815,
+     "pxP90D": 0.057,
+     "light": 0.006,
+     "dark": 0.003,
+     "seam": 1.486,
+     "seamBase": 1.394,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 281,
+     "p50D": 0.025,
+     "p90D": 0.057,
+     "within": 0.826,
+     "pxP90D": 0.07,
+     "light": 0.036,
+     "dark": 0.011,
+     "seam": 2.149,
+     "seamBase": 1.03,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 200.1,
+   "views": 4,
+   "provinces": 37,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.989,
+    1,
+    0.93,
+    1
+   ],
+   "unexplored": [
+    0.99,
+    1
+   ],
+   "deutan": [
+    0.989,
+    1,
+    0.93,
+    1
+   ],
+   "protan": [
+    0.987,
+    1,
+    0.935,
+    1
+   ],
+   "tritan": [
+    0.987,
+    1,
+    0.93,
+    1
+   ],
+   "missed": [],
+   "missedU": [],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 251,
+     "acc": 0.964
+    },
+    "sight": {
+     "patches": 251,
+     "acc": 0.964
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 251,
+     "acc": 0.968
+    }
+   }
+  },
+  "ms": 35193
+ },
+ "refW": {
+  "band": "near",
+  "s": 1.142,
+  "Dpx": 200.1,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 85,
+    "samples": 670,
+    "median": 1.224,
+    "p90": 1.307,
+    "max": 1.451,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 27,
+   "fails": 0,
+   "worst": 4.5,
+   "worstAt": "Sunmere (mountains) against Karwick",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 200.1,
+   "limit": 4,
+   "look": "natural",
+   "town": {
+    "seats": 3,
+    "p95Worst": 2.941,
+    "p95Median": 2.692,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.142,
+   "Dpx": 200.1,
+   "armyBase": 34,
+   "names": 9,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 15,
+   "namedInView": 3,
+   "pctNamed": 20,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 184,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 8,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 77.1,
+   "columns": 771,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 1.46,
+   "drawn": false,
+   "lastMs": 0,
+   "builds": 0,
+   "pixels": 0
+  },
+  "stable": {
+   "first": 1323873152,
+   "second": 1323873152,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 9,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 1547,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 1062,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 183,
+     "p50D": 0.02,
+     "p90D": 0.057,
+     "within": 0.863,
+     "pxP90D": 0.067,
+     "light": 0.033,
+     "dark": 0,
+     "seam": 2.532,
+     "seamBase": 2.104,
+     "pass": true
+    },
+    "Greyteeth": {
+     "n": 188,
+     "p50D": 0.032,
+     "p90D": 0.057,
+     "within": 0.798,
+     "pxP90D": 0.075,
+     "light": 0.043,
+     "dark": 0.011,
+     "seam": 2.304,
+     "seamBase": 1.834,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 200.1,
+   "views": 1,
+   "provinces": 12,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.98,
+    1,
+    0.93,
+    0.917
+   ],
+   "unexplored": [
+    0.984,
+    1
+   ],
+   "deutan": [
+    0.98,
+    1,
+    0.93,
+    0.917
+   ],
+   "protan": [
+    0.98,
+    1,
+    0.939,
+    1
+   ],
+   "tritan": [
+    0.98,
+    1,
+    0.934,
+    0.917
+   ],
+   "missed": [],
+   "missedU": [],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 238,
+     "acc": 0.954
+    },
+    "sight": {
+     "patches": 238,
+     "acc": 0.954
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 238,
+     "acc": 0.962
+    }
+   }
+  },
+  "ms": 25187
+ },
+ "near-hills": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 12,
+    "samples": 269,
+    "median": 1.225,
+    "p90": 1.311,
+    "max": 1.362,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 16,
+   "fails": 0,
+   "worst": 3.84,
+   "worstAt": "Morholt (mountains) against Karwick",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 3,
+    "p95Worst": 3.538,
+    "p95Median": 3.53,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 5,
+   "namedInView": 5,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 734,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 0.1,
+   "builds": 1,
+   "pixels": 895895
+  },
+  "stable": {
+   "first": 3297830883,
+   "second": 3297830883,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {
+    "Ashspine": {
+     "n": 109,
+     "p50D": 0.024,
+     "p90D": 0.054,
+     "within": 0.899,
+     "pxP90D": 0.083,
+     "light": 0,
+     "dark": 0,
+     "seam": 2.247,
+     "seamBase": 1.4,
+     "pass": true
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 1,
+   "provinces": 3,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "unexplored": [
+    1,
+    1
+   ],
+   "deutan": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "protan": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "tritan": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "missed": [],
+   "missedU": [],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 232,
+     "acc": 1
+    },
+    "sight": {
+     "patches": 232,
+     "acc": 1
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 232,
+     "acc": 1
+    }
+   }
+  },
+  "ms": 10814
+ },
+ "near-plains": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 33,
+    "samples": 448,
+    "median": 1.228,
+    "p90": 1.321,
+    "max": 1.453,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 0,
+   "fails": 0,
+   "worst": null,
+   "worstAt": "",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "town": {
+    "seats": 1,
+    "p95Worst": 5.077,
+    "p95Median": 5.077,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "hamlet": {
+    "seats": 3,
+    "p95Worst": 3.349,
+    "p95Median": 3.318,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 5,
+   "namedInView": 5,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 894,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 92.3,
+   "builds": 2,
+   "pixels": 1529918
+  },
+  "stable": {
+   "first": 3703062227,
+   "second": 3703062227,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 1343,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {
+    "Ashspine": {
+     "n": 283,
+     "p50D": 0.019,
+     "p90D": 0.049,
+     "within": 0.905,
+     "pxP90D": 0.076,
+     "light": 0.007,
+     "dark": 0.042,
+     "seam": 2.279,
+     "seamBase": 1.902,
+     "pass": true
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 4,
+   "provinces": 13,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.88,
+    0.846,
+    0.881,
+    0.846
+   ],
+   "unexplored": [
+    0.88,
+    0.846
+   ],
+   "deutan": [
+    0.879,
+    0.846,
+    0.876,
+    0.846
+   ],
+   "protan": [
+    0.88,
+    0.846,
+    0.881,
+    0.846
+   ],
+   "tritan": [
+    0.88,
+    0.846,
+    0.88,
+    0.846
+   ],
+   "missed": [
+    "Wyrford (wasteland read hills)",
+    "Duskholt (wasteland read hills)"
+   ],
+   "missedU": [
+    "Wyrford (wasteland read hills)",
+    "Duskholt (wasteland read hills)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 351,
+     "acc": 0.718
+    },
+    "sight": {
+     "patches": 351,
+     "acc": 0.718
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 351,
+     "acc": 0.712
+    }
+   }
+  },
+  "ms": 34797
+ },
+ "near-forest": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 33,
+    "samples": 662,
+    "median": 1.236,
+    "p90": 1.324,
+    "max": 1.566,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 0,
+   "fails": 0,
+   "worst": null,
+   "worstAt": "",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "town": {
+    "seats": 1,
+    "p95Worst": 5.071,
+    "p95Median": 5.071,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "hamlet": {
+    "seats": 3,
+    "p95Worst": 3.319,
+    "p95Median": 3.291,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 8,
+   "namedInView": 8,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 856,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 88.3,
+   "builds": 7,
+   "pixels": 1637987
+  },
+  "stable": {
+   "first": 1124664061,
+   "second": 1124664061,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 1049,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {
+    "Ashspine": {
+     "n": 232,
+     "p50D": 0.021,
+     "p90D": 0.06,
+     "within": 0.802,
+     "pxP90D": 0.079,
+     "light": 0.013,
+     "dark": 0.047,
+     "seam": 2.727,
+     "seamBase": 2.016,
+     "pass": true
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 2,
+   "provinces": 10,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.825,
+    0.8,
+    0.819,
+    0.8
+   ],
+   "unexplored": [
+    0.826,
+    0.8
+   ],
+   "deutan": [
+    0.825,
+    0.8,
+    0.819,
+    0.8
+   ],
+   "protan": [
+    0.826,
+    0.8,
+    0.819,
+    0.8
+   ],
+   "tritan": [
+    0.825,
+    0.8,
+    0.819,
+    0.8
+   ],
+   "missed": [
+    "Wyrholt (plains read hills)",
+    "Morgate (plains read hills)"
+   ],
+   "missedU": [
+    "Wyrholt (plains read hills)",
+    "Morgate (plains read hills)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 385,
+     "acc": 0.732
+    },
+    "sight": {
+     "patches": 385,
+     "acc": 0.732
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 385,
+     "acc": 0.735
+    }
+   }
+  },
+  "ms": 25869
+ },
+ "near-wasteland": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 31,
+    "samples": 578,
+    "median": 1.242,
+    "p90": 1.315,
+    "max": 1.507,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 27,
+   "fails": 0,
+   "worst": 3.72,
+   "worstAt": "Rookmere (hills) against Oakford",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 3,
+    "p95Worst": 3.463,
+    "p95Median": 3.299,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 7,
+   "namedInView": 7,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 1013,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 49,
+   "builds": 10,
+   "pixels": 1412668
+  },
+  "stable": {
+   "first": 585319877,
+   "second": 585319877,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {}
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 9,
+   "provinces": 14,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.898,
+    0.929,
+    0.895,
+    0.929
+   ],
+   "unexplored": [
+    0.899,
+    0.929
+   ],
+   "deutan": [
+    0.894,
+    0.929,
+    0.891,
+    0.929
+   ],
+   "protan": [
+    0.905,
+    0.929,
+    0.897,
+    0.929
+   ],
+   "tritan": [
+    0.898,
+    0.929,
+    0.895,
+    0.929
+   ],
+   "missed": [
+    "Bramreach (mountains read wasteland)"
+   ],
+   "missedU": [
+    "Bramreach (mountains read wasteland)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 364,
+     "acc": 0.956
+    },
+    "sight": {
+     "patches": 344,
+     "acc": 0.953
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 20,
+     "acc": 1
+    },
+    "unexploredProvinces": [
+     "Oakford"
+    ],
+    "unexploredInSightControl": {
+     "patches": 20,
+     "acc": 1
+    },
+    "forcedUnexplored": {
+     "patches": 364,
+     "acc": 0.962
+    }
+   }
+  },
+  "ms": 43706
+ },
+ "near-mountains": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 27,
+    "samples": 175,
+    "median": 1.211,
+    "p90": 1.314,
+    "max": 1.4,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 34,
+   "fails": 0,
+   "worst": 3.51,
+   "worstAt": "Sunmere (mountains) against Karwick",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 2,
+    "p95Worst": 3.442,
+    "p95Median": 3.442,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 5,
+   "namedInView": 5,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 972,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 63.3,
+   "builds": 20,
+   "pixels": 1577478
+  },
+  "stable": {
+   "first": 3415649059,
+   "second": 3415649059,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {
+    "Ashspine": {
+     "n": 353,
+     "p50D": 0.021,
+     "p90D": 0.048,
+     "within": 0.915,
+     "pxP90D": 0.055,
+     "light": 0.011,
+     "dark": 0.006,
+     "seam": 1.997,
+     "seamBase": 1.76,
+     "pass": true
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 9,
+   "provinces": 15,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.739,
+    0.867,
+    0.733,
+    0.867
+   ],
+   "unexplored": [
+    0.733,
+    0.867
+   ],
+   "deutan": [
+    0.732,
+    0.867,
+    0.727,
+    0.867
+   ],
+   "protan": [
+    0.748,
+    0.867,
+    0.74,
+    0.867
+   ],
+   "tritan": [
+    0.743,
+    0.867,
+    0.732,
+    0.867
+   ],
+   "missed": [
+    "Ashfen (swamp read plains)",
+    "Ashmoor (farmland read mountains)"
+   ],
+   "missedU": [
+    "Ashfen (swamp read plains)",
+    "Ashmoor (farmland read mountains)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 216,
+     "acc": 0.847
+    },
+    "sight": {
+     "patches": 216,
+     "acc": 0.847
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 216,
+     "acc": 0.856
+    }
+   }
+  },
+  "ms": 42630
+ },
+ "near-swamp": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 41,
+    "samples": 489,
+    "median": 1.223,
+    "p90": 1.314,
+    "max": 1.455,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 21,
+   "fails": 0,
+   "worst": 4.04,
+   "worstAt": "Sunmere (mountains) against Karwick",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "town": {
+    "seats": 1,
+    "p95Worst": 3.194,
+    "p95Median": 3.194,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "hamlet": {
+    "seats": 4,
+    "p95Worst": 3.363,
+    "p95Median": 3.282,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 6,
+   "namedInView": 6,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 1246,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 65.6,
+   "builds": 30,
+   "pixels": 1929024
+  },
+  "stable": {
+   "first": 3768640724,
+   "second": 3768640724,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 1513,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {
+    "Ashspine": {
+     "n": 353,
+     "p50D": 0.021,
+     "p90D": 0.048,
+     "within": 0.904,
+     "pxP90D": 0.06,
+     "light": 0.076,
+     "dark": 0,
+     "seam": 2.267,
+     "seamBase": 2.158,
+     "pass": true
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 9,
+   "provinces": 20,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.807,
+    0.8,
+    0.744,
+    0.65
+   ],
+   "unexplored": [
+    0.783,
+    0.7
+   ],
+   "deutan": [
+    0.804,
+    0.8,
+    0.745,
+    0.7
+   ],
+   "protan": [
+    0.813,
+    0.8,
+    0.744,
+    0.65
+   ],
+   "tritan": [
+    0.808,
+    0.8,
+    0.745,
+    0.65
+   ],
+   "missed": [
+    "Duskholt (wasteland read mountains)",
+    "Karwick (hills read swamp)",
+    "Ashvale (hills read swamp)",
+    "Halevale (hills read farmland)"
+   ],
+   "missedU": [
+    "Ashfen (swamp read plains)",
+    "Duskholt (wasteland read mountains)",
+    "Karwick (hills read swamp)",
+    "Ashvale (hills read swamp)",
+    "Halevale (hills read farmland)",
+    "Marholt (swamp read plains)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 365,
+     "acc": 0.693
+    },
+    "sight": {
+     "patches": 365,
+     "acc": 0.693
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 365,
+     "acc": 0.693
+    }
+   }
+  },
+  "ms": 43075
+ },
+ "near-farmland": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 55,
+    "samples": 721,
+    "median": 1.225,
+    "p90": 1.306,
+    "max": 1.483,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 7,
+   "fails": 0,
+   "worst": 3.97,
+   "worstAt": "Elmgate (plains) against Halebrook",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 2,
+    "p95Worst": 3.447,
+    "p95Median": 3.447,
+    "over": []
+   },
+   "town": {
+    "seats": 2,
+    "p95Worst": 2.911,
+    "p95Median": 2.911,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 8,
+   "namedInView": 8,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 857,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 40.7,
+   "builds": 40,
+   "pixels": 2307591
+  },
+  "stable": {
+   "first": 3414382329,
+   "second": 3414382329,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 1182,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 209,
+     "p50D": 0.021,
+     "p90D": 0.058,
+     "within": 0.789,
+     "pxP90D": 0.068,
+     "light": 0.081,
+     "dark": 0,
+     "seam": 3.084,
+     "seamBase": 2.784,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 139,
+     "p50D": 0.027,
+     "p90D": 0.077,
+     "within": 0.791,
+     "pxP90D": 0.061,
+     "light": 0.014,
+     "dark": 0.007,
+     "seam": 2.046,
+     "seamBase": 1.953,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 3,
+   "provinces": 17,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.871,
+    0.882,
+    0.871,
+    0.824
+   ],
+   "unexplored": [
+    0.881,
+    0.882
+   ],
+   "deutan": [
+    0.87,
+    0.882,
+    0.86,
+    0.824
+   ],
+   "protan": [
+    0.877,
+    0.882,
+    0.877,
+    0.824
+   ],
+   "tritan": [
+    0.87,
+    0.882,
+    0.874,
+    0.824
+   ],
+   "missed": [
+    "Halebrook (swamp read mountains)",
+    "Ashfen (swamp read plains)"
+   ],
+   "missedU": [
+    "Halebrook (swamp read mountains)",
+    "Ashfen (swamp read plains)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 419,
+     "acc": 0.959
+    },
+    "sight": {
+     "patches": 419,
+     "acc": 0.959
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 419,
+     "acc": 0.959
+    }
+   }
+  },
+  "ms": 31922
+ },
+ "near1180": {
+  "band": "near",
+  "s": 1.918,
+  "Dpx": 336,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 40,
+    "samples": 605,
+    "median": 1.241,
+    "p90": 1.345,
+    "max": 1.95,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 23,
+   "fails": 0,
+   "worst": 3.19,
+   "worstAt": "Elmgate (plains) against Wyrmarch",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 336,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 4,
+    "p95Worst": 2.95,
+    "p95Median": 2.612,
+    "over": []
+   },
+   "town": {
+    "seats": 2,
+    "p95Worst": 3.713,
+    "p95Median": 3.713,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 1.918,
+   "Dpx": 336,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 10,
+   "namedInView": 10,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 129.5,
+   "columns": 1169,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 2.45,
+   "drawn": true,
+   "lastMs": 44.4,
+   "builds": 44,
+   "pixels": 1976896
+  },
+  "stable": {
+   "first": 2022989797,
+   "second": 2022989797,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {}
+  },
+  "readers": {
+   "Dpx": 336,
+   "views": 9,
+   "provinces": 26,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.942,
+    0.923,
+    0.924,
+    0.923
+   ],
+   "unexplored": [
+    0.942,
+    0.923
+   ],
+   "deutan": [
+    0.938,
+    0.923,
+    0.922,
+    0.923
+   ],
+   "protan": [
+    0.942,
+    0.923,
+    0.931,
+    0.923
+   ],
+   "tritan": [
+    0.941,
+    0.923,
+    0.925,
+    0.923
+   ],
+   "missed": [
+    "Halebrook (swamp read hills)",
+    "Bramreach (mountains read wasteland)"
+   ],
+   "missedU": [
+    "Halebrook (swamp read hills)",
+    "Bramreach (mountains read wasteland)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 367,
+     "acc": 0.564
+    },
+    "sight": {
+     "patches": 310,
+     "acc": 0.665
+    },
+    "outofsight": {
+     "patches": 56,
+     "acc": 0
+    },
+    "unexplored": {
+     "patches": 1,
+     "acc": 1
+    },
+    "unexploredProvinces": [
+     "Cinford"
+    ],
+    "unexploredInSightControl": {
+     "patches": 1,
+     "acc": 1
+    },
+    "forcedUnexplored": {
+     "patches": 367,
+     "acc": 0.569
+    }
+   }
+  },
+  "ms": 64279
+ },
+ "nearMax": {
+  "band": "near",
+  "s": 2.397,
+  "Dpx": 420,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 23,
+    "samples": 403,
+    "median": 1.235,
+    "p90": 1.329,
+    "max": 1.55,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "near",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 20,
+   "fails": 0,
+   "worst": 3.94,
+   "worstAt": "Elmcrag (plains) against Briarstead",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "near",
+   "Dpx": 420,
+   "limit": 4,
+   "look": "natural",
+   "hamlet": {
+    "seats": 3,
+    "p95Worst": 3.604,
+    "p95Median": 3.433,
+    "over": []
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "near",
+   "scale": 2.397,
+   "Dpx": 420,
+   "armyBase": 34,
+   "names": 60,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 5,
+   "namedInView": 5,
+   "pctNamed": 100,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 185,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 0,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 161.9,
+   "columns": 1102,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 1,
+   "texelCssPx": 3.07,
+   "drawn": true,
+   "lastMs": 42.1,
+   "builds": 54,
+   "pixels": 1589250
+  },
+  "stable": {
+   "first": 1537675438,
+   "second": 1537675438,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 60,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 0,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.14
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "fine",
+   "pass": true,
+   "wilds": {}
+  },
+  "readers": {
+   "Dpx": 420,
+   "views": 9,
+   "provinces": 13,
+   "pass": "n/a (no floor at Near, over 240 px a province: the floors bind Mid, the reference zoom and Far)",
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    0.665,
+    0.769,
+    0.658,
+    0.769
+   ],
+   "unexplored": [
+    0.666,
+    0.769
+   ],
+   "deutan": [
+    0.665,
+    0.769,
+    0.656,
+    0.769
+   ],
+   "protan": [
+    0.665,
+    0.769,
+    0.659,
+    0.769
+   ],
+   "tritan": [
+    0.665,
+    0.769,
+    0.658,
+    0.769
+   ],
+   "missed": [
+    "Briarstead (hills read wasteland)",
+    "Bramreach (mountains read wasteland)",
+    "Rookmere (hills read plains)"
+   ],
+   "missedU": [
+    "Briarstead (hills read wasteland)",
+    "Bramreach (mountains read wasteland)",
+    "Rookmere (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 487,
+     "acc": 0
+    },
+    "sight": {
+     "patches": 487,
+     "acc": 0
+    },
+    "outofsight": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexplored": {
+     "patches": 0,
+     "acc": null
+    },
+    "unexploredProvinces": [],
+    "unexploredInSightControl": {
+     "patches": 0,
+     "acc": null
+    },
+    "forcedUnexplored": {
+     "patches": 487,
+     "acc": 0
+    }
+   }
+  },
+  "ms": 51307
+ },
+ "m40": {
+  "band": "mid",
+  "s": 0.479,
+  "Dpx": 84,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 99,
+    "samples": 1066,
+    "median": 1.238,
+    "p90": 1.334,
+    "max": 1.744,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 63,
+   "fails": 0,
+   "worst": 3.48,
+   "worstAt": "Briarmarch (wasteland) against Brambarrow",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 84,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 10,
+    "p95Worst": 4.427,
+    "p95Median": 2.505,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.479,
+   "Dpx": 84,
+   "armyBase": 19.3,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 178,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 44,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 0,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 32.4,
+   "columns": 623,
+   "stripeIndex": 0.061,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.8,
+    "p50": 14.8,
+    "p95": 33.4,
+    "spread": 28.6,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.61,
+   "drawn": false,
+   "lastMs": 45.3,
+   "builds": 63,
+   "pixels": 1589250
+  },
+  "stable": {
+   "first": 3558666410,
+   "second": 3558666410,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 961,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 893,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 230,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.913,
+     "pxP90D": 0.083,
+     "light": 0.039,
+     "dark": 0.009,
+     "seam": 3.393,
+     "seamBase": 3.545,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 122,
+     "p50D": 0.024,
+     "p90D": 0.065,
+     "within": 0.893,
+     "pxP90D": 0.06,
+     "light": 0.016,
+     "dark": 0,
+     "seam": 3.001,
+     "seamBase": 4.534,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 138,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.942,
+     "pxP90D": 0.071,
+     "light": 0.036,
+     "dark": 0,
+     "seam": 3.363,
+     "seamBase": 3.688,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 84,
+   "views": 1,
+   "provinces": 49,
+   "pass": true,
+   "farPass": true,
+   "normal": [
+    0.948,
+    1,
+    0.871,
+    1
+   ],
+   "unexplored": [
+    0.932,
+    0.98
+   ],
+   "deutan": [
+    0.95,
+    1,
+    0.859,
+    1
+   ],
+   "protan": [
+    0.954,
+    1,
+    0.859,
+    1
+   ],
+   "tritan": [
+    0.951,
+    1,
+    0.867,
+    1
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 25,
+    "all": {
+     "patches": 614,
+     "acc": 0.966
+    },
+    "sight": {
+     "patches": 514,
+     "acc": 0.967
+    },
+    "outofsight": {
+     "patches": 35,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 65,
+     "acc": 0.938
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 65,
+     "acc": 0.892
+    },
+    "forcedUnexplored": {
+     "patches": 614,
+     "acc": 0.946
+    }
+   }
+  },
+  "ms": 9000
+ },
+ "m40mid": {
+  "band": "mid",
+  "s": 1,
+  "Dpx": 175.2,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 99,
+    "samples": 795,
+    "median": 1.235,
+    "p90": 1.325,
+    "max": 1.78,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 48,
+   "fails": 0,
+   "worst": 3.31,
+   "worstAt": "Ashdale (plains) against Redcrag",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 175.2,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 5,
+    "p95Worst": 3.866,
+    "p95Median": 2.794,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 1,
+   "Dpx": 175.2,
+   "armyBase": 34,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 24,
+   "namedInView": 2,
+   "pctNamed": 8.3,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 183,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 12,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 0,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 67.5,
+   "columns": 1025,
+   "stripeIndex": null,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": null,
+    "p50": null,
+    "p95": null,
+    "spread": null,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 1.28,
+   "drawn": false,
+   "lastMs": 45.3,
+   "builds": 63,
+   "pixels": 1589250
+  },
+  "stable": {
+   "first": 2242217922,
+   "second": 2242217922,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 955,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Still Mere",
+     "px": 792,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 896,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "bake",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 149,
+     "p50D": 0.02,
+     "p90D": 0.057,
+     "within": 0.839,
+     "pxP90D": 0.066,
+     "light": 0.013,
+     "dark": 0,
+     "seam": 2.659,
+     "seamBase": 1.786,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 284,
+     "p50D": 0.026,
+     "p90D": 0.071,
+     "within": 0.803,
+     "pxP90D": 0.06,
+     "light": 0.007,
+     "dark": 0,
+     "seam": 1.967,
+     "seamBase": 1.823,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 209,
+     "p50D": 0.026,
+     "p90D": 0.06,
+     "within": 0.78,
+     "pxP90D": 0.071,
+     "light": 0.029,
+     "dark": 0.005,
+     "seam": 2.997,
+     "seamBase": 1.251,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 175.2,
+   "views": 1,
+   "provinces": 17,
+   "pass": true,
+   "farPass": "n/a (the Far floor binds 55 to 85 px a province)",
+   "normal": [
+    1,
+    1,
+    0.967,
+    1
+   ],
+   "unexplored": [
+    1,
+    1
+   ],
+   "deutan": [
+    0.996,
+    1,
+    0.963,
+    1
+   ],
+   "protan": [
+    0.996,
+    1,
+    0.976,
+    1
+   ],
+   "tritan": [
+    1,
+    1,
+    0.984,
+    1
+   ],
+   "missed": [],
+   "missedU": [],
+   "verifier": {
+    "patchPx": 48,
+    "all": {
+     "patches": 243,
+     "acc": 0.992
+    },
+    "sight": {
+     "patches": 206,
+     "acc": 0.995
+    },
+    "outofsight": {
+     "patches": 21,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 16,
+     "acc": 0.938
+    },
+    "unexploredProvinces": [
+     "Rookford"
+    ],
+    "unexploredInSightControl": {
+     "patches": 16,
+     "acc": 0.938
+    },
+    "forcedUnexplored": {
+     "patches": 243,
+     "acc": 0.992
+    }
+   }
+  },
+  "ms": 10963
+ },
+ "m70": {
+  "band": "mid",
+  "s": 0.479,
+  "Dpx": 84,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 99,
+    "samples": 1107,
+    "median": 1.239,
+    "p90": 1.337,
+    "max": 1.744,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 63,
+   "fails": 0,
+   "worst": 3.43,
+   "worstAt": "Briarmarch (wasteland) against Brambarrow",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 84,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 14,
+    "p95Worst": 6.373,
+    "p95Median": 3.182,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.479,
+   "Dpx": 84,
+   "armyBase": 19.3,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 178,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 44,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 0,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 32.4,
+   "columns": 623,
+   "stripeIndex": 0.061,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.8,
+    "p50": 14.8,
+    "p95": 33.4,
+    "spread": 28.6,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.61,
+   "drawn": false,
+   "lastMs": 45.3,
+   "builds": 63,
+   "pixels": 1589250
+  },
+  "stable": {
+   "first": 1233110199,
+   "second": 1233110199,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 961,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 893,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 230,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.913,
+     "pxP90D": 0.083,
+     "light": 0.03,
+     "dark": 0.009,
+     "seam": 3.393,
+     "seamBase": 3.545,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 122,
+     "p50D": 0.024,
+     "p90D": 0.065,
+     "within": 0.893,
+     "pxP90D": 0.06,
+     "light": 0.016,
+     "dark": 0,
+     "seam": 3.215,
+     "seamBase": 4.534,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 138,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.942,
+     "pxP90D": 0.071,
+     "light": 0.036,
+     "dark": 0,
+     "seam": 3.209,
+     "seamBase": 3.688,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 84,
+   "views": 1,
+   "provinces": 49,
+   "pass": true,
+   "farPass": true,
+   "normal": [
+    0.948,
+    1,
+    0.864,
+    1
+   ],
+   "unexplored": [
+    0.93,
+    0.98
+   ],
+   "deutan": [
+    0.95,
+    1,
+    0.864,
+    1
+   ],
+   "protan": [
+    0.957,
+    1,
+    0.857,
+    1
+   ],
+   "tritan": [
+    0.951,
+    1,
+    0.865,
+    1
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 25,
+    "all": {
+     "patches": 614,
+     "acc": 0.967
+    },
+    "sight": {
+     "patches": 532,
+     "acc": 0.97
+    },
+    "outofsight": {
+     "patches": 17,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 65,
+     "acc": 0.938
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 65,
+     "acc": 0.892
+    },
+    "forcedUnexplored": {
+     "patches": 614,
+     "acc": 0.948
+    }
+   }
+  },
+  "ms": 8084
+ },
+ "back3": {
+  "band": "mid",
+  "s": 0.479,
+  "Dpx": 84,
+  "look": "natural",
+  "lines": {
+   "hair": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 0,
+    "min": null,
+    "median": null,
+    "under": 0,
+    "limit": 3.2
+   },
+   "faint": {
+    "edges": 104,
+    "samples": 1092,
+    "median": 1.236,
+    "p90": 1.329,
+    "max": 1.698,
+    "overFloor": 0,
+    "note": "the natural view: neutral and internal lines faint (owner, 2026-10-23); held under the hairline floor"
+   },
+   "worst": {
+    "hair": null,
+    "int": null
+   },
+   "under": {
+    "hair": [],
+    "int": []
+   },
+   "partners": 0,
+   "flips": 0,
+   "maxW": 0,
+   "pass": true
+  },
+  "rest": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "dpr": 1,
+   "samples": 0,
+   "min": null,
+   "under": 0,
+   "examples": [],
+   "pass": true
+  },
+  "wildEdge": {
+   "look": "natural",
+   "mode": "ownership",
+   "band": "mid",
+   "applicable": "focus",
+   "samples": 0,
+   "fails": 0,
+   "rim": "none at rest",
+   "note": "natural view at rest: no wild edge is drawn (owner, 2026-10-24); reliefWildRest checks the landform, reliefWildFocusSweep the focus states",
+   "pass": true
+  },
+  "wildMargins": {
+   "samples": 0,
+   "fails": 0,
+   "under110": 0,
+   "p5": null,
+   "min": null
+  },
+  "rails": {
+   "samples": 45,
+   "fails": 0,
+   "worst": 3.45,
+   "worstAt": "Morholt (mountains) against Ashvale",
+   "failList": []
+  },
+  "means": "n/a",
+  "seats": {
+   "band": "mid",
+   "Dpx": 84,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 8,
+    "p95Worst": 4.569,
+    "p95Median": 2.548,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.479,
+   "Dpx": 84,
+   "armyBase": 19.3,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 2,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 178,
+   "cornerWrong": 0
+  },
+  "hoverChips": {
+   "hovered": 44,
+   "namesOverAChip": 0,
+   "dayChipsOverNames": 0,
+   "pass": true
+  },
+  "dayChips": {
+   "chips": 1,
+   "overlaps": 0,
+   "examples": [],
+   "underPieces": 0,
+   "underPiecesWorstShare": 0,
+   "underExamples": [],
+   "pass": true
+  },
+  "cliff": {
+   "visible": true,
+   "facePx": 32.4,
+   "columns": 623,
+   "stripeIndex": 0.061,
+   "lightStreaksPer100px": 0,
+   "faceL": {
+    "p5": 4.8,
+    "p50": 14.8,
+    "p95": 33.4,
+    "spread": 28.6,
+    "need": 25
+   },
+   "design": {
+    "before": [
+     0.568,
+     15.4
+    ],
+    "after": [
+     0.141,
+     0
+    ]
+   }
+  },
+  "nearDetail": {
+   "strength": 0,
+   "texelCssPx": 0.61,
+   "drawn": false,
+   "lastMs": 45.3,
+   "builds": 63,
+   "pixels": 1589250
+  },
+  "stable": {
+   "first": 392876994,
+   "second": 392876994,
+   "identical": true
+  },
+  "namesInView": {
+   "names": 6,
+   "viewRight": 1197,
+   "cut": [],
+   "pass": true
+  },
+  "wildNames": {
+   "named": [
+    {
+     "wild": "The Ashspine",
+     "px": 961,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    },
+    {
+     "wild": "The Greyteeth",
+     "px": 893,
+     "outsideWild": 0,
+     "onOutlineBand": 0,
+     "tracking": 0.12
+    }
+   ],
+   "unnamed": [
+    "The Still Mere"
+   ],
+   "pass": true
+  },
+  "wildRest": {
+   "drawn": 0,
+   "src": "land",
+   "pass": false,
+   "wilds": {
+    "Ashspine": {
+     "n": 230,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.913,
+     "pxP90D": 0.083,
+     "light": 0.039,
+     "dark": 0.009,
+     "seam": 3.233,
+     "seamBase": 3.627,
+     "pass": true
+    },
+    "Still Mere": {
+     "n": 122,
+     "p50D": 0.024,
+     "p90D": 0.065,
+     "within": 0.893,
+     "pxP90D": 0.06,
+     "light": 0.016,
+     "dark": 0,
+     "seam": 2.8,
+     "seamBase": 4.656,
+     "pass": false
+    },
+    "Greyteeth": {
+     "n": 138,
+     "p50D": 0.024,
+     "p90D": 0.06,
+     "within": 0.942,
+     "pxP90D": 0.071,
+     "light": 0.043,
+     "dark": 0,
+     "seam": 3.342,
+     "seamBase": 4.003,
+     "pass": false
+    }
+   }
+  },
+  "readers": {
+   "Dpx": 84,
+   "views": 1,
+   "provinces": 49,
+   "pass": true,
+   "farPass": true,
+   "normal": [
+    0.954,
+    1,
+    0.873,
+    1
+   ],
+   "unexplored": [
+    0.93,
+    0.98
+   ],
+   "deutan": [
+    0.95,
+    1,
+    0.864,
+    0.98
+   ],
+   "protan": [
+    0.962,
+    1,
+    0.861,
+    1
+   ],
+   "tritan": [
+    0.954,
+    1,
+    0.864,
+    1
+   ],
+   "missed": [],
+   "missedU": [
+    "Karreach (hills read plains)"
+   ],
+   "verifier": {
+    "patchPx": 25,
+    "all": {
+     "patches": 614,
+     "acc": 0.969
+    },
+    "sight": {
+     "patches": 514,
+     "acc": 0.971
+    },
+    "outofsight": {
+     "patches": 35,
+     "acc": 1
+    },
+    "unexplored": {
+     "patches": 65,
+     "acc": 0.938
+    },
+    "unexploredProvinces": [
+     "Oakford",
+     "Bramreach",
+     "Cinford",
+     "Rookmarch",
+     "Rookford",
+     "Thornwick",
+     "Wyrmere"
+    ],
+    "unexploredInSightControl": {
+     "patches": 65,
+     "acc": 0.892
+    },
+    "forcedUnexplored": {
+     "patches": 614,
+     "acc": 0.953
+    }
+   }
+  },
+  "ms": 9316
+ },
+ "hover_start": {
+  "look": "natural",
+  "faintOn": true,
+  "band": "mid",
+  "provinces": 41,
+  "rows": [
+   {
+    "how": "hover",
+    "prov": "Ashvale",
+    "owner": "",
+    "hair": 64,
+    "hairMin": 2.996,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrholt",
+    "owner": "",
+    "hair": 71,
+    "hairMin": 3.028,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Cinfen",
+    "owner": "",
+    "hair": 93,
+    "hairMin": 2.989,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Bramreach",
+    "owner": "",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Redbarrow",
+    "owner": "",
+    "hair": 95,
+    "hairMin": 2.73,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Morgate",
+    "owner": "",
+    "hair": 101,
+    "hairMin": 2.772,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 74,
+    "hairMin": 2.951,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Elmwick",
+    "owner": "",
+    "hair": 108,
+    "hairMin": 2.738,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Fenvale",
+    "owner": "",
+    "hair": 53,
+    "hairMin": 2.817,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Halebrook",
+    "owner": "",
+    "hair": 59,
+    "hairMin": 2.94,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashstead",
+    "owner": "",
+    "hair": 70,
+    "hairMin": 2.849,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Gallreach",
+    "owner": "",
+    "hair": 84,
+    "hairMin": 2.988,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrmere",
+    "owner": "",
+    "hair": 3,
+    "hairMin": 4.962,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Elmcrag",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 66,
+    "intMin": 4.125,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Cinford",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 27,
+    "intMin": 5.758,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Briardale",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 126,
+    "intMin": 4.018,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Elmgate",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 68,
+    "intMin": 4.098,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Rookmarch",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Kharnath",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 128,
+    "intMin": 3.879,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashdale",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 70,
+    "intMin": 3.737,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Torbarrow",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 69,
+    "intMin": 3.996,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Halevale",
+    "owner": "",
+    "hair": 60,
+    "hairMin": 2.957,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Redwick",
+    "owner": "",
+    "hair": 103,
+    "hairMin": 3.003,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Briarstead",
+    "owner": "",
+    "hair": 62,
+    "hairMin": 3.013,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Karwick",
+    "owner": "",
+    "hair": 28,
+    "hairMin": 4.332,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Duskholt",
+    "owner": "",
+    "hair": 120,
+    "hairMin": 2.972,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 58,
+    "hairMin": 2.971,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 123,
+    "hairMin": 2.982,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 70,
+    "hairMin": 3.013,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 55,
+    "hairMin": 3.009,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Thornwick",
+    "owner": "",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrfen",
+    "owner": "",
+    "hair": 101,
+    "hairMin": 2.886,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Redcrag",
+    "owner": "",
+    "hair": 59,
+    "hairMin": 3.074,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Morholt",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 37,
+    "intMin": 5.296,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Rookmere",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 71,
+    "intMin": 5.105,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Sunmere",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 65,
+    "intMin": 4.357,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashfen",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 62,
+    "intMin": 4.904,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Deepmoss",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 60,
+    "intMin": 7.68,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Redholt",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 92,
+    "intMin": 4.448,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Oakmoor",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 67,
+    "intMin": 5.076,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Rookford",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 30,
+    "intMin": 4.304,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashvale",
+    "owner": "",
+    "hair": 64,
+    "hairMin": 2.965,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrholt",
+    "owner": "",
+    "hair": 71,
+    "hairMin": 2.872,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Cinfen",
+    "owner": "",
+    "hair": 93,
+    "hairMin": 3.097,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Bramreach",
+    "owner": "",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Redbarrow",
+    "owner": "",
+    "hair": 95,
+    "hairMin": 3.045,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Morgate",
+    "owner": "",
+    "hair": 101,
+    "hairMin": 3.021,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 74,
+    "hairMin": 2.951,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Elmwick",
+    "owner": "",
+    "hair": 108,
+    "hairMin": 2.738,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Fenvale",
+    "owner": "",
+    "hair": 53,
+    "hairMin": 3.058,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Halebrook",
+    "owner": "",
+    "hair": 59,
+    "hairMin": 2.93,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashstead",
+    "owner": "",
+    "hair": 70,
+    "hairMin": 2.866,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Gallreach",
+    "owner": "",
+    "hair": 84,
+    "hairMin": 2.939,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrmere",
+    "owner": "",
+    "hair": 3,
+    "hairMin": 3.833,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Elmcrag",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 66,
+    "intMin": 4.125,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Cinford",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 27,
+    "intMin": 5.831,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Briardale",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 126,
+    "intMin": 4.017,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Elmgate",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 68,
+    "intMin": 4.098,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Rookmarch",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Kharnath",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 128,
+    "intMin": 4.021,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashdale",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 70,
+    "intMin": 3.737,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Torbarrow",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 69,
+    "intMin": 3.959,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Halevale",
+    "owner": "",
+    "hair": 60,
+    "hairMin": 2.957,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Redwick",
+    "owner": "",
+    "hair": 103,
+    "hairMin": 2.959,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Briarstead",
+    "owner": "",
+    "hair": 62,
+    "hairMin": 2.998,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Karwick",
+    "owner": "",
+    "hair": 28,
+    "hairMin": 4.904,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Duskholt",
+    "owner": "",
+    "hair": 120,
+    "hairMin": 2.995,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 58,
+    "hairMin": 2.96,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 123,
+    "hairMin": 3.175,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 70,
+    "hairMin": 2.982,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 55,
+    "hairMin": 2.971,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Thornwick",
+    "owner": "",
+    "hair": 0,
+    "hairMin": null,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrfen",
+    "owner": "",
+    "hair": 101,
+    "hairMin": 2.885,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Redcrag",
+    "owner": "",
+    "hair": 59,
+    "hairMin": 3,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Morholt",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 37,
+    "intMin": 5.296,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Rookmere",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 71,
+    "intMin": 5.231,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Sunmere",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 65,
+    "intMin": 4.357,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashfen",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 62,
+    "intMin": 4.694,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Deepmoss",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 60,
+    "intMin": 8.666,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Redholt",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 92,
+    "intMin": 4.403,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Oakmoor",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 67,
+    "intMin": 4.893,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Rookford",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 30,
+    "intMin": 4.466,
+    "under": [],
+    "pass": true
+   }
+  ],
+  "hairMin": 2.73,
+  "intMin": 3.737,
+  "pass": true
+ },
+ "focus_start": {
+  "look": "natural",
+  "mode": "ownership",
+  "band": "mid",
+  "dpr": 1,
+  "faintOn": true,
+  "provinces": 48,
+  "hover": {
+   "provinces": 48,
+   "samples": 6424,
+   "min": 2.73,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "select": {
+   "provinces": 48,
+   "samples": 6424,
+   "min": 2.682,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "ms": 10072,
+  "pass": true
+ },
+ "hover_mid": {
+  "look": "natural",
+  "faintOn": true,
+  "band": "mid",
+  "provinces": 12,
+  "rows": [
+   {
+    "how": "hover",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 128,
+    "hairMin": 2.954,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 272,
+    "hairMin": 2.967,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 132,
+    "hairMin": 2.964,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 109,
+    "hairMin": 2.945,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Briardale",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 286,
+    "intMin": 4.002,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Kharnath",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 231,
+    "intMin": 3.633,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 169,
+    "hairMin": 2.867,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Elmwick",
+    "owner": "",
+    "hair": 246,
+    "hairMin": 2.862,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Fenvale",
+    "owner": "",
+    "hair": 90,
+    "hairMin": 2.912,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Halebrook",
+    "owner": "",
+    "hair": 138,
+    "hairMin": 2.633,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashfen",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 139,
+    "intMin": 4.773,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Oakmoor",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 144,
+    "intMin": 4.931,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 128,
+    "hairMin": 2.966,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 272,
+    "hairMin": 3.163,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 132,
+    "hairMin": 2.957,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 109,
+    "hairMin": 2.974,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Briardale",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 286,
+    "intMin": 3.938,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Kharnath",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 231,
+    "intMin": 3.576,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 169,
+    "hairMin": 2.866,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Elmwick",
+    "owner": "",
+    "hair": 246,
+    "hairMin": 2.76,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Fenvale",
+    "owner": "",
+    "hair": 90,
+    "hairMin": 2.878,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Halebrook",
+    "owner": "",
+    "hair": 138,
+    "hairMin": 2.667,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashfen",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 139,
+    "intMin": 4.615,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Oakmoor",
+    "owner": "red",
+    "hair": 0,
+    "hairMin": null,
+    "int": 144,
+    "intMin": 4.755,
+    "under": [],
+    "pass": true
+   }
+  ],
+  "hairMin": 2.633,
+  "intMin": 3.576,
+  "pass": true
+ },
+ "focus_mid": {
+  "look": "natural",
+  "mode": "ownership",
+  "band": "mid",
+  "dpr": 1,
+  "faintOn": true,
+  "provinces": 28,
+  "hover": {
+   "provinces": 28,
+   "samples": 5924,
+   "min": 2.633,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "select": {
+   "provinces": 28,
+   "samples": 5924,
+   "min": 2.667,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "ms": 13739,
+  "pass": true
+ },
+ "hover_near": {
+  "look": "natural",
+  "faintOn": true,
+  "band": "near",
+  "provinces": 4,
+  "rows": [
+   {
+    "how": "hover",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 205,
+    "hairMin": 2.74,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 295,
+    "hairMin": 2.408,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 240,
+    "hairMin": 2.817,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 149,
+    "hairMin": 3.17,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Tormere",
+    "owner": "",
+    "hair": 205,
+    "hairMin": 2.757,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Ashmoor",
+    "owner": "",
+    "hair": 295,
+    "hairMin": 2.414,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Stagmoor",
+    "owner": "",
+    "hair": 240,
+    "hairMin": 2.755,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Marholt",
+    "owner": "",
+    "hair": 149,
+    "hairMin": 3.501,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   }
+  ],
+  "hairMin": 2.408,
+  "intMin": null,
+  "pass": true
+ },
+ "focus_near": {
+  "look": "natural",
+  "mode": "ownership",
+  "band": "near",
+  "dpr": 1,
+  "faintOn": true,
+  "provinces": 7,
+  "hover": {
+   "provinces": 7,
+   "samples": 2272,
+   "min": 2.408,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "select": {
+   "provinces": 7,
+   "samples": 2272,
+   "min": 2.414,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "ms": 4244,
+  "pass": true
+ },
+ "hover_near1180": {
+  "look": "natural",
+  "faintOn": true,
+  "band": "near",
+  "provinces": 3,
+  "rows": [
+   {
+    "how": "hover",
+    "prov": "Duskholt",
+    "owner": "",
+    "hair": 218,
+    "hairMin": 3.338,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Elmcrag",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 288,
+    "intMin": 3.663,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "hover",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 226,
+    "hairMin": 2.765,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Duskholt",
+    "owner": "",
+    "hair": 218,
+    "hairMin": 3.485,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Elmcrag",
+    "owner": "green",
+    "hair": 0,
+    "hairMin": null,
+    "int": 288,
+    "intMin": 3.663,
+    "under": [],
+    "pass": true
+   },
+   {
+    "how": "select",
+    "prov": "Wyrmarch",
+    "owner": "",
+    "hair": 226,
+    "hairMin": 2.819,
+    "int": 0,
+    "intMin": null,
+    "under": [],
+    "pass": true
+   }
+  ],
+  "hairMin": 2.765,
+  "intMin": 3.663,
+  "pass": true
+ },
+ "focus_near1180": {
+  "look": "natural",
+  "mode": "ownership",
+  "band": "near",
+  "dpr": 1,
+  "faintOn": true,
+  "provinces": 9,
+  "hover": {
+   "provinces": 9,
+   "samples": 3620,
+   "min": 2.625,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "select": {
+   "provinces": 9,
+   "samples": 3620,
+   "min": 2.819,
+   "under": 0,
+   "failing": [],
+   "examples": []
+  },
+  "ms": 2749,
+  "pass": true
+ },
+ "wildLook": {
+  "peaks": {
+   "texels": 65834,
+   "Lp5": 12.6,
+   "Lp50": 27.2,
+   "Lp95": 46.5,
+   "Lmax": 75,
+   "textelsOutsideTheirCells": 0,
+   "cap": 54.85,
+   "passableRockP999": 52.35,
+   "overCap": 0,
+   "rockOverCap": 0,
+   "snowShare": 0.0518,
+   "snowOverCapShare": 0.0234,
+   "snowLmax": 75,
+   "snowMax": 80,
+   "snowShareMax": 0.08,
+   "rule": "pass 3 prototype: rock under the cap; snow on the top crests to snowMax on at most snowShareMax",
+   "snowPass": true
+  },
+  "mere": {
+   "texels": 14159,
+   "Lp5": 27.9,
+   "Lp50": 32.6,
+   "Lp95": 38.9,
+   "Lmax": 52.3,
+   "textelsOutsideTheirCells": 0,
+   "waterMeanLab": [
+    32.3,
+    -21.5,
+    -5
+   ],
+   "naturalWaterLab": [
+    36.8,
+    -23.8,
+    -3.1
+   ],
+   "waterDE": 4.2,
+   "fringeShare": 0.149
+  },
+  "pass": true
+ },
+ "startClear": {
+  "Dpx": 84,
+  "ribbon": true,
+  "wildSamplesUnderRibbon": 0,
+  "seatsUnderRibbon": [],
+  "focus": [
+   299,
+   378
+  ],
+  "viewBottom": 487,
+  "pass": true
+ },
+ "footprint": {
+  "landHashBefore": "75770385",
+  "landHashAfter": "75770385",
+  "landTexelsWrittenByWildPass": 0,
+  "wildTexelsOutsideCells": 0,
+  "landShadowTexelsMoved": 18225,
+  "pass": true
+ },
+ "interact": {
+  "edges": 30,
+  "hitInside": 30,
+  "hitOutsideNamesTerrain": 30,
+  "cardsImpassable": 3,
+  "pathsRefused": 30,
+  "problems": [],
+  "pass": true
+ },
+ "sweep": {
+  "focusAll": true,
+  "views": 33,
+  "samples": 12281,
+  "fails": 0,
+  "samplesUnder110": 0,
+  "minRatio": 1.136,
+  "worst": "sweep 17 The Greyteeth The Greyteeth/Fenvale",
+  "pans": [
+   {
+    "view": "start",
+    "positions": 5,
+    "fails": 0,
+    "decisionChanged": 0
+   },
+   {
+    "view": "mid",
+    "positions": 5,
+    "fails": 0,
+    "decisionChanged": 0
+   },
+   {
+    "view": "Ashspine Near",
+    "positions": 5,
+    "fails": 0,
+    "decisionChanged": 0
+   }
+  ],
+  "rows": [
+   {
+    "view": "sweep 0 The Ashspine",
+    "Dpx": 124.7,
+    "samples": 268,
+    "fails": 0,
+    "p5": 1.309,
+    "min": {
+     "r": 1.16,
+     "at": "The Ashspine/Halevale",
+     "via": "-0.5 px L* 0",
+     "W": 34,
+     "G": 37,
+     "sx": 547,
+     "sy": 152
+    },
+    "share": 0.788
+   },
+   {
+    "view": "sweep 1 The Still Mere",
+    "Dpx": 59.9,
+    "samples": 162,
+    "fails": 0,
+    "p5": 1.297,
+    "min": {
+     "r": 1.249,
+     "at": "The Still Mere/Oakmarch",
+     "via": "-3.5 px L* 57",
+     "W": 36,
+     "G": 27,
+     "sx": 577,
+     "sy": 300
+    },
+    "share": 0.883
+   },
+   {
+    "view": "sweep 2 The Greyteeth",
+    "Dpx": 163.5,
+    "samples": 315,
+    "fails": 0,
+    "p5": 1.311,
+    "min": {
+     "r": 1.205,
+     "at": "The Greyteeth/Sundale",
+     "via": "-2.5 px L* 58",
+     "W": 31,
+     "G": 33,
+     "sx": 583,
+     "sy": 400
+    },
+    "share": 0.706
+   },
+   {
+    "view": "sweep 3 The Ashspine",
+    "Dpx": 290.2,
+    "samples": 261,
+    "fails": 0,
+    "p5": 1.394,
+    "min": {
+     "r": 1.3,
+     "at": "The Ashspine/Tormere",
+     "via": "-3.5 px L* 54",
+     "W": 25,
+     "G": 16,
+     "sx": 586,
+     "sy": 342
+    },
+    "share": 0.573
+   },
+   {
+    "view": "sweep 4 The Still Mere",
+    "Dpx": 183.1,
+    "samples": 326,
+    "fails": 0,
+    "p5": 1.302,
+    "min": {
+     "r": 1.177,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-0.5 px L* 0",
+     "W": 34,
+     "G": 53,
+     "sx": 193,
+     "sy": 369
+    },
+    "share": 0.676
+   },
+   {
+    "view": "sweep 5 The Greyteeth",
+    "Dpx": 165.3,
+    "samples": 286,
+    "fails": 0,
+    "p5": 1.317,
+    "min": {
+     "r": 1.156,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-1 px L* 0",
+     "W": 31,
+     "G": 50,
+     "sx": 467,
+     "sy": 244
+    },
+    "share": 0.704
+   },
+   {
+    "view": "sweep 6 The Ashspine",
+    "Dpx": 407.9,
+    "samples": 286,
+    "fails": 0,
+    "p5": 1.362,
+    "min": {
+     "r": 1.254,
+     "at": "The Ashspine/Ashfen",
+     "via": "-3 px L* 63",
+     "W": 27,
+     "G": 40,
+     "sx": 282,
+     "sy": 253
+    },
+    "share": 0.57
+   },
+   {
+    "view": "sweep 7 The Still Mere",
+    "Dpx": 159.5,
+    "samples": 255,
+    "fails": 0,
+    "p5": 1.305,
+    "min": {
+     "r": 1.246,
+     "at": "The Still Mere/Oakmarch",
+     "via": "-0.5 px L* 0",
+     "W": 34,
+     "G": 30,
+     "sx": 620,
+     "sy": 382
+    },
+    "share": 0.698
+   },
+   {
+    "view": "sweep 8 The Greyteeth",
+    "Dpx": 369.1,
+    "samples": 397,
+    "fails": 0,
+    "p5": 1.328,
+    "min": {
+     "r": 1.251,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-0.5 px L* 0",
+     "W": 36,
+     "G": 50,
+     "sx": 274,
+     "sy": 224
+    },
+    "share": 0.612
+   },
+   {
+    "view": "sweep 9 The Ashspine",
+    "Dpx": 119.9,
+    "samples": 249,
+    "fails": 0,
+    "p5": 1.324,
+    "min": {
+     "r": 1.228,
+     "at": "The Ashspine/Wyrholt",
+     "via": "-0.5 px L* 0",
+     "W": 36,
+     "G": 47,
+     "sx": 701,
+     "sy": 189
+    },
+    "share": 0.815
+   },
+   {
+    "view": "sweep 10 The Still Mere",
+    "Dpx": 227,
+    "samples": 350,
+    "fails": 0,
+    "p5": 1.3,
+    "min": {
+     "r": 1.158,
+     "at": "The Greyteeth/Marholt",
+     "via": "-1 px L* 0",
+     "W": 32,
+     "G": 27,
+     "sx": 238,
+     "sy": 280
+    },
+    "share": 0.664
+   },
+   {
+    "view": "sweep 11 The Greyteeth",
+    "Dpx": 276.3,
+    "samples": 321,
+    "fails": 0,
+    "p5": 1.299,
+    "min": {
+     "r": 1.184,
+     "at": "The Still Mere/Sundale",
+     "via": "-1 px L* 0",
+     "W": 27,
+     "G": 33,
+     "sx": 988,
+     "sy": 359
+    },
+    "share": 0.659
+   },
+   {
+    "view": "sweep 12 The Ashspine",
+    "Dpx": 366.7,
+    "samples": 319,
+    "fails": 0,
+    "p5": 1.327,
+    "min": {
+     "r": 1.204,
+     "at": "The Ashspine/Halevale",
+     "via": "-1 px L* 0",
+     "W": 30,
+     "G": 37,
+     "sx": 418,
+     "sy": 309
+    },
+    "share": 0.681
+   },
+   {
+    "view": "sweep 13 The Still Mere",
+    "Dpx": 79.5,
+    "samples": 193,
+    "fails": 0,
+    "p5": 1.315,
+    "min": {
+     "r": 1.262,
+     "at": "The Ashspine/Ashfen",
+     "via": "-3 px L* 61",
+     "W": 17,
+     "G": 37,
+     "sx": 295,
+     "sy": 132
+    },
+    "share": 0.903
+   },
+   {
+    "view": "sweep 14 The Greyteeth",
+    "Dpx": 52.6,
+    "samples": 137,
+    "fails": 0,
+    "p5": 1.294,
+    "min": {
+     "r": 1.24,
+     "at": "The Still Mere/Marholt",
+     "via": "-0.5 px L* 0",
+     "W": 27,
+     "G": 35,
+     "sx": 653,
+     "sy": 255
+    },
+    "share": 0.891
+   },
+   {
+    "view": "sweep 15 The Ashspine",
+    "Dpx": 105.9,
+    "samples": 166,
+    "fails": 0,
+    "p5": 1.308,
+    "min": {
+     "r": 1.278,
+     "at": "The Ashspine/Morholt",
+     "via": "-3.5 px L* 79",
+     "W": 30,
+     "G": 49,
+     "sx": 384,
+     "sy": 319
+    },
+    "share": 0.835
+   },
+   {
+    "view": "sweep 16 The Still Mere",
+    "Dpx": 237.9,
+    "samples": 250,
+    "fails": 0,
+    "p5": 1.345,
+    "min": {
+     "r": 1.22,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-1 px L* 0",
+     "W": 36,
+     "G": 50,
+     "sx": 28,
+     "sy": 347
+    },
+    "share": 0.627
+   },
+   {
+    "view": "sweep 17 The Greyteeth",
+    "Dpx": 211.1,
+    "samples": 368,
+    "fails": 0,
+    "p5": 1.275,
+    "min": {
+     "r": 1.136,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-1 px L* 0",
+     "W": 35,
+     "G": 23,
+     "sx": 510,
+     "sy": 217
+    },
+    "share": 0.684
+   },
+   {
+    "view": "sweep 18 The Ashspine",
+    "Dpx": 120.5,
+    "samples": 278,
+    "fails": 0,
+    "p5": 1.315,
+    "min": {
+     "r": 1.217,
+     "at": "The Ashspine/Wyrholt",
+     "via": "-1 px L* 0",
+     "W": 36,
+     "G": 48,
+     "sx": 743,
+     "sy": 163
+    },
+    "share": 0.815
+   },
+   {
+    "view": "sweep 19 The Still Mere",
+    "Dpx": 122.1,
+    "samples": 228,
+    "fails": 0,
+    "p5": 1.312,
+    "min": {
+     "r": 1.248,
+     "at": "The Greyteeth/Stagmoor",
+     "via": "-4 px L* 64",
+     "W": 41,
+     "G": 19,
+     "sx": 367,
+     "sy": 191
+    },
+    "share": 0.809
+   },
+   {
+    "view": "sweep 20 The Greyteeth",
+    "Dpx": 395.4,
+    "samples": 188,
+    "fails": 0,
+    "p5": 1.286,
+    "min": {
+     "r": 1.237,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-1 px L* 0",
+     "W": 52,
+     "G": 28,
+     "sx": 548,
+     "sy": 143
+    },
+    "share": 0.525
+   },
+   {
+    "view": "sweep 21 The Ashspine",
+    "Dpx": 81.1,
+    "samples": 213,
+    "fails": 0,
+    "p5": 1.303,
+    "min": {
+     "r": 1.268,
+     "at": "The Greyteeth/Sundale",
+     "via": "-3.5 px L* 61",
+     "W": 19,
+     "G": 37,
+     "sx": 702,
+     "sy": 472
+    },
+    "share": 0.908
+   },
+   {
+    "view": "sweep 22 The Still Mere",
+    "Dpx": 250.7,
+    "samples": 328,
+    "fails": 0,
+    "p5": 1.269,
+    "min": {
+     "r": 1.153,
+     "at": "The Still Mere/Oakmarch",
+     "via": "-1 px L* 0",
+     "W": 32,
+     "G": 27,
+     "sx": 688,
+     "sy": 286
+    },
+    "share": 0.63
+   },
+   {
+    "view": "sweep 23 The Greyteeth",
+    "Dpx": 116.9,
+    "samples": 244,
+    "fails": 0,
+    "p5": 1.31,
+    "min": {
+     "r": 1.261,
+     "at": "The Greyteeth/Sundale",
+     "via": "-3.5 px L* 61",
+     "W": 16,
+     "G": 37,
+     "sx": 585,
+     "sy": 354
+    },
+    "share": 0.829
+   },
+   {
+    "view": "sweep 24 The Ashspine",
+    "Dpx": 107.7,
+    "samples": 150,
+    "fails": 0,
+    "p5": 1.308,
+    "min": {
+     "r": 1.213,
+     "at": "The Ashspine/Halevale",
+     "via": "-1 px L* 0",
+     "W": 36,
+     "G": 44,
+     "sx": 645,
+     "sy": 311
+    },
+    "share": 0.835
+   },
+   {
+    "view": "sweep 25 The Still Mere",
+    "Dpx": 79.3,
+    "samples": 239,
+    "fails": 0,
+    "p5": 1.305,
+    "min": {
+     "r": 1.268,
+     "at": "The Ashspine/Wyrholt",
+     "via": "-4 px L* 74",
+     "W": 33,
+     "G": 47,
+     "sx": 458,
+     "sy": 136
+    },
+    "share": 0.903
+   },
+   {
+    "view": "sweep 26 The Greyteeth",
+    "Dpx": 56.8,
+    "samples": 153,
+    "fails": 0,
+    "p5": 1.294,
+    "min": {
+     "r": 1.252,
+     "at": "The Still Mere/Marholt",
+     "via": "-0.5 px L* 0",
+     "W": 27,
+     "G": 35,
+     "sx": 613,
+     "sy": 233
+    },
+    "share": 0.882
+   },
+   {
+    "view": "sweep 27 The Ashspine",
+    "Dpx": 212.2,
+    "samples": 336,
+    "fails": 0,
+    "p5": 1.315,
+    "min": {
+     "r": 1.229,
+     "at": "The Ashspine/Stagmoor",
+     "via": "-3 px L* 52",
+     "W": 24,
+     "G": 13,
+     "sx": 764,
+     "sy": 410
+    },
+    "share": 0.654
+   },
+   {
+    "view": "sweep 28 The Still Mere",
+    "Dpx": 254.9,
+    "samples": 307,
+    "fails": 0,
+    "p5": 1.29,
+    "min": {
+     "r": 1.211,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-0.5 px L* 0",
+     "W": 36,
+     "G": 50,
+     "sx": 16,
+     "sy": 129
+    },
+    "share": 0.632
+   },
+   {
+    "view": "sweep 29 The Greyteeth",
+    "Dpx": 365.1,
+    "samples": 301,
+    "fails": 0,
+    "p5": 1.284,
+    "min": {
+     "r": 1.228,
+     "at": "The Still Mere/Oakmarch",
+     "via": "-0.5 px L* 0",
+     "W": 29,
+     "G": 34,
+     "sx": 1015,
+     "sy": 300
+    },
+    "share": 0.613
+   },
+   {
+    "view": "closest The Ashspine",
+    "Dpx": 420,
+    "samples": 361,
+    "fails": 0,
+    "p5": 1.318,
+    "min": {
+     "r": 1.236,
+     "at": "The Ashspine/Halevale",
+     "via": "-1 px L* 0",
+     "W": 30,
+     "G": 37,
+     "sx": 477,
+     "sy": 108
+    },
+    "share": 0.652
+   },
+   {
+    "view": "closest The Still Mere",
+    "Dpx": 420,
+    "samples": 307,
+    "fails": 0,
+    "p5": 1.31,
+    "min": {
+     "r": 1.201,
+     "at": "The Greyteeth/Marholt",
+     "via": "-0.5 px L* 0",
+     "W": 29,
+     "G": 34,
+     "sx": 58,
+     "sy": 240
+    },
+    "share": 0.587
+   },
+   {
+    "view": "closest The Greyteeth",
+    "Dpx": 420,
+    "samples": 248,
+    "fails": 0,
+    "p5": 1.293,
+    "min": {
+     "r": 1.223,
+     "at": "The Greyteeth/Fenvale",
+     "via": "-1 px L* 0",
+     "W": 32,
+     "G": 52,
+     "sx": 419,
+     "sy": 252
+    },
+    "share": 0.587
+   }
+  ],
+  "pass": true
+ },
+ "sweepMs": 49146,
+ "quietCost": {
+  "lastLiveMs": 49.1,
+  "liveDecisions": 94,
+  "prefetchSlices": 587,
+  "prefetchMs": 8143,
+  "rungsKept": 24,
+  "edgesDecidedHere": 30,
+  "rung": 1.01
+ },
+ "snowNatural": {
+  "look": "natural",
+  "byTerrain": {
+   "hills": {
+    "texels": 308881,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 32,
+    "minCvd": 31.4
+   },
+   "plains": {
+    "texels": 604637,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 29.9,
+    "minCvd": 28.9
+   },
+   "forest": {
+    "texels": 547483,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 32.5,
+    "minCvd": 32
+   },
+   "wasteland": {
+    "texels": 179088,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 23.2,
+    "minCvd": 22.7
+   },
+   "mountains": {
+    "texels": 189953,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 29.1,
+    "minCvd": 28.9
+   },
+   "farmland": {
+    "texels": 313289,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 30,
+    "minCvd": 29.3
+   },
+   "swamp": {
+    "texels": 235860,
+    "within2012": 0,
+    "withinUnderHaze": 0,
+    "minNormal": 32.3,
+    "minCvd": 31.7
+   }
+  },
+  "pass": true
+ },
+ "design": {
+  "ownTerrainShare": {
+   "min": 0.865,
+   "under80": 0,
+   "need": 0.8
+  },
+  "glowCore": {
+   "min": 0.79,
+   "median": 0.911,
+   "need": 0.7,
+   "note": "owned provinces; the core is untouched by the glow and the fog hem"
+  },
+  "meanResidualL": null,
+  "reliefInvariants": {
+   "peakMin": 1.198,
+   "passableMax": 0.998,
+   "peaksAbove": true,
+   "mereMax": -0.05,
+   "landMin": -0.05,
+   "meresBelow": true,
+   "note": "checked map-wide (stricter than within 2 D and 1 D)"
+  },
+  "water": {
+   "lakes": 4,
+   "ponds": 8,
+   "streams": 9,
+   "waterfalls": 2,
+   "lakeMaxShare": 0.045,
+   "pondMaxShare": 0.018,
+   "minClearD": 0.101,
+   "needD": 0.1,
+   "streamPointsOutsideTheirProvince": 0,
+   "note": "clearance for waterfalls is measured off the south edge they fall from"
+  },
+  "escarpment": "Clear not baked yet",
+  "coreSwing": "Clear not baked yet",
+  "reliefRulesPass": {
+   "invariants": true,
+   "escarpmentAtMost3": true,
+   "coreSwingThirdOfCap": true,
+   "ownTerrain80": true,
+   "glowCore70": true,
+   "meanResidual": true,
+   "all": true
+  }
+ },
+ "naturalStart": {
+  "look": "natural",
+  "chroma": {
+   "texels": 1189679,
+   "over010": 0,
+   "max": 0.089,
+   "p99": 0.085,
+   "cap": 0.1,
+   "materialsMax": [
+    "plains.light",
+    "#6e7734",
+    0.092
+   ],
+   "materialsOver010": 0,
+   "pass": true
+  },
+  "cover": {
+   "sourceScan": {
+    "transcendentals": [],
+    "pass": true
+   },
+   "provinces": 60,
+   "wholeMin": 0.811,
+   "wholeMedian": 0.926,
+   "wholeOwnCopsesMin": 0.828,
+   "coreMin": 0.988,
+   "coreCopsesAsForestMin": 0.8,
+   "copseCoreMax": 0.2,
+   "worst": "Karford (farmland) 0.811",
+   "byTerrain": {
+    "hills": {
+     "n": 8,
+     "wholeMin": 0.876,
+     "coreMin": 1
+    },
+    "plains": {
+     "n": 15,
+     "wholeMin": 0.846,
+     "coreMin": 1
+    },
+    "forest": {
+     "n": 13,
+     "wholeMin": 0.947,
+     "coreMin": 1
+    },
+    "wasteland": {
+     "n": 5,
+     "wholeMin": 0.868,
+     "coreMin": 1
+    },
+    "mountains": {
+     "n": 5,
+     "wholeMin": 0.876,
+     "coreMin": 1
+    },
+    "farmland": {
+     "n": 8,
+     "wholeMin": 0.811,
+     "coreMin": 0.988
+    },
+    "swamp": {
+     "n": 6,
+     "wholeMin": 0.879,
+     "coreMin": 1
+    }
+   },
+   "need": {
+    "whole": 0.7,
+    "core": 0.95,
+    "copseCore": 0.25
+   },
+   "pass": true
+  },
+  "snow": {
+   "look": "natural",
+   "byTerrain": {
+    "hills": {
+     "texels": 308881,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32,
+     "minCvd": 31.4
+    },
+    "plains": {
+     "texels": 604637,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 29.9,
+     "minCvd": 28.9
+    },
+    "forest": {
+     "texels": 547483,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32.5,
+     "minCvd": 32
+    },
+    "wasteland": {
+     "texels": 179088,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 23.2,
+     "minCvd": 22.7
+    },
+    "mountains": {
+     "texels": 189953,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 29.1,
+     "minCvd": 28.9
+    },
+    "farmland": {
+     "texels": 313289,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 30,
+     "minCvd": 29.3
+    },
+    "swamp": {
+     "texels": 235860,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32.3,
+     "minCvd": 31.7
+    }
+   },
+   "pass": true
+  },
+  "readers": "not run (a data mode replaces the terrain colours)"
+ },
+ "rebake": {
+  "first": 3551693820,
+  "second": 3551693820,
+  "identical": true,
+  "bake": {
+   "look": "natural",
+   "first": 3675559845,
+   "again": 3675559845,
+   "identical": true,
+   "rebakeMs": 25128,
+   "coverIdentical": true
+  }
+ },
+ "memory": {
+  "looksBaked": [
+   "natural"
+  ],
+  "bakeMB": 10,
+  "mipsMB": 3.13,
+  "bakeWithMipsMB": 13.13,
+  "liveRastersMB": 2.5,
+  "rimMB": 6.5,
+  "figureAtlasMB": 0.95,
+  "screenCachesMB": 23.67,
+  "rastersKeptMB": 48.28,
+  "unwashedCopiesMB": 13.13,
+  "totalCanvasMB": 46.74,
+  "jsHeapMB": 347.14,
+  "design": "bake RGBA8 with mips 14.0 MB on GPU (2048 x 1280); this mockup holds CPU canvases instead of GPU textures, plus the CPU rasters the checks read"
+ },
+ "times": {
+  "firstLook": "natural",
+  "sharedStepsMs": {
+   "idRaster": 382.4,
+   "warpLookup": 2095,
+   "heightWeights": 1845.3,
+   "heightfield": 1314.7,
+   "hillshade": 898.4,
+   "water": 137.6,
+   "modeRelief": 209.4
+  },
+  "naturalStepsMs": {
+   "wilds": 7974.8,
+   "coverBlend": 1436.7,
+   "covers": 3834.3,
+   "canopyShadow": 919.7,
+   "materials": 6306.2,
+   "wildTexels": 4787,
+   "corners": 289.9,
+   "canvas": 2040.6
+  },
+  "clearStepsMs": null,
+  "lookCpu": {
+   "natural": {
+    "total": 29226,
+    "wall": 36087,
+    "slices": 204
+   },
+   "clear": null
+  },
+  "bakeCpuMs": 29226,
+  "bakeWallMs": 36087,
+  "slices": 204,
+  "figureAtlasMs": 5669,
+  "figureAtlas": "pixi.js 8.22.0",
+  "glowMs": 25.5,
+  "modeRasterMs": null,
+  "washComposites": 6,
+  "washMsTotal": 2186.4,
+  "staticRenders": 2001,
+  "staticMsMean": 65.4,
+  "firstPaintMs": 1217,
+  "design": "GPU bake: a few ms to 15 ms on a GPU (estimate); CPU fallback 1.3 s at 1024 and 3.3 s at 2048 (measured under load in the research)"
+ },
+ "log": {
+  "pageErrors": [],
+  "console": [
+   "[1280x720 dpr1] warning: [GroupMarkerNotSet(crbug.com/242999)!:A0A02000DC0E0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (about:flags#enable-unsafe-swiftshader) flag",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read",
+   "[1280x720 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read"
+  ],
+  "requests": [
+   "https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya:ital,wght@0,500;0,600;0,700;0,800;1,500&family=Ale",
+   "https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js",
+   "https://fonts.gstatic.com/s/marcellussc/v14/ke8iOgUHP1dg-Rmi6RWjbLE_htac.woff2",
+   "https://fonts.gstatic.com/s/alegreya/v41/4UaBrEBBsBhlBjvfkSLhx6g.woff2",
+   "https://fonts.gstatic.com/s/alegreya/v41/4UaSrEBBsBhlBjvfkSLk3abBFkvpkARTPlbSv5qhmSU.woff2",
+   "https://fonts.gstatic.com/s/alegreyasans/v28/5aUz9_-1phKLFgshYDvh6Vwt7VptvQ.woff2",
+   "https://fonts.gstatic.com/s/ibmplexsanscondensed/v15/Gg8gN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHY5a67vspYY.woff2",
+   "https://fonts.gstatic.com/s/ibmplexsanscondensed/v15/Gg8lN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHYapyK4.woff2",
+   "https://fonts.gstatic.com/s/ibmplexsanscondensed/v15/Gg8gN4UfRSqiPg7Jn2ZI12V4DCEwkj1E4LVeHY527LvspYY.woff2",
+   "https://fonts.gstatic.com/s/alegreyasans/v28/5aUu9_-1phKLFgshYDvh6Vwt5alOqEp2iw.woff2",
+   "https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.js",
+   "https://fonts.gstatic.com/s/alegreyasans/v28/5aUu9_-1phKLFgshYDvh6Vwt5eFIqEp2iw.woff2",
+   "https://fonts.gstatic.com/s/alegreyasans/v28/5aUt9_-1phKLFgshYDvh6Vwt7V9dv21T.woff2"
+  ]
+ },
+ "fails": [
+  [
+   "start",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "far",
+   [
+    "wildRest",
+    "readersFar"
+   ]
+  ],
+  [
+   "min",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "mid75",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "mid",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "ref",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "refW",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "near-farmland",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "m40",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "m40mid",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "m70",
+   [
+    "wildRest"
+   ]
+  ],
+  [
+   "back3",
+   [
+    "wildRest"
+   ]
+  ]
+ ],
+ "totalMin": 13.2
+}

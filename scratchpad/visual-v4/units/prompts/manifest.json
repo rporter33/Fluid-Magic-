@@ -1,0 +1,582 @@
+{
+ "stage": "A",
+ "model": "gemini-nano-banana-2.1",
+ "budget": 60,
+ "jobs": [
+  {
+   "job": "cal1.cinderWarrior.back",
+   "wave": "calibration",
+   "figure": "cinderWarrior",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cal/cal1.cinderWarrior.back.png",
+   "key": "green",
+   "promptFile": "prompts/cal1.cinderWarrior.back.txt"
+  },
+  {
+   "job": "cal2.cinderWarrior.back",
+   "wave": "calibration",
+   "figure": "cinderWarrior",
+   "view": "back",
+   "model": "gemini-3-pro-image",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cal/cal2.cinderWarrior.back.png",
+   "key": "green",
+   "promptFile": "prompts/cal2.cinderWarrior.back.txt"
+  },
+  {
+   "job": "cal3.cinderWarrior.back",
+   "wave": "calibration",
+   "figure": "cinderWarrior",
+   "view": "back",
+   "model": "nano-banana-pro-preview",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cal/cal3.cinderWarrior.back.png",
+   "key": "green",
+   "promptFile": "prompts/cal3.cinderWarrior.back.txt"
+  },
+  {
+   "job": "cal4.cinderWarrior.back",
+   "wave": "calibration",
+   "figure": "cinderWarrior",
+   "view": "back",
+   "model": "BEST",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cal/cal4.cinderWarrior.back.png",
+   "key": "green",
+   "promptFile": "prompts/cal4.cinderWarrior.back.txt"
+  },
+  {
+   "job": "cinderWarrior.back",
+   "wave": "core",
+   "figure": "cinderWarrior",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cinderWarrior.back.png",
+   "key": "green",
+   "promptFile": "prompts/cinderWarrior.back.txt"
+  },
+  {
+   "job": "cinderWarrior.front",
+   "wave": "core",
+   "figure": "cinderWarrior",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/cinderWarrior.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/cinderWarrior.front.png",
+   "key": "green",
+   "promptFile": "prompts/cinderWarrior.front.txt"
+  },
+  {
+   "job": "cinderWarrior.bust",
+   "wave": "core",
+   "figure": "cinderWarrior",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/cinderWarrior.front.png"
+   ],
+   "out": "gen/A/cinderWarrior.bust.png",
+   "key": null,
+   "after": "cinderWarrior.front approved",
+   "promptFile": "prompts/cinderWarrior.bust.txt"
+  },
+  {
+   "job": "flameArcher.back",
+   "wave": "core",
+   "figure": "flameArcher",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/flameArcher.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/03.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/flameArcher.back.png",
+   "key": "green",
+   "promptFile": "prompts/flameArcher.back.txt"
+  },
+  {
+   "job": "flameArcher.front",
+   "wave": "core",
+   "figure": "flameArcher",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/flameArcher.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/03.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/flameArcher.front.png",
+   "key": "green",
+   "promptFile": "prompts/flameArcher.front.txt"
+  },
+  {
+   "job": "flameArcher.bust",
+   "wave": "core",
+   "figure": "flameArcher",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/flameArcher.front.png"
+   ],
+   "out": "gen/A/flameArcher.bust.png",
+   "key": null,
+   "after": "flameArcher.front approved",
+   "promptFile": "prompts/flameArcher.bust.txt"
+  },
+  {
+   "job": "warden.back",
+   "wave": "core",
+   "figure": "warden",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/warden.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/warden.back.png",
+   "key": "magenta",
+   "promptFile": "prompts/warden.back.txt"
+  },
+  {
+   "job": "warden.front",
+   "wave": "core",
+   "figure": "warden",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/warden.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/05.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/warden.front.png",
+   "key": "magenta",
+   "promptFile": "prompts/warden.front.txt"
+  },
+  {
+   "job": "warden.bust",
+   "wave": "core",
+   "figure": "warden",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/warden.front.png"
+   ],
+   "out": "gen/A/warden.bust.png",
+   "key": null,
+   "after": "warden.front approved",
+   "promptFile": "prompts/warden.bust.txt"
+  },
+  {
+   "job": "longbowHunter.back",
+   "wave": "core",
+   "figure": "longbowHunter",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/longbowHunter.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/longbowHunter.back.png",
+   "key": "magenta",
+   "promptFile": "prompts/longbowHunter.back.txt"
+  },
+  {
+   "job": "longbowHunter.front",
+   "wave": "core",
+   "figure": "longbowHunter",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/longbowHunter.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/longbowHunter.front.png",
+   "key": "magenta",
+   "promptFile": "prompts/longbowHunter.front.txt"
+  },
+  {
+   "job": "longbowHunter.bust",
+   "wave": "core",
+   "figure": "longbowHunter",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/longbowHunter.front.png"
+   ],
+   "out": "gen/A/longbowHunter.bust.png",
+   "key": null,
+   "after": "longbowHunter.front approved",
+   "promptFile": "prompts/longbowHunter.bust.txt"
+  },
+  {
+   "job": "ashChieftain-06.back",
+   "wave": "core",
+   "figure": "ashChieftain-06",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/ashChieftain-06.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/ashChieftain-06.back.png",
+   "key": "green",
+   "promptFile": "prompts/ashChieftain-06.back.txt"
+  },
+  {
+   "job": "ashChieftain-06.front",
+   "wave": "core",
+   "figure": "ashChieftain-06",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/ashChieftain-06.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/ashChieftain-06.front.png",
+   "key": "green",
+   "promptFile": "prompts/ashChieftain-06.front.txt"
+  },
+  {
+   "job": "ashChieftain-03.back",
+   "wave": "core",
+   "figure": "ashChieftain-03",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/ashChieftain-03.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/03.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/ashChieftain-03.back.png",
+   "key": "green",
+   "promptFile": "prompts/ashChieftain-03.back.txt"
+  },
+  {
+   "job": "ashChieftain-03.front",
+   "wave": "core",
+   "figure": "ashChieftain-03",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/ashChieftain-03.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/03.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/ashChieftain-03.front.png",
+   "key": "green",
+   "promptFile": "prompts/ashChieftain-03.front.txt"
+  },
+  {
+   "job": "wardenCaptain-07.back",
+   "wave": "core",
+   "figure": "wardenCaptain-07",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/wardenCaptain-07.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/07.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/wardenCaptain-07.back.png",
+   "key": "magenta",
+   "promptFile": "prompts/wardenCaptain-07.back.txt"
+  },
+  {
+   "job": "wardenCaptain-07.front",
+   "wave": "core",
+   "figure": "wardenCaptain-07",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/wardenCaptain-07.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/07.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/wardenCaptain-07.front.png",
+   "key": "magenta",
+   "promptFile": "prompts/wardenCaptain-07.front.txt"
+  },
+  {
+   "job": "salamander-01.idle.back",
+   "wave": "core",
+   "figure": "salamander-01",
+   "view": "back",
+   "action": "idle",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "3:4",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/salamander-01.idle.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/01.webp"
+   ],
+   "out": "gen/A/salamander-01.idle.back.png",
+   "key": "green",
+   "promptFile": "prompts/salamander-01.idle.back.txt"
+  },
+  {
+   "job": "salamander-01.idle.front",
+   "wave": "core",
+   "figure": "salamander-01",
+   "view": "front",
+   "action": "idle",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "3:4",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/salamander-01.idle.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/01.webp"
+   ],
+   "out": "gen/A/salamander-01.idle.front.png",
+   "key": "green",
+   "promptFile": "prompts/salamander-01.idle.front.txt"
+  },
+  {
+   "job": "emberSkirmisher.back",
+   "wave": "second",
+   "figure": "emberSkirmisher",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/emberSkirmisher.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/emberSkirmisher.back.png",
+   "key": "green",
+   "promptFile": "prompts/emberSkirmisher.back.txt"
+  },
+  {
+   "job": "emberSkirmisher.front",
+   "wave": "second",
+   "figure": "emberSkirmisher",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/emberSkirmisher.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/emberSkirmisher.front.png",
+   "key": "green",
+   "promptFile": "prompts/emberSkirmisher.front.txt"
+  },
+  {
+   "job": "emberSkirmisher.bust",
+   "wave": "second",
+   "figure": "emberSkirmisher",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/emberSkirmisher.front.png"
+   ],
+   "out": "gen/A/emberSkirmisher.bust.png",
+   "key": null,
+   "after": "emberSkirmisher.front approved",
+   "promptFile": "prompts/emberSkirmisher.bust.txt"
+  },
+  {
+   "job": "flamebrand.back",
+   "wave": "second",
+   "figure": "flamebrand",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/flamebrand.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/pyrePriest/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/flamebrand.back.png",
+   "key": "green",
+   "promptFile": "prompts/flamebrand.back.txt"
+  },
+  {
+   "job": "flamebrand.front",
+   "wave": "second",
+   "figure": "flamebrand",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/flamebrand.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/pyrePriest/06.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/flamebrand.front.png",
+   "key": "green",
+   "promptFile": "prompts/flamebrand.front.txt"
+  },
+  {
+   "job": "flamebrand.bust",
+   "wave": "second",
+   "figure": "flamebrand",
+   "view": "bust",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/gen/A/flamebrand.front.png"
+   ],
+   "out": "gen/A/flamebrand.bust.png",
+   "key": null,
+   "after": "flamebrand.front approved",
+   "promptFile": "prompts/flamebrand.bust.txt"
+  },
+  {
+   "job": "emberAdept-07.back",
+   "wave": "second",
+   "figure": "emberAdept-07",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/emberAdept-07.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/emberAdept/07.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/emberAdept-07.back.png",
+   "key": "green",
+   "promptFile": "prompts/emberAdept-07.back.txt"
+  },
+  {
+   "job": "emberAdept-07.front",
+   "wave": "second",
+   "figure": "emberAdept-07",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/emberAdept-07.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/emberAdept/07.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/emberAdept-07.front.png",
+   "key": "green",
+   "promptFile": "prompts/emberAdept-07.front.txt"
+  },
+  {
+   "job": "elderDruid-08.back",
+   "wave": "second",
+   "figure": "elderDruid-08",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/elderDruid-08.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/elderDruid/08.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/elderDruid-08.back.png",
+   "key": "magenta",
+   "promptFile": "prompts/elderDruid-08.back.txt"
+  },
+  {
+   "job": "elderDruid-08.front",
+   "wave": "second",
+   "figure": "elderDruid-08",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/elderDruid-08.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/elderDruid/08.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/elderDruid-08.front.png",
+   "key": "magenta",
+   "promptFile": "prompts/elderDruid-08.front.txt"
+  },
+  {
+   "job": "saplingDruid-08.back",
+   "wave": "second",
+   "figure": "saplingDruid-08",
+   "view": "back",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/saplingDruid-08.back.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/saplingDruid/08.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/saplingDruid-08.back.png",
+   "key": "magenta",
+   "promptFile": "prompts/saplingDruid-08.back.txt"
+  },
+  {
+   "job": "saplingDruid-08.front",
+   "wave": "second",
+   "figure": "saplingDruid-08",
+   "view": "front",
+   "model": "gemini-nano-banana-2.1",
+   "aspect": "1:1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/refs/guides/saplingDruid-08.front.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/saplingDruid/08.webp",
+    "/home/user/Fluid-Magic-/art-source/portraits/anchor-style.webp"
+   ],
+   "out": "gen/A/saplingDruid-08.front.png",
+   "key": "magenta",
+   "promptFile": "prompts/saplingDruid-08.front.txt"
+  }
+ ]
+}

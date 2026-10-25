@@ -1,0 +1,10 @@
+// where the wild edge decision spends its time: wraps the helpers it calls, recomputes the decision at a few zooms (cold and warm memo)
+const { launch, open, ev, mev, PAGE, OUT } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] };
+  const p = await open(b, process.env.PAGEFILE || PAGE, { log, settle: 1500 }); await p.mouse.move(720, 895);
+  await p.evaluate(() => { const T = (window.__T = {}); for (const nm of ['rlPairDE', 'rlQeAt', 'rlStateOf', 'rlApplyState', 'provinceAt', 'rlSegDist', 'rlFogAt', 'rgb2lab', 'rlLabTo', 'rlLumOf', 'rlTintOf', 'inModel']) { const f = window[nm]; if (typeof f !== 'function') { T[nm] = 'n/a'; continue; } T[nm] = { n: 0, ms: 0 }; window[nm] = function (...a) { const t = performance.now(); try { return f.apply(this, a); } finally { T[nm].ms += performance.now() - t; T[nm].n++; } }; } });
+  const wc = await mev(p, 'WILDS.map((w) => { let x = 0, y = 0; for (const c of w.cells) { x += cent[c][0]; y += cent[c][1]; } return [x / w.cells.length, y / w.cells.length]; })');
+  for (const [nm, s, x, y] of [['start', 0.5478775892930478, 720, 450], ['mid', 1.0, 640, 480], ['near', 336 / 175.2, ...wc[0]], ['max', 420 / 175.2, ...wc[2]]]) for (const cold of [true, false]) {
+    await ev(p, `m.setScale(${s}, ${x}, ${y})`); const r = await mev(p, `(() => { if (${cold}) { RL_QE.memo = null; RL_QE.smemo = null; } for (const k of Object.keys(window.__T)) if (window.__T[k] !== 'n/a') window.__T[k] = { n: 0, ms: 0 }; RL_WRIM.key = ''; const t = performance.now(); rlQuietEdgeMap(); const tot = performance.now() - t; let N = 0, Ns = 0; for (const E of RL_WRIM.map.values()) { N += E.N; Ns += E.seen.reduce((a, v) => a + v, 0); } return { tot: +tot.toFixed(1), samples: N, seen: Ns, memo: RL_QE.memo ? RL_QE.memo.size : 0, T: Object.fromEntries(Object.entries(window.__T).map(([k, v]) => [k, v === 'n/a' ? v : [v.n, +v.ms.toFixed(1)]])) }; })()`);
+    console.log(nm, cold ? 'cold' : 'warm', JSON.stringify(r)); }
+  await b.close(); })();

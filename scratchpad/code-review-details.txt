@@ -1,0 +1,425 @@
+
+######## #1 [correctness] low src/sim/buildings.ts:53 — releaseBuilder idles a commander that has started the same building in another province
+DESC: When a construction ends (completed or abandoned), releaseBuilder sets the builder's order to idle whenever it is a 'build' order for the same building id. The build order does not record a province, and the check ignores the builder's location. Decision 21 says the builder returns to idle 'if it still holds that build order'. A commander that walked to another province and started the same kind of building there holds a different build order, but it is idled anyway.
+SCENARIO: Verified with a scratch script. Commander c (order build temple) starts a temple in owned province A. Ten days later it is in owned province B with order build temple and starts a temple there (A's temple keeps going, since builds finish without the builder). On day 30 A's temple completes and releaseBuilder sets c.order to {kind:'idle'}. B's construction still has 10 days left. The commander shows as idle and free, which breaks 'the commander is busy for the duration', and the AI or player may reassign it. The same happens if A is abandoned because it changed hands.
+FIX: Only release the builder if it is still at the construction site: require builder.location === p.id && builder.transit === null, together with the kind and building check. Alternatively, store the province in the build order and compare it.
+-- confirmed worth=True: Tie the release to the site.
+- Simplest fix: pass the province id into releaseBuilder and also require `builder.location === provinceId && builder.transit === null` before idling. Because each province allows only one construction, a builder standing at the site with a matching build order can only belong to that job.
+- More robust fix: add `province: ProvinceId` to the 'build' CommanderOrder variant and compare `builder.order.province === p.id`. Phase 3 commands would set it when the order is issued.
+
+Either way, add a test to tests/sim/buildings.test.ts in which one commander starts the same building at A and then at B. Check that c.order is still the build order for B after A completes, and again after A is abandoned.
+-- confirmed worth=True: Low priority. It is fine to do this when the Phase 3 build command lands, since that command sets the order anyway.
+
+1. Change the order variant to `{ kind: 'build'; building: BuildingId; province: ProvinceId }`.
+2. Have releaseBuilder take the province id from progressConstruction and require `builder.order.province === provinceId`, in addition to the existing kind and building checks.
+3. Have the Phase 3 build command set the province field.
+4. Add a test case: the same commander starts a temple in A, then a temple in B; when A completes, the commander stays on B's build order.
+
+Do not use the suggested location/transit check: a builder moved out of the province with its order unchanged (for example by a retreat) would keep a stale build order forever once its construction is abandoned.
+
+######## #2 [correctness] low src/sim/selectors.ts:63 — Selectors include a province effect on the day it has already ended
+DESC: Expired effects are only removed at the start of step 4 of advance (tick.ts:22), before state.day is incremented. Between ticks, state.provinceEffects still holds effects with untilDay === state.day, which by the type's contract 'end at the start of untilDay'. provinceEconomy (selectors.ts:63) and provinceScales (scales.ts:49) read the list without checking untilDay. On an effect's end day the UI and AI therefore see rates that the next advance() will not apply. This breaks selectors.ts's guarantee that 'what the UI shows is what happens'.
+SCENARIO: Verified with a scratch script on seed 1. Push a supply effect {deltaPct: 1, untilDay: 1} on the Cinder capital and run advance() once, so state.day is 1. provinceEconomy(capital).supply then reports 1120. advance() on day 1 drops the effect first and uses 560. The same off-by-one affects ritual growth effects in provinceScales: popGrowth, supplyPct and Rot tint mana shown for that day.
+FIX: Filter on e.untilDay > state.day wherever effects are read (selectors.ts:63 and scales.ts:49). Alternatively, expire effects at the end of advance(), after state.day += 1, so the stored list is always current between ticks.
+-- confirmed worth=True: The preferred fix is to expire effects where they are read. Add one small helper, e.g. `activeEffects(state, provinceId)` returning `state.provinceEffects.filter(e => e.province === provinceId && e.untilDay > state.day)`, and use it in selectors.ts:63 and scales.ts:49. Then provinceScales, and so constructionDays/constructionCost, also stop seeing dead effects in steps 1 and 3. Keep the tick.ts:22 filter as list cleanup, or move it after `state.day += 1` so the stored list is current between ticks. Moving the filter alone would not cover step 3, so the read-site check is the stronger option.
+
+Add a test to tests/sim/tick.test.ts or tests/sim/selectors.test.ts: push an effect with untilDay = 1, advance once, and assert that provinceEconomy(cap).supply equals the no-effect value.
+-- confirmed worth=True: In src/sim/tick.ts, move `state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);` to just after `state.day += 1`. The stored list is then current between ticks and for every step of the next tick (commands, battles, construction, economy). The step-4 snapshot is unchanged, because day d still never sees effects with untilDay <= d. This is a single source of truth and adds no filters to the readers.
+
+Update decision #1's wording to say effects are dropped when the day advances. Adjust tests/sim/tick.test.ts as follows:
+- After 2 days the list has length 1, and the selector supply includes the effect.
+- After 3 days (day === untilDay) the list has length 0.
+- Add a check that provinceEconomy on the day after expiry matches what advance applies.
+
+######## #3 [correctness] low src/sim/selectors.ts:149 — A besieged fort keeps collecting 50% of its neighbors' materials
+DESC: fortMaterials zeroes the fort province's own production under siege, because provinceEconomy returns materials 0 when besieged. It still adds 50% of every adjacent owned fortless province's materials. accrueMaterials then grows the besieged pool. docs/01-core-rules.md section 11 says 'Besieged provinces produce no gold, materials, or recruits ... Supplies for the besieged come only from the province itself'. The Phase 2 decision in docs/01 says 'sieges stop gold, materials, and recruits'. A fort cut off by an enemy army should not be gathering materials from outside its walls.
+SCENARIO: Verified with a scratch script on seed 1. Give the Cinder capital's neighbors to Cinder and set capital.siege = {attacker: n1, wallHp: 300}. Over 30 advance() calls the capital's pool rises from 0 to 24.7 materials. fortMaterials reports perMonth 24.7 even though the capital's own production is 0. Those materials then pay for recruits queued once the siege lifts.
+FIX: In fortMaterials, return no collection while the fort is besieged (fort.siege !== null), or skip the neighbor loop in that case. The 'cap only stops growth' rule already keeps the existing pool. Add a test with an owned neighbor next to a besieged fort.
+-- confirmed worth=True: In fortMaterials, return { perMonth: 0, cap: 0 } when fort.siege !== null, or skip the neighbor loop in that case. accrueMaterials only raises a pool that is below its cap and never lowers one, so the existing stockpile survives the siege. Add a test in tests/sim/economy.test.ts that gives the capital an owned fortless neighbor, besieges the capital, runs 30 days, and checks that the pool does not grow. Also record the rule ("a besieged fort collects nothing from its neighbors") with decision 14 at the bottom of docs/01-core-rules.md.
+-- confirmed worth=True: In src/sim/selectors.ts fortMaterials, extend the early return to `if (!fort.buildings.includes('fort') || fort.owner === null || fort.siege !== null) return { perMonth: 0, cap: 0 };`. The cap-only-stops-growth rule in accrueMaterials then keeps the existing stockpile. Also update the doc comment to say a besieged fort collects nothing.
+
+Add a test in tests/sim/economy.test.ts: give the capital's neighbors to the owner, set capital.siege, check that fortMaterials(...).perMonth is 0, then runDays(state, 30) and check that capital.materials has not changed. Optionally note in docs/01 Phase 2 decisions that a besieged fort collects nothing from its neighbors either.
+
+######## #4 [tests] medium tests/sim/supply.test.ts:78 — Commander starvation and healing are untested beyond the 1 HP floor; removing the heal cap survives and fed commanders gain HP forever
+DESC: The only commander test (line 78) sets hp = 1.1 and checks the 1 HP floor. Nothing checks a commander's 2%/day drain, its healing, the max-HP cap on healing, or commander.starvedDays. Every one of these mutations to src/sim/supply.ts:41-46 passes the whole suite: SU04 (delete the heal line), SU10 (drain 4%), SU11 (drop Math.min(max, ...) from the heal), SU05 (starvedDays never rises), SU06 (starvedDays never falls). SU11 is the worst: every fed commander heals past its maximum each day.
+SCENARIO: Mutate supply.ts:45 to `commander.hp = commander.hp + max * SUPPLY.healHpPerDay`. On day 0 the capital is fed and every commander there is at full HP. After 30 days the Ash Chieftain has 14 + 30*0.28 = 22.4 HP and the starting mages and priests are above their max too. All 225 tests still pass. Commander starvedDays (used for the Phase 4 morale penalty) can also be frozen at 0 without any test failing.
+FIX: Add a test like K8 in /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/code-review/test-strength/kill.test.ts. Starve 200 cinderWarriors under an ashChieftain in a mountains province. After 1 day expect army.hp ≈ 14 - 0.28 and army.starvedDays === 1; after 3 days expect starvedDays 3. Move the army to the capital: after 1 day expect hp ≈ 14 - 0.56 and starvedDays 2; after 30 more days expect hp === 14. Also assert that no capital commander's hp exceeds unitDef(c.unit).hp. This kills SU04, SU05, SU06, SU10 and SU11.
+-- confirmed worth=True: In the starvation describe block of tests/sim/supply.test.ts, add a commander test based on starvingArmy():
+- After 1 day: expect army.hp toBeCloseTo(14 - 0.28) and army.starvedDays toBe(1).
+- After 2 more days: expect starvedDays toBe(3).
+- Set army.location to the red capital and run 1 day: expect hp toBeCloseTo(14 - 0.56) and starvedDays toBe(2).
+- After 30 more days: expect hp toBe(14) and starvedDays toBe(0).
+- Also assert that every commander at the capital has hp <= unitDef(c.unit).hp. Better, use commanderMaxHp from src/sim/commanders so the test still holds once max HP gets modifiers.
+
+The real code produces exactly these values, and this one test catches all five mutations: SU04, SU05, SU06, SU10 and SU11.
+-- confirmed worth=True: Add one test to the 'starvation' describe block in tests/sim/supply.test.ts, reusing starvingArmy(). Read max from unitDef(army.unit).hp; don't hard-code 14. Run 1 day and expect army.hp toBeCloseTo(max*0.98) and army.starvedDays 1. Run 2 more days and expect starvedDays 3. Set army.location to the red capital. Run 1 day and expect hp toBeCloseTo(max*0.96) and starvedDays 2. Run 30 more days and expect hp toBe(max) and starvedDays 0. Finally, assert that every commander in Object.values(state.commanders) has hp <= unitDef(c.unit).hp. No production code changes.
+
+######## #5 [tests] medium tests/sim/supply.test.ts:120 — Squad healing rate is never tested: the 'heals 2% of max HP' assertion passes with any heal rate
+DESC: Starvation removes dead troops, so count = ceil(hp/unitHp) and a starved squad is always within one unit's HP (under 11) of full. Healing 2% of max (about 40 HP) always fills it in one day, so the expected value Math.min(count*11, hp + count*11*0.02) reduces to count*11. Any heal rate large enough to close that gap passes. Mutations R01 (healHpPerDay: 1) and SU13 (heal 2% of current HP instead of max) both survive. The 'battle wounds too' part of rule 16 has no test.
+SCENARIO: Set SUPPLY.healHpPerDay to 1 in src/content/rules.ts (or change supply.ts:30 to heal 2% of squad.hp). A squad at half HP after a Phase 4 battle would heal fully in one day. The full suite passes.
+FIX: In the capital, which is fed, set a starting squad's hp to max/2 where max = count*unitHp. Run one day and expect hp ≈ max/2 + 0.02*max. See K7 in the scratch kill.test.ts.
+-- confirmed worth=True: Add a test to tests/sim/supply.test.ts:
+1. Place a fed squad in the capital, e.g. `addArmy(state, red, capitalOf(state, red).id, 'cinderWarrior', 100)`.
+2. Set `squad.hp = max/2`, where `max = squad.count * unitDef('cinderWarrior').hp`.
+3. Run one day and expect `squad.hp` to be close to `max/2 + max * SUPPLY.healHpPerDay`. Read the rate from SUPPLY, not a literal 0.02.
+4. Also assert that `squad.count` is unchanged. Optionally run enough further days to check that it clamps at max.
+
+This covers healing battle wounds and kills both R01 and SU13. A matching commander case is worth adding: set `army.hp` to half of `commanderMaxHp` in the capital and expect +2% of max after one day.
+-- confirmed worth=True: Add a test to tests/sim/supply.test.ts, or replace the first assertion in the existing heal test. Put a starting-size squad (e.g. addArmy(state, red, capitalOf(state, red).id, 'cinderWarrior', 50)) in the fed capital. Set squad.hp = max/2, where max = count * unitDef('cinderWarrior').hp, and set the commander's hp = 1. Run runDays(state, 1). Expect squad.hp toBeCloseTo(max/2 + max*0.02), squad.count unchanged, and army.hp toBeCloseTo(1 + commanderMaxHp(army)*0.02). This covers healing of battle wounds, the rate, the max-HP basis, and commander healing. Keep the existing starved-then-fed test for the starvedDays countdown.
+
+######## #6 [tests] medium tests/sim/supply.test.ts:58 — Required 'starvation drains HP' test does not pin squad count = ceil(hp / unit hp)
+DESC: The exact checks run on day 1 only, when 2200 - 44 = 2156 = 196*11 is an exact multiple of unit HP. Ceil, floor and round all give 196 there. After 10 days the test only checks count < 196. Mutations SU01 (Math.floor) and SU02 (Math.round) at src/sim/supply.ts:26 both survive. With floor, a squad's hp exceeds count*unitHp, which breaks the 'troops die as the pool stops covering them at full health' rule.
+SCENARIO: Use Math.floor at supply.ts:26. On day 2 hp = 2112.88: the rule gives 193 troops, floor gives 192. One extra troop dies per partly covered squad per starving day, and hp > count*11 afterwards. All tests pass.
+FIX: Extend the test to day 2: expect squad.hp ≈ 2112.88 and squad.count === 193 (ceil(192.08)). See K6.
+-- confirmed worth=True: In tests/sim/supply.test.ts, in 'drains 2% of max HP a day and kills troops the pool no longer covers', add a second step right after the day-1 checks:
+  runDays(state, 1);
+  expect(squad.hp).toBeCloseTo(2112.88, 9);
+  expect(squad.count).toBe(193);
+  expect(squad.hp).toBeLessThanOrEqual(squad.count * 11);
+Then change the later runDays(state, 9) to runDays(state, 8) so starvedDays is still 10. On day 2 the pool is 2112.88 (2156 minus 2% of 2156), which covers 192.08 troops, so the count is 193. These assertions fail under both the Math.floor and Math.round mutants.
+
+Optionally, also assert squad.hp <= squad.count * 11 at the end of the test. The invariant count === ceil(hp / 11) can be checked at day 10 too (count 164 for hp 1796.52).
+-- confirmed worth=True: In tests/sim/supply.test.ts, add a second day right after the day-1 assertions:
+
+```ts
+runDays(state, 1);
+expect(squad.hp).toBeCloseTo(2112.88, 9);
+expect(squad.count).toBe(193); // ceil(192.08)
+expect(squad.hp).toBeLessThanOrEqual(squad.count * 11);
+```
+
+Then change the next `runDays(state, 9)` to `runDays(state, 8)` so the starvedDays === 10 check still holds. Add a short comment: 2% of 196 * 11 is 43.12, leaving 2112.88, which is 192.08 troops' worth, so 193 survive. No sim change is needed.
+
+######## #7 [tests] medium tests/sim/economy.test.ts:301 — Required 'materials cap' test cannot tell a 6-month cap of total collection from a cap of the fort's own production
+DESC: Rule 14 says the cap is 6 months of collection, which includes 50% of each adjacent owned fortless province. The cap test runs on the capital while it owns no neighbours, so the collection equals its own production. The neighbour-share test at line 289 checks only perMonth, not the cap. Mutation S14 (cap = own materials * 6 at selectors.ts:152) survives.
+SCENARIO: Change selectors.ts:152 to `cap: (economies.get(fortId)?.materials ?? 0) * MATERIALS.capMonths`. A capital that owns two forest neighbours collects about 60 + 2*35 a month but caps at 360 instead of 780, so materials stop growing about half way. The suite passes.
+FIX: After `state.provinces[neighbor]!.owner = red` in the neighbour test, also expect fortMaterials(state, capital.id).cap ≈ 6 * (own + theirs / 2). See K4.
+-- confirmed worth=True: In tests/sim/economy.test.ts, in the 'collects half of each adjacent owned fortless province' test, add this line right after the second perMonth assertion (after `state.provinces[neighbor]!.owner = red!;`):
+`expect(fortMaterials(state, capital.id).cap).toBeCloseTo(6 * (own + theirs / 2), 9);`
+Optionally write it as `MATERIALS.capMonths * (own + theirs * MATERIALS.neighborShare)` so it tracks the rules content. I verified that this one line kills the mutant and passes on the current code.
+-- confirmed worth=True: In tests/sim/economy.test.ts, in the test 'collects half of each adjacent owned fortless province', add this line right after `expect(fortMaterials(state, capital.id).perMonth).toBeCloseTo(own + theirs / 2, 9);`:
+`expect(fortMaterials(state, capital.id).cap).toBeCloseTo(MATERIALS.capMonths * (own + theirs / 2), 9);`
+Use 6 instead of MATERIALS.capMonths if the test file does not import MATERIALS. Optionally rename the cap test's last assertion comment to say the capital has no owned neighbours there, so its 6 * own expectation is not read as the rule. No production code change is needed.
+
+######## #8 [tests] medium tests/sim/economy.test.ts:252 — Dominion tint and Rot Black mana are only tested where the owner dominates; paying them under enemy dominion survives
+DESC: docs/01 section 4: tint is paid 'to the province owner only if the owner is also the dominator'. All mana tests use a capital the owner dominates. Mutation S06 (drop `p.dominion.nation === p.owner` at selectors.ts:100) survives. So does S07, which moves `mana.B += tintManaB` outside that check.
+SCENARIO: With S06, a red capital dominated by green at strength 9 still pays red +3 Red mana a month. With S07, a green province dominated by a Rot-3 red nation pays green +3 Black. No test fails.
+FIX: Set capitalOf(red).dominion = {nation: green, strength: 9} and expect mana {R: 4, others 0}. In redGame(9, {growth: -3}), set the green capital's dominion to red at strength 9 and expect mana {G: 4, B: 0}. See K1.
+-- confirmed worth=True: Add two tests to the 'mana' describe block in tests/sim/economy.test.ts. Both expected values match what the current code produces, so both tests pass now and each kills one mutant.
+
+1. In twoNationGame(), set capitalOf(state, red).dominion = { nation: green, strength: 9 }. Expect provinceEconomy(state, capital.id).mana toEqual { W:0, U:0, B:0, R:4, G:0 }, which is springs only. This kills S06.
+2. In redGame(9, { growth: -3 }), set the green capital's dominion to { nation: red, strength: 9 }. Expect provinceEconomy(...).mana toEqual { W:0, U:0, B:0, R:0, G:4 }, with no Black. This kills S07, and S06 as well.
+-- confirmed worth=True: Add two cases to the `describe('mana')` block in tests/sim/economy.test.ts, using provinceEconomy and the existing fixtures:
+1. In twoNationGame(), set capitalOf(state, red).dominion = { nation: green, strength: 9 }. Expect provinceEconomy(state, cap.id).mana toEqual { W:0, U:0, B:0, R:4, G:0 }: springs only, no tint, and the dominator's color is not paid either.
+2. In redGame(9, { growth: -3 }), set capitalOf(state, green).dominion = { nation: red, strength: 9 }. Expect mana toEqual { W:0, U:0, B:0, R:0, G:4 }: no Rot Black for a non-dominating owner.
+No production code change is needed.
+
+######## #9 [tests] medium tests/sim/unrest.test.ts:237 — Priest unrest decay is untested for priests in transit, foreign priests, and several priests
+DESC: Rule 18 and docs/01 decisions say priests calm only their own nation's provinces and only while standing there, at -5 each. The tests cover one owned, stationary priest. Mutations at selectors.ts:113-114 survive: S08 (drop `!c.transit`), S09 (drop `c.owner === p.owner`) and S18 (`Math.min(1, priests.length)`). The 'stays within 0 to 100' test adds a second priest, but unrest is already pinned at 0 so it cannot tell.
+SCENARIO: With S09, a red Pyre Priest standing in Thornwood's capital lowers Thornwood's unrest by 5 a month. With S08, a priest marching out of a province keeps calming it. With S18, two priests calm only as much as one. All tests pass.
+FIX: Add one transit pyrePriest to the red capital and expect unrest -7, not -12. Put a red priest in the green capital (green holy zeroed) and expect -2. Add a second stationary priest to the red capital and expect -12. See K2 and K15.
+-- confirmed worth=True: Add three cases to tests/sim/unrest.test.ts using the existing fixtures (twoNationGame, capitalOf, addArmy, commandersIn, provinceEconomy):
+1. Add a pyrePriest to the red capital and give it a non-null `transit`. Expect unrest -7, not -12.
+2. Zero holy for every commander in the green capital, then add a red pyrePriest there. Expect -2, not -7.
+3. Add a second stationary pyrePriest to the red capital. Expect -12.
+
+These kill S08, S09 and S18 respectively and cost a few lines each.
+-- confirmed worth=True: Add one test to tests/sim/unrest.test.ts that uses twoNationGame(), addArmy and provinceEconomy, with three assertions:
+(1) Add a red pyrePriest to the red capital and set its transit, as pillage.test.ts:55 does: `transit = { from: id, to: id, progress: 0, totalDays: 4 }`. Expect unrest -7.
+(2) In a fresh game, set holy = 0 on the commanders in the green capital, then add a red pyrePriest there. Expect -2.
+(3) In a fresh game, add a second stationary red pyrePriest to the red capital. Expect -12.
+No sim code changes.
+
+######## #10 [tests] medium tests/sim/scales.test.ts:58 — Ritual growth effects are only checked in their target province; applying them to every province survives
+DESC: Mutation SC04 (drop `effect.province === provinceId` at src/sim/scales.ts:50) survives. The test reads only the targeted capital's growth scale.
+SCENARIO: With SC04, one Fertile Season on the capital gives +2 Growth scale to every province on the map. That means extra pop growth and supply everywhere, including enemy provinces. The suite passes.
+FIX: In the same test, also expect provinceScales(state, independentProvince(state).id).growth toBe 0. See K5.
+-- confirmed worth=True: In tests/sim/scales.test.ts, in 'adds timed growth effects and clamps', add `expect(provinceScales(state, independentProvince(state).id).growth).toBe(0);` after the existing capital assertion. Optionally also assert that the other nation's capital keeps its growth of 0. `independentProvince` is already imported in that file. This kills SC04: the independent province reads 0 on the original code and 2 on the mutant.
+-- confirmed worth=True: In tests/sim/scales.test.ts, in the 'adds timed growth effects and clamps' test, add `expect(provinceScales(state, independentProvince(state).id).growth).toBe(0);` right after the capital assertion on line 71. `independentProvince` is already imported from './fixtures'. This kills mutation SC04 and passes against the current code.
+
+######## #11 [tests] medium tests/sim/scales.test.ts:19 — nationScales clamp is never exercised: on the seed-1 map every Wellspring step moves toward zero, and the expected value restates the code
+DESC: The test is named 'adds one step per owned Wellspring and clamps'. On the seed-1 medium map the Wellsprings are order -1, lore +1 and sanctity -1. With pretender order 3 and lore -3 these give 2 and -2, so no clamp ever applies. The expected value is computed with the same add-then-clamp loop as the code. Mutation SC02 (delete the clamp at src/sim/scales.ts:32) survives.
+SCENARIO: Without the clamp, a Dread -3 nation owning the sanctity -1 Wellspring has national sanctity -4. At dominion strength 7 a province gets roundHalfAway(-2.8) = -3 Dread steps instead of roundHalfAway(-2.1) = -2, so +6 enemy unrest a month instead of +4. No test fails.
+FIX: Read the first Wellspring's {axis, step}, build redGame(5, {[axis]: 3*step}), give that Wellspring to red, and expect nationScales(state, red)[axis] toBe 3*step. See K11.
+-- confirmed worth=True: In tests/sim/scales.test.ts, add a case that actually hits the clamp and expects a literal value:
+1. Read the first Wellspring's `{axis, step}` from `state.map.provinces[state.map.wellsprings[0]].wellspring`.
+2. Build `redGame(5, {[axis]: 3 * step})` and give that Wellspring to red.
+3. Assert `nationScales(state, red)[axis]` is exactly `3 * step`.
+
+For example, on seed 1, sanctity -3 plus p55 should stay -3. Also replace the loop-computed `expected` in the existing test with literal values (order 2, lore -2, sanctity -1 on seed 1), or derive each one by hand per axis, so the test no longer copies the implementation. To pin the downstream effect, you could also check that `provinceScales` at strength 7 gives sanctity -2, not -3, when the clamp matters.
+-- confirmed worth=True: Add an independent clamp assertion to tests/sim/scales.test.ts. Probe redGame(5) for `const well = state.map.wellsprings[0]; const { axis, step } = state.map.provinces[well].wellspring`. Then build `redGame(5, { [axis]: 3 * step })`, set `state.provinces[well].owner = red`, and `expect(nationScales(state, red)[axis]).toBe(3 * step)`. That gives a step toward the pole that would reach ±4 without the clamp. Also replace the loop-computed `expected` in the existing test with literal values ({order:2, lore:-2, sanctity:-1}, or each value derived from its own Wellspring) so it no longer restates the code. As an option, add one provinceScales check at strength 7 to show the national clamp matters below full dominion. This is test-only, with no production change.
+
+######## #12 [tests] medium tests/sim/economy.test.ts:126 — Half upkeep for sacred units is untested
+DESC: The upkeep constants cover only the starting armies, which have no sacred units. The flamebrand test at line 230 only drives income negative. Mutations C01 (sacred factor 1 at src/sim/commanders.ts:73), R02 (ECONOMY.sacredUpkeepFactor: 1) and CT01 (remove 'sacred' from flamebrand's tags) all survive. units.test.ts pins tags for berserker and wolfRider only.
+SCENARIO: With R02, Flamebrands and Oakhearts cost full upkeep, double the docs/01 section 4 value. Every test passes.
+FIX: Expect commanderUpkeep(addArmy(state, red, capital, 'flamebrand', 10)) ≈ 40/15 + 10*32/15/2 (K10). Add the 'sacred' tag for flamebrand and oakheart to the units.test.ts special-details fixture.
+-- confirmed worth=True: Add an upkeep test in tests/sim/economy.test.ts. Compute the expected values from the doc formula, not from ECONOMY:
+- `expect(commanderUpkeep(addArmy(state, red, capital, 'flamebrand', 10))).toBeCloseTo(40/15 + 10*32/15/2, 9)`
+- The same check for oakheart with 36.
+
+Alternatively, add the army and check that nationEconomy(state, red).upkeep goes up by that amount. Also pin `expect(unitDef('flamebrand').tags).toEqual(['sacred'])` and the same for oakheart in the special-details test in tests/content/units.test.ts. That kills CT01 even if the economy test changes later.
+-- confirmed worth=True: 1. In the 'upkeep' describe of tests/sim/economy.test.ts, add one case. For example, `const c = addArmy(state, red!, capital, 'flamebrand', 10)` led by the default ashChieftain (gold 40), then `expect(commanderUpkeep(c)).toBeCloseTo(40 / 15 + (10 * 32) / 15 / 2, 9)`. Write the expected value from the doc formula, not from ECONOMY, so that R02 fails the test.
+2. In the "records weapons, tags..." test in tests/content/units.test.ts, add `expect(unitDef('flamebrand').tags).toContain('sacred')` and `expect(unitDef('oakheart').tags).toContain('sacred')` to catch CT01.
+
+No source changes are needed.
+
+######## #13 [tests] low tests/sim/supply.test.ts:23 — Commanders in transit eating at the province they left is untested
+DESC: Rule 15 and docs/01 decisions say commanders eat where they stand, also while in transit. No supply test puts a commander in transit. Mutation S12 (skip `c.transit` in supplyUsed at selectors.ts:91) survives.
+SCENARIO: With S12, an army marching out of a starving province stops eating and stops starving for the whole march. The suite passes.
+FIX: Add a 10-troop army with transit set and expect provinceEconomy(p).supplyUsed toBe 11. See K3.
+-- confirmed worth=True: Add a test in tests/sim/supply.test.ts. Use addArmy(state, red, p.id, 'cinderWarrior', 10), set `army.transit = { from: p.id, to: p.id, progress: 0, totalDays: 4 }`, and expect provinceEconomy(state, p.id).supplyUsed toBe 11. Optionally add the starving variant: 200 cinder warriors in a mountains province with transit set, runDays(state, 1), expect squad.count toBe 196. That variant also covers applySupply taking commanders in transit into account.
+-- confirmed worth=True: In tests/sim/supply.test.ts, inside describe('supply'), add a test:
+
+it('counts commanders and troops in transit at the province they left', () => {
+  const state = twoNationGame();
+  const [red] = nationIds(state);
+  const p = independentProvince(state);
+  const marching = addArmy(state, red!, p.id, 'cinderWarrior', 10);
+  marching.transit = { from: p.id, to: p.id, progress: 0, totalDays: 4 };
+  expect(provinceEconomy(state, p.id).supplyUsed).toBe(11);
+});
+
+To also cover the starvation side, optionally set transit on the army from starvingArmy() and check that squad.count still drops after runDays(state, 1). No production code change is needed.
+
+######## #14 [tests] low tests/sim/tick.test.ts:198 — Effect expiry test checks only the list length, not that an expired effect stops applying on its until day
+DESC: Rule 1 says effects with untilDay <= day are dropped at the start of step 4, before the rate snapshot. Mutation T01 swaps tick.ts:22 with the allProvinceEconomies call, so effects are filtered after the snapshot. It survives, because the list is still the same length at the end of each day.
+SCENARIO: With T01, every ritual effect (supply, materials, growth) applies for one extra day past its untilDay. No test fails.
+FIX: Add a {kind:'materials', delta: 3000, untilDay: 1} effect on the capital. Run 1 day, record materials, run 1 more day, and expect the second day's gain to be the plain 60/30 (less than 3). See K13.
+-- confirmed worth=True: In tests/sim/tick.test.ts, next to the existing expiry test (lines 15-31), add a test that checks the effect actually stops applying, not just that the list shrinks. Set the capital's materials to 0 (so the fort cap doesn't interfere) and push {kind:'materials', delta:300, untilDay:1} on the capital. Run 1 day and record the pool, then run a second day. Assert that day 0's gain includes the bonus (about 10/day on top of the base) and that day 1's gain is only the base rate (about 2/day, well under 3). A supply-effect variant that compares provinceEconomy(...).supply before and after the until day would also work. Either one kills T01.
+-- confirmed worth=True: In tests/sim/tick.test.ts, extend or add to 'expires province effects on their until day' with a behavioral check. Push {id:'fx99' as never, province: capital.id, nation: red, source:'test', untilDay: 1, kind:'materials', delta: 3000} onto the red capital. Record capital.materials, advance once and expect the gain to be above 50 (about 102). Advance again and expect the gain to be below 10 (the plain rate, about 2). This keeps the existing length assertions and kills mutation T01. Read capital.materials, not nation materials.
+
+######## #15 [tests] low tests/sim/economy.test.ts:177 — Easy-AI income test checks gold only; applying the factor to upkeep (or mana) survives
+DESC: Mutation S17 (`upkeep: upkeep * factor` at selectors.ts:183) survives. Thornwood's upkeep is asserted only at normal difficulty (line 153).
+SCENARIO: With S17, easy AI nations pay 80% upkeep, which offsets most of their income handicap. No test fails.
+FIX: In the easy-AI test, also expect nationEconomy(state, green).upkeep ≈ THORNWOOD_UPKEEP and mana.G toBe 5. See K12.
+-- confirmed worth=True: In tests/sim/economy.test.ts 'gives easy AI nations 80% of their income' (line 74), add `expect(nationEconomy(state, green!).upkeep).toBeCloseTo(THORNWOOD_UPKEEP, 9);` and `expect(nationEconomy(state, green!).mana).toEqual({ W: 0, U: 0, B: 0, R: 0, G: 5 });`. Optionally, run one day and assert the treasury moves by (250*0.8 - THORNWOOD_UPKEEP)/30, so the tick path is covered as well.
+-- confirmed worth=True: In the test 'gives easy AI nations 80% of their income' (tests/sim/economy.test.ts:74), keep the existing gold assertion and add two more:
+
+`expect(nationEconomy(state, green!).upkeep).toBeCloseTo(THORNWOOD_UPKEEP, 9);`
+`expect(nationEconomy(state, green!).mana.G).toBe(5);`
+
+These pin down that the difficulty factor applies to gold income only. No production code changes.
+
+######## #16 [tests] low tests/sim/supply.test.ts:104 — 'One message per nation' is tested with a single army, so posting one message per commander survives
+DESC: Mutation SU08 posts inside the per-commander loop at supply.ts:64 instead of through the newlyStarving set, and it survives.
+SCENARIO: Three red armies that start starving together in one province post three identical 'Troops are starving' messages. With the 300-message cap per nation, this chatter can push out older messages.
+FIX: Put two red 100-warrior armies in one mountains province, run 1 day, and expect exactly 1 starvation message. See K14.
+-- confirmed worth=True: Add a test to tests/sim/supply.test.ts. Put two or three red armies (for example cinderWarrior x100 each, via addArmy) in independentProvince(state, 'mountains'), check that supplyUsed > supply, call runDays(state, 1), and expect exactly one 'starvation' message for red with province === p.id. Optionally add a green army in the same province and expect exactly one message for green as well, so the test also covers "one per nation" rather than "one per province".
+-- confirmed worth=True: In tests/sim/supply.test.ts, add a test to the 'starvation' describe block. Put two red armies of 100 cinderWarrior each (default ashChieftain leaders) in independentProvince(state, 'mountains'). Assert that supplyUsed > supply, run runDays(state, 1), and expect exactly 1 message with kind 'starvation' for red, whose province is that province's id. This needs no production change. It is low priority but cheap.
+
+######## #17 [tests] low tests/sim/economy.test.ts:233 — Unpaid-days cap and starting gold are checked against the imported constants, so wrong values survive
+DESC: The cap test asserts `<= UNPAID_DAYS_CAP` and `> UNPAID_DAYS_CAP - 1` using the constant it imports, and never checks recovery from the cap. Mutation E09 (cap 120 instead of 119 at src/sim/economy.ts:11) survives. createGame.test.ts:100 and the day-30 test likewise compare against ECONOMY.startGold, so R07 (startGold 301) survives against decision 3's 300.
+SCENARIO: With the cap at 120, a nation that has been broke for a long time needs 31 paid days instead of 30 to lose the first morale point, against the rule 'recovery runs at the loss rate'. No test fails.
+FIX: Use the literal values: expect(UNPAID_DAYS_CAP).toBe(119) and expect(r.gold).toBe(300). Better, after hitting the cap, pay for 30 days and expect unpaidMoralePenalty to be 2 (K16).
+-- confirmed worth=True: Pin the spec values as literals in the tests:
+- In tests/sim/economy.test.ts, add `expect(UNPAID_DAYS_CAP).toBe(119)`.
+- Add a recovery-from-cap test: set unpaidDays to UNPAID_DAYS_CAP (or run broke until it reaches the cap), restore income, then assert unpaidMoralePenalty is still 3 after 29 paid days and is 2 after 30.
+- In tests/sim/createGame.test.ts:100, use `expect(r.gold).toBe(300)`.
+- In the day-30 gold test, seed `let gold = 300` instead of using ECONOMY.startGold.
+-- confirmed worth=True: Fix only the cap test, in tests/sim/economy.test.ts. Prefer a behavior check over a copied literal: after the 400-day run that reaches the cap, give the nation enough gold to pay upkeep (or remove the extra armies), then run 29 days and expect unpaidMoralePenalty to be 3, run 1 more day and expect 2. Also, or instead, compute the expected cap in the test from the rule rather than importing it: `expect(UNPAID_DAYS_CAP).toBe((ECONOMY.unpaidMoraleCap + 1) * ECONOMY.unpaidDaysPerMorale - 1)` is weaker; the paid-day recovery check is the one that encodes the decision. Don't change the startGold assertions to the literal 300. It is a tunable content number, and the current test correctly checks that the sim reads it from content.
+
+######## #18 [tests] low tests/content/validate.test.ts:119 — Scale effect table (docs/05 step 4) is not pinned; extra or wrong per-step effects survive
+DESC: The scales content test checks only axis ids, pole colours and names. The sim tests exercise a subset of the values. Extra or wrong entries in SCALE_DEFS survive. R11 (Turmoil popGrowth), R12 (Dread goldPct), R14 (Lore supplyPct) and CT05 (Fury goldPct +0.1) all change Phase 2 economy numbers. CT02 (Lore research 0.2), CT03 (Order recruit time sign) and CT04 (Dread undead upkeep sign) change later-phase numbers.
+SCENARIO: Adding goldPct: 0.1 to Fury in src/content/pretenders/scales.ts gives every Fury province 10% more gold per step, and all tests pass.
+FIX: Add a content fixture that lists each pole's full effects object, per docs/05 step 4 plus the decision-10 formula effects, and compare it with toEqual.
+-- confirmed worth=True: Add a test to the `describe('scales')` block in tests/content/validate.test.ts. It should list every pole's full `effects` object, taken from the docs/05-pretender.md step 4 table plus decision 10's formula effects (Turmoil goldPct -0.07, Wild materialsPct -0.1, Artifice supplyPct -0.1). Compare each with `toEqual`: Order, Turmoil, Lore, Fury, Growth, Rot, Wild, Artifice, Sanctity and Dread. `toEqual` fails on both wrong values and extra keys, so no further check is needed. If the fixture should be built from the pole entries, check that each one's `Object.keys(effects).sort()` matches a fixed list.
+-- confirmed worth=True: Add one test to the 'scales' describe block in tests/content/validate.test.ts. It needs a literal fixture, transcribed from the docs/05 step 4 table plus the decision-10 formula effects, that maps each axis to the full `effects` object of its positive and negative poles. Compare each pole with `expect(SCALE_DEFS[axis].positive.effects).toEqual(FIXTURE[axis].positive)`, and the same for negative. Using toEqual rejects extra keys. Add a comment like the one in units.test.ts saying that any change from the doc must be recorded in docs/09-balance.md. The fix is about 25 lines of test code and changes no production code.
+
+######## #19 [tests] low tests/sim/unrest.test.ts:271 — Unrest formula terms untested: enemy-dominion floor and Order/Turmoil unrest in unowned provinces
+DESC: The enemy-dominion test uses strength 7, where floor(7/3) and round(7/3) are both 2, so S10 (Math.round at selectors.ts:116) survives. Rule 18 applies the order-axis effect to all provinces, but no test puts an unowned province under Order/Turmoil dominion. S11, which moves the order term inside the `p.owner !== null` block, also survives.
+SCENARIO: With S10, enemy dominion at strength 8 adds 3 unrest a month instead of 2. With S11, independent provinces under a Turmoil nation's dominion no longer build unrest before conquest. The suite passes.
+FIX: Use strength 8 and expect -2 + 2 (K17). Give an independent province dominion {red, 10} in redGame(10, {order: -3}) and expect unrest 6 - 2.
+-- confirmed worth=True: Add two assertions to tests/sim/unrest.test.ts. (1) In the enemy-dominion test, or a new one, set greenCapital.dominion = { nation: red, strength: 8 } and expect -2 + 2 with neutral scales. With sanctity -3, Dread is round(-3*0.8) = -2 steps, so the expectation becomes -2 + 2 + 4. This catches a floor-to-round change. (2) In redGame(10, { order: -3 }), find a province with owner === null, set its dominion to { nation: red, strength: 10 } and expect provinceEconomy(...).unrest to be 6 - 2 = 4. This pins rule 18's order term for unowned provinces.
+-- confirmed worth=True: In tests/sim/unrest.test.ts, change the enemy-dominion test to strength 8 and update its comment to "floor(8 / 3) = 2 (round would give 3)". The expectation stays -2 + 2 + 4. Then add a case using independentProvince from the fixtures: `const state = redGame(10, { order: -3 }); const red = nationIds(state)[0]!; const p = independentProvince(state); p.dominion = { nation: red, strength: 10 }; expect(provinceEconomy(state, p.id).unrest).toBe(6 - 2);`. Both have been checked to pass on the current code and to fail on their mutants. Production code needs no change.
+
+######## #20 [tests] low tests/sim/population.test.ts:208 — 'Never goes below zero' population assertion is vacuous
+DESC: Growth is proportional to pop and is at least -0.7% a month, so pop*(1 - 0.007/30) can never go negative. Pillage removes 2% and also cannot. The `capital.pop >= 0` check cannot fail, and mutation P01 (remove Math.max(0, ...) at src/sim/population.ts:13) survives. The test and the clamp suggest coverage that does not exist.
+SCENARIO: Delete the floor at population.ts:13. The assertion still passes because 0.001 * (1 - 0.007/30) > 0.
+FIX: Drop the vacuous assertion, or write a case that can actually go negative (e.g. a growth effect beyond the clamp range) if the floor is meant to matter. Otherwise state in the test that the floor is defensive.
+-- confirmed worth=True: This is low severity and only touches the test: the test name and assertion promise coverage that doesn't exist. Pick one:
+1. Rename the test to 'compounds daily', drop the `>= 0` assertion, and add a comment at population.ts:13 saying the floor is defensive and unreachable while growth is proportional to pop and the Growth scale is clamped to ±3.
+2. If the floor is meant to matter, write a case that can actually go negative, for example by passing `growPopulation` a hand-built economies map whose growth is below -pop*30. Then assert pop === 0, which kills the mutant.
+
+Either way, the current assertion should not be read as coverage of the clamp.
+-- confirmed worth=True: Keep the `Math.max(0, ...)` floor (decision 17). Choose one of these test fixes, cheapest first:
+(a) Delete lines 34-36. Rename the test to 'compounds daily at the negative growth rate'. Add a one-line comment that the floor is defensive and content cannot reach it.
+(b) Exercise the clamp directly. Call `growPopulation(state, new Map([[capital.id, { ...provinceEconomy(state, capital.id), growth: -1e9 }]]))` and then `expect(capital.pop).toBe(0)`. That test fails when the floor is removed, at a cost of about 3 lines.
+Do not add new content or rules to make the floor reachable.
+
+######## #21 [tests] low tests/sim/buildings.test.ts:148 — Builder release on abandonment is untested
+DESC: Rule 21 and docs/01 decisions say the builder returns to idle when the construction ends. The code releases the builder on abandonment too (buildings.ts:68), but the abandonment test uses commander null. Mutation B02 (drop releaseBuilder on the abandonment path) survives.
+SCENARIO: With B02, when a province under construction is captured, the builder keeps a Build order for a construction that no longer exists, and nothing ever resets it. No test fails.
+FIX: In the abandonment test, start the build with a builder whose order is {kind:'build', building:'temple'}. Change the owner, run 1 day, and expect builder.order toEqual {kind:'idle'}.
+-- confirmed worth=True: Extend the abandonment test in tests/sim/buildings.test.ts, or add a sibling test, to use a real builder. Call addArmy(state, red, p.id, 'cinderWarrior', 1), set builder.order = { kind: 'build', building: 'temple' }, and call startConstruction(state, p.id, 'temple', red, builder.id). Run a few days, set p.owner = green, run 1 day, then assert p.construction is null, p.buildings equals [], and builder.order equals { kind: 'idle' }. This kills B02 and passes on the current code (I checked both in the scratch copy).
+-- confirmed worth=True: Strengthen the existing 'is abandoned when the province changes hands' test (tests/sim/buildings.test.ts:51-62) instead of adding a new one. Create a builder with `const builder = addArmy(state, red, p.id, 'cinderWarrior', 1); builder.order = { kind: 'build', building: 'temple' };`, then pass `builder.id` to startConstruction instead of null. After `p.owner = green; runDays(state, 1);` add `expect(builder.order).toEqual({ kind: 'idle' })`, and keep the existing construction and buildings assertions. Make no change to src/sim/buildings.ts.
+
+######## #22 [organization] medium src/sim/selectors.ts:2 — Pillage changes pop, unrest and gold outside the selectors, so the shown rates disagree with what the tick applies
+DESC: The selectors.ts header and docs/06-architecture.md line 272 both say every economic rate is computed in selectors.ts, 'so the UI and the simulation cannot disagree'. In fact pillage.ts:10-29 computes and applies its own pop loss (2%/day), plunder gold, and +5 unrest/day. None of this appears in ProvinceEconomy (growth, unrest) or NationEconomy (gold). The Phase 7 AI and the Phase 8 province panel will read rates that leave pillage out.
+SCENARIO: Scratch script (twoNationGame seed 1, an owned independent province, 10 Cinder Warriors on the pillage order). provinceEconomy reports growth +5.20/month and unrest -2.00/month, and nationEconomy implies +7.60 gold/day. One advance() actually changes pop by -51.83, unrest by +4.93 and gold by +10.20. The province panel would show unrest falling and pop growing while both move the other way. The AI cannot see plunder income when it weighs the pillage order.
+FIX: Move the pillage rates into selectors: a per-province pillage term (pop loss per day, unrest per day, taker nation, plunder gold) in ProvinceEconomy, plus plunder in NationEconomy. pillage.ts then only applies those values. Otherwise, narrow the selectors.ts header and the docs/06 'Rates in one place' bullet so they name pillage as an exception.
+-- confirmed worth=True: Preferred fix:
+1. Add a selector to selectors.ts, such as pillageRates(state, byProvince), that gives each province its taker nation, pop loss per day, unrest per day and plunder gold per day. Build it from the same commandersByProvince pass.
+2. Expose the result as an optional `pillage` field on ProvinceEconomy and a `plunderPerDay` field on NationEconomy. Keep the per-day units explicit, because the rate is 2% of the current pop each day, not a monthly figure.
+3. Have applyPillage(state, economies) apply only those snapshot values, so the tick and the selectors share one source. The pillage test's plainDay() workaround can then read the selector directly.
+
+Minimal alternative: narrow the selectors.ts header comment and the docs/06 "Rates in one place" bullet so they name pillage as an exception applied in pillage.ts. Then add a note to docs/PROGRESS.md that the UI and AI must account for it separately.
+-- confirmed worth=True: Correct the wording only; do not move pillage into the selectors in Phase 2. 1. In the src/sim/selectors.ts header, name order effects as the exception, e.g. "Pillage (pillage.ts) is an order effect applied directly and is not included in these rates." 2. Reword the docs/06-architecture.md 'Rates in one place' bullet the same way. 3. Change the tick.ts step-4 comment to say that pillage does not use the snapshot. 4. Add a line under known issues in docs/PROGRESS.md: when the Phase 7 AI or Phase 8 province panel needs pillage, add a per-province pillage term (pop loss, unrest, taker, plunder) to the selectors and have pillage.ts apply it.
+
+######## #23 [organization] medium src/sim/tick.ts:22 — Expired province effects still feed selector rates between ticks; comment says they end at the start of untilDay
+DESC: Effects are dropped only inside advance() step 4 (tick.ts:22). scales.ts:49 and selectors.ts:63 read state.provinceEffects without checking untilDay. After the tick for day untilDay-1, state.day equals untilDay and the effect is still in state. Every selector the UI or AI reads while paused therefore includes an effect the next tick drops before its snapshot. The ProvinceEffect comment at types.ts:286 ('The effect ends at the start of `untilDay`') is wrong for the paused UI and for steps 1-3, including Phase 4 battles in step 2 that will read 'defense' effects.
+SCENARIO: Scratch script: push a growth effect (deltaScale 3, untilDay 3) on Cinder Horde's capital and run 3 days. state.day is 3 and provinceEconomy shows growth 275.3/month. The day-3 tick drops the effect and applies 50.1/month. The UI shows a rate that never happens, against the selectors' own contract.
+FIX: Add one helper, activeEffects(state, provinceId), that filters e.untilDay > state.day. Use it in provinceScales and provinceEconomy, and keep the tick filter only as cleanup. Alternatively, run the filter after `state.day += 1`. Either way, make the types.ts:286 comment match, and record the expiry point in docs/06's advance order.
+-- confirmed worth=True: The simplest fix is to move the filter to after `state.day += 1` in tick.ts: `state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);`. The effect then applies on days < untilDay as it does now, and state never holds an expired effect between ticks or during steps 1-3. Update tests/sim/tick.test.ts to expect length 0 after 3 days, and add a check that provinceEconomy at day untilDay matches what the next tick applies. If rituals will later be able to add effects mid-tick, also add an activeEffects(state, provinceId) helper that filters `untilDay > state.day`, and use it in provinceScales and provinceEconomy. Finally, fix the wording of decision 1 / docs/06 to say effects are dropped at the end of the day before untilDay. Low priority, since nothing creates effects until Phase 5, but it is cheap to fix now, before Phase 4 battles read 'defense' effects in step 2.
+-- confirmed worth=True: Severity should drop to low. Do not add the activeEffects helper the claim suggests. Instead, move the existing filter line `state.provinceEffects = state.provinceEffects.filter((e) => e.untilDay > state.day);` from step 4 to immediately after `state.day += 1` in tick.ts.
+
+Why this is enough:
+- Step 4 sees exactly the same effect set it sees now, so the economy and determinism are unchanged.
+- State between ticks then holds only effects the next tick will apply, so the selector contract holds.
+- Steps 1-3 of day untilDay no longer see the effect either, which matches the types.ts:286 comment "ends at the start of untilDay".
+
+Follow-up edits:
+- Update tests/sim/tick.test.ts so that the effect is gone after runDays(state, 3), with state.day equal to 3.
+- Change decision #1's sentence to "dropped at the end of advance, after the day increments (untilDay <= day)".
+- Optionally add one line to docs/06's advance order.
+
+######## #24 [organization] medium docs/PROGRESS.md:49 — docs/PROGRESS.md has no Phase 2 section although three Phase 2 commits have landed
+DESC: CLAUDE.md asks for docs/PROGRESS.md to be updated at the end of each phase. None of the commits 110e97c, da11b75 or 1c4d832 touch it. The file stops at 'Phase 1: Map and provinces (done)'. Its Deviations and Known issues sections say nothing about Phase 2.
+SCENARIO: A Phase 3 session that starts from CLAUDE.md reads PROGRESS.md. It sees no record that GameState left the docs/06 sketch (no activeRituals, result is null, banner), that independent defender forces were deferred to Phase 3 (decision 7), or that the Hills supply checklist item cannot pass. It may re-derive or contradict these choices.
+FIX: Add 'Phase 2: Economy and population (done)'. List the modules (createGame, scales, economy, population, unrest, supply, pillage, buildings, messages, selectors, tick) and the tests. Under Deviations: the GameState shape changes, ritual progress kept in the castRitual order, independents' troops deferred to Phase 3, the pretender commander deferred to Phase 6. Under Known issues: the Hills supply versus checklist conflict (09-balance), pillage missing from the selectors, and content validation running only in tests.
+-- confirmed worth=True: Add a 'Phase 2: Economy and population (done)' section to docs/PROGRESS.md, ideally in the commit that applies this review's fixes, which is how Phase 1 did it.
+- **Done:** list the modules (createGame, scales, economy, population, unrest, supply, pillage, buildings, messages, selectors, tick), the content added (units, nations, rules, ai, buildings) and the test files.
+- **Deviations:** add short entries for the GameState shape changes (no `activeRituals`, since ritual progress lives in the castRitual order; `result`; banners), independent defender forces deferred to Phase 3, and the pretender commander deferred to Phase 6. Point to the bottoms of docs/01 and docs/06 instead of repeating them.
+- **Known issues:** note the Hills supply versus checklist conflict (docs/09-balance.md, to be decided in Phase 12), plus any open items this review confirms.
+-- confirmed worth=True: Add the PROGRESS.md section in the same commit as the Phase 2 review fixes, the way 2fee71d did for Phase 1, rather than as a separate change now. Add "## Phase 2: Economy and population (done)" with:
+- A short module list: createGame, scales, economy, population, unrest, supply, pillage, buildings, messages, selectors, tick, plus the content units, nations and buildings.
+- A one-line summary of the tests.
+- The review outcome.
+
+Under Deviations, add one-line pointers to where each change is already recorded, instead of restating it:
+- The GameState changes are in docs/06-architecture.md (castRitual holds ritual progress, banner, roster).
+- Independents' troops are deferred to Phase 3.
+- The pretender commander is deferred to Phase 6.
+
+Under Known issues, list only items still open after the fixes. The Hills supply versus checklist conflict (docs/09-balance.md) is one; add the others only if they are still unresolved then. Severity: low.
+
+######## #25 [organization] low src/sim/commanders.ts:9 — Game numbers hard-coded in sim code (script slots, base troop supply, minimum build days, default tax)
+DESC: CLAUDE.md says no game numbers go in sim code, and docs/06 line 275 says 'the sim hard-codes none'. Yet four rule values live in sim code. commanders.ts:9 has `const SCRIPT_SLOTS = 5` (docs/04: 5 script slots), and it is not exported. commanders.ts:87 returns a literal `1` for a normal troop's daily supply, although SUPPLY.commanderSupply and bigUnitSupply sit in rules.ts. buildings.ts:18 hard-codes the 1-day construction minimum (decision 21). createGame.ts:52 hard-codes the default tax 'normal'.
+SCENARIO: Phase 3's setScript validation must check slots.length against 5. SCRIPT_SLOTS is private, so commands.ts will repeat the literal and the two can drift. Separately, retuning base troop supply to 2 in rules.ts is impossible: the 1 lives in commanders.ts.
+FIX: Move these into src/content/rules.ts, for example COMMANDER.scriptSlots, SUPPLY.troopSupply, CONSTRUCTION.minDays and TAX.defaultRate, and import them in commanders.ts, buildings.ts and createGame.ts.
+-- confirmed worth=True: The two clear cases come first:
+- Add `troopSupply: 1` to SUPPLY in src/content/rules.ts and use it in commanders.ts:87.
+- Add a rules entry such as `COMMANDER = { scriptSlots: 5 }` in rules.ts and use it in commanders.ts, so Phase 3's setScript validation can import the same value.
+
+The two optional cases are cheap and keep things consistent:
+- Add `DEFAULT_TAX_RATE: TaxRate = 'normal'` next to TAX_RATES and use it in createGame.ts.
+- Add a `CONSTRUCTION.minDays` (1) entry and use it in buildings.ts:18.
+
+After the change, record the values in docs/09-balance.md and run the typecheck, lint and test commands.
+-- confirmed worth=True: Limit the fix to the two numeric rule values:
+1. In src/content/rules.ts, add `troopSupply: 1` to SUPPLY and change the comment to "others eat troopSupply".
+2. In src/content/rules.ts, add an exported constant such as `export const BATTLE = { scriptSlots: 5 } as const;` (or COMMANDER.scriptSlots), citing docs/04.
+3. In src/sim/commanders.ts, remove the private SCRIPT_SLOTS and use the rules constant in defaultScript. Use SUPPLY.troopSupply in troopSupply().
+
+Phase 3 setScript validation and the Phase 4 resolver should then import the same constant. Leave the `Math.max(1, ...)` construction floor and the `'normal'` tax default as they are, because neither is a tunable game number. No new tests are needed, since existing defaultScript and supply tests cover the behavior.
+
+######## #26 [organization] low src/sim/commanders.ts:73 — src/sim/commanders.ts has no mirrored test file; upkeep, extra-pip and priest-presence mutations go unnoticed
+DESC: CLAUDE.md says tests mirror src, but tests/sim/commanders.test.ts does not exist. commanders.ts is tested only indirectly. No test checks the sacred half-upkeep: the only sacred case is the flamebrand cap test, which reaches the cap either way. No test creates a Cinder Magus or Elder Druid, so the extraPip roll never runs. The priest '!c.transit' rule at selectors.ts:113 has no case either.
+SCENARIO: Mutation runs through a scratch vitest config that redirects the module, with the module cache disabled. Each mutant passed all 225 tests in tests/sim and tests/content: sacred factor changed to 1 (commanders.ts:73), the extraPip roll replaced by false (commanders.ts:48), and the '!c.transit' filter removed (selectors.ts:113). A control mutant (troop supply 1 to 2) failed 4 tests, so the harness works.
+FIX: Add tests/sim/commanders.test.ts. Cover unitUpkeep(flamebrand) = 32/15*0.5, the no-cost garrison = 0, troopSupply by size and tag, defaultFormation and defaultScript, and createCommander('cinderMagus') over many seeded creations (about 25% get R3). In unrest.test.ts, add a case where a priest in transit does not calm the province.
+-- confirmed worth=True: Add tests/sim/commanders.test.ts with these cases:
+- unitUpkeep(unitDef('flamebrand')) is close to 32/15*0.5, and a non-sacred unit is goldCost/15.
+- unitUpkeep of the no-cost garrison is 0.
+- commanderUpkeep sums the commander plus count times troop upkeep.
+- troopSupply returns 1 normally, 3 for size >= 3, and 0 for undead and construct.
+- commanderSupply gives 0 for the garrison holder.
+- defaultFormation is 'middle' for ranged units and 'front' otherwise.
+- defaultScript gives 5 cast slots for mages and priests and 5 hold slots for others.
+- createCommander('cinderMagus') over about 400 seeded creations gets R3 roughly 25% of the time, e.g. between 15% and 35%. Also assert that some get R2 and some get R3.
+
+In tests/sim/unrest.test.ts, add a case where the only priest at the capital has `transit` set; it must not reduce unrest, while the same priest with `transit: null` does.
+-- confirmed worth=True: Add a short tests/sim/commanders.test.ts covering:
+- `unitUpkeep(unitDef('flamebrand'))` is close to 32 / 15 * 0.5, and a non-sacred troop is cost / 15. Read the numbers from ECONOMY so the test follows the rules file.
+- A unit with no cost (the garrison holder) has upkeep 0.
+- `troopSupply`: 1 for a normal troop, SUPPLY.bigUnitSupply for size 3 and up, 0 for undead and construct.
+- `defaultFormation`: 'middle' for a ranged unit, 'front' otherwise. `defaultScript`: 5 cast slots for a mage or priest, 5 hold slots for anyone else.
+- `createCommander(state, 'cinderMagus', ...)` repeated a few hundred times from one seeded state:
+  - pips.R is always 2 or 3, and the share of 3s is about 0.25 (a loose bound such as 0.18 to 0.32).
+  - The same seed gives the same sequence.
+
+In tests/sim/unrest.test.ts, add one case: set the starting priest's `transit` to a non-null object, then check that provinceEconomy(...).unrest loses the -5 priest term.
+
+No production code needs to change.
+
+######## #27 [organization] low docs/06-architecture.md:272 — docs/06 architecture notes no longer match the code (scales location, the activeRituals sketch, step-4 order)
+DESC: Three spots in docs/06 are stale. Line 272 says selectors.ts computes 'scales' and the dominion score, but nationScales and provinceScales live in scales.ts. The GameState sketch at line 151 still lists `activeRituals: RitualInProgress[]` and `result?`; only a note at line 267 says these were removed. Step 4 of the advance order (line 171) does not mention pillage or effect expiry. A grep of docs/ for 'untilDay' finds nothing, so decisions 1 and 20 (effects dropped at the start of step 4; pillage after gold accrual and before growth) are recorded in no doc.
+SCENARIO: In Phase 5, an implementer building rituals from the docs/06 contract sketch adds an activeRituals list, or looks for it. In Phase 3/4, an implementer adding battle pop loss or new effects goes by the step-4 text. They cannot tell that pillage runs after upkeep is paid and that growth uses the population from before pillage, and they put the new code in the wrong place.
+FIX: Edit the sketch itself: drop activeRituals and write `result: GameResult | null`. Change line 272 to say scales come from scales.ts. Rewrite step 4 as: 'drop effects with untilDay <= day; snapshot rates; gold, mana, upkeep; materials; pillage; population; unrest; supply'.
+-- confirmed worth=True: Doc-only, cheap:
+1. docs/06:272: change the list to "(province economy, nation economy, fort materials, dominion score; scales come from `scales.ts`)".
+2. docs/06:171: change step 4 to "Drop province effects with untilDay <= day; snapshot the day's rates; gold, mana, and upkeep; materials; pillage; population; unrest; supply."
+3. Optionally edit the sketch at 151-153 to match types.ts: remove `activeRituals` and write `result: GameResult | null`. The note at 266-268 can then shrink to the remaining changes, or stay as a history note.
+4. Optionally add a sentence to the Phase 2 block in docs/01, near line 278 or 302, saying that pillage runs after the day's gold and before growth, and that growth uses the snapshot's pre-pillage population.
+-- confirmed worth=True: Make a doc-only edit in docs/06-architecture.md and leave the original sketch as it is, since the deviation note already covers it.
+
+(a) In the "Rates in one place" bullet, change "fort materials, scales, dominion score" to "fort materials, dominion score; province and national scales come from `scales.ts`".
+
+(b) Add one bullet under "Implementation decisions": "Step 4 order (Phase 2): drop province effects with `untilDay <= day`, take the day's rate snapshot, then gold, mana and upkeep, materials, pillage, population growth, unrest, supply. Pillage gold therefore cannot pay that day's upkeep, and growth uses the snapshot rate."
+
+No code change is needed.
+
+######## #28 [organization] low src/sim/commanders.ts:98 — squadMaxHp is dead code while the same formula is written out inline
+DESC: squadMaxHp(squad) is exported but used nowhere in src or tests. supply.ts:23 (`const max = squad.count * def.hp`) and commanders.ts:31 compute the same value inline. Its sibling commanderMaxHp is used by supply.ts:39, so the two helpers are used inconsistently.
+SCENARIO: In Phase 5, blessings or buffs raise max HP by changing squadMaxHp, the obvious hook. feedSquad keeps using raw count*def.hp, so a fed, buffed squad heals only to the unbuffed maximum and starves on the unbuffed figure.
+FIX: Use squadMaxHp(squad) in feedSquad, the way feedCommander uses commanderMaxHp, or delete squadMaxHp until something needs it.
+-- confirmed worth=True: In feedSquad (src/sim/supply.ts), replace `const max = squad.count * def.hp;` with `const max = squadMaxHp(squad);` and add squadMaxHp to the import from './commanders'. Keep `def` for the count recomputation `Math.ceil(squad.hp / def.hp)`, which uses per-unit HP. This is a one-line change and existing supply tests should cover it. The other option is to delete squadMaxHp until Phase 5 needs it. Leave createSquad's inline value as it is.
+-- confirmed worth=True: In src/sim/supply.ts, import `squadMaxHp` from './commanders' and change line 23 to `const max = squadMaxHp(squad);`. Keep `def` for the `troopSupply(def)` check and the `Math.ceil(squad.hp / def.hp)` count update. Behaviour stays the same: `max` is still computed before `squad.count` changes, so the existing tests in tests/sim/supply.test.ts should pass unchanged. If the team would rather not keep a helper that has only one caller, deleting `squadMaxHp` works too. Using it in feedSquad is better, because it matches how feedCommander uses commanderMaxHp. Treat this as low-priority cleanup.
+
+######## #29 [organization] low src/content/rules.ts:99 — MESSAGES.keep comment says the whole log is capped; the cap is per nation
+DESC: The comment reads 'Messages kept in the log; older ones are dropped.' But messages.ts:24 applies the 300 limit per nation (decision 22), so the log holds keep times the number of nations.
+SCENARIO: Someone sizing saves or building the Phase 8 messages panel reads 'keep: 300' as the whole log. A 4-nation game actually holds up to 1200 messages, and the UI must filter by nation.
+FIX: Change the comment to: 'Messages kept per nation; each nation's oldest are dropped past this.'
+-- confirmed worth=True: Change the comment in src/content/rules.ts:99 to `/** Messages kept per nation; each nation's oldest are dropped past this. */`. This is a comment-only change and needs no code or test changes.
+-- confirmed worth=True: In src/content/rules.ts:99, change only the doc comment, to something like `/** Messages kept per nation; past this, that nation's oldest message is dropped. */`. No code or test changes are needed.
+
+######## #30 [determinism] low src/sim/economy.ts:25 — Daily gold accrual rescans every province and commander once per nation, using about half of advance()
+DESC: accrueGoldAndMana calls nationEconomy(state, nation.id, economies) once for each nation. Each call walks every province (selectors.ts:172) and every commander (selectors.ts:180), and recomputes each owned commander's upkeep through unitDef lookups. So every day the tick does N full scans of provinces and commanders when one pass would cover them all. I timed it on a 4-nation game with 200 commanders spread over the map (busy: pillage, effects, constructions, dominion everywhere). advance() takes 1.10-1.49 ms on small/medium/large maps (90/110/130 provinces). A sandbox copy that collects gold, mana and upkeep for all nations in one pass over provinces and one over commanders takes 0.52-0.71 ms. Its JSON state after 600 days is identical to the original's, and all 160 sim tests pass. The docs/06 target is 2 ms for the whole advance(). Phase 2 alone already uses 55-75% of it, before movement, visibility, dominion spread and AI are added. A smaller cost of about 0.3 ms comes from selectors.ts:62-117: provinceEconomy calls provinceScales, which rebuilds nationScales (object spread, Wellspring loop) for each province, and then calls scaleEffect 7 times with keyed lookups, even though nation scales only change when Wellspring ownership does.
+SCENARIO: Setup: createGame with 4 nations on 'small' (90 provinces), 200 commanders with 1-3 squads each over random provinces, 15% on pillage, 20 province effects, temples under construction. Measured over 2000 advance() calls: 1.10-1.22 ms per call (small) and 1.32-1.49 ms (large). The same state with a single-pass nation total: 0.52-0.57 ms (small) and 0.71 ms (large), with bit-identical results. Once Phase 3-7 add per-day movement, visibility and AI on top of the current ~1.2-1.5 ms, the 2 ms target will be missed.
+FIX: In accrueGoldAndMana, build per-nation totals in one pass: provinces in key order add gold and mana to their owner's totals, and commanders in key order add upkeep to their owner's totals. Then apply the difficulty factor and pay per nation. This keeps the same float addition order per nation, so results stay bit-identical. Keep nationEconomy as the UI selector. Optionally, compute nationScales once per nation per day (pass a cache into provinceScales from allProvinceEconomies), and compute each province's scale-effect values in one pass over the axes instead of 7 separate scaleEffect calls.
+-- confirmed worth=True: In accrueGoldAndMana, gather per-nation totals in one pass. Go through Object.values(state.provinces) in key order and add each province's gold and mana to its owner's entry in a Map keyed by NationId. Then go through Object.values(state.commanders) in key order and add commanderUpkeep(c) to the owner's upkeep. After that, for each non-eliminated nation, apply the difficulty incomeFactor to the gold total and pay income and upkeep exactly as now. Per-nation float order is preserved, so results are bit-identical (verified over 600 days). Keep nationEconomy as the UI selector, or have both use a shared allNationEconomies helper so the UI and the tick cannot drift apart. Optional follow-up: compute nationScales once per nation per day, for example as a Map passed from allProvinceEconomies into provinceScales, since it only changes when Wellspring ownership changes. Also compute a province's scale effects in one pass over the axes instead of 7 separate scaleEffect calls. Low priority: advance() is under the 2 ms target today.
+-- refuted worth=False: No change needed now. If a later phase's performance check shows advance() getting close to the 2 ms budget, add a single-pass selector, allNationEconomies(state, economies), in selectors.ts that returns a Map from NationId to NationEconomy. Have both nationEconomy and accrueGoldAndMana use it, so there is still only one aggregation path and the per-nation float addition order stays the same. Do not put a separate aggregation loop in economy.ts. Caching nationScales per day is also deferrable and should be done the same way, inside selectors.ts and scales.ts.
+
+######## #31 [determinism] low tests/sim/tick.test.ts:48 — Save/load and determinism tests run a quiet game that never exercises the Phase 2 state-changing paths
+DESC: The only mid-game save/load test ('continues identically after a save and load') and the 365-day determinism test both use twoNationGame with just the starting armies. No pillage, no starvation, no construction in progress, no province effects mid-duration, no messages, and no easy-AI income factor. They only check daily accrual. State kept outside GameState, or keyed by object identity that a JSON round trip changes, in any of the other Phase 2 systems therefore goes unnoticed. The per-system tests never round-trip. That is the class of bug this review lens covers, and later phases will add more such paths.
+SCENARIO: Mutation run in a scratch copy of the repo: progressConstruction (src/sim/buildings.ts) keeps the remaining days in a module-level WeakMap<Construction, number> instead of decrementing job.daysLeft. All 160 tests in tests/sim pass. But in a busy 4-nation game with temples under construction, saving with JSON at day 10 and running both copies 40 more days gives different states. After the JSON parse, each Construction is a new object the WeakMap does not know, so the loaded game starts its constructions over. The same applies to any hidden cache added to pillage, supply or messages.
+FIX: Add a save/load test, and a run-twice determinism test, on a fixture that is busy when it is saved: a construction partway through, an army on pillage, a starving army in Mountains, a province effect whose untilDay comes after the save, an easy-AI nation, and posted messages. Save it with JSON mid-activity and require JSON.stringify of the original and the loaded copy to match after N more days. Also scan the state for -0, NaN, Infinity and undefined values, and for objects referenced in two places, before saving.
+-- confirmed worth=True: Add a 'busy' fixture to tests/sim/fixtures.ts. It should have:
+- three or four nations, one of them `ai: { difficulty: 'easy' }`
+- a construction partway through (startConstruction, then a few days)
+- a commander with troops on `{ kind: 'pillage' }`
+- a large army in a low-supply province (Mountains or Waste) so it starves
+- a provinceEffect whose untilDay comes after the save day
+- at least one message posted, for example from a finished build or the start of starvation
+- upkeep pressure, either low gold or many troops
+
+In tick.test.ts, run that fixture twice and compare JSON.stringify of the two states. Then save it mid-activity with JSON.parse(JSON.stringify(state)) and require JSON.stringify of the original and the loaded copy to match after N more days. Pick N so the construction finishes and the effect expires after the save.
+
+Optionally, before saving, walk the state and assert there are no -0, NaN, Infinity or undefined values, and no object reachable from two parents.
+-- refuted worth=False: No change in Phase 2. When Phase 13 adds serialize.ts, its round-trip test should save a fixture that is busy at the time of saving: constructions and recruit queues partway through, pillage, starvation, a province effect still in effect, messages, an easy AI, and in-transit or besieged state from Phases 3-4. It should then require the original and the loaded copy to match byte for byte after N more days. A scan for non-finite numbers, -0 and undefined values can be added there cheaply. If something is wanted sooner, the smallest step is a fixture tweak: run the existing save/load test on a game where one army has the pillage order and one temple is under construction. A new multi-system fixture is not needed.
+
+######## #32 [organization] low tests/content/validate.test.ts:1 — Content-validation fixtures sit in units.test.ts, but validate.test.ts and docs/06 say they belong in validate.test.ts
+DESC: The validate.test.ts header says 'units, nations, spells, chassis, and presets join these fixtures as they are added'. docs/06 line 236 also says validate.test.ts asserts that every unit a nation references exists. The Phase 2 unit and nation fixtures, the validateContent() call, and the 'holds exactly the fixture units' check all live in tests/content/units.test.ts instead. docs/06 line 91 also calls the registry 'validated on load', but validateContent() is only called from tests.
+SCENARIO: In Phase 5, following CLAUDE.md ('add it to the content validation test fixtures') and docs/06, the implementer puts spell fixtures and checks in validate.test.ts. The registry-level validateContent() assertion and the exact-set fixture pattern stay in units.test.ts, so the checks split across files and spells miss the exact-set guard. Also, a bad content edit loads silently under `npm run dev`, contrary to 'validated on load'.
+FIX: Either move the registry checks into validate.test.ts, or rewrite the validate.test.ts header and docs/06 'Content validation' to name units.test.ts (and a future spells.test.ts) as the fixture homes. Then either call validateContent() at startup in dev, or drop 'validated on load' from docs/06.
+-- confirmed worth=True: This is a cheap documentation fix. Rewrite the validate.test.ts header so it covers only the cross-cutting content (colors, terrain, scales, mapgen, names) and points to units.test.ts for the unit and nation fixtures and registry validation, with future spells/chassis/presets getting sibling files. Alternatively, move the 'content registry' describe block (the validateContent() call and the exact-set check) into validate.test.ts. Then update docs/06 in two places: the tests tree at line 131 and the 'Content validation' paragraph at line 236, so they name the actual files. Also either change line 91 to say validation runs in tests (validateContent() in tests/content) or add a dev-only startup assertion once the UI uses the registry. Record the choice in docs/06 'Implementation decisions' and update PROGRESS.md.
+-- refuted worth=False: No code change is needed. As an optional zero-risk tidy-up, the next phase that touches these files could:
+- reword the validate.test.ts header to "colors, terrain, mapgen; per-kind fixtures (units, nations, later spells/chassis) live in their own tests/content/*.test.ts";
+- change docs/06 "validated on load" to "validated by tests/content".
+
+Do not add startup validation and do not move the tests.
+
+######## #33 [organization] low src/content/buildings.ts:10 — Building ids break the content id pattern: BUILDING_IDS is separate from the BuildingId union and there is no isBuildingId guard
+DESC: TERRAIN_IDS, TAX_RATE_IDS and MAP_SIZE_IDS derive their id types from a const array and come with an is* guard, as do nations and units. BuildingId instead is a separate hand-written union (content/types.ts:130), and BUILDING_IDS is typed readonly BuildingId[], which can be a subset of it. No isBuildingId exists for Phase 3's `build` command validation.
+SCENARIO: Phase 3 validates `{ type: 'build', buildingId }` from the AI or a loaded save and has no guard. An unknown id reaches buildingDef, which returns undefined, and constructionCost throws on `def.gold`. Separately, adding a building to the union and BUILDINGS while forgetting BUILDING_IDS still compiles, and validateContent then never checks the new building.
+FIX: Declare `export const BUILDING_IDS = ['temple', 'lab', 'fort'] as const`, derive `type BuildingId = (typeof BUILDING_IDS)[number]`, and add `isBuildingId(value: unknown)` next to isTerrainId, re-exported from content/index.ts.
+-- confirmed worth=True: In src/content/buildings.ts, declare `export const BUILDING_IDS = ['temple', 'lab', 'fort'] as const;` and `export type BuildingId = (typeof BUILDING_IDS)[number];`. Move that type out of content/types.ts, or have types.ts re-export it, taking care with the import cycle, since BuildingDef uses it. Add `export function isBuildingId(value: unknown): value is BuildingId { return typeof value === 'string' && Object.hasOwn(BUILDINGS, value); }` and re-export it from content/index.ts next to isUnitTypeId and isNationDefId. In validateContent, loop over `Object.entries(BUILDINGS)` as is done for units and nations, so no building can slip past the check. In tests/content/validate.test.ts, assert that BUILDING_IDS matches the keys of BUILDINGS. Phase 3's `build` command validation should then call isBuildingId before buildingDef. Do not take the claim's statement that TAX_RATE_IDS and MAP_SIZE_IDS have guards as a model: they have none. If Phase 3 validates tax-rate or map-size input from commands or saves, add isTaxRate and isMapSizeId too.
+-- refuted worth=False: Nothing is needed for Phase 2. When Phase 3 writes `validate` for the `build` command and something actually needs to check untrusted input, add `isBuildingId`, preferably defined as `value in BUILDINGS` or from an as-const array. If the drift concern is worth one line at that point, the validateContent loop can iterate `Object.entries(BUILDINGS)` the way the unit and nation loops do, and BUILDING_IDS can be dropped.

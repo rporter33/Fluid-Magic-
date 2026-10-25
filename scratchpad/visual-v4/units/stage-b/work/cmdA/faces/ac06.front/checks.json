@@ -1,0 +1,206 @@
+{
+ "figure": "cinderWarrior",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.762,
+  "iouMirrored": 0.661,
+  "aspectRatio": 1.093,
+  "headDx": -0.115,
+  "guideHeadDx": -0.054,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.587,
+  "marchLegsIoU": 0.426,
+  "mostAlike": [
+   "stand~marchA",
+   0.741
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 1.006,
+   "marchB": 0.956
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.654,
+  "keyInUnitPct": 0.089,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.58,
+  "pass_": true,
+  "edgeDevThickPct": 1.78,
+  "deviatingChromaShift": 0.004
+ },
+ "side": {
+  "plains": {
+   "share": 0.0,
+   "blockL": 24.4,
+   "groundL": 67.7,
+   "below": 43.4
+  },
+  "farmland": {
+   "share": 0.0,
+   "blockL": 24.4,
+   "groundL": 67.3,
+   "below": 42.9
+  },
+  "swamp": {
+   "share": 0.0,
+   "blockL": 23.8,
+   "groundL": 58.5,
+   "below": 34.6
+  },
+  "forest": {
+   "share": 0.0,
+   "blockL": 23.8,
+   "groundL": 58.7,
+   "below": 34.9
+  },
+  "share": 0.0,
+  "pass": false
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.836
+  ],
+  "maxDE": [
+   "follow",
+   1.4
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.762,
+    0.102
+   ],
+   "idle2": [
+    0.746,
+    0.289
+   ],
+   "marchA": [
+    0.804,
+    0.157
+   ],
+   "marchB": [
+    0.797,
+    0.257
+   ],
+   "windup": [
+    0.719,
+    0.129
+   ],
+   "strike": [
+    0.435,
+    0.021
+   ],
+   "follow": [
+    0.338,
+    -0.102
+   ],
+   "brace": [
+    0.55,
+    0.089
+   ],
+   "recoil": [
+    0.663,
+    0.132
+   ],
+   "fall": [
+    0.575,
+    0.333
+   ],
+   "deadA": [
+    0.614,
+    0.257
+   ],
+   "deadB": [
+    0.793,
+    0.698
+   ],
+   "fleeA": [
+    0.679,
+    0.047
+   ],
+   "fleeB": [
+    0.778,
+    0.477
+   ],
+   "cheer": [
+    0.65,
+    0.07
+   ]
+  },
+  "medianIoU": 0.679,
+  "medianMargin": 0.132,
+  "follow": "13/15",
+  "followShare": 0.87
+ },
+ "rim": {
+  "beforeMax": 1.9,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.177,
+  "worstBelow": 31.5,
+  "grounds": {
+   "plains": {
+    "share": 0.177,
+    "below": 40.0
+   },
+   "farmland": {
+    "share": 0.207,
+    "below": 39.6
+   },
+   "swamp": {
+    "share": 0.161,
+    "below": 31.5
+   },
+   "forest": {
+    "share": 0.191,
+    "below": 31.7
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 6.2,
+  "upperThirdLab": [
+   21.1,
+   1.3,
+   6.1
+  ],
+  "portraitLab": [
+   29.3,
+   2.6,
+   6.8
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/ac06.front.redress.nb21.png"
+}

@@ -1,0 +1,236 @@
+{
+ "wildLook": {
+  "peaks": {
+   "texels": 65834,
+   "Lp5": 5.1,
+   "Lp50": 20.7,
+   "Lp95": 50.5,
+   "Lmax": 53.7,
+   "textelsOutsideTheirCells": 0,
+   "cap": 54.85,
+   "passableRockP999": 52.35,
+   "overCap": 0,
+   "note": "8-bit sRGB rounds L* by up to about 0.4"
+  },
+  "mere": {
+   "texels": 14159,
+   "Lp5": 22.4,
+   "Lp50": 27.9,
+   "Lp95": 35.6,
+   "Lmax": 52.7,
+   "textelsOutsideTheirCells": 0,
+   "waterMeanLab": [
+    26.7,
+    -21,
+    -2.3
+   ],
+   "naturalWaterLab": [
+    36.8,
+    -23.8,
+    -3.1
+   ],
+   "waterDE": 8.2,
+   "fringeShare": 0.231
+  },
+  "pass": true
+ },
+ "hfStart": {
+  "peaksWild": {
+   "hf": 1.54,
+   "px": 26336,
+   "Lp5": 4.2,
+   "Lp50": 19.2,
+   "Lp95": 44.8
+  },
+  "mereWild": {
+   "hf": 0.7,
+   "px": 7708,
+   "Lp5": 18,
+   "Lp50": 24.9,
+   "Lp95": 47.3
+  },
+  "mountains": {
+   "hf": 1.45,
+   "px": 26720,
+   "Lp5": 21.3,
+   "Lp50": 36.9,
+   "Lp95": 48.3
+  },
+  "forest": {
+   "hf": 1.35,
+   "px": 65418,
+   "Lp5": 13.5,
+   "Lp50": 19.3,
+   "Lp95": 29.7
+  },
+  "otherLand": {
+   "hf": 1.13,
+   "px": 200008,
+   "Lp5": 25.6,
+   "Lp50": 43.1,
+   "Lp95": 53.7
+  }
+ },
+ "hfRef": {
+  "peaksWild": {
+   "hf": 0.69,
+   "px": 96828,
+   "Lp5": 3.4,
+   "Lp50": 18.2,
+   "Lp95": 45.6
+  },
+  "mereWild": {
+   "hf": 0.34,
+   "px": 28996,
+   "Lp5": 22.4,
+   "Lp50": 26,
+   "Lp95": 36.1
+  },
+  "mountains": {
+   "hf": 0.6,
+   "px": 25319,
+   "Lp5": 20.9,
+   "Lp50": 34.9,
+   "Lp95": 47.3
+  },
+  "forest": {
+   "hf": 1.19,
+   "px": 102850,
+   "Lp5": 10.3,
+   "Lp50": 18.5,
+   "Lp95": 23.4
+  },
+  "otherLand": {
+   "hf": 0.84,
+   "px": 350285,
+   "Lp5": 24.7,
+   "Lp50": 43.3,
+   "Lp95": 51.9
+  }
+ },
+ "min": {
+  "readers": {
+   "patch": 0.91,
+   "prov": 1,
+   "unexPatch": 0.894,
+   "unexProv": 0.983,
+   "missed": [
+    "Karreach (hills read plains)"
+   ]
+  },
+  "steps": {
+   "edges": 100,
+   "diffTerrain": {
+    "n": 74,
+    "step3": 8.8,
+    "step12": 15,
+    "crisp": 29
+   },
+   "sameTerrain": {
+    "n": 26,
+    "step3": 2.3,
+    "step12": 3.2
+   }
+  },
+  "raster": {
+   "edges": 132,
+   "p50": 1,
+   "p90": 2.5,
+   "max": 5,
+   "over8": 0
+  },
+  "face": {
+   "px": 4158,
+   "p5": 8.2,
+   "p50": 17.7,
+   "p95": 29.1,
+   "spread": 20.9
+  },
+  "lip": {
+   "north": {
+    "lip": 58,
+    "inside": 36.3,
+    "dL": 21.6
+   },
+   "south": {
+    "lip": 26.3,
+    "inside": 37.9,
+    "dL": -11.6
+   },
+   "west": {
+    "lip": 60.8,
+    "inside": 38.8,
+    "dL": 22
+   },
+   "east": {
+    "lip": 30.3,
+    "inside": 45.3,
+    "dL": -15
+   }
+  }
+ },
+ "minNoRelief": {
+  "readers": {
+   "patch": 0.953,
+   "prov": 1,
+   "unexPatch": 0.88,
+   "unexProv": 0.967,
+   "missed": [
+    "Halegate (hills read plains)",
+    "Karreach (hills read plains)"
+   ]
+  },
+  "steps": {
+   "edges": 100,
+   "diffTerrain": {
+    "n": 74,
+    "step3": 9.1,
+    "step12": 14.9,
+    "crisp": 27
+   },
+   "sameTerrain": {
+    "n": 26,
+    "step3": 1.9,
+    "step12": 3.4
+   }
+  }
+ },
+ "face69": {
+  "px": 6854,
+  "p5": 8.1,
+  "p50": 17.7,
+  "p95": 25.5,
+  "spread": 17.4
+ },
+ "maxAsh": {
+  "sharp": {
+   "wildHF": 1.83,
+   "landHF": 1.35,
+   "ratio": 1.35,
+   "wildPx": 357084,
+   "landPx": 384074
+  },
+  "nd": {
+   "ms": 75.4,
+   "px": 3180030
+  }
+ },
+ "maxMere": {
+  "sharp": {
+   "wildHF": 1.71,
+   "landHF": 1.74,
+   "ratio": 0.99,
+   "wildPx": 218843,
+   "landPx": 522315
+  },
+  "nd": {
+   "ms": 73,
+   "px": 3333054
+  }
+ },
+ "mere": {
+  "samples": 308,
+  "waterWithin002D": 0.351
+ },
+ "pageErrors": []
+}

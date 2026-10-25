@@ -1,0 +1,129 @@
+<title>Fluid Magic Portrait Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column of sets; each set a grid of portrait cards with keep/redo toggles; verdicts copy out at the end.
+   Single dark look on purpose: the portraits are painted to sit on the game's dark chrome. */
+:root {
+  --bg: #1C1A17; --panel: #26231E; --panel-2: #2F2B25; --line: #4A443B;
+  --text: #F4EEDF; --dim: #BDB4A2; --faint: #8E8574; --brass: #B8914A; --keep: #7FB77E; --redo: #E38B6B;
+  --font-display: 'Marcellus SC', Georgia, serif; --font-body: 'Alegreya Sans', system-ui, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--text); font: 16px/1.5 var(--font-body); font-variant-numeric: lining-nums;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 56px; }
+.wrap { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+header { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+.eyebrow { font: 600 12px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+h1 { font: 400 30px/1.15 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h2 { font: 400 22px/1.2 var(--font-display); margin: 0; letter-spacing: .03em; }
+p { margin: 0; } .lead { color: var(--dim); max-width: 66ch; }
+.set-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.set-head .count { color: var(--faint); font-size: 14px; margin-left: auto; }
+.code { font: 500 12.5px var(--font-mono); color: var(--bg); background: var(--brass); border-radius: 3px; padding: 1px 6px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card.redo { border-color: var(--redo); }
+.card img.big { width: 100%; aspect-ratio: 1; display: block; }
+.card .body { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 8px; }
+.row { display: flex; align-items: center; gap: 8px; }
+.mini { border-radius: 50%; display: block; }
+.trait { font-size: 13.5px; color: var(--dim); min-height: 2.6em; }
+.toggle { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin-left: auto; }
+.toggle button { font: 500 13.5px var(--font-body); color: var(--dim); background: none; border: none; padding: 4px 10px; cursor: pointer; }
+.toggle button + button { border-left: 1px solid var(--line); }
+.toggle button[aria-pressed="true"].k { background: #2E3A2C; color: var(--keep); }
+.toggle button[aria-pressed="true"].r { background: #3E2A22; color: var(--redo); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.room { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.oak { width: 100%; aspect-ratio: 1; background-size: 50% 50%; background-repeat: repeat; }
+.floor { width: 100%; display: block; }
+.verdicts { background: var(--panel); border: 1px solid var(--brass); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+textarea { font: 15px var(--font-body); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; min-height: 70px; resize: vertical; }
+pre { font: 13.5px/1.5 var(--font-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.big-btn { font: 600 15px var(--font-body); color: var(--bg); background: var(--brass); border: none; border-radius: 4px; padding: 9px 16px; cursor: pointer; align-self: flex-start; }
+.note { color: var(--faint); font-size: 14px; }
+@media (max-width: 460px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: 25px; } .toggle button { padding: 4px 7px; } }
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Fluid Magic · first portrait sets</span>
+    <h1>Portrait review</h1>
+    <p class="lead">Thirty-two leader portraits made with Gemini from your approved rim-light anchor, plus the oak table top and the tavern floor. Every card starts as Keep. Mark the ones to redo, add a note if something specific is off, then copy your verdicts and paste them into our chat.</p>
+    <p class="note">Each card shows the portrait at 256 pixels and as the game's round frames at 48 and 24 pixels.</p>
+  </header>
+  <div id="sets"></div>
+  <section aria-labelledby="room-h" style="display:flex;flex-direction:column;gap:12px">
+    <div class="set-head"><h2 id="room-h">The table and the room</h2></div>
+    <div class="room" id="room"></div>
+  </section>
+  <section class="verdicts" aria-labelledby="v-h">
+    <h2 id="v-h">Your verdicts</h2>
+    <label for="notes" class="note">Notes for the redo (optional)</label>
+    <textarea id="notes" placeholder="e.g. Pyre Priests: less armor, more robe"></textarea>
+    <pre id="summary"></pre>
+    <button class="big-btn" id="copy" type="button">Copy verdicts</button>
+  </section>
+</div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(() => {
+  const data = JSON.parse(document.getElementById('data').textContent);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('fm-review-' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('fm-review-' + k, JSON.stringify(v)); } catch { /* unavailable */ } },
+  };
+  const redo = store.get('redo', {});
+  const sumEl = document.getElementById('summary');
+  const notes = document.getElementById('notes');
+  notes.value = store.get('notes', '');
+  const setsEl = document.getElementById('sets');
+  setsEl.style.display = 'flex'; setsEl.style.flexDirection = 'column'; setsEl.style.gap = '30px';
+  function toggle(id, card) {
+    const t = document.createElement('div'); t.className = 'toggle'; t.setAttribute('role', 'group'); t.setAttribute('aria-label', id + ' verdict');
+    const k = document.createElement('button'); k.type = 'button'; k.className = 'k'; k.textContent = 'Keep';
+    const r = document.createElement('button'); r.type = 'button'; r.className = 'r'; r.textContent = 'Redo';
+    const sync = () => { k.setAttribute('aria-pressed', String(!redo[id])); r.setAttribute('aria-pressed', String(Boolean(redo[id]))); card.classList.toggle('redo', Boolean(redo[id])); summary(); };
+    k.addEventListener('click', () => { delete redo[id]; store.set('redo', redo); sync(); });
+    r.addEventListener('click', () => { redo[id] = true; store.set('redo', redo); sync(); });
+    t.append(k, r); sync(); return t;
+  }
+  for (const s of data.sets) {
+    const sec = document.createElement('section'); sec.style.display = 'flex'; sec.style.flexDirection = 'column'; sec.style.gap = '12px';
+    sec.innerHTML = `<div class="set-head"><span class="code">${s.code}</span><h2>${s.name}</h2><span class="note">${s.nation}</span><span class="count"></span></div>`;
+    const grid = document.createElement('div'); grid.className = 'grid';
+    for (const f of s.faces) {
+      const card = document.createElement('article'); card.className = 'card';
+      card.innerHTML = `<img class="big" alt="${s.name} ${f.id}" src="${f.img}"><div class="body"><div class="row"><img class="mini" width="48" height="48" alt="" src="${f.img}"><img class="mini" width="24" height="24" alt="" src="${f.img}"><span class="code">${f.id}</span></div><p class="trait"></p></div>`;
+      card.querySelector('.trait').textContent = f.trait;
+      card.querySelector('.body').appendChild(toggle(f.id, card));
+      grid.appendChild(card);
+    }
+    sec.appendChild(grid); setsEl.appendChild(sec);
+  }
+  const room = document.getElementById('room');
+  for (const r of data.room) {
+    const card = document.createElement('article'); card.className = 'card';
+    card.innerHTML = r.id === 'A1' ? `<div class="oak" role="img" aria-label="${r.name}" style="background-image:url(${r.img})"></div>` : `<img class="floor" alt="${r.name}" src="${r.img}">`;
+    const body = document.createElement('div'); body.className = 'body';
+    body.innerHTML = `<div class="row"><span class="code">${r.id}</span><span>${r.name}</span></div>`;
+    body.appendChild(toggle(r.id, card)); card.appendChild(body); room.appendChild(card);
+  }
+  function summary() {
+    const ids = Object.keys(redo).sort();
+    const n = notes.value.trim();
+    const text = `Art verdicts: ${ids.length ? 'keep everything except redo ' + ids.join(', ') : 'keep everything'}.${n ? ' Notes: ' + n : ''}`;
+    sumEl.textContent = text;
+    return text;
+  }
+  notes.addEventListener('input', () => { store.set('notes', notes.value); summary(); });
+  document.getElementById('copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget; const text = summary();
+    try { await navigator.clipboard.writeText(text); b.textContent = 'Copied: paste it in the chat'; }
+    catch { const range = document.createRange(); range.selectNodeContents(sumEl); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); b.textContent = 'Selected: copy it'; }
+    setTimeout(() => { b.textContent = 'Copy verdicts'; }, 2200);
+  });
+  summary();
+})();
+</script>

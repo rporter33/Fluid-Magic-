@@ -1,0 +1,1072 @@
+{
+ "figure": "cinderScout-06",
+ "unit": "cinderScout",
+ "face": "06",
+ "nation": "cinderHorde",
+ "body": "cmdScout",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA (+ cmdA2 fixes and own kits)",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/cs06.front.redress.nb21.png",
+   "sheetSha256": "4d62dcfa008133b310f37c9cbf4174fab7962dfca12940a321cce8597a300669",
+   "body": "stage-b/raw/cmdA/cmdScout.front.body.edit2.nb21.png",
+   "bodySha256": "cd9874fab0ebea2ddcab36e7a8d11fb92993910595052e6f9c6b2e1fb48bfa05",
+   "key": "blue",
+   "keyer": "key.py",
+   "dir": "cs06.front",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.46043,
+    "H": 0.92086
+   },
+   "scaleFrom": {
+    "bodyH": 139,
+    "from_": "body cmdScout.front.body.edit2.nb21.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "cinderScout-06.front.stand",
+     "srcBox": [
+      73,
+      71,
+      180,
+      219
+     ],
+     "srcAnchor": [
+      69.6,
+      145.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.648,
+       "y": 0.968
+      },
+      "H": {
+       "x": 0.6417,
+       "y": 0.968
+      }
+     }
+    },
+    "idle2": {
+     "frame": "cinderScout-06.front.idle2",
+     "srcBox": [
+      336,
+      73,
+      435,
+      219
+     ],
+     "srcAnchor": [
+      62.0,
+      143.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6156,
+       "y": 0.9687
+      },
+      "H": {
+       "x": 0.622,
+       "y": 0.9687
+      }
+     }
+    },
+    "marchA": {
+     "frame": "cinderScout-06.front.marchA",
+     "srcBox": [
+      581,
+      82,
+      693,
+      229
+     ],
+     "srcAnchor": [
+      74.1,
+      144.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6503,
+       "y": 0.9615
+      },
+      "H": {
+       "x": 0.6564,
+       "y": 0.9684
+      }
+     }
+    },
+    "marchB": {
+     "frame": "cinderScout-06.front.marchB",
+     "srcBox": [
+      840,
+      81,
+      956,
+      216
+     ],
+     "srcAnchor": [
+      48.8,
+      132.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4267,
+       "y": 0.9653
+      },
+      "H": {
+       "x": 0.4229,
+       "y": 0.9653
+      }
+     }
+    },
+    "windup": {
+     "frame": "cinderScout-06.front.windup",
+     "srcBox": [
+      92,
+      278,
+      187,
+      478
+     ],
+     "srcAnchor": [
+      55.2,
+      197.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5743,
+       "y": 0.9756
+      },
+      "H": {
+       "x": 0.5806,
+       "y": 0.9756
+      }
+     }
+    },
+    "strike": {
+     "frame": "cinderScout-06.front.strike",
+     "srcBox": [
+      328,
+      342,
+      434,
+      487
+     ],
+     "srcAnchor": [
+      70.5,
+      142.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6561,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.6561,
+       "y": 0.962
+      }
+     }
+    },
+    "follow": {
+     "frame": "cinderScout-06.front.follow",
+     "srcBox": [
+      614,
+      342,
+      685,
+      484
+     ],
+     "srcAnchor": [
+      42.1,
+      139.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5824,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.5908,
+       "y": 0.963
+      }
+     }
+    },
+    "recoil": {
+     "frame": "cinderScout-06.front.recoil",
+     "srcBox": [
+      797,
+      318,
+      987,
+      473
+     ],
+     "srcAnchor": [
+      121.6,
+      152.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6403,
+       "y": 0.9724
+      },
+      "H": {
+       "x": 0.6367,
+       "y": 0.9658
+      }
+     }
+    },
+    "actA": {
+     "frame": "cinderScout-06.front.actA",
+     "srcBox": [
+      111,
+      525,
+      206,
+      729
+     ],
+     "srcAnchor": [
+      32.9,
+      201.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.351,
+       "y": 0.9744
+      },
+      "H": {
+       "x": 0.3549,
+       "y": 0.9744
+      }
+     }
+    },
+    "actB": {
+     "frame": "cinderScout-06.front.actB",
+     "srcBox": [
+      302,
+      589,
+      434,
+      728
+     ],
+     "srcAnchor": [
+      98.3,
+      136.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7343,
+       "y": 0.9639
+      },
+      "H": {
+       "x": 0.7343,
+       "y": 0.9639
+      }
+     }
+    },
+    "fall": {
+     "frame": "cinderScout-06.front.fall",
+     "srcBox": [
+      623,
+      523,
+      762,
+      726
+     ],
+     "srcAnchor": [
+      31.8,
+      200.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.237,
+       "y": 0.9799
+      },
+      "H": {
+       "x": 0.237,
+       "y": 0.9747
+      }
+     }
+    },
+    "deadA": {
+     "frame": "cinderScout-06.front.deadA",
+     "srcBox": [
+      874,
+      575,
+      1022,
+      681
+     ],
+     "srcAnchor": [
+      73.9,
+      77.8
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5004,
+       "y": 0.722
+      },
+      "H": {
+       "x": 0.5004,
+       "y": 0.722
+      }
+     }
+    },
+    "deadB": {
+     "frame": "cinderScout-06.front.deadB",
+     "srcBox": [
+      2,
+      899,
+      162,
+      1017
+     ],
+     "srcAnchor": [
+      96.4,
+      86.8
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5972,
+       "y": 0.7315
+      },
+      "H": {
+       "x": 0.6011,
+       "y": 0.7251
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "cinderScout-06.front.fleeA",
+     "srcBox": [
+      337,
+      863,
+      435,
+      1000
+     ],
+     "srcAnchor": [
+      59.8,
+      134.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6071,
+       "y": 0.9646
+      },
+      "H": {
+       "x": 0.6071,
+       "y": 0.9646
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "cinderScout-06.front.fleeB",
+     "srcBox": [
+      614,
+      866,
+      695,
+      991
+     ],
+     "srcAnchor": [
+      14.6,
+      122.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.198,
+       "y": 0.9529
+      },
+      "H": {
+       "x": 0.1955,
+       "y": 0.9609
+      }
+     }
+    },
+    "cheer": {
+     "frame": "cinderScout-06.front.cheer",
+     "srcBox": [
+      875,
+      791,
+      947,
+      985
+     ],
+     "srcAnchor": [
+      37.3,
+      191.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5193,
+       "y": 0.9774
+      },
+      "H": {
+       "x": 0.5193,
+       "y": 0.972
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "15/16",
+    "failing": [
+     "fall"
+    ],
+    "inherit": 0.935,
+    "variety": true,
+    "marchIoU": 0.475,
+    "rimAfter": 0.0,
+    "edgeDev": 1.83,
+    "keyIn": 0.282,
+    "side": 0.199,
+    "valueBelow": 31.0,
+    "identityDE": 6.4,
+    "consHist": [
+     "deadB",
+     0.784
+    ],
+    "consDE": [
+     "deadB",
+     2.9
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "cs06.front.redress.nb21.png",
+    "marksFront": "yypyyy",
+    "dir": "cs06.front",
+    "ownKit": false,
+    "keyer": "key.py",
+    "body": null
+   },
+   "pass": true
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/cs06.back.redress.r2.nb21.png",
+   "sheetSha256": "ee8d0b0cf3051a49cd8b26ee73a754b6d66a18b55d87a7cc34879baf7d8cda64",
+   "body": "stage-b/raw/cmdA/cmdLevy.back.body.g3pro.png",
+   "bodySha256": "a523cb689b557d97ecf2dfcfa7dc543943b92363db74a47bfad11ace7264fffb",
+   "key": "blue",
+   "keyer": "a2key",
+   "dir": "cs06.back.r2",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.512,
+    "H": 1.024
+   },
+   "scaleFrom": {
+    "bodyH": 125,
+    "from_": "body cmdLevy.back.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "cinderScout-06.back.stand",
+     "srcBox": [
+      79,
+      39,
+      169,
+      173
+     ],
+     "srcAnchor": [
+      40.8,
+      131.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.456,
+       "y": 0.9588
+      },
+      "H": {
+       "x": 0.456,
+       "y": 0.9656
+      }
+     }
+    },
+    "idle2": {
+     "frame": "cinderScout-06.back.idle2",
+     "srcBox": [
+      344,
+      41,
+      440,
+      175
+     ],
+     "srcAnchor": [
+      32.4,
+      131.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3449,
+       "y": 0.9588
+      },
+      "H": {
+       "x": 0.3449,
+       "y": 0.9656
+      }
+     }
+    },
+    "marchA": {
+     "frame": "cinderScout-06.back.marchA",
+     "srcBox": [
+      590,
+      39,
+      684,
+      189
+     ],
+     "srcAnchor": [
+      29.4,
+      147.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3211,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.3211,
+       "y": 0.9654
+      }
+     }
+    },
+    "marchB": {
+     "frame": "cinderScout-06.back.marchB",
+     "srcBox": [
+      841,
+      39,
+      939,
+      181
+     ],
+     "srcAnchor": [
+      24.6,
+      139.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2614,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.2614,
+       "y": 0.9687
+      }
+     }
+    },
+    "windup": {
+     "frame": "cinderScout-06.back.windup",
+     "srcBox": [
+      73,
+      285,
+      164,
+      436
+     ],
+     "srcAnchor": [
+      45.0,
+      148.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4906,
+       "y": 0.9718
+      },
+      "H": {
+       "x": 0.4957,
+       "y": 0.9657
+      }
+     }
+    },
+    "strike": {
+     "frame": "cinderScout-06.back.strike",
+     "srcBox": [
+      331,
+      295,
+      437,
+      445
+     ],
+     "srcAnchor": [
+      31.1,
+      147.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3022,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.2995,
+       "y": 0.9654
+      }
+     }
+    },
+    "follow": {
+     "frame": "cinderScout-06.back.follow",
+     "srcBox": [
+      590,
+      299,
+      682,
+      444
+     ],
+     "srcAnchor": [
+      32.0,
+      142.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3548,
+       "y": 0.9698
+      },
+      "H": {
+       "x": 0.3548,
+       "y": 0.9698
+      }
+     }
+    },
+    "recoil": {
+     "frame": "cinderScout-06.back.recoil",
+     "srcBox": [
+      814,
+      301,
+      994,
+      441
+     ],
+     "srcAnchor": [
+      64.4,
+      137.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3614,
+       "y": 0.9614
+      },
+      "H": {
+       "x": 0.3614,
+       "y": 0.9679
+      }
+     }
+    },
+    "actA": {
+     "frame": "cinderScout-06.back.actA",
+     "srcBox": [
+      59,
+      524,
+      144,
+      686
+     ],
+     "srcAnchor": [
+      60.6,
+      159.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6962,
+       "y": 0.9695
+      },
+      "H": {
+       "x": 0.7039,
+       "y": 0.9695
+      }
+     }
+    },
+    "actB": {
+     "frame": "cinderScout-06.back.actB",
+     "srcBox": [
+      330,
+      550,
+      464,
+      686
+     ],
+     "srcAnchor": [
+      46.4,
+      133.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3487,
+       "y": 0.9597
+      },
+      "H": {
+       "x": 0.3512,
+       "y": 0.9664
+      }
+     }
+    },
+    "fall": {
+     "frame": "cinderScout-06.back.fall",
+     "srcBox": [
+      535,
+      617,
+      664,
+      763
+     ],
+     "srcAnchor": [
+      120.9,
+      143.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.925,
+       "y": 0.9638
+      },
+      "H": {
+       "x": 0.925,
+       "y": 0.9638
+      }
+     }
+    },
+    "deadA": {
+     "frame": "cinderScout-06.back.deadA",
+     "srcBox": [
+      780,
+      615,
+      918,
+      762
+     ],
+     "srcAnchor": [
+      69.1,
+      108.5
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4983,
+       "y": 0.7344
+      },
+      "H": {
+       "x": 0.5018,
+       "y": 0.7297
+      }
+     }
+    },
+    "deadB": {
+     "frame": "cinderScout-06.back.deadB",
+     "srcBox": [
+      83,
+      791,
+      244,
+      903
+     ],
+     "srcAnchor": [
+      72.5,
+      82.2
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4538,
+       "y": 0.7303
+      },
+      "H": {
+       "x": 0.4511,
+       "y": 0.7241
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "cinderScout-06.back.fleeA",
+     "srcBox": [
+      330,
+      809,
+      429,
+      959
+     ],
+     "srcAnchor": [
+      28.4,
+      147.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2932,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.296,
+       "y": 0.9654
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "cinderScout-06.back.fleeB",
+     "srcBox": [
+      587,
+      810,
+      667,
+      952
+     ],
+     "srcAnchor": [
+      12.4,
+      139.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1709,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.1709,
+       "y": 0.9687
+      }
+     }
+    },
+    "cheer": {
+     "frame": "cinderScout-06.back.cheer",
+     "srcBox": [
+      836,
+      776,
+      917,
+      942
+     ],
+     "srcAnchor": [
+      51.7,
+      163.0
+     ],
+     "atlas": {
+      "S": "cinderScout.S.0.png",
+      "H": "cinderScout.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6388,
+       "y": 0.9708
+      },
+      "H": {
+       "x": 0.6315,
+       "y": 0.9708
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 2,
+    "cells": "14/16",
+    "failing": [
+     "deadB",
+     "fall"
+    ],
+    "inherit": 0.837,
+    "variety": true,
+    "marchIoU": 0.528,
+    "rimAfter": 0.0,
+    "edgeDev": 2.34,
+    "keyIn": 0.286,
+    "side": 0.147,
+    "valueBelow": 27.9,
+    "identityDE": 5.6,
+    "consHist": [
+     "fleeB",
+     0.866
+    ],
+    "consDE": [
+     "deadA",
+     1.8
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "cs06.back.redress.r2.nb21.png",
+    "marksFront": null,
+    "eye2": {
+     "facing": "ok",
+     "note": "every cell faces away (stand, idle2, actA and cheer show the back of the hood and the cape; the levy back body faces away in all 16 cells)"
+    },
+    "dir": "cs06.back.r2",
+    "ownKit": false,
+    "keyer": "a2key",
+    "body": "cmdLevy.back.body.g3pro.png"
+   },
+   "pass": true
+  }
+ },
+ "marks": [
+  {
+   "mark": "the close charcoal hood held tight to the head by a narrow band of dark iron across the brow",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "her straight-cut black fringe and her uncovered broad face",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the three short black soot stripes slanting across her cheek like claw marks",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the dark scarf wound once around the neck with its long tail thrown back over one shoulder",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the plain leather strap across the chest, and no shoulder plates",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the long knife of dark iron",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the close charcoal hood held tight to the head by a narrow band of dark iron across the brow",
+    "tick": "y"
+   },
+   {
+    "mark": "her straight-cut black fringe and her uncovered broad face",
+    "tick": "y"
+   },
+   {
+    "mark": "the three short black soot stripes slanting across her cheek like claw marks",
+    "tick": "p"
+   },
+   {
+    "mark": "the dark scarf wound once around the neck with its long tail thrown back over one shoulder",
+    "tick": "y"
+   },
+   {
+    "mark": "the plain leather strap across the chest, and no shoulder plates",
+    "tick": "y"
+   },
+   {
+    "mark": "the long knife of dark iron",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "cs06",
+  "weapon": "the long knife of dark iron",
+  "weaponChanged": false,
+  "mantle": null,
+  "note": "unchanged"
+ }
+}

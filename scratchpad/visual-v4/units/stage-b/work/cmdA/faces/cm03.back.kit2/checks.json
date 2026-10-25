@@ -1,0 +1,292 @@
+{
+ "figure": "cmdCaster",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.647,
+  "iouMirrored": 0.621,
+  "aspectRatio": 0.771,
+  "headDx": -0.052,
+  "guideHeadDx": 0.127,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.685,
+  "marchLegsIoU": 0.662,
+  "mostAlike": [
+   "marchA~strike",
+   0.694
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.994,
+   "marchA": 1.006,
+   "marchB": 0.96
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 12.267,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.17,
+  "pass_": true,
+  "edgeDevThickPct": 1.29,
+  "deviatingChromaShift": 0.008
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "fall",
+   0.861
+  ],
+  "maxDE": [
+   "fall",
+   3.7
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.647,
+    0.027
+   ],
+   "idle2": [
+    0.591,
+    0.002
+   ],
+   "marchA": [
+    0.63,
+    0.045
+   ],
+   "marchB": [
+    0.582,
+    0.004
+   ],
+   "windup": [
+    0.64,
+    0.005
+   ],
+   "strike": [
+    0.571,
+    0.086
+   ],
+   "follow": [
+    0.58,
+    0.005
+   ],
+   "recoil": [
+    0.466,
+    -0.001
+   ],
+   "actA": [
+    0.658,
+    0.045
+   ],
+   "actB": [
+    0.703,
+    0.066
+   ],
+   "fall": [
+    0.496,
+    0.477
+   ],
+   "deadA": [
+    0.355,
+    0.3
+   ],
+   "deadB": [
+    0.593,
+    0.282
+   ],
+   "fleeA": [
+    0.569,
+    0.038
+   ],
+   "fleeB": [
+    0.604,
+    0.121
+   ],
+   "cheer": [
+    0.694,
+    0.05
+   ]
+  },
+  "medianIoU": 0.592,
+  "medianMargin": 0.045,
+  "follow": "13/16",
+  "followShare": 0.81
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.674,
+    0.035,
+    0.846
+   ],
+   "idle2": [
+    0.74,
+    0.048,
+    0.86
+   ],
+   "marchA": [
+    0.703,
+    0.098,
+    0.873
+   ],
+   "marchB": [
+    0.622,
+    0.047,
+    0.882
+   ],
+   "windup": [
+    0.65,
+    0.01,
+    0.865
+   ],
+   "strike": [
+    0.665,
+    0.194,
+    0.854
+   ],
+   "follow": [
+    0.592,
+    -0.003,
+    0.812
+   ],
+   "recoil": [
+    0.581,
+    0.014,
+    0.875
+   ],
+   "actA": [
+    0.648,
+    0.041,
+    0.867
+   ],
+   "actB": [
+    0.593,
+    0.042,
+    0.855
+   ],
+   "fall": [
+    0.498,
+    0.481,
+    0.489
+   ],
+   "deadA": [
+    0.368,
+    0.313,
+    0.378
+   ],
+   "deadB": [
+    0.575,
+    0.249,
+    0.604
+   ],
+   "fleeA": [
+    0.692,
+    0.187,
+    0.834
+   ],
+   "fleeB": [
+    0.591,
+    0.147,
+    0.757
+   ],
+   "cheer": [
+    0.693,
+    0.057,
+    0.871
+   ]
+  },
+  "follow": "13/16",
+  "followN": 13,
+  "failing": [
+   "deadA",
+   "fall",
+   "follow"
+  ],
+  "medianIoU": 0.635,
+  "inheritMedian": 0.855,
+  "inheritMin": [
+   0.378,
+   "deadA"
+  ]
+ },
+ "rim": {
+  "beforeMax": 0.7,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.18,
+  "worstBelow": 24.8,
+  "grounds": {
+   "plains": {
+    "share": 0.18,
+    "below": 33.0
+   },
+   "farmland": {
+    "share": 0.204,
+    "below": 32.6
+   },
+   "swamp": {
+    "share": 0.15,
+    "below": 24.8
+   },
+   "forest": {
+    "share": 0.188,
+    "below": 25.0
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 7.1,
+  "upperThirdLab": [
+   21.9,
+   -1.1,
+   5.8
+  ],
+  "portraitLab": [
+   29.2,
+   2.0,
+   7.9
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": false,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": false,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cm03.back.redress.kit2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdCaster.back.body.edit.nb21.png",
+  "ownKit": true,
+  "kit": {
+   "face": "cm03",
+   "weapon": "the tall staff of blackened wood with a hooked top, a small iron cage with a dull ember hanging beneath it",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "cm03.back.redress.kit2"
+ }
+}

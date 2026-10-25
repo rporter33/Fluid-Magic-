@@ -1,0 +1,4 @@
+(async () => { const H = () => { const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let v = 0x811c9dc5; for (let k = 0; k < d.length; k++) { v ^= d[k]; v = Math.imul(v, 0x01000193); } return (v >>> 0).toString(16); };
+  view.reduced = true; const sl = (ms) => new Promise((r) => setTimeout(r, ms)), ready = async () => { if (typeof p4SeasonReady === 'function') await p4SeasonReady(); else await sl(300); };
+  const st = async () => { await ready(); hoverProv = -1; RL_LINK.prov = -1; fit(); RCK = null; draw(); return H(); }, mid = () => window.__mock.setScale(140 / MED_DIAM, cent[greenCap][0], cent[greenCap][1]); const out = {};
+  setMonth(40); out.a = await st(); mid(); out.midA = H(); setMonth(64); setMonth(40); out.b = await st(); mid(); out.midB = H(); setMonth(40); out.c = await st(); out.d = await st(); return out; })()

@@ -1,0 +1,288 @@
+{
+ "figure": "treant-04",
+ "unit": "treant",
+ "face": "04",
+ "nation": "thornwood",
+ "key": "magenta",
+ "body": "treant",
+ "portrait": "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/04.webp",
+ "views": {
+  "back": {
+   "idle": "frames/treant-04.back/treant-04.back.idle.png",
+   "heightWu": 95.26,
+   "anchorPx": [
+    220.2,
+    1124.0
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-04.back.idle",
+     "shadow": "treant-04.back.idle.shadow",
+     "scale": 0.1668,
+     "w": 111,
+     "h": 193,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-04.back.idle",
+     "shadow": "treant-04.back.idle.shadow",
+     "scale": 0.3337,
+     "w": 223,
+     "h": 386,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant04.back.redress.v2.nb21.png",
+   "sha256": "b8badd09302c3f245f6a287af312a497974139bf4343c975cf45627f8253995f",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant04.back.redress.v2",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/creatures/bases/treant01.back.norump.base1k.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "keycast magthin: key-cast pixels max 1.18% -> 0.74% of a frame; magenta edge pass: 10331 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.0118,
+    "castShareAfter": 0.0074
+   },
+   "otherAttempts": [
+    "treant04.back.redress",
+    "treant04.back.redress.r2"
+   ],
+   "checks": {
+    "camera": {
+     "iou": 0.628,
+     "iouMirrored": 0.469,
+     "aspectRatio": 1.225,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      45.5,
+      1.9,
+      10.4
+     ],
+     "portraitLab": [
+      42.9,
+      2.1,
+      11.2
+     ],
+     "dE2000": 2.4,
+     "wholeDE2000": 8.7,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 36.8,
+      "groundL": 67.7,
+      "below": 31.0
+     },
+     "farmland": {
+      "bodyL": 36.7,
+      "groundL": 67.3,
+      "below": 30.6
+     },
+     "swamp": {
+      "bodyL": 36.4,
+      "groundL": 58.5,
+      "below": 22.1
+     },
+     "forest": {
+      "bodyL": 36.4,
+      "groundL": 58.7,
+      "below": 22.3
+     },
+     "worstBelow": 22.1,
+     "minContrast": 22.1,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 16.3,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 2.953,
+     "keyInUnitPct": 0.009,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.94,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     652,
+     1142
+    ],
+    "oversampleAtH": 3.0
+   },
+   "identity": {
+    "marks": {
+     "white birch bark, black lenticels and patches": true,
+     "top forked into two stems": true,
+     "drooping dark twigs, yellow-brown leaves": "partly",
+     "almond knot-scar eyes, thin scar": "hidden in this view",
+     "dark moss only on the shoulders": true
+    },
+    "note": "no-rump back (re-made from the straight-trunk Treant 01 back)",
+    "by": "stage C creatures agent, 4x crops (review/identity-treant-04.png)"
+   }
+  },
+  "front": {
+   "idle": "frames/treant-04.front/treant-04.front.idle.png",
+   "heightWu": 100.6,
+   "anchorPx": [
+    409.7,
+    1060.2
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-04.front.idle",
+     "shadow": "treant-04.front.idle.shadow",
+     "scale": 0.1777,
+     "w": 112,
+     "h": 204,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-04.front.idle",
+     "shadow": "treant-04.front.idle.shadow",
+     "scale": 0.3555,
+     "w": 223,
+     "h": 407,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant04.front.redress.nb21.png",
+   "sha256": "fd5fb215cc5acf2d1b72d055f0895060d3c3979361d264ce07024122773e9b21",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant04.front.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "stage-c/raw/creatures/treant01.front.guide.r2.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "keycast magthin: key-cast pixels max 0.74% -> 0.30% of a frame; magenta edge pass: 4777 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.0074,
+    "castShareAfter": 0.003
+   },
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.627,
+     "iouMirrored": 0.498,
+     "aspectRatio": 1.225,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      44.0,
+      1.7,
+      10.2
+     ],
+     "portraitLab": [
+      42.9,
+      2.1,
+      11.2
+     ],
+     "dE2000": 1.3,
+     "wholeDE2000": 4.1,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 41.5,
+      "groundL": 67.7,
+      "below": 26.3
+     },
+     "farmland": {
+      "bodyL": 41.5,
+      "groundL": 67.3,
+      "below": 25.8
+     },
+     "swamp": {
+      "bodyL": 41.0,
+      "groundL": 58.5,
+      "below": 17.4
+     },
+     "forest": {
+      "bodyL": 41.0,
+      "groundL": 58.7,
+      "below": 17.7
+     },
+     "worstBelow": 17.4,
+     "minContrast": 17.4,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 11.0,
+     "afterMax": 0.1
+    },
+    "fringe": {
+     "spillEdgePct": 3.962,
+     "keyInUnitPct": 0.031,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.89,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     613,
+     1132
+    ],
+    "oversampleAtH": 2.81
+   },
+   "identity": {
+    "marks": {
+     "white birch bark, black lenticels and patches": true,
+     "top forked into two stems": true,
+     "drooping dark twigs, yellow-brown leaves": "partly",
+     "almond knot-scar eyes, thin scar": true,
+     "dark moss only on the shoulders": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-treant-04.png)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

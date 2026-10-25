@@ -1,0 +1,255 @@
+{
+ "figure": "thornMilitia",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.76,
+  "iouMirrored": 0.679,
+  "aspectRatio": 0.977,
+  "headDx": -0.089,
+  "guideHeadDx": -0.05,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.568,
+  "marchLegsIoU": 0.435,
+  "mostAlike": [
+   "windup~recoil",
+   0.684
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.137,
+   "marchA": 1.031,
+   "marchB": 0.924
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 0.209,
+  "keyInUnitPct": 0.03,
+  "fringePct": 0.0,
+  "edgeDevPct": 0.0,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.393,
+  "histMin": [
+   "follow",
+   0.738
+  ],
+  "maxDE": [
+   "fleeB",
+   4.9
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.818,
+    "de": 2.9,
+    "cloth": 0.299
+   },
+   "deadB": {
+    "hist": 0.839,
+    "de": 1.3,
+    "cloth": 0.368
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.76,
+    0.082
+   ],
+   "idle2": [
+    0.634,
+    0.497
+   ],
+   "marchA": [
+    0.716,
+    0.053
+   ],
+   "marchB": [
+    0.791,
+    0.32
+   ],
+   "windup": [
+    0.761,
+    0.213
+   ],
+   "strike": [
+    0.832,
+    0.576
+   ],
+   "follow": [
+    0.819,
+    0.442
+   ],
+   "brace": [
+    0.822,
+    0.392
+   ],
+   "recoil": [
+    0.824,
+    0.287
+   ],
+   "fall": [
+    0.743,
+    0.536
+   ],
+   "deadA": [
+    0.724,
+    0.447
+   ],
+   "deadB": [
+    0.808,
+    0.783
+   ],
+   "fleeA": [
+    0.847,
+    0.227
+   ],
+   "fleeB": [
+    0.79,
+    0.549
+   ],
+   "cheer": [
+    0.729,
+    0.12
+   ]
+  },
+  "medianIoU": 0.79,
+  "medianMargin": 0.392,
+  "follow": "15/15",
+  "followShare": 1.0
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.776,
+    0.094
+   ],
+   "idle2": [
+    0.59,
+    0.465
+   ],
+   "marchA": [
+    0.746,
+    0.081
+   ],
+   "marchB": [
+    0.798,
+    0.341
+   ],
+   "windup": [
+    0.778,
+    0.212
+   ],
+   "strike": [
+    0.809,
+    0.544
+   ],
+   "follow": [
+    0.815,
+    0.45
+   ],
+   "brace": [
+    0.823,
+    0.399
+   ],
+   "recoil": [
+    0.798,
+    0.243
+   ],
+   "fall": [
+    0.639,
+    0.413
+   ],
+   "fleeA": [
+    0.861,
+    0.241
+   ],
+   "fleeB": [
+    0.79,
+    0.549
+   ],
+   "cheer": [
+    0.731,
+    0.098
+   ]
+  },
+  "follow": "13/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.008,
+   "marchA": 1.023,
+   "marchB": 0.914
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 1.9,
+  "afterMax": 1.4
+ },
+ "side": {
+  "neutral": {
+   "share": 0.333,
+   "worstBelow": 24.0,
+   "below": {
+    "plains": 32.3,
+    "farmland": 32.0,
+    "swamp": 24.0,
+    "forest": 24.3
+   }
+  },
+  "sideKeyline": {
+   "share": 0.516,
+   "worstBelow": 22.7,
+   "below": {
+    "plains": 31.1,
+    "farmland": 30.8,
+    "swamp": 22.7,
+    "forest": 22.9
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "thornMilitia.front.brace.png": 0.172,
+  "thornMilitia.front.cheer.png": 0.29,
+  "thornMilitia.front.deadA.png": 0.28,
+  "thornMilitia.front.deadB.png": 0.358,
+  "thornMilitia.front.dropped.png": 0.0,
+  "thornMilitia.front.fall.png": 0.234,
+  "thornMilitia.front.fleeA.png": 0.191,
+  "thornMilitia.front.fleeB.png": 0.128,
+  "thornMilitia.front.follow.png": 0.136,
+  "thornMilitia.front.idle2.png": 0.387,
+  "thornMilitia.front.marchA.png": 0.262,
+  "thornMilitia.front.marchB.png": 0.19,
+  "thornMilitia.front.recoil.png": 0.326,
+  "thornMilitia.front.stand.png": 0.357,
+  "thornMilitia.front.strike.png": 0.144,
+  "thornMilitia.front.windup.png": 0.323
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/c.tm.front.from-ashMilitia.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": true
+}

@@ -1,0 +1,253 @@
+{
+ "figure": "longbowHunter",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.677,
+  "iouMirrored": 0.576,
+  "aspectRatio": 1.803,
+  "headDx": -0.007,
+  "guideHeadDx": -0.066,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.554,
+  "marchLegsIoU": 0.506,
+  "mostAlike": [
+   "draw~loose",
+   0.796
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.025,
+   "marchB": 0.963
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 8.531,
+  "keyInUnitPct": 0.312,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.52,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.476,
+  "histMin": [
+   "fleeA",
+   0.815
+  ],
+  "maxDE": [
+   "fleeA",
+   8.3
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.862,
+    "de": 7.3,
+    "cloth": 0.392
+   },
+   "deadB": {
+    "hist": 0.866,
+    "de": 6.7,
+    "cloth": 0.54
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.677,
+    0.101
+   ],
+   "marchA": [
+    0.708,
+    0.21
+   ],
+   "marchB": [
+    0.688,
+    0.085
+   ],
+   "nock": [
+    0.703,
+    0.092
+   ],
+   "draw": [
+    0.61,
+    -0.028
+   ],
+   "loose": [
+    0.645,
+    -0.055
+   ],
+   "windup": [
+    0.688,
+    0.112
+   ],
+   "strike": [
+    0.756,
+    0.311
+   ],
+   "recoil": [
+    0.519,
+    0.132
+   ],
+   "fall": [
+    0.508,
+    0.241
+   ],
+   "deadA": [
+    0.714,
+    0.366
+   ],
+   "deadB": [
+    0.757,
+    0.619
+   ],
+   "fleeA": [
+    0.747,
+    0.189
+   ],
+   "fleeB": [
+    0.709,
+    0.291
+   ],
+   "cheer": [
+    0.635,
+    0.006
+   ]
+  },
+  "medianIoU": 0.688,
+  "medianMargin": 0.132,
+  "follow": "11/15",
+  "followShare": 0.73
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.608,
+    0.049
+   ],
+   "marchA": [
+    0.69,
+    0.192
+   ],
+   "marchB": [
+    0.648,
+    0.114
+   ],
+   "nock": [
+    0.699,
+    0.09
+   ],
+   "draw": [
+    0.681,
+    -0.006
+   ],
+   "loose": [
+    0.599,
+    -0.009
+   ],
+   "windup": [
+    0.729,
+    0.13
+   ],
+   "strike": [
+    0.755,
+    0.309
+   ],
+   "recoil": [
+    0.669,
+    0.262
+   ],
+   "fall": [
+    0.569,
+    0.292
+   ],
+   "fleeA": [
+    0.75,
+    0.191
+   ],
+   "fleeB": [
+    0.705,
+    0.291
+   ],
+   "cheer": [
+    0.681,
+    0.032
+   ]
+  },
+  "follow": "11/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.013,
+   "marchB": 0.968
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 13.4,
+  "afterMax": 0.9
+ },
+ "side": {
+  "neutral": {
+   "share": 0.341,
+   "worstBelow": 31.5,
+   "below": {
+    "plains": 40.0,
+    "farmland": 39.6,
+    "swamp": 31.5,
+    "forest": 31.7
+   }
+  },
+  "sideKeyline": {
+   "share": 0.51,
+   "worstBelow": 30.1,
+   "below": {
+    "plains": 38.8,
+    "farmland": 38.4,
+    "swamp": 30.1,
+    "forest": 30.3
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "longbowHunter.front.cheer.png": 0.418,
+  "longbowHunter.front.deadA.png": 0.368,
+  "longbowHunter.front.deadB.png": 0.52,
+  "longbowHunter.front.draw.png": 0.411,
+  "longbowHunter.front.dropped.png": 0.0,
+  "longbowHunter.front.fall.png": 0.405,
+  "longbowHunter.front.fleeA.png": 0.321,
+  "longbowHunter.front.fleeB.png": 0.387,
+  "longbowHunter.front.loose.png": 0.417,
+  "longbowHunter.front.marchA.png": 0.473,
+  "longbowHunter.front.marchB.png": 0.442,
+  "longbowHunter.front.nock.png": 0.437,
+  "longbowHunter.front.recoil.png": 0.546,
+  "longbowHunter.front.stand.png": 0.461,
+  "longbowHunter.front.strike.png": 0.365,
+  "longbowHunter.front.windup.png": 0.509
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/t2a.longbowHunter.front.dress.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

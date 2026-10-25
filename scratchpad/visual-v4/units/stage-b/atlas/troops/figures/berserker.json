@@ -1,0 +1,410 @@
+{
+ "figure": "berserker",
+ "unit": "berserker",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "A Berserker: a huge bare-chested ash-grey brute, broader than the other warriors, no shirt and no armour; his chest, belly, shoulders and upper back are daubed with thick dull ember-orange war paint in broad solid smeared patches (paint on his skin, not a garment), with black soot handprints over it; wild matted black hair bound up with dull ember-orange rags; a long ragged dull ember-orange kilt from the waist to the knees, belted with iron; a strip of black bear fur over one shoulder; iron arm rings; a massive two-handed jagged great axe with a crescent blade. No helmet, no shield, no horns. In the brace cell he beats his chest and roars instead.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4275,
+     "standPx": 56,
+     "frames": [
+      "berserker.back.stand",
+      "berserker.back.stand.white",
+      "berserker.back.idle2",
+      "berserker.back.marchA",
+      "berserker.back.marchB",
+      "berserker.back.windup",
+      "berserker.back.strike",
+      "berserker.back.follow",
+      "berserker.back.brace",
+      "berserker.back.recoil",
+      "berserker.back.recoil.white",
+      "berserker.back.fall",
+      "berserker.back.deadA",
+      "berserker.back.deadB",
+      "berserker.back.fleeA",
+      "berserker.back.fleeB",
+      "berserker.back.cheer",
+      "berserker.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.855,
+     "standPx": 112,
+     "frames": [
+      "berserker.back.stand",
+      "berserker.back.stand.white",
+      "berserker.back.idle2",
+      "berserker.back.marchA",
+      "berserker.back.marchB",
+      "berserker.back.windup",
+      "berserker.back.strike",
+      "berserker.back.follow",
+      "berserker.back.brace",
+      "berserker.back.recoil",
+      "berserker.back.recoil.white",
+      "berserker.back.fall",
+      "berserker.back.deadA",
+      "berserker.back.deadB",
+      "berserker.back.fleeA",
+      "berserker.back.fleeB",
+      "berserker.back.cheer",
+      "berserker.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r2.berserker.back.dress.nb21.png",
+   "sha256": "21ef3d25f0de7c25e26b871342bca2017dabcebd7fff37ef20eded066958c496",
+   "model": "gemini-nano-banana-2.1",
+   "job": "berserker.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/r3/cw.back.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/06.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "checks": {
+    "cameraAll": "8/15",
+    "cells": {
+     "stand": [
+      0.606,
+      0.11
+     ],
+     "idle2": [
+      0.727,
+      0.13
+     ],
+     "marchA": [
+      0.636,
+      0.171
+     ],
+     "marchB": [
+      0.672,
+      0.219
+     ],
+     "windup": [
+      0.501,
+      0.004
+     ],
+     "strike": [
+      0.369,
+      -0.107
+     ],
+     "follow": [
+      0.311,
+      -0.266
+     ],
+     "brace": [
+      0.552,
+      0.096
+     ],
+     "recoil": [
+      0.586,
+      0.03
+     ],
+     "fall": [
+      0.604,
+      0.578
+     ],
+     "deadA": [
+      0.414,
+      0.393
+     ],
+     "deadB": [
+      0.046,
+      0.02
+     ],
+     "fleeA": [
+      0.355,
+      0.024
+     ],
+     "fleeB": [
+      0.336,
+      -0.173
+     ],
+     "cheer": [
+      0.686,
+      0.089
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.609,
+     "marchLegsIoU": 0.519,
+     "mostAlike": [
+      "marchA~strike",
+      0.621
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.0,
+      "marchA": 1.137,
+      "marchB": 1.069
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.214,
+     "histMin": [
+      "fall",
+      0.692
+     ],
+     "maxDE": [
+      "marchB",
+      5.6
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 20.6,
+     "afterMax": 0.5
+    },
+    "side": {
+     "neutral": {
+      "share": 0.116,
+      "worstBelow": 23.4,
+      "below": {
+       "plains": 31.7,
+       "farmland": 31.3,
+       "swamp": 23.4,
+       "forest": 23.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.38,
+      "worstBelow": 20.4,
+      "below": {
+       "plains": 28.9,
+       "farmland": 28.5,
+       "swamp": 20.4,
+       "forest": 20.7
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 10.859,
+     "keyInUnitPct": 0.075,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.94,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4516,
+     "standPx": 56,
+     "frames": [
+      "berserker.front.stand",
+      "berserker.front.stand.white",
+      "berserker.front.idle2",
+      "berserker.front.marchA",
+      "berserker.front.marchB",
+      "berserker.front.windup",
+      "berserker.front.strike",
+      "berserker.front.follow",
+      "berserker.front.brace",
+      "berserker.front.recoil",
+      "berserker.front.recoil.white",
+      "berserker.front.fall",
+      "berserker.front.deadA",
+      "berserker.front.deadB",
+      "berserker.front.fleeA",
+      "berserker.front.fleeB",
+      "berserker.front.cheer",
+      "berserker.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.9032,
+     "standPx": 112,
+     "frames": [
+      "berserker.front.stand",
+      "berserker.front.stand.white",
+      "berserker.front.idle2",
+      "berserker.front.marchA",
+      "berserker.front.marchB",
+      "berserker.front.windup",
+      "berserker.front.strike",
+      "berserker.front.follow",
+      "berserker.front.brace",
+      "berserker.front.recoil",
+      "berserker.front.recoil.white",
+      "berserker.front.fall",
+      "berserker.front.deadA",
+      "berserker.front.deadB",
+      "berserker.front.fleeA",
+      "berserker.front.fleeB",
+      "berserker.front.cheer",
+      "berserker.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/t2a.berserker.front.mixed.nb21.png",
+   "sha256": "d125f8a0344c9ff3f8bb4ab507b85c6fe72a2ab7c737c86e496f43281b2448ca",
+   "model": "gemini-nano-banana-2.1",
+   "job": "berserker.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/bk.front.mixed.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/ashChieftain/06.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "14/15",
+    "cells": {
+     "stand": [
+      0.771,
+      0.141
+     ],
+     "idle2": [
+      0.602,
+      0.472
+     ],
+     "marchA": [
+      0.783,
+      0.174
+     ],
+     "marchB": [
+      0.794,
+      0.257
+     ],
+     "windup": [
+      0.564,
+      0.088
+     ],
+     "strike": [
+      0.276,
+      0.149
+     ],
+     "follow": [
+      0.728,
+      0.267
+     ],
+     "brace": [
+      0.796,
+      0.248
+     ],
+     "recoil": [
+      0.817,
+      0.26
+     ],
+     "fall": [
+      0.727,
+      0.48
+     ],
+     "deadA": [
+      0.801,
+      0.419
+     ],
+     "deadB": [
+      0.742,
+      0.707
+     ],
+     "fleeA": [
+      0.751,
+      0.217
+     ],
+     "fleeB": [
+      0.557,
+      0.135
+     ],
+     "cheer": [
+      0.707,
+      0.13
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.594,
+     "marchLegsIoU": 0.5,
+     "mostAlike": [
+      "stand~marchA",
+      0.78
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.04,
+      "marchA": 1.04,
+      "marchB": 0.984
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.205,
+     "histMin": [
+      "follow",
+      0.803
+     ],
+     "maxDE": [
+      "idle2",
+      2.4
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 22.8,
+     "afterMax": 0.2
+    },
+    "side": {
+     "neutral": {
+      "share": 0.096,
+      "worstBelow": 26.9,
+      "below": {
+       "plains": 35.6,
+       "farmland": 35.2,
+       "swamp": 26.9,
+       "forest": 27.1
+      }
+     },
+     "sideKeyline": {
+      "share": 0.317,
+      "worstBelow": 24.1,
+      "below": {
+       "plains": 32.9,
+       "farmland": 32.5,
+       "swamp": 24.1,
+       "forest": 24.4
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 10.587,
+     "keyInUnitPct": 0.234,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.9,
+     "pass_": true
+    }
+   },
+   "replaces": {
+    "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.berserker.front.g3pro.png",
+    "status": "reported",
+    "failed": [
+     "side"
+    ]
+   },
+   "madeBy": "stage B troops2 (stage-b/work/troops2)"
+  }
+ },
+ "approved": null
+}

@@ -1,0 +1,2 @@
+[{"open":[1920,1080],"query":"?paused=1"},
+ {"eval":"(() => { const T = window.__battle.game.stage.T; const wf = T.F.find((f) => T.G[f.g].g.unit === 'greatWyrm'); return { strikes: wf.strikes.map((s) => [s.t, s.item && s.item.b.outcome]), m: window.__battle.moments(), dur: T.duration }; })()","name":"dbg"}]

@@ -1,0 +1,278 @@
+{
+ "stage": "C creatures (owner review 2: standing in the game, no animation)",
+ "date": "2026-10-24",
+ "formats": {
+  "keyPose": "troop format: <family>-<S|H>.0.png/.json Pixi spritesheets (frames: frame, anchor, sourceSize), <family>-<S|H>.var.json, figures/<figure>.json (views[view].atlas[tier].frames by name \"<figure>.<view>.<pose>\", white flash frames \"<...>.white\"), frames/<figure>.<view>/ (rim-fixed frames + slicer JSON for bundle.py's calpack.frames_of path)",
+  "bigBody": "Salamander format: frames/<figure>.<view>/<figure>.<view>.idle.png + .json (height, slicer anchor, maquette anchor, heightWu), baked tier cutouts on <family>-<S|H>.0.png as \"<figure>.<view>.idle\" and \"<figure>.<view>.idle.shadow\" (keyline, black 42% shadow blurred 5 wu), figures/<figure>.json (anchorPx, heightWu, snoutPx and mouthWu for the Salamanders)"
+ },
+ "tiers": {
+  "S": "0.5 wu/px; tier S keyline in the side's dark cloth at 75% for units with a side (Fire Sprite Cinder, Hornet/Oakheart/Wolf Rider Thornwood, Ash Rider Cinder), neutral for the Wolf",
+  "H": "0.25 wu/px; neutral keyline #1C1A17 60%"
+ },
+ "families": {
+  "ashRider": {
+   "H": "ashRider-H.0.png",
+   "S": "ashRider-S.0.png"
+  },
+  "fireSprite": {
+   "H": "fireSprite-H.0.png",
+   "S": "fireSprite-S.0.png"
+  },
+  "giant": {
+   "H": "giant-H.0.png",
+   "S": "giant-S.0.png"
+  },
+  "hornetSwarm": {
+   "H": "hornetSwarm-H.0.png",
+   "S": "hornetSwarm-S.0.png"
+  },
+  "oakheart": {
+   "H": "oakheart-H.0.png",
+   "S": "oakheart-S.0.png"
+  },
+  "salamander": {
+   "H": "salamander-H.0.png",
+   "S": "salamander-S.0.png"
+  },
+  "treant": {
+   "H": "treant-H.0.png",
+   "S": "treant-S.0.png"
+  },
+  "wolf": {
+   "H": "wolf-H.0.png",
+   "S": "wolf-S.0.png"
+  },
+  "wolfRider": {
+   "H": "wolfRider-H.0.png",
+   "S": "wolfRider-S.0.png"
+  }
+ },
+ "figures": {
+  "ashRider": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "fringe"
+    ],
+    "job": "ashRider.back.fill"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "side",
+     "fringe"
+    ],
+    "job": "ashRider.front.cfix.r2"
+   }
+  },
+  "fireSprite": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "rim",
+     "fringe"
+    ],
+    "job": "fireSprite.back.paint.r2"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "job": "fireSprite.front.paint.r2"
+   }
+  },
+  "giant-01": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "giant01.back.guide"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "giant01.front.guide"
+   }
+  },
+  "giant-02": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "giant02.back.redress"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "giant02.front.redress"
+   }
+  },
+  "hornetSwarm": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "job": "hornetSwarm.back.cfix"
+   }
+  },
+  "oakheart": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "job": "oakheart.back.cfix.r2"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "side"
+    ],
+    "job": "oakheart.front.cfix.r2"
+   }
+  },
+  "salamander-02": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal02.back.redress"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal02.front.redress"
+   }
+  },
+  "salamander-03": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal03.back.redress"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal03.front.redress"
+   }
+  },
+  "salamander-04": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal04.back.redress"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "sal04.front.redress"
+   }
+  },
+  "treant-01": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "treant01.back.norump"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "treant01.front.guide.r2"
+   }
+  },
+  "treant-02": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "job": "treant02.back.cfix"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "fringe"
+    ],
+    "job": "treant02.front.redress"
+   }
+  },
+  "treant-03": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "treant03.back.redress.v2"
+   },
+   "front": {
+    "status": "pass",
+    "failed": [],
+    "job": "treant03.front.redress"
+   }
+  },
+  "treant-04": {
+   "back": {
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "job": "treant04.back.cfix.r2"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "job": "treant04.front.cfix.r2"
+   }
+  },
+  "wolf": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "wolf.back.paint"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "job": "wolf.front.fill"
+   }
+  },
+  "wolfRider": {
+   "back": {
+    "status": "pass",
+    "failed": [],
+    "job": "wolfRider.back.paint.r2"
+   },
+   "front": {
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "job": "wolfRider.front.harness"
+   },
+   "frontKept": {
+    "status": "reported",
+    "failed": [
+     "side"
+    ],
+    "job": "wolfRider.front.kept"
+   }
+  }
+ },
+ "review": {
+  "contact": "stage-c/work/creatures/review/contact-<figure>.png",
+  "identity": "stage-c/work/creatures/review/identity-<figure>.png",
+  "lineup": "stage-c/work/creatures/review/lineup-tierS.png"
+ },
+ "notes": [
+  "wolfRider has three views: back (new, passes), front (stage C edit of the owner-kept test with the War Wolf A tack and coat), frontKept (the owner-kept test as it was); the bundler should map \"front\" to the one the owner picks",
+  "reported views are flagged stand-ins (status \"reported\", failedGates named); nothing is approved until owner review 2"
+ ],
+ "writtenBy": "cpack.py write_index() from figures/*.json (stage C fix 3)"
+}

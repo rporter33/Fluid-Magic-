@@ -1,0 +1,1061 @@
+{
+ "figure": "grovePriest-03",
+ "unit": "grovePriest",
+ "face": "03",
+ "nation": "thornwood",
+ "body": "twDruid",
+ "layout": "commander",
+ "act": "cast",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdB",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdB/gp03.front.redress.r2.nb21.png",
+   "sheetSha256": "a2e4d20f91da388d74e555c3fb8a1becdaf7b094211f61da579cf0517be5203b",
+   "body": "stage-b/cal/raw/cmdDruid.front.body.g3pro.png",
+   "bodySha256": "a3b9b41be6db7277ef06cb0e9506e426f075e599e9d6853a3fb091cf2a224501",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.40764,
+    "H": 0.81529
+   },
+   "scaleFrom": {
+    "bodyH": 157,
+    "from_": "body twDruid.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "grovePriest-03.front.stand",
+     "srcBox": [
+      68,
+      60,
+      187,
+      222
+     ],
+     "srcAnchor": [
+      80.1,
+      159.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6598,
+       "y": 0.9679
+      },
+      "H": {
+       "x": 0.6664,
+       "y": 0.9679
+      }
+     }
+    },
+    "idle2": {
+     "frame": "grovePriest-03.front.idle2",
+     "srcBox": [
+      319,
+      60,
+      442,
+      222
+     ],
+     "srcAnchor": [
+      68.0,
+      159.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5523,
+       "y": 0.9679
+      },
+      "H": {
+       "x": 0.5523,
+       "y": 0.9679
+      }
+     }
+    },
+    "marchA": {
+     "frame": "grovePriest-03.front.marchA",
+     "srcBox": [
+      561,
+      67,
+      696,
+      222
+     ],
+     "srcAnchor": [
+      88.9,
+      152.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6533,
+       "y": 0.9686
+      },
+      "H": {
+       "x": 0.6533,
+       "y": 0.9686
+      }
+     }
+    },
+    "marchB": {
+     "frame": "grovePriest-03.front.marchB",
+     "srcBox": [
+      821,
+      66,
+      952,
+      217
+     ],
+     "srcAnchor": [
+      93.2,
+      148.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.709,
+       "y": 0.9583
+      },
+      "H": {
+       "x": 0.7026,
+       "y": 0.9658
+      }
+     }
+    },
+    "windup": {
+     "frame": "grovePriest-03.front.windup",
+     "srcBox": [
+      85,
+      261,
+      193,
+      479
+     ],
+     "srcAnchor": [
+      62.8,
+      215.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5783,
+       "y": 0.9741
+      },
+      "H": {
+       "x": 0.5783,
+       "y": 0.9741
+      }
+     }
+    },
+    "strike": {
+     "frame": "grovePriest-03.front.strike",
+     "srcBox": [
+      313,
+      340,
+      436,
+      479
+     ],
+     "srcAnchor": [
+      76.0,
+      136.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.615,
+       "y": 0.9566
+      },
+      "H": {
+       "x": 0.615,
+       "y": 0.9648
+      }
+     }
+    },
+    "follow": {
+     "frame": "grovePriest-03.front.follow",
+     "srcBox": [
+      572,
+      337,
+      697,
+      479
+     ],
+     "srcAnchor": [
+      81.1,
+      139.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6426,
+       "y": 0.961
+      },
+      "H": {
+       "x": 0.6426,
+       "y": 0.961
+      }
+     }
+    },
+    "recoil": {
+     "frame": "grovePriest-03.front.recoil",
+     "srcBox": [
+      784,
+      307,
+      986,
+      479
+     ],
+     "srcAnchor": [
+      132.8,
+      169.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6564,
+       "y": 0.9707
+      },
+      "H": {
+       "x": 0.6525,
+       "y": 0.9707
+      }
+     }
+    },
+    "actA": {
+     "frame": "grovePriest-03.front.actA",
+     "srcBox": [
+      105,
+      516,
+      188,
+      734
+     ],
+     "srcAnchor": [
+      43.1,
+      215.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5158,
+       "y": 0.9741
+      },
+      "H": {
+       "x": 0.5158,
+       "y": 0.9741
+      }
+     }
+    },
+    "actB": {
+     "frame": "grovePriest-03.front.actB",
+     "srcBox": [
+      296,
+      595,
+      439,
+      733
+     ],
+     "srcAnchor": [
+      111.0,
+      135.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7708,
+       "y": 0.9661
+      },
+      "H": {
+       "x": 0.7644,
+       "y": 0.9578
+      }
+     }
+    },
+    "fall": {
+     "frame": "grovePriest-03.front.fall",
+     "srcBox": [
+      616,
+      518,
+      765,
+      729
+     ],
+     "srcAnchor": [
+      44.3,
+      208.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3025,
+       "y": 0.9749
+      },
+      "H": {
+       "x": 0.3049,
+       "y": 0.9749
+      }
+     }
+    },
+    "deadA": {
+     "frame": "grovePriest-03.front.deadA",
+     "srcBox": [
+      858,
+      563,
+      1020,
+      699
+     ],
+     "srcAnchor": [
+      80.1,
+      100.2
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4949,
+       "y": 0.7341
+      },
+      "H": {
+       "x": 0.4949,
+       "y": 0.7278
+      }
+     }
+    },
+    "deadB": {
+     "frame": "grovePriest-03.front.deadB",
+     "srcBox": [
+      3,
+      888,
+      187,
+      1022
+     ],
+     "srcAnchor": [
+      103.2,
+      98.8
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5593,
+       "y": 0.7241
+      },
+      "H": {
+       "x": 0.5593,
+       "y": 0.7305
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "grovePriest-03.front.fleeA",
+     "srcBox": [
+      314,
+      858,
+      444,
+      989
+     ],
+     "srcAnchor": [
+      75.9,
+      128.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5807,
+       "y": 0.9669
+      },
+      "H": {
+       "x": 0.5807,
+       "y": 0.9582
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "grovePriest-03.front.fleeB",
+     "srcBox": [
+      616,
+      856,
+      709,
+      977
+     ],
+     "srcAnchor": [
+      35.3,
+      118.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3847,
+       "y": 0.9628
+      },
+      "H": {
+       "x": 0.3847,
+       "y": 0.9534
+      }
+     }
+    },
+    "cheer": {
+     "frame": "grovePriest-03.front.cheer",
+     "srcBox": [
+      872,
+      776,
+      956,
+      991
+     ],
+     "srcAnchor": [
+      44.8,
+      212.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5351,
+       "y": 0.9713
+      },
+      "H": {
+       "x": 0.5351,
+       "y": 0.9768
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": false,
+    "rolls": 2,
+    "cells": "14/16",
+    "failing": [
+     "follow",
+     "strike"
+    ],
+    "inherit": 0.891,
+    "variety": true,
+    "marchIoU": 0.715,
+    "rimAfter": 0.7,
+    "edgeDev": 1.07,
+    "keyIn": 0.775,
+    "side": 0.14,
+    "valueBelow": 27.5,
+    "identityDE": 10.4,
+    "consHist": [
+     "deadB",
+     0.825
+    ],
+    "consDE": [
+     "deadB",
+     3.1
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": false,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "gp03.front.redress.r2.nb21.png",
+    "marks": "yyyny"
+   },
+   "status": "reported",
+   "failedGates": [
+    "fringe"
+   ],
+   "rolls": 2,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0163,
+    "meanShare": 0.0108
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.274,
+    "lockedShareMean": 0.168,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdB/gp03.back.redress.nb21.png",
+   "sheetSha256": "002fd7c21fcf60476bffd7a1f97d6820680c3bbfda04cdf36276bdc4e732c413",
+   "body": "stage-b/raw/cmdB/twDruid.back.body.edit.r2.nb21.png",
+   "bodySha256": "77e4a326d23e4fb405dbf4f46a33b95c778ed42da019b88503518816ffa295db",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.46377,
+    "H": 0.92754
+   },
+   "scaleFrom": {
+    "bodyH": 138,
+    "from_": "body twDruid.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "grovePriest-03.back.stand",
+     "srcBox": [
+      87,
+      22,
+      188,
+      182
+     ],
+     "srcAnchor": [
+      33.9,
+      157.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3413,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.3413,
+       "y": 0.9712
+      }
+     }
+    },
+    "idle2": {
+     "frame": "grovePriest-03.back.idle2",
+     "srcBox": [
+      345,
+      36,
+      469,
+      183
+     ],
+     "srcAnchor": [
+      33.7,
+      144.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2771,
+       "y": 0.9683
+      },
+      "H": {
+       "x": 0.2795,
+       "y": 0.9683
+      }
+     }
+    },
+    "marchA": {
+     "frame": "grovePriest-03.back.marchA",
+     "srcBox": [
+      597,
+      30,
+      720,
+      186
+     ],
+     "srcAnchor": [
+      29.4,
+      153.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.248,
+       "y": 0.9724
+      },
+      "H": {
+       "x": 0.248,
+       "y": 0.9659
+      }
+     }
+    },
+    "marchB": {
+     "frame": "grovePriest-03.back.marchB",
+     "srcBox": [
+      840,
+      34,
+      977,
+      178
+     ],
+     "srcAnchor": [
+      36.5,
+      141.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2716,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.2737,
+       "y": 0.9622
+      }
+     }
+    },
+    "windup": {
+     "frame": "grovePriest-03.back.windup",
+     "srcBox": [
+      73,
+      251,
+      201,
+      436
+     ],
+     "srcAnchor": [
+      46.8,
+      182.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3722,
+       "y": 0.9705
+      },
+      "H": {
+       "x": 0.3692,
+       "y": 0.9705
+      }
+     }
+    },
+    "strike": {
+     "frame": "grovePriest-03.back.strike",
+     "srcBox": [
+      334,
+      290,
+      463,
+      443
+     ],
+     "srcAnchor": [
+      35.5,
+      150.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2817,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.2817,
+       "y": 0.9666
+      }
+     }
+    },
+    "follow": {
+     "frame": "grovePriest-03.back.follow",
+     "srcBox": [
+      604,
+      296,
+      709,
+      452
+     ],
+     "srcAnchor": [
+      55.5,
+      153.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5243,
+       "y": 0.9724
+      },
+      "H": {
+       "x": 0.5295,
+       "y": 0.9659
+      }
+     }
+    },
+    "recoil": {
+     "frame": "grovePriest-03.back.recoil",
+     "srcBox": [
+      815,
+      298,
+      1010,
+      440
+     ],
+     "srcAnchor": [
+      71.1,
+      139.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3693,
+       "y": 0.9627
+      },
+      "H": {
+       "x": 0.3673,
+       "y": 0.9627
+      }
+     }
+    },
+    "actA": {
+     "frame": "grovePriest-03.back.actA",
+     "srcBox": [
+      60,
+      505,
+      163,
+      683
+     ],
+     "srcAnchor": [
+      59.8,
+      175.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5747,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.5747,
+       "y": 0.9723
+      }
+     }
+    },
+    "actB": {
+     "frame": "grovePriest-03.back.actB",
+     "srcBox": [
+      328,
+      535,
+      490,
+      685
+     ],
+     "srcAnchor": [
+      49.3,
+      147.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3099,
+       "y": 0.9607
+      },
+      "H": {
+       "x": 0.3099,
+       "y": 0.9675
+      }
+     }
+    },
+    "fall": {
+     "frame": "grovePriest-03.back.fall",
+     "srcBox": [
+      535,
+      618,
+      697,
+      787
+     ],
+     "srcAnchor": [
+      133.3,
+      166.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.8158,
+       "y": 0.9748
+      },
+      "H": {
+       "x": 0.8158,
+       "y": 0.9688
+      }
+     }
+    },
+    "deadA": {
+     "frame": "grovePriest-03.back.deadA",
+     "srcBox": [
+      781,
+      620,
+      950,
+      826
+     ],
+     "srcAnchor": [
+      84.2,
+      152.8
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5006,
+       "y": 0.7333
+      },
+      "H": {
+       "x": 0.4975,
+       "y": 0.7371
+      }
+     }
+    },
+    "deadB": {
+     "frame": "grovePriest-03.back.deadB",
+     "srcBox": [
+      98,
+      790,
+      268,
+      917
+     ],
+     "srcAnchor": [
+      68.9,
+      93.5
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4068,
+       "y": 0.7273
+      },
+      "H": {
+       "x": 0.4068,
+       "y": 0.7273
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "grovePriest-03.back.fleeA",
+     "srcBox": [
+      333,
+      797,
+      462,
+      955
+     ],
+     "srcAnchor": [
+      35.5,
+      155.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2817,
+       "y": 0.9718
+      },
+      "H": {
+       "x": 0.2817,
+       "y": 0.9654
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "grovePriest-03.back.fleeB",
+     "srcBox": [
+      587,
+      806,
+      715,
+      949
+     ],
+     "srcAnchor": [
+      22.5,
+      140.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1875,
+       "y": 0.9695
+      },
+      "H": {
+       "x": 0.1859,
+       "y": 0.9624
+      }
+     }
+    },
+    "cheer": {
+     "frame": "grovePriest-03.back.cheer",
+     "srcBox": [
+      805,
+      710,
+      950,
+      942
+     ],
+     "srcAnchor": [
+      84.9,
+      229.0
+     ],
+     "atlas": {
+      "S": "grovePriest.S.0.png",
+      "H": "grovePriest.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5851,
+       "y": 0.9746
+      },
+      "H": {
+       "x": 0.5851,
+       "y": 0.979
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": false,
+    "rolls": 2,
+    "cells": "11/16",
+    "failing": [
+     "deadA",
+     "deadB",
+     "fall",
+     "follow",
+     "recoil"
+    ],
+    "inherit": 0.851,
+    "variety": true,
+    "marchIoU": 0.631,
+    "rimAfter": 1.1,
+    "edgeDev": 1.32,
+    "keyIn": 0.35,
+    "side": 0.127,
+    "valueBelow": 29.2,
+    "identityDE": 5.4,
+    "consHist": [
+     "deadB",
+     0.709
+    ],
+    "consDE": [
+     "deadB",
+     6.3
+    ],
+    "gate": {
+     "cells": false,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "gp03.back.redress.nb21.png",
+    "marks": "y-y-y"
+   },
+   "status": "reported",
+   "failedGates": [
+    "cells"
+   ],
+   "rolls": 2,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0233,
+    "meanShare": 0.0088
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.34,
+    "lockedShareMean": 0.151,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  }
+ },
+ "marks": [
+  {
+   "mark": "the wreath of mistletoe with small white berries on the head",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his short black beard and deep brown skin",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the bark-brown robe to the ground with a mantle of green leaves on the shoulders",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the clasp carved as a spiral",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the tall gnarled staff of dark wood",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": null,
+ "approved": null,
+ "productionKit": {
+  "weapon": "the tall staff of dark wood with a living sprig of green oak leaves at its top",
+  "weaponChanged": true,
+  "mantle": null,
+  "mantleFrom": "portrait"
+ }
+}

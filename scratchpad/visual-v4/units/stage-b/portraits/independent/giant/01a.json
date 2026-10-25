@@ -1,0 +1,92 @@
+{
+ "id": "giant-01a",
+ "unit": "giant",
+ "nation": "independent",
+ "group": "creatures",
+ "subject": "giant",
+ "promptFile": "stage-b/work/portraits/prompts-used/giant.01a.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 64026,
+  "game": 19332,
+  "small": 1754
+ },
+ "sourceFile": "stage-b/raw/portraits/giant.01a.nb21.png",
+ "sourceSha256": "c0d66b5c23123ced4a54e191f99adeb1e7df0306a79015ba863dda527e30dc6f",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one mountain giant (a huge, primitive man of the high mountains, four men tall), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the hair about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One giant only, no other people. No hands, no club raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and hair and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Giant, an independent mountain giant, four men tall, who eats for four and draws every eye and every blow: a giant, not a man: coarse, heavy, massive features, a neck as thick as the head, weathered skin, crude hides and stones for clothing; muted greys and tans.\nPerson: an old mountain giant, a huge broad brutish face with a heavy jutting brow, a flattened broken nose, small deep-set pale eyes, a wide mouth with gaps in the teeth, weathered grey-tan skin rough as granite with pale lichen-grey patches, a bald head with a few long grey wisps, a matted grey beard with small stones and bone beads knotted into it. Kit: a cloak of stitched goat and bear hides over the shoulders, a rope of knotted hide across the chest, a necklace of huge animal teeth. Marks: the broken nose, the bald head, the stones knotted in the grey beard, the necklace of huge teeth.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "broken flattened nose",
+   "read": "partly"
+  },
+  {
+   "mark": "bald head with grey wisps",
+   "read": true
+  },
+  {
+   "mark": "stones knotted in the grey beard",
+   "read": true
+  },
+  {
+   "mark": "necklace of huge teeth",
+   "read": true
+  },
+  {
+   "mark": "hide cloak",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.3,
+   "bgSpread": 3.3,
+   "floor": 6.1,
+   "top": 0.057,
+   "low": 1.0,
+   "bottomCut": 0.247,
+   "cx": 0.438,
+   "subject": 0.508,
+   "light": 2.3,
+   "rim": 0.595,
+   "read48": 26.9,
+   "muted": 0.0018,
+   "satAll": 0.0018,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Old bald giant, coarse heavy features, stones and beads in the beard, the tooth necklace and hide cloak; reads as a giant, not a man.",
+  "marks": {
+   "broken flattened nose": "partly",
+   "bald head with grey wisps": true,
+   "stones knotted in the grey beard": true,
+   "necklace of huge teeth": true,
+   "hide cloak": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

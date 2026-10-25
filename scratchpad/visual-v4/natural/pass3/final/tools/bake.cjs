@@ -1,0 +1,4 @@
+const { launch, open, ev, PAGE, BEFORE, OUT } = require('./lib.cjs'); const fs = require('fs');
+(async () => { const rows = []; for (let k = 0; k < 2; k++) for (const [nm, file] of [['now', PAGE], ['pass2', BEFORE]]) { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, file, { log, settle: 500 }); const t = await ev(p, 'm.reliefTimes()');
+  const r = { k, nm, readyMs: p.__readyMs, bakeCpu: t.bakeCpuMs, bakeWall: t.bakeWallMs, wilds: t.naturalStepsMs.wilds, wildTexels: t.naturalStepsMs.wildTexels, materials: t.naturalStepsMs.materials, firstPaint: t.firstPaintMs, mem: (await ev(p, 'm.reliefMemory()')).totalCanvasMB, heap: (await ev(p, 'm.reliefMemory()')).jsHeapMB }; rows.push(r); console.log(JSON.stringify(r)); await b.close(); }
+  fs.writeFileSync(OUT + 'bake.json', JSON.stringify(rows, null, 1)); })();

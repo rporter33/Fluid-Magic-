@@ -1,0 +1,171 @@
+// Red (Ember) spells, docs/02-magic.md section 6: five battle spells and five rituals.
+import type { BattleSpellDef, RitualSpellDef } from './types';
+
+const battle = { kind: 'battle', color: 'R', holy: 0, carriedMana: {} } as const;
+const ritual = { kind: 'ritual', color: 'R', holy: 0 } as const;
+
+export const RED_SPELLS = {
+  emberDart: {
+    ...battle,
+    id: 'emberDart',
+    name: 'Ember Dart',
+    level: 1,
+    requirement: 'R',
+    description: 'A dart of fire that pierces armor and strikes one enemy.',
+    fatigue: 10,
+    effects: [
+      {
+        kind: 'damage',
+        amount: 12,
+        element: 'fire',
+        targets: { kind: 'single' },
+        armorPiercing: true,
+      },
+    ],
+  },
+  fireball: {
+    ...battle,
+    id: 'fireball',
+    name: 'Fireball',
+    level: 2,
+    requirement: 'RR',
+    description: 'A ball of fire that bursts among five enemies.',
+    fatigue: 25,
+    effects: [{ kind: 'damage', amount: 10, element: 'fire', targets: { kind: 'area', count: 5 } }],
+  },
+  warcry: {
+    ...battle,
+    id: 'warcry',
+    name: 'Warcry',
+    level: 2,
+    requirement: 'R',
+    description: 'Every friendly unit gains 2 morale for the battle. Uses 1 carried Red mana.',
+    fatigue: 20,
+    carriedMana: { R: 1 },
+    effects: [
+      {
+        kind: 'buff',
+        stat: 'mor',
+        delta: 2,
+        duration: { kind: 'battle' },
+        targets: { kind: 'allFriendly' },
+      },
+    ],
+  },
+  bloodFury: {
+    ...battle,
+    id: 'bloodFury',
+    name: 'Blood Fury',
+    level: 3,
+    requirement: 'RR',
+    description: 'One friendly squad gains 2 attack and 3 strength and loses 2 defense.',
+    fatigue: 30,
+    effects: [
+      {
+        kind: 'buff',
+        stat: 'att',
+        delta: 2,
+        duration: { kind: 'battle' },
+        targets: { kind: 'friendlySquad' },
+      },
+      {
+        kind: 'buff',
+        stat: 'str',
+        delta: 3,
+        duration: { kind: 'battle' },
+        targets: { kind: 'friendlySquad' },
+      },
+      // The fury's price, not an enemy's curse: a buff with a negative delta, never lifted.
+      {
+        kind: 'buff',
+        stat: 'def',
+        delta: -2,
+        duration: { kind: 'battle' },
+        targets: { kind: 'friendlySquad' },
+      },
+    ],
+  },
+  pyreStorm: {
+    ...battle,
+    id: 'pyreStorm',
+    name: 'Pyre Storm',
+    level: 5,
+    requirement: 'RRR',
+    description: 'A storm of fire over twelve enemies. Uses 1 carried Red mana.',
+    fatigue: 60,
+    carriedMana: { R: 1 },
+    effects: [
+      { kind: 'damage', amount: 14, element: 'fire', targets: { kind: 'area', count: 12 } },
+    ],
+  },
+
+  callFireSprites: {
+    ...ritual,
+    id: 'callFireSprites',
+    name: 'Call Fire Sprites',
+    level: 1,
+    requirement: 'R',
+    description: 'Five Fire Sprites join the caster.',
+    cost: { mana: { R: 2 }, generic: 0 },
+    castDays: 5,
+    target: { kind: 'caster' },
+    effects: [{ kind: 'summonToProvince', unit: 'fireSprite', count: 5, commander: false }],
+  },
+  forgeOfCinders: {
+    ...ritual,
+    id: 'forgeOfCinders',
+    name: 'Forge of Cinders',
+    level: 2,
+    requirement: 'RR',
+    description: "The caster's fort gathers 25 more materials a month for 6 months.",
+    cost: { mana: { R: 3 }, generic: 1 },
+    castDays: 10,
+    target: { kind: 'casterFort' },
+    effects: [{ kind: 'provinceMaterials', delta: 25, months: 6 }],
+  },
+  burnTheFields: {
+    ...ritual,
+    id: 'burnTheFields',
+    name: 'Burn the Fields',
+    level: 3,
+    requirement: 'RR',
+    description:
+      'A province within 3 provinces loses 6% of its people, half its supply for 3 months, and gains 15 unrest.',
+    cost: { mana: { R: 4 }, generic: 2 },
+    castDays: 10,
+    target: { kind: 'any', hops: 3 },
+    effects: [
+      { kind: 'provincePop', deltaPct: -0.06 },
+      { kind: 'provinceSupply', deltaPct: -0.5, months: 3 },
+      { kind: 'provinceUnrest', delta: 15 },
+    ],
+  },
+  bindSalamander: {
+    ...ritual,
+    id: 'bindSalamander',
+    name: 'Bind Salamander',
+    level: 4,
+    requirement: 'RRR',
+    description: 'A Salamander, a fire-breathing beast and Red mage, joins the nation.',
+    cost: { mana: { R: 8 }, generic: 4 },
+    castDays: 20,
+    target: { kind: 'caster' },
+    effects: [{ kind: 'summonToProvince', unit: 'salamander', count: 1, commander: true }],
+  },
+  ashRain: {
+    ...ritual,
+    id: 'ashRain',
+    name: 'Ash Rain',
+    level: 6,
+    requirement: 'RRRR',
+    description:
+      'Burning ash falls on a province within 4 provinces: every troop takes 2d6 fire, and unrest rises 25.',
+    cost: { mana: { R: 12 }, generic: 6 },
+    castDays: 25,
+    target: { kind: 'any', hops: 4 },
+    effects: [
+      { kind: 'remoteDamage', dice: 2, element: 'fire' },
+      { kind: 'provinceUnrest', delta: 25 },
+    ],
+  },
+} satisfies Record<string, BattleSpellDef | RitualSpellDef>;

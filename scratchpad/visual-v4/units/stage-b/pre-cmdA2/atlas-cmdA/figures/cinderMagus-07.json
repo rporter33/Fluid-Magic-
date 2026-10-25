@@ -1,0 +1,1053 @@
+{
+ "figure": "cinderMagus-07",
+ "unit": "cinderMagus",
+ "face": "07",
+ "nation": "cinderHorde",
+ "body": "cmdCaster",
+ "layout": "commander",
+ "act": "cast",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/cm07.front.redress.nb21.png",
+   "sheetSha256": "92088f42b24530218209d9cb103966363c9096d7096ad620cd15fee4ad3c5146",
+   "body": "stage-b/cal/raw/cmdCaster.front.body.g3pro.png",
+   "bodySha256": "925f5a0dea2eaeace278408b7c6e5e198b5d7cda1cc6662cf8f4d26f0539ee0f",
+   "key": "green",
+   "layout": "commander",
+   "scale": {
+    "S": 0.4507,
+    "H": 0.90141
+   },
+   "scaleFrom": {
+    "bodyH": 142,
+    "from_": "body cmdCaster.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "cinderMagus-07.front.stand",
+     "srcBox": [
+      71,
+      38,
+      190,
+      221
+     ],
+     "srcAnchor": [
+      77.4,
+      180.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6408,
+       "y": 0.9777
+      },
+      "H": {
+       "x": 0.6466,
+       "y": 0.9719
+      }
+     }
+    },
+    "idle2": {
+     "frame": "cinderMagus-07.front.idle2",
+     "srcBox": [
+      327,
+      38,
+      443,
+      221
+     ],
+     "srcAnchor": [
+      64.4,
+      180.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.556,
+       "y": 0.9777
+      },
+      "H": {
+       "x": 0.5509,
+       "y": 0.9719
+      }
+     }
+    },
+    "marchA": {
+     "frame": "cinderMagus-07.front.marchA",
+     "srcBox": [
+      579,
+      41,
+      701,
+      218
+     ],
+     "srcAnchor": [
+      80.4,
+      174.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6533,
+       "y": 0.9686
+      },
+      "H": {
+       "x": 0.6533,
+       "y": 0.9686
+      }
+     }
+    },
+    "marchB": {
+     "frame": "cinderMagus-07.front.marchB",
+     "srcBox": [
+      835,
+      42,
+      957,
+      220
+     ],
+     "srcAnchor": [
+      80.0,
+      175.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6501,
+       "y": 0.9741
+      },
+      "H": {
+       "x": 0.6501,
+       "y": 0.9741
+      }
+     }
+    },
+    "windup": {
+     "frame": "cinderMagus-07.front.windup",
+     "srcBox": [
+      91,
+      268,
+      195,
+      476
+     ],
+     "srcAnchor": [
+      60.0,
+      205.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5723,
+       "y": 0.9729
+      },
+      "H": {
+       "x": 0.5723,
+       "y": 0.978
+      }
+     }
+    },
+    "strike": {
+     "frame": "cinderMagus-07.front.strike",
+     "srcBox": [
+      323,
+      308,
+      443,
+      474
+     ],
+     "srcAnchor": [
+      67.6,
+      163.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5619,
+       "y": 0.9671
+      },
+      "H": {
+       "x": 0.5619,
+       "y": 0.9671
+      }
+     }
+    },
+    "follow": {
+     "frame": "cinderMagus-07.front.follow",
+     "srcBox": [
+      616,
+      307,
+      698,
+      475
+     ],
+     "srcAnchor": [
+      42.9,
+      165.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5214,
+       "y": 0.9662
+      },
+      "H": {
+       "x": 0.5214,
+       "y": 0.9725
+      }
+     }
+    },
+    "recoil": {
+     "frame": "cinderMagus-07.front.recoil",
+     "srcBox": [
+      792,
+      286,
+      988,
+      477
+     ],
+     "srcAnchor": [
+      123.5,
+      188.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6296,
+       "y": 0.9742
+      },
+      "H": {
+       "x": 0.6261,
+       "y": 0.9742
+      }
+     }
+    },
+    "actA": {
+     "frame": "cinderMagus-07.front.actA",
+     "srcBox": [
+      109,
+      526,
+      189,
+      732
+     ],
+     "srcAnchor": [
+      40.6,
+      203.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5079,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.5079,
+       "y": 0.9736
+      }
+     }
+    },
+    "actB": {
+     "frame": "cinderMagus-07.front.actB",
+     "srcBox": [
+      306,
+      564,
+      445,
+      730
+     ],
+     "srcAnchor": [
+      96.3,
+      163.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6831,
+       "y": 0.9671
+      },
+      "H": {
+       "x": 0.6884,
+       "y": 0.9671
+      }
+     }
+    },
+    "fall": {
+     "frame": "cinderMagus-07.front.fall",
+     "srcBox": [
+      619,
+      523,
+      762,
+      733
+     ],
+     "srcAnchor": [
+      46.4,
+      207.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.332,
+       "y": 0.9721
+      },
+      "H": {
+       "x": 0.3295,
+       "y": 0.9772
+      }
+     }
+    },
+    "deadA": {
+     "frame": "cinderMagus-07.front.deadA",
+     "srcBox": [
+      867,
+      563,
+      1024,
+      697
+     ],
+     "srcAnchor": [
+      76.1,
+      98.8
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4835,
+       "y": 0.7343
+      },
+      "H": {
+       "x": 0.4835,
+       "y": 0.7285
+      }
+     }
+    },
+    "deadB": {
+     "frame": "cinderMagus-07.front.deadB",
+     "srcBox": [
+      4,
+      888,
+      181,
+      1021
+     ],
+     "srcAnchor": [
+      101.1,
+      98.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5679,
+       "y": 0.7285
+      },
+      "H": {
+       "x": 0.5679,
+       "y": 0.7285
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "cinderMagus-07.front.fleeA",
+     "srcBox": [
+      341,
+      824,
+      441,
+      985
+     ],
+     "srcAnchor": [
+      61.9,
+      158.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6149,
+       "y": 0.9628
+      },
+      "H": {
+       "x": 0.6149,
+       "y": 0.9693
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "cinderMagus-07.front.fleeB",
+     "srcBox": [
+      619,
+      823,
+      700,
+      982
+     ],
+     "srcAnchor": [
+      37.0,
+      156.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4532,
+       "y": 0.9636
+      },
+      "H": {
+       "x": 0.4591,
+       "y": 0.9702
+      }
+     }
+    },
+    "cheer": {
+     "frame": "cinderMagus-07.front.cheer",
+     "srcBox": [
+      875,
+      781,
+      958,
+      987
+     ],
+     "srcAnchor": [
+      41.9,
+      203.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5099,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.5034,
+       "y": 0.9736
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "16/16",
+    "failing": [],
+    "inherit": 0.855,
+    "variety": true,
+    "marchIoU": 0.912,
+    "rimAfter": 0.2,
+    "edgeDev": 2.36,
+    "keyIn": 0.34,
+    "side": 0.176,
+    "valueBelow": 26.6,
+    "identityDE": 4.2,
+    "consHist": [
+     "deadB",
+     0.53
+    ],
+    "consDE": [
+     "deadB",
+     15.2
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "cm07.front.redress.nb21.png",
+    "marksFront": "yyypny"
+   },
+   "pass": true,
+   "scaleNote": null
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/cm07.back.redress.nb21.png",
+   "sheetSha256": "9ccecf3a6ec1486b299c0c557844738e785ba19eabb3dad5fcc238642e1c9b63",
+   "body": "stage-b/raw/cmdA/cmdCaster.back.body.edit.nb21.png",
+   "bodySha256": "09e9addfd92246dd31ea856a414c24d0e0311a039219a9844957b00b2d925918",
+   "key": "green",
+   "layout": "commander",
+   "scale": {
+    "S": 0.46043,
+    "H": 0.92086
+   },
+   "scaleFrom": {
+    "bodyH": 139,
+    "from_": "body cmdCaster.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "cinderMagus-07.back.stand",
+     "srcBox": [
+      87,
+      18,
+      176,
+      182
+     ],
+     "srcAnchor": [
+      33.4,
+      161.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3809,
+       "y": 0.9632
+      },
+      "H": {
+       "x": 0.3809,
+       "y": 0.9694
+      }
+     }
+    },
+    "idle2": {
+     "frame": "cinderMagus-07.back.idle2",
+     "srcBox": [
+      345,
+      21,
+      450,
+      183
+     ],
+     "srcAnchor": [
+      32.6,
+      159.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3202,
+       "y": 0.9637
+      },
+      "H": {
+       "x": 0.317,
+       "y": 0.97
+      }
+     }
+    },
+    "marchA": {
+     "frame": "cinderMagus-07.back.marchA",
+     "srcBox": [
+      598,
+      21,
+      698,
+      186
+     ],
+     "srcAnchor": [
+      29.3,
+      162.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3019,
+       "y": 0.9691
+      },
+      "H": {
+       "x": 0.3019,
+       "y": 0.9691
+      }
+     }
+    },
+    "marchB": {
+     "frame": "cinderMagus-07.back.marchB",
+     "srcBox": [
+      841,
+      18,
+      954,
+      178
+     ],
+     "srcAnchor": [
+      37.1,
+      157.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3349,
+       "y": 0.9643
+      },
+      "H": {
+       "x": 0.3349,
+       "y": 0.9707
+      }
+     }
+    },
+    "windup": {
+     "frame": "cinderMagus-07.back.windup",
+     "srcBox": [
+      73,
+      274,
+      204,
+      436
+     ],
+     "srcAnchor": [
+      47.3,
+      159.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3674,
+       "y": 0.9637
+      },
+      "H": {
+       "x": 0.3645,
+       "y": 0.97
+      }
+     }
+    },
+    "strike": {
+     "frame": "cinderMagus-07.back.strike",
+     "srcBox": [
+      333,
+      279,
+      444,
+      443
+     ],
+     "srcAnchor": [
+      38.2,
+      161.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3507,
+       "y": 0.9632
+      },
+      "H": {
+       "x": 0.3507,
+       "y": 0.9694
+      }
+     }
+    },
+    "follow": {
+     "frame": "cinderMagus-07.back.follow",
+     "srcBox": [
+      601,
+      279,
+      687,
+      441
+     ],
+     "srcAnchor": [
+      41.5,
+      159.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4788,
+       "y": 0.9637
+      },
+      "H": {
+       "x": 0.4845,
+       "y": 0.97
+      }
+     }
+    },
+    "recoil": {
+     "frame": "cinderMagus-07.back.recoil",
+     "srcBox": [
+      816,
+      277,
+      998,
+      441
+     ],
+     "srcAnchor": [
+      70.3,
+      161.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.388,
+       "y": 0.9632
+      },
+      "H": {
+       "x": 0.388,
+       "y": 0.9694
+      }
+     }
+    },
+    "actA": {
+     "frame": "cinderMagus-07.back.actA",
+     "srcBox": [
+      59,
+      514,
+      150,
+      683
+     ],
+     "srcAnchor": [
+      60.7,
+      166.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6579,
+       "y": 0.9679
+      },
+      "H": {
+       "x": 0.6579,
+       "y": 0.9679
+      }
+     }
+    },
+    "actB": {
+     "frame": "cinderMagus-07.back.actB",
+     "srcBox": [
+      327,
+      530,
+      472,
+      685
+     ],
+     "srcAnchor": [
+      50.2,
+      152.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3495,
+       "y": 0.9724
+      },
+      "H": {
+       "x": 0.3495,
+       "y": 0.9658
+      }
+     }
+    },
+    "fall": {
+     "frame": "cinderMagus-07.back.fall",
+     "srcBox": [
+      535,
+      617,
+      675,
+      764
+     ],
+     "srcAnchor": [
+      127.3,
+      144.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.9032,
+       "y": 0.9615
+      },
+      "H": {
+       "x": 0.8964,
+       "y": 0.9684
+      }
+     }
+    },
+    "deadA": {
+     "frame": "cinderMagus-07.back.deadA",
+     "srcBox": [
+      781,
+      619,
+      926,
+      763
+     ],
+     "srcAnchor": [
+      73.5,
+      106.2
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.505,
+       "y": 0.7338
+      },
+      "H": {
+       "x": 0.505,
+       "y": 0.7284
+      }
+     }
+    },
+    "deadB": {
+     "frame": "cinderMagus-07.back.deadB",
+     "srcBox": [
+      97,
+      767,
+      251,
+      901
+     ],
+     "srcAnchor": [
+      65.3,
+      98.8
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4256,
+       "y": 0.7264
+      },
+      "H": {
+       "x": 0.4256,
+       "y": 0.7321
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "cinderMagus-07.back.fleeA",
+     "srcBox": [
+      330,
+      784,
+      447,
+      956
+     ],
+     "srcAnchor": [
+      39.0,
+      169.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3385,
+       "y": 0.973
+      },
+      "H": {
+       "x": 0.3385,
+       "y": 0.973
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "cinderMagus-07.back.fleeB",
+     "srcBox": [
+      585,
+      783,
+      693,
+      949
+     ],
+     "srcAnchor": [
+      29.1,
+      163.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2769,
+       "y": 0.975
+      },
+      "H": {
+       "x": 0.2796,
+       "y": 0.9688
+      }
+     }
+    },
+    "cheer": {
+     "frame": "cinderMagus-07.back.cheer",
+     "srcBox": [
+      852,
+      770,
+      925,
+      940
+     ],
+     "srcAnchor": [
+      38.4,
+      167.0
+     ],
+     "atlas": {
+      "S": "cinderMagus.S.0.png",
+      "H": "cinderMagus.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5189,
+       "y": 0.9737
+      },
+      "H": {
+       "x": 0.5262,
+       "y": 0.9676
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": false,
+    "rolls": 1,
+    "cells": "15/16",
+    "failing": [
+     "follow"
+    ],
+    "inherit": 0.929,
+    "variety": true,
+    "marchIoU": 0.659,
+    "rimAfter": 0.0,
+    "edgeDev": 3.68,
+    "keyIn": 0.588,
+    "side": 0.16,
+    "valueBelow": 27.4,
+    "identityDE": 6.7,
+    "consHist": [
+     "deadB",
+     0.81
+    ],
+    "consDE": [
+     "fall",
+     4.1
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": false,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "cm07.back.redress.nb21.png",
+    "marksFront": null
+   },
+   "pass": false,
+   "scaleNote": null
+  }
+ },
+ "marks": [
+  {
+   "mark": "the tall stiff peaked cowl rising straight up to a sharp point, its seams stiffened with thin iron ribs",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his round fleshy clean-shaven face with heavy jowls",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the broad mantle of layered smoke-grey cloth with a ragged hem",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the pendant of a rough black iron ingot on a chain",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the row of small raised ritual scar dots across the forehead",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the tall staff of blackened wood crowned with an iron cage holding a dull ember",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the tall stiff peaked cowl rising straight up to a sharp point, its seams stiffened with thin iron ribs",
+    "tick": "y"
+   },
+   {
+    "mark": "his round fleshy clean-shaven face with heavy jowls",
+    "tick": "y"
+   },
+   {
+    "mark": "the broad mantle of layered smoke-grey cloth with a ragged hem",
+    "tick": "y"
+   },
+   {
+    "mark": "the pendant of a rough black iron ingot on a chain",
+    "tick": "p"
+   },
+   {
+    "mark": "the row of small raised ritual scar dots across the forehead",
+    "tick": "n"
+   },
+   {
+    "mark": "the tall staff of blackened wood crowned with an iron cage holding a dull ember",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "cm07",
+  "weapon": "the tall staff of blackened wood crowned with an iron ring, a dark coal set in its centre",
+  "weaponChanged": true,
+  "mantle": null,
+  "mantleFrom": "portrait"
+ }
+}

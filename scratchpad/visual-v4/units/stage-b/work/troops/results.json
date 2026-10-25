@@ -1,0 +1,679 @@
+{
+ "key": "troops",
+ "generations": {
+  "used": 46,
+  "cap": 80,
+  "ok": 44,
+  "failed": [
+   "stage-b/raw/troops/r3.thornMilitia.front.edit.nb21.png failed (1)",
+   "stage-b/raw/troops/r3.thornMilitia.front.edit.nb21.png failed (1)"
+  ],
+  "byRound": {
+   "r1": 25,
+   "r2": 15,
+   "e1": 1,
+   "n1": 3,
+   "r3": 2
+  },
+  "apiStop": "HTTP 402 RESOURCE_EXHAUSTED (prepayment credits are depleted) on the r3 edit and again on its retry 4 minutes later; the commander keys logged the same failures at 08:56; generation stopped"
+ },
+ "sheets": {
+  "ashMilitia": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.ashMilitia.back.g3pro.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.212,
+     "sideKeyline": 0.53
+    },
+    "foreign": null,
+    "valueBelow": 16.8,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     9.2
+    ],
+    "keyIn": 0.045,
+    "edgeDev": 4.12,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.ashMilitia.front.dress.nb21.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.335,
+     "sideKeyline": 0.629
+    },
+    "foreign": null,
+    "valueBelow": 19.4,
+    "rimAfter": 0.0,
+    "variety": true,
+    "consistencyMaxDE": [
+     "follow",
+     6.5
+    ],
+    "keyIn": 0.142,
+    "edgeDev": 5.58,
+    "failed": [],
+    "note": null
+   }
+  },
+  "cinderWarrior": {
+   "back": {
+    "status": "pass",
+    "sheet": "../pilot/raw/r3/cw.back.g3pro.png",
+    "cells": "14/15",
+    "side": {
+     "neutral": 0.377,
+     "sideKeyline": 0.63
+    },
+    "foreign": null,
+    "valueBelow": 23.6,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "strike",
+     8.6
+    ],
+    "keyIn": 0.029,
+    "edgeDev": 1.34,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "../pilot/raw/ad/cw.front.rs.nb21.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.373,
+     "sideKeyline": 0.608
+    },
+    "foreign": null,
+    "valueBelow": 24.2,
+    "rimAfter": 0.3,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeA",
+     11.9
+    ],
+    "keyIn": 0.116,
+    "edgeDev": 4.49,
+    "failed": [],
+    "note": null
+   }
+  },
+  "emberSkirmisher": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.emberSkirmisher.back.g3pro.png",
+    "cells": "10/15",
+    "side": {
+     "neutral": 0.222,
+     "sideKeyline": 0.455
+    },
+    "foreign": null,
+    "valueBelow": 12.3,
+    "rimAfter": 1.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     7.5
+    ],
+    "keyIn": 0.963,
+    "edgeDev": 7.04,
+    "failed": [
+     "camera",
+     "side",
+     "fringe"
+    ],
+    "note": "r2 (Pro, failure named) 3/15 at eye level; r1 kept: 10/15, value 12.3 L* below swamp, javelin shafts keep key green (keyIn 0.96%)"
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.emberSkirmisher.front.pro.g3pro.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.209,
+     "sideKeyline": 0.388
+    },
+    "foreign": null,
+    "valueBelow": 17.6,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     3.5
+    ],
+    "keyIn": 0.159,
+    "edgeDev": 2.6,
+    "failed": [],
+    "note": null
+   }
+  },
+  "flameArcher": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.flameArcher.back.g3pro.png",
+    "cells": "14/15",
+    "side": {
+     "neutral": 0.239,
+     "sideKeyline": 0.482
+    },
+    "foreign": null,
+    "valueBelow": 22.5,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     7.3
+    ],
+    "keyIn": 0.219,
+    "edgeDev": 4.26,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.flameArcher.front.g3pro.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.267,
+     "sideKeyline": 0.505
+    },
+    "foreign": null,
+    "valueBelow": 24.1,
+    "rimAfter": 1.6,
+    "variety": true,
+    "consistencyMaxDE": [
+     "recoil",
+     2.6
+    ],
+    "keyIn": 0.116,
+    "edgeDev": 4.4,
+    "failed": [],
+    "note": null
+   }
+  },
+  "berserker": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r2.berserker.back.dress.nb21.png",
+    "cells": "8/15",
+    "side": {
+     "neutral": 0.116,
+     "sideKeyline": 0.38
+    },
+    "foreign": null,
+    "valueBelow": 20.4,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "marchB",
+     5.6
+    ],
+    "keyIn": 0.075,
+    "edgeDev": 1.94,
+    "failed": [
+     "camera"
+    ],
+    "note": "r1 (Pro) 3/15 at eye level; r2 (nb21 re-dress of the kept Cinder back) kept: 8/15 (strike, follow, flee cells drift)"
+   },
+   "front": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.berserker.front.g3pro.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.042,
+     "sideKeyline": 0.269
+    },
+    "foreign": null,
+    "valueBelow": 20.8,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeB",
+     2.7
+    ],
+    "keyIn": 0.14,
+    "edgeDev": 2.19,
+    "failed": [
+     "side"
+    ],
+    "note": "camera 13/15 both times; side 26.9% (r1) and 26.6% (r2, nb21 edit asking for broad war paint) with the side keyline, under 30%"
+   }
+  },
+  "flamebrand": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.flamebrand.back.g3pro.png",
+    "cells": "11/15",
+    "side": {
+     "neutral": 0.274,
+     "sideKeyline": 0.57
+    },
+    "foreign": null,
+    "valueBelow": 18.5,
+    "rimAfter": 1.2,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     6.4
+    ],
+    "keyIn": 0.043,
+    "edgeDev": 1.24,
+    "failed": [
+     "camera"
+    ],
+    "note": "r2 (Pro, failure named) 1/15 at eye level; r1 kept: 11/15 (follow, fall, deadA, deadB)"
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.flamebrand.front.g3pro.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.1,
+     "sideKeyline": 0.355
+    },
+    "foreign": null,
+    "valueBelow": 20.8,
+    "rimAfter": 0.2,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeA",
+     4.5
+    ],
+    "keyIn": 0.089,
+    "edgeDev": 0.86,
+    "failed": [],
+    "note": null
+   }
+  },
+  "thornMilitia": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.thornMilitia.back.dress.nb21.png",
+    "cells": "14/15",
+    "side": {
+     "neutral": 0.429,
+     "sideKeyline": 0.628
+    },
+    "foreign": null,
+    "valueBelow": 24.2,
+    "rimAfter": 0.7,
+    "variety": true,
+    "consistencyMaxDE": [
+     "cheer",
+     7.1
+    ],
+    "keyIn": 0.0,
+    "edgeDev": 2.61,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.thornMilitia.front.g3pro.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.215,
+     "sideKeyline": 0.418
+    },
+    "foreign": null,
+    "valueBelow": 29.0,
+    "rimAfter": 1.7,
+    "variety": true,
+    "consistencyMaxDE": [
+     "cheer",
+     13.5
+    ],
+    "keyIn": 0.119,
+    "edgeDev": 3.1,
+    "failed": [
+     "consistency"
+    ],
+    "note": "its one re-roll (an nb21 edit) was refused twice by the API: HTTP 402, prepayment credits depleted"
+   }
+  },
+  "warden": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.warden.back.edit.nb21.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.431,
+     "sideKeyline": 0.615
+    },
+    "foreign": null,
+    "valueBelow": 30.0,
+    "rimAfter": 0.0,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     12.0
+    ],
+    "keyIn": 0.075,
+    "edgeDev": 1.22,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/e1.warden.front.surcoat.nb21.png",
+    "cells": "15/15",
+    "side": {
+     "neutral": 0.283,
+     "sideKeyline": 0.466
+    },
+    "foreign": null,
+    "valueBelow": 26.1,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeA",
+     3.9
+    ],
+    "keyIn": 0.144,
+    "edgeDev": 1.81,
+    "failed": [],
+    "note": null
+   }
+  },
+  "briarGuard": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.briarGuard.back.g3pro.png",
+    "cells": "11/15",
+    "side": {
+     "neutral": 0.332,
+     "sideKeyline": 0.538
+    },
+    "foreign": null,
+    "valueBelow": 28.6,
+    "rimAfter": 0.6,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     19.7
+    ],
+    "keyIn": 0.131,
+    "edgeDev": 3.06,
+    "failed": [
+     "camera",
+     "consistency"
+    ],
+    "note": "r2 (Pro) 13/15 but its stand cell faces the camera (caught by consistency, windup dE 17.5); r1 kept: 11/15 (follow and brace at 0.524, both dead cells), facing right"
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.briarGuard.front.g3pro.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.202,
+     "sideKeyline": 0.381
+    },
+    "foreign": null,
+    "valueBelow": 26.0,
+    "rimAfter": 0.8,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeA",
+     2.7
+    ],
+    "keyIn": 0.0,
+    "edgeDev": 3.43,
+    "failed": [],
+    "note": "r1 had a white background; passed after the keyer gained a flat-background path (no generation); r2 (Pro) was 1/15"
+   }
+  },
+  "longbowHunter": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r2.longbowHunter.back.dress.nb21.png",
+    "cells": "13/15",
+    "side": {
+     "neutral": 0.396,
+     "sideKeyline": 0.52
+    },
+    "foreign": null,
+    "valueBelow": 31.2,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "windup",
+     12.7
+    ],
+    "keyIn": 0.314,
+    "edgeDev": 5.0,
+    "failed": [
+     "consistency"
+    ],
+    "note": "r1 (Pro) grey-teal background, 9/15 after the flat-background keyer; r2 (nb21 re-dress of the Archer back) kept: 13/15, consistency windup dE 12.7 against 12"
+   },
+   "front": {
+    "status": "reported",
+    "sheet": "raw/troops/r1.longbowHunter.front.g3pro.png",
+    "cells": "9/15",
+    "side": {
+     "neutral": 0.214,
+     "sideKeyline": 0.371
+    },
+    "foreign": null,
+    "valueBelow": 29.7,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeB",
+     3.3
+    ],
+    "keyIn": 0.251,
+    "edgeDev": 3.25,
+    "failed": [
+     "camera"
+    ],
+    "note": "six attempts across calibration and stage B never reached 13/15: cal r1 11/15, cal r2 3/15, r1 9/15 (kept), r2 re-dress of the Archer front 8/15"
+   }
+  },
+  "lightInfantry": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.lightInfantry.back.g3pro.png",
+    "cells": "13/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 19.0,
+    "rimAfter": 0.3,
+    "variety": true,
+    "consistencyMaxDE": [
+     "windup",
+     3.1
+    ],
+    "keyIn": 0.098,
+    "edgeDev": 3.95,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.lightInfantry.front.g3pro.png",
+    "cells": "15/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 19.5,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeB",
+     6.0
+    ],
+    "keyIn": 0.135,
+    "edgeDev": 4.2,
+    "failed": [],
+    "note": null
+   }
+  },
+  "heavyInfantry": {
+   "back": {
+    "status": "reported",
+    "sheet": "raw/troops/r2.heavyInfantry.back.dress.nb21.png",
+    "cells": "12/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 23.9,
+    "rimAfter": 0.0,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     3.8
+    ],
+    "keyIn": 0.21,
+    "edgeDev": 6.78,
+    "failed": [
+     "camera"
+    ],
+    "note": "r1 (Pro) 4/15; r2 (nb21 re-dress of the Warden back) kept: 12/15 (recoil 0.503, both dead cells)"
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.heavyInfantry.front.dress.nb21.png",
+    "cells": "13/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 20.6,
+    "rimAfter": 0.5,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     10.4
+    ],
+    "keyIn": 0.126,
+    "edgeDev": 7.0,
+    "failed": [],
+    "note": null
+   }
+  },
+  "archer": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.archer.back.g3pro.png",
+    "cells": "15/15",
+    "side": null,
+    "foreign": 0.001,
+    "valueBelow": 18.9,
+    "rimAfter": 1.2,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fall",
+     9.3
+    ],
+    "keyIn": 0.094,
+    "edgeDev": 2.66,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.archer.front.g3pro.png",
+    "cells": "15/15",
+    "side": null,
+    "foreign": 0.002,
+    "valueBelow": 19.3,
+    "rimAfter": 0.2,
+    "variety": true,
+    "consistencyMaxDE": [
+     "fleeB",
+     4.6
+    ],
+    "keyIn": 0.057,
+    "edgeDev": 2.43,
+    "failed": [],
+    "note": null
+   }
+  },
+  "swampFighter": {
+   "back": {
+    "status": "pass",
+    "sheet": "raw/troops/r1.swampFighter.back.g3pro.png",
+    "cells": "13/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 16.5,
+    "rimAfter": 0.3,
+    "variety": true,
+    "consistencyMaxDE": [
+     "recoil",
+     7.8
+    ],
+    "keyIn": 0.052,
+    "edgeDev": 6.34,
+    "failed": [],
+    "note": null
+   },
+   "front": {
+    "status": "pass",
+    "sheet": "raw/troops/r2.swampFighter.front.dress.nb21.png",
+    "cells": "13/15",
+    "side": null,
+    "foreign": 0.0,
+    "valueBelow": 17.7,
+    "rimAfter": 0.4,
+    "variety": true,
+    "consistencyMaxDE": [
+     "cheer",
+     4.5
+    ],
+    "keyIn": 0.124,
+    "edgeDev": 5.02,
+    "failed": [],
+    "note": null
+   }
+  }
+ },
+ "banners": {
+  "thornwood": {
+   "aspect": 2.46,
+   "notchShare": 0.81,
+   "side": 0.839,
+   "keyInUnitPct": 0.028,
+   "edgeDevPct": 0.0,
+   "aspectAsked": 3.5,
+   "pass": true
+  },
+  "cinderHorde": {
+   "aspect": 2.42,
+   "notchShare": 1.0,
+   "side": 0.825,
+   "keyInUnitPct": 0.167,
+   "edgeDevPct": 0.04,
+   "aspectAsked": 3.5,
+   "pass": true
+  },
+  "independent": {
+   "aspect": 2.21,
+   "notchShare": 1.0,
+   "side": {
+    "cinderHorde": 0.0,
+    "thornwood": 0.0
+   },
+   "keyInUnitPct": 0.203,
+   "edgeDevPct": 0.29,
+   "aspectAsked": 3.5,
+   "pass": true
+  }
+ },
+ "busts": {
+  "done": {
+   "warden": {
+    "background": 3.2,
+    "top": 0.029,
+    "side": 0.04,
+    "kit": 5.1,
+    "pass": false
+   }
+  },
+  "notMade": "13 (every troop type but the Warden): jobs and prompts ready in stage-b/work/troops/jobs/b1.json, blocked by the API (HTTP 402)"
+ }
+}

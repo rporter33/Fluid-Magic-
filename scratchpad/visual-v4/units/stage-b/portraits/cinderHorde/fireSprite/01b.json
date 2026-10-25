@@ -1,0 +1,86 @@
+{
+ "id": "fireSprite-01b",
+ "unit": "fireSprite",
+ "nation": "cinderHorde",
+ "group": "creatures",
+ "subject": "fireSprite",
+ "promptFile": "stage-b/work/portraits/prompts-used/fireSprite.01b.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 23678,
+  "game": 8732,
+  "small": 1144
+ },
+ "sourceFile": "stage-b/raw/portraits/fireSprite.01b.nb21.png",
+ "sourceSha256": "f896f58ccc380e324bb6c612f0e84a3998f02e6e94cea4438f79242c37f4f280",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one Fire Sprite, a small summoned spirit of living flame (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the flame tips about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the flame narrowing below the face into a short wavering tail that fades out near the bottom edge, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the flame tips and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and flame tips and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy outside the flame: the flame is dull and smoky, never neon, never a photographic glow effect. The sprite is made of flame, so its flame is the one warm, bright colour in the image: painted in oil as dull smoky orange and deep ember red, brightening only to a small pale-yellow core around the eyes and the mouth; it lights almost nothing around it, there are no sparks flying across the image and the background stays dark. Outside the flame, no saturated red, orange, green or blue area larger than a small patch.\n\nSubject: A Fire Sprite, a flicker of living flame summoned by Cinder Horde mages, with no will of its own: a head-sized tongue of fire whose flames form a face; no body, no arms, no legs.\nCreature: the face is formed by the flame itself, turned three-quarters toward the right: a narrow head of fire whose flames sweep back from the brow like wind-blown hair, two short flame points rising like small horns above the brow, narrow slanted dark eye-slits and a thin, wide, dark grin, set in the brighter core; the outer flames deep ember red going to smoky charcoal at their tips; a thin trail of grey smoke streams back from the flames. A sly, flickering, mindless look. Marks: the swept-back flame hair, the two small horn-like flame points, the slanted eye-slits, the thin dark grin.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "swept-back flame hair",
+   "read": null
+  },
+  {
+   "mark": "two horn-like flame points",
+   "read": null
+  },
+  {
+   "mark": "slanted dark eye-slits",
+   "read": null
+  },
+  {
+   "mark": "thin dark grin",
+   "read": null
+  },
+  {
+   "mark": "no body or limbs",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 4.1,
+   "bgSpread": 1.5,
+   "floor": 1.0,
+   "top": 0.131,
+   "low": 1.0,
+   "bottomCut": 0.026,
+   "cx": 0.499,
+   "subject": 0.263,
+   "light": -19.0,
+   "rim": 0.309,
+   "read48": 29.3,
+   "muted": 0.0,
+   "satAll": 0.5075,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "A smooth, smiling yellow mask like a cartoon sun; re-rolled.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

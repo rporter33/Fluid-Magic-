@@ -1,0 +1,8 @@
+timeout 3600 node session.cjs natural 1440 900 > ../out/logs/session-natural.txt 2>&1
+timeout 3600 node session.cjs clear 1440 900 > ../out/logs/session-clear.txt 2>&1
+timeout 3600 node session.cjs terrain 1440 900 > ../out/logs/session-terrain.txt 2>&1
+LINES=0 timeout 3600 node session.cjs natural 390 844 > ../out/logs/session-phone.txt 2>&1
+LINES=0 timeout 3600 node session.cjs natural 1280 720 > ../out/logs/session-1280.txt 2>&1
+timeout 3600 node phonefit.cjs natural 3 > ../out/logs/phonefit-natural.txt 2>&1
+timeout 3600 node phonefit.cjs clear 3 > ../out/logs/phonefit-clear.txt 2>&1
+timeout 5400 node linesall.cjs natural 1 > ../out/logs/linesall-natural-1.txt 2>&1

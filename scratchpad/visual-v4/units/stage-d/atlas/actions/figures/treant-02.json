@@ -1,0 +1,1380 @@
+{
+ "figure": "treant-02",
+ "family": "treant",
+ "body": "treant",
+ "key": "magenta",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 105.95,
+    "wuPerPx": 0.0931,
+    "kind": "standing",
+    "anchorPx": [
+     305.5,
+     1124.0
+    ],
+    "points": {
+     "footR": [
+      26.2,
+      -8.3
+     ],
+     "footL": [
+      -1.8,
+      -12.8
+     ],
+     "handR": [
+      34.5,
+      -56.1
+     ],
+     "handL": [
+      -10.1,
+      -55.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "treant-02.back.idle.white",
+      "scale": 0.1862,
+      "w": 144,
+      "h": 215
+     },
+     "H": {
+      "white": "treant-02.back.idle.white",
+      "scale": 0.3724,
+      "w": 289,
+      "h": 429
+     }
+    },
+    "texture": "stage C: stage-c/atlas/creatures/frames/treant-02.back/treant-02.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "windup": {
+    "heightWu": 115.2,
+    "wuPerPx": 0.11925,
+    "kind": "standing",
+    "anchorPx": [
+     432.7,
+     1006.8
+    ],
+    "points": {
+     "footR": [
+      20.4,
+      -7.0
+     ],
+     "footL": [
+      4.0,
+      -4.7
+     ],
+     "handR": [
+      19.4,
+      -110.9
+     ],
+     "handL": [
+      -24.9,
+      -119.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.back.windup",
+      "shadow": "treant-02.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2385,
+      "w": 203,
+      "h": 233
+     },
+     "H": {
+      "frame": "treant-02.back.windup",
+      "shadow": "treant-02.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.477,
+      "w": 406,
+      "h": 467
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11925,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -14.5,
+     "anchorY": 1006.8,
+     "idleAnchorBelowSoleWu": 4.7,
+     "feet": [
+      "footR",
+      "footL"
+     ],
+     "anchorX": 432.7,
+     "brokenRegistration": true
+    },
+    "anchorBeforeGroundFix": [
+     476.5,
+     1128.5
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.back.S.nb21.2k/treant-02.back.windup.png",
+    "raw": "stage-d/raw/act.treant-02.back.S.nb21.2k.png",
+    "rawSha256": "2f07d812ac7e2b2dd1f3bb715f14ca7906bc6167b05475b54e4259875dd90330",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.back.png",
+    "tag": "act.treant-02.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.409,
+      "iouMirrored": 0.376,
+      "aspectRatio": 2.755,
+      "headDx": -0.133,
+      "guideHeadDx": -0.133,
+      "facingMargin": 0.033,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 6832,
+      "keyHueShiftedPct": 0.15,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 36.2,
+       "groundL": 67.7,
+       "below": 31.6
+      },
+      "farmland": {
+       "bodyL": 36.2,
+       "groundL": 67.3,
+       "below": 31.2
+      },
+      "swamp": {
+       "bodyL": 35.4,
+       "groundL": 58.5,
+       "below": 23.1
+      },
+      "forest": {
+       "bodyL": 35.4,
+       "groundL": 58.7,
+       "below": 23.3
+      },
+      "worstBelow": 23.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.4,
+      "dE_upperThird": 1.4,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 23,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.087
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2617,
+      "keyHueShiftedPct": 0.04,
+      "pass_": true,
+      "rimFixedShare": 0.134
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.557,
+      "edgeDevPct": 0.58,
+      "pass_": false
+     }
+    },
+    "flags": [
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.63,
+     "scale": 1.4967,
+     "aspect": 1.07,
+     "shear": 0.062,
+     "M": [
+      [
+       1.60143,
+       0.10168
+      ],
+      [
+       0.0,
+       1.39875
+      ]
+     ],
+     "t": [
+      -299.0,
+      -168.47
+     ],
+     "guideWuPerPx": 0.36092,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.3677,
+     "wuPerPxFromArea": 0.11379,
+     "wuPerPxFromThickness": 0.11925,
+     "wuPerPxFromFit": 0.12368,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "slam": {
+    "heightWu": 107.19,
+    "wuPerPx": 0.11319,
+    "kind": "standing",
+    "anchorPx": [
+     358.7,
+     979.2
+    ],
+    "points": {
+     "footR": [
+      17.7,
+      -6.7
+     ],
+     "footL": [
+      -16.0,
+      -5.3
+     ],
+     "handR": [
+      44.6,
+      -60.8
+     ],
+     "handL": [
+      -12.2,
+      -75.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.back.slam",
+      "shadow": "treant-02.back.slam.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2264,
+      "w": 197,
+      "h": 217
+     },
+     "H": {
+      "frame": "treant-02.back.slam",
+      "shadow": "treant-02.back.slam.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4528,
+      "w": 393,
+      "h": 435
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11489,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": -0.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.back.S.nb21.2k/treant-02.back.slam.png",
+    "raw": "stage-d/raw/act.treant-02.back.S.nb21.2k.png",
+    "rawSha256": "2f07d812ac7e2b2dd1f3bb715f14ca7906bc6167b05475b54e4259875dd90330",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.back.png",
+    "tag": "act.treant-02.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.36,
+      "iouMirrored": 0.412,
+      "aspectRatio": 1.72,
+      "headDx": -0.209,
+      "guideHeadDx": 0.193,
+      "facingMargin": -0.052,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 9027,
+      "keyHueShiftedPct": 0.1,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 35.8,
+       "groundL": 67.7,
+       "below": 32.0
+      },
+      "farmland": {
+       "bodyL": 35.7,
+       "groundL": 67.3,
+       "below": 31.6
+      },
+      "swamp": {
+       "bodyL": 35.0,
+       "groundL": 58.5,
+       "below": 23.5
+      },
+      "forest": {
+       "bodyL": 35.0,
+       "groundL": 58.7,
+       "below": 23.7
+      },
+      "worstBelow": 23.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.4,
+      "dE_upperThird": 2.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 27,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.027
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 3150,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.122
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.557,
+      "edgeDevPct": 0.58,
+      "pass_": false
+     }
+    },
+    "flags": [
+     "facing",
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.577,
+     "scale": 1.388,
+     "aspect": 1.1,
+     "shear": 0.15,
+     "M": [
+      [
+       1.52677,
+       0.20512
+      ],
+      [
+       0.0,
+       1.26179
+      ]
+     ],
+     "t": [
+      -309.35,
+      -174.85
+     ],
+     "guideWuPerPx": 0.30631,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.3677,
+     "wuPerPxFromArea": 0.10476,
+     "wuPerPxFromThickness": 0.11489,
+     "wuPerPxFromFit": 0.11319,
+     "fitAtAreaScale": 0.579,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 98.41,
+    "wuPerPx": 0.11132,
+    "kind": "standing",
+    "anchorPx": [
+     462.9,
+     915.7
+    ],
+    "points": {
+     "footR": [
+      6.0,
+      -4.8
+     ],
+     "footL": [
+      -9.2,
+      -9.3
+     ],
+     "handR": [
+      56.1,
+      -42.5
+     ],
+     "handL": [
+      -50.8,
+      -81.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.back.hit",
+      "shadow": "treant-02.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "treant-02.back.hit.white",
+      "scale": 0.2226,
+      "w": 222,
+      "h": 200
+     },
+     "H": {
+      "frame": "treant-02.back.hit",
+      "shadow": "treant-02.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "treant-02.back.hit.white",
+      "scale": 0.4453,
+      "w": 445,
+      "h": 399
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11361,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 11.8,
+     "anchorY": 915.7,
+     "idleAnchorBelowSoleWu": 4.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     462.9,
+     810.0
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.back.S.nb21.2k/treant-02.back.hit.png",
+    "raw": "stage-d/raw/act.treant-02.back.S.nb21.2k.png",
+    "rawSha256": "2f07d812ac7e2b2dd1f3bb715f14ca7906bc6167b05475b54e4259875dd90330",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.back.png",
+    "tag": "act.treant-02.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.512,
+      "iouMirrored": 0.469,
+      "aspectRatio": 0.992,
+      "headDx": -0.12,
+      "guideHeadDx": -0.169,
+      "facingMargin": 0.043,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 6962,
+      "keyHueShiftedPct": 0.01,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 36.2,
+       "groundL": 67.7,
+       "below": 31.6
+      },
+      "farmland": {
+       "bodyL": 36.1,
+       "groundL": 67.3,
+       "below": 31.2
+      },
+      "swamp": {
+       "bodyL": 35.4,
+       "groundL": 58.5,
+       "below": 23.0
+      },
+      "forest": {
+       "bodyL": 35.5,
+       "groundL": 58.7,
+       "below": 23.3
+      },
+      "worstBelow": 23.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.4,
+      "dE_upperThird": 2.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 30,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.948
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2581,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.096
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.557,
+      "edgeDevPct": 0.58,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.614,
+     "scale": 1.4337,
+     "aspect": 1.06,
+     "shear": 0.05,
+     "M": [
+      [
+       1.51971,
+       0.06763
+      ],
+      [
+       0.0,
+       1.35254
+      ]
+     ],
+     "t": [
+      -271.99,
+      -332.37
+     ],
+     "guideWuPerPx": 0.29356,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.3677,
+     "wuPerPxFromArea": 0.11132,
+     "wuPerPxFromThickness": 0.11361,
+     "wuPerPxFromFit": 0.10502,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 104.57,
+    "wuPerPx": 0.12173,
+    "kind": "lying",
+    "anchorPx": [
+     829.1,
+     210.7
+    ],
+    "points": {
+     "footR": [
+      9.1,
+      -10.3
+     ],
+     "footL": [
+      -8.7,
+      -17.1
+     ],
+     "handR": [
+      5.8,
+      32.5
+     ],
+     "handL": [
+      -75.6,
+      -7.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.back.dead",
+      "shadow": "treant-02.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2435,
+      "w": 241,
+      "h": 212
+     },
+     "H": {
+      "frame": "treant-02.back.dead",
+      "shadow": "treant-02.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4869,
+      "w": 482,
+      "h": 424
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11753,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.back.S.nb21.2k/treant-02.back.dead.png",
+    "raw": "stage-d/raw/act.treant-02.back.S.nb21.2k.png",
+    "rawSha256": "2f07d812ac7e2b2dd1f3bb715f14ca7906bc6167b05475b54e4259875dd90330",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.back.png",
+    "tag": "act.treant-02.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.614,
+      "iouMirrored": 0.364,
+      "aspectRatio": 1.007,
+      "headDx": 0.353,
+      "guideHeadDx": 0.549,
+      "facingMargin": 0.25,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 7766,
+      "keyHueShiftedPct": 0.05,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 35.7,
+       "groundL": 67.7,
+       "below": 32.1
+      },
+      "farmland": {
+       "bodyL": 35.6,
+       "groundL": 67.3,
+       "below": 31.7
+      },
+      "swamp": {
+       "bodyL": 35.0,
+       "groundL": 58.5,
+       "below": 23.4
+      },
+      "forest": {
+       "bodyL": 35.1,
+       "groundL": 58.7,
+       "below": 23.6
+      },
+      "worstBelow": 23.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.5,
+      "dE_upperThird": 5.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 19,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.953
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 3233,
+      "keyHueShiftedPct": 0.03,
+      "pass_": true,
+      "rimFixedShare": 0.111
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.557,
+      "edgeDevPct": 0.58,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.723,
+     "scale": 1.0451,
+     "aspect": 0.99,
+     "shear": -0.013,
+     "M": [
+      [
+       1.03462,
+       -0.0142
+      ],
+      [
+       0.0,
+       1.05563
+      ]
+     ],
+     "t": [
+      -7.82,
+      -25.1
+     ],
+     "guideWuPerPx": 0.26031,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.3677,
+     "wuPerPxFromArea": 0.11108,
+     "wuPerPxFromThickness": 0.12173,
+     "wuPerPxFromFit": 0.12775,
+     "fitAtAreaScale": 0.689,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 100.6,
+    "wuPerPx": 0.09306,
+    "kind": "standing",
+    "anchorPx": [
+     393.4,
+     1014.4
+    ],
+    "points": {
+     "footR": [
+      -11.0,
+      -6.2
+     ],
+     "footL": [
+      3.7,
+      -1.2
+     ],
+     "handR": [
+      -29.9,
+      -28.2
+     ],
+     "handL": [
+      6.5,
+      -16.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "treant-02.front.idle.white",
+      "scale": 0.1861,
+      "w": 112,
+      "h": 204
+     },
+     "H": {
+      "white": "treant-02.front.idle.white",
+      "scale": 0.3722,
+      "w": 224,
+      "h": 408
+     }
+    },
+    "texture": "stage C: stage-c/atlas/creatures/frames/treant-02.front/treant-02.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "windup": {
+    "heightWu": 119.33,
+    "wuPerPx": 0.12469,
+    "kind": "standing",
+    "anchorPx": [
+     198.5,
+     893.3
+    ],
+    "points": {
+     "footR": [
+      -9.4,
+      2.6
+     ],
+     "footL": [
+      6.5,
+      6.8
+     ],
+     "handR": [
+      -16.3,
+      -107.4
+     ],
+     "handL": [
+      19.8,
+      -94.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.front.windup",
+      "shadow": "treant-02.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2494,
+      "w": 103,
+      "h": 242
+     },
+     "H": {
+      "frame": "treant-02.front.windup",
+      "shadow": "treant-02.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4988,
+      "w": 206,
+      "h": 483
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.12469,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.0,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.front.S.nb21.2k/treant-02.front.windup.png",
+    "raw": "stage-d/raw/act.treant-02.front.S.nb21.2k.png",
+    "rawSha256": "026510fa90837b984f2f221393d65e7c49f02597c0b0a08205acafcd10bf8db1",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.front.png",
+    "tag": "act.treant-02.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.669,
+      "iouMirrored": 0.61,
+      "aspectRatio": 1.356,
+      "headDx": -0.048,
+      "guideHeadDx": -0.127,
+      "facingMargin": 0.059,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 4290,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.2,
+       "groundL": 67.7,
+       "below": 35.5
+      },
+      "farmland": {
+       "bodyL": 32.2,
+       "groundL": 67.3,
+       "below": 35.1
+      },
+      "swamp": {
+       "bodyL": 31.6,
+       "groundL": 58.5,
+       "below": 26.8
+      },
+      "forest": {
+       "bodyL": 31.6,
+       "groundL": 58.7,
+       "below": 27.1
+      },
+      "worstBelow": 26.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 2.7,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 5,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.186
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1666,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.132
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.622,
+      "edgeDevPct": 0.4,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.777,
+     "scale": 1.1677,
+     "aspect": 1.1,
+     "shear": -0.025,
+     "M": [
+      [
+       1.28447,
+       -0.02807
+      ],
+      [
+       0.0,
+       1.06155
+      ]
+     ],
+     "t": [
+      -16.4,
+      -42.98
+     ],
+     "guideWuPerPx": 0.36743,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0161,
+     "wuPerPxFromArea": 0.12469,
+     "wuPerPxFromThickness": 0.11065,
+     "wuPerPxFromFit": 0.1199,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "slam": {
+    "heightWu": 85.75,
+    "wuPerPx": 0.09161,
+    "kind": "standing",
+    "anchorPx": [
+     479.9,
+     804.4
+    ],
+    "points": {
+     "footR": [
+      -12.8,
+      5.8
+     ],
+     "footL": [
+      9.4,
+      5.8
+     ],
+     "handR": [
+      -34.6,
+      -16.8
+     ],
+     "handL": [
+      0.9,
+      -1.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.front.slam",
+      "shadow": "treant-02.front.slam.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1832,
+      "w": 131,
+      "h": 174
+     },
+     "H": {
+      "frame": "treant-02.front.slam",
+      "shadow": "treant-02.front.slam.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3664,
+      "w": 262,
+      "h": 348
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.09368,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -6.5,
+     "anchorY": 804.4,
+     "idleAnchorBelowSoleWu": -5.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     479.9,
+     875.9
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.front.S.nb21.2k/treant-02.front.slam.png",
+    "raw": "stage-d/raw/act.treant-02.front.S.nb21.2k.png",
+    "rawSha256": "026510fa90837b984f2f221393d65e7c49f02597c0b0a08205acafcd10bf8db1",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.front.png",
+    "tag": "act.treant-02.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.622,
+      "iouMirrored": 0.409,
+      "aspectRatio": 1.149,
+      "headDx": -0.128,
+      "guideHeadDx": 0.014,
+      "facingMargin": 0.213,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 7360,
+      "keyHueShiftedPct": 0.01,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 33.6,
+       "groundL": 67.7,
+       "below": 34.2
+      },
+      "farmland": {
+       "bodyL": 33.6,
+       "groundL": 67.3,
+       "below": 33.8
+      },
+      "swamp": {
+       "bodyL": 32.9,
+       "groundL": 58.5,
+       "below": 25.6
+      },
+      "forest": {
+       "bodyL": 32.9,
+       "groundL": 58.7,
+       "below": 25.8
+      },
+      "worstBelow": 25.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.4,
+      "dE_upperThird": 3.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 9,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.872
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1785,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.112
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.622,
+      "edgeDevPct": 0.4,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.737,
+     "scale": 1.077,
+     "aspect": 0.965,
+     "shear": -0.125,
+     "M": [
+      [
+       1.03932,
+       -0.12945
+      ],
+      [
+       0.0,
+       1.11608
+      ]
+     ],
+     "t": [
+      66.21,
+      -70.44
+     ],
+     "guideWuPerPx": 0.24899,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0161,
+     "wuPerPxFromArea": 0.09161,
+     "wuPerPxFromThickness": 0.10759,
+     "wuPerPxFromFit": 0.08809,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 101.03,
+    "wuPerPx": 0.10668,
+    "kind": "standing",
+    "anchorPx": [
+     504.9,
+     892.4
+    ],
+    "points": {
+     "footR": [
+      -5.3,
+      -8.8
+     ],
+     "footL": [
+      6.0,
+      5.8
+     ],
+     "handR": [
+      -52.5,
+      -62.9
+     ],
+     "handL": [
+      42.6,
+      -22.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.front.hit",
+      "shadow": "treant-02.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "treant-02.front.hit.white",
+      "scale": 0.2134,
+      "w": 202,
+      "h": 205
+     },
+     "H": {
+      "frame": "treant-02.front.hit",
+      "shadow": "treant-02.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "treant-02.front.hit.white",
+      "scale": 0.4267,
+      "w": 403,
+      "h": 409
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11008,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -4.6,
+     "anchorY": 892.4,
+     "idleAnchorBelowSoleWu": -5.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     504.9,
+     935.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.front.S.nb21.2k/treant-02.front.hit.png",
+    "raw": "stage-d/raw/act.treant-02.front.S.nb21.2k.png",
+    "rawSha256": "026510fa90837b984f2f221393d65e7c49f02597c0b0a08205acafcd10bf8db1",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.front.png",
+    "tag": "act.treant-02.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.616,
+      "iouMirrored": 0.437,
+      "aspectRatio": 1.058,
+      "headDx": 0.002,
+      "guideHeadDx": 0.021,
+      "facingMargin": 0.179,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 6536,
+      "keyHueShiftedPct": 0.03,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.7,
+       "groundL": 67.7,
+       "below": 36.0
+      },
+      "farmland": {
+       "bodyL": 31.7,
+       "groundL": 67.3,
+       "below": 35.6
+      },
+      "swamp": {
+       "bodyL": 31.1,
+       "groundL": 58.5,
+       "below": 27.4
+      },
+      "forest": {
+       "bodyL": 31.1,
+       "groundL": 58.7,
+       "below": 27.6
+      },
+      "worstBelow": 27.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 3.0,
+      "dE_upperThird": 3.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 8,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.036
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2161,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.083
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.622,
+      "edgeDevPct": 0.4,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.717,
+     "scale": 1.1337,
+     "aspect": 1.055,
+     "shear": 0.0,
+     "M": [
+      [
+       1.19606,
+       0.0
+      ],
+      [
+       0.0,
+       1.0746
+      ]
+     ],
+     "t": [
+      -123.4,
+      -13.17
+     ],
+     "guideWuPerPx": 0.3174,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0161,
+     "wuPerPxFromArea": 0.11201,
+     "wuPerPxFromThickness": 0.10623,
+     "wuPerPxFromFit": 0.10668,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 88.0,
+    "wuPerPx": 0.09811,
+    "kind": "lying",
+    "anchorPx": [
+     171.3,
+     915.8
+    ],
+    "points": {
+     "footR": [
+      -7.1,
+      -13.1
+     ],
+     "footL": [
+      6.9,
+      -7.9
+     ],
+     "handR": [
+      -5.3,
+      -65.3
+     ],
+     "handL": [
+      59.3,
+      -40.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "treant-02.front.dead",
+      "shadow": "treant-02.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1962,
+      "w": 187,
+      "h": 179
+     },
+     "H": {
+      "frame": "treant-02.front.dead",
+      "shadow": "treant-02.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3924,
+      "w": 374,
+      "h": 358
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.09811,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.treant-02.front.S.nb21.2k/treant-02.front.dead.png",
+    "raw": "stage-d/raw/act.treant-02.front.S.nb21.2k.png",
+    "rawSha256": "026510fa90837b984f2f221393d65e7c49f02597c0b0a08205acafcd10bf8db1",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/treant.S.front.png",
+    "tag": "act.treant-02.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.674,
+      "iouMirrored": 0.119,
+      "aspectRatio": 0.953,
+      "headDx": 0.381,
+      "guideHeadDx": 0.308,
+      "facingMargin": 0.555,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 7740,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.7,
+       "groundL": 67.7,
+       "below": 35.0
+      },
+      "farmland": {
+       "bodyL": 32.7,
+       "groundL": 67.3,
+       "below": 34.6
+      },
+      "swamp": {
+       "bodyL": 32.1,
+       "groundL": 58.5,
+       "below": 26.4
+      },
+      "forest": {
+       "bodyL": 32.1,
+       "groundL": 58.7,
+       "below": 26.6
+      },
+      "worstBelow": 26.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.7,
+      "dE_upperThird": 4.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 7,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.875
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2309,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.089
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.622,
+      "edgeDevPct": 0.4,
+      "pass_": false
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.802,
+     "scale": 1.011,
+     "aspect": 1.0,
+     "shear": 0.006,
+     "M": [
+      [
+       1.01102,
+       0.00632
+      ],
+      [
+       0.0,
+       1.01102
+      ]
+     ],
+     "t": [
+      -15.45,
+      -0.09
+     ],
+     "guideWuPerPx": 0.26031,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0161,
+     "wuPerPxFromArea": 0.09811,
+     "wuPerPxFromThickness": 0.1227,
+     "wuPerPxFromFit": 0.09811,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {},
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {}
+}

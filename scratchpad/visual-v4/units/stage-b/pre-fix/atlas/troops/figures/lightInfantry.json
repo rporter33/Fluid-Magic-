@@ -1,0 +1,396 @@
+{
+ "figure": "lightInfantry",
+ "unit": "lightInfantry",
+ "nation": "independent",
+ "key": "magenta",
+ "cloth": "#8C8A80",
+ "hueLocked": false,
+ "kit": "A Light Infantry levy of the free villages, sworn to no nation: a padded jack of undyed tan linen, worn under a sleeveless surcoat of undyed grey wool that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; padded sleeves and leather bracers; a plain rounded iron skullcap over a padded coif; a short grey wool shoulder cape; wrapped legs and soft boots; a long ash-wood spear with a leaf-shaped iron head; a small round wooden shield whose face is painted plain pale grey, with a thin iron rim and a boss. Plain, practical, worn; no colours but grey, tan, leather brown and iron.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.4828,
+     "standPx": 56,
+     "frames": [
+      "lightInfantry.back.stand",
+      "lightInfantry.back.stand.white",
+      "lightInfantry.back.idle2",
+      "lightInfantry.back.marchA",
+      "lightInfantry.back.marchB",
+      "lightInfantry.back.windup",
+      "lightInfantry.back.strike",
+      "lightInfantry.back.follow",
+      "lightInfantry.back.brace",
+      "lightInfantry.back.recoil",
+      "lightInfantry.back.recoil.white",
+      "lightInfantry.back.fall",
+      "lightInfantry.back.deadA",
+      "lightInfantry.back.deadB",
+      "lightInfantry.back.fleeA",
+      "lightInfantry.back.fleeB",
+      "lightInfantry.back.cheer",
+      "lightInfantry.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.9655,
+     "standPx": 112,
+     "frames": [
+      "lightInfantry.back.stand",
+      "lightInfantry.back.stand.white",
+      "lightInfantry.back.idle2",
+      "lightInfantry.back.marchA",
+      "lightInfantry.back.marchB",
+      "lightInfantry.back.windup",
+      "lightInfantry.back.strike",
+      "lightInfantry.back.follow",
+      "lightInfantry.back.brace",
+      "lightInfantry.back.recoil",
+      "lightInfantry.back.recoil.white",
+      "lightInfantry.back.fall",
+      "lightInfantry.back.deadA",
+      "lightInfantry.back.deadB",
+      "lightInfantry.back.fleeA",
+      "lightInfantry.back.fleeB",
+      "lightInfantry.back.cheer",
+      "lightInfantry.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.lightInfantry.back.g3pro.png",
+   "sha256": "6282053cb3091210accf614cfbe7ffb46a4a0adf83935b23dea3d898bf720837",
+   "model": "gemini-3-pro-image",
+   "job": "lightInfantry.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/lightInfantry.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.back.from-cw.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-levy/01.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.804,
+      0.218
+     ],
+     "idle2": [
+      0.775,
+      0.079
+     ],
+     "marchA": [
+      0.767,
+      0.255
+     ],
+     "marchB": [
+      0.831,
+      0.325
+     ],
+     "windup": [
+      0.603,
+      0.023
+     ],
+     "strike": [
+      0.797,
+      0.312
+     ],
+     "follow": [
+      0.709,
+      0.302
+     ],
+     "brace": [
+      0.751,
+      0.152
+     ],
+     "recoil": [
+      0.666,
+      0.092
+     ],
+     "fall": [
+      0.551,
+      0.533
+     ],
+     "deadA": [
+      0.545,
+      0.543
+     ],
+     "deadB": [
+      0.078,
+      0.059
+     ],
+     "fleeA": [
+      0.812,
+      0.371
+     ],
+     "fleeB": [
+      0.837,
+      0.555
+     ],
+     "cheer": [
+      0.612,
+      0.04
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.584,
+     "marchLegsIoU": 0.481,
+     "mostAlike": [
+      "stand~marchB",
+      0.622
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.026,
+      "marchA": 1.095,
+      "marchB": 1.034
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.014,
+     "histMin": [
+      "fall",
+      0.71
+     ],
+     "maxDE": [
+      "windup",
+      3.1
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 28.0,
+     "afterMax": 0.3
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.0
+     },
+     "sideKeyline": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.0
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.266,
+     "keyInUnitPct": 0.098,
+     "fringePct": 0.0,
+     "edgeDevPct": 3.95,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-independent-S",
+     "scale": 0.4628,
+     "standPx": 56,
+     "frames": [
+      "lightInfantry.front.stand",
+      "lightInfantry.front.stand.white",
+      "lightInfantry.front.idle2",
+      "lightInfantry.front.marchA",
+      "lightInfantry.front.marchB",
+      "lightInfantry.front.windup",
+      "lightInfantry.front.strike",
+      "lightInfantry.front.follow",
+      "lightInfantry.front.brace",
+      "lightInfantry.front.recoil",
+      "lightInfantry.front.recoil.white",
+      "lightInfantry.front.fall",
+      "lightInfantry.front.deadA",
+      "lightInfantry.front.deadB",
+      "lightInfantry.front.fleeA",
+      "lightInfantry.front.fleeB",
+      "lightInfantry.front.cheer",
+      "lightInfantry.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-independent-H",
+     "scale": 0.9256,
+     "standPx": 112,
+     "frames": [
+      "lightInfantry.front.stand",
+      "lightInfantry.front.stand.white",
+      "lightInfantry.front.idle2",
+      "lightInfantry.front.marchA",
+      "lightInfantry.front.marchB",
+      "lightInfantry.front.windup",
+      "lightInfantry.front.strike",
+      "lightInfantry.front.follow",
+      "lightInfantry.front.brace",
+      "lightInfantry.front.recoil",
+      "lightInfantry.front.recoil.white",
+      "lightInfantry.front.fall",
+      "lightInfantry.front.deadA",
+      "lightInfantry.front.deadB",
+      "lightInfantry.front.fleeA",
+      "lightInfantry.front.fleeB",
+      "lightInfantry.front.cheer",
+      "lightInfantry.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.lightInfantry.front.g3pro.png",
+   "sha256": "fcab53832e589e437b258730b7087a3c2f1de3098e55f94db6d0a25981f94a2a",
+   "model": "gemini-3-pro-image",
+   "job": "lightInfantry.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/lightInfantry.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/camrefs/independent.front.from-wd.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/independent/independentCaptain-levy/01.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.799,
+      0.123
+     ],
+     "idle2": [
+      0.793,
+      0.728
+     ],
+     "marchA": [
+      0.85,
+      0.222
+     ],
+     "marchB": [
+      0.782,
+      0.375
+     ],
+     "windup": [
+      0.859,
+      0.334
+     ],
+     "strike": [
+      0.768,
+      0.534
+     ],
+     "follow": [
+      0.904,
+      0.461
+     ],
+     "brace": [
+      0.868,
+      0.43
+     ],
+     "recoil": [
+      0.833,
+      0.281
+     ],
+     "fall": [
+      0.807,
+      0.598
+     ],
+     "deadA": [
+      0.774,
+      0.498
+     ],
+     "deadB": [
+      0.911,
+      0.88
+     ],
+     "fleeA": [
+      0.911,
+      0.292
+     ],
+     "fleeB": [
+      0.83,
+      0.578
+     ],
+     "cheer": [
+      0.837,
+      0.247
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.516,
+     "marchLegsIoU": 0.466,
+     "mostAlike": [
+      "stand~marchA",
+      0.764
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.008,
+      "marchA": 1.0,
+      "marchB": 0.967
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.001,
+     "histMin": [
+      "fall",
+      0.767
+     ],
+     "maxDE": [
+      "fleeB",
+      6.0
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 21.2,
+     "afterMax": 0.4
+    },
+    "side": {
+     "kind": "independent",
+     "neutral": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.5
+     },
+     "sideKeyline": {
+      "foreign": 0.0,
+      "foreignBy": {
+       "cinderHorde": 0.0,
+       "thornwood": 0.0
+      },
+      "worstBelow": 19.5
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 13.01,
+     "keyInUnitPct": 0.135,
+     "fringePct": 0.0,
+     "edgeDevPct": 4.2,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

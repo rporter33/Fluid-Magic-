@@ -1,0 +1,161 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Painted map bench</title>
+<style>body{margin:0;background:#222}canvas{display:block}</style></head>
+<body><canvas id="out"></canvas>
+<script>
+// Painted-map recipe bench: a seeded 105-province Large map (1037 x 648 units), baked in canvas 2D
+// with each recipe stage timed. Every random draw comes from a seeded stream.
+const Q = new URLSearchParams(location.search);
+const RES = Number(Q.get('res') ?? 2.5);          // px per map unit (Mid 1.25 x DPR 2)
+const STAGES = (Q.get('stages') ?? 'all').split(',');
+const on = (s) => STAGES.includes('all') || STAGES.includes(s);
+function mulberry32(a) { return function () { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function h32(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193); } return h >>> 0; }
+const SEED = Q.get('seed') ?? '7'; const rngFor = (key) => mulberry32(h32('seed' + SEED + ':' + key));
+const gauss = (R) => { let u = 0, v = 0; while (u === 0) u = R(); v = R(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+// ---- colour helpers (sRGB <-> CIELAB D65)
+const hex2rgb = (h) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 16));
+const rgb2hex = (c) => '#' + c.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+const lin = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+const gam = (v) => 255 * (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055);
+function rgb2lab([r, g, b]) { const R = lin(r), G = lin(g), B = lin(b); const x = (0.4124 * R + 0.3576 * G + 0.1805 * B) / 0.95047, y = 0.2126 * R + 0.7152 * G + 0.0722 * B, z = (0.0193 * R + 0.1192 * G + 0.9505 * B) / 1.08883; const f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116); return [116 * f(y) - 16, 500 * (f(x) - f(y)), 200 * (f(y) - f(z))]; }
+function lab2rgb([L, a, b]) { const fy = (L + 16) / 116, fx = fy + a / 500, fz = fy - b / 200; const fi = (t) => (t ** 3 > 0.008856 ? t ** 3 : (t - 16 / 116) / 7.787); const x = fi(fx) * 0.95047, y = fi(fy), z = fi(fz) * 1.08883; return [gam(3.2406 * x - 1.5372 * y - 0.4986 * z), gam(-0.9689 * x + 1.8758 * y + 0.0415 * z), gam(0.0557 * x - 0.204 * y + 1.057 * z)]; }
+function de2000(l1, l2) { const [L1, a1, b1] = l1, [L2, a2, b2] = l2, rad = Math.PI / 180; const C1 = Math.hypot(a1, b1), C2 = Math.hypot(a2, b2), Cb = (C1 + C2) / 2, G = 0.5 * (1 - Math.sqrt(Cb ** 7 / (Cb ** 7 + 25 ** 7))); const a1p = a1 * (1 + G), a2p = a2 * (1 + G), C1p = Math.hypot(a1p, b1), C2p = Math.hypot(a2p, b2); const h = (b, a) => { const v = Math.atan2(b, a) / rad; return v < 0 ? v + 360 : v; }; const h1 = h(b1, a1p), h2 = h(b2, a2p); const dL = L2 - L1, dC = C2p - C1p; let dh = h2 - h1; if (C1p * C2p === 0) dh = 0; else if (dh > 180) dh -= 360; else if (dh < -180) dh += 360; const dH = 2 * Math.sqrt(C1p * C2p) * Math.sin((dh * rad) / 2); const Lb = (L1 + L2) / 2, Cbp = (C1p + C2p) / 2; let hb = h1 + h2; if (C1p * C2p !== 0) { if (Math.abs(h1 - h2) > 180) hb = h1 + h2 < 360 ? (h1 + h2 + 360) / 2 : (h1 + h2 - 360) / 2; else hb = (h1 + h2) / 2; } const Tt = 1 - 0.17 * Math.cos((hb - 30) * rad) + 0.24 * Math.cos(2 * hb * rad) + 0.32 * Math.cos((3 * hb + 6) * rad) - 0.2 * Math.cos((4 * hb - 63) * rad); const dTh = 30 * Math.exp(-(((hb - 275) / 25) ** 2)), Rc = 2 * Math.sqrt(Cbp ** 7 / (Cbp ** 7 + 25 ** 7)), Sl = 1 + (0.015 * (Lb - 50) ** 2) / Math.sqrt(20 + (Lb - 50) ** 2), Sc = 1 + 0.045 * Cbp, Sh = 1 + 0.015 * Cbp * Tt, Rt = -Math.sin(2 * dTh * rad) * Rc; return Math.sqrt((dL / Sl) ** 2 + (dC / Sc) ** 2 + (dH / Sh) ** 2 + Rt * (dC / Sc) * (dH / Sh)); }
+const shadeL = (hex, d) => { const l = rgb2lab(hex2rgb(hex)); l[0] = Math.max(0, Math.min(100, l[0] + d)); return rgb2hex(lab2rgb(l)); };
+// ---- the map: 105 sites by best-candidate sampling, Voronoi by labelled half-plane clipping
+const W = 1037, H = 648, N = 105;
+const TER = { plains: '#C1D29F', farmland: '#EEBA3A', forest: '#374C2B', hills: '#856824', mountains: '#8DA4AD', swamp: '#1A727A', wasteland: '#AE897F' };
+const GRAN = { plains: 0.25, farmland: 0.2, forest: 0.45, hills: 0.6, mountains: 0.7, swamp: 0.35, wasteland: 0.8 };
+const TK = Object.keys(TER);
+const sites = []; { const R = rngFor('sites'); for (let i = 0; i < N; i++) { let best = null, bd = -1; for (let k = 0; k < 12; k++) { const c = [R() * W, R() * H]; let d = Infinity; for (const s of sites) d = Math.min(d, (s[0] - c[0]) ** 2 + (s[1] - c[1]) ** 2); if (d > bd) { bd = d; best = c; } } sites.push(best); } }
+const terrain = sites.map((_, i) => TK[Math.floor(rngFor('ter' + i)() * TK.length)]);
+function clipCell(i) {
+  let poly = [[0, 0, -1], [W, 0, -2], [W, H, -3], [0, H, -4]];
+  const si = sites[i];
+  for (let j = 0; j < N; j++) {
+    if (j === i) continue; const sj = sites[j];
+    const nx = sj[0] - si[0], ny = sj[1] - si[1], c = (sj[0] ** 2 + sj[1] ** 2 - si[0] ** 2 - si[1] ** 2) / 2;
+    const inside = (p) => p[0] * nx + p[1] * ny <= c;
+    const out = [];
+    for (let k = 0; k < poly.length; k++) {
+      const a = poly[k], b = poly[(k + 1) % poly.length], ia = inside(a), ib = inside(b);
+      const cut = () => { const da = a[0] * nx + a[1] * ny - c, db = b[0] * nx + b[1] * ny - c, t = da / (da - db); return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; };
+      if (ia && ib) out.push(a);
+      else if (ia && !ib) { out.push(a); const p = cut(); out.push([p[0], p[1], j]); }
+      else if (!ia && ib) { const p = cut(); out.push([p[0], p[1], a[2]]); }
+    }
+    poly = out; if (poly.length < 3) break;
+  }
+  return poly.filter((p, k) => { const q = poly[(k + 1) % poly.length]; return Math.hypot(q[0] - p[0], q[1] - p[1]) > 1e-6; });
+}
+const LLOYD = Number(Q.get('lloyd') ?? 2);
+for (let r = 0; r < LLOYD; r++) { const polys = sites.map((_, i) => clipCell(i)); polys.forEach((P, i) => { let A = 0, cx = 0, cy = 0; for (let k = 0; k < P.length; k++) { const a = P[k], b = P[(k + 1) % P.length], c = a[0] * b[1] - b[0] * a[1]; A += c; cx += (a[0] + b[0]) * c; cy += (a[1] + b[1]) * c; } sites[i] = [cx / (3 * A), cy / (3 * A)]; }); }
+const raw = sites.map((_, i) => clipCell(i));
+// ---- noisy edges (Red Blob mapgen2 recursiveSubdivision): one polyline per unordered pair, reused reversed by the other side
+function subdivide(a, b, p, q, R, len, amp, out) {
+  const dx = a[0] - b[0], dy = a[1] - b[1];
+  if (dx * dx + dy * dy < len * len) { out.push(b); return; }
+  const L = (u, v, t) => [u[0] + (v[0] - u[0]) * t, u[1] + (v[1] - u[1]) * t];
+  const div = 0.5 * (1 - amp) + R() * amp, c = L(p, q, div);
+  subdivide(a, c, L(a, p, 0.5), L(a, q, 0.5), R, len, amp, out); subdivide(c, b, L(b, p, 0.5), L(b, q, 0.5), R, len, amp, out);
+}
+const EDGES = new Map(); let mismatch = 0, guarded = 0;
+const NOISE_LEN = Number(Q.get('nlen') ?? 3), NOISE_AMP = Number(Q.get('namp') ?? 0.45);
+for (let i = 0; i < N; i++) { const P = raw[i]; for (let k = 0; k < P.length; k++) { const j = P[k][2]; if (j < 0 || j < i) continue; const a = P[k], b = P[(k + 1) % P.length]; const pts = [[a[0], a[1]]]; const GUARD = Q.get('guard') !== '0'; const o = (u, v, w) => Math.sign((v[0] - u[0]) * (w[1] - u[1]) - (v[1] - u[1]) * (w[0] - u[0])); const convex = o(a, b, sites[i]) * o(a, b, sites[j]) < 0 && o(sites[i], sites[j], a) * o(sites[i], sites[j], b) < 0; if (GUARD && !convex) { guarded++; pts.push([b[0], b[1]]); EDGES.set(`${i}:${j}`, pts); continue; } subdivide([a[0], a[1]], [b[0], b[1]], sites[i], sites[j], rngFor(`edge:${i}:${j}`), NOISE_LEN, NOISE_AMP, pts); const CH = Number(Q.get('chaikin') ?? 0); let sm = pts; for (let it = 0; it < CH; it++) { const o2 = [sm[0]]; for (let m = 0; m < sm.length - 1; m++) { const A = sm[m], B = sm[m + 1]; if (m > 0) o2.push([0.75 * A[0] + 0.25 * B[0], 0.75 * A[1] + 0.25 * B[1]]); if (m < sm.length - 2) o2.push([0.25 * A[0] + 0.75 * B[0], 0.25 * A[1] + 0.75 * B[1]]); } o2.push(sm[sm.length - 1]); sm = o2; } EDGES.set(`${i}:${j}`, sm); } }
+const nbr = sites.map(() => new Set());
+const cells = raw.map((P, i) => {
+  const out = [];
+  for (let k = 0; k < P.length; k++) {
+    const j = P[k][2];
+    if (j < 0) { out.push([P[k][0], P[k][1]]); continue; }
+    nbr[i].add(j);
+    const key = i < j ? `${i}:${j}` : `${j}:${i}`; let pts = EDGES.get(key);
+    if (!pts) { mismatch++; out.push([P[k][0], P[k][1]]); continue; }
+    if (i > j) pts = [...pts].reverse();
+    for (let m = 0; m < pts.length - 1; m++) out.push(pts[m]);
+  }
+  return out;
+});
+// star-shaped check: every fan triangle from the site has the same orientation
+let fanBad = 0, fanTotal = 0;
+cells.forEach((P, i) => { const s = sites[i]; let sign = 0; for (let k = 0; k < P.length; k++) { const a = P[k], b = P[(k + 1) % P.length]; const cr = (a[0] - s[0]) * (b[1] - s[1]) - (a[1] - s[1]) * (b[0] - s[0]); fanTotal++; if (Math.abs(cr) < 1e-9) continue; const sg = Math.sign(cr); if (!sign) sign = sg; else if (sg !== sign) fanBad++; } });
+function segX(a, b, c, d) { const o = (p, q, r) => Math.sign((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])); return o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0; }
+let selfX = 0, cellsX = 0; cells.forEach((P) => { let x = 0; for (let k = 0; k < P.length; k++) for (let m = k + 2; m < P.length; m++) { if (k === 0 && m === P.length - 1) continue; if (segX(P[k], P[(k + 1) % P.length], P[m], P[(m + 1) % P.length])) x++; } selfX += x; if (x) cellsX++; });
+const ptsPer = cells.reduce((a, P) => a + P.length, 0) / N;
+// ---- seamless value noise tile (grey centred on 128), as mapgen2 does for its paper grain
+function noiseTile(size, cellsN, amp, key) {
+  const c = new OffscreenCanvas(size, size), g = c.getContext('2d'), img = g.createImageData(size, size), R = rngFor(key);
+  const oct = [[cellsN, 1], [cellsN * 2, 0.5], [cellsN * 4, 0.25], [cellsN * 8, 0.125]].map(([n, w]) => ({ n, w, v: Array.from({ length: n * n }, () => R() * 2 - 1) }));
+  const sm = (t) => t * t * (3 - 2 * t);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    let v = 0; for (const o of oct) { const fx = (x / size) * o.n, fy = (y / size) * o.n, x0 = Math.floor(fx), y0 = Math.floor(fy), tx = sm(fx - x0), ty = sm(fy - y0); const at = (u, w) => o.v[((w % o.n) * o.n) + (u % o.n)]; const top = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * tx, bot = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * tx; v += (top + (bot - top) * ty) * o.w; }
+    const q = 128 + v * amp, k = (y * size + x) * 4; img.data[k] = img.data[k + 1] = img.data[k + 2] = q; img.data[k + 3] = 255;
+  }
+  g.putImageData(img, 0, 0); return c;
+}
+// ---- paper fibres: short curved strokes on a transparent tile
+function fibreTile(size, key) { const c = new OffscreenCanvas(size, size), g = c.getContext('2d'), R = rngFor(key); g.lineCap = 'round'; for (let k = 0; k < 900; k++) { const x = R() * size, y = R() * size, a = R() * Math.PI, l = 3 + R() * 9; g.strokeStyle = R() < 0.5 ? 'rgba(90,70,40,.10)' : 'rgba(255,250,235,.16)'; g.lineWidth = 0.5 + R() * 0.6; g.beginPath(); for (const dx of [-1, 0, 1]) { const px = x + dx * size, py = y; } g.moveTo(x, y); g.quadraticCurveTo(x + Math.cos(a) * l * 0.5 + (R() - 0.5) * 2, y + Math.sin(a) * l * 0.5 + (R() - 0.5) * 2, x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke(); } return c; }
+// ---- Hobbs-style deformation of a polygon
+function deform(P, depth, v, R) { let pts = P; for (let d = 0; d < depth; d++) { const out = []; for (let k = 0; k < pts.length; k++) { const a = pts[k], b = pts[(k + 1) % pts.length]; out.push(a); const len = Math.hypot(b[0] - a[0], b[1] - a[1]); out.push([(a[0] + b[0]) / 2 + gauss(R) * v * len, (a[1] + b[1]) / 2 + gauss(R) * v * len]); } pts = out; v *= 0.75; } return pts; }
+const trace = (g, P) => { g.beginPath(); g.moveTo(P[0][0], P[0][1]); for (let k = 1; k < P.length; k++) g.lineTo(P[k][0], P[k][1]); g.closePath(); };
+const bbox = (P) => { let a = 1e9, b = 1e9, c = -1e9, d = -1e9; for (const [x, y] of P) { a = Math.min(a, x); b = Math.min(b, y); c = Math.max(c, x); d = Math.max(d, y); } return [a, b, c, d]; };
+// ---- glyph atlas: 16 tree variants pre-rendered once per band resolution
+function treeAtlas(res) {
+  const s = Math.ceil(9 * res), c = new OffscreenCanvas(s * 16, s), g = c.getContext('2d');
+  for (let v = 0; v < 16; v++) { const R = rngFor('tree' + v), cx = v * s + s / 2, by = s * 0.92, r = s * (0.26 + R() * 0.08); g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(cx + r * 0.3, by - 1, r * 0.9, r * 0.3, 0, 0, 7); g.fill(); g.strokeStyle = '#3A2A1C'; g.lineWidth = res * 0.5; g.beginPath(); g.moveTo(cx, by); g.lineTo(cx, by - r * 0.9); g.stroke(); const lobes = 3 + Math.floor(R() * 3); g.fillStyle = shadeL('#374C2B', 10 + R() * 6); g.strokeStyle = 'rgba(28,26,23,.7)'; g.lineWidth = res * 0.35; g.beginPath(); for (let k = 0; k <= 24; k++) { const a = (k / 24) * Math.PI * 2, rr = r * (1 + 0.12 * Math.sin(a * lobes + v)); const x = cx + Math.cos(a) * rr, y = by - r * 1.6 + Math.sin(a) * rr * 0.95; k ? g.lineTo(x, y) : g.moveTo(x, y); } g.closePath(); g.fill(); g.stroke(); g.fillStyle = 'rgba(255,255,230,.18)'; g.beginPath(); g.ellipse(cx - r * 0.3, by - r * 1.9, r * 0.45, r * 0.3, -0.5, 0, 7); g.fill(); }
+  return { c, s };
+}
+// ---- the bake, stage by stage
+const T = {}; let FL = null; const tick = (k, t0) => { if (FL && Q.get('flush') === '1') FL.getImageData(0, 0, 1, 1); T[k] = (T[k] ?? 0) + performance.now() - t0; };
+function bake(res) {
+  const TILE = Number(Q.get('tile') ?? 0), cw = TILE || Math.round(W * res), ch = TILE || Math.round(H * res), C = new OffscreenCanvas(cw, ch), g = C.getContext('2d');
+  const ox = TILE ? W / 2 - TILE / res / 2 : 0, oy = TILE ? H / 2 - TILE / res / 2 : 0;
+  g.setTransform(res, 0, 0, res, -ox * res, -oy * res); FL = g;
+  const px = 1 / res, grain = noiseTile(256, 6, 26, 'grain'), paper = noiseTile(256, 3, 14, 'paper'), fib = fibreTile(256, 'fib');
+  const pat = (tile) => { const p = g.createPattern(tile, 'repeat'); p.setTransform(new DOMMatrix([px * 1.2, 0, 0, px * 1.2, 0, 0])); return p; };
+  const grainP = pat(grain), paperP = pat(paper), fibP = pat(fib);
+  const atlas = treeAtlas(res);
+  let t0 = performance.now();
+  const COMP = Q.get('comp') ? JSON.parse(Q.get('comp')) : {}; for (let i = 0; i < N; i++) { trace(g, cells[i]); g.fillStyle = COMP[terrain[i]] ? shadeL(TER[terrain[i]], COMP[terrain[i]]) : TER[terrain[i]]; g.fill(); }
+  tick('1 flat fill (noisy polygons)', t0);
+  if (on('wash')) { t0 = performance.now(); for (let i = 0; i < N; i++) { const F = TER[terrain[i]], R = rngFor('wash' + i), P = cells[i]; g.save(); trace(g, P); g.clip(); const s = sites[i]; const base = raw[i].map(([x, y]) => [s[0] + (x - s[0]) * 1.08, s[1] + (y - s[1]) * 1.08]); for (let b = 0; b < Number(Q.get('wb') ?? 3); b++) { const B = deform(base, 2, 0.12, R); for (let l = 0; l < Number(Q.get('wl') ?? 6); l++) { const Lp = deform(B, 3, 0.08, R); trace(g, Lp); g.globalAlpha = 0.07; g.fillStyle = shadeL(F, (l % 2 ? 5 : -5)); g.fill(); } } g.globalAlpha = 1; g.restore(); } tick('2 wash: 18 deformed layers @7%', t0); }
+  if (on('warm')) { t0 = performance.now(); g.globalCompositeOperation = 'soft-light'; for (let i = 0; i < N; i++) { const bb = bbox(cells[i]); g.save(); trace(g, cells[i]); g.clip(); const gr = g.createLinearGradient(bb[0], bb[1], bb[2], bb[3]); const WA = Number(Q.get('wa') ?? 0.3); gr.addColorStop(0, `rgba(255,214,150,${WA})`); gr.addColorStop(0.5, 'rgba(128,128,128,0)'); gr.addColorStop(1, `rgba(90,120,170,${WA})`); g.fillStyle = gr; g.fillRect(bb[0], bb[1], bb[2] - bb[0], bb[3] - bb[1]); g.restore(); } g.globalCompositeOperation = 'source-over'; tick('2b warm-cool wash per province (soft-light gradient)', t0); }
+  if (on('edge')) { t0 = performance.now(); g.lineJoin = 'round'; for (let i = 0; i < N; i++) { const F = TER[terrain[i]], P = cells[i]; g.save(); trace(g, P); g.clip(); g.globalCompositeOperation = 'multiply'; g.strokeStyle = F; for (let k = 1; k <= 4; k++) { g.globalAlpha = 0.11; g.lineWidth = 2 * k * 1.6 * px; trace(g, P); g.stroke(); } g.globalAlpha = 0.22; g.lineWidth = 2 * 1.1 * px; g.stroke(); g.restore(); } g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1; tick('3a edge darkening: self-multiply strokes', t0); }
+  if (on('shadow')) { t0 = performance.now(); for (let i = 0; i < N; i++) { const P = cells[i], bb = bbox(P); g.save(); trace(g, P); g.clip(); g.shadowColor = 'rgba(40,30,20,.35)'; g.shadowBlur = 6; g.fillStyle = '#000'; g.beginPath(); g.rect(bb[0] - 40, bb[1] - 40, bb[2] - bb[0] + 80, bb[3] - bb[1] + 80); g.moveTo(P[0][0], P[0][1]); for (let k = 1; k < P.length; k++) g.lineTo(P[k][0], P[k][1]); g.closePath(); g.fill('evenodd'); g.restore(); } tick('3b edge darkening: inner shadowBlur', t0); }
+  if (on('bleed')) { t0 = performance.now(); for (const [key, pts] of EDGES) { const [i, j] = key.split(':').map(Number); for (const [me, other] of [[i, j], [j, i]]) { g.save(); trace(g, cells[me]); g.clip(); g.strokeStyle = TER[terrain[other]]; g.globalAlpha = 0.10; for (const w of [7, 4]) { g.lineWidth = w * px; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]); for (let m = 1; m < pts.length; m++) g.lineTo(pts[m][0], pts[m][1]); g.stroke(); } g.restore(); } } g.globalAlpha = 1; tick('4 colour bleed across shared edges', t0); }
+  if (on('gran')) { t0 = performance.now(); g.globalCompositeOperation = 'soft-light'; for (let i = 0; i < N; i++) { g.save(); trace(g, cells[i]); g.clip(); g.globalAlpha = GRAN[terrain[i]]; g.fillStyle = grainP; const bb = bbox(cells[i]); g.fillRect(bb[0], bb[1], bb[2] - bb[0], bb[3] - bb[1]); g.restore(); } g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1; tick('5 granulation: grain tile, soft-light, per terrain', t0); }
+  if (on('bloom')) { t0 = performance.now(); for (let i = 0; i < N; i++) { const R = rngFor('bloom' + i), F = TER[terrain[i]], n = R() < 0.5 ? 1 : 2; g.save(); trace(g, cells[i]); g.clip(); for (let b = 0; b < n; b++) { const s = sites[i], cx = s[0] + (R() - 0.5) * 30, cy = s[1] + (R() - 0.5) * 30, r = 6 + R() * 8, ph = R() * 9; g.beginPath(); for (let k = 0; k <= 40; k++) { const a = (k / 40) * Math.PI * 2, rr = r * (1 + 0.18 * Math.sin(a * 5 + ph) + 0.1 * Math.sin(a * 11 + ph * 2)); k ? g.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr) : g.moveTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); } g.closePath(); g.globalAlpha = 0.35; g.fillStyle = shadeL(F, 4); g.fill(); g.globalAlpha = 0.3; g.strokeStyle = shadeL(F, -9); g.lineWidth = 1.2 * px; g.stroke(); } g.restore(); } g.globalAlpha = 1; tick('6 wet-edge blooms (1-2 per province)', t0); }
+  if (on('stamps')) { t0 = performance.now(); let n = 0; for (let i = 0; i < N; i++) { const R = rngFor('st' + i), s = sites[i], k = terrain[i] === 'forest' ? 30 : 10; for (let m = 0; m < k; m++) { const v = Math.floor(R() * 16), x = s[0] + (R() - 0.5) * 50, y = s[1] + (R() - 0.5) * 40; g.drawImage(atlas.c, v * atlas.s, 0, atlas.s, atlas.s, x - 4.5, y - 9, 9, 9); n++; } } tick(`7 stamps from atlas (${'30/10'} per province)`, t0); }
+  if (on('hach')) { t0 = performance.now(); g.lineCap = 'round'; for (let i = 0; i < N; i++) { if (terrain[i] !== 'hills' && terrain[i] !== 'mountains') continue; const R = rngFor('h' + i), s = sites[i]; for (let m = 0; m < 24; m++) { const x = s[0] + (R() - 0.2) * 30, y = s[1] + (R() - 0.2) * 22, a = 1.2 + R() * 0.3, l = 3 + R() * 3; const segs = 5; for (let q = 0; q < segs; q++) { const t = q / segs, t2 = (q + 1) / segs; g.lineWidth = 0.9 * px * Math.sin(Math.PI * (t + 0.1)) ** 0.6 + 0.2 * px; g.strokeStyle = 'rgba(40,30,20,.55)'; g.beginPath(); g.moveTo(x + Math.cos(a) * l * t, y + Math.sin(a) * l * t); g.lineTo(x + Math.cos(a) * l * t2, y + Math.sin(a) * l * t2); g.stroke(); } } } tick('8 tapered hachures (24 per hill/mountain)', t0); }
+  if (on('ink')) { t0 = performance.now(); g.lineCap = 'round'; g.strokeStyle = '#2B2620'; for (const [key, pts] of EDGES) { const R = rngFor('ink' + key); let ph = R() * 10; for (let m = 0; m < pts.length - 1; m++) { const w = 2 * (1 + 0.12 * Math.sin(ph + m * 0.7)); g.globalAlpha = 0.85 + 0.15 * R(); g.lineWidth = w * px; g.beginPath(); g.moveTo(pts[m][0], pts[m][1]); g.lineTo(pts[m + 1][0], pts[m + 1][1]); g.stroke(); } } g.globalAlpha = 1; tick('9 ink borders: per-segment width and alpha', t0); }
+  if (on('paper')) { t0 = performance.now(); g.globalCompositeOperation = 'soft-light'; g.globalAlpha = 0.6; g.fillStyle = paperP; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'source-over'; g.globalAlpha = 1; g.fillStyle = fibP; g.fillRect(0, 0, W, H); tick('10 paper: grain soft-light + fibres, whole sheet', t0); }
+  const t1 = performance.now(); const bmp = C.transferToImageBitmap(); tick('11 transferToImageBitmap', t1);
+  return { C, bmp, cw, ch };
+}
+// colour check: mean CIELAB and L* spread inside each province (edges included), against its fill
+function colourCheck(res) {
+  const saved = STAGES.slice(); const cw = Math.round(W * res), ch = Math.round(H * res);
+  const C = new OffscreenCanvas(cw, ch), g = C.getContext('2d');
+  return { cw, ch, C, g };
+}
+const out = document.getElementById('out');
+(async () => {
+  const r = bake(RES);
+  const tot = Object.values(T).reduce((a, b) => a + b, 0);
+  // per-province colour statistics on the result (untimed)
+  const g2 = new OffscreenCanvas(r.cw, r.ch).getContext('2d'); g2.drawImage(r.bmp, 0, 0); const img = g2.getImageData(0, 0, r.cw, r.ch).data;
+  const mask = new OffscreenCanvas(r.cw, r.ch).getContext('2d', { willReadFrequently: true });
+  let worstMean = 0, worstSpread = 0, sumMean = 0; const per = {};
+  if (Q.get('colour') === '1') for (let i = 0; i < N; i++) {
+    mask.setTransform(1, 0, 0, 1, 0, 0); mask.clearRect(0, 0, r.cw, r.ch); mask.setTransform(RES, 0, 0, RES, 0, 0); trace(mask, cells[i]); mask.fillStyle = '#fff'; mask.fill();
+    const bb = bbox(cells[i]).map((v) => Math.floor(v * RES)); const m = mask.getImageData(bb[0], bb[1], bb[2] - bb[0] + 1, bb[3] - bb[1] + 1).data; const Ls = []; let sL = 0, sa = 0, sb = 0, n = 0;
+    for (let y = bb[1]; y <= bb[3]; y++) for (let x = bb[0]; x <= bb[2]; x++) { const mk = ((y - bb[1]) * (bb[2] - bb[0] + 1) + (x - bb[0])) * 4; if (m[mk + 3] < 255) continue; const k = (y * r.cw + x) * 4; const lab = rgb2lab([img[k], img[k + 1], img[k + 2]]); Ls.push(lab[0]); sL += lab[0]; sa += lab[1]; sb += lab[2]; n++; }
+    Ls.sort((a, b) => a - b); const f = rgb2lab(hex2rgb(TER[terrain[i]])); const mean = [sL / n, sa / n, sb / n];
+    const dE = de2000(mean, f); const spread = [Ls[Math.floor(n * 0.05)] - f[0], Ls[Math.floor(n * 0.95)] - f[0]];
+    worstMean = Math.max(worstMean, dE); sumMean += dE; const t = terrain[i]; per[t] ??= { dE: 0, dL: 0, p5: 0, p95: 0, n: 0 }; per[t].dE += dE; per[t].dL += mean[0] - f[0]; per[t].p5 += spread[0]; per[t].p95 += spread[1]; per[t].n++;
+  }
+  for (const t in per) for (const k of ['dE', 'dL', 'p5', 'p95']) per[t][k] = +(per[t][k] / per[t].n).toFixed(2);
+  out.width = r.cw; out.height = r.ch; out.getContext('2d').drawImage(r.bmp, 0, 0);
+  window.RESULT = { res: RES, size: [r.cw, r.ch], provinces: N, ptsPerProvince: +ptsPer.toFixed(1), edges: EDGES.size, edgeMismatch: mismatch, fanBad, fanTotal, selfX, cellsX, guarded, ms: Object.fromEntries(Object.entries(T).map(([k, v]) => [k, +v.toFixed(1)])), totalMs: +tot.toFixed(1), colour: Q.get('colour') === '1' ? { meanDE2000: +(sumMean / N).toFixed(2), worstDE2000: +worstMean.toFixed(2), perTerrain: per } : null };
+})();
+</script></body></html>

@@ -1,0 +1,25 @@
+import os, shutil
+D = '/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/art-gen/round2/independentCaptain'
+R = D + '/rejected'; os.makedirs(R, exist_ok=True)
+FIX = {
+ ('mountaineer', 7): "Person: a man about thirty, a narrow fox-like face, hollow cheeks, pale freckled skin, light hazel eyes, reddish-brown hair loose to the shoulders from under the helm, a short reddish-brown beard, a cocky half-smile. Kit: a tall rounded iron helm with no brim at all, a thick raised iron comb running from front to back over the crown like a crest, a big dent in its side, the face fully open; a mantle of grey-brown spotted lynx fur, pinned with a short antler pin.",
+ ('mountaineer', 8): "Person: a man about fifty-five, a wide weathered face, muted weathered light-brown skin (dull and earthy, not orange), high flat cheekbones, narrow dark eyes, a long thin black moustache streaked with grey drooping past the chin, a bare chin, a calm weathered squint. Kit: a round iron helm whose bare dented iron dome shows clearly above a rim of dark fur, with long fur earflaps hanging down beside the face; a mantle of long shaggy dark brown yak hair, with a string of bone beads at the collar.",
+ ('mountaineer', 11): "Person: a man about thirty-five, a long horse-like face, medium brown skin, light brown eyes, a thick curly dark beard, curly dark hair at the sides, a deep scar through one cheek into the beard, a grim weary look. Kit: a rounded iron helm with no brim at the front or sides and a long flared tail of iron sweeping down over the back of the neck, dented on the crown; a mantle of dull brown deer hide with the hair on, closed with a carved wooden toggle.",
+ ('reedman', 1): "Person: a man about forty, a lean weathered face, muted weathered brown skin (dull and earthy, not orange), black eyes, long black hair tied back, a thin black beard along the jaw, a smear of dried grey mud on the forehead, a patient hooded gaze. Kit: a short cylindrical leather cap with a flat top, like a squat drum, a twist of dried reed wound around its base, the ears uncovered; a cloak of tightly plaited straw-tan reeds in a herringbone weave; a cord of small white fish-bone beads at the throat.",
+ ('reedman', 5): "Person: a man about thirty-five, a broad face, pale skin, a faded grey-blue tattoo of three wavy lines across one cheek, a close-cropped brown beard, a broken nose, a hard grin. Kit: a cap of matte, scuffed dark brown boiled leather that clearly reads as leather and not metal, with a row of small iron studs around the band, no ear flaps, the ears uncovered, and a short flap over the back of the neck; a reed cloak with a collar of dark woven rush, closed with a plain iron ring.",
+ ('reedman', 6): "Person: a woman about forty-five, a broad weathered face, muted weathered light-brown skin (dull and earthy, not orange or golden), dark almond-shaped eyes, black hair in a thick knot at the nape held by a bone pin, deep lines around the mouth, a calm watchful look. Kit: a leather cap with a short stiff peak over the brow; a cloak of sedge woven in a checker pattern of pale and dark reeds; a clasp of braided eel-skin cord.",
+ ('reedman', 9): "Person: a young woman about twenty, a heart-shaped face, light olive skin, grey eyes, freckles, straight brown hair in a short fringe under the cap, a smudge of dark river mud on one cheek, a curious bold look. Kit: a small pointed leather cap whose soft tip bends forward, like a Phrygian cap, laced up the back, the ears uncovered; a light cloak of thin woven rushes with a braided rush collar; a small bone charm carved like a frog on a cord.",
+ ('reedman', 11): "Person: a man about thirty-two, a square face, tan skin, thick dark eyebrows, black stubble beard, a jagged scar along the jaw, a confident steady look. Kit: a round leather cap with a broad soft brim pinned up on one side with a bone pin; a reed cloak bound in horizontal bands of dark twine; a plain leather strap across the chest.",
+ ('reedman', 12): "Person: a man about forty-eight, a wide flat face, reddish-brown weathered skin, small dark eyes, bushy eyebrows, a thick grey-streaked brown beard, a scar across the nose, a gruff squint. Kit: a tight leather cap shaped like a headscarf knotted at the back of the head, its two tied ends hanging behind, no ear guards, the ears uncovered; a cloak of plaited reeds with a stiff high reed collar standing up behind the neck; a string of pike teeth at the throat.",
+}
+for (o, n), person in FIX.items():
+    base = f'{D}/independent__independentCaptain-{o}__{n:02d}'
+    for ext in ('png', 'json', 'txt'):
+        if os.path.exists(f'{base}.{ext}'):
+            shutil.copy(f'{base}.{ext}', f'{R}/independent__independentCaptain-{o}__{n:02d}-r1.{ext}')
+    lines = open(base + '.txt').read().split('\n')
+    assert lines[-1].startswith('Person:')
+    lines[-1] = person
+    open(base + '.txt', 'w').write('\n'.join(lines))
+    os.remove(base + '.png'); os.remove(base + '.json')
+    print(o, n)

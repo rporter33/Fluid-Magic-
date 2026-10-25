@@ -1,0 +1,46 @@
+END=6 node vprobe.cjs natural 1 > ../out/logs/F-vprobe-n1.log 2>&1
+node checksx.cjs natural 1 > ../out/logs/F-checks-natural-1.log 2>&1
+node checksx.cjs natural 2 > ../out/logs/F-checks-natural-2.log 2>&1
+node checksx.cjs clear 1 > ../out/logs/F-checks-clear-1.log 2>&1
+node checksx.cjs clear 2 > ../out/logs/F-checks-clear-2.log 2>&1
+node checksx.cjs terrain 1 > ../out/logs/F-checks-terrain-1.log 2>&1
+node checksx.cjs terrain 2 > ../out/logs/F-checks-terrain-2.log 2>&1
+node checksx.cjs natural 3 390 844 > ../out/logs/F-checks-natural-phone.log 2>&1
+node checksx.cjs clear 3 390 844 > ../out/logs/F-checks-clear-phone.log 2>&1
+node checksx.cjs terrain 1 390 844 > ../out/logs/F-checks-terrain-phone.log 2>&1
+node modes.cjs natural 1 > ../out/logs/F-modes-natural-1.log 2>&1
+node modes.cjs natural 2 > ../out/logs/F-modes-natural-2.log 2>&1
+node modes.cjs clear 1 > ../out/logs/F-modes-clear-1.log 2>&1
+node modes.cjs clear 2 > ../out/logs/F-modes-clear-2.log 2>&1
+ONLYNOW=1 node modewild.cjs 1 > ../out/logs/F-modewild-1.log 2>&1
+ONLYNOW=1 node modewild.cjs 2 > ../out/logs/F-modewild-2.log 2>&1
+node seedprobe.cjs s7 > ../out/logs/F-seed-s7.log 2>&1
+node seedprobe.cjs s31 > ../out/logs/F-seed-s31.log 2>&1
+node seedprobe.cjs alt > ../out/logs/F-seed-alt.log 2>&1
+node seedprobe.cjs s3 > ../out/logs/F-seed-s3.log 2>&1
+node seedprobe.cjs s44 > ../out/logs/F-seed-s44.log 2>&1
+node det.cjs natural 3 1 > ../out/logs/F-det-natural.log 2>&1
+node det.cjs clear 3 1 > ../out/logs/F-det-clear.log 2>&1
+node det.cjs terrain 2 1 > ../out/logs/F-det-terrain.log 2>&1
+node histdiag3.cjs 1 > ../out/logs/F-hist-1.log 2>&1
+node histdiag3.cjs 2 > ../out/logs/F-hist-2.log 2>&1
+node v3same.cjs 2 > ../out/logs/F-v3same.log 2>&1
+node v3checks.cjs > ../out/logs/F-v3checks.log 2>&1
+node phonefit.cjs natural 3 > ../out/logs/F-phonefit-natural.log 2>&1
+node phonefit.cjs clear 3 > ../out/logs/F-phonefit-clear.log 2>&1
+node sweep.cjs 1 > ../out/logs/F-sweep-1.log 2>&1
+node sweep.cjs 2 > ../out/logs/F-sweep-2.log 2>&1
+node linesall.cjs natural 1 > ../out/logs/F-linesall-natural-1.log 2>&1
+node linesall.cjs natural 2 > ../out/logs/F-linesall-natural-2.log 2>&1
+node linesall.cjs clear 1 > ../out/logs/F-linesall-clear-1.log 2>&1
+node session.cjs natural 1440 900 full > ../out/logs/F-session-natural.log 2>&1
+node session.cjs natural 390 844 full > ../out/logs/F-session-phone.log 2>&1
+node session.cjs clear 1440 900 full > ../out/logs/F-session-clear.log 2>&1
+END=6 node vprobe.cjs natural 2 > ../out/logs/F-vprobe-n2.log 2>&1
+node farreader.cjs - 55,60,66,75,85 > ../out/logs/F-farreader.log 2>&1
+node dumpr.cjs clear 1 start,mid,ref,nearW,far60 > ../out/logs/F-dump-clear-now.log 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html TAGP=bf- node dumpr.cjs clear 1 start,mid,ref,nearW,far60 > ../out/logs/F-dump-clear-bf.log 2>&1
+node dumpr.cjs terrain 1 start,mid,ref,nearW > ../out/logs/F-dump-terrain-now.log 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html TAGP=bf- node dumpr.cjs terrain 1 start,mid,ref,nearW > ../out/logs/F-dump-terrain-bf.log 2>&1
+cd ../art/tools && KEY=fx node dump.cjs natural 1 start,far,mid,midAsh,nearAsh,nearGrey,nearMere,maxAsh,maxGrey,maxMere > ../out/F-dump-fx.log 2>&1
+cd ../art/tools && KEY=f3 node dump.cjs natural 1 start,far,mid,midAsh,nearAsh,nearGrey,nearMere,maxAsh,maxGrey,maxMere > ../out/F-dump-f3.log 2>&1

@@ -1,0 +1,45 @@
+clear 1440x900 full pageErrors 0 failedSteps 0 []
+  hover-start {"label":"start","reachable":60,"hovered":50,"hoverHits":50,"tipNamesProvince":50,"tipNamesTerrain":50,"byFog":{"sight":41,"unexplored":7,"outofsight":2},"hoverMiss":[],"tipMiss":[]}
+  hover-mid {"label":"mid","reachable":27,"hovered":20,"hoverHits":20,"tipNamesProvince":20,"tipNamesTerrain":20,"byFog":{"sight":20},"hoverMiss":[],"tipMiss":[]}
+  hover-near {"label":"near","reachable":9,"hovered":8,"hoverHits":8,"tipNamesProvince":8,"tipNamesTerrain":8,"byFog":{"sight":8},"hoverMiss":[],"tipMiss":[]}
+  hover-unexplored [["Oakford","Wasteland",true,true,false],["Bramreach","Mountains",true,true,false],["Cinford","Plains",true,true,false],["Rookmarch","Wasteland",true,true,false],["Rookford","Plains",true,true,false],["Thornwick","Plains",true,true,false]]
+  selectProvince {"s":"prov:Ashmoor","dock":true,"tabs":["Overview","Forces","History"],"dockNamesTerrain":true}
+  selectArmyByClick {"sel":"cmd:varo","armyTipNamesTerrain":true}
+  stripButtons 7
+  keyboardSelectPiece {"enter":"varo","space":"varo","pausedBefore":true,"pausedAfter":true}
+  rightClickAcross {"target":"Ashvale","path":"Morholt>Ashvale 8d the Ashspine","chips":{"chips":3,"overlaps":0,"examples":[],"pass":true}}
+  wheelOutAfterMove ["far@0.318 chipOverlaps 0  rib 0","far@0.318 chipOverlaps 0  rib 0","far@0.318 chipOverlaps 0  rib 0","far@0.318 chipOverlaps 0  rib 0"]
+  rightClickEnemyPiece {"line":"Tormere 3d","lastToast":"Varo marches to Tormere: 3 days."}
+  rightClickWild "No path crosses the Ashspine."
+  rightClickTable [true,true,true,false]
+  fanStack {"stackIn":"Kharnath","fanned":3}
+  modes {"seen":"dominion,supply,unrest,population,springs,terrain,ownership,dominion,supply,unrest,population,springs,terrain,ownership,S1:ownership,S2:dominion,S3:supply,S4:unrest,S5:population,S6:springs,S7:terrain,rail:ownership","captionAfterChange":["legend captemp capshow","1","visible"],"caption4600msLater":["legend captemp capshow","1","visible"],"captionOnHover":["legend captemp capshow","1"]}
+  wheelBands "far@0.318 mid@0.754 near@1.788 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397"
+  dragPanNear {"dx":-180,"dy":-72}
+  zKey "mid@0.548"
+  fitButton "mid@0.548 fit 0.484"
+  openControls true
+  controls "terrain=natural shown:clear terrain=clear tint=on tint=off table=simple table=off table=full detail=reduced detail=full chrome=warm chrome=approved parch=on parch=off"
+  vision "ok"
+  reducedMotion false
+  passability "ok"
+  portraits true
+  tryArt "ok"
+  lookSwitch {"v3Relief":false,"v3checks":{"hit":{"samples":200,"wrong":0},"labels":6,"stable":{"first":2257611181,"second":2257611181,"identical":true}},"v3tip":null,"back":true,"shown":"clear"}
+  shiftNames {"before":6,"held":60,"released":6}
+  numbers 60
+  keys 1
+  timelapseDrag "Y6 M10"
+  timelapseAll "Y1 M3"
+  clockRuns {"date":"Y1 M3 D17","paused":[true,false,false,true]}
+  research [true,true]
+  codex 20
+  ledger false
+  topbarTips [16,16]
+  rail "ok"
+  outliner {"rows":10,"sel":"Sunmere,varo,titan,seren,ondra,Ashfen,Ashmoor,Thornbrook,Halevale,Sunmere"}
+  feed {"chips":6,"lit":["Morholt:-","Morholt:-","Tormere:-","Ashfen:-","Kharnath:-","Kharnath:-"],"report":true}
+  ribbon 5
+  pausechip "ilsa"
+  dockAndClose null
+console []

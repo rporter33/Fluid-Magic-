@@ -1,0 +1,6 @@
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE || PAGE, { log, settle: 500 });
+  const r = await mev(p, `(() => { const out = []; for (const w of WILDS) { const ol = rlWildOutline(w); const by = {}; for (const e of ol) { const L = Math.hypot(e.b[0]-e.a[0], e.b[1]-e.a[1]); const k = names[e.j] + ':' + terr[e.j]; by[k] = (by[k] || 0) + L; } const tot = Object.values(by).reduce((a,b)=>a+b,0); out.push({ w: w.name, tot: +tot.toFixed(0), by: Object.fromEntries(Object.entries(by).map(([k,v]) => [k, +(v/tot).toFixed(3)])) }); }
+   const seats = provList.filter(i => [...WILDS.flatMap(w => w.cells.flatMap(c => NB[c]))].includes(i)).map(i => ({ n: names[i], t: terr[i], cent: cent[i].map(v=>+v.toFixed(0)), seat: !!(prov[i].town || prov[i].settlement), keys: Object.keys(prov[i]).join(' ') }));
+   return { out, seats, water: { lakes: RB.water.lakes.map(l => names[l.i]), ponds: RB.water.ponds.map(l => names[l.i]), streams: RB.water.streams.map(s => names[s.i]) } }; })()`);
+  console.log(JSON.stringify(r, null, 1)); console.log('errors', log.pageErrors); await b.close(); })();

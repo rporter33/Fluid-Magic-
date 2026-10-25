@@ -1,0 +1,701 @@
+
+######## #1 [readiness] high src/sim/battle/events.ts — BattleRecord has no starting roster, so the replay viewer cannot draw rows or side panels
+DESC: A replay holds only events that point at BattleUnitRef strings. Nothing records which commanders and squads fought, their unit types, starting counts, rows, sides or owners. After the battle, dead commanders and emptied squads are gone from GameState, and surviving squads may be merged or transferred, so Phase 10 cannot rebuild the starting setup. PD troops and independents' battle-local units have no state entry at all. The R/G spells also need event kinds that do not exist: Regrowth heals and removes debuffs, and G bless and Treant regeneration heal every round. melee and volley events carry no damage amount, yet the UI floats damage numbers.
+EVIDENCE: docs/04-battle.md: 'a replay: BattleEvent[] log sufficient to render the fight'. docs/07-ui.md: 'squads as blocks of up to 20 sprites in a grid', 'Side panels list each side's commanders and squads with live counts', 'damage numbers float'. events.ts: `volley`/`melee` carry `{hits, kills}` only, there is no heal or cleanse event, and `summon` has no row. The BattleUnitRef comment covers commander, squad or summon ids, but not PD squads.
+CHANGE: Before saves exist, add to BattleRecord `sides: Record<BattleSide, { nation: NationId | null; commanders: { ref, unit, name, row, hp }[]; squads: { ref, commander: BattleUnitRef | null, unit, count, hp, row, pd: boolean }[] }>` (or a `{kind:'setup'}` first event), plus `terrain` and a `storm`/walls flag. Add `damage: number` to volley and melee, add `{kind:'heal'; target; amount}` and `{kind:'cleanse'; target; source}`, add `row` to summon, and add an optional `rounds` to buff for timed effects. Document that PD and summon refs are battle-local, e.g. `pd0`, `su0`.
+-- confirmed worth=True: Add a starting roster to `BattleRecord` in src/sim/types.ts. It is a snapshot of the `BattleSetup` the Phase 4 resolver already receives.
+
+```ts
+setup: Record<BattleSide, {
+  nation: NationId | null;
+  commanders: { ref; unit; name; row; hp }[];
+  squads: { ref; commander: BattleUnitRef | null; unit; count; hp; row }[];
+}>
+```
+
+Optionally add `fortStorm: boolean` and `wallsStanding: boolean`. Terrain can come from `map` through `province`.
+
+Changes to events.ts:
+- Update the `BattleUnitRef` comment: refs are commander or squad ids, or battle-local ids for PD and summons (for example `pd0`, `su0`), and they resolve only through `setup` or a `summon` event.
+- Add a `row` to `summon`.
+- Add `{ kind: 'heal'; target: BattleUnitRef; amount: number }` now. Regrowth, the G bless and Treant regeneration need it to keep counts right.
+- A cleanse event and `damage` on `volley`/`melee` are optional. The viewer can float kills, and a cleanse can be logged as a reversing `buff`.
+
+Record the roster and battle-local ref rule at the bottom of docs/04-battle.md, since the doc's event list does not cover it.
+-- confirmed worth=True: Make a smaller version of the change in src/sim/battle/events.ts and src/sim/types.ts:
+
+1. Add a starting roster to BattleRecord, for example `start: Record<BattleSide, BattleRoster>`. Define `BattleRoster = { nation: NationId | null; commanders: { ref: BattleUnitRef; unit: UnitTypeId; name: string; row: Formation; hp: number }[]; squads: { ref: BattleUnitRef; commander: BattleUnitRef | null; unit: UnitTypeId; count: number; row: Formation }[] }`. Phase 4 fills it from BattleSetup.
+2. Add `row: Formation` to the `summon` event so the viewer knows where to draw summoned troops.
+3. Extend the BattleUnitRef comment to say that PD squads and summons get battle-local refs, for example `pd0` and `su0`.
+4. Note the roster at the bottom of docs/04-battle.md as a rule decision.
+
+Leave out terrain, walls and storm flags, heal and cleanse events, damage amounts on volley and melee, and rounds on buff. Phase 4 and Phase 5 can add them if the resolver or viewer turns out to need them, at no cost before saves exist.
+
+######## #2 [readiness] medium src/sim/types.ts — The move order does not keep a group's shared speed, so multi-commander moves split after one leg
+DESC: A move issued to several commanders must give them 'the slowest commander's speed'. Transit.totalDays is computed per leg, and `{ kind: 'move'; path }` keeps only the remaining provinces. When the next leg starts, each commander recomputes totalDays from its own speed. A scout (speed 3) escorting Wardens (speed 1) arrives first and fights alone, because the battle is resolved on arrival.
+EVIDENCE: docs/01-core-rules.md §6: 'a move to a multi-commander selection ... gives all of them the same path and the slowest commander's speed'; 'Entering an enemy or independent province triggers a battle at the moment of arrival'. types.ts: `| { kind: 'move'; path: ProvinceId[] }`, `Transit { from, to, progress, totalDays }`.
+CHANGE: Extend the order to `{ kind: 'move'; path: ProvinceId[]; mapSpeed: number }`, holding the group minimum and set by the move command, and compute each leg's totalDays from it. Also have movement batch arrivals by (province, nation) in the same tick, so a group fights as one side.
+-- confirmed worth=True: In src/sim/types.ts, change the move order to `{ kind: 'move'; path: ProvinceId[]; mapSpeed: number }`, with a doc comment saying it holds the group's minimum map speed, frozen when the move command is applied. A single-commander move stores that commander's own speed. Phase 3 movement then computes each leg's `totalDays` from `order.mapSpeed`, not from the commander's live speed. `reverse` keeps the existing totalDays.
+
+Record two rules at the bottom of docs/01-core-rules.md, or in phase2-decisions.md for the implementer:
+1. Movement first advances every commander in transit for the day. It then groups the arrivals by (destination province, owner) in sorted-id order, and resolves one battle per group, with all of that nation's arriving commanders on one side.
+2. A commander that gets a new order leaves the group, and its speed is recomputed.
+
+Add a Phase 3 test: a speed-3 commander and a speed-1 commander get one move order over a path of two or more legs, and both arrive on the same tick on every leg.
+-- confirmed worth=True: In src/sim/types.ts, change the order variant to `{ kind: 'move'; path: ProvinceId[]; mapSpeed: number }`. Comment it as: the map speed (1..3) used for every leg of this move, set by the move command to the minimum effective speed of all commanders it names, where a commander's effective speed is the minimum of its own and its squads' unit mapSpeed. A single-commander move stores its own speed. Phase 3 computes each leg's totalDays from `order.mapSpeed`, not from the commander's current squads.
+
+Do not add the arrival batching to types.ts. Instead, add it to the Phase 3/4 decisions, and record it at the bottom of docs/01-core-rules.md once it is implemented:
+- In advance step 2, first move every transit forward.
+- Then collect the arrivals and group them by destination province, in province-id order.
+- Within each province, group by nation in nation-id order, so all of one nation's arriving commanders form one attacking side.
+- Resolve one battle per (province, arriving nation).
+
+When Phase 3 adds movement, also put the speedFactor table (speed 1 = 1.5, speed 2 = 1.0, speed 3 = 0.7) in src/content/rules.ts rather than in the sim code.
+
+######## #3 [readiness] medium src/content/colors.ts — Nation and independent colors are never checked against the terrain fills they are drawn on
+DESC: The palette test checks terrain against terrain and mana primary against mana primary, but the owner glow band and army shields are drawn on top of terrain fills. Several of those pairs fall well below the 20/12 rule. Thornwood's primary on Forest is the weakest, and Forest is Thornwood's home terrain and capital terrain. Accents and secondaries do not fix it: the G and R accents are within 6.0 and 0.9 of Farmland under deuteranopia.
+EVIDENCE: Computed with tests/content/colorMath.ts (normal/protan/deutan/tritan): G #00674B vs Forest #374C2B 13.5/9.0/8.8/14.4; G vs Swamp tritan 6.0; R #FD6533 vs Hills protan 10.0, vs Farmland deutan 10.1; independent #8C8A80 vs Wasteland 15.9/2.5/5.8/15.7. docs/09-art-direction.md: 'Nation chrome uses primary for borders and glow'.
+CHANGE: Add a palette.test.ts case comparing every color drawn on the map (nation banner variants from the first finding, independent marker color, dominion candle color) against every terrain fill, with a stated minimum. Then tune the banner values, or draw bands and markers with a dark #2B2620 outline, which a test can check as luminance contrast instead. Record the rule in docs/09-art-direction.md.
+-- confirmed worth=True: Leave Phase 2 sim code alone. Make a small content, test and doc change:
+
+1. In docs/09-art-direction.md and the comment in 07-ui.md, set the owner band rule:
+   - The band is a flat band of the nation's primary, at least 5px, not a fading glow.
+   - It has a 1px keyline on its inner edge, between the band and the fill. The keyline is light (#F4EEDF) on dark fills (Forest, Swamp, Hills) and dark (#1C1A17) on light fills, chosen by the fill's relative luminance.
+   - Hue identity stays with the primary. R vs G is already at least 12 under every vision by the mana test. The keyline makes the band visible on any fill.
+   - Do not use #2B2620 for the keyline: its contrast ratio against Forest is only 1.59.
+   - Use the same keyline rule for dominion candles and shield badges.
+
+2. Export the keyline choice from src/content/colors.ts as data or a pure function, for example `MAP_KEYLINE = { light, dark }` plus a luminance cutoff. The renderer then reads it from content instead of hard-coding it.
+
+3. Add a case to tests/content/palette.test.ts. For every terrain fill, the chosen keyline must have a WCAG contrast ratio of at least 3 with that fill. For every nation color (all five, since M2 uses W, U and B), the primary vs the keyline must also be at least 3.
+
+4. Exclude the independent palette from this check: per 07-ui.md and 01-core-rules §9, independents have no band and never move, so they have no markers on the map.
+
+If this is not done now, at minimum add a known-issues entry to docs/PROGRESS.md. It should say that G primary on Forest measures 8.8 under deuteranopia and R on Farmland 10.1, and that Phase 8 must settle the band rule and add the test.
+-- confirmed worth=True: Change only the docs now. Do not change palette values or tests in Phase 2.
+1. Add a rule under "Distinct colors" in docs/09-art-direction.md. Anything drawn over a terrain fill must stay distinct from every fill: the owner glow band, dominion candles and army shields. A nation's band and candles must also stay distinct from every other nation's on the same fill, using the same CIEDE2000 minimums (20 normal, 12 under simulated CVD). The renderer may use lighter or darker steps, or a two-tone light/dark halo, to meet this. The plain #2B2620 outline alone is not enough, because it reaches only a 1.59 contrast ratio on Forest. Nation symbols stay on shields and candles so that ownership never relies on hue alone.
+2. Under Known issues in docs/PROGRESS.md, record the measured gaps: G on Forest 13.5/9.0/8.8/14.4, G on Swamp 6.0 under tritan, R on Hills 10.0 under protan, R on Farmland 10.1 under deutan. Mark them for Phase 8.
+3. In Phase 8, once the band, candle and shield drawing is defined, add the palette.test.ts case. It should compare the colors the renderer actually draws, after step choice and alpha blending over each fill, against every terrain fill and against the other nations' colors on the same fill. Tune from there.
+Drop the independent glow-band part of the claim, since independents get no band per docs/07-ui.md.
+
+######## #4 [readiness] low src/content/types.ts — NationDef cannot hold Thornwood's forest defense bonus
+DESC: Phase 4 needs a per-nation terrain bonus. The CLAUDE.md rule against game numbers in sim code means it must be content, and NationDef has no field for it.
+EVIDENCE: docs/04-battle.md: 'Thornwood gets +1 def in forests on either side.' docs/03-nations.md: '+1 def in forests for Thornwood units'. NationDef has no terrain modifier.
+CHANGE: Add `homeTerrain?: { terrain: TerrainId; def: number }` to NationDef, set it on THORNWOOD, and validate the terrain id in validateNation.
+-- confirmed worth=True: This is low priority and can wait until Phase 4 if needed.
+
+In src/content/types.ts, add to `NationDef`:
+`/** Battle bonus for this nation's units in a terrain, whether attacking or defending; stacks with the terrain's defender bonus. */ homeTerrain?: { terrain: TerrainId; def: number };`
+
+In src/content/nations/thornwood.ts, set `homeTerrain: { terrain: 'forest', def: 1 }` on THORNWOOD.
+
+In `validateNation` in src/content/index.ts, add a check: if `n.homeTerrain` exists and `!isTerrainId(n.homeTerrain.terrain)` or `!Number.isInteger(n.homeTerrain.def)`, push a problem.
+
+Record two rule decisions at the bottom of docs/04-battle.md:
+- The bonus applies to every unit on that nation's side, including summons and the pretender. This follows "Thornwood gets ...", and it is the simplest reading.
+- A Thornwood defender in a forest gets +2 def in total: the terrain's +1 plus the nation's +1.
+-- confirmed worth=False: Leave NationDef unchanged in Phase 2. Optionally add one line to the Phase 4 notes, or to docs/PROGRESS.md under known issues: "Phase 4 adds an optional nation-level battle terrain modifier to NationDef (Thornwood: forest +1 def on either side, docs/04-battle.md), validated in validateNation; no nation-id branches or literal numbers in the resolver." Pick the field's final shape when the resolver's province-modifier code is written. Something like `terrainBattle?: Partial<Record<TerrainId, { def?: number; att?: number }>>` would fit next to TerrainDef.battle.
+
+######## #5 [readiness] low src/content/types.ts — Nation color identity is a single Color, not the array the milestone says to keep
+DESC: The milestone singles out 'nation color identity arrays' as the one future data format to keep in M1. NationDef.color, NationState.color and CapitalSpec.color are single Colors, so two-color nations will mean reshaping all three and migrating saves. Phase 6 scale costs already test membership ('a pole whose color is in the nation's identity').
+EVIDENCE: docs/10-milestone-1.md: 'Stub nothing for these except where the data format is already designed to hold them (spell requirement strings, nation color identity arrays).' docs/05-pretender.md: 'Cost per step: 40 points toward a pole whose color is not in the nation's identity, 20 ... is'. content/types.ts: `color: Color`.
+CHANGE: Use `colors: readonly Color[]` (length 1 in M1, checked by validateNation) on NationDef and NationState, with a helper `primaryColor(n) = n.colors[0]` for tint, research and capital springs. Combine this with the banner field from the first finding.
+-- confirmed worth=True: 1. Content type: in src/content/types.ts, replace `NationDef.color: Color` with `colors: readonly Color[]`. In the nation files, Cinder Horde becomes `colors: ['R']` and Thornwood becomes `colors: ['G']`.
+2. Helpers and validation: add `primaryColor(def) = def.colors[0]` and `hasColorIdentity(def, c) = def.colors.includes(c)` in content. Make `primaryColor` return a safe value without a non-null assertion, for example by having the validator guarantee the array is non-empty and typing it as a tuple `readonly [Color, ...Color[]]`. Update `validateNation` to check that the array is non-empty, every entry passes `isColor`, and there are no duplicates. Optionally require length 1 in M1, and add a fixture for that.
+3. Sim state: in src/sim/types.ts, either drop `NationState.color` and read the identity through `def`, or store `colors: readonly Color[]`.
+4. Call sites: use `primaryColor` for the default research color, the dominion tint color in selectors.ts, and the color passed to mapgen.
+5. Scales: price Phase 6 scale steps with `hasColorIdentity`.
+6. Leave alone: keep `CapitalSpec.color` in src/mapgen/types.ts as a single spring color, since mapgen is done and the field means capital springs, not identity. Keep `startingResearch.color` as it is.
+7. Record the decision at the bottom of docs/03-nations.md or docs/01-core-rules.md. If the banner/display-color finding is adopted, add that field to NationDef in the same change.
+-- confirmed worth=True: A small, contained change:
+- Change NationDef.color to `colors: readonly Color[]` (cinderHorde `['R']`, thornwood `['G']`).
+- Change NationState.color to `colors: readonly Color[]`, copied from the def in createGame.
+- Add one helper, `primaryColor(n): Color` (returns `n.colors[0]`, with a validator guarantee so no non-null assertion is needed, or a first-element tuple type `readonly [Color, ...Color[]]`). Use it for:
+  - the CapitalSpec color in createGame.ts:71
+  - the starting research.color in createGame.ts:115
+  - dominion tint mana in selectors.ts:97
+- In validateNation, check that the array is non-empty, has no duplicates, and that every entry passes isColor. Add the M1 rule length === 1, or keep that rule in the content validation test.
+- Update tests/sim/createGame.test.ts to match.
+- Leave CapitalSpec.color in src/mapgen/types.ts as a single Color.
+- Do not combine this with the banner-field finding.
+- Record the rule at the bottom of docs/03-nations.md: "identity is an array; index 0 is the primary color used for tint, capital springs, default research and UI tint". Phase 6 scale cost then uses `colors.includes(pole.color)`.
+
+######## #6 [fidelity] high src/sim/types.ts — Duplicate nations get identical colors; GameState has no per-nation display color
+DESC: The user asked that colors stay distinct. NationState carries only `color: Color`, the magic identity. Ownership glow, dominion candles and army badges are all drawn in the nation's color (docs/07), so two Cinder Hordes, or two Thornwoods, look exactly the same. M1 allows duplicate nations, and with 3 or 4 nations built from only 2 definitions, at least one pair is guaranteed to share a color. Decision 3 adds a numeral to duplicate names but nothing to colors. The palette test only compares the five mana primaries, so it cannot catch this.
+EVIDENCE: docs/07: "M1 allows duplicates of the two nations"; "owner color as an inner glow band ... (color identity of the owning nation)"; "Dominion shown as a candle icon stack ... in the province's nation color". docs/09-art-direction: palettes must be "distinct enough that every unit, nation, terrain, and color reads at a glance". Scratch check (tests/content/colorMath.ts): Cinder Horde vs Cinder Horde II is CIEDE2000 0. Reusing the same color's other swatches fails the docs' minimum: R accent #FFB347 vs R primary is 10.6 under deuteranopia, and G secondary #244F22 vs G primary is 11.5 normal and 9.4 tritan (minimums 20 / 12).
+CHANGE: Add a per-instance display color to NationState (e.g. `banner: string` hex, or `bannerIndex`) and assign it in createGame. The first nation of a color gets the color's primary; each duplicate gets the next entry from a content list (e.g. `NATION_BANNERS: Record<Color, readonly string[]>` in content/colors.ts). Extend tests/content/palette.test.ts so that every banner, plus the mana primaries and the independents' color, meets CIEDE2000 >= 20 normal and >= 12 under the three simulated deficiencies. Record in decision 3 that the renderer draws ownership, dominion and army markers with the banner color, and that duplicate symbols carry the numeral.
+-- confirmed worth=True: 1. Add `banner: string` (a hex color) to `NationState` in src/sim/types.ts. Set it in createGame next to the numbered name: the k-th nation of a color (counting from 0, in setup order) gets `NATION_BANNERS[color][k]`, where entry 0 is that color's primary.
+2. Add `NATION_BANNERS: Readonly<Record<Color, readonly string[]>>` to src/content/colors.ts, with 4 entries per color, because all 4 nations may share one definition.
+3. Extend tests/content/palette.test.ts. Every pair of nations that can appear in the same game must differ by CIEDE2000 >= 20 for normal vision and >= 12 under protan, deutan and tritan. That covers banners of the same color pairwise, the k-th Red vs the j-th Green whenever (k+1)+(j+1) <= 4, and every banner vs the independents' #8C8A80. Leave the W/U/B mana primaries out of this check.
+4. Let duplicate banners leave their hue family. That is the only way to pass under deuteranopia. The mana symbol still carries the color identity, and the army badge and candles also show the numeral, in line with docs/07's rule that color identity never relies on hue alone.
+5. Write all of this into decision 3 and docs/09-art-direction: the renderer draws ownership glow, dominion candles and army badges in `nation.banner`, not the color's primary. Add a createGame test that two Cinder Hordes get different banners.
+-- confirmed worth=True: Make these changes:
+
+1. **Content.** Add `NATION_BANNERS: Readonly<Record<Color, readonly string[]>>` to src/content/colors.ts. Entry 0 of each list is the color's primary. Each color used by a nation def gets at least `maxNations - 1` (3) more hexes. Pick them with the scratch search, e.g. from #5800EA #C39FBA #471105 #6EFA02 #D0EFFD #925607, re-checked after assignment. W, U and B can have just their primary until M3. Duplicate banners need not share the nation's hue: distinctness wins over hue identity, and the symbol plus the numeral keep the nation's identity.
+2. **State.** Add `banner: string` (hex) to `NationState`, documented as the per-instance display color for ownership glow, dominion candles and army badges. A `bannerIndex: number` is equally fine. In createGame, set it to `NATION_BANNERS[def.color][k]`, where k is the number of earlier nations in setup order with the same color. Key on color, not def, so future same-color nations also stay distinct. Throw if the list runs out.
+3. **Validation.** In validateContent, or a content test, check that every color used by a NationDef has at least maxNations banners.
+4. **Test.** Extend tests/content/palette.test.ts with a "nation banners" set: all banners of all colors, plus the mana primaries and INDEPENDENT_PALETTE.primary, pairwise at CIEDE2000 >= 20 with normal vision and >= 12 under protanopia, deuteranopia and tritanopia.
+5. **Decisions.** Add a createGame test that a 4x Cinder Horde setup gets 4 distinct banners. Record in phase2-decisions decision 3, and at the bottom of docs/07-ui.md, that the renderer draws ownership, dominion and army markers with `NationState.banner`. Mana symbols and spell effects keep the color palette, and duplicate nations also show their numeral.
+
+######## #7 [fidelity] high phase2-decisions.md #17 — Decision 17's all-or-nothing upkeep makes the unpaid-morale penalty unreachable
+DESC: Under the decision, when gold is short nothing is paid, and the next day that can cover a full day of upkeep resets unpaidDays to 0. A nation whose income is below its upkeep therefore pays on some days and skips others, and its counter never reaches 30. The penalty only triggers if income is under about 1/30 of upkeep, so in practice the docs' rule never fires and a nation can field roughly 1.5x to 30x the army its income supports. The decision also drops the docs' 'no recruitment' while broke. The in-progress src/sim/economy.ts already differs: it pays part of the day's upkeep and adds the unpaid fraction to the counter. So the decision text, the code and the docs now give three different rules.
+EVIDENCE: docs/01 §4: "Gold below zero: no recruitment, all upkeep unpaid, troops lose 1 morale per month unpaid (recovers when paid)." Worked example (income 10/day, upkeep 15/day, gold 0): day 1 gold 10, unpaid (unpaidDays 1); day 2 gold 20, paid (gold 5, reset to 0); day 3 gold 15, paid (gold 0); day 4 unpaid (1); the cycle repeats. unpaidDays never goes above 1, so the penalty floor(1/30) stays 0 forever while only 67% of upkeep is paid. economy.ts:131 `nation.unpaidDays = paid >= due ? 0 : nation.unpaidDays + (due - paid) / due` gives 1 morale per 90 days in the same case, against the docs' 1 per 30.
+CHANGE: Use the docs' literal rule. It is simple and deterministic: always deduct upkeep, so gold may go negative. While gold < 0, unpaidDays += 1 per day, the recruit, buyPd and build commands are rejected, and penalty = floor(unpaidDays/30). Reset when gold >= 0 again. If you keep 'gold never negative' instead, at least decrement unpaidDays on paid days rather than resetting it, block recruitment while unpaidDays > 0, and rewrite decision 17 to match the code.
+-- confirmed worth=True: Keep the committed code. Rewrite decision 17 to match it before it goes into docs/01-core-rules.md (bottom) or docs/09-balance.md. Suggested text:
+
+"Each day: gold += income/30. Pay min(gold, upkeep/30), so gold never goes negative. If the full day is paid, unpaidDays = 0. Otherwise unpaidDays += unpaid share of the day, (due - paid)/due. Troop morale penalty = floor(unpaidDays / unpaidDaysPerMorale), with unpaidDaysPerMorale = 30 in rules.ts."
+
+Then make two small additions:
+1. Record that "no recruitment while broke" is enforced as: the recruit, buyPd and build validators reject commands while unpaidDays > 0. This is mostly redundant, since gold is 0 on any unpaid day, but it keeps the docs' rule explicit for zero-gold-cost cases.
+2. Add a test that a mid-scale deficit (for example income at 50% of upkeep) reaches a penalty of 1 within about 60 days, so a later edit cannot quietly reintroduce the all-or-nothing reset.
+
+Do not adopt "gold may go negative".
+-- confirmed worth=True: Keep the rule in src/sim/economy.ts, and do not switch to negative gold or debt. Rewrite decision 17 to describe the code before it is copied into docs/01-core-rules.md (implementation decisions) and docs/09-balance.md.
+
+Suggested wording: "Each day gold += income/30, then upkeep/30 is paid as far as gold allows. Gold never goes negative. A short day adds the unpaid fraction, (due - paid)/due, to unpaidDays, and a fully paid day resets it to 0 ('recovers when paid'). Troop morale penalty = floor(unpaidDays / 30), applied in battle in Phase 4. A short day leaves gold at exactly 0, so recruit, buyPd and build fail their cost checks and no separate 'no recruitment' rule is needed."
+
+Also list it in PROGRESS.md as a deviation from "gold below zero". Note that the penalty grows with the shortfall: 1 morale per 90 days when upkeep is 1.5x income, and 1 per 30 only when nothing is paid.
+
+If the 1-per-month rate from the docs is wanted instead, change `+ (due - paid) / due` to `+ 1` and update the test 'pays what it can and counts the unpaid fraction of each day'. That is a balance call to record, not a correctness fix.
+
+######## #8 [fidelity] medium phase2-decisions.md #18 — Materials cap tied to current production wipes a fort's stockpile during a siege
+DESC: Decision 18 says besieged provinces produce nothing, and that the pool cap is 6x the fort's current monthly collection. Together they give a besieged fort a cap of 0, so a siege of one day deletes the whole capital stockpile. The same happens on a smaller scale whenever the collection drops: an adjacent province is captured, or enemy dominion brings Wild steps. The cap shrinks and stock already in the pool is destroyed. The docs say only that besieged provinces stop producing, and that materials beyond the cap are lost; they mean overflow, not existing stock.
+EVIDENCE: docs/01 §11: "Besieged provinces produce no gold, materials, or recruits". docs/01 §4: "accumulate in the fort's pool up to a cap of 6 months of production ... Unspent materials beyond the cap are lost." In-progress code: selectors.ts:76 sets materials to 0 when besieged; fortMaterials returns `cap: perMonth * MATERIALS.capMonths` (0); economy.ts:143 `p.materials = Math.min(cap, p.materials + perMonth * PER_DAY)` sets the pool to 0 on the first besieged day.
+CHANGE: Compute the cap from the fort's unbesieged production. Only clamp on gain, never reduce existing stock: `materials = Math.max(materials, Math.min(cap, materials + gain))`, or skip accrual when the pool is at or above cap. Record the rule in docs/01 and add a test: a fort with a full pool keeps it through a siege day.
+-- confirmed worth=True: In src/sim/economy.ts accrueMaterials, apply the cap only to gains, so existing stock is never reduced:
+
+`const next = p.materials + perMonth * PER_DAY; p.materials = Math.max(p.materials, Math.min(cap, next));`
+
+When the pool is already at or above the cap, this leaves it unchanged.
+
+Keep the cap as 6 x the current collection. Do not add an "unbesieged production" variant; the clamp change alone fixes the siege, lost-neighbor, Wild and population cases.
+
+Record the rule at the bottom of docs/01-core-rules.md and in decision #18: "The cap limits accrual only; a lowered cap (siege, lost neighbor, scale change) never removes materials already in the pool."
+
+Add tests to tests/sim/economy.test.ts:
+1. Fill the capital pool, besiege it for a day: the pool is unchanged. Lift the siege: the pool is still unchanged and does not grow while it is above the cap.
+2. A fort with a full pool loses an owned neighbor: the pool is kept.
+-- confirmed worth=True: In src/sim/economy.ts accrueMaterials, clamp only the gain and never cut existing stock: `p.materials = Math.max(p.materials, Math.min(cap, p.materials + perMonth * PER_DAY));`. Keep the cap at 6x current collection. With the max() in place, the cap does not need to be computed from unbesieged production: a besieged fort's gain is 0, so its pool stays as it is. A pool that ends up above a shrunken cap keeps its stock but stops growing until spending brings it below the cap. Record the rule in docs/01 §4 below the materials bullets (or at the bottom of the doc) and in the phase2 decision #18 text: "The cap limits accrual only; a pool above the cap (siege, lost neighbors, Wild) keeps its stock and stops growing." Add tests to tests/sim/economy.test.ts covering three cases: (a) a capital with a full pool keeps it exactly through a besieged day (set `siege = { attacker, wallHp: 300 }`, run 1 day); (b) after an owned neighbor is lost, the pool does not drop and does not grow while above the new cap; (c) the existing 6-month cap test still passes.
+
+######## #9 [fidelity] medium src/content/types.ts — Nation color identity is a single Color; docs/10 calls for identity arrays
+DESC: docs/10 names the nation color-identity array as one of the few data formats M1 must already shape for future two-color nations. docs/05 prices scale steps by whether a pole's color is 'in the nation's identity'. Both NationDef and NationState use a scalar `color: Color`. The STATE_VERSION 1 save shape is being fixed now, so changing this later means a migration.
+EVIDENCE: docs/10 Out of scope: "Stub nothing for these except where the data format is already designed to hold them (spell requirement strings, nation color identity arrays)." docs/01 §6: "a color identity (one color in M1)". docs/05: "20 points toward a pole whose color **is** [in the nation's identity]". content/types.ts NationDef `color: Color`; sim/types.ts NationState `color: Color`.
+CHANGE: Use `colors: readonly Color[]` (exactly 1 in M1, checked by validateContent) on NationDef and NationState. Keep a helper for the primary color, used for dominion tint (decision 25), research default (decision 7) and capital springs. Note in decision 25 that tint uses the primary color.
+-- confirmed worth=True: In src/content/types.ts, change NationDef to `colors: readonly [Color, ...Color[]]` (or `readonly Color[]`) and update cinderHorde.ts to `colors: ['R']` and thornwood.ts to `colors: ['G']`. Make the same change on NationState in src/sim/types.ts. In validateContent, check that `colors` is non-empty, has no duplicates, uses only W/U/B/R/G, and in M1 has exactly 1 entry (with M3 two-color nations, also check that the pair is in ALLIED_PAIRS). Add a pure helper `primaryColor(n) = n.colors[0]` and a membership helper `inIdentity(n, c)` in content or sim selectors.
+
+Use primaryColor for the following:
+- the mapgen CapitalSpec color (capital springs; MapData can keep its scalar color)
+- dominion tint in selectors.ts and decision 25
+- the default research color (decision 7) and AI research (docs/08)
+- the adept extra pip and the Titan/Wyrm "nation color" pips
+
+Phase 6 pretender scale costing should use inIdentity. ResearchState.color stays scalar, since it is the current research target and not the identity. Update decisions 7 and 25 to say "primary color". Note in docs/03 or at the bottom of docs/01 that identity is an ordered array and the first entry is primary.
+-- confirmed worth=True: 1. Replace `color: Color` in NationDef (src/content/types.ts) with `colors: readonly [Color, ...Color[]]`. The non-empty tuple types `colors[0]` as `Color`, so no non-null assertion is needed.
+2. Update the two nation files to `colors: ['R']` and `colors: ['G']`.
+3. In validateContent (src/content/index.ts:68), check that every entry passes isColor, that there are no duplicates, and that the length is exactly 1 in M1.
+4. Make the same change on NationState in src/sim/types.ts (`colors: readonly [Color, ...Color[]]`), and update createGame.ts:108 to copy it.
+5. Add two small helpers in sim (e.g. in selectors.ts or a tiny nations.ts):
+   - `primaryColor(n) = n.colors[0]`
+   - `inIdentity(n, c) = n.colors.includes(c)`
+6. Use the primary color for:
+   - dominion tint mana (selectors.ts:97)
+   - capital springs (createGame.ts:71, which passes `colors[0]` into the mapgen capital spec; mapgen stays scalar because a spring has one color)
+   - the default research color (createGame.ts:115; `startingResearch.color` also works)
+   - the map owner hue later
+7. Use `inIdentity` in the Phase 6/9 scale step cost (20 vs 40 points).
+8. Record the rule in decision 25 / docs/01: tint, capital springs, default research and map hue use the primary color (`colors[0]`).
+9. Update tests/sim/createGame.test.ts and the content validation fixtures to match.
+
+######## #10 [fidelity] medium phase2-decisions.md #24 — Pillage is in no phase and the Phase 2 decisions leave it out
+DESC: Pillage is a daily effect on population, gold and unrest, so it belongs to the economy tick. CommanderOrder already has 'pillage' and 'patrol', and acceptance criterion 6 requires both. Yet no docs/10 phase lists pillage. The Phase 2 decisions (23 population, 24 unrest, 15 gold) do not mention it, so nobody owns it. The docs also leave open where pillage is allowed, which nation gets the gold, and whether 'Pillage is strong' for Cinder Horde is a number.
+EVIDENCE: docs/01 §3: "Pillage (an army order) removes 2% of pop per day, converts it to gold at 1 gold per 20 pop lost, and adds 5 unrest per day." docs/01 §5: "pillage +5/day". docs/03 Cinder Horde: "Pillage is strong." docs/10 Phase 2 and Phase 3 bullet lists do not mention pillage or patrol; acceptance 6 lists "pillage, patrol". types.ts:136-137 has `pillage` and `patrol` orders.
+CHANGE: Either add pillage to the Phase 2 tick as a decision, or assign it to Phase 3 in docs/10. The decision should cover: in which provinces it is allowed (e.g. any province the commander stands in that its nation owns or has just taken), that gold goes to the commander's nation without tax, unrest or difficulty factors, that pop and unrest change daily, and any Cinder Horde multiplier as a NationDef field. Put the numbers (0.02, 20, 5) in content/rules.ts. Also record what patrol does, or that it is deferred.
+-- confirmed worth=True: Add a decision to phase2-decisions.md, as #28 or folded into #15, #23 and #24, so the Phase 2 tick (docs/06 step 4) applies pillage:
+
+- **When it applies.** Each day, every province holding at least one commander with order `pillage` that is not in transit is pillaged once. Several commanders do not stack; with several nations, the lowest NationId gets the gold. Pillage is allowed in any province, whoever owns it.
+- **Effect.** `lost = pop * PILLAGE.popFraction` (0.02). Then `pop -= lost` (pop is a float). The pillaging nation gets `gold += lost / PILLAGE.popPerGold` (20) directly, with no tax, order, unrest or difficulty factor. Then `unrest = min(100, unrest + PILLAGE.unrestPerDay)` (5).
+- **Content.** Add a `PILLAGE` block to src/content/rules.ts with these three values, and record them in docs/09-balance.md.
+- **Cinder Horde.** Record that "Pillage is strong" is expressed by the AI personality `pillage: 0.6`, with no extra multiplier in M1. If a multiplier is wanted, make it a NationDef field that defaults to 1 instead.
+- **Ownership.** Give the `setOrder` validation for pillage to Phase 3, and add "pillage" to the Phase 2 or Phase 3 bullet list in docs/10.
+- **Patrol.** Record either a minimal M1 meaning (for example, the commander stays put and counts as a defender) or that its effect is deferred to Phase 4.
+- **Test.** Add one: pillaging a 25000-pop capital for one day removes 500 pop, adds 25 gold and adds 5 unrest.
+-- confirmed worth=True: A small change. Record who owns it and put in the numbers. Do not add a nation multiplier.
+
+1. Add to /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/phase2-decisions.md, and when docs are updated, to the bottom of docs/01-core-rules.md:
+"28. Pillage: once per province per day, if at least one commander not in transit holds order pillage there (no stacking, since an army is a UI grouping): lost = pop * PILLAGE.popFractionPerDay; pop -= lost; that nation's gold += lost / PILLAGE.popPerGold (flat, with no tax, order, unrest or difficulty factors); unrest += PILLAGE.unrestPerDay, clamped 0..100. It runs in tick step 4, after the economy snapshot."
+
+2. Add `PILLAGE = { popFractionPerDay: 0.02, popPerGold: 20, unrestPerDay: 5 }` to src/content/rules.ts.
+
+3. Add a marked slot for pillage in step 4 of src/sim/tick.ts. Implement it either now (tests can set the order directly) or in Phase 3. If it waits for Phase 3, write "pillage and patrol: Phase 3" in docs/10 Phase 3 so the gap closes.
+
+4. The Phase 3 validate rule should be the simplest one: the commander stands in a province its nation owns. That fits docs/08's 'enemy provinces it cannot hold', which the nation owns once it captures them.
+
+5. Patrol: record that in M1 it means the commander stays put and defends like any commander present, with no other effect. Do not invent unrest or spy effects.
+
+6. Do not add a Cinder Horde pillage multiplier to NationDef. docs/03 gives no number, and AI personality pillage 0.6 already covers it.
+
+Downgrade the severity to low, because no GameState change is needed.
+
+######## #11 [fidelity] low phase2-decisions.md #19 — Supply at pop/50 contradicts the balance checklist's Hills starvation target
+DESC: Under decision 19, Hills supply is 40 + pop/50, which is 100 to 160 per day for the 3000 to 6000 starting population. A 60-troop army eats 61 and never starves, and Growth 3 makes no difference. The Phase 12 checklist expects 60+ troops to starve there unless Thornwood has Growth 3. That target fits pop/500 (46 to 52, or 60 to 68 with +30%), not pop/50. Either the formula or the checklist is wrong, and the decision should say which one wins.
+EVIDENCE: docs/01 §4: "Each province provides `supplyBase + pop / 50` supply"; Hills supplyBase 40, start pop 3000 to 6000 (content/terrain.ts). docs/09-balance checklist: "Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3."
+CHANGE: Keep pop/50 as the rule for Phase 2, but add this mismatch to docs/PROGRESS.md known issues (or docs/09-balance.md), so Phase 12 tunes either SUPPLY.popDivisor or the checklist on purpose.
+-- confirmed worth=True: Keep `supplyBase + pop/50` (SUPPLY.popDivisor = 50) in Phase 2, since that is what docs/01 §4 specifies.
+
+Add one sentence to decision 19 and a matching item under known issues in docs/PROGRESS.md at the end of Phase 2. Suggested wording: "Hills supply at pop/50 is 100 to 160, so a 61-supply army never starves. This contradicts the docs/09 checklist item 'Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3', which fits a divisor near 500. Phase 12 should either tune SUPPLY.popDivisor (or the terrain supplyBase) or change the checklist on purpose, and record the change in docs/09-balance.md."
+
+Make no code change now.
+-- confirmed worth=True: Keep decision 19 as written (pop/50 via SUPPLY.popDivisor). When Phase 2 ends, add a known issue to docs/PROGRESS.md: Hills supply under pop/50 is 100 to 160 per day, so a 60-troop army never starves there. The docs/09-balance.md checklist line only holds with a divisor of about 500 (46 to 52 base, 60 to 68 with Growth 3), so Phase 12 must decide on purpose whether to retune SUPPLY.popDivisor or change the checklist. Phase 2 supply tests should take the divisor from SUPPLY.popDivisor rather than a literal 50, so retuning does not break them. Make no other design change.
+
+######## #12 [fidelity] low phase2-decisions.md #21 — starvedDays keeps rising past the -3 cap, so morale recovers slower than docs say
+DESC: The Squad type replaces the moraleMod in docs/01 §6 with starvedDays, which decisions 21 and 22 count up by 1 per starving day and down by 1 per fed day. The penalty caps at -3 after 15 days but the counter does not. A squad starved 40 days needs 26 fed days before its first morale point comes back. The docs say recovery is at the same rate as the loss.
+EVIDENCE: docs/01 §4: "squads lose 1 morale per 5 days of starvation (capped at −3). Starved HP and morale recover at the same rate once fed." docs/01 §6: "A squad is `{ unitTypeId, count, hpPool, moraleMod, formation }`". Decision 21: "starvedDays + 1 ... Morale penalty = min(3, floor(starvedDays / 5))".
+CHANGE: Cap starvedDays at starvationMoraleCap * starvationDaysPerMorale (15), on squads and on commanders. Record that the docs' moraleMod is derived from starvedDays and nation.unpaidDays rather than stored.
+-- confirmed worth=True: 1. Add a selector `maxStarvedDays = (SUPPLY.starvationMoraleCap + 1) * SUPPLY.starvationDaysPerMorale - 1`. With the current rules that is 19.
+2. In src/sim/supply.ts, change the starving branch to `starvedDays = Math.min(maxStarvedDays, starvedDays + 1)` for both squads (line 22) and commanders (line 37). The "began starving" check (`=== 1`) is not affected.
+3. Update decision 21 and the Squad comment in src/sim/types.ts lines 124-125 to say the counter is capped at 19.
+4. Add a test that a squad starved 40 days gets its first morale point back after 5 fed days and is fully recovered after 15.
+5. Record at the bottom of docs/01-core-rules.md that the `moraleMod` from section 6 is not stored. It is derived from `starvedDays` and `nation.unpaidDays`.
+
+Do not use the suggested cap of 15. It brings the first point back after 1 fed day instead of 5.
+-- confirmed worth=True: 1. In /home/user/Fluid-Magic-/src/sim/supply.ts, clamp the counter on starving days in both feedSquad and feedCommander. Use something like `squad.starvedDays = Math.min(SUPPLY.starvationMoraleCap * SUPPLY.starvationDaysPerMorale, squad.starvedDays + 1)`, and the same for commanders. Derive the bound from rules.ts and give it a small shared const or helper, not a literal 15.
+2. Update the doc comment on Squad.starvedDays in /home/user/Fluid-Magic-/src/sim/types.ts to say "capped at starvationMoraleCap * starvationDaysPerMorale".
+3. Change decision 21 to "starvedDays + 1, capped at 15". Record at the bottom of docs/01-core-rules.md that the docs' squad `moraleMod` is not stored: it is derived in battle from starvedDays (starvationMoralePenalty) and nation.unpaidDays (unpaidMoralePenalty). Also note that the floor makes full recovery from the cap take 11 fed days against 15 days to lose all 3 points, and that this is accepted.
+4. Add a test to tests/sim/supply.test.ts: starve 40 days, check starvedDays === 15, feed 1 day, check starvationMoralePenalty(...) === 2.
+
+######## #13 [fidelity] low src/content/units/base.ts — Invented numbers not recorded in docs/09-balance.md; a comment points to rows that do not exist
+DESC: CLAUDE.md requires numbers the docs do not give to be recorded in docs/09-balance.md. base.ts says commander weapon values are there, but the balance log has no such rows. Other invented values are also missing: starting gold 300 (decision 4 itself says 'not in docs'), garrison leadership 10000, the 300-message log, and the 2%/day healing of battle wounds (decision 22).
+EVIDENCE: base.ts: "Commander weapons; the commander tables list none (values in docs/09-balance.md)." docs/09-balance.md has only Phase 1 mapgen rows. rules.ts `startGold: 300`, `MESSAGES.keep: 300`; common.ts garrison `leadership: 10_000`.
+CHANGE: Before the Phase 2 commit, add balance rows for the commander weapons (Dagger 2, Staff 2, Sword 4, Axe 5, and who carries which), start gold, any start materials, garrison leadership, message cap, and fed healing rate. Add the rule-type decisions (1-27) to the bottom of docs/01.
+-- confirmed worth=True: Make the following changes in the Phase 2 follow-up docs commit.
+
+Add "(new)" rows to docs/09-balance.md for:
+- the commander weapons and who carries each: Dagger 2 for Scouts; Staff 2 for priests and mages; Sword 4 for Warden Captain and Independent Captain; Axe 5 for Ash Chieftain
+- starting gold 300, starting mana 0 and starting fort materials 0
+- garrison holder leadership 10000, as a stand-in for "no limit"
+- the message log cap of 300
+
+Add decisions 1-27 as a "Phase 2" block under "Implementation decisions" at the bottom of docs/01-core-rules.md. Include decision 22, that fed healing also heals battle wounds. The 2%/day rate needs no balance row because docs/01 section 4 already implies it.
+
+Once the rows exist, the base.ts comment is accurate. Otherwise reword it to point at the content file.
+-- confirmed worth=True: Make these edits before the Phase 2 commit; they change docs only.
+
+1. **Add "(new)" rows to docs/09-balance.md:**
+   - Commander weapons: Dagger 2, Staff 2, Sword 4, Axe 5. Note that Sword and Axe reuse the troop values from docs/03, and list which commander carries which (scouts Dagger, mages and priests Staff, leaders Sword or Axe, Independent Captain Sword).
+   - Starting gold 300, starting mana 0, starting materials 0 (decision 4).
+   - Message log keeps 300 messages.
+2. **Add the rule decisions from phase2-decisions.md to the bottom of docs/01-core-rules.md**, as a Phase 2 list in the same style as the Phase 1 list. At minimum, include these, since they go beyond the docs:
+   - 1: daily accrual at rate/30.
+   - 11-14: national and province scales.
+   - 17: unpaid upkeep replaces negative gold.
+   - 18: fort collection.
+   - 20-22: who eats, and feeding also heals battle wounds.
+   - 24-25: unrest and mana terms.
+   - 26: construction progress.
+3. **Record garrison leadership as a rule, not a balance row:** "the garrison commander has no leadership cap". Its 10_000 can stay a stand-in, or become explicit unlimited handling keyed on `garrison: true`.
+4. **Leave the 2% heal rate out of 09-balance.** docs/01 line 83 already gives it.
+5. **Keep the base.ts line 19 comment**, now that the rows exist. Otherwise, reword it to point at the rows' actual location.
+
+######## #14 [simplicity] medium src/sim/battle/events.ts — BattleRecord has no starting roster, so a replay cannot be rendered from the saved record
+DESC: docs/04 requires the replay log to be enough to render the fight. The event union has no deploy or roster entry. BattleRecord (src/sim/types.ts:228-238) keeps only ids, winner and rounds. Once a battle is over, dead squads are removed from state, survivors have different counts and formations, and PD militia and battle summons never exist in state. The viewer would have no way to place squads in rows, label their unit types, or show starting counts. BattleUnitRef is a plain `string`, so nothing ties a ref to a side, unit or row. Separately, `buff` is the only effect event. Heal (Regrowth) has no event shape, and there are no shapes for regeneration or field effects either.
+EVIDENCE: events.ts:12-28 lists roundStart, cast, volley, melee, damage, rout, death, summon, buff and battleEnd. Nothing records the initial sides. types.ts:228 `BattleRecord { id, day, province, attacker, defender, winner, rounds, replay }`. docs/07: side panels list each side's commanders and squads with live counts. docs/01 section 8: PD fights but is not stored as squads.
+CHANGE: Add a first event kind `{ kind: 'deploy'; side: BattleSide; ref: BattleUnitRef; unit: UnitTypeId; count: number; hp: number; row: Formation; commander: BattleUnitRef | null }`, which the resolver emits for every commander, squad and PD unit before round 1, and give summons the same fields. Then every ref in the log resolves inside the record. Add a `heal { target, amount }` event, or a single `effect { target, stat, delta, source }` event that covers buff, debuff and heal. Record the battle-local ref format (for example `pd0` and `sum0`, which cannot collide with the c/sq/b prefixes) as a decision.
+-- confirmed worth=True: In src/sim/battle/events.ts:
+
+1. Add a deploy event that the resolver emits before round 1 for every commander, squad and PD unit:
+   `{ kind: 'deploy'; side: BattleSide; ref: BattleUnitRef; unit: UnitTypeId; name: string | null; count: number; hp: number; row: Formation; commander: BattleUnitRef | null }`
+   - `name` holds the commander name; it is null for squads.
+   - `commander` holds the leading commander's ref; it is null for commanders and PD.
+   - Give `summon` the same hp and row fields.
+   An equivalent alternative is an `initial` roster per side on BattleRecord. Pick one, not both.
+2. Add `{ kind: 'heal'; target: BattleUnitRef; amount: number; source: string }` for heal spells and regeneration.
+3. Write down the battle-local ref format (for example pd0..pdN and sum0..sumN, which cannot collide with the commander and squad id prefixes). Note in docs/04 that every ref in a replay resolves through its deploy or summon event, so a replay renders from the record alone.
+
+Treat this as a low-to-medium contract fix. Nothing breaks before Phase 4, so it can ship with this phase's review fixes.
+-- confirmed worth=True: Make a small, additive change in src/sim/battle/events.ts.
+
+1. Add a `deploy` event: `{ kind: 'deploy'; side: BattleSide; ref: BattleUnitRef; unit: UnitTypeId; count: number; hp: number; row: Formation; commander: BattleUnitRef | null }`. The resolver emits one before `roundStart(1)` for every commander, squad and PD unit. A commander gets count 1 and commander null.
+2. Add `row: Formation` to the existing `summon` event, so a summon also binds its ref the way deploy does.
+3. Add `{ kind: 'heal'; target: BattleUnitRef; amount: number; source: string }`. It covers Regrowth and per-round regeneration, with a source of 'regeneration' for the latter.
+
+Leave the rest alone:
+- Keep `buff` as it is; a negative delta is a debuff.
+- Do not add a field-effect event, since no M1 spell uses fieldEffect.
+- Do not replace the union with a generic `effect` event.
+- Leave BattleRecord unchanged: the deploy events serve as the roster.
+
+Record two rule decisions at the bottom of docs/04-battle.md:
+- The replay log opens with one deploy event per combatant, and every ref in the log resolves through a deploy or summon event in the same record.
+- The battle-local ref format: the existing commander and squad ids, plus `pd<n>` for PD units and `sum<n>` for summons, which cannot collide with the id prefixes.
+
+Update the event list in docs/04's "Replay log" section to match.
+
+######## #15 [simplicity] medium phase2-decisions.md #18 — Fort materials cap is derived from today's production, so a siege or a pop drop deletes stored materials
+DESC: Decision 18 sets pool cap = 6 x the fort's monthly collection, and accrueMaterials clamps the stored pool to that cap every day. Besieged provinces produce nothing, so a besieged capital whose neighbors are unowned has a cap of 0. One besieged day wipes the whole pool. Any drop in production also removes stock: losing a neighbor, losing pop to pillage or battle, or the Wild scale arriving. The docs only say that production beyond the cap is lost, not existing stock.
+EVIDENCE: economy.ts:39 `p.materials = Math.min(cap, p.materials + perMonth * PER_DAY)`. Scratch run (design-review/simplicity/siegePool.ts, seed 1): pool 240.8 on day 120, 0.0 after one day with `siege` set. Halving capital pop moved the pool from 242.4 to 212.4 in one tick.
+CHANGE: Let the cap stop accrual but never shrink stock: `p.materials = Math.max(p.materials, Math.min(cap, p.materials + perMonth * PER_DAY))`. Record in decision 18 that the cap limits growth only. Add a test that a siege day leaves the pool unchanged.
+-- confirmed worth=True: 1. In `src/sim/economy.ts` `accrueMaterials`, make the cap limit only growth: `p.materials = Math.max(p.materials, Math.min(cap, p.materials + perMonth * PER_DAY));`. Production beyond the cap is still lost, as docs/01 section 4 says.
+2. Update decision 18 and the rule note at the bottom of docs/01 to say: "The cap limits accrual only; a lower cap (siege, pop loss, scale change) never removes stored materials."
+3. Add tests to `tests/sim/economy.test.ts`:
+   - Fill the pool, set `siege` on the capital, advance one day: the pool is unchanged.
+   - Halve the capital's pop at the cap: the pool does not drop and does not grow.
+-- confirmed worth=True: In src/sim/economy.ts accrueMaterials, change the line to `p.materials = Math.max(p.materials, Math.min(cap, p.materials + perMonth * PER_DAY));`. The cap then limits growth only: stock above a lowered cap is kept, but it does not grow. Add one sentence to phase2-decisions.md #18, then to docs/01-core-rules.md (bottom) or docs/09-balance.md: "The cap limits accrual only; a lower cap (siege, pop loss, lost neighbors) never removes stored materials." In tests/sim/economy.test.ts, add a test that a fort's pool is unchanged after one day with `siege` set, next to the existing cap test that production stops at 6 months. A separate, smaller point, out of scope for this claim: section 11 says the besieged get supplies only from their own province, and the same logic may mean a besieged fort should not collect from its neighbors either. That should be decided separately.
+
+######## #16 [simplicity] medium phase2-decisions.md #21 — Starvation's count = ceil(hp / unitHp) kills wounded troops at once on the first hungry day
+DESC: Squad keeps `count` and an `hp` pool as independent numbers: survivors of a battle can be wounded, so hp < count x unitHp (docs/01 section 6, and decision 22 says feeding heals battle wounds). Decision 21 then recomputes count from the pool during starvation. That treats count as derived from hp, which contradicts the data model, and it makes a wounded squad lose many troops on the first starving day while its pool drops only 2%.
+EVIDENCE: supply.ts:61-62 `squad.hp = Math.max(0, squad.hp - max * 0.02); squad.count = Math.ceil(squad.hp / def.hp)`. Scratch run (design-review/simplicity/woundedStarve.ts): 10 Cinder Warriors with 60/110 hp in a starving Wasteland province became 6 troops after one day, with the pool going from 60 to 57.8.
+CHANGE: Pick one meaning and apply it everywhere. Simplest: troops die in proportion to pool loss, keeping the average per-troop HP. Compute `avg = hp / count` before the drain, then `count = Math.min(count, Math.ceil(newHp / avg))`. Alternatively, have the battle writeback set count = ceil(hp / unitHp) so the invariant always holds. Record the choice in decision 21 and add a wounded-squad starvation test.
+-- confirmed worth=True: Decide now that a squad's pool deficit means wounds spread evenly over its troops, and that count changes only when troops die.
+
+1. In src/sim/supply.ts feedSquad, compute `newHp = Math.max(0, squad.hp - max * SUPPLY.starvationHpPerDay)` first. Then set `squad.count = squad.hp > 0 ? Math.min(squad.count, Math.ceil(squad.count * newHp / squad.hp)) : 0`, and only after that assign `squad.hp = newHp`. The hp > 0 guard prevents a 0/0 division.
+2. Rewrite decision 21 to say "troops die in proportion to pool loss, keeping the average troop HP", and record it in docs/01 or 09 as the rule.
+3. Update the Squad.hp comment in src/sim/types.ts the same way, so Phase 4 writes back count = surviving troops and hp = their summed HP.
+4. Add a test in tests/sim/supply.test.ts: 10 Cinder Warriors at 60/110 HP still number 10 after one starving day, with the pool at 57.8.
+5. Record the size-dependent rounding (small squads hold their count, then die off quickly near the end) in the decision note.
+-- confirmed worth=False: Keep `count = Math.ceil(squad.hp / def.hp)` in src/sim/supply.ts and do not adopt the proportional formula. Its per-day rounding up postpones deaths: a full squad of 10 keeps all its troops for 40 days, then dies out by day 60.
+
+Make one documentation-only change instead. Add a sentence to decision 21, mirrored in the Squad.hp comment in src/sim/types.ts, saying:
+- Starvation treats the HP pool as compacted (count = ceil(hp / unit hp)).
+- The Phase 4 battle writeback must either keep that invariant, or revisit this rule together with how the resolver splits the pool into per-unit HP.
+
+Add the wounded-squad starvation test in Phase 4, once writeback can actually produce a wounded squad.
+
+######## #17 [simplicity] medium src/sim/types.ts — Duplicate nations get identical colors, and nothing in state or content tells them apart
+DESC: M1 allows duplicate nations (docs/07 New Game), and decision 3 numbers their names. Map ownership bands and dominion candles use the nation's color identity (docs/07 Map), and NationState carries only `color: Color`. Two Cinder Hordes therefore draw the same #FD6533 band, the same candles and the same mana symbol. That breaks the project's rule that colors stay distinct (docs/09-art-direction, palette.test.ts). The existing palette entries cannot serve as a second band either: they fail the documented thresholds against the primary.
+EVIDENCE: Scratch run (design-review/simplicity/dupColors.ts), 4-nation game cinderHorde x2 + thornwood x2: n0 and n1 are both R #FD6533, and n2 and n3 are both G #00674B. The only fields that differ are id, name, capital, ai and explored. R primary vs accent is CIEDE2000 10.6 under deuteranopia (threshold 12). G primary vs secondary is 11.5 normal (threshold 20) and 9.4 to 10.8 under color blindness simulation (threshold 12).
+CHANGE: Add per-color banner variants to src/content/colors.ts, at least 2 per color: the first is the primary, the next are new hues that pass the 20/12 CIEDE2000 rule against each other, every other primary, the independent grey and the terrain fills. Extend tests/content/palette.test.ts to check them. Derive a nation's banner in a selector, as the number of earlier nations in `state.nations` insertion order with the same color, so no new state is stored. Show the name numeral beside the mana symbol so identity never relies on hue alone. Record this in docs/09-art-direction.md.
+-- confirmed worth=True: Leave src/sim/types.ts and the Phase 2 code as they are. Now, record a rule where the docs are silent. Put it at the bottom of docs/09-art-direction.md (or docs/07-ui.md) and add a line to docs/PROGRESS.md. The rule:
+
+- A nation's duplicate ordinal is the number of earlier nations with the same `def`, in nation id order. The first copy is 0. This matches the numeral in its name.
+- A selector computes the ordinal from state, so nothing new is stored.
+- The renderer separates same-color nations with marks that do not rely on hue, keyed by the ordinal:
+  - the ownership band's pattern: solid, dashed, dotted or double;
+  - the Roman numeral beside the mana symbol on army shields, dominion candles, the province panel owner and the hover tooltip.
+- The band keeps the nation's primary color for every copy. A lightness step taken from the primary is optional on top of the pattern.
+
+Implement it in Phase 8 with a smoke test showing that a 4-nation game of one nation gives 4 different band styles. Do not add the proposed hue variants to colors.ts or palette.test.ts. Up to 4 copies need 4 variants, a search found at most 3 that still read as red or green, and the current primaries already fail the proposed 20/12 bar against the terrain fills.
+-- confirmed worth=True: Leave src/sim/types.ts and GameState unchanged, and do not add palette variants in Phase 2. Write the rule down now so it is not lost, and build it in Phase 8 along with the band renderer. (a) Add to docs/09-art-direction.md (Color palettes) and docs/07-ui.md (Map): "Nations of the same color keep that color's hue. The k-th nation of a color, counted in nation id order (n0, n1, ...), takes band style k from [solid, dashed, dotted, double], drawn in the same primary. The nation's numeral (II, III, IV) appears on its army shield badges, its capital label and beside its mana symbol in the province panel owner line." This covers all four possible duplicates, works for color blind players and needs no palette search. (b) In Phase 8, add a pure render-side selector duplicateOrdinal(state, nationId) = the number of nations with a lower id and the same color, plus a small unit test. (c) Add a known-issue line to docs/PROGRESS.md under Phase 2: "Duplicate nations share map colors until the Phase 8 band styles land." Only if playtesting shows patterns are not readable enough, add lightness variants to colors.ts later, with palette.test.ts coverage for up to four of the same color.
+
+######## #18 [simplicity] medium src/sim/types.ts — castRitual and build orders duplicate progress kept elsewhere, and nothing keeps the two in sync
+DESC: `{ kind: 'castRitual'; ritual: RitualId }` points into `GameState.activeRituals`, and RitualInProgress points back via `caster`. If the caster dies in battle or gets a new order, both records must be cleaned up by hand. Otherwise a ritual completes for a deleted commander (getCommander throws) or a busy mage looks idle. `claimWellspring` already keeps its countdown in the order, so the two follow different conventions. `{ kind: 'build'; building }` has no link to `ProvinceState.construction`, and Construction does not name the commander. Construction continues after the commander leaves (decision 26), and nothing resets the order when it finishes, so the commander shows 'build' forever.
+EVIDENCE: types.ts:143 castRitual order, 144 claimWellspring with daysLeft, 145 build order, 265-271 RitualInProgress with caster, 312 activeRituals. buildings.ts:52-66: progressConstruction never touches commanders.
+CHANGE: Follow the claimWellspring pattern. Make the order `{ kind: 'castRitual'; spellId; target: ProvinceId | null; daysLeft }`, drop `activeRituals`, `RitualInProgress` and the `ritual` id kind, and record the deviation from the docs/06 contract. Deleting the commander or replacing its order then cancels the ritual automatically. Drop the `build` order kind: Build is the one-shot `build` command (docs/06 command list), which starts `province.construction`, and the UI shows the construction on the province.
+-- confirmed worth=True: Rituals: take the claim's fix as proposed.
+- Change the order in src/sim/types.ts to `{ kind: 'castRitual'; spellId: string; target: ProvinceId | null; daysLeft: number }`, following the claimWellspring pattern.
+- Remove `activeRituals` from GameState and createGame, remove the RitualInProgress interface, and remove RitualId and the `ritual` prefix from src/sim/ids.ts.
+- Phase 5 then advances rituals by scanning commanders whose order is castRitual. A dead caster or a replaced order cancels the ritual with no cleanup code; mana stays spent, since it is paid at cast time.
+- Record this in docs/PROGRESS.md as a deviation from the docs/06 GameState sketch, which matches docs/01's `CastRitual(spellId, target)`.
+
+Build: keep the `build` order kind. docs/01 §6-7 and docs/07 require it, and they say the commander is busy while building. Fix the missing reset instead:
+- When a construction finishes or is abandoned, progressConstruction (src/sim/buildings.ts) sets back to `{ kind: 'idle' }` every commander of `job.nation` located in that province whose order is `{ kind: 'build', building: job.building }`.
+- The alternative is to add `commander: CommanderId | null` to Construction and reset that one commander. The scan is simpler and safe because only one construction can run per province.
+- Add a test that a commander's build order returns to idle on completion.
+- Note in docs/01 or PROGRESS that a commander who leaves drops its build order (its order becomes move) while the construction keeps going.
+-- confirmed worth=True: 1. In src/sim/types.ts, replace the castRitual order with `{ kind: 'castRitual'; spellId: string; target: ProvinceId | null; daysLeft: number }`. Remove `RitualInProgress` and `GameState.activeRituals`. Remove the `ritual` id kind and `RitualId` from src/sim/ids.ts, and `activeRituals: []` from createGame.ts. Ritual progress (Phase 5) then loops over commanders whose order is castRitual. A new order or the caster's death cancels the ritual by itself. Mana is paid when the castRitual command runs; the simplest rule is that cancelling refunds nothing, and that should be written down. Record the deviation from the docs/06 GameState listing in docs/PROGRESS.md and at the bottom of docs/06.
+2. In the Phase 3 `setOrder` validation, reject `castRitual` and `claimWellspring` orders. These may be set only by their own commands (`castRitual` pays mana; `claimWellspring` checks priest, holy and owned Wellspring). Otherwise a client could set `daysLeft: 1` and skip payment.
+3. Keep the `build` order kind. docs/01 sections 6 and 7 and docs/07 require Build to be an order that keeps the commander busy, and the construction stays on the province (decision 26). In `progressConstruction` (src/sim/buildings.ts), when a construction completes or is abandoned, set to `{ kind: 'idle' }` every commander standing in that province with order `{ kind: 'build', building: job.building }` and `owner === job.nation`. Add a test for this to tests/sim/buildings.test.ts.
+
+######## #19 [simplicity] low src/sim/types.ts — Prophet and pretender status are stored twice
+DESC: CommanderState has `prophet: boolean` and `pretender: boolean`, and NationState has `prophetId` and `pretenderId`. Two sources of truth can disagree: the flag on the wrong commander, two prophets, or an id left pointing at a dead commander while the flag is set elsewhere. Pretender status will also follow from the commander's unit once chassis join the unit registry in Phase 6.
+EVIDENCE: types.ts:173-174 `prophet: boolean; pretender: boolean;` and types.ts:213-214 `pretenderId`, `prophetId`.
+CHANGE: Keep only the nation-level ids, which enforce one per nation, and drop the two booleans. Add selectors `isProphet(state, c)` and `isPretender(state, c)` that compare `nations[c.owner].prophetId` and `pretenderId` with `c.id`.
+-- confirmed worth=True: 1. Remove `prophet: boolean` and `pretender: boolean` from CommanderState in src/sim/types.ts, and the two `false` initializers in src/sim/commanders.ts:63-64.
+2. Keep `NationState.prophetId`, `pretenderId` and `prophetAvailableDay` as the only source of truth.
+3. Add selectors in src/sim/selectors.ts: `isProphet(state, c)` returns `c.owner !== null && state.nations[c.owner].prophetId === c.id`, and `isPretender` works the same way with `pretenderId`.
+4. Handle commander death in the single commander-removal path: clear the matching nation id there, and set `prophetAvailableDay` when the prophet dies. Alternatively, have the selectors treat an id whose commander no longer exists as "none". Ids are monotonic and never reused, so this is safe.
+5. Note the decision in the bottom section of docs/06-architecture.md or docs/05-pretender.md: prophet and pretender identity is stored per nation, not per commander.
+-- confirmed worth=True: 1. Remove `prophet: boolean;` and `pretender: boolean;` from CommanderState in /home/user/Fluid-Magic-/src/sim/types.ts, and remove `prophet: false,` and `pretender: false,` from createCommander in /home/user/Fluid-Magic-/src/sim/commanders.ts.
+2. Keep `pretenderId`, `prophetId` and `prophetAvailableDay` on NationState as the only record of who holds each role.
+3. Add `isProphet(state, c)` and `isPretender(state, c)` to /home/user/Fluid-Magic-/src/sim/selectors.ts. Each returns `c.owner !== null && getNation(state, c.owner).prophetId === c.id` (pretenderId for the second). They can go in now, or when Phase 4/6 first needs them.
+4. Write the rule at the bottom of the relevant doc (docs/05-pretender.md, or the phase-2 decisions record): the nation ids are the single source of truth. When a commander dies, the death code clears any nation id that points to it, and for the prophet it also sets `prophetAvailableDay = day + 24 * 30`.
+5. Do not derive pretender status from the commander's unit. Chassis live in content/pretenders/chassis.ts according to docs/06, not in the unit registry.
+
+######## #20 [simplicity] low src/sim/economy.ts — Upkeep code differs from decision 17 and turns negative gold into free money
+DESC: Decision 17 says upkeep is paid in full or not at all, with `unpaidDays` going up by 1 per unpaid day. The code pays part of the upkeep and counts fractional unpaid days, which is a more complex rule than the recorded one. With a negative treasury, `Math.min(gold, due)` is negative: the debt is wiped to 0 and unpaidDays jumps by dozens in one day. docs/01 section 4 still talks about 'gold below zero', and startConstruction subtracts gold without a check.
+EVIDENCE: economy.ts:25-27 `const paid = Math.min(nation.gold, due); nation.gold -= paid; nation.unpaidDays = paid >= due ? 0 : nation.unpaidDays + (due - paid) / due;`. Scratch run (design-review/simplicity/negGold.ts): gold -50 became 0.000 after one day (income 8.33, upkeep 1.24), and unpaidDays became 34.48.
+CHANGE: Implement decision 17 as written: `if (nation.gold >= due) { nation.gold -= due; nation.unpaidDays = 0; } else nation.unpaidDays += 1;`. Alternatively, keep partial payment with `paid = Math.max(0, Math.min(gold, due))` and update decision 17 to match. Either way, add a test that starts from negative gold.
+-- confirmed worth=True: Keep the partial-payment rule; do not switch to decision 17's all-or-nothing rule, because it almost never triggers the morale penalty.
+
+1) Rewrite decision 17 to match the code: 'pay min(gold, upkeep/30); a fully paid day sets unpaidDays to 0, otherwise unpaidDays += unpaid fraction of the day; morale penalty = floor(unpaidDays / 30)'. Record it in docs/09-balance.md and at the bottom of docs/01-core-rules.md. The record should replace 'Gold below zero' with 'gold never goes below 0; an unpaid shortfall counts toward unpaidDays'.
+
+2) Make economy.ts:25 `const paid = Math.max(0, Math.min(nation.gold, due));` so a negative treasury cannot be wiped out and the code really guarantees what its comment says.
+
+3) Add a test that starts from negative gold. Gold should rise by exactly that day's income, and unpaidDays should grow by at most 1 per day.
+
+4) Note for Phase 3: every command that spends gold (Build, Recruit queueing, PD) must reject the command in validate when cost > gold.
+-- confirmed worth=True: Keep the partial-payment rule. Do not revert to all-or-nothing, because under that rule chronic deficits escape the morale penalty. Make three changes:
+(1) In /home/user/Fluid-Magic-/src/sim/economy.ts, change line 25 to `const paid = Math.max(0, Math.min(nation.gold, due));` so a negative treasury cannot be wiped to zero or inflate unpaidDays.
+(2) Rewrite decision 17 before recording it in docs/09-balance.md and at the bottom of docs/01-core-rules.md. New text: "Each day gold += income/30, then upkeep/30 is paid as far as gold allows. A fully paid day sets unpaidDays = 0; otherwise unpaidDays += unpaid fraction of the day. Morale penalty = floor(unpaidDays/30). Gold never goes negative. This replaces 'gold below zero' in section 4." Also note that recruitment and construction validation must require gold >= cost.
+(3) Add a test in tests/sim/economy.test.ts that sets nation.gold negative, runs one day, and checks that gold has not risen above its starting value plus one day's income and that unpaidDays rose by at most 1.
+
+######## #21 [simplicity] low src/content/types.ts — Nation content refers to units by plain string, so createGame needs casts
+DESC: NationDef.troops, commanders, pd and startingArmy are `string`, so a typo in nation data is caught only when validateContent runs in tests, and sim code has to cast. The registry already has a typed `UnitTypeId`. Some lists are also kept by hand: `BuildingId` is a hand-written union with a separate `BUILDING_IDS` array, which validateContent iterates. `CommanderTraits.pips` re-declares the sim's `Pips`, and `carriedMana` reuses the `Pips` name for mana.
+EVIDENCE: content/types.ts:95-98 and 115-121 use `string` unit refs. createGame.ts:140 `start.commander as UnitTypeId`, 143 `squad.unit as UnitTypeId`. content/types.ts:126 and buildings.ts:97 keep separate BuildingId lists. sim/types.ts:172 `carriedMana: Pips`.
+CHANGE: Type the unit refs as `UnitTypeId` with `import type { UnitTypeId } from './units'`; a type-only cycle compiles away. Then remove the casts. Derive `BuildingId` from a `BUILDING_IDS = [...] as const` array, as TAX_RATE_IDS does. Define `Pips` once in content/types.ts, and type carried mana as `Partial<ColorAmounts>` under its own name.
+-- confirmed worth=True: Main change:
+1. In src/content/types.ts, add `import type { UnitTypeId } from './units';`.
+2. Type `StartingCommander.commander`, `squads[].unit`, `NationDef.troops`, `NationDef.commanders`, `pd.militia` and `pd.archer` as `UnitTypeId` (readonly arrays where they are arrays).
+3. In src/sim/createGame.ts, remove the two `as UnitTypeId` casts (lines 140 and 143) and the unused `type UnitTypeId` import on line 3.
+4. Keep validateNation's runtime checks for troop vs. commander and day-1 recruitability. Its "does not exist" branch becomes a compile-time guarantee, and it is harmless to keep.
+
+This compiles, lints and passes all 359 tests in a scratch copy.
+
+Optional, for consistency:
+- In buildings.ts, use `export const BUILDING_IDS = ['temple', 'lab', 'fort'] as const;` and in types.ts use `export type BuildingId = (typeof BUILDING_IDS)[number]`. Import the type, or move the array into types.ts as was done for UNIT_TAGS.
+- Have CommanderTraits.pips reuse a single `Pips` alias, and optionally give carriedMana its own alias name.
+
+These last points are cosmetic and can be skipped.
+-- confirmed worth=True: Do these two (tested on the scratch copy):
+
+1. In src/content/types.ts, add `import type { UnitTypeId } from './units';`. Then retype these fields as UnitTypeId:
+   - `StartingCommander.commander` and `squads[].unit`
+   - `NationDef.troops` and `commanders` (both `readonly UnitTypeId[]`)
+   - `pd` (`{ militia: UnitTypeId; archer: UnitTypeId }`)
+
+   In src/sim/createGame.ts, drop the two `as UnitTypeId` casts (lines 140 and 143) and the now-unused `type UnitTypeId` import. Keep validateContent's semantic nation checks (troop vs commander, day-1 recruitable, PD in the troop list); the type only catches nonexistent ids.
+
+2. In src/content/buildings.ts, use `export const BUILDING_IDS = ['temple', 'lab', 'fort'] as const;`. In src/content/types.ts, make `BuildingId = (typeof BUILDING_IDS)[number]` (a type-only import), matching TAX_RATE_IDS.
+
+Optional, cosmetic, can wait:
+- Export `Pips` from content/types.ts, use it for CommanderTraits.pips, and have sim/types.ts re-export it.
+- Give carried mana its own alias, e.g. `export type ManaAmounts = Partial<ColorAmounts>`, and type `carriedMana` with it.
+
+Run typecheck, lint and test afterward.
+
+######## #22 [gameplay] high src/sim/economy.ts accrueMaterials; phase2-decisions.md #18 — Any drop in the fort's cap deletes the materials pool: one day of siege empties a capital
+DESC: Decision 18 sets the cap at 6 times the fort's current monthly collection, and accrueMaterials clamps the pool to that cap every day. A besieged fort produces 0 materials, so the cap falls to 6 times its neighbors' share, which is 0 if the attacker has taken them. On the first day of a siege the whole stockpile is clamped away. Losing capital neighbors also deletes stock that is already banked. In Phase 4 any hostile army that walks into an enemy capital, then leaves, erases up to 6 months of that nation's materials.
+EVIDENCE: Scratch run with real content, seed 1: Deepmoss pool after 180 days was 421.8. After setting siege for 1 day it was 0.0. With all neighbors owned the pool reached 891.7 after 180 more days, and the next day after those neighbors were captured it was 427.3. That is 464 materials lost, about 33 Wardens at 14 each.
+CHANGE: Fix now. Let the cap limit accrual only, never existing stock: `if (pool < cap) pool = Math.min(cap, pool + add)`. Optionally compute the cap from production with the siege ignored. Record the rule under decision 18 and add tests: a 1-day siege leaves the pool unchanged, and losing a neighbor does not reduce the pool.
+-- confirmed worth=True: 1. Change `accrueMaterials` in `src/sim/economy.ts` so the cap only stops new accrual and never cuts stock already banked: `const add = perMonth * PER_DAY; if (p.materials < cap) p.materials = Math.min(cap, p.materials + add);`.
+2. Record the rule under decision 18 and in the rules notes at the bottom of `docs/01-core-rules.md`: "The cap stops accumulation; a lower cap (siege, lost neighbors, pop loss) never removes stored materials."
+3. Add two tests to `tests/sim/economy.test.ts`:
+   - After filling the pool, a 1-day siege leaves the pool unchanged.
+   - After owning neighbors and filling the pool, giving the neighbors to another nation leaves the pool unchanged and stops further accrual until the pool falls below the new cap.
+
+Computing the cap with the siege ignored is not needed once the clamp only applies to accrual.
+-- confirmed worth=True: 1. In src/sim/economy.ts accrueMaterials, clamp only the accrual so stock already in the pool is never removed: `const next = p.materials + perMonth * PER_DAY; if (p.materials < cap) p.materials = Math.min(cap, next);` (or the equivalent `p.materials = Math.max(p.materials, Math.min(cap, next))`).
+2. Do not add the optional siege-ignored cap.
+3. Update the fortMaterials doc comment to say the cap limits accrual only.
+4. Record the rule under decision 18 and at the bottom of docs/01-core-rules.md: "The cap limits accrual only. A falling cap (siege, lost neighbors, expired effects, scale changes) never removes materials already in the pool."
+5. Add three tests in tests/sim/economy.test.ts:
+   - Fill the pool, set `siege` for one day, and check the pool is unchanged.
+   - Fill the pool with an owned neighbor, set that neighbor's owner to null, run a day, and check the pool has not dropped.
+   - A pool above a lowered cap does not grow until spending brings it under the cap.
+
+######## #23 [gameplay] high src/sim/types.ts NationState.color; src/sim/createGame.ts; phase2-decisions.md #3 — Duplicate nations share one owner color, so their provinces, dominion and armies look identical
+DESC: NationState only stores `color: def.color`, the magic color. docs/07-ui.md draws the owner glow band, dominion candles and army badges in 'the color identity of the owning nation'. M1 has only two nation defs and docs/07 allows duplicates, so every 3- or 4-nation game has at least two nations with the same color. A Cinder Horde mirror match with 1 AI on 'Random' happens half the time. Decision 3 gives duplicates numbered names but nothing visual, which goes against the user's 'make sure colors are distinct' request and the docs/09-art-direction 'every nation reads at a glance' rule.
+EVIDENCE: createGame.ts sets `color: def.color` for each slot. With 4 nations from {cinderHorde, thornwood}, two nations both get R (#FD6533) or G (#00674B). Their CIEDE2000 difference is 0 under every vision, against the project's own minimum of 20 normal and 12 color-blind.
+CHANGE: Fix now, while STATE_VERSION is 1. Give each nation a distinct display color separate from its magic color. Either add `banner: string` to NationState, assigned in createGame from a new content list (e.g. `NATION_BANNERS` in content/colors.ts, ordered so the first nation of each color keeps its primary), or derive it deterministically from slot order in a selector. Extend tests/content/palette.test.ts so every pair of banners that can appear together, plus the independent palette, clears 20 normal and 12 under protan, deutan and tritan. Record the rule under decision 3.
+-- confirmed worth=True: 1. Add a display color separate from the magic color. Put a `NATION_BANNERS` list in src/content/colors.ts, keyed per magic color with a few entries each. Entry 0 is the color's own palette primary, so the first Cinder Horde stays #FD6533 and the first Thornwood stays #00674B. Later duplicates take later entries.
+2. Store the color on the nation. Add `banner: string` (hex) to `NationState` and assign it in createGame next to the `numbered(...)` name, choosing by how many earlier slots share the same nation def. A selector deriving it from nation id order would also work, but a stored field keeps the renderer simple and saves self-describing.
+3. Use it in the UI. Phase 8 draws the owner glow, dominion candles and army badges with `banner`. Mana symbols, spell effects and the research UI keep the magic `color`.
+4. Test it. Extend tests/content/palette.test.ts so every pair of banners that can appear in one game (up to 4 nations from the two M1 defs), plus the independent palette, clears CIEDE2000 20 for normal vision and 12 under protan, deutan and tritan.
+5. Record the rule. Add it under decision 3 and at the bottom of docs/01-core-rules.md, next to the existing "later capitals get numerals" rule.
+-- confirmed worth=True: Do not add a `banner` field to NationState, and do not touch STATE_VERSION. Make one docs-only change now: extend decision 3 in phase2-decisions.md and record it at the bottom of docs/07-ui.md (or docs/01-core-rules.md) with roughly this wording:
+
+"Nations that share a magic color must be told apart on the map. A pure selector `nationBanner(state, nationId)` gives the first nation of each color (in nation id order, eliminated nations included) its color's primary, and each later one the next entry of a content list `NATION_BANNERS[color]` in src/content/colors.ts. Army badges and the province header also show the nation's numeral, so identity never relies on hue alone (docs/07 accessibility). tests/content/palette.test.ts checks every banner set that can appear together in a 4-nation game, plus the independent gray, at CIEDE2000 20 normal and 12 under protan, deutan and tritan. Built in Phase 8 together with the map renderer."
+
+Add a known-issue line to docs/PROGRESS.md pointing at it. Choose the actual hex values and write the palette test in Phase 8, once the glow band rendering is known.
+
+######## #24 [gameplay] medium phase2-decisions.md #20 (src/sim/supply.ts applySupply) — Decision 20 makes static independent garrisons eat and starve, so Wellspring guards shrink before anyone attacks
+DESC: 'Units of all owners in a province share its supply' includes owner-null independent defenders, which never move or recruit (docs/01 section 9). In poor terrain they starve and self-limit to whatever the province feeds, so players and the AI meet weaker defenders than the stored strength 8+4d or 30. This cheapens Wellspring guards in wastelands, and it gets much worse if the supply divisor is lowered as the first finding suggests.
+EVIDENCE: At pop/50, a wasteland Wellspring in the 10-seed sample has supply 30 against 30 guards + 1 captain = 31, so it starves. Wasteland at pop 500-700 also starves a d=4 force (24 + 1 = 25). At pop/250, wasteland supply is 12-18 and mountains 24-32, so a 30-guard Wellspring there would fall to about 17-31 troops. The scratch run shows an overloaded single squad shedding troops until consumption equals supply (29 down to 23 in 10 days).
+CHANGE: Fix now. Commanders with owner === null neither count toward supplyUsed nor starve or heal through applySupply. Record that under decision 20 and add a test that an independent force in a wasteland keeps its count after 60 days.
+-- confirmed worth=True: Make Independents exempt from supply.
+
+1. In src/sim/selectors.ts provinceEconomy, leave commanders with owner === null out of supplyUsed.
+2. In src/sim/supply.ts applySupply, always treat commanders with owner === null as fed. They heal 2% a day as under decision 22, and their starvedDays decays, but they never starve. This is better than skipping them entirely, so that Phase 4 battle wounds on independents still heal.
+3. Record the rule under decision 20 ("Independents never eat or starve; they are always fed") and at the bottom of docs/01-core-rules.md as a rules decision.
+4. Add tests in tests/sim/supply.test.ts:
+   - An owner-null captain with 30 lightInfantry in a wasteland province whose supply is under 31 still has 30 troops, at full HP, after 60 advance() calls.
+   - That province's supplyUsed does not include them.
+   - A nation's force in the same setup does still starve. This guards the existing rule.
+-- confirmed worth=True: Add to decision 20 in phase2-decisions.md and record it at the bottom of docs/01-core-rules.md: "Independent forces (commanders with owner === null and their squads) are outside the supply rule. They add nothing to supplyUsed, never starve, and are not healed by applySupply. They exist only in independent provinces, which never hold another owner's units." In applySupply, skip owner-null commanders when summing consumption and when applying starve or heal. Add a Phase 2 test: build an owner-null commander with a 30-troop squad in a wasteland province whose supply is below 31, advance 60 days, and assert the count, hpPool and starvedDays are unchanged. Phase 3 independent generation can then rely on stored strength matching actual troops. Treat the severity as low at pop/50 (about 2% of independents, 4 of 150 Wellsprings, all wasteland) and medium if the supply divisor is tightened toward the docs/09 Hills target.
+
+######## #25 [gameplay] medium src/content/colors.ts; tests/content/palette.test.ts — Nation colors fail the project's own distinctness bar against terrain fills (Thornwood glow on Forest)
+DESC: docs/07 draws the owner band in the nation's primary color over the terrain fill. palette.test.ts checks terrain against terrain and mana against mana, but never nation color against terrain. Several pairs fall below the 20 normal / 12 color-blind minimums, including Thornwood's own capital and home terrain, Forest.
+EVIDENCE: CIEDE2000 computed with tests/content/colorMath.ts: G #00674B vs Forest #374C2B is 13.5 normal, 9.0 protan and 8.8 deutan. G vs Swamp #1A727A is 6.0 tritan. R #FD6533 vs Hills #856824 is 10.0 protan. R vs Farmland #EEBA3A is 10.1 deutan.
+CHANGE: Add a palette test now that every nation banner color (see the duplicate-nation finding) clears the minimums against every terrain fill, or against the fill plus a fixed band outline. Pick banner values, or a light/dark stroke around the glow band, that pass. Record the values in docs/09-art-direction.md so Phase 8 rendering inherits them.
+-- confirmed worth=True: Don't change the mana primaries. They were just tuned to keep R and G apart, and no single palette value clears every terrain. Instead, fix it with a band rule plus a test:
+
+1. Add a rule to docs/09-art-direction.md. The owner glow band is the nation primary with a 1-2px contrast stroke on its inner edge. The stroke is a fixed light value such as parchment #E8DCC2, or a dark value such as border #2B2620, chosen per terrain fill as whichever contrasts more. Alternatively, the band uses a derived lighter or darker step of the primary, chosen per fill. Record the chosen values there, so the Phase 8 renderer inherits them instead of improvising.
+
+2. Add a describe block to tests/content/palette.test.ts. For every nation color and every TERRAIN fill, under every vision, the band must reach MIN_NORMAL / MIN_DEFICIENT against the fill through its primary or its stroke. Once the duplicate-nation finding is settled, use the per-nation banner color.
+
+The doc rule and test are cheap and can go in now, since the user asked for distinct colors. It is not a Phase 2 blocker; at the latest it must be in place before Phase 8 rendering. Add a line to docs/PROGRESS.md noting that nation-vs-terrain contrast is now covered.
+-- confirmed worth=True: Keep the R and G primaries as they are; no in-family color can pass. Make the fix a recorded rule plus a test of the composite band, not a recolor:
+
+(1) In docs/09-art-direction.md, under "Distinct colors", add that the owner glow band is the nation primary drawn inside a two-tone outline. Per terrain, use a light outline (#FFFFFF) on Forest, Hills and Swamp and a dark one (#1C1A17) on Plains, Farmland, Mountains and Wasteland. Record that a bare band fails: G on Forest scores 8.8 deutan, R on Hills 10.0 protan.
+
+(2) Put the two outline tones in src/content/colors.ts as data, for example BAND_OUTLINE = { light, dark }.
+
+(3) Add a describe block to tests/content/palette.test.ts. For every nation in the registry (so future nations are covered automatically) and every terrain fill, under every vision, check one of two things: either the band clears 20/12 against the fill directly, or some outline tone clears 20/12 against both the fill and the band color.
+
+(4) Mention it in docs/PROGRESS.md so Phase 8 inherits it. If the Phase 8 renderer picks a different band style, re-check the composite in that test then.
+
+Do not hold back the Phase 2 sim work for this.
+
+######## #26 [readiness] high src/sim/types.ts — Duplicate nations share one owner color, so the map cannot tell them apart
+DESC: NationState carries only `color: Color`, copied from NationDef.color. That one field is both the magic identity and the only color the map can draw. M1 allows duplicate nations, and only two NationDefs exist, so every 3- or 4-nation game has at least two nations with the same Color. Those nations would get the same hex for the owner glow band, the dominion candles and the army shields. That breaks the 'distinct colors' rule the user asked for, and adding a display color after Phase 8 means a STATE_VERSION bump and a migration.
+EVIDENCE: docs/07-ui.md: 'opponents (1 to 3 AI, each with a nation or Random; M1 allows duplicates of the two nations)'; 'owner color as an inner glow band along the border (color identity of the owning nation)'; 'Dominion shown as a candle icon stack ... in the province's nation color'. docs/09-art-direction.md: 'Nation chrome uses primary for borders and glow'. Phase 2 decision 3 adds numerals only to display names ('Cinder Horde II'). NationState has no banner or palette field, and tests/content/palette.test.ts checks only the five mana primaries plus independents, never two nations of the same color.
+CHANGE: Add `banner: number` (an index) or `palette: Palette` to NationState and fill it in createGame from a new content table, e.g. `NATION_BANNERS: Record<Color, readonly Palette[]>` with at least 4 variants per color, since up to 4 nations can share one def. Keep `color` for identity uses only (tint mana, research default, scale costs), and make renderers read the banner. Extend palette.test.ts so every banner variant that can appear in the same game is checked pairwise against the others and against the independent palette, under all four visions. Record the rule in docs/09-art-direction.md.
+-- confirmed worth=True: Make a small change now and record the rule. Do not treat this as a contract migration.
+
+1. In `createGame`, add `banner: number` to `NationState`: the nation's 0-based rank among same-color nations in setup order. One explicit integer is simpler and safer than having the renderer sort string ids. It is cheap while STATE_VERSION is still 1 and no saves exist.
+2. Keep `color` for identity uses only: tint mana, research default, scale costs.
+3. Add a content table to src/content/colors.ts, `NATION_BANNERS: Record<Color, readonly Palette[]>`, with variant 0 equal to the color's own palette. Also give each banner a second cue that does not rely on hue, for example a stripe pattern or a numeral on the shield and candles. That fits the docs/07-ui.md rule that color identity never relies on hue alone.
+4. Extend tests/content/palette.test.ts. For every mix of up to 4 M1 nations, check the banner primaries that can appear together, pairwise and against the independent grey, under all four visions at the existing 20/12 thresholds. Candidate values that pass: R #FD6533, #F0E6D1, #3A0303, #A30E00; G #00674B, #ADFF5C, #47C285, #0F2E29.
+5. Write the rule into Phase 2 decision 3 and at the bottom of docs/09-art-direction.md: duplicates get a banner variant plus a numeral or pattern, and renderers draw owner chrome from the banner, not from `color`.
+
+Rate this medium, not high. It does not block Phase 2 logic, and nothing forces a migration.
+-- refuted worth=False: Leave NationState and src/sim/types.ts unchanged, and don't add a banner or palette field to the state. To act on the user's distinct-colors request without touching the sim contract, write the rule down for Phase 8, in docs/09-art-direction.md (or at the bottom of docs/07-ui.md):
+- A nation's display variant is its ordinal among nations with the same `color`, in `state.nations` order.
+- The renderer derives it with a pure helper, so it needs no state.
+- Ordinal 0 uses the color's palette unchanged.
+- Duplicates are told apart by more than hue: a lightness step on the glow band plus a pattern (hatched or dashed band) and the Roman numeral on the shield badge.
+
+In Phase 8, extend tests/content/palette.test.ts so every glow or banner color that can appear in the same game is checked pairwise, under all four visions, against the other nations' colors, the independent palette and the terrain fills.
+
+######## #27 [readiness] medium src/sim/types.ts — No record of where a commander came from, so besiegers and stormers have no retreat destination
+DESC: Routed attackers 'return to the province they came from', and at round 50 the attacker retreats. On an arrival battle, transit.from is still at hand. But a siege can last weeks before the Storm command, and by then transit is null and `location` is the enemy fort, so the origin is lost. The same applies to any later battle in a province the attacker entered earlier. It is also undecided where a squad goes when it routs while its commander stays: squads cannot exist without a commander in this model.
+EVIDENCE: docs/01-core-rules.md §10: 'Routed squads that survive return to the province they came from.' §11: 'The player clicks **Storm** to attack.' docs/04-battle.md: 'Round 50: attacker retreats (all attacker squads rout and leave safely).' CommanderState has location and transit only.
+CHANGE: Add `cameFrom: ProvinceId | null` to CommanderState and set it to transit.from on every arrival. Use it for attacker retreats and fall back to a random adjacent friendly province. Record in docs/04-battle.md that routed squads stay with their commander and leave with it, because squads have no holder of their own.
+-- confirmed worth=True: Make two cheap changes:
+
+1. **Add the field.** Add `cameFrom: ProvinceId | null` to CommanderState in src/sim/types.ts, documented as "the province this commander last entered from; null if it has never moved". Initialise it to null in createGame and set it to `transit.from` on every arrival in Phase 3 movement. It must live on each commander, not in SiegeState, because a storm is one command per nation but its commanders can arrive from different provinces.
+
+2. **Record the rules.** At the bottom of docs/04-battle.md, write down the Phase 4 retreat rules:
+   - Surviving attacker commanders, with their remaining squads, go to `cameFrom` if it is owned by their nation and holds no hostile army.
+   - Otherwise they go to a random adjacent friendly province, chosen with state.rng.
+   - Otherwise they are destroyed.
+   - A routed squad whose commander does not rout stays attached to that commander, and leaves with it if the side loses or retreats. Squads have no holder of their own.
+
+If you would rather not add state, the acceptable alternative is to record only this rule: arrival battles use `transit.from`, and storm attackers use the defensive-loser rule (random adjacent friendly province). Either way, write the decision down now rather than leaving it implicit.
+-- refuted worth=False: Leave CommanderState in src/sim/types.ts as it is for Phase 2. In Phase 4, settle and record these rules in docs/04-battle.md:
+
+1. Routed attackers in an arrival battle go to `transit.from`. Resolve the battle before clearing transit, or save `from` first. If that province is no longer friendly, use the defensive-loser rule.
+2. Attackers who retreat or rout after a Storm, or at round 50, use the defensive-loser rule from docs/01-core-rules.md §10. They go to a random adjacent province owned by their nation, drawn with `state.rng`, and are destroyed if none exists.
+3. Routed squads stay in their commander's `squads` list. After the battle they stay or leave with that commander.
+
+Add `cameFrom` in Phase 4 only if playtesting shows the random destination feels wrong. That is cheap before save/load arrives in Phase 9.
+
+######## #28 [readiness] low src/sim/types.ts — Prophet and pretender identity are stored twice, and `holy` duplicates the prophet rule
+DESC: NationState.prophetId/pretenderId and CommanderState.prophet/pretender both say which commander holds each role. Every path that makes a prophet, kills a commander or recalls a pretender (Godless) must update both, or they drift apart. CommanderState.holy is stored, yet the prophet's holy 3 comes from the flag, as its +1 morale does. Storing one and deriving the other invites mismatch.
+EVIDENCE: types.ts: CommanderState `holy: number; prophet: boolean; pretender: boolean;` and NationState `pretenderId: CommanderId | null; prophetId: CommanderId | null;`. docs/05-pretender.md: 'The prophet gains holy 3, +1 mor'.
+CHANGE: Keep only the NationState ids and derive `isProphet(c) = nations[c.owner].prophetId === c.id`, or keep only the flags. Derive holy as `prophet ? 3 : unitDef.commander.holy` in a selector instead of storing it.
+-- refuted worth=False: No change needed. Keep `holy` stored; when makeProphet runs (Phase 9), set `holy = max(holy, 3)`. Derive the prophet's +1 morale and its dominion check from the role, since morale isn't stored. If the implementer wants less state anyway, the cheap cleanup is to drop the two CommanderState booleans, which nothing reads yet. Keep NationState `prophetId`/`pretenderId`, which give O(1) lookup and the "one prophet per nation" check. Add `isProphet(state, c)` and `isPretender(state, c)` selectors. Either way, make sure Phase 4/6 commander-death handling clears `prophetId` and sets `prophetAvailableDay`, clears `pretenderId`, and records Godless recall as a rule in docs/01-core-rules.md.
+-- confirmed worth=True: Make two small changes and leave holy as it is.
+
+1. Delete `prophet: boolean; pretender: boolean;` from CommanderState in /home/user/Fluid-Magic-/src/sim/types.ts, and delete the two matching initialisers in /home/user/Fluid-Magic-/src/sim/commanders.ts.
+2. Make NationState.pretenderId/prophetId the only record of who holds each role. Add selectors to src/sim/selectors.ts:
+   - `isProphet(state, c) = c.owner !== null && getNation(state, c.owner).prophetId === c.id`
+   - `isPretender(state, c)`, built the same way from pretenderId.
+
+Keep CommanderState.holy stored, as pips is. In Phase 6, makeProphet sets `holy = Math.max(holy, PROPHET.holy)` once, with the number taken from content and not hard-coded. Commander death (Phase 4) and Godless recall (Phase 6) clear the nation id; death also sets prophetAvailableDay. Add a line at the bottom of docs/05-pretender.md: role identity lives on NationState; holy is stored and raised to 3 when a commander is made prophet; the prophet's +1 morale is applied at battle time from the role.
+
+######## #29 [readiness] low src/sim/types.ts — RecruitOrder does not record what was paid, so a cancel refund is undefined or exploitable
+DESC: Gold and materials are paid when an order is queued, and costs depend on province scales (Wild beast cost -10%). cancelRecruit is a Phase 3 command. If it refunds by recomputing the current price, a player can queue while Wild dominion holds and cancel after it fades, for a profit. If it refunds nothing, that needs recording.
+EVIDENCE: types.ts: `RecruitOrder { unit; count; daysLeft }` ('Gold and materials are paid on queueing'). docs/06-architecture.md: `{ type: 'cancelRecruit'; provinceId; queueIndex }`. scales.ts Wild: `beastCostPct: -0.1`.
+CHANGE: Add `paid: { gold: number; materials: number }` to RecruitOrder and refund exactly that, or decide 'no refund' and record it in docs/01-core-rules.md §8.
+-- confirmed worth=True: Add `paid: { gold: number; materials: number }` to `RecruitOrder` in src/sim/types.ts. Phase 3's `recruit` command sets it to the amounts actually charged, after the Wild beast discount and any other modifiers.
+
+Record this rule at the bottom of docs/01-core-rules.md §8: `cancelRecruit` refunds exactly `paid`, gold to the nation's treasury and materials to that fort's pool; the normal pool cap applies at the next collection; population is never charged, so there is nothing to give back. The rule holds whether or not the item has started.
+
+The other option is a "no refund" rule recorded in §8, which needs no field but makes the UI's cancel button punitive. The stored-amount refund is the simpler, deterministic choice, and it also lets the queue list show what each item cost.
+-- refuted worth=False: Keep RecruitOrder as it is in Phase 2. In Phase 3, when writing the `recruit` and `cancelRecruit` commands:
+- Add `paid: { gold: number; materials: number }` to RecruitOrder, filled when the order is queued.
+- Have cancelRecruit refund exactly that recorded amount, never a recomputed price. Clamp the materials refund to the fort's pool cap, the same way production is clamped.
+- Record that rule in docs/01-core-rules.md §8 and add a validate/apply test that a cancel refunds what was paid.
+
+######## #30 [readiness] low src/sim/types.ts — NationState.capital is fixed, but 3- and 4-nation games let a nation survive losing it
+DESC: Defeat is 'lose the capital while holding no other fort'. In M1 the only other forts are captured enemy capitals, so in 3- and 4-nation games a nation can lose its own capital and survive. Godless ('capital dominion reaches 0'), pretender arrival, the 'capital' recruitment requirement and the capital's 3 dominion checks would then all point at a province the nation no longer owns.
+EVIDENCE: docs/01-core-rules.md §13: 'Defeat: lose all provinces, or lose the capital while holding no other fort.' §12: 'Capital: 3 checks', 'A nation whose capital dominion reaches 0 ...'. types.ts: `capital: ProvinceId` on NationState. cinderMagus requires 'capital'.
+CHANGE: Record a rule in docs/01-core-rules.md, for example: when a nation loses its capital but holds a captured capital, `capital` moves to that fort; or 'capital' always means the original, and those effects stop while it is lost. Update NationState.capital on capture accordingly.
+-- confirmed worth=True: Leave src/sim/types.ts and the Phase 2 code as they are. Add one rule to the "Implementation decisions" section at the bottom of docs/01-core-rules.md, now or at the start of Phase 4. The simplest option that stays consistent: when a nation loses its capital while holding another fort, `NationState.capital` moves to the held fort with the lowest province id. If it holds no other fort, it is defeated. All capital effects follow the current `capital` field: the 3 dominion checks, 'capital' recruitment, pretender arrival, the AI's capital rules and the top bar materials. The original province becomes an ordinary fort province for whoever captured it. "Last nation with a capital" then means the last nation not eliminated, which agrees with the defeat rule. Implement this in Phase 4's capture flow and test it in Phase 6: in a 3-nation game, a nation that loses its capital while holding a captured one survives, and victory waits until it is eliminated.
+-- refuted worth=False: Change nothing in src/sim/types.ts or in the Phase 2 plan. Optionally, add one line to the known issues in docs/PROGRESS.md: "Capital-loss survival in 3–4 nation games: rule for `capital` after loss to be decided in Phase 4/6." When Phase 4/6 builds capture, defeat and victory, pick the simplest deterministic rule and record it at the bottom of docs/01-core-rules.md. That rule: `NationState.capital` always stays the original province, and capital-only effects work only while the nation owns it. Those effects are the 3 dominion checks, the 'capital' recruitment requirement, pretender arrival, and Godless counting as true. Make that rule settle "last nation with a capital" too, for example by reading it as "last nation not eliminated", and add a test for a 3-nation game where a nation loses its capital and survives.
+
+######## #31 [fidelity] low phase2-decisions.md #26 — Wild/Artifice 'build time' read as construction only, though docs/01 §8 uses 'build time' for recruitment
+DESC: Decisions 14 and 26 apply Wild and Artifice build time only to building construction. But docs/01 §8 uses 'build time' for recruitment, matching docs/05's Order/Turmoil 'recruit time'. So the docs use the two terms interchangeably, and the reading the decision picks should be stated as a rule.
+EVIDENCE: docs/01 §8 (Recruitment): "Turmoil scale: −10% build time per step. Order scale: +5% per step." docs/05 Order/Turmoil: "recruit time +5%" / "recruit time −10%"; Wild/Artifice: "build time +15%" / "build time −15%".
+CHANGE: Add a line to the docs/01 implementation decisions saying Wild/Artifice build time scales construction days only, and Order/Turmoil scales recruit days only. Or apply Wild/Artifice to both if that is what was meant. Either way, write it down.
+-- refuted worth=False: No design change needed. Optionally, when decision 26 goes into the "Implementation decisions" section of docs/01-core-rules.md, add one clause: "the Wild/Artifice 'build time' effect scales building construction only; recruitment uses the Order/Turmoil recruit-time effect (section 8)". It costs nothing, but the design is already unambiguous without it.
+-- confirmed worth=True: Keep the current reading and write it down; change no code. Add one bullet under "Implementation decisions" in docs/01-core-rules.md, for example: "**Build time vs recruit time** (Phase 2): §8's 'build time' for recruit queues is the docs/05 'recruit time' (Order/Turmoil, recruitTimePct) and scales recruit-queue days only. Wild/Artifice 'build time' (buildTimePct) scales building construction days only. Both use the province's effective scale." Optionally add a matching one-line doc comment on recruitTimePct and buildTimePct in src/content/pretenders/scales.ts so the Phase 3 implementer sees it at the field. Do not take the option of applying Wild/Artifice to recruitment.
+
+######## #32 [simplicity] low src/sim/types.ts — Global caps on messages and battles let AI-only records push out the human's
+DESC: `messages` (cap 300) and `battles` (last 20, docs/06) are shared by all nations, and postMessage writes for AI nations too. In a 3 to 4 nation game, AI recruitment, construction, starvation and constant AI-vs-independent battles fill both lists. The human's log gets shorter, and the 'click to replay' link (`Message.battle`) points at replays that are already gone. The AI never reads messages or replays, so these records only grow saves and use up ids.
+EVIDENCE: messages.ts:186-196 posts for any nation and trims to MESSAGES.keep = 300 globally. supply.ts:103 and buildings.ts:65 post for AI owners. types.ts:262 `battle: BattleId | null` outlives the 20 kept battles.
+CHANGE: Post messages, and keep BattleRecords, only when a nation with `ai === null` is involved. That stays deterministic, since the check is a pure function of state. Treat a missing battle id in the UI as 'replay expired'. Record the retention rule in docs/06.
+-- confirmed worth=True: Low priority and cheap:
+1. In src/sim/messages.ts, return early from postMessage when `getNation(state, nation).ai !== null`.
+2. In Phase 4, push a BattleRecord only when the attacker or the defender is a nation with ai === null. All-AI headless games then keep no messages or replays, and nothing uses them anyway.
+3. Note the retention rule in docs/06-architecture.md next to `battles` and `messages`. Say that messages and battle replays are kept only for human nations, and that a Message.battle id with no matching record means "replay expired". The UI must show that state either way, because 20 kept battles is fewer than 300 kept messages.
+4. Do not justify the change with id usage or save size; neither matters.
+-- refuted worth=False: No change in Phase 2; types.ts and messages.ts stay as they are. Two optional notes for docs/PROGRESS.md: (a) Phase 10: the replay link must handle a battle id that is no longer in `state.battles` (show "replay expired"), because the 20-battle cap applies whatever the fix. (b) Phase 8/9 playtest: if AI entries visibly crowd the player's log, add a guard in postMessage that skips nations with `ai !== null`, or have Phase 4 retention keep battles involving a human first, and record the rule in docs/06.
+
+######## #33 [simplicity] low src/sim/types.ts — `location` vs `transit.from` is ambiguous after a reversal
+DESC: The CommanderState comment defines location as 'while in transit, the province it left', which suggests location === transit.from. docs/01 section 6 reverses a move by swapping from and to. After a reversal, either location must jump to the original destination, which the commander never entered (it would then eat that enemy province's supply and count there under decision 20), or location and transit.from disagree. Phase 3 needs this decided before movement is written.
+EVIDENCE: types.ts:161-163 `/** Current province; while in transit, the province it left. */ location; transit: Transit | null` and types.ts:147-153 Transit { from, to, progress, totalDays }. Decision 20: 'Every commander counts in its location province, also while in transit.'
+CHANGE: Record that `location` changes only on arrival (it becomes `to`) and never on reversal. `transit.from` and `transit.to` exist only to draw the edge and its progress. Update the type comment to 'the last province it stood in' and add the reversal case to decision 20.
+-- refuted worth=False: Make no design change. "The province it left" already means location stays put on a reversal, and the doc's reverse rule only touches from, to and progress, so a literal Phase 3 implementation gets this right. If anything, Phase 3 can add a movement test: reverse, then check that location is unchanged and that arrival sets location = transit.to. The comment can stay as it is.
+-- confirmed worth=True: Make no code or type change; only reword comments and record the rule.
+
+1. In src/sim/types.ts, change the `location` comment to: "The last province the commander stood in. It changes only on arrival (it becomes transit.to) and never on reversal. transit.from/to only describe the edge being travelled, so after a reversal transit.from may differ from location."
+2. Give the comment on commandersByProvince in src/sim/selectors.ts:44 the same meaning ("the last province they stood in, also while in transit").
+3. Record the rule where Phase 3 movement decisions are kept. Appending to decision 20 also works: "Reversal swaps transit.from/to and leaves location unchanged; location updates only on arrival."
+
+Do not add an invariant that location === transit.from.
+
+######## #34 [gameplay] high src/content/rules.ts (SUPPLY.popDivisor); phase2-decisions.md #19 — Supply formula makes the Hills starvation checklist item impossible and leaves the supply scale effects with almost nothing to do
+DESC: Decision 19 keeps supply = terrainBase + pop/50 per day. The pop term is so large that supply almost never limits an army. In Hills it is 100 to 160 per day, so 99 to 159 troops plus a commander are fed forever. The docs/09-balance.md checklist item 'Armies larger than 60 troops in a Hills province starve within a month unless Thornwood with Growth 3' therefore fails in every Hills province, and Growth, Wild, Artifice and Rot supply effects only matter in mountains, swamp and wasteland. The docs contradict each other here and decision 19 does not record the conflict.
+EVIDENCE: Supply per day at the terrain's min to max start pop, from terrain.ts: Hills 100-160, Forest 110-190, Plains 180-300, Farmland 320-480, capitals 560 (Kharnath) and 550 (Deepmoss). Measured over 10 Medium seeds: an army of 61 troops plus a commander starves in only 15% of provinces, and an 81-troop army (one commander's full leadership) in 24%. With pop/250, Hills gives 52-64, so 61 troops starve in most Hills provinces, and Thornwood at effective Growth 2-3 (+20-30%) gives 62-83, which feeds them. That matches the checklist. pop/500 gives Hills 46-52, which also matches but is harsher (161 troops starve in 100% of provinces).
+CHANGE: Fix now, before the Phase 2 starvation tests, Phase 3 independents and Phase 7 AI army sizing are calibrated on it. Set SUPPLY.popDivisor to 250. That gives capitals 150-160, Farmland 160-192 and Hills 52-64, and starting armies (34 eaters) stay fed. Record the doc conflict and the new value in docs/09-balance.md. Add a test that 61 troops plus a commander starve in a 4500-pop Hills province with neutral scales and are fed at effective Growth +3.
+-- confirmed worth=True: Keep SUPPLY.popDivisor = 50 as docs/01 specifies. Record the conflict instead of retuning now:
+- Add a line to decision 19, and later to docs/PROGRESS.md under known issues: with pop/50, Hills supply is 100 to 160, so the docs/09-balance.md Hills checklist item cannot pass. It is a Phase 12 tuning item. Candidate value: popDivisor 250 (Hills 52 to 64).
+- Write the Phase 2 starvation tests from SUPPLY and TERRAIN constants (army size = computed supply + 1), not hard-coded numbers, so a Phase 12 retune does not break them.
+- Separately, flag for Phase 3 that 18 of about 580 independent garrisons already exceed their province's supply at start with /50. That number rises to 60 with /250. Decide whether independents eat supply before any retune.
+-- refuted worth=False: Keep SUPPLY.popDivisor at 50, as docs/01 §4 specifies.
+
+Do two cheap things instead:
+1. Add a sentence to decision 19, and a short entry to the decisions in docs/01-core-rules.md or a note in docs/09-balance.md. It should say that the core supply formula gives Hills 100 to 160 supply per day, which conflicts with the checklist item about 60 troops starving in Hills. The divisor stays at the doc value until the Phase 12 tuning pass. Note pop/250 as a candidate, and note its side effect: at pop/250 about 10% of independent garrisons, nearly all in wasteland, start out starving.
+2. Write the Phase 2 starvation test so its army size or province pop comes from the SUPPLY and TERRAIN constants, not hard-coded numbers. A later retune then needs no test edits.
+
+Do not add the "61 troops starve in 4500-pop Hills" test now. It would lock in a Phase 12 balance target before the systems that set army sizes exist.
+
+######## #35 [gameplay] medium phase2-decisions.md #17; src/sim/economy.ts accrueGoldAndMana — Decision 17's all-or-nothing upkeep never triggers the penalty; the implemented version resets months of penalty after one paid day and has no cap
+DESC: As written, decision 17 pays a day's upkeep when gold covers it and resets unpaidDays to 0. Whenever income is above 1/30 of upkeep, gold refills to one day's upkeep within a few days, so unpaidDays never reaches 30 and any deficit is free. economy.ts actually does partial payment, which fixes that, so the decision text and the code disagree. The code still resets unpaidDays to 0 after a single fully paid day, so a one-day tax toggle wipes the whole penalty. floor(unpaidDays/30) also has no cap: a besieged last capital earns 0 gold, so its defenders lose 1 more morale every month.
+EVIDENCE: Decision-17 model, income 250 and upkeep 750 per month: only 33% of upkeep is paid, yet the longest unpaid streak is 2 days, so the penalty stays 0 all game. With the implemented code, income 250 and upkeep 312: unpaidDays reached 28.4 after 300 days. Setting capital tax High for one day (income 375 > 312) paid the day in full and unpaidDays went back to 0.0.
+CHANGE: Fix now. Rewrite decision 17 to match the partial-payment code. Change recovery to one point per fully paid day, `unpaidDays = Math.max(0, unpaidDays - 1)`, the same as starvedDays and the docs' 'recovers when paid'. Cap the morale penalty at 3, like starvation (add `unpaidMoraleCap` to ECONOMY). Test that a one-day surplus does not clear a 90-day deficit.
+-- refuted worth=False: Leave src/sim/economy.ts and the tests as they are. One doc-only step: when the Phase 2 decisions are recorded in docs/01-core-rules.md ("Implementation decisions"), do not copy decision 17 as written. Describe the rule that was built: upkeep is paid as far as the treasury allows, and gold never goes negative. Each day adds the unpaid fraction of that day's upkeep to unpaidDays. A fully paid day resets it to 0, which is how this implementation reads "recovers when paid". The morale penalty is floor(unpaidDays / 30) with no cap, as in docs/01. Optionally, note the 2/3-coverage tax-toggle observation as a known issue in docs/PROGRESS.md, and revisit a cap or gradual recovery in Phase 12 if playtests show it matters.
+-- confirmed worth=True: Make these changes now:
+(a) Rewrite decision 17 to match the partial-payment code before it goes into docs/01-core-rules.md: pay `min(gold, due)` and add the unpaid fraction of the day to unpaidDays.
+(b) In src/sim/economy.ts, change the fully paid branch from `0` to `Math.max(0, nation.unpaidDays - 1)`, so recovery takes one point per fully paid day, like starvedDays in src/sim/supply.ts. Update the comment, decision 17 and the unpaidDays doc comment in src/sim/types.ts to say this.
+(c) In tests/sim/economy.test.ts, replace 'clears the unpaid count on a fully paid day' with two tests. One: a fully paid day lowers unpaidDays by 1 (45 becomes 44). Two: one surplus day after a long deficit, such as a 1-day High tax toggle, leaves the penalty in place.
+
+Do not add `unpaidMoraleCap`. The docs give no cap, and Phase 4 can clamp effective morale if playtests show a problem.
+
+######## #36 [gameplay] low phase2-decisions.md #21; src/sim/supply.ts feedSquad — Starvation losses depend on how a player splits squads
+DESC: Under decision 21 each squad loses 2% of count x unitHp per day and count = ceil(hp/unitHp). A big squad sheds troops early until the province feeds it. 1-troop squads lose no troops for 49 days, then all die together on day 50. Players can split squads with transferSquad and count, so the same troops in the same province get very different results depending on squad size alone.
+EVIDENCE: Scratch run, 29 Cinder Warriors plus a commander in a wasteland with supply 24. As one squad: 23 alive after 10 days, then fed and stable (still 23 at day 45). As 29 one-troop squads: all 29 alive at day 30 at 128/319 HP and still starving, 29 alive at 32 HP on day 45, all dead on day 50. If the army leaves on day 30, the split army keeps all 29 and heals, while the single squad has lost 6 for good.
+CHANGE: Fix now while Phase 2 owns starvation. Pool the starvation loss per (province, owner, unit type): add up max HP and HP, remove 2% of the total max, set the total count to ceil(totalHp/unitHp), then remove dead troops from the smallest squads first (ties by squad id) so the rule stays deterministic. Add a test that one squad of 29 and 29 squads of 1 end with the same count.
+-- confirmed worth=True: Keep supply.ts per squad. Fix the case by capping how far squads can be split, not by pooling starvation across commanders.
+
+Add this to phase2-decisions.md #21, or to the Phase 3 rules: "A commander holds at most one squad per (unit type, formation)."
+- transferSquad, including a partial transfer with count, and recruit completion merge into the target commander's matching squad: counts add, HP pools add, starvedDays takes the max.
+- from == to is rejected.
+- setFormation onto a row that already holds the same unit merges the two squads.
+
+This caps the split at three squads per unit type per commander. The extra survival from the ceil rule is then at most one partly wounded troop per squad. Getting more than that means paying for more commanders, and each one eats and draws upkeep.
+
+Note in #21 that ceil rounding gives each squad one free partial troop, and that this cap keeps that bounded.
+
+If Phase 3 needs freer splitting later, the smaller alternative is to pool starvation per commander per unit type inside applySupply, not per province.
+
+Add a Phase 3 test: 29 troops moved one at a time into another commander end up as one squad of 29.
+-- refuted worth=False: Leave decision 21 and feedSquad as they are. At most, add a known-issue line to docs/PROGRESS.md: starvation deaths come from each squad's HP pool, so very small squads lose HP but no troops until late. Then deal with it in Phase 6 when transferSquad is defined. The simplest fix there is that a transferred squad merges into the recipient commander's existing squad of the same unit and formation, which limits splitting to the number of commanders. Only revisit the pooled-starvation rule if playtests from Phase 8 show players exploiting splits.
+
+######## #37 [gameplay] low phase2-decisions.md #24; src/content/rules.ts TAX_RATES / UNREST — High tax costs nothing at the capital and alternating tax rates gives +25% gold for free
+DESC: High tax adds +4 unrest a month, but the -2 baseline decay absorbs half of it. The starting priest's -5 makes High at the capital net -3 a month, so the tax choice there is not really a choice. Cinder Magus and Elder Druid (holy 1) count as priests too, and they sit in the capital lab researching. Elsewhere, switching High and Normal every month keeps unrest at 0 to 2 for +25% gold.
+EVIDENCE: Scratch run, Kharnath over 24 months: Normal earns 6146 gold at unrest 0. High with the starting Pyre Priest earns 9219 (+50%) at unrest 0. Alternating monthly earns 7681 (+25%) at unrest 0. High without the priest earns 8106 at unrest 48, close to the 50 that blocks recruitment at the only fort.
+CHANGE: Flag for Phase 12, and note it in docs/09-balance.md. Options: High tax suspends the baseline decay (net +4), or raise High to +6. Alternatively, count only holy >= 2 commanders and prophets as priests for unrest, so research magi do not count.
+-- confirmed worth=False: Leave Phase 2 alone. Keep TAX_RATES and UNREST at the docs/01 values, and keep the priest test as "owner's commander with holy > 0", which matches docs/01 §6. At the end of Phase 2, add one line under known issues in docs/PROGRESS.md: under the doc numbers, High tax is nearly free. It is free wherever a holy commander of the owner stands (including mages researching at the capital). Alternating High and Normal gives about +25% gold at unrest near 0. Outside the capital, High out-earns Normal until unrest passes about 67. Tune this in Phase 12 against the AI-vs-AI runs. Possible fixes then: High suspends the baseline decay, raise High's unrest, or make unrest cost more. Only if Phase 12 changes a number does it get a row in docs/09-balance.md.
+-- refuted worth=False: Make no Phase 2 change. Keep TAX_RATES and UNREST, and the holy > 0 priest test, exactly as the spec gives them. If the implementer wants this kept on record, add one line under "known issues" in docs/PROGRESS.md: High tax is nearly free with a resident priest, and alternating High and Normal gives about +25% gold; revisit in Phase 12. Do not edit docs/09-balance.md now, since nothing has been tuned yet.

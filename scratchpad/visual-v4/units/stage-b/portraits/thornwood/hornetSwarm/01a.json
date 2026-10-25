@@ -1,0 +1,86 @@
+{
+ "id": "hornetSwarm-01a",
+ "unit": "hornetSwarm",
+ "nation": "thornwood",
+ "group": "creatures",
+ "subject": "hornetSwarm",
+ "promptFile": "stage-b/work/portraits/prompts-used/hornetSwarm.01a.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 49162,
+  "game": 15506,
+  "small": 1652
+ },
+ "sourceFile": "stage-b/raw/portraits/hornetSwarm.01a.nb21.png",
+ "sourceSha256": "3d0bc65e2a274fdb735ce681ba8071e18b56554174104fc377c02837f793ad0c",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one great hornet of the Thornwood swarms, seen huge and close (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the antennae about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut across the thorax, with the folded wings behind it, with dark empty space above and around the head. No legs in view. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the antennae and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and antennae and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy: dull ochre, umber, charcoal and smoky amber, never bright yellow. Nothing in the image glows; the eyes do not shine. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Hornet Swarm, a cloud of stinging hornets summoned by Thornwood druids, shown as one of its hornets painted as large as a head-and-shoulders portrait: a forest hornet with a heavy armoured head.\nCreature: a heavy forest hornet, the head turned three-quarters toward the right: large dark kidney-shaped compound eyes, a broad face plate of dull ochre with a dark anchor-shaped mark, strong dark mandibles closed, two thick segmented antennae curving up and forward, three small simple eyes in a triangle on the crown, a thorax furred in dark umber, a pair of smoky translucent amber-brown wings folded back over the body. A cold, alien, watchful presence. Marks: the dull ochre face plate with its dark anchor mark, the curving antennae, the three small crown eyes, the folded smoky wings.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "dull ochre face plate with a dark anchor mark",
+   "read": null
+  },
+  {
+   "mark": "curving segmented antennae",
+   "read": null
+  },
+  {
+   "mark": "three small crown eyes",
+   "read": null
+  },
+  {
+   "mark": "closed dark mandibles",
+   "read": null
+  },
+  {
+   "mark": "folded smoky wings",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.2,
+   "bgSpread": 2.2,
+   "floor": 1.8,
+   "top": 0.062,
+   "low": 0.916,
+   "bottomCut": 0.008,
+   "cx": 0.461,
+   "subject": 0.294,
+   "light": -4.9,
+   "rim": 0.517,
+   "read48": 20.8,
+   "muted": 0.0132,
+   "satAll": 0.0132,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "Good painting, but furry like a bumblebee; re-rolled. It passes every gate and is the fallback.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

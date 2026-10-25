@@ -1,0 +1,12 @@
+<canvas id="c" style="width:1408px;height:780px"></canvas>
+<script>
+const c = document.getElementById('c'); c.width = 1408; c.height = 780; const g = c.getContext('2d');
+const big = document.createElement('canvas'); big.width = 2000; big.height = 1300; const bg = big.getContext('2d'); for (let i = 0; i < 2000; i++) { bg.fillStyle = `hsl(${i % 360},50%,50%)`; bg.fillRect(Math.random() * 2000, Math.random() * 1300, 40, 40); }
+const sprites = Array.from({ length: 60 }, () => { const s = document.createElement('canvas'); s.width = 250; s.height = 230; const q = s.getContext('2d'); for (let i = 0; i < 80; i++) { q.fillStyle = '#345'; q.beginPath(); q.arc(Math.random() * 250, Math.random() * 230, 5, 0, 7); q.fill(); } return s; });
+window.run = (mode, n = 60) => new Promise((res) => { let k = 0, t0 = 0; const st = (now) => { if (k === 1) t0 = now; if (k > n) { res(((now - t0) / n).toFixed(1)); return; } k++;
+  if (mode === 'fill') { g.fillStyle = k % 2 ? '#123' : '#234'; g.fillRect(0, 0, 1408, 780); }
+  if (mode === 'blit') { g.drawImage(big, k, 0, 1800, 1200, 0, 0, 1408, 780); }
+  if (mode === 'sprites') { g.fillStyle = '#123'; g.fillRect(0, 0, 1408, 780); for (let i = 0; i < 60; i++) g.drawImage(sprites[i], (i % 10) * 140 + (k % 5), Math.floor(i / 10) * 130, 105, 97); }
+  if (mode === 'none') {}
+  requestAnimationFrame(st); }; requestAnimationFrame(st); });
+</script>

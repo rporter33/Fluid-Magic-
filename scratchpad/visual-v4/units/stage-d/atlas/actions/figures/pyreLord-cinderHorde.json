@@ -1,0 +1,2976 @@
+{
+ "figure": "pyreLord-cinderHorde",
+ "family": "pyreLord",
+ "body": "pyreLord",
+ "key": "green",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 128.91,
+    "wuPerPx": 0.12713,
+    "kind": "standing",
+    "anchorPx": [
+     237.5,
+     968.0
+    ],
+    "points": {
+     "footR": [
+      8.1,
+      -4.2
+     ],
+     "footL": [
+      -7.1,
+      -9.9
+     ],
+     "mouth": [
+      12.3,
+      -98.8
+     ],
+     "handR": [
+      35.2,
+      -59.8
+     ],
+     "handL": [
+      -25.6,
+      -76.3
+     ],
+     "weaponTip": [
+      32.4,
+      -122.9
+     ],
+     "head": [
+      0.8,
+      -87.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "pyreLord-cinderHorde.back.idle.white",
+      "scale": 0.2543,
+      "w": 144,
+      "h": 261
+     },
+     "H": {
+      "white": "pyreLord-cinderHorde.back.idle.white",
+      "scale": 0.5085,
+      "w": 288,
+      "h": 521
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/pyreLord-cinderHorde.back/pyreLord-cinderHorde.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 128.76,
+    "wuPerPx": 0.14165,
+    "kind": "standing",
+    "anchorPx": [
+     216.9,
+     847.6
+    ],
+    "points": {
+     "footR": [
+      15.3,
+      3.9
+     ],
+     "footL": [
+      -25.1,
+      6.6
+     ],
+     "mouth": [
+      21.7,
+      -76.0
+     ],
+     "handR": [
+      35.4,
+      -49.7
+     ],
+     "handL": [
+      -17.3,
+      -73.0
+     ],
+     "weaponTip": [
+      70.3,
+      -137.2
+     ],
+     "butt": [
+      16.8,
+      -2.7
+     ],
+     "head": [
+      6.9,
+      -86.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.stepA",
+      "shadow": "pyreLord-cinderHorde.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2833,
+      "w": 199,
+      "h": 261
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.stepA",
+      "shadow": "pyreLord-cinderHorde.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5666,
+      "w": 397,
+      "h": 521
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.14165,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 0.9,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.A.nb21.2k/pyreLord-cinderHorde.back.stepA.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.A.nb21.2k.png",
+    "rawSha256": "26012b9ee9e53cd945644f96da107e71c3703d27de8ad57c556851d4da3765ba",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.659,
+      "iouMirrored": 0.528,
+      "aspectRatio": 1.036,
+      "headDx": 0.599,
+      "guideHeadDx": 0.674,
+      "facingMargin": 0.131,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 2217,
+      "keyHueShiftedPct": 0.77,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.5,
+       "groundL": 67.7,
+       "below": 42.2
+      },
+      "farmland": {
+       "bodyL": 25.5,
+       "groundL": 67.3,
+       "below": 41.8
+      },
+      "swamp": {
+       "bodyL": 25.2,
+       "groundL": 58.5,
+       "below": 33.3
+      },
+      "forest": {
+       "bodyL": 25.2,
+       "groundL": 58.7,
+       "below": 33.5
+      },
+      "worstBelow": 33.3,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.0,
+      "dE_upperThird": 2.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.999,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2217,
+      "keyHueShiftedPct": 0.18,
+      "pass_": true,
+      "rimFixedShare": 0.085
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.07,
+      "edgeDevPct": 5.54,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.758,
+     "scale": 1.1194,
+     "aspect": 0.955,
+     "shear": -0.025,
+     "M": [
+      [
+       1.06902,
+       -0.02856
+      ],
+      [
+       0.0,
+       1.17214
+      ]
+     ],
+     "t": [
+      -3.82,
+      -130.81
+     ],
+     "guideWuPerPx": 0.37612,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.14165,
+     "wuPerPxFromThickness": 0.15485,
+     "wuPerPxFromFit": 0.14454,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 139.5,
+    "wuPerPx": 0.15016,
+    "kind": "standing",
+    "anchorPx": [
+     207.3,
+     890.9
+    ],
+    "points": {
+     "footR": [
+      -8.8,
+      1.8
+     ],
+     "footL": [
+      1.5,
+      5.7
+     ],
+     "mouth": [
+      19.5,
+      -88.3
+     ],
+     "handR": [
+      35.5,
+      -63.7
+     ],
+     "handL": [
+      -22.1,
+      -76.6
+     ],
+     "weaponTip": [
+      58.9,
+      -165.7
+     ],
+     "butt": [
+      19.8,
+      -11.4
+     ],
+     "head": [
+      6.0,
+      -97.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.stepB",
+      "shadow": "pyreLord-cinderHorde.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3003,
+      "w": 191,
+      "h": 282
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.stepB",
+      "shadow": "pyreLord-cinderHorde.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.6006,
+      "w": 381,
+      "h": 564
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.14958,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 4.1,
+     "anchorY": 890.9,
+     "idleAnchorBelowSoleWu": -5.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     207.3,
+     863.4
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.A.nb21.2k/pyreLord-cinderHorde.back.stepB.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.A.nb21.2k.png",
+    "rawSha256": "26012b9ee9e53cd945644f96da107e71c3703d27de8ad57c556851d4da3765ba",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.528,
+      "iouMirrored": 0.502,
+      "aspectRatio": 1.094,
+      "headDx": 0.428,
+      "guideHeadDx": 0.433,
+      "facingMargin": 0.026,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2237,
+      "keyHueShiftedPct": 0.94,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.9,
+       "groundL": 67.7,
+       "below": 41.9
+      },
+      "farmland": {
+       "bodyL": 25.9,
+       "groundL": 67.3,
+       "below": 41.5
+      },
+      "swamp": {
+       "bodyL": 25.5,
+       "groundL": 58.5,
+       "below": 32.9
+      },
+      "forest": {
+       "bodyL": 25.5,
+       "groundL": 58.7,
+       "below": 33.2
+      },
+      "worstBelow": 32.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.2,
+      "dE_upperThird": 1.9,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.078,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2252,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.088
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.07,
+      "edgeDevPct": 5.54,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.736,
+     "scale": 1.2053,
+     "aspect": 0.91,
+     "shear": -0.038,
+     "M": [
+      [
+       1.09684,
+       -0.04566
+      ],
+      [
+       0.0,
+       1.32452
+      ]
+     ],
+     "t": [
+      -26.92,
+      -232.28
+     ],
+     "guideWuPerPx": 0.42075,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.14866,
+     "wuPerPxFromThickness": 0.1553,
+     "wuPerPxFromFit": 0.15016,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "windup": {
+    "heightWu": 120.64,
+    "wuPerPx": 0.13647,
+    "kind": "standing",
+    "anchorPx": [
+     358.8,
+     829.3
+    ],
+    "points": {
+     "footR": [
+      1.1,
+      7.5
+     ],
+     "footL": [
+      -4.9,
+      1.3
+     ],
+     "mouth": [
+      9.0,
+      -70.5
+     ],
+     "handR": [
+      -3.9,
+      -66.0
+     ],
+     "handL": [
+      -9.4,
+      -85.3
+     ],
+     "weaponTip": [
+      -59.2,
+      -113.0
+     ],
+     "butt": [
+      25.8,
+      -40.8
+     ],
+     "head": [
+      -5.5,
+      -82.3
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.windup",
+      "shadow": "pyreLord-cinderHorde.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2729,
+      "w": 167,
+      "h": 244
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.windup",
+      "shadow": "pyreLord-cinderHorde.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5459,
+      "w": 333,
+      "h": 489
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.13855,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.A.nb21.2k/pyreLord-cinderHorde.back.windup.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.A.nb21.2k.png",
+    "rawSha256": "26012b9ee9e53cd945644f96da107e71c3703d27de8ad57c556851d4da3765ba",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.669,
+      "iouMirrored": 0.651,
+      "aspectRatio": 1.082,
+      "headDx": -0.324,
+      "guideHeadDx": -0.012,
+      "facingMargin": 0.018,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1995,
+      "keyHueShiftedPct": 1.1,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.8,
+       "groundL": 67.7,
+       "below": 42.0
+      },
+      "farmland": {
+       "bodyL": 25.7,
+       "groundL": 67.3,
+       "below": 41.6
+      },
+      "swamp": {
+       "bodyL": 25.4,
+       "groundL": 58.5,
+       "below": 33.0
+      },
+      "forest": {
+       "bodyL": 25.4,
+       "groundL": 58.7,
+       "below": 33.3
+      },
+      "worstBelow": 33.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.9,
+      "dE_upperThird": 1.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.95
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1976,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.096
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.07,
+      "edgeDevPct": 5.54,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.737,
+     "scale": 1.124,
+     "aspect": 1.06,
+     "shear": 0.006,
+     "M": [
+      [
+       1.19139,
+       0.00675
+      ],
+      [
+       0.0,
+       1.06033
+      ]
+     ],
+     "t": [
+      -109.75,
+      -26.48
+     ],
+     "guideWuPerPx": 0.34286,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.13647,
+     "wuPerPxFromThickness": 0.15216,
+     "wuPerPxFromFit": 0.13122,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 117.11,
+    "wuPerPx": 0.1357,
+    "kind": "standing",
+    "anchorPx": [
+     268.0,
+     748.8
+    ],
+    "points": {
+     "footR": [
+      -10.7,
+      5.7
+     ],
+     "footL": [
+      -1.2,
+      5.0
+     ],
+     "mouth": [
+      19.8,
+      -70.5
+     ],
+     "handR": [
+      38.8,
+      -58.9
+     ],
+     "handL": [
+      -8.4,
+      -70.1
+     ],
+     "weaponTip": [
+      73.8,
+      -90.3
+     ],
+     "butt": [
+      23.1,
+      -44.4
+     ],
+     "head": [
+      7.9,
+      -79.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.strike",
+      "shadow": "pyreLord-cinderHorde.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2714,
+      "w": 233,
+      "h": 237
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.strike",
+      "shadow": "pyreLord-cinderHorde.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5428,
+      "w": 466,
+      "h": 475
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.14656,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -8.4,
+     "anchorY": 748.8,
+     "idleAnchorBelowSoleWu": -5.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     268.0,
+     810.5
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.A.nb21.2k/pyreLord-cinderHorde.back.strike.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.A.nb21.2k.png",
+    "rawSha256": "26012b9ee9e53cd945644f96da107e71c3703d27de8ad57c556851d4da3765ba",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.535,
+      "iouMirrored": 0.481,
+      "aspectRatio": 1.165,
+      "headDx": 0.625,
+      "guideHeadDx": 0.242,
+      "facingMargin": 0.054,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2639,
+      "keyHueShiftedPct": 0.76,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.0,
+       "groundL": 67.7,
+       "below": 42.7
+      },
+      "farmland": {
+       "bodyL": 25.0,
+       "groundL": 67.3,
+       "below": 42.3
+      },
+      "swamp": {
+       "bodyL": 24.7,
+       "groundL": 58.5,
+       "below": 33.8
+      },
+      "forest": {
+       "bodyL": 24.7,
+       "groundL": 58.7,
+       "below": 34.0
+      },
+      "worstBelow": 33.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.3,
+      "dE_upperThird": 3.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.981
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2427,
+      "keyHueShiftedPct": 0.08,
+      "pass_": true,
+      "rimFixedShare": 0.074
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.07,
+      "edgeDevPct": 5.54,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.664,
+     "scale": 0.9823,
+     "aspect": 1.015,
+     "shear": -0.038,
+     "M": [
+      [
+       0.99707,
+       -0.03411
+      ],
+      [
+       0.0,
+       0.96782
+      ]
+     ],
+     "t": [
+      -9.05,
+      37.93
+     ],
+     "guideWuPerPx": 0.30989,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.12835,
+     "wuPerPxFromThickness": 0.15265,
+     "wuPerPxFromFit": 0.1357,
+     "fitAtAreaScale": 0.675,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 130.41,
+    "wuPerPx": 0.13977,
+    "kind": "standing",
+    "anchorPx": [
+     427.8,
+     802.1
+    ],
+    "points": {
+     "footR": [
+      10.1,
+      5.7
+     ],
+     "footL": [
+      -15.1,
+      1.4
+     ],
+     "mouth": [
+      10.2,
+      -102.3
+     ],
+     "handR": [
+      29.2,
+      -39.7
+     ],
+     "handL": [
+      -48.8,
+      -78.8
+     ],
+     "weaponTip": [
+      53.1,
+      17.6
+     ],
+     "butt": [
+      19.0,
+      -68.4
+     ],
+     "head": [
+      -3.0,
+      -91.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.hit",
+      "shadow": "pyreLord-cinderHorde.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "pyreLord-cinderHorde.back.hit.white",
+      "scale": 0.2795,
+      "w": 229,
+      "h": 264
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.hit",
+      "shadow": "pyreLord-cinderHorde.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "pyreLord-cinderHorde.back.hit.white",
+      "scale": 0.5591,
+      "w": 458,
+      "h": 528
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.13977,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 11.2,
+     "anchorY": 802.1,
+     "idleAnchorBelowSoleWu": -5.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     427.8,
+     721.7
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.B.nb21.2k.r3/pyreLord-cinderHorde.back.hit.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.B.nb21.2k.r3.png",
+    "rawSha256": "faecc0214b43810c09d250875b2ee79b3521b15dcb3eff660a25e2c7f2f5712c",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.B.nb21.2k.r3",
+    "checks": {
+     "camera": {
+      "iou": 0.676,
+      "iouMirrored": 0.436,
+      "aspectRatio": 0.988,
+      "headDx": -0.032,
+      "guideHeadDx": -0.504,
+      "facingMargin": 0.24,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5348,
+      "keyHueShiftedPct": 0.06,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 27.3,
+       "groundL": 67.7,
+       "below": 40.5
+      },
+      "farmland": {
+       "bodyL": 27.3,
+       "groundL": 67.3,
+       "below": 40.0
+      },
+      "swamp": {
+       "bodyL": 27.0,
+       "groundL": 58.5,
+       "below": 31.5
+      },
+      "forest": {
+       "bodyL": 27.0,
+       "groundL": 58.7,
+       "below": 31.7
+      },
+      "worstBelow": 31.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.3,
+      "dE_upperThird": 6.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.012
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2577,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.094
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.106,
+      "edgeDevPct": 1.09,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.755,
+     "scale": 0.9751,
+     "aspect": 1.0,
+     "shear": -0.038,
+     "M": [
+      [
+       0.97506,
+       -0.03693
+      ],
+      [
+       0.0,
+       0.97506
+      ]
+     ],
+     "t": [
+      39.79,
+      8.43
+     ],
+     "guideWuPerPx": 0.32002,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.13977,
+     "wuPerPxFromThickness": 0.14103,
+     "wuPerPxFromFit": 0.14118,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 121.55,
+    "wuPerPx": 0.19927,
+    "kind": "lying",
+    "anchorPx": [
+     510.7,
+     268.8
+    ],
+    "points": {
+     "footR": [
+      -1.3,
+      -30.6
+     ],
+     "footL": [
+      -17.7,
+      -35.0
+     ],
+     "mouth": [
+      -61.9,
+      -13.7
+     ],
+     "handR": [
+      7.2,
+      18.2
+     ],
+     "handL": [
+      -96.2,
+      -11.3
+     ],
+     "weaponTip": [
+      104.9,
+      50.1
+     ],
+     "butt": [
+      -45.1,
+      0.9
+     ],
+     "head": [
+      -56.6,
+      14.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.dead",
+      "shadow": "pyreLord-cinderHorde.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3985,
+      "w": 346,
+      "h": 247
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.dead",
+      "shadow": "pyreLord-cinderHorde.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.7971,
+      "w": 691,
+      "h": 493
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.19927,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.B.nb21.2k.r3/pyreLord-cinderHorde.back.dead.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.B.nb21.2k.r3.png",
+    "rawSha256": "faecc0214b43810c09d250875b2ee79b3521b15dcb3eff660a25e2c7f2f5712c",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.B.nb21.2k.r3",
+    "checks": {
+     "camera": {
+      "iou": 0.006,
+      "iouMirrored": 0.06,
+      "aspectRatio": 0.82,
+      "headDx": 0.401,
+      "guideHeadDx": -0.849,
+      "facingMargin": -0.054,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 4748,
+      "keyHueShiftedPct": 0.11,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 29.1,
+       "groundL": 67.7,
+       "below": 38.6
+      },
+      "farmland": {
+       "bodyL": 29.1,
+       "groundL": 67.3,
+       "below": 38.2
+      },
+      "swamp": {
+       "bodyL": 28.7,
+       "groundL": 58.5,
+       "below": 29.7
+      },
+      "forest": {
+       "bodyL": 28.8,
+       "groundL": 58.7,
+       "below": 30.0
+      },
+      "worstBelow": 29.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 10.6,
+      "dE_upperThird": 6.2,
+      "pass_": false
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.943
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 3065,
+      "keyHueShiftedPct": 0.36,
+      "pass_": true,
+      "rimFixedShare": 0.054
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.106,
+      "edgeDevPct": 1.09,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "identity"
+    ],
+    "registration": {
+     "fitIoU": 0.75,
+     "scale": 1.0399,
+     "aspect": 1.07,
+     "shear": 0.125,
+     "M": [
+      [
+       1.1127,
+       0.1347
+      ],
+      [
+       0.0,
+       0.97187
+      ]
+     ],
+     "t": [
+      -51.2,
+      15.58
+     ],
+     "guideWuPerPx": 0.49919,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.19927,
+     "wuPerPxFromThickness": 0.23515,
+     "wuPerPxFromFit": 0.20649,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "call": {
+    "heightWu": 114.11,
+    "wuPerPx": 0.1463,
+    "kind": "standing",
+    "anchorPx": [
+     231.6,
+     675.9
+    ],
+    "points": {
+     "footR": [
+      12.1,
+      3.4
+     ],
+     "footL": [
+      -9.2,
+      5.7
+     ],
+     "mouth": [
+      30.3,
+      -65.1
+     ],
+     "handR": [
+      34.1,
+      -26.8
+     ],
+     "handL": [
+      1.1,
+      -87.3
+     ],
+     "weaponTip": [
+      119.2,
+      -1.9
+     ],
+     "butt": [
+      -6.3,
+      -52.6
+     ],
+     "head": [
+      9.2,
+      -76.4
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.call",
+      "shadow": "pyreLord-cinderHorde.back.call.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2926,
+      "w": 294,
+      "h": 231
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.call",
+      "shadow": "pyreLord-cinderHorde.back.call.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5852,
+      "w": 588,
+      "h": 463
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.158,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -3.5,
+     "anchorY": 675.9,
+     "idleAnchorBelowSoleWu": -5.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     231.6,
+     699.7
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.B.nb21.2k.r3/pyreLord-cinderHorde.back.call.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.B.nb21.2k.r3.png",
+    "rawSha256": "faecc0214b43810c09d250875b2ee79b3521b15dcb3eff660a25e2c7f2f5712c",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.B.nb21.2k.r3",
+    "checks": {
+     "camera": {
+      "iou": 0.427,
+      "iouMirrored": 0.286,
+      "aspectRatio": 1.068,
+      "headDx": 0.086,
+      "guideHeadDx": -0.03,
+      "facingMargin": 0.141,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5709,
+      "keyHueShiftedPct": 0.26,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 26.6,
+       "groundL": 67.7,
+       "below": 41.2
+      },
+      "farmland": {
+       "bodyL": 26.5,
+       "groundL": 67.3,
+       "below": 40.8
+      },
+      "swamp": {
+       "bodyL": 26.2,
+       "groundL": 58.5,
+       "below": 32.2
+      },
+      "forest": {
+       "bodyL": 26.2,
+       "groundL": 58.7,
+       "below": 32.5
+      },
+      "worstBelow": 32.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.9,
+      "dE_upperThird": 4.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.956
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2776,
+      "keyHueShiftedPct": 0.07,
+      "pass_": true,
+      "rimFixedShare": 0.125
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.106,
+      "edgeDevPct": 1.09,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.569,
+     "scale": 1.2372,
+     "aspect": 1.1,
+     "shear": -0.038,
+     "M": [
+      [
+       1.36097,
+       -0.04296
+      ],
+      [
+       0.0,
+       1.12477
+      ]
+     ],
+     "t": [
+      -40.47,
+      -27.43
+     ],
+     "guideWuPerPx": 0.42078,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.13106,
+     "wuPerPxFromThickness": 0.16025,
+     "wuPerPxFromFit": 0.1463,
+     "fitAtAreaScale": 0.658,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "fall": {
+    "heightWu": 139.08,
+    "wuPerPx": 0.14907,
+    "kind": "standing",
+    "anchorPx": [
+     230.0,
+     680.0
+    ],
+    "points": {
+     "footR": [
+      8.3,
+      1.9
+     ],
+     "footL": [
+      -29.8,
+      -1.8
+     ],
+     "mouth": [
+      22.1,
+      -70.4
+     ],
+     "handR": [
+      16.5,
+      -23.6
+     ],
+     "handL": [
+      -25.0,
+      -39.1
+     ],
+     "weaponTip": [
+      25.1,
+      61.4
+     ],
+     "butt": [
+      12.0,
+      -69.0
+     ],
+     "head": [
+      10.3,
+      -84.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.back.fall",
+      "shadow": "pyreLord-cinderHorde.back.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2981,
+      "w": 169,
+      "h": 281
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.back.fall",
+      "shadow": "pyreLord-cinderHorde.back.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5963,
+      "w": 339,
+      "h": 563
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.14813,
+    "groundFix": {
+     "applied": true,
+     "artDirector": true,
+     "shiftWu": -45.6
+    },
+    "anchorBeforeGroundFix": [
+     125.0,
+     985.8
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.back.B.nb21.2k.r3/pyreLord-cinderHorde.back.fall.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.back.B.nb21.2k.r3.png",
+    "rawSha256": "faecc0214b43810c09d250875b2ee79b3521b15dcb3eff660a25e2c7f2f5712c",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.back.png",
+    "tag": "act.pyreLord-cinderHorde.back.B.nb21.2k.r3",
+    "checks": {
+     "camera": {
+      "iou": 0.672,
+      "iouMirrored": 0.028,
+      "aspectRatio": 1.227,
+      "headDx": -0.23,
+      "guideHeadDx": -0.221,
+      "facingMargin": 0.644,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 3734,
+      "keyHueShiftedPct": 0.43,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 27.1,
+       "groundL": 67.7,
+       "below": 40.6
+      },
+      "farmland": {
+       "bodyL": 27.1,
+       "groundL": 67.3,
+       "below": 40.2
+      },
+      "swamp": {
+       "bodyL": 26.8,
+       "groundL": 58.5,
+       "below": 31.6
+      },
+      "forest": {
+       "bodyL": 26.8,
+       "groundL": 58.7,
+       "below": 31.9
+      },
+      "worstBelow": 31.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.2,
+      "dE_upperThird": 11.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.072
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1941,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.154
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.106,
+      "edgeDevPct": 1.09,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.743,
+     "scale": 1.1994,
+     "aspect": 0.98,
+     "shear": -0.113,
+     "M": [
+      [
+       1.17545,
+       -0.13562
+      ],
+      [
+       0.0,
+       1.22392
+      ]
+     ],
+     "t": [
+      -7.95,
+      -19.25
+     ],
+     "guideWuPerPx": 0.41775,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1471,
+     "wuPerPxFromArea": 0.14907,
+     "wuPerPxFromThickness": 0.1353,
+     "wuPerPxFromFit": 0.14982,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 130.87,
+    "wuPerPx": 0.12051,
+    "kind": "standing",
+    "anchorPx": [
+     387.2,
+     1062.5
+    ],
+    "points": {
+     "footR": [
+      -7.7,
+      -19.7
+     ],
+     "footL": [
+      8.5,
+      -14.5
+     ],
+     "mouth": [
+      -13.2,
+      -68.9
+     ],
+     "handR": [
+      -36.1,
+      -59.8
+     ],
+     "handL": [
+      29.7,
+      -40.7
+     ],
+     "weaponTip": [
+      -39.8,
+      -127.8
+     ],
+     "head": [
+      -0.6,
+      -90.4
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "pyreLord-cinderHorde.front.idle.white",
+      "scale": 0.241,
+      "w": 165,
+      "h": 265
+     },
+     "H": {
+      "white": "pyreLord-cinderHorde.front.idle.white",
+      "scale": 0.482,
+      "w": 330,
+      "h": 529
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/pyreLord-cinderHorde.front/pyreLord-cinderHorde.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 112.02,
+    "wuPerPx": 0.1253,
+    "kind": "standing",
+    "anchorPx": [
+     549.9,
+     836.4
+    ],
+    "points": {
+     "footR": [
+      -15.8,
+      2.8
+     ],
+     "footL": [
+      26.6,
+      -14.8
+     ],
+     "mouth": [
+      -15.3,
+      -60.4
+     ],
+     "handR": [
+      -34.7,
+      -51.8
+     ],
+     "handL": [
+      20.4,
+      -25.0
+     ],
+     "weaponTip": [
+      -67.4,
+      -104.6
+     ],
+     "butt": [
+      -16.9,
+      -25.7
+     ],
+     "head": [
+      -3.1,
+      -81.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.stepA",
+      "shadow": "pyreLord-cinderHorde.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2506,
+      "w": 215,
+      "h": 227
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.stepA",
+      "shadow": "pyreLord-cinderHorde.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5012,
+      "w": 429,
+      "h": 454
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.12538,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 3.9,
+     "anchorY": 836.4,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     549.9,
+     805.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.A.nb21.2k/pyreLord-cinderHorde.front.stepA.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.A.nb21.2k.png",
+    "rawSha256": "db7bf0261c9f4ad0fe5d5387566b953f0fd2dfb235bcdc6687f263682eac5433",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.721,
+      "iouMirrored": 0.567,
+      "aspectRatio": 0.942,
+      "headDx": -0.025,
+      "guideHeadDx": -0.177,
+      "facingMargin": 0.154,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2162,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 21.9,
+       "groundL": 67.7,
+       "below": 45.9
+      },
+      "farmland": {
+       "bodyL": 21.8,
+       "groundL": 67.3,
+       "below": 45.5
+      },
+      "swamp": {
+       "bodyL": 21.5,
+       "groundL": 58.5,
+       "below": 36.9
+      },
+      "forest": {
+       "bodyL": 21.5,
+       "groundL": 58.7,
+       "below": 37.2
+      },
+      "worstBelow": 36.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.4,
+      "dE_upperThird": 0.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.856,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2162,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.049
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.054,
+      "edgeDevPct": 2.87,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.749,
+     "scale": 1.0578,
+     "aspect": 0.98,
+     "shear": -0.025,
+     "M": [
+      [
+       1.03668,
+       -0.02618
+      ],
+      [
+       0.0,
+       1.07943
+      ]
+     ],
+     "t": [
+      19.97,
+      -5.77
+     ],
+     "guideWuPerPx": 0.30797,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.1253,
+     "wuPerPxFromThickness": 0.14073,
+     "wuPerPxFromFit": 0.12405,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 120.56,
+    "wuPerPx": 0.12949,
+    "kind": "standing",
+    "anchorPx": [
+     522.4,
+     874.1
+    ],
+    "points": {
+     "footR": [
+      10.7,
+      -6.4
+     ],
+     "footL": [
+      -0.8,
+      2.8
+     ],
+     "mouth": [
+      -9.4,
+      -66.2
+     ],
+     "handR": [
+      -33.7,
+      -52.6
+     ],
+     "handL": [
+      29.6,
+      -39.1
+     ],
+     "weaponTip": [
+      -60.3,
+      -101.8
+     ],
+     "butt": [
+      -20.2,
+      -30.2
+     ],
+     "head": [
+      -2.7,
+      -90.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.stepB",
+      "shadow": "pyreLord-cinderHorde.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.259,
+      "w": 215,
+      "h": 244
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.stepB",
+      "shadow": "pyreLord-cinderHorde.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.518,
+      "w": 430,
+      "h": 488
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.1312,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 12.0,
+     "anchorY": 874.1,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     522.4,
+     781.1
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.A.nb21.2k/pyreLord-cinderHorde.front.stepB.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.A.nb21.2k.png",
+    "rawSha256": "db7bf0261c9f4ad0fe5d5387566b953f0fd2dfb235bcdc6687f263682eac5433",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.607,
+      "iouMirrored": 0.541,
+      "aspectRatio": 0.881,
+      "headDx": -0.143,
+      "guideHeadDx": -0.112,
+      "facingMargin": 0.066,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 2291,
+      "keyHueShiftedPct": 0.52,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 21.9,
+       "groundL": 67.7,
+       "below": 45.9
+      },
+      "farmland": {
+       "bodyL": 21.9,
+       "groundL": 67.3,
+       "below": 45.4
+      },
+      "swamp": {
+       "bodyL": 21.5,
+       "groundL": 58.5,
+       "below": 37.0
+      },
+      "forest": {
+       "bodyL": 21.5,
+       "groundL": 58.7,
+       "below": 37.2
+      },
+      "worstBelow": 37.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.4,
+      "dE_upperThird": 0.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.933,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2273,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.058
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.054,
+      "edgeDevPct": 2.87,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.726,
+     "scale": 0.931,
+     "aspect": 0.95,
+     "shear": 0.0,
+     "M": [
+      [
+       0.88442,
+       0.0
+      ],
+      [
+       0.0,
+       0.97996
+      ]
+     ],
+     "t": [
+      65.6,
+      43.95
+     ],
+     "guideWuPerPx": 0.2829,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.12819,
+     "wuPerPxFromThickness": 0.14059,
+     "wuPerPxFromFit": 0.12949,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "windup": {
+    "heightWu": 143.48,
+    "wuPerPx": 0.13984,
+    "kind": "standing",
+    "anchorPx": [
+     479.8,
+     1018.5
+    ],
+    "points": {
+     "footR": [
+      -0.7,
+      -14.6
+     ],
+     "footL": [
+      16.1,
+      0.9
+     ],
+     "mouth": [
+      -13.4,
+      -69.0
+     ],
+     "handR": [
+      5.8,
+      -114.2
+     ],
+     "handL": [
+      9.3,
+      -91.5
+     ],
+     "weaponTip": [
+      57.0,
+      -190.1
+     ],
+     "butt": [
+      -21.7,
+      -73.4
+     ],
+     "head": [
+      7.1,
+      -87.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.windup",
+      "shadow": "pyreLord-cinderHorde.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2797,
+      "w": 224,
+      "h": 290
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.windup",
+      "shadow": "pyreLord-cinderHorde.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5594,
+      "w": 448,
+      "h": 580
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.15103,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": -1.9,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.A.nb21.2k/pyreLord-cinderHorde.front.windup.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.A.nb21.2k.png",
+    "rawSha256": "db7bf0261c9f4ad0fe5d5387566b953f0fd2dfb235bcdc6687f263682eac5433",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.407,
+      "iouMirrored": 0.394,
+      "aspectRatio": 1.91,
+      "headDx": -0.149,
+      "guideHeadDx": 0.216,
+      "facingMargin": 0.013,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2453,
+      "keyHueShiftedPct": 0.73,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 22.8,
+       "groundL": 67.7,
+       "below": 45.0
+      },
+      "farmland": {
+       "bodyL": 22.8,
+       "groundL": 67.3,
+       "below": 44.5
+      },
+      "swamp": {
+       "bodyL": 22.5,
+       "groundL": 58.5,
+       "below": 36.0
+      },
+      "forest": {
+       "bodyL": 22.5,
+       "groundL": 58.7,
+       "below": 36.2
+      },
+      "worstBelow": 36.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.6,
+      "dE_upperThird": 3.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.184
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2231,
+      "keyHueShiftedPct": 0.13,
+      "pass_": true,
+      "rimFixedShare": 0.056
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.054,
+      "edgeDevPct": 2.87,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.704,
+     "scale": 1.5977,
+     "aspect": 1.0,
+     "shear": -0.025,
+     "M": [
+      [
+       1.59775,
+       -0.03698
+      ],
+      [
+       0.0,
+       1.59775
+      ]
+     ],
+     "t": [
+      -150.8,
+      -490.8
+     ],
+     "guideWuPerPx": 0.52434,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.13972,
+     "wuPerPxFromThickness": 0.16665,
+     "wuPerPxFromFit": 0.13984,
+     "fitAtAreaScale": 0.708,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 108.23,
+    "wuPerPx": 0.12718,
+    "kind": "standing",
+    "anchorPx": [
+     783.4,
+     752.7
+    ],
+    "points": {
+     "footR": [
+      9.2,
+      -4.7
+     ],
+     "footL": [
+      -1.6,
+      2.8
+     ],
+     "mouth": [
+      -14.0,
+      -45.0
+     ],
+     "handR": [
+      -40.5,
+      -36.5
+     ],
+     "handL": [
+      9.5,
+      -26.4
+     ],
+     "weaponTip": [
+      -61.9,
+      45.9
+     ],
+     "butt": [
+      -27.5,
+      -76.5
+     ],
+     "head": [
+      -10.3,
+      -70.9
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.strike",
+      "shadow": "pyreLord-cinderHorde.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2544,
+      "w": 282,
+      "h": 219
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.strike",
+      "shadow": "pyreLord-cinderHorde.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5087,
+      "w": 564,
+      "h": 439
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.13226,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 3.7,
+     "anchorY": 752.7,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     783.4,
+     723.9
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.A.nb21.2k/pyreLord-cinderHorde.front.strike.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.A.nb21.2k.png",
+    "rawSha256": "db7bf0261c9f4ad0fe5d5387566b953f0fd2dfb235bcdc6687f263682eac5433",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.A.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.055,
+      "iouMirrored": 0.058,
+      "aspectRatio": 1.697,
+      "headDx": -0.363,
+      "guideHeadDx": 0.442,
+      "facingMargin": -0.003,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2428,
+      "keyHueShiftedPct": 0.12,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 20.8,
+       "groundL": 67.7,
+       "below": 46.9
+      },
+      "farmland": {
+       "bodyL": 20.8,
+       "groundL": 67.3,
+       "below": 46.5
+      },
+      "swamp": {
+       "bodyL": 20.5,
+       "groundL": 58.5,
+       "below": 37.9
+      },
+      "forest": {
+       "bodyL": 20.6,
+       "groundL": 58.7,
+       "below": 38.2
+      },
+      "worstBelow": 37.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 0.7,
+      "dE_upperThird": 2.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.86
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2319,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.076
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.054,
+      "edgeDevPct": 2.87,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.647,
+     "scale": 1.1949,
+     "aspect": 1.04,
+     "shear": 0.081,
+     "M": [
+      [
+       1.24274,
+       0.09335
+      ],
+      [
+       0.0,
+       1.14898
+      ]
+     ],
+     "t": [
+      -159.87,
+      71.22
+     ],
+     "guideWuPerPx": 0.35664,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.12303,
+     "wuPerPxFromThickness": 0.13226,
+     "wuPerPxFromFit": 0.12718,
+     "fitAtAreaScale": 0.648,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 138.02,
+    "wuPerPx": 0.14332,
+    "kind": "standing",
+    "anchorPx": [
+     412.8,
+     944.2
+    ],
+    "points": {
+     "footR": [
+      -9.3,
+      2.8
+     ],
+     "footL": [
+      15.9,
+      -21.4
+     ],
+     "mouth": [
+      -0.5,
+      -71.7
+     ],
+     "handR": [
+      -22.2,
+      -95.9
+     ],
+     "handL": [
+      54.3,
+      -51.9
+     ],
+     "weaponTip": [
+      -39.1,
+      -164.1
+     ],
+     "butt": [
+      -13.4,
+      -60.1
+     ],
+     "head": [
+      12.0,
+      -95.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.hit",
+      "shadow": "pyreLord-cinderHorde.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "pyreLord-cinderHorde.front.hit.white",
+      "scale": 0.2866,
+      "w": 242,
+      "h": 279
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.hit",
+      "shadow": "pyreLord-cinderHorde.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "pyreLord-cinderHorde.front.hit.white",
+      "scale": 0.5733,
+      "w": 485,
+      "h": 558
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.14376,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 6.2,
+     "anchorY": 944.2,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     412.8,
+     900.7
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.B.nb21.2k/pyreLord-cinderHorde.front.hit.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.B.nb21.2k.png",
+    "rawSha256": "35a1cb66ff301ef220cbae45011f22e5e961b5429c246c0c7ecc8041aa0eee79",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.397,
+      "iouMirrored": 0.357,
+      "aspectRatio": 1.266,
+      "headDx": -0.179,
+      "guideHeadDx": -0.231,
+      "facingMargin": 0.04,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2704,
+      "keyHueShiftedPct": 2.44,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 22.9,
+       "groundL": 67.7,
+       "below": 44.9
+      },
+      "farmland": {
+       "bodyL": 22.9,
+       "groundL": 67.3,
+       "below": 44.5
+      },
+      "swamp": {
+       "bodyL": 22.5,
+       "groundL": 58.5,
+       "below": 35.9
+      },
+      "forest": {
+       "bodyL": 22.6,
+       "groundL": 58.7,
+       "below": 36.2
+      },
+      "worstBelow": 35.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.9,
+      "dE_upperThird": 5.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.058
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2710,
+      "keyHueShiftedPct": 0.07,
+      "pass_": true,
+      "rimFixedShare": 0.078
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.041,
+      "edgeDevPct": 2.9,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "camera",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.688,
+     "scale": 1.2385,
+     "aspect": 1.0,
+     "shear": -0.062,
+     "M": [
+      [
+       1.23847,
+       -0.08063
+      ],
+      [
+       0.0,
+       1.23847
+      ]
+     ],
+     "t": [
+      26.23,
+      -246.03
+     ],
+     "guideWuPerPx": 0.41654,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.13758,
+     "wuPerPxFromThickness": 0.14748,
+     "wuPerPxFromFit": 0.14332,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 115.23,
+    "wuPerPx": 0.13572,
+    "kind": "lying",
+    "anchorPx": [
+     368.3,
+     943.7
+    ],
+    "points": {
+     "footR": [
+      -22.2,
+      -37.4
+     ],
+     "footL": [
+      -3.8,
+      -30.0
+     ],
+     "mouth": [
+      26.6,
+      -98.5
+     ],
+     "handR": [
+      -24.1,
+      -87.1
+     ],
+     "handL": [
+      78.3,
+      -61.7
+     ],
+     "weaponTip": [
+      -140.0,
+      -106.1
+     ],
+     "butt": [
+      22.7,
+      -94.3
+     ],
+     "head": [
+      40.3,
+      -95.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.dead",
+      "shadow": "pyreLord-cinderHorde.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2714,
+      "w": 261,
+      "h": 234
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.dead",
+      "shadow": "pyreLord-cinderHorde.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5429,
+      "w": 522,
+      "h": 467
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.14058,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.B.nb21.2k/pyreLord-cinderHorde.front.dead.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.B.nb21.2k.png",
+    "rawSha256": "35a1cb66ff301ef220cbae45011f22e5e961b5429c246c0c7ecc8041aa0eee79",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.48,
+      "iouMirrored": 0.33,
+      "aspectRatio": 0.525,
+      "headDx": 0.145,
+      "guideHeadDx": -0.073,
+      "facingMargin": 0.15,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2622,
+      "keyHueShiftedPct": 1.68,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.3,
+       "groundL": 67.7,
+       "below": 43.4
+      },
+      "farmland": {
+       "bodyL": 24.3,
+       "groundL": 67.3,
+       "below": 43.0
+      },
+      "swamp": {
+       "bodyL": 24.0,
+       "groundL": 58.5,
+       "below": 34.4
+      },
+      "forest": {
+       "bodyL": 24.1,
+       "groundL": 58.7,
+       "below": 34.7
+      },
+      "worstBelow": 34.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 4.2,
+      "dE_upperThird": 5.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.912
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2545,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.067
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.041,
+      "edgeDevPct": 2.9,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.703,
+     "scale": 1.6691,
+     "aspect": 1.1,
+     "shear": 0.15,
+     "M": [
+      [
+       1.836,
+       0.23508
+      ],
+      [
+       0.0,
+       1.51736
+      ]
+     ],
+     "t": [
+      -772.07,
+      -148.95
+     ],
+     "guideWuPerPx": 0.49919,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.13572,
+     "wuPerPxFromThickness": 0.14608,
+     "wuPerPxFromFit": 0.12744,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "call": {
+    "heightWu": 110.57,
+    "wuPerPx": 0.11639,
+    "kind": "standing",
+    "anchorPx": [
+     600.5,
+     920.7
+    ],
+    "points": {
+     "footR": [
+      -11.8,
+      -11.8
+     ],
+     "footL": [
+      9.5,
+      2.8
+     ],
+     "mouth": [
+      -21.4,
+      -67.6
+     ],
+     "handR": [
+      -32.3,
+      -87.6
+     ],
+     "handL": [
+      2.7,
+      -37.2
+     ],
+     "weaponTip": [
+      -118.2,
+      -142.4
+     ],
+     "butt": [
+      9.5,
+      -80.6
+     ],
+     "head": [
+      -5.1,
+      -85.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.call",
+      "shadow": "pyreLord-cinderHorde.front.call.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2328,
+      "w": 202,
+      "h": 224
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.call",
+      "shadow": "pyreLord-cinderHorde.front.call.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4656,
+      "w": 404,
+      "h": 448
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.12297,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 8.5,
+     "anchorY": 920.7,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     600.5,
+     847.4
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.B.nb21.2k/pyreLord-cinderHorde.front.call.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.B.nb21.2k.png",
+    "rawSha256": "35a1cb66ff301ef220cbae45011f22e5e961b5429c246c0c7ecc8041aa0eee79",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.382,
+      "iouMirrored": 0.352,
+      "aspectRatio": 1.015,
+      "headDx": -0.151,
+      "guideHeadDx": -0.671,
+      "facingMargin": 0.03,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2087,
+      "keyHueShiftedPct": 2.54,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 21.7,
+       "groundL": 67.7,
+       "below": 46.1
+      },
+      "farmland": {
+       "bodyL": 21.7,
+       "groundL": 67.3,
+       "below": 45.6
+      },
+      "swamp": {
+       "bodyL": 21.3,
+       "groundL": 58.5,
+       "below": 37.1
+      },
+      "forest": {
+       "bodyL": 21.3,
+       "groundL": 58.7,
+       "below": 37.4
+      },
+      "worstBelow": 37.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.0,
+      "dE_upperThird": 1.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.893
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1955,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.088
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.041,
+      "edgeDevPct": 2.9,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "camera",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.703,
+     "scale": 1.5674,
+     "aspect": 1.1,
+     "shear": -0.013,
+     "M": [
+      [
+       1.72418,
+       -0.01823
+      ],
+      [
+       0.0,
+       1.42494
+      ]
+     ],
+     "t": [
+      -469.03,
+      -417.13
+     ],
+     "guideWuPerPx": 0.42078,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.11639,
+     "wuPerPxFromThickness": 0.13012,
+     "wuPerPxFromFit": 0.11439,
+     "fitAtAreaScale": 0.702,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "fall": {
+    "heightWu": 100.97,
+    "wuPerPx": 0.11256,
+    "kind": "standing",
+    "anchorPx": [
+     499.0,
+     811.8
+    ],
+    "points": {
+     "footR": [
+      -17.1,
+      2.8
+     ],
+     "footL": [
+      17.9,
+      -0.8
+     ],
+     "mouth": [
+      -19.0,
+      -35.3
+     ],
+     "handR": [
+      -24.8,
+      -35.1
+     ],
+     "handL": [
+      18.8,
+      -20.5
+     ],
+     "weaponTip": [
+      -41.1,
+      27.1
+     ],
+     "butt": [
+      -16.1,
+      -68.5
+     ],
+     "head": [
+      -12.4,
+      -57.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "pyreLord-cinderHorde.front.fall",
+      "shadow": "pyreLord-cinderHorde.front.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2251,
+      "w": 194,
+      "h": 205
+     },
+     "H": {
+      "frame": "pyreLord-cinderHorde.front.fall",
+      "shadow": "pyreLord-cinderHorde.front.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4502,
+      "w": 388,
+      "h": 410
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11744,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -45.0,
+     "anchorY": 811.8,
+     "idleAnchorBelowSoleWu": -2.8,
+     "feet": [
+      "footR",
+      "footL"
+     ],
+     "anchorX": 499.0,
+     "brokenRegistration": true
+    },
+    "anchorBeforeGroundFix": [
+     513.3,
+     1211.5
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.pyreLord-cinderHorde.front.B.nb21.2k/pyreLord-cinderHorde.front.fall.png",
+    "raw": "stage-d/raw/act.pyreLord-cinderHorde.front.B.nb21.2k.png",
+    "rawSha256": "35a1cb66ff301ef220cbae45011f22e5e961b5429c246c0c7ecc8041aa0eee79",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/pyreLord.B.front.png",
+    "tag": "act.pyreLord-cinderHorde.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.423,
+      "iouMirrored": 0.523,
+      "aspectRatio": 1.105,
+      "headDx": -0.444,
+      "guideHeadDx": 0.26,
+      "facingMargin": -0.1,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2020,
+      "keyHueShiftedPct": 1.49,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 22.7,
+       "groundL": 67.7,
+       "below": 45.1
+      },
+      "farmland": {
+       "bodyL": 22.7,
+       "groundL": 67.3,
+       "below": 44.6
+      },
+      "swamp": {
+       "bodyL": 22.3,
+       "groundL": 58.5,
+       "below": 36.1
+      },
+      "forest": {
+       "bodyL": 22.3,
+       "groundL": 58.7,
+       "below": 36.4
+      },
+      "worstBelow": 36.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.2,
+      "dE_upperThird": 3.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.805
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1919,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.079
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.041,
+      "edgeDevPct": 2.9,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.698,
+     "scale": 0.9701,
+     "aspect": 0.98,
+     "shear": 0.025,
+     "M": [
+      [
+       0.95074,
+       0.02425
+      ],
+      [
+       0.0,
+       0.98994
+      ]
+     ],
+     "t": [
+      49.78,
+      99.33
+     ],
+     "guideWuPerPx": 0.25626,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1363,
+     "wuPerPxFromArea": 0.11256,
+     "wuPerPxFromThickness": 0.122,
+     "wuPerPxFromFit": 0.11256,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {},
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {}
+}

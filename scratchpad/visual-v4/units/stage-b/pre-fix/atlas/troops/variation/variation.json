@@ -1,0 +1,85 @@
+{
+ "cloth": {
+  "cinderHorde": {
+   "L": [
+    0,
+    0.03
+   ],
+   "hueDeg": [
+    0,
+    6
+   ],
+   "C": [
+    1.0,
+    1.08
+   ],
+   "stencil": "light",
+   "hueRef": "#C4532C"
+  },
+  "thornwood": {
+   "L": [
+    -0.035,
+    0
+   ],
+   "hueDeg": [
+    0,
+    6
+   ],
+   "C": [
+    0.92,
+    1.0
+   ],
+   "stencil": "dark",
+   "hueRef": "#1F6A50"
+  },
+  "independent": null
+ },
+ "skinL": [
+  -0.07,
+  0.05
+ ],
+ "skinHueDeg": [
+  -6,
+  6
+ ],
+ "metalL": [
+  -0.06,
+  0.05
+ ],
+ "metalWarm": [
+  -1,
+  1
+ ],
+ "leatherL": [
+  -0.05,
+  0.05
+ ],
+ "bright": [
+  0.92,
+  1.0
+ ],
+ "scale": [
+  0.96,
+  1.04
+ ],
+ "leanDeg": [
+  -1.5,
+  1.5
+ ],
+ "jitterWu": 1.2,
+ "restIdle2": 0.3,
+ "tempo": [
+  0.92,
+  1.08
+ ],
+ "stencilDark": -0.11,
+ "stencilLight": 0.07,
+ "stencilsAtTier": "H",
+ "excluded": [
+  "commanders",
+  "creatures",
+  "gods",
+  "mounts"
+ ],
+ "rule": "cloth varies one-sidedly per side; the colour-vision contrast of the two cloths must not drop (calibration 5.2)"
+}

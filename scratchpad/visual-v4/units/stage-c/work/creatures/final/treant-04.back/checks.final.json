@@ -1,0 +1,91 @@
+{
+ "figure": "treant-04",
+ "view": "back",
+ "camera": {
+  "iou": 0.548,
+  "iouMirrored": 0.45,
+  "aspectRatio": 1.064,
+  "pass": false
+ },
+ "identity": {
+  "upperThirdLab": [
+   42.6,
+   2.4,
+   9.5
+  ],
+  "portraitLab": [
+   42.9,
+   2.1,
+   11.2
+  ],
+  "dE2000": 1.4,
+  "wholeDE2000": 9.1,
+  "pass": true
+ },
+ "size": [
+  577,
+  1164
+ ],
+ "fringe": {
+  "spillEdgePct": 5.679,
+  "keyInUnitPct": 0.038,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.42,
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 10.6,
+  "afterMax": 0.0
+ },
+ "value": {
+  "plains": {
+   "bodyL": 36.6,
+   "groundL": 67.7,
+   "below": 31.2
+  },
+  "farmland": {
+   "bodyL": 36.5,
+   "groundL": 67.3,
+   "below": 30.8
+  },
+  "swamp": {
+   "bodyL": 36.0,
+   "groundL": 58.5,
+   "below": 22.4
+  },
+  "forest": {
+   "bodyL": 36.0,
+   "groundL": 58.7,
+   "below": 22.7
+  },
+  "worstBelow": 22.4,
+  "minContrast": 22.4,
+  "pass": true
+ },
+ "heightWu": 114.15,
+ "srcPx": [
+  576,
+  1164
+ ],
+ "tierPx": {
+  "S": 228,
+  "H": 457
+ },
+ "oversampleAtH": 3.05,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/treant04.back.cfix.r2.nb21.png",
+ "gates": {
+  "camera": false,
+  "identity": true,
+  "value": true,
+  "rim": true,
+  "fringe": true
+ },
+ "pass": false,
+ "scaleFrom": {
+  "rule": "critique fix 5: the shipped cut's px-to-wu scale kept, heightWu grows with the crown",
+  "shippedHeightPx": 1142,
+  "shippedHeightWu": 95.26,
+  "pxScale": 0.8506,
+  "bodyMatch": 0.996
+ }
+}

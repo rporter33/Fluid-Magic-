@@ -1,0 +1,40 @@
+timeout 3600 node sweep.cjs 1 > ../out/logs/sweep-1.txt 2>&1
+timeout 3600 node sweep.cjs 2 > ../out/logs/sweep-2.txt 2>&1
+timeout 3600 node optcheck.cjs '?wildfoot=talus' 1 > ../out/logs/opt-talus-1.txt 2>&1
+timeout 3600 node optcheck.cjs '?wildfoot=talus' 2 > ../out/logs/opt-talus-2.txt 2>&1
+timeout 3600 node optcheck.cjs '?wildink=2' 1 > ../out/logs/opt-ink2-1.txt 2>&1
+timeout 3600 node optcheck.cjs '?wildfoot=talus&wildink=2' 1 > ../out/logs/opt-talus-ink2-1.txt 2>&1
+timeout 3600 node seedprobe.cjs s7 > ../out/logs/seed-s7.txt 2>&1
+timeout 3600 node seedprobe.cjs s31 > ../out/logs/seed-s31.txt 2>&1
+timeout 3600 node seedprobe.cjs alt > ../out/logs/seed-alt.txt 2>&1
+timeout 3600 node seedprobe.cjs s3 > ../out/logs/seed-s3.txt 2>&1
+timeout 3600 node seedprobe.cjs s44 > ../out/logs/seed-s44.txt 2>&1
+timeout 3600 node seedprobe.cjs s5 > ../out/logs/seed-s5.txt 2>&1
+timeout 3600 node seedprobe.cjs s19 > ../out/logs/seed-s19.txt 2>&1
+timeout 3600 node seedprobe.cjs s58 > ../out/logs/seed-s58.txt 2>&1
+timeout 3600 node seedprobe.cjs s77 > ../out/logs/seed-s77.txt 2>&1
+timeout 3600 node seedprobe.cjs s101 > ../out/logs/seed-s101.txt 2>&1
+END=6 timeout 5400 node vprobe.cjs natural 1 > ../out/logs/vprobe-natural-1-end6.txt 2>&1
+END=6 timeout 5400 node vprobe.cjs natural 2 > ../out/logs/vprobe-natural-2-end6.txt 2>&1
+HOVER=0 timeout 5400 node vprobe.cjs clear 1 > ../out/logs/vprobe-clear-1.txt 2>&1
+HOVER=0 timeout 5400 node vprobe.cjs terrain 1 > ../out/logs/vprobe-terrain-1.txt 2>&1
+HOVER=0 NR=6 timeout 5400 node vprobe.cjs mode:dominion 1 > ../out/logs/vprobe-dominion-1.txt 2>&1
+HOVER=0 NR=6 timeout 5400 node vprobe.cjs mode:springs 2 > ../out/logs/vprobe-springs-2.txt 2>&1
+END=6 HOVER=0 NR=24 timeout 5400 node vprobe.cjs natural 1 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/final/variants/s5/game-screen-v4.html s5 > ../out/logs/vprobe-s5.txt 2>&1
+END=6 HOVER=0 NR=24 timeout 5400 node vprobe.cjs natural 1 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/final/variants/s58/game-screen-v4.html s58 > ../out/logs/vprobe-s58.txt 2>&1
+END=6 HOVER=0 NR=24 timeout 5400 node vprobe.cjs natural 2 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/final/variants/s44/game-screen-v4.html s44 > ../out/logs/vprobe-s44-2.txt 2>&1
+timeout 3600 node session.cjs natural 1440 900 > ../out/logs/session-natural.txt 2>&1
+timeout 3600 node session.cjs clear 1440 900 > ../out/logs/session-clear.txt 2>&1
+timeout 3600 node session.cjs terrain 1440 900 > ../out/logs/session-terrain.txt 2>&1
+LINES=0 timeout 3600 node session.cjs natural 390 844 > ../out/logs/session-phone.txt 2>&1
+LINES=0 timeout 3600 node session.cjs natural 1280 720 > ../out/logs/session-1280.txt 2>&1
+timeout 3600 node phonefit.cjs natural 3 > ../out/logs/phonefit-natural.txt 2>&1
+timeout 3600 node phonefit.cjs clear 3 > ../out/logs/phonefit-clear.txt 2>&1
+timeout 5400 node linesall.cjs natural 1 > ../out/logs/linesall-natural-1.txt 2>&1
+timeout 5400 node linesall.cjs clear 1 > ../out/logs/linesall-clear-1.txt 2>&1
+timeout 5400 node linesall.cjs terrain 1 > ../out/logs/linesall-terrain-1.txt 2>&1
+VIEWS=start,mid,near timeout 5400 node linesall.cjs natural 2 > ../out/logs/linesall-natural-2.txt 2>&1
+timeout 7000 node focus.cjs natural 1 > ../out/logs/focus-natural-1.txt 2>&1
+timeout 7000 node focus.cjs clear 1 > ../out/logs/focus-clear-1.txt 2>&1
+timeout 7000 node focus.cjs natural 2 > ../out/logs/focus-natural-2.txt 2>&1
+timeout 7000 node focus.cjs clear 2 > ../out/logs/focus-clear-2.txt 2>&1

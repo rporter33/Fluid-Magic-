@@ -1,0 +1,1066 @@
+{
+ "figure": "independentCaptain-levy-09",
+ "unit": "independentCaptain-levy",
+ "face": "09",
+ "nation": "independent",
+ "body": "cmdLevy",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA (+ cmdA2 fixes and own kits)",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/lv09.front.redress.nb21.png",
+   "sheetSha256": "800fa17ca6d8d007e3358646a2ee2a8534e1a76fedfc062f09208f26bed40685",
+   "body": "stage-b/raw/cmdA/cmdLevy.front.body.g3pro.png",
+   "bodySha256": "1a1b304a39d3af2cd46d625dc66d325bfc10585f6d01112366a0539a0e14af1f",
+   "key": "blue",
+   "keyer": "key.py",
+   "dir": "lv09.front",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.47761,
+    "H": 0.95522
+   },
+   "scaleFrom": {
+    "bodyH": 134,
+    "from_": "body cmdLevy.front.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "independentCaptain-levy-09.front.stand",
+     "srcBox": [
+      73,
+      73,
+      175,
+      217
+     ],
+     "srcAnchor": [
+      70.4,
+      141.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6789,
+       "y": 0.9626
+      },
+      "H": {
+       "x": 0.6856,
+       "y": 0.9626
+      }
+     }
+    },
+    "idle2": {
+     "frame": "independentCaptain-levy-09.front.idle2",
+     "srcBox": [
+      334,
+      74,
+      429,
+      218
+     ],
+     "srcAnchor": [
+      63.5,
+      141.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6666,
+       "y": 0.9626
+      },
+      "H": {
+       "x": 0.6595,
+       "y": 0.9626
+      }
+     }
+    },
+    "marchA": {
+     "frame": "independentCaptain-levy-09.front.marchA",
+     "srcBox": [
+      585,
+      84,
+      686,
+      229
+     ],
+     "srcAnchor": [
+      68.9,
+      142.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6781,
+       "y": 0.9693
+      },
+      "H": {
+       "x": 0.6781,
+       "y": 0.9625
+      }
+     }
+    },
+    "marchB": {
+     "frame": "independentCaptain-levy-09.front.marchB",
+     "srcBox": [
+      843,
+      82,
+      947,
+      216
+     ],
+     "srcAnchor": [
+      46.4,
+      131.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4454,
+       "y": 0.9631
+      },
+      "H": {
+       "x": 0.4497,
+       "y": 0.9631
+      }
+     }
+    },
+    "windup": {
+     "frame": "independentCaptain-levy-09.front.windup",
+     "srcBox": [
+      94,
+      276,
+      187,
+      477
+     ],
+     "srcAnchor": [
+      53.0,
+      198.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.572,
+       "y": 0.9752
+      },
+      "H": {
+       "x": 0.5659,
+       "y": 0.9752
+      }
+     }
+    },
+    "strike": {
+     "frame": "independentCaptain-levy-09.front.strike",
+     "srcBox": [
+      329,
+      345,
+      425,
+      486
+     ],
+     "srcAnchor": [
+      68.9,
+      138.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7064,
+       "y": 0.9697
+      },
+      "H": {
+       "x": 0.7064,
+       "y": 0.9627
+      }
+     }
+    },
+    "follow": {
+     "frame": "independentCaptain-levy-09.front.follow",
+     "srcBox": [
+      614,
+      342,
+      678,
+      483
+     ],
+     "srcAnchor": [
+      41.7,
+      138.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6338,
+       "y": 0.9697
+      },
+      "H": {
+       "x": 0.6436,
+       "y": 0.9627
+      }
+     }
+    },
+    "recoil": {
+     "frame": "independentCaptain-levy-09.front.recoil",
+     "srcBox": [
+      794,
+      319,
+      987,
+      473
+     ],
+     "srcAnchor": [
+      124.7,
+      151.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6442,
+       "y": 0.9621
+      },
+      "H": {
+       "x": 0.6442,
+       "y": 0.9685
+      }
+     }
+    },
+    "actA": {
+     "frame": "independentCaptain-levy-09.front.actA",
+     "srcBox": [
+      111,
+      524,
+      206,
+      728
+     ],
+     "srcAnchor": [
+      33.1,
+      201.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3576,
+       "y": 0.9798
+      },
+      "H": {
+       "x": 0.3539,
+       "y": 0.9749
+      }
+     }
+    },
+    "actB": {
+     "frame": "independentCaptain-levy-09.front.actB",
+     "srcBox": [
+      301,
+      590,
+      428,
+      727
+     ],
+     "srcAnchor": [
+      99.0,
+      134.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7664,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.7725,
+       "y": 0.963
+      }
+     }
+    },
+    "fall": {
+     "frame": "independentCaptain-levy-09.front.fall",
+     "srcBox": [
+      626,
+      522,
+      762,
+      725
+     ],
+     "srcAnchor": [
+      29.8,
+      200.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2274,
+       "y": 0.975
+      },
+      "H": {
+       "x": 0.2274,
+       "y": 0.975
+      }
+     }
+    },
+    "deadA": {
+     "frame": "independentCaptain-levy-09.front.deadA",
+     "srcBox": [
+      873,
+      578,
+      1022,
+      679
+     ],
+     "srcAnchor": [
+      73.9,
+      74.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4972,
+       "y": 0.7269
+      },
+      "H": {
+       "x": 0.4972,
+       "y": 0.7269
+      }
+     }
+    },
+    "deadB": {
+     "frame": "independentCaptain-levy-09.front.deadB",
+     "srcBox": [
+      5,
+      899,
+      162,
+      1013
+     ],
+     "srcAnchor": [
+      95.3,
+      83.8
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6041,
+       "y": 0.7326
+      },
+      "H": {
+       "x": 0.6041,
+       "y": 0.7261
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "independentCaptain-levy-09.front.fleeA",
+     "srcBox": [
+      337,
+      868,
+      435,
+      999
+     ],
+     "srcAnchor": [
+      59.4,
+      128.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5994,
+       "y": 0.9559
+      },
+      "H": {
+       "x": 0.5994,
+       "y": 0.9633
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "independentCaptain-levy-09.front.fleeB",
+     "srcBox": [
+      616,
+      868,
+      695,
+      990
+     ],
+     "srcAnchor": [
+      13.4,
+      119.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.185,
+       "y": 0.9639
+      },
+      "H": {
+       "x": 0.1873,
+       "y": 0.956
+      }
+     }
+    },
+    "cheer": {
+     "frame": "independentCaptain-levy-09.front.cheer",
+     "srcBox": [
+      875,
+      791,
+      948,
+      984
+     ],
+     "srcAnchor": [
+      37.0,
+      190.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5046,
+       "y": 0.976
+      },
+      "H": {
+       "x": 0.5046,
+       "y": 0.976
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "16/16",
+    "failing": [],
+    "inherit": 0.921,
+    "variety": true,
+    "marchIoU": 0.493,
+    "rimAfter": 0.0,
+    "edgeDev": 7.79,
+    "keyIn": 0.044,
+    "side": null,
+    "valueBelow": 22.4,
+    "identityDE": 3.7,
+    "consHist": [
+     "deadB",
+     0.817
+    ],
+    "consDE": [
+     "deadB",
+     2.6
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "lv09.front.redress.nb21.png",
+    "marksFront": "yyypyy",
+    "dir": "lv09.front",
+    "ownKit": false,
+    "keyer": "key.py",
+    "body": null
+   },
+   "pass": true
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/lv09.back.redress.nb21.png",
+   "sheetSha256": "32ca647cdcaf2bb9af6acff3ade126930b077320c63aa108f2a0cb50dc16e8fb",
+   "body": "stage-b/raw/cmdA/cmdLevy.back.body.g3pro.png",
+   "bodySha256": "a523cb689b557d97ecf2dfcfa7dc543943b92363db74a47bfad11ace7264fffb",
+   "key": "blue",
+   "keyer": "key.py",
+   "dir": "lv09.back",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.512,
+    "H": 1.024
+   },
+   "scaleFrom": {
+    "bodyH": 125,
+    "from_": "body cmdLevy.back.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "independentCaptain-levy-09.back.stand",
+     "srcBox": [
+      87,
+      37,
+      174,
+      174
+     ],
+     "srcAnchor": [
+      33.2,
+      134.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3829,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.3871,
+       "y": 0.9668
+      }
+     }
+    },
+    "idle2": {
+     "frame": "independentCaptain-levy-09.back.idle2",
+     "srcBox": [
+      344,
+      37,
+      434,
+      175
+     ],
+     "srcAnchor": [
+      32.3,
+      135.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3654,
+       "y": 0.9605
+      },
+      "H": {
+       "x": 0.3654,
+       "y": 0.9672
+      }
+     }
+    },
+    "marchA": {
+     "frame": "independentCaptain-levy-09.back.marchA",
+     "srcBox": [
+      600,
+      37,
+      691,
+      189
+     ],
+     "srcAnchor": [
+      20.0,
+      149.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2294,
+       "y": 0.9661
+      },
+      "H": {
+       "x": 0.2318,
+       "y": 0.9661
+      }
+     }
+    },
+    "marchB": {
+     "frame": "independentCaptain-levy-09.back.marchB",
+     "srcBox": [
+      851,
+      38,
+      945,
+      181
+     ],
+     "srcAnchor": [
+      14.7,
+      140.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1705,
+       "y": 0.9691
+      },
+      "H": {
+       "x": 0.1705,
+       "y": 0.9691
+      }
+     }
+    },
+    "windup": {
+     "frame": "independentCaptain-levy-09.back.windup",
+     "srcBox": [
+      73,
+      287,
+      165,
+      436
+     ],
+     "srcAnchor": [
+      45.8,
+      146.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.499,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.499,
+       "y": 0.965
+      }
+     }
+    },
+    "strike": {
+     "frame": "independentCaptain-levy-09.back.strike",
+     "srcBox": [
+      346,
+      295,
+      437,
+      445
+     ],
+     "srcAnchor": [
+      16.7,
+      147.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1949,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.1969,
+       "y": 0.9654
+      }
+     }
+    },
+    "follow": {
+     "frame": "independentCaptain-levy-09.back.follow",
+     "srcBox": [
+      602,
+      298,
+      681,
+      444
+     ],
+     "srcAnchor": [
+      19.6,
+      143.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2627,
+       "y": 0.9638
+      },
+      "H": {
+       "x": 0.2597,
+       "y": 0.9638
+      }
+     }
+    },
+    "recoil": {
+     "frame": "independentCaptain-levy-09.back.recoil",
+     "srcBox": [
+      812,
+      320,
+      993,
+      441
+     ],
+     "srcAnchor": [
+      66.4,
+      118.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3684,
+       "y": 0.9596
+      },
+      "H": {
+       "x": 0.3703,
+       "y": 0.9596
+      }
+     }
+    },
+    "actA": {
+     "frame": "independentCaptain-levy-09.back.actA",
+     "srcBox": [
+      58,
+      526,
+      145,
+      687
+     ],
+     "srcAnchor": [
+      61.5,
+      158.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6912,
+       "y": 0.975
+      },
+      "H": {
+       "x": 0.6987,
+       "y": 0.9692
+      }
+     }
+    },
+    "actB": {
+     "frame": "independentCaptain-levy-09.back.actB",
+     "srcBox": [
+      345,
+      549,
+      461,
+      687
+     ],
+     "srcAnchor": [
+      31.3,
+      135.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2791,
+       "y": 0.9605
+      },
+      "H": {
+       "x": 0.2768,
+       "y": 0.9672
+      }
+     }
+    },
+    "fall": {
+     "frame": "independentCaptain-levy-09.back.fall",
+     "srcBox": [
+      534,
+      616,
+      664,
+      762
+     ],
+     "srcAnchor": [
+      121.6,
+      143.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.9168,
+       "y": 0.9638
+      },
+      "H": {
+       "x": 0.9235,
+       "y": 0.9638
+      }
+     }
+    },
+    "deadA": {
+     "frame": "independentCaptain-levy-09.back.deadA",
+     "srcBox": [
+      779,
+      615,
+      919,
+      762
+     ],
+     "srcAnchor": [
+      69.6,
+      108.5
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4951,
+       "y": 0.7344
+      },
+      "H": {
+       "x": 0.4984,
+       "y": 0.7297
+      }
+     }
+    },
+    "deadB": {
+     "frame": "independentCaptain-levy-09.back.deadB",
+     "srcBox": [
+      97,
+      789,
+      244,
+      898
+     ],
+     "srcAnchor": [
+      60.9,
+      80.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4179,
+       "y": 0.7234
+      },
+      "H": {
+       "x": 0.4152,
+       "y": 0.7234
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "independentCaptain-levy-09.back.fleeA",
+     "srcBox": [
+      339,
+      807,
+      429,
+      960
+     ],
+     "srcAnchor": [
+      19.6,
+      150.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2299,
+       "y": 0.9725
+      },
+      "H": {
+       "x": 0.2299,
+       "y": 0.9665
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "independentCaptain-levy-09.back.fleeB",
+     "srcBox": [
+      590,
+      807,
+      667,
+      952
+     ],
+     "srcAnchor": [
+      9.6,
+      142.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1443,
+       "y": 0.9698
+      },
+      "H": {
+       "x": 0.1425,
+       "y": 0.9698
+      }
+     }
+    },
+    "cheer": {
+     "frame": "independentCaptain-levy-09.back.cheer",
+     "srcBox": [
+      849,
+      775,
+      918,
+      943
+     ],
+     "srcAnchor": [
+      38.2,
+      165.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-levy.S.0.png",
+      "H": "independentCaptain-levy.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5556,
+       "y": 0.9714
+      },
+      "H": {
+       "x": 0.5482,
+       "y": 0.9714
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "14/16",
+    "failing": [
+     "deadB",
+     "fall"
+    ],
+    "inherit": 0.902,
+    "variety": true,
+    "marchIoU": 0.576,
+    "rimAfter": 0.0,
+    "edgeDev": 6.36,
+    "keyIn": 0.194,
+    "side": null,
+    "valueBelow": 23.0,
+    "identityDE": 8.8,
+    "consHist": [
+     "deadB",
+     0.862
+    ],
+    "consDE": [
+     "deadA",
+     3.6
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "lv09.back.redress.nb21.png",
+    "marksFront": null,
+    "dir": "lv09.back",
+    "ownKit": false,
+    "keyer": "key.py",
+    "body": null
+   },
+   "pass": true
+  }
+ },
+ "marks": [
+  {
+   "mark": "the small round iron cap tied under the chin with a strip of cloth",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "her curly dark brown hair escaping in ringlets under the cap",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the padded jerkin of undyed grey wool with a single pewter button at the collar",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the wooden bead on a cord",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "her heart-shaped light brown freckled face",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the plain straight sword with a simple cross guard",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the small round iron cap tied under the chin with a strip of cloth",
+    "tick": "y"
+   },
+   {
+    "mark": "her curly dark brown hair escaping in ringlets under the cap",
+    "tick": "y"
+   },
+   {
+    "mark": "the padded jerkin of undyed grey wool with a single pewter button at the collar",
+    "tick": "y"
+   },
+   {
+    "mark": "the wooden bead on a cord",
+    "tick": "p"
+   },
+   {
+    "mark": "her heart-shaped light brown freckled face",
+    "tick": "y"
+   },
+   {
+    "mark": "the plain straight sword with a simple cross guard",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "lv09",
+  "weapon": "the plain straight sword with a simple cross guard",
+  "weaponChanged": false,
+  "mantle": null,
+  "note": "unchanged"
+ }
+}

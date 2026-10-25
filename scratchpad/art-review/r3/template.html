@@ -1,0 +1,133 @@
+<title>Leader Redo Picks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one card per redone face; the rejected face sits dimmed beside its two new versions with a three-way pick.
+   Single dark look on purpose: the portraits are painted for the game's dark chrome. */
+:root {
+  --bg: #1C1A17; --panel: #26231E; --line: #4A443B; --text: #F4EEDF; --dim: #BDB4A2; --faint: #8E8574;
+  --brass: #B8914A; --pick: #7FB77E; --redo: #E38B6B;
+  --font-display: 'Marcellus SC', Georgia, serif; --font-body: 'Alegreya Sans', system-ui, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--text); font: 16px/1.5 var(--font-body); font-variant-numeric: lining-nums;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 56px; margin: 0; }
+.wrap { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+header { display: flex; flex-direction: column; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+.eyebrow { font: 600 12px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+h1 { font: 400 30px/1.15 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h2 { font: 400 21px/1.2 var(--font-display); margin: 0; letter-spacing: .03em; }
+p { margin: 0; } .lead { color: var(--dim); max-width: 68ch; } .note { color: var(--faint); font-size: 14px; }
+.code { font: 500 12.5px var(--font-mono); color: var(--bg); background: var(--brass); border-radius: 3px; padding: 1px 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card.isredo { border-color: var(--redo); }
+.head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.opt { position: relative; border: 2px solid transparent; border-radius: 4px; overflow: hidden; cursor: pointer; padding: 0; background: none; display: block; width: 100%; }
+.opt img { width: 100%; aspect-ratio: 1; display: block; }
+.tag { position: absolute; left: 4px; top: 4px; font: 500 12px var(--font-body); background: rgba(28,26,23,.85); color: var(--dim); border-radius: 3px; padding: 0 6px; }
+.opt[aria-pressed="true"] { border-color: var(--pick); }
+.opt[aria-pressed="true"] .tag { color: var(--pick); }
+.old { position: relative; border: 2px solid transparent; border-radius: 4px; overflow: hidden; }
+.old img { width: 100%; aspect-ratio: 1; display: block; opacity: .45; }
+.old .tag { color: var(--redo); }
+.desc { font-size: 13.5px; color: var(--dim); }
+.flag { font-size: 13px; color: var(--redo); }
+.small { display: flex; gap: 6px; align-items: center; }
+.small img { width: 48px; height: 48px; border-radius: 3px; }
+.small span { font-size: 12.5px; color: var(--faint); }
+.row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rec { font-size: 13px; color: var(--faint); }
+.redo { font: 500 13px var(--font-body); color: var(--dim); background: none; border: 1px solid var(--line); border-radius: 4px; padding: 3px 9px; cursor: pointer; margin-left: auto; }
+.redo[aria-pressed="true"] { color: var(--redo); border-color: var(--redo); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.verdicts { background: var(--panel); border: 1px solid var(--brass); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+textarea { font: 15px var(--font-body); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; min-height: 64px; resize: vertical; }
+pre { font: 13.5px/1.5 var(--font-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; }
+.big-btn { font: 600 15px var(--font-body); color: var(--bg); background: var(--brass); border: none; border-radius: 4px; padding: 9px 16px; cursor: pointer; align-self: flex-start; }
+@media (max-width: 560px) {
+  h1 { font-size: 25px; }
+  .trio { grid-template-columns: 1fr 1fr; }
+  .col.rej { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 10px; }
+  .col.rej .old { width: 96px; flex: none; }
+}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Fluid Magic · leader portraits, redo round</span>
+    <h1>Pick the replacements</h1>
+    <p class="lead">The seven faces you sent back, each with two new versions. The art director's picks are pre-selected. Tap a picture to choose it, or mark the face to redo again. Small 48-pixel copies show how each reads on the map.</p>
+  </header>
+  <div id="faces" style="display:flex;flex-direction:column;gap:16px"></div>
+  <section class="verdicts" aria-labelledby="v-h">
+    <h2 id="v-h">Your picks</h2>
+    <label for="notes" class="note">Notes (optional)</label>
+    <textarea id="notes" placeholder="e.g. the pine treant should turn more to the right"></textarea>
+    <pre id="summary"></pre>
+    <button class="big-btn" id="copy" type="button">Copy picks</button>
+  </section>
+</div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(() => {
+  const data = JSON.parse(document.getElementById('data').textContent);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('fm-redo3-' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('fm-redo3-' + k, JSON.stringify(v)); } catch { /* unavailable */ } },
+  };
+  const sumEl = document.getElementById('summary');
+  const notes = document.getElementById('notes');
+  const pick = store.get('pick', Object.fromEntries(data.faces.map((f) => [f.id, f.rec])));
+  notes.value = store.get('notes', '');
+  function summary() {
+    const by = { A: [], B: [], redo: [] };
+    for (const f of data.faces) by[pick[f.id]].push(f.id);
+    const n = notes.value.trim();
+    const text = `Redo picks: A for ${by.A.join(', ') || 'none'}; B for ${by.B.join(', ') || 'none'}; redo again ${by.redo.join(', ') || 'none'}.${n ? ' Notes: ' + n : ''}`;
+    sumEl.textContent = text; return text;
+  }
+  const facesEl = document.getElementById('faces');
+  for (const f of data.faces) {
+    const card = document.createElement('article'); card.className = 'card';
+    card.innerHTML = `<div class="head"><span class="code">${f.id}</span><h2>${f.unit}</h2><span class="note">${f.nation}</span></div>
+      <div class="trio">
+        <div class="col rej"><div class="old"><img alt="${f.id} rejected" src="${f.rejected}"><span class="tag">rejected</span></div><p class="desc">You sent this back.</p></div>
+        <div class="col" data-k="A"></div><div class="col" data-k="B"></div>
+      </div>
+      <div class="row"><div class="small"><img alt="" src="${f.rejected}"><img alt="" src="${f.A}"><img alt="" src="${f.B}"><span>48 px: rejected, A, B</span></div>
+      <span class="rec">Director: ${f.rec}</span></div>`;
+    const btns = {};
+    for (const k of ['A', 'B']) {
+      const col = card.querySelector(`[data-k="${k}"]`);
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'opt';
+      b.innerHTML = `<img alt="${f.id} version ${k}" src="${f[k]}"><span class="tag">${k}${f.rec === k ? ' · director' : ''}</span>`;
+      b.addEventListener('click', () => { pick[f.id] = k; store.set('pick', pick); sync(); });
+      const d = document.createElement('p'); d.className = 'desc'; d.textContent = f[k + 'desc'];
+      col.append(b, d);
+      if (f[k + 'note']) { const n = document.createElement('p'); n.className = 'flag'; n.textContent = f[k + 'note']; col.appendChild(n); }
+      btns[k] = b;
+    }
+    const r = document.createElement('button'); r.type = 'button'; r.className = 'redo'; r.textContent = 'Redo again';
+    r.addEventListener('click', () => { pick[f.id] = pick[f.id] === 'redo' ? f.rec : 'redo'; store.set('pick', pick); sync(); });
+    card.querySelector('.row').appendChild(r);
+    function sync() {
+      for (const k of ['A', 'B']) btns[k].setAttribute('aria-pressed', String(pick[f.id] === k));
+      r.setAttribute('aria-pressed', String(pick[f.id] === 'redo'));
+      card.classList.toggle('isredo', pick[f.id] === 'redo');
+      summary();
+    }
+    sync();
+    facesEl.appendChild(card);
+  }
+  notes.addEventListener('input', () => { store.set('notes', notes.value); summary(); });
+  document.getElementById('copy').addEventListener('click', async (e) => {
+    const btn = e.currentTarget; const text = summary();
+    try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied: paste it in the chat'; }
+    catch { const range = document.createRange(); range.selectNodeContents(sumEl); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range); btn.textContent = 'Selected: copy it'; }
+    setTimeout(() => { btn.textContent = 'Copy picks'; }, 2200);
+  });
+  summary();
+})();
+</script>

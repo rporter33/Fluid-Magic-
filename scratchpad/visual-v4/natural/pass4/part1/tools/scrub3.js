@@ -1,0 +1,7 @@
+(async () => { const H = () => { const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data; let v = 0x811c9dc5; for (let k = 0; k < d.length; k++) { v ^= d[k]; v = Math.imul(v, 0x01000193); } return (v >>> 0).toString(16); };
+  view.reduced = true; const sl = (ms) => new Promise((r) => setTimeout(r, ms)), st = async () => { await p4SeasonReady(); hoverProv = -1; RL_LINK.prov = -1; fit(); RCK = null; draw(); return ctx.getImageData(0, 0, canvas.width, canvas.height); }; const out = {};
+  for (const M of [3, 30, 59]) { setMonth(M); for (const i of RL_MEM_OUT) provTip(i); }
+  setMonth(40); rlLive(40); deriveMonth(40);
+  setMonth(3); setMonth(40); const A = await st(); setMonth(64); setMonth(40); const B = await st(); setMonth(3); setMonth(40); const C = await st();
+  const diff = (X, Y) => { let n = 0, x0 = 1e9, y0 = 1e9, x1 = -1, y1 = -1; const w = X.width; for (let k = 0; k < X.data.length; k += 4) if (X.data[k] !== Y.data[k] || X.data[k + 1] !== Y.data[k + 1] || X.data[k + 2] !== Y.data[k + 2]) { n++; const p = k / 4, x = p % w, y = (p / w) | 0; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } return { n, box: [x0, y0, x1, y1], world: n ? [toWorld(x0, y0), toWorld(x1, y1)].map((q) => q.map(Math.round)) : null }; };
+  out.AB = diff(A, B); out.AC = diff(A, C); out.BC = diff(B, C); out.cmd = Object.values(cmd).map((c) => c.id + ':' + names[c.at] + ':' + (c.hidden ? 'h' : '') + ':' + (c.eta ?? '')).join(' '); return out; })()

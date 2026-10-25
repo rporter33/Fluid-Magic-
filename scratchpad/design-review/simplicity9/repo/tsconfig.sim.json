@@ -1,0 +1,11 @@
+{
+  // Pure code (sim, mapgen, content) checked without DOM or Node typings, so any
+  // browser or host API used there fails to compile. See CLAUDE.md non-negotiables.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": [],
+    "jsx": "preserve"
+  },
+  "include": ["src/sim", "src/mapgen", "src/content"]
+}

@@ -1,0 +1,92 @@
+{
+ "id": "fireSprite-01b-r2",
+ "unit": "fireSprite",
+ "nation": "cinderHorde",
+ "group": "creatures",
+ "subject": "fireSprite",
+ "promptFile": "stage-b/work/portraits/prompts-used/fireSprite.01b.r2.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "b-r2",
+ "files": {
+  "master": "01b-r2-512.webp",
+  "game": "01b-r2.webp",
+  "small": "01b-r2-64.webp"
+ },
+ "bytes": {
+  "master": 26988,
+  "game": 9738,
+  "small": 1138
+ },
+ "sourceFile": "stage-b/raw/portraits/fireSprite.01b.r2.nb21.png",
+ "sourceSha256": "26d9ea1adb087230821875372192d277e8809e4b7a35a6eecc323a67ecccaccd",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one Fire Sprite, a small summoned spirit of living flame (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the flame tips about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the flame narrowing below the face into a short wavering tail that fades out near the bottom edge, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the flame tips and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and flame tips and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy outside the flame: the flame is dull and smoky, never neon, never a photographic glow effect. The sprite is made of flame, so its flame is the one warm, bright colour in the image: painted in oil as dull smoky orange and deep ember red, brightening only to a small pale-yellow core around the eyes and the mouth; it lights almost nothing around it, there are no sparks flying across the image and the background stays dark. Outside the flame, no saturated red, orange, green or blue area larger than a small patch.\n\nSubject: A Fire Sprite, a flicker of living flame summoned by Cinder Horde mages, with no will of its own: a head-sized tongue of fire whose flames form a face; no body, no arms, no legs.\nCreature: the face is formed by the flame itself, turned three-quarters toward the right: a narrow head of fire whose flames sweep back from the brow like wind-blown hair, two short flame points rising like small horns above the brow, narrow slanted dark eye-slits and a thin, wide, dark grin, set in the brighter core; the outer flames deep ember red going to smoky charcoal at their tips; a thin trail of grey smoke streams back from the flames. A sly, flickering, mindless look. Marks: the swept-back flame hair, the two small horn-like flame points, the slanted eye-slits, the thin dark grin.\n\nCorrections from the previous attempt, which must be fixed: the face came out as a smooth, smiling yellow mask like a cartoon sun; it must be formed of flame itself, smoky and dull orange, the eye-slits and the grin dark hollows in the fire, with the two small horn-like flame points clearly rising above the brow.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new (re-roll r2)",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "swept-back flame hair",
+   "read": true
+  },
+  {
+   "mark": "two horn-like flame points",
+   "read": "partly"
+  },
+  {
+   "mark": "slanted dark eye-slits",
+   "read": true
+  },
+  {
+   "mark": "thin dark grin",
+   "read": true
+  },
+  {
+   "mark": "no body or limbs",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 4.0,
+   "bgSpread": 1.9,
+   "floor": 0.6,
+   "top": 0.127,
+   "low": 0.965,
+   "bottomCut": 0.0,
+   "cx": 0.489,
+   "subject": 0.231,
+   "light": -13.9,
+   "rim": 0.505,
+   "read48": 29.1,
+   "muted": 0.0,
+   "satAll": 0.3297,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "weak",
+  "note": "Now formed of smoky flame, but still a grinning, cartoon-like face; the horn points are only flame tips. Second attempt: reported.",
+  "marks": {
+   "swept-back flame hair": true,
+   "two horn-like flame points": "partly",
+   "slanted dark eye-slits": true,
+   "thin dark grin": true,
+   "no body or limbs": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

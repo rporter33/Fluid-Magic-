@@ -1,0 +1,11 @@
+const { launch, open, PAGE } = require('./vlib.cjs');
+(async () => { const b = await launch(); const p = await open(b, PAGE, {});
+  const ev = (s) => p.evaluate((x) => window.__mock.ev(x), s);
+  await p.keyboard.press('Escape'); const before = { paused: await ev('state.paused'), sel: await ev('state.sel && state.sel.id') };
+  await p.evaluate(() => { const h = [...document.querySelectorAll('#layer .mini .hit')].find((e) => /Ilsa/.test(e.getAttribute('aria-label') || '')); h.focus(); });
+  const focused = await p.evaluate(() => document.activeElement.getAttribute('aria-label'));
+  await p.keyboard.press(' '); await p.waitForTimeout(300);
+  const after = { paused: await ev('state.paused'), sel: await ev('state.sel && state.sel.id'), date: await p.evaluate(() => document.getElementById('date').textContent) };
+  await p.keyboard.press('Enter'); await p.waitForTimeout(200); const afterEnter = { paused: await ev('state.paused') };
+  console.log(JSON.stringify({ focused, before, afterSpace: after, afterEnter }));
+  await b.close(); })();

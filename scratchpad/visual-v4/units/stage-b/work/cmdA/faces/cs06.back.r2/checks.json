@@ -1,0 +1,285 @@
+{
+ "figure": "cmdLevy",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.789,
+  "iouMirrored": 0.647,
+  "aspectRatio": 0.958,
+  "headDx": -0.065,
+  "guideHeadDx": -0.077,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.528,
+  "marchLegsIoU": 0.189,
+  "mostAlike": [
+   "marchA~strike",
+   0.614
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 1.123,
+   "marchB": 1.062
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 14.415,
+  "keyInUnitPct": 0.286,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.34,
+  "pass_": true,
+  "edgeDevThickPct": 2.04,
+  "deviatingChromaShift": 0.002
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "fleeB",
+   0.866
+  ],
+  "maxDE": [
+   "deadA",
+   1.8
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.789,
+    0.142
+   ],
+   "idle2": [
+    0.779,
+    0.128
+   ],
+   "marchA": [
+    0.718,
+    0.248
+   ],
+   "marchB": [
+    0.74,
+    0.381
+   ],
+   "windup": [
+    0.604,
+    0.031
+   ],
+   "strike": [
+    0.706,
+    0.421
+   ],
+   "follow": [
+    0.617,
+    0.203
+   ],
+   "recoil": [
+    0.487,
+    -0.032
+   ],
+   "actA": [
+    0.7,
+    0.146
+   ],
+   "actB": [
+    0.759,
+    0.184
+   ],
+   "fall": [
+    0.512,
+    0.503
+   ],
+   "deadA": [
+    0.799,
+    0.797
+   ],
+   "deadB": [
+    0.48,
+    0.155
+   ],
+   "fleeA": [
+    0.788,
+    0.461
+   ],
+   "fleeB": [
+    0.709,
+    0.516
+   ],
+   "cheer": [
+    0.745,
+    0.113
+   ]
+  },
+  "medianIoU": 0.714,
+  "medianMargin": 0.194,
+  "follow": "13/16",
+  "followShare": 0.81
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.784,
+    0.147,
+    0.836
+   ],
+   "idle2": [
+    0.803,
+    0.146,
+    0.88
+   ],
+   "marchA": [
+    0.742,
+    0.272,
+    0.823
+   ],
+   "marchB": [
+    0.76,
+    0.405,
+    0.84
+   ],
+   "windup": [
+    0.634,
+    0.036,
+    0.849
+   ],
+   "strike": [
+    0.735,
+    0.445,
+    0.843
+   ],
+   "follow": [
+    0.586,
+    0.164,
+    0.805
+   ],
+   "recoil": [
+    0.676,
+    0.133,
+    0.77
+   ],
+   "actA": [
+    0.699,
+    0.145,
+    0.824
+   ],
+   "actB": [
+    0.733,
+    0.159,
+    0.838
+   ],
+   "fall": [
+    0.511,
+    0.502,
+    0.682
+   ],
+   "deadA": [
+    0.799,
+    0.797,
+    0.869
+   ],
+   "deadB": [
+    0.515,
+    0.194,
+    0.719
+   ],
+   "fleeA": [
+    0.766,
+    0.433,
+    0.859
+   ],
+   "fleeB": [
+    0.722,
+    0.521,
+    0.789
+   ],
+   "cheer": [
+    0.781,
+    0.112,
+    0.852
+   ]
+  },
+  "follow": "14/16",
+  "followN": 14,
+  "failing": [
+   "deadB",
+   "fall"
+  ],
+  "medianIoU": 0.734,
+  "inheritMedian": 0.837,
+  "inheritMin": [
+   0.682,
+   "fall"
+  ]
+ },
+ "rim": {
+  "beforeMax": 0.3,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.147,
+  "worstBelow": 27.9,
+  "grounds": {
+   "plains": {
+    "share": 0.147,
+    "below": 36.3
+   },
+   "farmland": {
+    "share": 0.199,
+    "below": 35.8
+   },
+   "swamp": {
+    "share": 0.132,
+    "below": 27.9
+   },
+   "forest": {
+    "share": 0.154,
+    "below": 28.1
+   }
+  },
+  "fPx": 32.0,
+  "pass": true,
+  "nationFrom": "face (cmdA2 fix_side)"
+ },
+ "identity": {
+  "dE2000": 5.6,
+  "upperThirdLab": [
+   24.5,
+   -0.5,
+   3.0
+  ],
+  "portraitLab": [
+   28.5,
+   2.1,
+   7.0
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cs06.back.redress.r2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdLevy.back.body.g3pro.png",
+  "ownKit": false,
+  "kit": "as the passing other view (unchanged)",
+  "job": "cs06.back.redress.r2"
+ }
+}

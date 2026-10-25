@@ -1,0 +1,114 @@
+{
+ "fills": {
+  "plains": "#CFD1B3",
+  "farmland": "#C8A86D",
+  "forest": "#344A28",
+  "hills": "#7C6748",
+  "mountains": "#ACB2C0",
+  "swamp": "#5B686A",
+  "wasteland": "#958081"
+ },
+ "paint": {
+  "plains": {
+   "M": 40,
+   "G": 0.35,
+   "B": 2,
+   "lift": 3.5
+  },
+  "farmland": {
+   "M": 40,
+   "G": 0.3,
+   "B": 0,
+   "lift": 2.2
+  },
+  "forest": {
+   "M": 40,
+   "G": 0.55,
+   "B": 0,
+   "lift": 1.7
+  },
+  "hills": {
+   "M": 40,
+   "G": 0.75,
+   "B": 1,
+   "lift": 2.3
+  },
+  "mountains": {
+   "M": 40,
+   "G": 0.85,
+   "B": 1,
+   "lift": 4.6,
+   "relief": 0.1
+  },
+  "swamp": {
+   "M": 40,
+   "G": 0.5,
+   "B": 2,
+   "lift": 1.8
+  },
+  "wasteland": {
+   "M": 40,
+   "G": 0.95,
+   "B": 2,
+   "lift": 1.9
+  }
+ },
+ "mottle": {
+  "n": 8,
+  "nMin": 3,
+  "r0": 0.16,
+  "r1": 0.12,
+  "tries": 12,
+  "keep": 0.5,
+  "plateau": 0.55
+ },
+ "bloom": {
+  "dl": 5,
+  "a": 0.35,
+  "rimDL": -12,
+  "rimA": 0.4,
+  "lw": 1.4
+ },
+ "pool": {
+  "dl": -34,
+  "a": 0.55,
+  "blur": {
+   "far": 6,
+   "mid": 14,
+   "near": 18
+  },
+  "rim": 4
+ },
+ "line": {
+  "dl": -16,
+  "a": 0.4
+ },
+ "paper": {
+  "alpha": {
+   "plains": 0.8,
+   "farmland": 0.8,
+   "mountains": 0.75,
+   "wasteland": 0.7,
+   "forest": 0.6,
+   "hills": 0.6,
+   "swamp": 0.6
+  },
+  "fine": 12,
+  "coarse": 14
+ },
+ "g": {
+  "stipple": 10,
+  "hedge": -30,
+  "field": 16,
+  "furrowDL": -16,
+  "furrowA": 0.5,
+  "farmHedge": -36,
+  "scallop": 9,
+  "scree": -16,
+  "swampLine": 10,
+  "swampPool": 7,
+  "ripple": 26,
+  "crack": -14,
+  "crackA": 0.6
+ }
+}

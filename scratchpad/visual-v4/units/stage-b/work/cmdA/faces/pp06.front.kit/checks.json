@@ -1,0 +1,290 @@
+{
+ "figure": "cmdCaster",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "deadA"
+ ],
+ "camera": {
+  "iou": 0.773,
+  "iouMirrored": 0.677,
+  "aspectRatio": 1.071,
+  "headDx": -0.066,
+  "guideHeadDx": -0.009,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.896,
+  "marchLegsIoU": 0.918,
+  "mostAlike": [
+   "marchA~marchB",
+   0.896
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.993,
+   "marchA": 0.952,
+   "marchB": 0.98
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.172,
+  "keyInUnitPct": 0.002,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.73,
+  "pass_": true,
+  "edgeDevThickPct": 1.46,
+  "deviatingChromaShift": 0.008
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.739
+  ],
+  "maxDE": [
+   "deadB",
+   6.0
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.773,
+    0.096
+   ],
+   "idle2": [
+    0.81,
+    0.241
+   ],
+   "marchA": [
+    0.775,
+    0.151
+   ],
+   "marchB": [
+    0.788,
+    0.124
+   ],
+   "windup": [
+    0.664,
+    0.093
+   ],
+   "strike": [
+    0.711,
+    0.309
+   ],
+   "follow": [
+    0.805,
+    0.287
+   ],
+   "recoil": [
+    0.695,
+    0.118
+   ],
+   "actA": [
+    0.665,
+    0.038
+   ],
+   "actB": [
+    0.782,
+    0.222
+   ],
+   "fall": [
+    0.667,
+    0.41
+   ],
+   "deadA": [
+    0.685,
+    0.359
+   ],
+   "deadB": [
+    0.792,
+    0.757
+   ],
+   "fleeA": [
+    0.807,
+    0.22
+   ],
+   "fleeB": [
+    0.781,
+    0.115
+   ],
+   "cheer": [
+    0.697,
+    0.08
+   ]
+  },
+  "medianIoU": 0.774,
+  "medianMargin": 0.185,
+  "follow": "16/16",
+  "followShare": 1.0
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.755,
+    0.095,
+    0.913
+   ],
+   "idle2": [
+    0.818,
+    0.235,
+    0.896
+   ],
+   "marchA": [
+    0.778,
+    0.155,
+    0.952
+   ],
+   "marchB": [
+    0.78,
+    0.122,
+    0.914
+   ],
+   "windup": [
+    0.664,
+    0.093,
+    0.928
+   ],
+   "strike": [
+    0.724,
+    0.322,
+    0.953
+   ],
+   "follow": [
+    0.797,
+    0.285,
+    0.952
+   ],
+   "recoil": [
+    0.7,
+    0.125,
+    0.956
+   ],
+   "actA": [
+    0.671,
+    0.048,
+    0.951
+   ],
+   "actB": [
+    0.752,
+    0.199,
+    0.921
+   ],
+   "fall": [
+    0.678,
+    0.42,
+    0.93
+   ],
+   "deadA": [
+    0.685,
+    0.359,
+    0.935
+   ],
+   "deadB": [
+    0.792,
+    0.757,
+    0.942
+   ],
+   "fleeA": [
+    0.784,
+    0.202,
+    0.949
+   ],
+   "fleeB": [
+    0.773,
+    0.118,
+    0.929
+   ],
+   "cheer": [
+    0.697,
+    0.08,
+    0.964
+   ]
+  },
+  "follow": "16/16",
+  "followN": 16,
+  "failing": [],
+  "medianIoU": 0.754,
+  "inheritMedian": 0.939,
+  "inheritMin": [
+   0.896,
+   "idle2"
+  ]
+ },
+ "rim": {
+  "beforeMax": 1.9,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.122,
+  "worstBelow": 30.6,
+  "grounds": {
+   "plains": {
+    "share": 0.122,
+    "below": 39.2
+   },
+   "farmland": {
+    "share": 0.146,
+    "below": 38.8
+   },
+   "swamp": {
+    "share": 0.122,
+    "below": 30.6
+   },
+   "forest": {
+    "share": 0.122,
+    "below": 30.8
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 2.7,
+  "upperThirdLab": [
+   26.5,
+   0.8,
+   6.7
+  ],
+  "portraitLab": [
+   28.5,
+   2.4,
+   7.7
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/pp06.front.redress.kit.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdCaster.front.body.g3pro.png",
+  "ownKit": true,
+  "kit": {
+   "face": "pp06",
+   "weapon": "the staff of blackened wood topped with a tall narrow iron chimney of a brazier, its coals dull and unlit",
+   "weaponChanged": true,
+   "mantle": "a plain dark wool cloak hanging to the knees",
+   "mantleFrom": "kit list"
+  },
+  "job": "pp06.front.redress.kit"
+ }
+}

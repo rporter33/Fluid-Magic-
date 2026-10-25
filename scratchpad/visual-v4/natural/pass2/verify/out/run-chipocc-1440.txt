@@ -1,0 +1,21 @@
+1440x900 {"fit":0.4841257336865742,"min":0.30664794007490637,"start":0.5478775892930478,"phone":false}
+existing-start chip 4d box 452,293,486,315 covered by pieces /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass2/verify/out/chipocc/1440x900-existing-start-0
+existing-fit chip 4d box 464,338,498,360 covered by pieces 0
+existing-min chip 4d box 549,350,583,372 covered by pieces 0
+across-start chip 5d box 295,214,319,233 covered by pieces 0
+across-start chip 8d · around the Ashspine box 268,120,400,139 covered by pieces 0
+across-start chip 4d box 452,293,486,315 covered by pieces /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass2/verify/out/chipocc/1440x900-across-start-5
+across-fit chip 5d box 333,230,357,249 covered by pieces 0
+across-fit chip 8d · around the Ashspine box 305,146,437,165 covered by pieces 0
+across-fit chip 4d box 464,338,498,360 covered by pieces 0
+across-min chip 5d box 501,304,526,323 covered by pieces 0
+across-min chip 8d box 506,226,530,245 covered by pieces 0
+across-min chip 4d box 549,350,583,372 covered by pieces 0
+/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass2/verify/tools/chipocc.cjs:27
+  console.log('SUMMARY chips', rows.length, 'coveredOver5pct', bad.length, 'coveredOver25pct', rows.filter((r) => typeof r.coveredShare === 'number' && r.coveredShare > 0.25).length, JSON.stringify(bad.map((r) => `${r.tag} ${r.t} ${r.coveredShare}`)), 'pageErrors', log.pageErrors.length);
+                                                               ^
+
+ReferenceError: bad is not defined
+    at /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass2/verify/tools/chipocc.cjs:27:64
+
+Node.js v22.22.0

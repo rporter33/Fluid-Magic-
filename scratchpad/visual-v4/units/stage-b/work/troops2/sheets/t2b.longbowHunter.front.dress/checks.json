@@ -1,0 +1,253 @@
+{
+ "figure": "longbowHunter",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.7,
+  "iouMirrored": 0.612,
+  "aspectRatio": 1.115,
+  "headDx": -0.011,
+  "guideHeadDx": -0.066,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.537,
+  "marchLegsIoU": 0.551,
+  "mostAlike": [
+   "draw~loose",
+   0.794
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 0.932,
+   "marchB": 0.888
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.522,
+  "keyInUnitPct": 0.289,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.0,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.308,
+  "histMin": [
+   "fleeB",
+   0.844
+  ],
+  "maxDE": [
+   "nock",
+   4.2
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.881,
+    "de": 1.7,
+    "cloth": 0.269
+   },
+   "deadB": {
+    "hist": 0.753,
+    "de": 16.2,
+    "cloth": 0.538
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.7,
+    0.087
+   ],
+   "marchA": [
+    0.712,
+    0.218
+   ],
+   "marchB": [
+    0.709,
+    0.136
+   ],
+   "nock": [
+    0.616,
+    0.1
+   ],
+   "draw": [
+    0.574,
+    -0.037
+   ],
+   "loose": [
+    0.608,
+    -0.022
+   ],
+   "windup": [
+    0.68,
+    0.139
+   ],
+   "strike": [
+    0.522,
+    0.174
+   ],
+   "recoil": [
+    0.612,
+    0.191
+   ],
+   "fall": [
+    0.517,
+    0.219
+   ],
+   "deadA": [
+    0.567,
+    0.177
+   ],
+   "deadB": [
+    0.308,
+    0.139
+   ],
+   "fleeA": [
+    0.539,
+    0.053
+   ],
+   "fleeB": [
+    0.716,
+    0.364
+   ],
+   "cheer": [
+    0.699,
+    0.017
+   ]
+  },
+  "medianIoU": 0.612,
+  "medianMargin": 0.139,
+  "follow": "9/15",
+  "followShare": 0.6
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.669,
+    0.069
+   ],
+   "marchA": [
+    0.677,
+    0.195
+   ],
+   "marchB": [
+    0.66,
+    0.123
+   ],
+   "nock": [
+    0.631,
+    0.088
+   ],
+   "draw": [
+    0.599,
+    -0.007
+   ],
+   "loose": [
+    0.572,
+    -0.051
+   ],
+   "windup": [
+    0.704,
+    0.141
+   ],
+   "strike": [
+    0.551,
+    0.206
+   ],
+   "recoil": [
+    0.653,
+    0.215
+   ],
+   "fall": [
+    0.53,
+    0.227
+   ],
+   "fleeA": [
+    0.616,
+    0.124
+   ],
+   "fleeB": [
+    0.716,
+    0.367
+   ],
+   "cheer": [
+    0.709,
+    0.019
+   ]
+  },
+  "follow": "10/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.042,
+   "marchB": 0.979
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 13.0,
+  "afterMax": 0.0
+ },
+ "side": {
+  "neutral": {
+   "share": 0.243,
+   "worstBelow": 31.0,
+   "below": {
+    "plains": 39.6,
+    "farmland": 39.2,
+    "swamp": 31.0,
+    "forest": 31.3
+   }
+  },
+  "sideKeyline": {
+   "share": 0.378,
+   "worstBelow": 29.6,
+   "below": {
+    "plains": 38.2,
+    "farmland": 37.8,
+    "swamp": 29.6,
+    "forest": 29.8
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "longbowHunter.front.cheer.png": 0.313,
+  "longbowHunter.front.deadA.png": 0.248,
+  "longbowHunter.front.deadB.png": 0.508,
+  "longbowHunter.front.draw.png": 0.269,
+  "longbowHunter.front.dropped.png": 0.0,
+  "longbowHunter.front.fall.png": 0.218,
+  "longbowHunter.front.fleeA.png": 0.256,
+  "longbowHunter.front.fleeB.png": 0.279,
+  "longbowHunter.front.loose.png": 0.268,
+  "longbowHunter.front.marchA.png": 0.291,
+  "longbowHunter.front.marchB.png": 0.31,
+  "longbowHunter.front.nock.png": 0.321,
+  "longbowHunter.front.recoil.png": 0.321,
+  "longbowHunter.front.stand.png": 0.299,
+  "longbowHunter.front.strike.png": 0.267,
+  "longbowHunter.front.windup.png": 0.28
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/t2b.longbowHunter.front.dress.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

@@ -1,0 +1,4 @@
+(() => { const Lk = RB.L.natural, sz = (o) => (o ? (o.width * o.height * 4) / 1048576 : 0), parts = {}; for (const k of ['img', 'canvas', 'mip1', 'mb1', 'mip2', 'mb2']) parts[k] = +sz(Lk[k]).toFixed(2);
+  const tot = Object.values(parts).reduce((a, b) => a + b, 0), g = { pillageProv: names[pillageProv], pillageNextToRed: nbrs(pillageProv).filter((w) => prov[w].owner === 'red').map((w) => names[w]), deepmossPdByMonth: [3, 30, 59].map((M) => { deriveMonth(M); return prov[greenCap].pd; }), deepmossDomByMonth: [3, 9, 15, 30, 59].map((M) => { deriveMonth(M); return prov[greenCap].dom.s; }) };
+  deriveMonth(3);
+  return JSON.stringify({ lookParts: parts, perVariantMB: +tot.toFixed(1), keys: Object.keys(Lk), mem: window.__mock.reliefMemory ? window.__mock.reliefMemory() : null, world: g, RLK, RLD, MED_DIAM, acrossTarget: acrossTarget != null ? names[acrossTarget] : null }); })()

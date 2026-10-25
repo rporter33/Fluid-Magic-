@@ -1,0 +1,12 @@
+// vstone.cjs <variant> <camera expr> <sx> <sy>: at one sample, the edge's solved stone, its ratios against the drawn W and G, and the pixels across the line
+const { launch, open, ev, mev } = require('./lib.cjs');
+(async () => { const V0 = process.argv[2], PAGE = `${__dirname}/../variants/${V0}/game-screen-v4.html`, b = await launch(); const p = await open(b, PAGE, { settle: 1500 }); await p.mouse.move(720, 896);
+  await ev(p, process.argv[3]); await p.waitForTimeout(1500); const SX = +process.argv[4], SY = +process.argv[5];
+  console.log(JSON.stringify(await mev(p, `(() => { RL_WRIM.key = ''; RCK = null; draw(); const d = rlRedraw(['pieces', 'labels', 'badges', 'arrows']), W2 = canvas.width;
+    const px = (sx, sy) => { const k = (Math.floor(sy * dpr) * W2 + Math.floor(sx * dpr)) * 4; return [d[k], d[k + 1], d[k + 2]]; }, rt = (q) => +Math.min(q.normal / 20, q.cvd / 12).toFixed(3), lab = (c) => rgb2lab(c).map((v) => +v.toFixed(1));
+    let best = null; for (const w of WILDS) for (const e of rlWildOutline(w)) { const [ax, ay] = toScreen(...e.a), [bx, by] = toScreen(...e.b), Lg = Math.hypot(bx - ax, by - ay); const t = ((${SX} - ax) * (bx - ax) + (${SY} - ay) * (by - ay)) / (Lg * Lg); if (t < 0 || t > 1) continue; const dd = Math.abs((${SX} - ax) * (by - ay) - (${SY} - ay) * (bx - ax)) / Lg; if (!best || dd < best.dd) best = { dd, e, w, t, ax, ay, bx, by, Lg }; }
+    const { e, w, t, ax, ay, bx, by, Lg } = best; let nx = -(by - ay) / Lg, ny = (bx - ax) / Lg; if (provinceAt(...toWorld((ax + bx) / 2 + nx * 8, (ay + by) / 2 + ny * 8)) !== e.j) { nx = -nx; ny = -ny; }
+    const E = RL_WRIM.map.get(e.c + ':' + e.j), st = rlQuietStone(E), sx = ${SX}, sy = ${SY};
+    const W = [6, 7, 8, 9].map((o) => px(sx - nx * o, sy - ny * o)), G = [6, 7, 8, 9, 9.5].map((o) => px(sx + nx * o, sy + ny * o)), mid = (a) => a.sort((p, q) => rlL(...p) - rlL(...q))[a.length >> 1], Wm = mid(W), Gm = mid(G);
+    const across = []; for (let o = -5; o <= 2; o += 0.5) { const c = px(sx + nx * o, sy + ny * o); across.push([o, lab(c)[0], rt(rlPairDE(c, Wm)), rt(rlPairDE(c, Gm))]); }
+    return { edge: w.name + '/' + names[e.j], t: +t.toFixed(3), stone: { rgb: st, lab: lab(st), vsW: rt(rlPairDE(st, Wm)), vsG: rt(rlPairDE(st, Gm)), pairW: rlPairDE(st, Wm), pairG: rlPairDE(st, Gm) }, hue: E.hue, fails: E.fails.map((c) => lab(c)), W: lab(Wm), G: lab(Gm), across, px: dpr }; })()`))); await b.close(); })();

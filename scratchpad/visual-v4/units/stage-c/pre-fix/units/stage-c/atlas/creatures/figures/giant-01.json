@@ -1,0 +1,267 @@
+{
+ "figure": "giant-01",
+ "unit": "giant",
+ "face": "01",
+ "nation": "independent",
+ "key": "magenta",
+ "body": "giant",
+ "portrait": "stage-b/portraits/independent/giant/01b-r2.webp",
+ "views": {
+  "back": {
+   "idle": "frames/giant-01.back/giant-01.back.idle.png",
+   "heightWu": 95.15,
+   "anchorPx": [
+    283.5,
+    964.2
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "giant-S",
+     "frame": "giant-01.back.idle",
+     "shadow": "giant-01.back.idle.shadow",
+     "scale": 0.1976,
+     "w": 181,
+     "h": 193,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "giant-H",
+     "frame": "giant-01.back.idle",
+     "shadow": "giant-01.back.idle.shadow",
+     "scale": 0.3952,
+     "w": 362,
+     "h": 386,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/giant01.back.guide.nb21.png",
+   "sha256": "242d1f71733bd876e9b96f2f7d563e274a283b64d0b083853f965864a30eeb26",
+   "model": "gemini-nano-banana-2.1",
+   "job": "giant01.back.guide",
+   "route": "guide",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/creatures/sbx/refs/guides/giant-01.idle.back.png",
+    "stage-b/portraits/independent/giant/01b-r2.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "magenta edge pass: 4121 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.589,
+     "iouMirrored": 0.244,
+     "aspectRatio": 0.949,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      41.7,
+      2.7,
+      11.6
+     ],
+     "portraitLab": [
+      36.5,
+      2.3,
+      12.0
+     ],
+     "dE2000": 4.5,
+     "wholeDE2000": 8.6,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 30.3,
+      "groundL": 67.7,
+      "below": 37.5
+     },
+     "farmland": {
+      "bodyL": 30.3,
+      "groundL": 67.3,
+      "below": 37.0
+     },
+     "swamp": {
+      "bodyL": 30.1,
+      "groundL": 58.5,
+      "below": 28.4
+     },
+     "forest": {
+      "bodyL": 30.1,
+      "groundL": 58.7,
+      "below": 28.6
+     },
+     "worstBelow": 28.4,
+     "minContrast": 28.4,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 1.6,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 1.615,
+     "keyInUnitPct": 0.061,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.25,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     901,
+     963
+    ],
+    "oversampleAtH": 2.53
+   },
+   "identity": {
+    "marks": {
+     "broken flattened nose": "hidden in this view",
+     "bald head with grey wisps": true,
+     "stones knotted in the grey beard": "partly",
+     "necklace of huge teeth": "partly",
+     "hide cloak": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-giant-01.png)"
+   }
+  },
+  "front": {
+   "idle": "frames/giant-01.front/giant-01.front.idle.png",
+   "heightWu": 89.05,
+   "anchorPx": [
+    621.0,
+    859.5
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "giant-S",
+     "frame": "giant-01.front.idle",
+     "shadow": "giant-01.front.idle.shadow",
+     "scale": 0.2028,
+     "w": 185,
+     "h": 181,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "giant-H",
+     "frame": "giant-01.front.idle",
+     "shadow": "giant-01.front.idle.shadow",
+     "scale": 0.4057,
+     "w": 371,
+     "h": 362,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/giant01.front.guide.nb21.png",
+   "sha256": "ae367e18c21997c0936269c89fa29fe7392fb4d4e72f1362d4817f36b1684067",
+   "model": "gemini-nano-banana-2.1",
+   "job": "giant01.front.guide",
+   "route": "guide",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/creatures/sbx/refs/guides/giant-01.idle.front.png",
+    "stage-b/portraits/independent/giant/01b-r2.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "magenta edge pass: 6645 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.794,
+     "iouMirrored": 0.312,
+     "aspectRatio": 0.974,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      34.8,
+      2.9,
+      11.0
+     ],
+     "portraitLab": [
+      36.5,
+      2.3,
+      12.0
+     ],
+     "dE2000": 1.8,
+     "wholeDE2000": 9.6,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 28.5,
+      "groundL": 67.7,
+      "below": 39.3
+     },
+     "farmland": {
+      "bodyL": 28.4,
+      "groundL": 67.3,
+      "below": 38.9
+     },
+     "swamp": {
+      "bodyL": 28.3,
+      "groundL": 58.5,
+      "below": 30.2
+     },
+     "forest": {
+      "bodyL": 28.3,
+      "groundL": 58.7,
+      "below": 30.4
+     },
+     "worstBelow": 30.2,
+     "minContrast": 30.2,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 11.6,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 1.372,
+     "keyInUnitPct": 0.09,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.28,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     900,
+     878
+    ],
+    "oversampleAtH": 2.46
+   },
+   "identity": {
+    "marks": {
+     "broken flattened nose": "partly",
+     "bald head with grey wisps": true,
+     "stones knotted in the grey beard": "partly",
+     "necklace of huge teeth": true,
+     "hide cloak": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-giant-01.png)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

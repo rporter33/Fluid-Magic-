@@ -1,0 +1,255 @@
+{
+ "figure": "briarGuard",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.786,
+  "iouMirrored": 0.637,
+  "aspectRatio": 1.026,
+  "headDx": -0.072,
+  "guideHeadDx": -0.064,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.524,
+  "marchLegsIoU": 0.5,
+  "mostAlike": [
+   "stand~marchA",
+   0.762
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.146,
+   "marchA": 1.0,
+   "marchB": 0.931
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 15.32,
+  "keyInUnitPct": 0.204,
+  "fringePct": 0.0,
+  "edgeDevPct": 4.68,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.349,
+  "histMin": [
+   "strike",
+   0.817
+  ],
+  "maxDE": [
+   "strike",
+   5.3
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.855,
+    "de": 3.0,
+    "cloth": 0.305
+   },
+   "deadB": {
+    "hist": 0.832,
+    "de": 8.2,
+    "cloth": 0.456
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.786,
+    0.148
+   ],
+   "idle2": [
+    0.796,
+    0.745
+   ],
+   "marchA": [
+    0.839,
+    0.202
+   ],
+   "marchB": [
+    0.811,
+    0.301
+   ],
+   "windup": [
+    0.77,
+    0.204
+   ],
+   "strike": [
+    0.688,
+    0.455
+   ],
+   "follow": [
+    0.843,
+    0.364
+   ],
+   "brace": [
+    0.734,
+    0.291
+   ],
+   "recoil": [
+    0.768,
+    0.175
+   ],
+   "fall": [
+    0.653,
+    0.389
+   ],
+   "deadA": [
+    0.687,
+    0.334
+   ],
+   "deadB": [
+    0.848,
+    0.824
+   ],
+   "fleeA": [
+    0.795,
+    0.227
+   ],
+   "fleeB": [
+    0.856,
+    0.513
+   ],
+   "cheer": [
+    0.719,
+    0.092
+   ]
+  },
+  "medianIoU": 0.786,
+  "medianMargin": 0.301,
+  "follow": "15/15",
+  "followShare": 1.0
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.778,
+    0.125
+   ],
+   "idle2": [
+    0.793,
+    0.743
+   ],
+   "marchA": [
+    0.842,
+    0.211
+   ],
+   "marchB": [
+    0.789,
+    0.292
+   ],
+   "windup": [
+    0.741,
+    0.145
+   ],
+   "strike": [
+    0.686,
+    0.456
+   ],
+   "follow": [
+    0.847,
+    0.375
+   ],
+   "brace": [
+    0.728,
+    0.29
+   ],
+   "recoil": [
+    0.749,
+    0.15
+   ],
+   "fall": [
+    0.62,
+    0.334
+   ],
+   "fleeA": [
+    0.812,
+    0.239
+   ],
+   "fleeB": [
+    0.854,
+    0.513
+   ],
+   "cheer": [
+    0.693,
+    0.036
+   ]
+  },
+  "follow": "13/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 1.0,
+   "marchB": 0.922
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 29.8,
+  "afterMax": 4.3
+ },
+ "side": {
+  "neutral": {
+   "share": 0.288,
+   "worstBelow": 31.0,
+   "below": {
+    "plains": 39.5,
+    "farmland": 39.1,
+    "swamp": 31.0,
+    "forest": 31.2
+   }
+  },
+  "sideKeyline": {
+   "share": 0.468,
+   "worstBelow": 29.3,
+   "below": {
+    "plains": 37.9,
+    "farmland": 37.5,
+    "swamp": 29.3,
+    "forest": 29.5
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "briarGuard.front.brace.png": 0.294,
+  "briarGuard.front.cheer.png": 0.368,
+  "briarGuard.front.deadA.png": 0.29,
+  "briarGuard.front.deadB.png": 0.439,
+  "briarGuard.front.dropped.png": 0.343,
+  "briarGuard.front.fall.png": 0.298,
+  "briarGuard.front.fleeA.png": 0.263,
+  "briarGuard.front.fleeB.png": 0.292,
+  "briarGuard.front.follow.png": 0.298,
+  "briarGuard.front.idle2.png": 0.342,
+  "briarGuard.front.marchA.png": 0.266,
+  "briarGuard.front.marchB.png": 0.315,
+  "briarGuard.front.recoil.png": 0.387,
+  "briarGuard.front.stand.png": 0.334,
+  "briarGuard.front.strike.png": 0.243,
+  "briarGuard.front.windup.png": 0.357
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r3.thornMilitia.front.edit.nb21.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": false,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

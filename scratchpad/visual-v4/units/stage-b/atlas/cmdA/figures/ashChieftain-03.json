@@ -1,0 +1,1082 @@
+{
+ "figure": "ashChieftain-03",
+ "unit": "ashChieftain",
+ "face": "03",
+ "nation": "cinderHorde",
+ "body": "cmdChief",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA (+ cmdA2 fixes and own kits)",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/ac03.front.redress.kit.nb21.png",
+   "sheetSha256": "89d4ac5202a1b62aaa8094d7fbe0e94888908dc0b15108c04f517eaae5f7b21c",
+   "body": "stage-b/cal/raw/cmdChief.front.zonesonly.g3pro.png",
+   "bodySha256": "b08186544adfd9691d32b56d35d33b88ef14dde10d6122c7793bc8e9f9407afb",
+   "key": "green",
+   "keyer": "a2key",
+   "dir": "ac03.front.kit",
+   "ownKit": true,
+   "layout": "commander",
+   "scale": {
+    "S": 0.42667,
+    "H": 0.85333
+   },
+   "scaleFrom": {
+    "bodyH": 150,
+    "from_": "body cmdChief.front.zonesonly.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "ashChieftain-03.front.stand",
+     "srcBox": [
+      65,
+      61,
+      185,
+      217
+     ],
+     "srcAnchor": [
+      76.1,
+      153.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6315,
+       "y": 0.9606
+      },
+      "H": {
+       "x": 0.6315,
+       "y": 0.9676
+      }
+     }
+    },
+    "idle2": {
+     "frame": "ashChieftain-03.front.idle2",
+     "srcBox": [
+      335,
+      64,
+      438,
+      221
+     ],
+     "srcAnchor": [
+      60.2,
+      154.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5801,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.5801,
+       "y": 0.9668
+      }
+     }
+    },
+    "marchA": {
+     "frame": "ashChieftain-03.front.marchA",
+     "srcBox": [
+      575,
+      72,
+      697,
+      229
+     ],
+     "srcAnchor": [
+      77.5,
+      154.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6309,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.6309,
+       "y": 0.9668
+      }
+     }
+    },
+    "marchB": {
+     "frame": "ashChieftain-03.front.marchB",
+     "srcBox": [
+      836,
+      71,
+      965,
+      216
+     ],
+     "srcAnchor": [
+      50.8,
+      142.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3978,
+       "y": 0.9623
+      },
+      "H": {
+       "x": 0.3978,
+       "y": 0.9623
+      }
+     }
+    },
+    "windup": {
+     "frame": "ashChieftain-03.front.windup",
+     "srcBox": [
+      77,
+      278,
+      187,
+      475
+     ],
+     "srcAnchor": [
+      68.3,
+      194.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6151,
+       "y": 0.9741
+      },
+      "H": {
+       "x": 0.6151,
+       "y": 0.9741
+      }
+     }
+    },
+    "strike": {
+     "frame": "ashChieftain-03.front.strike",
+     "srcBox": [
+      324,
+      339,
+      440,
+      486
+     ],
+     "srcAnchor": [
+      71.7,
+      144.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6195,
+       "y": 0.9606
+      },
+      "H": {
+       "x": 0.6134,
+       "y": 0.9681
+      }
+     }
+    },
+    "follow": {
+     "frame": "ashChieftain-03.front.follow",
+     "srcBox": [
+      602,
+      338,
+      703,
+      483
+     ],
+     "srcAnchor": [
+      50.9,
+      142.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5048,
+       "y": 0.9623
+      },
+      "H": {
+       "x": 0.5048,
+       "y": 0.9623
+      }
+     }
+    },
+    "recoil": {
+     "frame": "ashChieftain-03.front.recoil",
+     "srcBox": [
+      787,
+      314,
+      985,
+      472
+     ],
+     "srcAnchor": [
+      129.7,
+      155.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6551,
+       "y": 0.9729
+      },
+      "H": {
+       "x": 0.6513,
+       "y": 0.9659
+      }
+     }
+    },
+    "actA": {
+     "frame": "ashChieftain-03.front.actA",
+     "srcBox": [
+      103,
+      529,
+      204,
+      728
+     ],
+     "srcAnchor": [
+      43.9,
+      196.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4385,
+       "y": 0.9727
+      },
+      "H": {
+       "x": 0.4385,
+       "y": 0.9727
+      }
+     }
+    },
+    "actB": {
+     "frame": "ashChieftain-03.front.actB",
+     "srcBox": [
+      304,
+      587,
+      439,
+      729
+     ],
+     "srcAnchor": [
+      96.5,
+      139.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7029,
+       "y": 0.9572
+      },
+      "H": {
+       "x": 0.7088,
+       "y": 0.9649
+      }
+     }
+    },
+    "fall": {
+     "frame": "ashChieftain-03.front.fall",
+     "srcBox": [
+      610,
+      518,
+      762,
+      725
+     ],
+     "srcAnchor": [
+      51.2,
+      204.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.341,
+       "y": 0.9782
+      },
+      "H": {
+       "x": 0.341,
+       "y": 0.9728
+      }
+     }
+    },
+    "deadA": {
+     "frame": "ashChieftain-03.front.deadA",
+     "srcBox": [
+      857,
+      577,
+      1021,
+      686
+     ],
+     "srcAnchor": [
+      86.9,
+      80.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5289,
+       "y": 0.717
+      },
+      "H": {
+       "x": 0.5289,
+       "y": 0.7244
+      }
+     }
+    },
+    "deadB": {
+     "frame": "ashChieftain-03.front.deadB",
+     "srcBox": [
+      0,
+      903,
+      168,
+      1019
+     ],
+     "srcAnchor": [
+      94.0,
+      85.2
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5555,
+       "y": 0.7324
+      },
+      "H": {
+       "x": 0.5593,
+       "y": 0.7253
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "ashChieftain-03.front.fleeA",
+     "srcBox": [
+      333,
+      864,
+      441,
+      1000
+     ],
+     "srcAnchor": [
+      60.0,
+      133.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5542,
+       "y": 0.9624
+      },
+      "H": {
+       "x": 0.5542,
+       "y": 0.9624
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "ashChieftain-03.front.fleeB",
+     "srcBox": [
+      609,
+      863,
+      714,
+      989
+     ],
+     "srcAnchor": [
+      15.5,
+      123.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.162,
+       "y": 0.955
+      },
+      "H": {
+       "x": 0.162,
+       "y": 0.955
+      }
+     }
+    },
+    "cheer": {
+     "frame": "ashChieftain-03.front.cheer",
+     "srcBox": [
+      861,
+      791,
+      953,
+      985
+     ],
+     "srcAnchor": [
+      52.6,
+      191.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5718,
+       "y": 0.9705
+      },
+      "H": {
+       "x": 0.5649,
+       "y": 0.9705
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 2,
+    "cells": "14/16",
+    "failing": [
+     "deadA",
+     "fall"
+    ],
+    "inherit": 0.948,
+    "variety": true,
+    "marchIoU": 0.524,
+    "rimAfter": 0.0,
+    "edgeDev": 2.17,
+    "keyIn": 0.006,
+    "side": 0.139,
+    "valueBelow": 31.7,
+    "identityDE": 4.9,
+    "consHist": [
+     "deadB",
+     0.769
+    ],
+    "consDE": [
+     "fall",
+     1.4
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ac03.front.redress.kit.nb21.png",
+    "marksFront": "yyppyy",
+    "eye2": {
+     "facing": "ok",
+     "kitWeapon": "not visible: the axe keeps the body sheet silhouette; helm, beard and mantle follow the portrait"
+    },
+    "dir": "ac03.front.kit",
+    "ownKit": true,
+    "keyer": "a2key",
+    "body": "cmdChief.front.zonesonly.g3pro.png"
+   },
+   "pass": true
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/ac03.back.redress.kit.nb21.png",
+   "sheetSha256": "e7a39d4f56bdca512d922a57d9eaf33acd75e166c356c20681c14f8d2787c615",
+   "body": "stage-b/raw/cmdA/cmdChief.back.body.g3pro.png",
+   "bodySha256": "4f24dc6fadf78bd819e3ba481cd9c48d5f982e80dc92f0464383d37aca0abcce",
+   "key": "green",
+   "keyer": "a2key",
+   "dir": "ac03.back.kit",
+   "ownKit": true,
+   "layout": "commander",
+   "scale": {
+    "S": 0.512,
+    "H": 1.024
+   },
+   "scaleFrom": {
+    "bodyH": 125,
+    "from_": "body cmdChief.back.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "ashChieftain-03.back.stand",
+     "srcBox": [
+      85,
+      37,
+      185,
+      171
+     ],
+     "srcAnchor": [
+      37.5,
+      131.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3811,
+       "y": 0.9588
+      },
+      "H": {
+       "x": 0.3811,
+       "y": 0.9656
+      }
+     }
+    },
+    "idle2": {
+     "frame": "ashChieftain-03.back.idle2",
+     "srcBox": [
+      344,
+      37,
+      443,
+      172
+     ],
+     "srcAnchor": [
+      35.7,
+      132.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3637,
+       "y": 0.966
+      },
+      "H": {
+       "x": 0.3672,
+       "y": 0.966
+      }
+     }
+    },
+    "marchA": {
+     "frame": "ashChieftain-03.back.marchA",
+     "srcBox": [
+      599,
+      37,
+      700,
+      185
+     ],
+     "srcAnchor": [
+      25.0,
+      145.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2556,
+       "y": 0.9646
+      },
+      "H": {
+       "x": 0.2579,
+       "y": 0.9646
+      }
+     }
+    },
+    "marchB": {
+     "frame": "ashChieftain-03.back.marchB",
+     "srcBox": [
+      845,
+      36,
+      952,
+      177
+     ],
+     "srcAnchor": [
+      22.7,
+      138.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2214,
+       "y": 0.9683
+      },
+      "H": {
+       "x": 0.2214,
+       "y": 0.9683
+      }
+     }
+    },
+    "windup": {
+     "frame": "ashChieftain-03.back.windup",
+     "srcBox": [
+      75,
+      275,
+      170,
+      434
+     ],
+     "srcAnchor": [
+      47.2,
+      156.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4935,
+       "y": 0.9744
+      },
+      "H": {
+       "x": 0.4983,
+       "y": 0.9685
+      }
+     }
+    },
+    "strike": {
+     "frame": "ashChieftain-03.back.strike",
+     "srcBox": [
+      339,
+      295,
+      440,
+      443
+     ],
+     "srcAnchor": [
+      26.7,
+      145.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2717,
+       "y": 0.9646
+      },
+      "H": {
+       "x": 0.2742,
+       "y": 0.9646
+      }
+     }
+    },
+    "follow": {
+     "frame": "ashChieftain-03.back.follow",
+     "srcBox": [
+      603,
+      296,
+      677,
+      441
+     ],
+     "srcAnchor": [
+      35.9,
+      142.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4845,
+       "y": 0.9698
+      },
+      "H": {
+       "x": 0.4845,
+       "y": 0.9698
+      }
+     }
+    },
+    "recoil": {
+     "frame": "ashChieftain-03.back.recoil",
+     "srcBox": [
+      814,
+      305,
+      996,
+      435
+     ],
+     "srcAnchor": [
+      69.5,
+      127.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3851,
+       "y": 0.9569
+      },
+      "H": {
+       "x": 0.3851,
+       "y": 0.9639
+      }
+     }
+    },
+    "actA": {
+     "frame": "ashChieftain-03.back.actA",
+     "srcBox": [
+      59,
+      516,
+      152,
+      681
+     ],
+     "srcAnchor": [
+      62.3,
+      162.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.658,
+       "y": 0.9761
+      },
+      "H": {
+       "x": 0.6646,
+       "y": 0.9705
+      }
+     }
+    },
+    "actB": {
+     "frame": "ashChieftain-03.back.actB",
+     "srcBox": [
+      345,
+      548,
+      470,
+      683
+     ],
+     "srcAnchor": [
+      33.8,
+      132.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2774,
+       "y": 0.966
+      },
+      "H": {
+       "x": 0.2774,
+       "y": 0.966
+      }
+     }
+    },
+    "fall": {
+     "frame": "ashChieftain-03.back.fall",
+     "srcBox": [
+      535,
+      617,
+      675,
+      761
+     ],
+     "srcAnchor": [
+      126.6,
+      141.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.8894,
+       "y": 0.9631
+      },
+      "H": {
+       "x": 0.8955,
+       "y": 0.9694
+      }
+     }
+    },
+    "deadA": {
+     "frame": "ashChieftain-03.back.deadA",
+     "srcBox": [
+      782,
+      618,
+      927,
+      761
+     ],
+     "srcAnchor": [
+      70.7,
+      105.5
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4895,
+       "y": 0.7335
+      },
+      "H": {
+       "x": 0.4895,
+       "y": 0.7335
+      }
+     }
+    },
+    "deadB": {
+     "frame": "ashChieftain-03.back.deadB",
+     "srcBox": [
+      97,
+      792,
+      247,
+      902
+     ],
+     "srcAnchor": [
+      65.2,
+      80.8
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4352,
+       "y": 0.7305
+      },
+      "H": {
+       "x": 0.4352,
+       "y": 0.7243
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "ashChieftain-03.back.fleeA",
+     "srcBox": [
+      331,
+      806,
+      434,
+      956
+     ],
+     "srcAnchor": [
+      30.9,
+      147.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3058,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.3086,
+       "y": 0.9654
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "ashChieftain-03.back.fleeB",
+     "srcBox": [
+      588,
+      807,
+      670,
+      949
+     ],
+     "srcAnchor": [
+      14.2,
+      139.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.188,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.188,
+       "y": 0.9687
+      }
+     }
+    },
+    "cheer": {
+     "frame": "ashChieftain-03.back.cheer",
+     "srcBox": [
+      851,
+      768,
+      929,
+      939
+     ],
+     "srcAnchor": [
+      39.0,
+      168.0
+     ],
+     "atlas": {
+      "S": "ashChieftain.S.0.png",
+      "H": "ashChieftain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4992,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.4992,
+       "y": 0.9722
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 2,
+    "cells": "14/16",
+    "failing": [
+     "deadB",
+     "follow"
+    ],
+    "inherit": 0.923,
+    "variety": true,
+    "marchIoU": 0.635,
+    "rimAfter": 0.0,
+    "edgeDev": 1.4,
+    "keyIn": 0.025,
+    "side": 0.141,
+    "valueBelow": 27.0,
+    "identityDE": 4.6,
+    "consHist": [
+     "windup",
+     0.865
+    ],
+    "consDE": [
+     "windup",
+     3.2
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ac03.back.redress.kit.nb21.png",
+    "marksFront": null,
+    "eye2": {
+     "facing": "ok",
+     "note": "every cell faces away; lying cells read right",
+     "kitWeapon": "not visible: the axe keeps the body sheet silhouette; helm, beard and mantle follow the portrait"
+    },
+    "dir": "ac03.back.kit",
+    "ownKit": true,
+    "keyer": "a2key",
+    "body": "cmdChief.back.body.g3pro.png"
+   },
+   "pass": true
+  }
+ },
+ "marks": [
+  {
+   "mark": "the open-faced dark iron helm with two large curled ram horns wrapped in leather cord",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his clean-shaven face, dark charcoal-grey skin with three black soot stripes across the brow and cheeks",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the mail aventail at the neck",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the dark iron pauldrons studded with rows of iron rings",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the grey wolf-fur collar over the shoulders",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the jagged single-bit dark iron axe",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the open-faced dark iron helm with two large curled ram horns wrapped in leather cord",
+    "tick": "y"
+   },
+   {
+    "mark": "his clean-shaven face, dark charcoal-grey skin with three black soot stripes across the brow and cheeks",
+    "tick": "y"
+   },
+   {
+    "mark": "the mail aventail at the neck",
+    "tick": "p"
+   },
+   {
+    "mark": "the dark iron pauldrons studded with rows of iron rings",
+    "tick": "p"
+   },
+   {
+    "mark": "the grey wolf-fur collar over the shoulders",
+    "tick": "y"
+   },
+   {
+    "mark": "the jagged single-bit dark iron axe",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "ac03",
+  "weapon": "the long-hafted great axe of dark iron held in both hands, its haft as tall as his chest",
+  "weaponChanged": true,
+  "mantle": null,
+  "mantleFrom": "portrait",
+  "appliedIn": [
+   "back",
+   "front"
+  ]
+ }
+}

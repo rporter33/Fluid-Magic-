@@ -1,0 +1,28 @@
+timeout 3600 node checksx.cjs natural 1 > ../out/logs/checksx-natural-1.txt 2>&1
+timeout 3600 node checksx.cjs natural 3 390 844 > ../out/logs/checksx-natural-3-phone.txt 2>&1
+timeout 3600 node checksx.cjs clear 1 > ../out/logs/checksx-clear-1.txt 2>&1
+timeout 3600 node checksx.cjs clear 2 > ../out/logs/checksx-clear-2.txt 2>&1
+timeout 3600 node checksx.cjs terrain 1 > ../out/logs/checksx-terrain-1.txt 2>&1
+timeout 3600 node checksx.cjs terrain 2 > ../out/logs/checksx-terrain-2.txt 2>&1
+timeout 3600 node checksx.cjs clear 3 390 844 > ../out/logs/checksx-clear-3-phone.txt 2>&1
+timeout 3600 node checksx.cjs terrain 3 390 844 > ../out/logs/checksx-terrain-3-phone.txt 2>&1
+timeout 3600 node checksx.cjs natural 1 1280 720 > ../out/logs/checksx-natural-1-1280.txt 2>&1
+VIEWS=start,far,min,mid,ref,nearMax,back3,extra timeout 3600 node checksx.cjs natural 1 1920 1080 > ../out/logs/checksx-natural-1-1920.txt 2>&1
+MODE=dominion VIEWS=start,far,mid,ref,near1180 timeout 3600 node checksx.cjs natural 1 > ../out/logs/checksx-natural-dominion-1.txt 2>&1
+MODE=springs VIEWS=start,mid,near1180,far timeout 3600 node checksx.cjs clear 2 > ../out/logs/checksx-clear-springs-2.txt 2>&1
+timeout 3600 node modes.cjs natural 1 > ../out/logs/modes-natural-1.txt 2>&1
+timeout 3600 node modes.cjs natural 2 > ../out/logs/modes-natural-2.txt 2>&1
+timeout 3600 node modes.cjs clear 1 > ../out/logs/modes-clear-1.txt 2>&1
+timeout 3600 node modes.cjs clear 2 > ../out/logs/modes-clear-2.txt 2>&1
+timeout 3600 node modewild.cjs 1 > ../out/logs/modewild-1.txt 2>&1
+timeout 3600 node modewild.cjs 2 > ../out/logs/modewild-2.txt 2>&1
+timeout 3600 node det.cjs natural 3 > ../out/logs/det-natural.txt 2>&1
+timeout 3600 node det.cjs clear 3 > ../out/logs/det-clear.txt 2>&1
+timeout 3600 node det.cjs terrain 3 > ../out/logs/det-terrain.txt 2>&1
+timeout 3600 node det.cjs natural 3 2 > ../out/logs/det-natural-dpr2.txt 2>&1
+timeout 3600 node detphone.cjs > ../out/logs/detphone.txt 2>&1
+timeout 3600 node histdiag3.cjs 1 > ../out/logs/histdiag3-1.txt 2>&1
+timeout 3600 node histdiag3.cjs 2 > ../out/logs/histdiag3-2.txt 2>&1
+timeout 5400 node v3same.cjs 2 > ../out/logs/v3same.txt 2>&1
+timeout 3600 node v3checks.cjs > ../out/logs/v3checks.txt 2>&1
+timeout 3600 node det.cjs v3 3 > ../out/logs/det-v3.txt 2>&1

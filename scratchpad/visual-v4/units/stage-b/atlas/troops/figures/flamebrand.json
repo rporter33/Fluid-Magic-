@@ -1,0 +1,409 @@
+{
+ "figure": "flamebrand",
+ "unit": "flamebrand",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "A Flamebrand, a sacred warrior of the fire god: heavy blackened iron plate over scale with rusted edges on the arms and legs, worn under a sleeveless surcoat of dull ember-orange cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a black iron-studded belt; a tall closed dark iron helm topped by a crest of iron flames and a dull ember-orange plume; a long cape of the same ember-orange cloth from the shoulders to the backs of the knees; a straight longsword whose blade is wreathed in real flame, the only bright light on the figure. No shield, no horns. Taller and prouder than a warrior.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.3314,
+     "standPx": 56,
+     "frames": [
+      "flamebrand.back.stand",
+      "flamebrand.back.stand.white",
+      "flamebrand.back.idle2",
+      "flamebrand.back.marchA",
+      "flamebrand.back.marchB",
+      "flamebrand.back.windup",
+      "flamebrand.back.strike",
+      "flamebrand.back.follow",
+      "flamebrand.back.brace",
+      "flamebrand.back.recoil",
+      "flamebrand.back.recoil.white",
+      "flamebrand.back.fall",
+      "flamebrand.back.deadA",
+      "flamebrand.back.deadB",
+      "flamebrand.back.fleeA",
+      "flamebrand.back.fleeB",
+      "flamebrand.back.cheer",
+      "flamebrand.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.6627,
+     "standPx": 112,
+     "frames": [
+      "flamebrand.back.stand",
+      "flamebrand.back.stand.white",
+      "flamebrand.back.idle2",
+      "flamebrand.back.marchA",
+      "flamebrand.back.marchB",
+      "flamebrand.back.windup",
+      "flamebrand.back.strike",
+      "flamebrand.back.follow",
+      "flamebrand.back.brace",
+      "flamebrand.back.recoil",
+      "flamebrand.back.recoil.white",
+      "flamebrand.back.fall",
+      "flamebrand.back.deadA",
+      "flamebrand.back.deadB",
+      "flamebrand.back.fleeA",
+      "flamebrand.back.fleeB",
+      "flamebrand.back.cheer",
+      "flamebrand.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/t2b.flamebrand.back.dress.nb21.png",
+   "sha256": "94d16e9d4222007a337edd916ef2b4375eb59f0dc706da8a674a82da020c4763",
+   "model": "gemini-nano-banana-2.1",
+   "job": "flamebrand.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/b.fb.back.mixed.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/pyrePriest/06.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.671,
+      0.075
+     ],
+     "idle2": [
+      0.661,
+      0.075
+     ],
+     "marchA": [
+      0.673,
+      0.18
+     ],
+     "marchB": [
+      0.656,
+      0.221
+     ],
+     "windup": [
+      0.576,
+      0.022
+     ],
+     "strike": [
+      0.616,
+      0.238
+     ],
+     "follow": [
+      0.58,
+      0.188
+     ],
+     "brace": [
+      0.72,
+      0.188
+     ],
+     "recoil": [
+      0.633,
+      0.07
+     ],
+     "fall": [
+      0.311,
+      0.062
+     ],
+     "deadA": [
+      0.771,
+      0.769
+     ],
+     "deadB": [
+      0.292,
+      0.009
+     ],
+     "fleeA": [
+      0.793,
+      0.42
+     ],
+     "fleeB": [
+      0.838,
+      0.513
+     ],
+     "cheer": [
+      0.653,
+      0.026
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.787,
+     "marchLegsIoU": 0.637,
+     "mostAlike": [
+      "marchA~marchB",
+      0.787
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.994,
+      "marchA": 0.994,
+      "marchB": 0.982
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.353,
+     "histMin": [
+      "fall",
+      0.564
+     ],
+     "maxDE": [
+      "fall",
+      8.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 47.3,
+     "afterMax": 1.3
+    },
+    "side": {
+     "neutral": {
+      "share": 0.19,
+      "worstBelow": 23.6,
+      "below": {
+       "plains": 32.1,
+       "farmland": 31.7,
+       "swamp": 23.6,
+       "forest": 23.9
+      }
+     },
+     "sideKeyline": {
+      "share": 0.526,
+      "worstBelow": 20.4,
+      "below": {
+       "plains": 29.0,
+       "farmland": 28.6,
+       "swamp": 20.4,
+       "forest": 20.7
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 8.14,
+     "keyInUnitPct": 0.019,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.18,
+     "pass_": true
+    }
+   },
+   "replaces": {
+    "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.flamebrand.back.g3pro.png",
+    "status": "reported",
+    "failed": [
+     "camera"
+    ]
+   },
+   "madeBy": "stage B troops2 (stage-b/work/troops2)"
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.3758,
+     "standPx": 56,
+     "frames": [
+      "flamebrand.front.stand",
+      "flamebrand.front.stand.white",
+      "flamebrand.front.idle2",
+      "flamebrand.front.marchA",
+      "flamebrand.front.marchB",
+      "flamebrand.front.windup",
+      "flamebrand.front.strike",
+      "flamebrand.front.follow",
+      "flamebrand.front.brace",
+      "flamebrand.front.recoil",
+      "flamebrand.front.recoil.white",
+      "flamebrand.front.fall",
+      "flamebrand.front.deadA",
+      "flamebrand.front.deadB",
+      "flamebrand.front.fleeA",
+      "flamebrand.front.fleeB",
+      "flamebrand.front.cheer",
+      "flamebrand.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.7517,
+     "standPx": 112,
+     "frames": [
+      "flamebrand.front.stand",
+      "flamebrand.front.stand.white",
+      "flamebrand.front.idle2",
+      "flamebrand.front.marchA",
+      "flamebrand.front.marchB",
+      "flamebrand.front.windup",
+      "flamebrand.front.strike",
+      "flamebrand.front.follow",
+      "flamebrand.front.brace",
+      "flamebrand.front.recoil",
+      "flamebrand.front.recoil.white",
+      "flamebrand.front.fall",
+      "flamebrand.front.deadA",
+      "flamebrand.front.deadB",
+      "flamebrand.front.fleeA",
+      "flamebrand.front.fleeB",
+      "flamebrand.front.cheer",
+      "flamebrand.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.flamebrand.front.g3pro.png",
+   "sha256": "88e59acf4ab29d7539d47c0e4dbf43d3b5bef2787d824d8d82654de5e217ea11",
+   "model": "gemini-3-pro-image",
+   "job": "flamebrand.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/flamebrand.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/cw.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/pyrePriest/06.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.75,
+      0.099
+     ],
+     "idle2": [
+      0.7,
+      0.189
+     ],
+     "marchA": [
+      0.688,
+      0.124
+     ],
+     "marchB": [
+      0.773,
+      0.217
+     ],
+     "windup": [
+      0.744,
+      0.191
+     ],
+     "strike": [
+      0.61,
+      0.24
+     ],
+     "follow": [
+      0.708,
+      0.313
+     ],
+     "brace": [
+      0.74,
+      0.278
+     ],
+     "recoil": [
+      0.697,
+      0.162
+     ],
+     "fall": [
+      0.641,
+      0.378
+     ],
+     "deadA": [
+      0.702,
+      0.326
+     ],
+     "deadB": [
+      0.729,
+      0.668
+     ],
+     "fleeA": [
+      0.766,
+      0.177
+     ],
+     "fleeB": [
+      0.771,
+      0.405
+     ],
+     "cheer": [
+      0.735,
+      0.143
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.553,
+     "marchLegsIoU": 0.508,
+     "mostAlike": [
+      "stand~marchA",
+      0.715
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.013,
+      "marchA": 1.027,
+      "marchB": 0.966
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.219,
+     "histMin": [
+      "fleeA",
+      0.784
+     ],
+     "maxDE": [
+      "fleeA",
+      4.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 25.3,
+     "afterMax": 0.2
+    },
+    "side": {
+     "neutral": {
+      "share": 0.1,
+      "worstBelow": 23.7,
+      "below": {
+       "plains": 32.3,
+       "farmland": 31.9,
+       "swamp": 23.7,
+       "forest": 23.9
+      }
+     },
+     "sideKeyline": {
+      "share": 0.355,
+      "worstBelow": 20.8,
+      "below": {
+       "plains": 29.6,
+       "farmland": 29.1,
+       "swamp": 20.8,
+       "forest": 21.0
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 6.243,
+     "keyInUnitPct": 0.089,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.86,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

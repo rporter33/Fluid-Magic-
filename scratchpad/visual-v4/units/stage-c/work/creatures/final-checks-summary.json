@@ -1,0 +1,214 @@
+{
+ "fireSprite.back": {
+  "job": "fireSprite.back.paint.r2",
+  "status": "reported",
+  "failed": [
+   "camera",
+   "rim",
+   "fringe"
+  ],
+  "checks": "cam 1/9 fail ['dive', 'glide', 'recoil', 'strike', 'wingDown', 'wingMid', 'wingUp', 'wingUp2']; var [0.409] worst 0.441; rim 4.3; value 25.8; keyIn 2.619"
+ },
+ "fireSprite.front": {
+  "job": "fireSprite.front.paint.r2",
+  "status": "reported",
+  "failed": [
+   "camera",
+   "fringe"
+  ],
+  "checks": "cam 0/9 fail ['dive', 'glide', 'recoil', 'strike', 'wingDown', 'wingDown2', 'wingMid', 'wingUp', 'wingUp2']; var [0.551] worst 0.564; rim 1.1; value 23.8; keyIn 2.181"
+ },
+ "hornetSwarm.back": {
+  "job": "hornetSwarm.back.fill",
+  "status": "reported",
+  "failed": [
+   "camera",
+   "fringe"
+  ],
+  "checks": "cam 8/12 fail ['deadA', 'deadB', 'glide90', 'up90']; var [0.337] worst 0.562; rim 0.5; value 17.3; keyIn 0.922"
+ },
+ "wolf.back": {
+  "job": "wolf.back.paint",
+  "status": "pass",
+  "failed": [],
+  "checks": "cam 11/12 fail ['bite']; var [0.43] worst 0.742; rim 0.0; value 22.5; keyIn 0.056"
+ },
+ "wolf.front": {
+  "job": "wolf.front.fill",
+  "status": "reported",
+  "failed": [
+   "camera"
+  ],
+  "checks": "cam 8/12 fail ['bite', 'deadB', 'howl', 'recoil']; var [0.59] worst 0.688; rim 0.0; value 27.5; keyIn 0.081"
+ },
+ "oakheart.back": {
+  "job": "oakheart.back.fill",
+  "status": "reported",
+  "failed": [
+   "camera"
+  ],
+  "checks": "cam 10/15 fail ['deadB', 'fall', 'follow', 'strike', 'windup']; var [0.705] worst 0.705; rim 0.0; side 38% kl (neutral 22%), value 34.6; keyIn 0.233"
+ },
+ "oakheart.front": {
+  "job": "oakheart.front.fill",
+  "status": "reported",
+  "failed": [
+   "side"
+  ],
+  "checks": "cam 14/15 fail ['follow']; var [0.601] worst 0.805; rim 0.0; side 19% kl (neutral 8%), value 33.0; keyIn 0.156"
+ },
+ "ashRider.back": {
+  "job": "ashRider.back.fill",
+  "status": "reported",
+  "failed": [
+   "fringe"
+  ],
+  "checks": "cam 13/15 fail ['deadA', 'deadB']; var [0.851, 0.5] worst 0.778; rim 1.5; side 38% kl (neutral 13%), value 19.5; keyIn 0.529"
+ },
+ "ashRider.front": {
+  "job": "ashRider.front.fill",
+  "status": "reported",
+  "failed": [
+   "side",
+   "fringe"
+  ],
+  "checks": "cam 13/15 fail ['stand', 'walkA']; var [0.661, 0.412] worst 0.746; rim 0.3; side 22% kl (neutral 0%), value 21.1; keyIn 1.139"
+ },
+ "wolfRider.back": {
+  "job": "wolfRider.back.paint.r2",
+  "status": "pass",
+  "failed": [],
+  "checks": "cam 15/16 fail ['deadA']; var [0.507] worst 0.761; rim 0.0; side 53% kl (neutral 34%), value 17.6; keyIn 0.18"
+ },
+ "wolfRider.front": {
+  "job": "wolfRider.front.harness",
+  "status": "reported",
+  "failed": [
+   "camera"
+  ],
+  "checks": "cam 13/16 fail ['leapB', 'stand', 'strike']; var [0.488] worst 0.843; rim 0.7; side 35% kl (neutral 14%), value 16.3; keyIn 0.387"
+ },
+ "wolfRider.frontKept": {
+  "job": "wolfRider.front.kept",
+  "status": "reported",
+  "failed": [
+   "side"
+  ],
+  "checks": "cam 14/16 fail ['leapB', 'stand']; var [0.464] worst 0.833; rim 0.4; side 38% kl (neutral 16%), value 14.6; keyIn 0.19"
+ },
+ "salamander-02.back": {
+  "job": "sal02.back.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.888 facing +0.62 aspect 1.013; idDE 7.0; value 35.0; rim 0.0; keyIn 0.005; src [669, 988] H x2.53"
+ },
+ "salamander-02.front": {
+  "job": "sal02.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.872 facing +0.55 aspect 1.013; idDE 3.7; value 31.2; rim 0.0; keyIn 0.0; src [780, 927] H x2.95"
+ },
+ "salamander-03.back": {
+  "job": "sal03.back.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.751 facing +0.48 aspect 1.108; idDE 3.7; value 34.5; rim 0.0; keyIn 0.009; src [735, 992] H x2.54"
+ },
+ "salamander-03.front": {
+  "job": "sal03.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.893 facing +0.57 aspect 0.998; idDE 4.6; value 34.4; rim 0.0; keyIn 0.003; src [768, 926] H x2.95"
+ },
+ "salamander-04.back": {
+  "job": "sal04.back.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.761 facing +0.5 aspect 1.01; idDE 5.9; value 36.0; rim 0.0; keyIn 0.025; src [695, 1029] H x2.64"
+ },
+ "salamander-04.front": {
+  "job": "sal04.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.854 facing +0.52 aspect 0.947; idDE 6.6; value 35.9; rim 0.0; keyIn 0.05; src [740, 940] H x2.99"
+ },
+ "treant-01.back": {
+  "job": "treant01.back.guide.2k",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.646 facing +0.17 aspect 1.296; idDE 5.5; value 24.7; rim 0.1; keyIn 0.034; src [1324, 2192] H x5.75"
+ },
+ "treant-01.front": {
+  "job": "treant01.front.guide.r2",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.847 facing +0.41 aspect 1.155; idDE 1.5; value 25.6; rim 0.0; keyIn 0.106; src [549, 1077] H x2.68"
+ },
+ "treant-02.back": {
+  "job": "treant02.back.redress.r2",
+  "status": "reported",
+  "failed": [
+   "camera",
+   "fringe"
+  ],
+  "checks": "IoU 0.624 facing +0.13 aspect 1.334; idDE 7.5; value 27.4; rim 0.0; keyIn 0.922; src [708, 1140] H x2.99"
+ },
+ "treant-02.front": {
+  "job": "treant02.front.redress",
+  "status": "reported",
+  "failed": [
+   "fringe"
+  ],
+  "checks": "IoU 0.689 facing +0.19 aspect 1.231; idDE 3.2; value 26.1; rim 0.2; keyIn 2.155; src [588, 1081] H x2.69"
+ },
+ "treant-03.back": {
+  "job": "treant03.back.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.659 facing +0.16 aspect 1.197; idDE 7.7; value 36.5; rim 0.0; keyIn 0.101; src [610, 1093] H x2.87"
+ },
+ "treant-03.front": {
+  "job": "treant03.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.837 facing +0.4 aspect 1.169; idDE 7.8; value 33.4; rim 0.0; keyIn 0.307; src [554, 1076] H x2.67"
+ },
+ "treant-04.back": {
+  "job": "treant04.back.redress",
+  "status": "reported",
+  "failed": [
+   "value"
+  ],
+  "checks": "IoU 0.625 facing +0.16 aspect 1.254; idDE 11.5; value 13.0; rim 0.0; keyIn 0.006; src [664, 1140] H x2.99"
+ },
+ "treant-04.front": {
+  "job": "treant04.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.627 facing +0.13 aspect 1.225; idDE 1.3; value 17.4; rim 0.1; keyIn 0.031; src [613, 1132] H x2.81"
+ },
+ "giant-01.back": {
+  "job": "giant01.back.guide",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.589 facing +0.34 aspect 0.949; idDE 4.5; value 28.4; rim 0.0; keyIn 0.061; src [901, 963] H x2.53"
+ },
+ "giant-01.front": {
+  "job": "giant01.front.guide",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.794 facing +0.48 aspect 0.974; idDE 1.8; value 30.2; rim 0.0; keyIn 0.09; src [900, 878] H x2.46"
+ },
+ "giant-02.back": {
+  "job": "giant02.back.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.595 facing +0.35 aspect 0.937; idDE 11.9; value 32.8; rim 0.0; keyIn 0.09; src [900, 974] H x2.56"
+ },
+ "giant-02.front": {
+  "job": "giant02.front.redress",
+  "status": "pass",
+  "failed": [],
+  "checks": "IoU 0.786 facing +0.47 aspect 0.962; idDE 9.3; value 32.5; rim 0.1; keyIn 0.096; src [900, 889] H x2.5"
+ }
+}

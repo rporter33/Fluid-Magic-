@@ -1,0 +1,167 @@
+{
+ "figure": "cmdPriest",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.67,
+  "iouMirrored": 0.665,
+  "aspectRatio": 0.813,
+  "headDx": -0.023,
+  "guideHeadDx": 0.1,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.971,
+  "marchLegsIoU": 0.976,
+  "mostAlike": [
+   "marchA~marchB",
+   0.971
+  ],
+  "robe": true,
+  "pass": false
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.995,
+   "marchA": 0.985,
+   "marchB": 0.985
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 10.314,
+  "keyInUnitPct": 0.153,
+  "fringePct": 0.0,
+  "edgeDevPct": 5.07,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "fall",
+   0.794
+  ],
+  "maxDE": [
+   "deadA",
+   2.8
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.67,
+    0.005
+   ],
+   "idle2": [
+    0.68,
+    0.013
+   ],
+   "marchA": [
+    0.655,
+    0.079
+   ],
+   "marchB": [
+    0.665,
+    0.105
+   ],
+   "windup": [
+    0.562,
+    -0.007
+   ],
+   "strike": [
+    0.475,
+    -0.109
+   ],
+   "follow": [
+    0.423,
+    -0.199
+   ],
+   "recoil": [
+    0.495,
+    0.02
+   ],
+   "actA": [
+    0.608,
+    0.051
+   ],
+   "actB": [
+    0.623,
+    0.012
+   ],
+   "fall": [
+    0.36,
+    0.311
+   ],
+   "deadA": [
+    0.056,
+    -0.167
+   ],
+   "deadB": [
+    0.286,
+    -0.2
+   ],
+   "fleeA": [
+    0.475,
+    -0.118
+   ],
+   "fleeB": [
+    0.429,
+    -0.187
+   ],
+   "cheer": [
+    0.506,
+    -0.032
+   ]
+  },
+  "medianIoU": 0.5,
+  "medianMargin": -0.001,
+  "follow": "6/16",
+  "followShare": 0.38
+ },
+ "rim": {
+  "beforeMax": 2.3,
+  "afterMax": 0.6
+ },
+ "sideCmd": {
+  "share": 0.134,
+  "worstBelow": 26.7,
+  "grounds": {
+   "plains": {
+    "share": 0.134,
+    "below": 35.1
+   },
+   "farmland": {
+    "share": 0.181,
+    "below": 34.7
+   },
+   "swamp": {
+    "share": 0.125,
+    "below": 26.7
+   },
+   "forest": {
+    "share": 0.154,
+    "below": 26.9
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "gate": {
+  "cells": false,
+  "variety": false,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": null,
+  "missing": []
+ },
+ "pass": false,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdPriest.back.body.g3pro.png"
+}

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Magic Pilot Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* One dark look on purpose, like the stage B and C review pages: the art is painted for the game's dark chrome. */
+:root {
+  --bg: #1C1A17; --panel: #26231E; --panel2: #2F2B25; --line: #4A443B; --text: #F4EEDF; --dim: #C2B9A7; --faint: #9A917F;
+  --brass: #B8914A; --brass-hi: #D3AF69; --keep: #8CC08A; --change: #E8957A; --ground: #8D8D78; --ember: #FFB347; --loam: #A6D96A;
+  --font-display: 'Marcellus SC', Georgia, serif; --font-body: 'Alegreya Sans', system-ui, sans-serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--text); font: 17px/1.5 var(--font-body); font-variant-numeric: lining-nums; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: max(24px, env(safe-area-inset-top, 0px)); padding-bottom: max(64px, env(safe-area-inset-bottom, 0px)); }
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+p { margin: 0; }
+a { color: var(--brass-hi); }
+h1 { font: 400 34px/1.12 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h2 { font: 400 25px/1.2 var(--font-display); margin: 0; letter-spacing: .03em; text-wrap: balance; }
+h3.grp, h3.bh { font: 400 19px/1.2 var(--font-display); letter-spacing: .03em; margin: 0; }
+.eyebrow { font: 700 12.5px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+.lead { color: var(--dim); max-width: 78ch; }
+.note { color: var(--faint); font-size: 14.5px; }
+header.top { display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 20px; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.links a { display: inline-flex; flex-direction: column; gap: 2px; text-decoration: none; border: 1px solid var(--brass); border-radius: 6px; padding: 8px 14px; min-height: 44px; background: var(--panel); }
+.links a b { font: 400 17px/1.2 var(--font-display); letter-spacing: .03em; color: var(--brass-hi); }
+.links a span { font-size: 13.5px; color: var(--dim); }
+.links a:hover { border-color: var(--brass-hi); background: var(--panel2); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px; }
+nav.toc a { font-size: 15px; color: var(--dim); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; min-height: 44px; display: inline-flex; align-items: center; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--text); border-color: var(--brass); }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--dim); font-size: 14.5px; }
+kbd { font: 500 13px var(--font-mono); color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 6px; }
+.piece { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 12px; min-width: 0; }
+#fireball { border-top: 3px solid var(--ember); } #entangle { border-top: 3px solid var(--loam); }
+.phead { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.num { font: 400 15px/1 var(--font-display); color: var(--bg); background: var(--brass); border-radius: 50%; width: 28px; height: 28px; display: inline-grid; place-items: center; flex: none; transform: translateY(-3px); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { display: inline-block; font: 500 13px/1.5 var(--font-body); color: var(--dim); border: 1px solid var(--line); border-radius: 3px; padding: 0 6px; }
+.what { color: var(--dim); max-width: 86ch; }
+/* the player: the clip and its controls beside the storyboard */
+.player { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cliptabs, .segs { display: flex; flex-wrap: wrap; gap: 6px; }
+.pgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 340px); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .pgrid { grid-template-columns: minmax(0, 1fr); } }
+.screen { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.vbox { position: relative; background: var(--ground); border-radius: 4px; overflow: hidden; aspect-ratio: 16 / 9; }
+.vbox .vscroll { position: absolute; inset: 0; overflow: hidden; }
+.vbox video { display: block; width: 100%; height: 100%; object-fit: contain; background: #14120f; }
+.vbox.mag .vscroll { overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; }
+.vbox.mag video { width: 200%; height: 200%; max-width: none; }
+.vbox .maghint { position: absolute; left: 8px; top: 8px; z-index: 2; pointer-events: none; font-size: 13px; color: var(--text); background: rgba(28, 26, 23, .78); border-radius: 4px; padding: 2px 8px; }
+.ph { border: 1px solid var(--line); border-left: 4px solid var(--change); border-radius: 5px; background: var(--panel); padding: 10px 14px; color: var(--dim); font-size: 15px; max-width: 86ch; }
+.ph b { color: var(--text); }
+.vnote { position: absolute; inset: auto 8px 8px 8px; background: rgba(28, 26, 23, .9); border: 1px solid var(--change); border-radius: 5px; padding: 8px 10px; font-size: 14.5px; }
+.readout { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 15px; color: var(--dim); min-height: 24px; }
+.readout .tm { font: 500 15px var(--font-mono); color: var(--text); min-width: 9ch; }
+.readout .bt { font-weight: 700; color: var(--text); }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.btn, .seg { font: 700 15px/1.2 var(--font-body); color: var(--dim); background: transparent; border: 1px solid var(--line); border-radius: 5px; padding: 6px 14px; cursor: pointer; min-height: 44px; min-width: 48px; }
+.btn:hover, .seg:hover { border-color: var(--faint); color: var(--text); }
+.btn.pp { min-width: 84px; color: var(--bg); background: var(--brass); border-color: var(--brass); }
+.btn.pp:hover { background: var(--brass-hi); }
+.seg[aria-pressed="true"] { color: var(--bg); background: var(--brass-hi); border-color: var(--brass-hi); }
+.seg[aria-pressed="true"]::before { content: '\2713\00a0'; content: '\2713\00a0' / ''; }
+.scrubl { display: block; }
+.scrub { width: 100%; min-height: 44px; accent-color: var(--brass-hi); }
+.cnote { font-size: 14px; }
+.boardw { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+ol.board { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+ol.board button { width: 100%; text-align: left; display: grid; grid-template-columns: 18px 1fr auto; gap: 2px 8px; font: 15px/1.35 var(--font-body); color: var(--dim);
+  background: var(--panel2); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 5px; padding: 8px 10px; cursor: pointer; min-height: 44px; }
+ol.board button:hover { border-color: var(--faint); }
+ol.board .mk { grid-row: 1; color: var(--brass-hi); font-weight: 700; }
+ol.board .bn { font: 400 16px/1.3 var(--font-display); letter-spacing: .03em; color: var(--text); }
+ol.board .bt { font: 500 13px/1.6 var(--font-mono); color: var(--faint); }
+ol.board .bd { grid-column: 2 / 4; font-size: 14px; }
+ol.board button[aria-current="step"] { border-color: var(--brass-hi); border-left-color: var(--brass-hi); background: #3a342b; color: var(--text); }
+ol.board button[aria-current="step"] .bt { color: var(--brass-hi); }
+details.stills summary { cursor: pointer; color: var(--brass-hi); min-height: 44px; display: flex; align-items: center; }
+.pics { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-start; }
+.pics figure { margin: 0; width: var(--w); max-width: 100%; flex: 0 1 auto; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.pics img { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--ground); }
+figcaption { font-size: 13.5px; color: var(--dim); line-height: 1.35; }
+figcaption b { color: var(--text); }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+ul.stat { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; font-size: 14.5px; color: var(--dim); }
+ul.stat li { padding-left: 18px; position: relative; }
+ul.stat li::before { content: '\2713'; content: '\2713' / ''; position: absolute; left: 0; top: 0; width: 12px; text-align: center; font-weight: 700; color: var(--keep); }
+ul.stat li.flaw::before { content: '!'; content: '!' / ''; color: var(--change); }
+.gallery { display: flex; flex-direction: column; gap: 10px; }
+.glabels { display: grid; grid-template-columns: 1fr 1fr; font: 400 16px var(--font-display); letter-spacing: .03em; color: var(--dim); }
+.gcanvas { width: 100%; aspect-ratio: 1100 / 500; background: var(--ground); border-radius: 4px; overflow: hidden; }
+.gcanvas canvas { display: block; width: 100% !important; height: auto !important; }
+.sheet { display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed #5A5246; padding-top: 12px; }
+.cand.picked img { outline: 3px solid var(--keep); outline-offset: 2px; }
+.pk { color: var(--keep); font-weight: 700; }
+.pk::before { content: '\2713\00a0'; content: '\2713\00a0' / ''; }
+.sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* answers */
+.vrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-top: 1px solid var(--line); padding-top: 12px; }
+.vrow .vq { font: 400 16px var(--font-display); letter-spacing: .03em; margin-right: 4px; }
+.vbtn { position: relative; font: 700 15px/1.2 var(--font-body); color: var(--dim); background: transparent; border: 1px solid var(--line); border-radius: 5px; padding: 6px 16px; cursor: pointer; min-height: 44px; min-width: 48px; }
+.vbtn:hover { border-color: var(--faint); color: var(--text); }
+.vbtn[aria-pressed="true"] { color: var(--bg); background: var(--brass-hi); border-color: var(--brass-hi); padding-left: 26px; padding-right: 10px; }
+.vbtn[data-v="Keep"][aria-pressed="true"] { background: var(--keep); border-color: var(--keep); }
+.vbtn[data-v="Redo"][aria-pressed="true"] { background: var(--change); border-color: var(--change); }
+.vbtn[aria-pressed="true"]::before { content: '\2713'; content: '\2713' / ''; position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 12px; line-height: 1; }
+.vbtn .rec { display: inline-block; margin-left: 6px; font: 700 11px/1.6 var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--brass-hi); border: 1px solid currentColor; border-radius: 3px; padding: 0 4px; vertical-align: 1px; }
+.vbtn[aria-pressed="true"] .rec { color: var(--bg); }
+.vclr { font: 500 14px/1.2 var(--font-body); color: var(--faint); background: transparent; border: 1px dashed var(--line); border-radius: 5px; padding: 6px 12px; cursor: pointer; min-height: 44px; min-width: 48px; }
+.vclr:hover { color: var(--text); border-color: var(--faint); }
+.vclr[hidden] { display: none; }
+.qstills { display: flex; flex-wrap: wrap; gap: 10px; }
+.qstills figure { margin: 0; flex: 1 1 260px; max-width: 480px; display: flex; flex-direction: column; gap: 4px; }
+.qstills img { display: block; width: 100%; height: auto; border-radius: 4px; background: var(--ground); }
+.vrow input[type="text"] { flex: 1 1 240px; min-width: 0; font: 15.5px var(--font-body); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 8px 10px; min-height: 44px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible, summary:focus-visible, .player:focus-visible { outline: 2px solid var(--brass-hi); outline-offset: 2px; }
+.q { background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 12px; }
+.q h3 { font: 400 19px/1.25 var(--font-display); letter-spacing: .03em; margin: 0; display: flex; gap: 10px; align-items: baseline; }
+.q h3 .qn { font: 700 13px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--brass-hi); flex: none; }
+.q > p { color: var(--dim); font-size: 15.5px; max-width: 80ch; }
+.qs { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+.verdict { background: var(--panel); border: 1px solid var(--brass); border-radius: 8px; padding: 18px; display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 12px; }
+.answers { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 16px; font-size: 14.5px; }
+.answers div { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dotted var(--line); padding: 3px 0; }
+.answers .k { color: var(--keep); font-weight: 700; } .answers .c { color: var(--change); font-weight: 700; } .answers .o { color: var(--brass-hi); font-weight: 700; } .answers .u { color: var(--faint); }
+.answers .r { color: var(--faint); font-weight: 400; font-size: 12.5px; margin-left: 4px; }
+textarea { font: 15.5px var(--font-body); color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 8px 10px; min-height: 84px; resize: vertical; width: 100%; }
+pre { font: 13.5px/1.55 var(--font-mono); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; color: var(--dim); }
+.big-btn { font: 700 16px var(--font-body); color: var(--bg); background: var(--brass); border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer; align-self: flex-start; min-height: 44px; }
+.big-btn:hover { background: var(--brass-hi); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 12px; }
+.skip { position: absolute; left: 6px; top: 6px; z-index: 5; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.skip:focus { width: auto; height: auto; clip-path: none; min-height: 44px; display: inline-flex; align-items: center; padding: 0 14px; font: 700 15px var(--font-body); color: var(--text); background: var(--panel); border: 1px solid var(--brass); border-radius: 5px; }
+/* phones: the player runs edge to edge (the clip is what is judged), the 2x clip by default, a magnifier for detail.
+   Last in the sheet, so these win over the base rules above (the gallery's stacked scenes were clipped to one) */
+@media (max-width: 600px) {
+  .piece { padding: 14px 12px; }
+  .screen .vbox { margin-left: calc(-12px - max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-12px - max(16px, env(safe-area-inset-right, 0px))); border-radius: 0; }
+  .ctl { gap: 8px; }
+  .glabels { grid-template-columns: 1fr; gap: 2px; }
+  .glabels span:first-child::before { content: 'Top: '; } .glabels span:last-child::before { content: 'Below: '; } /* the scenes stack */
+  .gcanvas { aspect-ratio: 550 / 1000; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#verdict">Skip to the verdict</a>
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">Fluid Magic · stage D · the magic pilot</p>
+  <h1>Fireball and Entangle, built in full</h1>
+  <p class="lead">The two pilot spells, each with its painted sheets, particles, light, decals and sound hooks, shown in their real battle moments: each at 1x, at 0.25x and frame by frame beside its storyboard, at play zoom and at 2x. The art director's twelve fixes are in. Every question already holds its recommended answer, marked <span class="tag">recommended</span>: change any you disagree with, then copy the verdict line.</p>
+  <p class="ph"><b>Placeholders.</b> <!--PLACEHOLDERS--></p>
+  <div class="links"><a href="../../../battle-mockup.html?b=a&amp;t=3.6"><b>The live mockup, battle a</b><span>Fireball cast 1 at 3.9 s (from units/stage-d/pilot/)</span></a><a href="../../../battle-mockup.html?b=a&amp;t=47"><b>Battle a, cast 6</b><span>the short form with four slain, at 47.2 s</span></a><a href="../../../battle-mockup.html?b=c&amp;t=44.8"><b>The live mockup, battle c</b><span>Entangle at 45.1 s; the wither at 51.75 s</span></a></div>
+  <p class="keys" aria-label="Keyboard"><span><kbd>Space</kbd> play or pause</span><span><kbd>,</kbd> <kbd>.</kbd> one frame back or on</span><span><kbd>1</kbd> 1x, <kbd>4</kbd> 0.25x</span><span><kbd>Z</kbd> play zoom or 2x</span><span><kbd>M</kbd> magnify</span><span>(when the player has focus: click it or tab to it)</span></p>
+  <nav class="toc" aria-label="On this page"><a href="#fireball">Fireball</a><a href="#entangle">Entangle</a><a href="#gallery">Effects gallery</a><a href="#sheets">Painted sheets</a><a href="#questions">Questions</a><a href="#verdict">Verdict</a><a href="#built">How it is built</a></nav>
+</header>
+<!--SPELLS-->
+<section class="piece" id="gallery" aria-labelledby="gal-h">
+  <div class="phead"><span class="num" aria-hidden="true">3</span><h2 id="gal-h">Effects gallery</h2><div class="tags"><span class="tag">live, the mockup's own effects code</span><span class="tag">painted figures</span></div></div>
+  <p class="what">Both spells loop side by side on a small battle of painted figures, drawn live by the same effects code as the mockup, at about play zoom: Fireball on a Thornwood block, Entangle holding a Cinder block (battle c only shows it on one man).</p>
+  <p class="what"><b>The readability tests of docs/09 cannot run yet.</b> They compare pairs: two spells of different colours in the same family must read apart with the sprites hidden, and two spells of the same colour in different families with the colour removed. Fireball and Entangle differ in both colour and family, so neither pair exists: the tests come with Thorn Spray (a Loam burst, beside Fireball) and Ember Dart (an Ember projectile). What this gallery can show is each spell alone: with the sprites hidden, does the effect's own shape and motion carry it, and with the colour removed, does it still read in grey?</p>
+  <div class="gallery" id="gal">
+    <div class="ctl" role="group" aria-label="Gallery controls">
+      <button type="button" class="btn pp" id="gPlay" aria-label="Play">Play</button>
+      <div class="segs" role="group" aria-label="Gallery speed"><button type="button" class="seg" data-grate="1" aria-pressed="true">1x</button><button type="button" class="seg" data-grate="0.25" aria-pressed="false">0.25x</button></div>
+      <div class="segs" role="group" aria-label="Step one frame"><button type="button" class="btn" id="gBack" aria-label="Back one frame">&#9664; Frame</button><button type="button" class="btn" id="gFwd" aria-label="Forward one frame">Frame &#9654;</button></div>
+    </div>
+    <p class="note" id="gtests-h">Each spell alone: sprites hidden, colour removed.</p>
+    <div class="ctl" role="group" aria-labelledby="gtests-h">
+      <button type="button" class="seg" data-gt="hidden" aria-pressed="false">Sprites hidden</button>
+      <button type="button" class="seg" data-gt="grey" aria-pressed="false">Colour removed</button>
+      <button type="button" class="seg" data-gt="short" aria-pressed="false">Short forms (2x and up)</button>
+      <button type="button" class="seg" data-gt="crowd" aria-pressed="true">300 vs 300 backdrop</button>
+    </div>
+    <p class="note">Short forms: Fireball's is docs/12's (1.3 s against 1.9 s); Entangle has none in docs/12, so its 0.98 s comes from the design's C.3 rule (the charge halved).</p>
+    <div class="glabels" aria-hidden="true"><span>Fireball · burst, scale 2 · Ember</span><span>Entangle · shock, scale 2 · Loam</span></div>
+    <div class="gcanvas"></div>
+    <p class="gnote note" hidden>The gallery needs PixiJS 8.22 from cdn.jsdelivr.net: open this page online to see it live.</p>
+    <script type="application/json" id="gfigs">/*GFIGS*/</script>
+    <p class="note" id="gStatus" aria-live="polite"></p>
+  </div>
+</section>
+<section class="piece" id="sheets" aria-labelledby="sheets-h">
+  <div class="phead"><span class="num" aria-hidden="true">4</span><h2 id="sheets-h">The painted sheets</h2></div>
+  <p class="what">Nine sheets, two candidates each from the portraits' model and its stronger sibling (one re-roll for the burst), then five re-rolls the art director asked for (open coils in halves, the heaved furrow, the burst's last frames without smoke, the flame and leaf glyph rings), keyed and shown with their own blend on the battle ground. The picked one is framed and marked. Checks: the cut elements, none touching the sheet edge, stray alpha, key fringe (the magenta sheets) and the smallest element's solid size at a man of 18 px.</p>
+  <!--SHEETS-->
+</section>
+<section class="piece" id="questions" aria-labelledby="q-h">
+  <div class="phead"><span class="num" aria-hidden="true">5</span><h2 id="q-h">Questions</h2></div>
+  <p class="what">The recommended answer is already selected in each. Tap another to change it, or Clear to leave a question open.</p>
+  <div class="qs"><!--QUESTIONS--></div>
+</section>
+<section class="verdict" id="verdict" aria-labelledby="ver-h" tabindex="-1"><h2 id="ver-h">Your verdict</h2>
+  <p class="note" id="count"></p>
+  <div class="answers" id="answers" role="list" aria-label="Your answers so far"></div>
+  <label for="general" class="note">Notes (optional)</label>
+  <textarea id="general" placeholder="Anything else: a look you want, what to change before the other nine spells"></textarea>
+  <pre id="summary" aria-live="polite"></pre>
+  <button class="big-btn" id="copy" type="button">Copy verdict</button>
+  <p class="note" id="copied" aria-live="polite">Your answers are kept in this browser, so you can come back to them.</p>
+</section>
+<section class="card" id="built" aria-labelledby="built-h"><h2 id="built-h">How it is built, and the checks</h2>
+  <p class="note">The effects layer is new code beside the mockup's, driven by one data table (45-fx-looks.js, the future content/fx.ts: every timing, count and colour-grammar value, and each spell's fx record). One effects atlas (2048 x 1024); each spell in its own containers, its particles pre-warmed in ParticleContainers (normal for matter, added for Ember only, as the new colour grammar says), pooled sprites and rope meshes for the large shapes; the burst and the vines sorted with the figures; ground rings squashed to the camera's 0.643; light pools in a warm normal blend under an added core; the figures in a spell's light take an added copy of their own painted frame in its colour, up to 0.5 at the peak and only while the light is on them, so nothing glows at rest (the owner's "Glow only during own fire"); pushed shadows; decals in the field under its cap; the docs/12 flash limiter; the OS reduced-motion setting. Above 2x the short form plays without its linger, and at most 3 burst or field effects play at once. No Graphics are redrawn per frame and every effect is a function of story time, so a seek, a replay or a screenshot draws the same frame. The effects sit under the standards and block glyphs, so a numbers layer above them would never be covered.</p>
+  <!--BUILT-->
+</section>
+</div>
+<!--BLOBS-->
+<script type="application/json" id="fx-data">/*FXDATA*/</script>
+<script src="https://cdn.jsdelivr.net/npm/pixi.js@8.22.0/dist/pixi.min.js"></script>
+<script>
+/*FXCODE*/
+</script>
+<script>
+(() => {
+  const el = document.getElementById('gal'), st = document.getElementById('gStatus'), pp = document.getElementById('gPlay');
+  const sync = () => { const S = GALLERY.S; pp.textContent = S.playing ? 'Pause' : 'Play'; pp.setAttribute('aria-label', S.playing ? 'Pause' : 'Play');
+    el.querySelectorAll('[data-gt]').forEach((b) => b.setAttribute('aria-pressed', String(!!S[b.dataset.gt])));
+    el.querySelectorAll('[data-grate]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.grate === S.rate))); };
+  if (typeof PIXI === 'undefined' || typeof GALLERY === 'undefined') { el.querySelector('.gnote').hidden = false; return; }
+  GALLERY.init(el).then(() => { sync(); st.textContent = FX_MOTION.os ? 'Paused: this device asks for reduced motion. Press Play to run it.' : ''; }).catch((e) => { st.textContent = 'The gallery could not start: ' + e.message; });
+  pp.addEventListener('click', () => { GALLERY.S.playing = !GALLERY.S.playing; sync(); });
+  document.getElementById('gBack').addEventListener('click', () => { GALLERY.step(-1); sync(); });
+  document.getElementById('gFwd').addEventListener('click', () => { GALLERY.step(1); sync(); });
+  el.querySelectorAll('[data-grate]').forEach((b) => b.addEventListener('click', () => { GALLERY.S.rate = +b.dataset.grate; sync(); }));
+  el.querySelectorAll('[data-gt]').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.gt; GALLERY.set(k, !GALLERY.S[k]); sync(); }));
+})();
+</script>
+<script>
+'use strict';
+const CLIPS = /*CLIPS*/;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const urls = {};
+function blobUrl(id) { // the clips are embedded as base64 and turned into object URLs on first use
+  if (urls[id]) return urls[id];
+  const el = document.getElementById(id);
+  if (!el) return '';
+  const bin = atob(el.textContent.trim()), n = bin.length, a = new Uint8Array(n);
+  for (let i = 0; i < n; i++) a[i] = bin.charCodeAt(i);
+  urls[id] = URL.createObjectURL(new Blob([a], { type: el.dataset.type }));
+  return urls[id];
+}
+function Player(root) {
+  const v = root.querySelector('video'), box = root.querySelector('.vbox'), sc = root.querySelector('.vscroll'), ids = root.dataset.clips.split(',');
+  const $ = (s) => root.querySelector(s), $$ = (s) => [...root.querySelectorAll(s)];
+  const tm = $('.tm'), bt = $('.bt'), zm = $('.zm'), pp = $('.pp'), scrub = $('.scrub'), board = $('.board'), cnote = $('.cnote'), magb = $('.magb');
+  // phones: the 2x clip by default (a man is about 12 px in the play-zoom clip at 390 px; 25 px in the 2x one)
+  const phone = matchMedia('(max-width: 600px)');
+  let clip = null, cid = ids[0], zoom = phone.matches ? 2 : 1, rate = 1, lastBeat = -2, mag = false, shown = 0;
+  const can = !!v.canPlayType && v.canPlayType('video/webm; codecs="vp9"') !== '';
+  if (!can) $('.vnote').hidden = false;
+  function beatAt(ms) { let k = -1; clip.beats.forEach((b, i) => { if (ms >= b.a) k = i; }); return k; }
+  function renderBoard() {
+    board.innerHTML = '';
+    clip.beats.forEach((b, i) => {
+      const li = document.createElement('li'), btn = document.createElement('button');
+      btn.type = 'button';
+      for (const [cls, txt] of [['mk', ''], ['bn', b.name], ['bt', `${b.a}–${b.b} ms`], ['bd', b.text]]) {
+        const s = document.createElement('span'); s.className = cls; s.textContent = txt; if (cls === 'mk') s.setAttribute('aria-hidden', 'true'); btn.appendChild(s);
+      }
+      btn.setAttribute('aria-label', `${b.name}, ${b.a} to ${b.b} ms: ${b.text}. Go to the start of this beat.`);
+      btn.addEventListener('click', () => { v.pause(); seekFrame(Math.ceil((Math.max(b.a, clip.from * 1000) / 1000 - clip.from) * clip.fps - 1e-6)); }); // the beat's first frame
+      li.appendChild(btn); board.appendChild(li);
+    });
+    lastBeat = -2;
+  }
+  // the readout shows the frame on screen: the time of the frame the video last presented (requestVideoFrameCallback),
+  // not currentTime, which runs ahead of the decoder after a seek or a frame step (critique fix 6)
+  function update(t) {
+    if (!clip) return;
+    const mt = t === undefined ? shown : t;
+    const ms = Math.round((clip.from + mt) * 1000), k = beatAt(ms), fr = Math.round(mt * clip.fps);
+    tm.textContent = `${ms} ms`;
+    if (k !== lastBeat) {
+      lastBeat = k;
+      $$('.board button').forEach((b, i) => { const on = i === k; b.toggleAttribute('aria-current', false); if (on) b.setAttribute('aria-current', 'step'); b.querySelector('.mk').textContent = on ? '▶' : ''; });
+      bt.textContent = k >= 0 ? clip.beats[k].name : 'Before the charge';
+    }
+    const man = clip.man[zoom] ? Math.round(clip.man[zoom] * v.clientWidth / (clip.size ? clip.size[0] : v.videoWidth || 1120)) : null; // clientWidth already doubles under the magnifier
+    zm.textContent = `${zoom === 1 ? 'play zoom' : '2x'} · ${rate === 1 ? '1x' : '0.25x'} · frame ${fr} of ${clip.frames - 1} (${clip.fps} a second)${man ? ' · a man is ' + man + ' px here' : ''}`;
+    scrub.value = String(Math.round(mt * 1000));
+    scrub.setAttribute('aria-valuetext', `${ms} ms, ${bt.textContent}`);
+  }
+  const rvfc = typeof v.requestVideoFrameCallback === 'function';
+  function onFrame(now, meta) { shown = meta.mediaTime; update(); v.requestVideoFrameCallback(onFrame); }
+  if (rvfc) v.requestVideoFrameCallback(onFrame);
+  else { const tick = () => { shown = v.currentTime; update(); if (!v.paused) requestAnimationFrame(tick); }; v.addEventListener('play', tick); v.addEventListener('seeked', () => { shown = v.currentTime; update(); }); }
+  function seekFrame(f) { v.currentTime = Math.min(Math.max(0, (f + 0.25) / clip.fps), v.duration ? v.duration - 0.001 : 0); } // a quarter frame in: that frame shows
+  function load(id, keep) {
+    const t = keep ? shown : 0, playing = keep && !v.paused;
+    cid = id; clip = CLIPS[id];
+    v.poster = document.getElementById(`p-${id}-${zoom}`) ? blobUrl(`p-${id}-${zoom}`) : '';
+    v.src = blobUrl(`v-${id}-${zoom}`);
+    v.addEventListener('loadedmetadata', () => { v.currentTime = Math.min(t, v.duration - 0.001); shown = v.currentTime; v.playbackRate = rate; scrub.max = String(Math.round(v.duration * 1000)); update(); if (playing) v.play(); if (mag) centreMag(); }, { once: true });
+    $$('.cliptabs .seg').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.clip === id)));
+    cnote.textContent = clip.note;
+    if (!keep) renderBoard();
+  }
+  function play() { if (v.paused) { v.playbackRate = rate; v.play().catch(() => {}); } else v.pause(); }
+  function step(n) { v.pause(); const f = Math.round(shown * clip.fps) + n * Math.round(clip.fps / 60); v.currentTime = Math.min(Math.max(0, (f + 0.25) / clip.fps), v.duration - 0.001); }
+  function setRate(r) { rate = r; v.playbackRate = r; $$('[data-rate]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.rate === r))); update(); }
+  function setZoom(z) { if (z === zoom) return; zoom = z; $$('[data-zoom]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.zoom === z))); load(cid, true); }
+  // the magnifier: the clip at twice its size inside the box, scrolled by touch or the scroll wheel to the action
+  function centreMag() { sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2; sc.scrollTop = (sc.scrollHeight - sc.clientHeight) / 2; }
+  function setMag(on) { mag = on; box.classList.toggle('mag', on); magb.setAttribute('aria-pressed', String(on)); $('.maghint').hidden = !on; if (on) requestAnimationFrame(centreMag); else { sc.scrollLeft = 0; sc.scrollTop = 0; } update(); }
+  $$('[data-zoom]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.zoom === zoom)));
+  v.addEventListener('play', () => { pp.textContent = 'Pause'; pp.setAttribute('aria-label', 'Pause'); });
+  v.addEventListener('pause', () => { pp.textContent = 'Play'; pp.setAttribute('aria-label', 'Play'); });
+  v.addEventListener('seeked', () => { if (!rvfc) { shown = v.currentTime; update(); } });
+  pp.addEventListener('click', play);
+  $('.fbk').addEventListener('click', () => step(-1));
+  $('.ffw').addEventListener('click', () => step(1));
+  magb.addEventListener('click', () => setMag(!mag));
+  $$('[data-rate]').forEach((b) => b.addEventListener('click', () => setRate(+b.dataset.rate)));
+  $$('[data-zoom]').forEach((b) => b.addEventListener('click', () => setZoom(+b.dataset.zoom)));
+  $$('.cliptabs .seg').forEach((b) => b.addEventListener('click', () => { v.pause(); load(b.dataset.clip, false); }));
+  scrub.addEventListener('input', () => { v.pause(); v.currentTime = Math.min(+scrub.value / 1000, v.duration - 0.001); });
+  v.addEventListener('click', () => { if (!mag) play(); });
+  window.addEventListener('resize', () => update());
+  root.tabIndex = 0; root.setAttribute('role', 'group');
+  root.setAttribute('aria-label', root.dataset.spell + ' player: Space plays, comma and full stop step a frame, 1 and 4 set the speed, Z the zoom, M the magnifier');
+  root.addEventListener('keydown', (e) => {
+    if (e.target.matches('input[type="text"], textarea')) return;
+    const k = e.key;
+    if (k === ' ' || k === 'k' || k === 'K') { if (e.target.matches('button')) return; e.preventDefault(); play(); }
+    else if (k === ',' || k === 'ArrowLeft' && e.target === root) { e.preventDefault(); step(-1); }
+    else if (k === '.' || k === 'ArrowRight' && e.target === root) { e.preventDefault(); step(1); }
+    else if (k === '1') setRate(1);
+    else if (k === '4') setRate(0.25);
+    else if (k === 'z' || k === 'Z') setZoom(zoom === 1 ? 2 : 1);
+    else if (k === 'm' || k === 'M') setMag(!mag);
+  });
+  load(ids[0], false);
+  void reduceMotion; // nothing plays until asked, so the OS setting needs no more here
+}
+document.querySelectorAll('.player').forEach((p) => Player(p));
+
+// ---- the verdict: Keep or Redo per spell, the questions, notes; kept in this browser (fm-stage-d-pilot-v1) ----
+// Every row holds its recommended answer (data-rec) until the owner picks another or clears it: an answer he gave or
+// cleared is stored (a cleared one as ''), so a default never comes back over his choice.
+(() => {
+  const KEY = 'fm-stage-d-pilot-v1';
+  const load = () => { try { const v = JSON.parse(localStorage.getItem(KEY) || 'null'); return v && typeof v === 'object' ? v : null; } catch (e) { return null; } };
+  const saved = load() || {};
+  const state = { picks: Object.assign({}, saved.picks || {}), notes: Object.assign({}, saved.notes || {}), general: typeof saved.general === 'string' ? saved.general : '' };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable: answers live for this visit only */ } };
+  const ROWS = [...document.querySelectorAll('.vrow[data-key]')].map((r) => ({ el: r, key: r.dataset.key, short: r.dataset.short, rec: r.dataset.rec || '' }));
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+  const has = (r, v) => [...r.el.querySelectorAll('.vbtn')].some((b) => b.dataset.v === v);
+  const value = (r) => { const v = r.key in state.picks ? state.picks[r.key] : r.rec; return v && has(r, v) ? v : ''; };
+  const S = ROWS.filter((r) => r.key.startsWith('s:')), Q = ROWS.filter((r) => r.key.startsWith('q:'));
+  function line() {
+    const sp = S.map((r) => { const v = value(r), n = clean(state.notes[r.key]); return `${r.short}: ${v || 'not decided'}${n ? ' (' + n + ')' : ''}`; });
+    const qa = Q.map((r) => { const v = value(r), n = clean(state.notes[r.key]); return `${r.short} ${v || 'no answer'}${n ? ' (' + n + ')' : ''}`; });
+    const g = clean(state.general);
+    return `Stage D magic pilot verdict. ${sp.join('. ')}. Questions: ${qa.join('; ')}.${g ? ' Notes: ' + g : ''}`;
+  }
+  function render() {
+    for (const r of ROWS) {
+      const v = value(r);
+      for (const b of r.el.querySelectorAll('.vbtn')) b.setAttribute('aria-pressed', String(v === b.dataset.v));
+      const c = r.el.querySelector('.vclr'); if (c) c.hidden = !v;
+    }
+    const ans = document.getElementById('answers');
+    ans.innerHTML = '';
+    for (const r of ROWS) {
+      const v = value(r), d = document.createElement('div'), a = document.createElement('span'), b = document.createElement('span');
+      d.setAttribute('role', 'listitem'); a.textContent = r.short;
+      b.className = !v ? 'u' : v === 'Keep' || v === 'Right' || v === 'Yes' || v === 'Dust ring' ? 'k' : v === 'Redo' ? 'c' : 'o';
+      b.textContent = v || 'not yet';
+      if (v && v === r.rec) { const t = document.createElement('span'); t.className = 'r'; t.textContent = '(recommended)'; b.appendChild(t); }
+      d.append(a, b); ans.appendChild(d);
+    }
+    const done = ROWS.filter((r) => value(r)).length, own = ROWS.filter((r) => r.key in state.picks).length;
+    document.getElementById('count').textContent = `${done} of ${ROWS.length} answered (${ROWS.length - own} still on the recommended answer).`;
+    document.getElementById('summary').textContent = line();
+  }
+  for (const r of ROWS) {
+    for (const b of r.el.querySelectorAll('.vbtn')) b.addEventListener('click', () => { state.picks[r.key] = value(r) === b.dataset.v ? '' : b.dataset.v; save(); render(); });
+    const c = r.el.querySelector('.vclr'); if (c) c.addEventListener('click', () => { state.picks[r.key] = ''; save(); render(); r.el.querySelector('.vbtn').focus(); });
+    const inp = r.el.querySelector('input[type="text"]');
+    if (inp) { inp.value = state.notes[r.key] || ''; inp.addEventListener('input', () => { state.notes[r.key] = inp.value; save(); render(); }); }
+  }
+  const g = document.getElementById('general');
+  g.value = state.general; g.addEventListener('input', () => { state.general = g.value; save(); render(); });
+  document.getElementById('copy').addEventListener('click', async () => {
+    const text = line(), msg = document.getElementById('copied');
+    try { await navigator.clipboard.writeText(text); msg.textContent = 'Copied. Paste it into the chat.'; }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (e2) { ok = false; }
+      ta.remove(); msg.textContent = ok ? 'Copied. Paste it into the chat.' : 'Copy was blocked: select the line above and copy it.';
+    }
+  });
+  render();
+})();
+</script>
+</body>
+</html>

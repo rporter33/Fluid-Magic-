@@ -1,0 +1,12 @@
+cd ../art/tools && KEY=fx timeout 3600 node dump.cjs natural 1 start,far,mid,midAsh,nearAsh,nearGrey,nearMere,maxAsh,maxGrey,maxMere > ../out/dump-fx.log 2>&1
+cd ../art/tools && KEY=f3 timeout 3600 node dump.cjs natural 1 start,far,mid,midAsh,nearAsh,nearGrey,nearMere,maxAsh,maxGrey,maxMere > ../out/dump-f3.log 2>&1
+cd ../art/tools && timeout 3600 node bandshare.cjs > ../out/bandshare.log 2>&1
+cd ../art/tools && timeout 3600 node va-runs.cjs > ../out/runs.log 2>&1
+cd ../art/tools && timeout 3600 node pop.cjs fx ashspine > ../out/pop-fx.log 2>&1
+cd ../art/tools && timeout 3600 node pop.cjs f3 ashspine > ../out/pop-f3.log 2>&1
+timeout 3600 node startcmp.cjs > ../out/logs/startcmp.txt 2>&1
+CX=800 CY=500 timeout 3600 node farreader.cjs - 55,60,66,75,85 > ../out/logs/farreader-now-800.txt 2>&1
+CX=800 CY=500 timeout 3600 node farreader.cjs /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html 55,60,66,75,85 > ../out/logs/farreader-bf-800.txt 2>&1
+CX=720 CY=450 timeout 3600 node farreader.cjs - 55,60,66,75,85 > ../out/logs/farreader-now-720.txt 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html TAGP=bf- VIEWS=start,far,min,ref,near-forest,back3 timeout 3600 node checksx.cjs natural 3 390 844 > ../out/logs/checksx-bf-natural-3-phone.txt 2>&1
+timeout 3600 node phonereader.cjs > ../out/logs/phonereader.txt 2>&1

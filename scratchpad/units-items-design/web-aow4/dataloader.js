@@ -1,0 +1,521 @@
+const unlockableUnitsMapStructures = {
+    wildlife_sanctuary: ["goretusk_piglet", "dread_spider_hatchling", "vampire_spider_hatchling", "razorback", "warg"],
+    demon_gate: ["inferno_puppy", "gremlin", "inferno_hound", "chaos_eater", "gluttonous_imp"],
+    wyvern_eyrie: ["fire_wyvern", "frost_wyvern", "gold_wyvern", "obsidian_wyvern"],
+    accursed_shrine: ["accursed_ogre", "accursed_blade", "accursed_trickster"],
+    shrine_of_prosperity: ["blessed_dragon", "radiant_guardian", "righteous_judge"]
+};
+
+function cleanTranslation(text) {
+    if (!text) return text;
+
+    return (
+        text
+            // Remove ^fa{[1]}fn{[2]} style markers
+            .replace(/\^fa\{\[\d+\]\}fn\{\[\d+\]\}/g, "")
+            // Remove any ^ followed by a single letter (e.g. ^m, ^N, ^a)
+            .replace(/\^[a-zA-Z]/g, "")
+            // Clean up leftover spaces
+            .trim()
+    );
+}
+
+const architectCultureUnits = ["surveyor", "cultivator", "earthbreaker", "guardian", "shademaker", "architect"];
+
+const MountedSpecialList = [
+    "pioneer",
+    "pathfinder",
+    "scout",
+    "lightseeker",
+    "knight",
+    "outrider",
+    "dark_knight",
+    "tyrant_knight",
+    "wildspeaker",
+    "houndmaster",
+    "spellbreaker",
+    "dragoon",
+    "spirit_tracker",
+    "spellshield"
+];
+
+const extraFormUnitsList = [
+    "phantasm_warrior",
+    "evoker",
+    "white_witch",
+    "necromancer",
+    "zombie",
+    "decaying_zombie",
+    "skeleton",
+    "chaplain",
+    "zealot",
+    "inquisitor",
+    "glade_runner",
+    "pyromancer",
+    "warbreed",
+    "exemplar",
+    "transmuter",
+    "zephyr_archer",
+    "afflictor",
+    "stormbringer",
+    "constrictor",
+    "pyre_templar",
+    "monk",
+    "shade",
+    "wildspeaker",
+    "houndmaster",
+    "geomancer",
+    "paladin",
+    "oracle",
+    "pain_bringer",
+    "blood_cultist",
+    "subjugator",
+    "lieutenant",
+    "warlord",
+    "temptress",
+    "priest_of_the_weave"
+];
+
+const secretSpellsList = [
+    "abominable_mistling",
+    "colossal_penguin",
+    "feylor",
+    "yakas_feline_infusion",
+    "fanfare_of_mercy",
+    "ysariels_fallen_form",
+    "bhajifs_disruption",
+    "zaethyls_paradise",
+    "karissas_immolation",
+    "cinrens_temptation",
+    "ydgaards_trade",
+    "noctus_mastery",
+    "frikkas_revelation",
+    "nimues_failure",
+    "thulyanas_contortion",
+    "belbedors_folly",
+    "articas_ice_age"
+];
+
+const incorrectIconOverrideList = [
+    "summon_zealot",
+    "summon_lightbringer",
+    "conjure_divine_beacon",
+    "summon_lesser_snow_spirit",
+    "summon_wind_rager",
+    "summon_balor",
+    "summon_lesser_magma_spirit",
+    "summon_horned_god",
+    "summon_corrupt_soul",
+    "summon_lesser_light_spirit",
+    "summon_blessed_soul"
+];
+
+const extraAbilities = [];
+
+const extraSkills = [];
+
+function checkSecretSpell(id) {
+    if (secretSpellsList.includes(id) && !showSecretSpells.checked) {
+        return true;
+    }
+
+    return false;
+}
+
+function fetchJsonFiles(filePaths) {
+    return Promise.all(
+        filePaths.map((filePath) =>
+            fetch(filePath).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
+        )
+    );
+}
+var jsonSiegeProjects;
+
+const dlcMap = {
+    DRAGONLORDS: {
+        src: "/aow4db/Icons/Text/DragonDawn.png",
+        text: "Part of the Dragon Dawn DLC"
+    },
+    EMPIRESANDASHES: {
+        src: "/aow4db/Icons/Text/EmpiresAshes.png",
+        text: "Part of the Empires & Ashes DLC"
+    },
+    PRIMALFURY: {
+        src: "/aow4db/Icons/Text/PrimalFury.png",
+        text: "Part of the Primal Fury DLC"
+    },
+    ELDRITCHREALMS: {
+        src: "/aow4db/Icons/Text/EldritchRealms.png",
+        text: "Part of the Eldritch Realms DLC"
+    },
+    HERALDOFGLORY: {
+        src: "/aow4db/Icons/Text/herald_of_glory.png",
+        text: "Part of the Herald of Glory DLC"
+    },
+    WAYSOFWAR: {
+        src: "/aow4db/Icons/Text/waysofwar.png",
+        text: "Part of the Ways of War DLC"
+    },
+    GIANTKINGS: {
+        src: "/aow4db/Icons/Text/GKLogo.png",
+        text: "Part of the Giant Kings DLC"
+    },
+    ARCHONPROPHECY: {
+        src: "/aow4db/Icons/Text/ArchonProphecy.png",
+        text: "Part of the Archon Prophecy DLC"
+    },
+    COSMICWANDERER: {
+        src: "/aow4db/Icons/Text/CosmicWanderer.png",
+        text: "Part of the Cosmic Wanderer DLC"
+    },
+    THRONESOFBLOOD: {
+        src: "/aow4db/Icons/Text/ThronesOfBlood.png",
+        text: "Part of the Thrones of Blood DLC"
+    },
+    RISEFROMRUIN: {
+        src: "/aow4db/Icons/Text/RiseFromRuin.png",
+        text: "Part of the Rise From Ruin DLC"
+    },
+    SECRETSOFTHEARCHMAGES: {
+        src: "/aow4db/Icons/Text/SecretsOfTheArchmages.png",
+        text: "Part of the Secrets of the Archmages DLC"
+    },
+    WITCHOFTHEWAVES: {
+        src: "/aow4db/Icons/Text/singer_of_storms.png",
+        text: "Part of the Singer of Storms DLC"
+    },
+    THESILVERSEAS: {
+        src: "/aow4db/Icons/Text/the_silver_seas.png",
+        text: "Silver Seas for theorycrafting"
+    }
+};
+
+async function GetAllData(selectedLang) {
+    let basePathEN = `/aow4db/Data/EN/`;
+
+    if (selectedLang == "BETA") {
+        basePathEN = `/aow4db/Data/BETA/`;
+    }
+
+    const basePathGen = `/aow4db/Data/GEN/`;
+    // }
+    //  const basePathEN = `/aow4db/Data/EN/`;
+    const basePathLocal = `/aow4db/Data/${selectedLang}/`;
+
+    const fileNamesGeneric = [
+        "EnchantmentTables.json",
+        "all_spawnsets.json",
+        "BuilderLookup.json",
+        "AscendedInfo.json",
+        "BuilderLookupHero.json",
+        "UI.json",
+        "FactionCreation.json",
+        "StatusEffects.json",
+        "ExtraToolTips.json",
+        "CombatEnchantments.json",
+        "WorldStructures.json",
+        "CosmicHappenings.json",
+        "CityTree.json",
+        "all_spawnsets_strategic.json",
+        "FreeCities.json",
+        "DestinyTraits.json",
+        "Relics.json",
+        "Pantheon_Tree.json",
+        "ExtraLookSpellsOrigin.json"
+    ];
+    const fileNames = [
+        // ingame dump files
+        "HeroItems.json",
+        "HeroSkills.json",
+        "SiegeProjects.json",
+        "Units.json",
+        "Traits.json",
+        "Tomes.json",
+        "Abilities.json",
+        "EmpireProgression.json",
+        "Spells.json",
+        "StructureUpgrades.json",
+        "Destinies.json",
+        "Governance.json",
+        "ItemForgeTypes.json",
+        "ItemForgeUpgrades.json",
+        // non-ingame-dump-json-files
+        "UI.json",
+        "all.json",
+        "concept_tooltips.json"
+    ];
+
+    // Create file paths
+    const filesToFetchGeneric = fileNamesGeneric.map((f) => basePathGen + f);
+    const filesToFetchEN = fileNames.map((f) => basePathEN + f);
+    const filesToFetchLocal = fileNames.map((f) => basePathLocal + f);
+
+    try {
+        const [dataGen, dataEN, dataLocal, templatesHtml] = await Promise.all([
+            fetchJsonFiles(filesToFetchGeneric),
+            fetchJsonFiles(filesToFetchEN),
+            fetchJsonFiles(filesToFetchLocal),
+            fetch("/aow4db/HTML/templates.html").then((res) => res.text())
+        ]);
+
+        const genericTargets = [
+            "jsonEnchantments",
+            "jsonSpawnTables",
+            "jsonBuilderLookUp",
+            "jsonExtraAscendedInfo",
+            "jsonBuilderHeroLookUp",
+
+            "jsonUIGeneric",
+            "jsonFactionCreation",
+            "jsonStatusEffects",
+            "jsonExtraTooltips",
+            "jsonCombatEnchantments",
+            "jsonWorldStructures",
+            "jsonCosmicHappenings",
+            "jsonCityTreeNodes",
+            "jsonSpawnSetsStrat",
+            "jsonFreeCities",
+            "jsonDestinyTriggers",
+            "jsonRelics",
+            "jsonPantheon",
+            "jsonExtraSpellsLookup"
+        ];
+        const targets = [
+            "jsonHeroItems",
+            "jsonHeroSkills",
+            "jsonSiegeProjects",
+            "jsonUnits",
+            "jsonFactionCreation2",
+            "jsonTomes",
+            "jsonUnitAbilities",
+            "jsonEmpire",
+            "jsonSpells",
+            "jsonStructureUpgrades",
+            "jsonHeroAmbitions",
+            "jsonHeroGovernance",
+            "jsonItemForgeTypes",
+            "jsonItemForgeUpgrades",
+            "jsonUI",
+            "jsonAllFromPO",
+            "jsonConceptTooltips"
+        ];
+
+        // Assign data to global vars
+        genericTargets.forEach((key, i) => {
+            window[key] = dataGen[i];
+        });
+
+        targets.forEach((key, i) => {
+            window[key] = dataEN[i];
+            window[key + "Localized"] = dataLocal[i];
+        });
+
+        // Inject the template HTML into the page
+        const templateContainer = document.createElement("div");
+        templateContainer.innerHTML = templatesHtml;
+        document.body.appendChild(templateContainer); // or attach to a hidden container
+    } catch (error) {
+        console.error("Error loading data or templates:", error.message);
+    }
+}
+
+function AddExtraData() {
+    // add extra data to the main data set
+    jsonHeroSkills = [...jsonHeroSkills, ...extraSkills];
+    jsonHeroSkillsLocalized = [...jsonHeroSkillsLocalized, ...extraSkills];
+
+    jsonUnitAbilities = [...jsonUnitAbilities, ...extraAbilities];
+    jsonUnitAbilitiesLocalized = [...jsonUnitAbilitiesLocalized, ...extraAbilities];
+
+    jsonUnitAbilities = [...jsonUnitAbilities, ...jsonExtraTooltips];
+    jsonUnitAbilitiesLocalized = [...jsonUnitAbilitiesLocalized, ...jsonExtraTooltips];
+}
+
+const abilityMap = {};
+const abilityNameMap = {};
+
+async function CheckData() {
+    if (jsonSiegeProjects === undefined) {
+        let storedSettings = getUserSettings();
+        if (storedSettings === null) {
+            setUserSettings({
+                tooltipselectable: false,
+                fontSize: "16px",
+                showSecretSpells: false,
+                showBeta: false,
+                language: "EN"
+            });
+            storedSettings = getUserSettings();
+        }
+        //checkboxTooltip = document.getElementById("tooltipCheckbox");
+        checkboxTooltip.checked = storedSettings.tooltipselectable;
+        showSecretSpells.checked = storedSettings.showSecretSpells;
+
+        //checkboxNumbers = document.getElementById("numbersCheckbox");
+        //checkboxNumbers = document.getElementById("numbersCheckbox");
+        checkboxNumbers.checked = storedSettings.isolateNumber;
+
+        // showBetaTooltip = document.getElementById("showBetaCheckbox");
+        showBetaTooltip.checked = storedSettings.showBeta;
+
+        //  languageSelect = document.getElementById("languageSelect");
+        languageSelect.value = storedSettings.language;
+        //languageSelect.value = "EN";
+        let hoverDiv = document.getElementById("hoverDiv");
+        let hoverDiv2 = document.getElementById("hoverDiv2");
+        if (checkboxTooltip.checked === true) {
+            addTooltipListeners(hoverDiv, null);
+            addTooltipListeners(hoverDiv2, null, "something");
+        } else {
+            removeToolTipListeners(hoverDiv);
+            removeToolTipListeners(hoverDiv2);
+        }
+        CheckBoxTooltips();
+
+        if (storedSettings.showBeta) {
+            await GetAllData("BETA");
+        } else {
+            await GetAllData(storedSettings.language);
+        }
+
+        //await GetAllData("EN");
+        AddExtraData();
+
+        jsonUnitAbilitiesLocalized.forEach((a) => (abilityMap[a.slug] = a));
+        jsonUnitAbilitiesLocalized.forEach((a) => (abilityNameMap[a.name] = a));
+
+        // maps
+        HandlePage();
+        if (languageSelect.value != "EN") {
+            LocalizeUI();
+        }
+    }
+}
+
+const lookupMaps = new Map(); // cache of maps per "array+key" combo
+
+function buildLookupMap(array, key) {
+    const mapKey =
+        array === jsonUnits
+            ? "jsonUnits:" + key
+            : array === jsonUnitAbilities
+              ? "jsonUnitAbilities:" + key
+              : array === jsonUnitAbilitiesLocalized
+                ? "jsonUnitAbilitiesLocalized:" + key
+                : array === jsonSpells
+                  ? "jsonSpells:" + key
+                  : array === jsonSpellsLocalized
+                    ? "jsonSpellsLocalized:" + key
+                    : array === jsonTomes
+                      ? "jsonTomes:" + key
+                      : array === jsonTomesLocalized
+                        ? "jsonTomesLocalized:" + key
+                        : array === jsonHeroSkills
+                          ? "jsonHeroSkills:" + key
+                          : array === jsonAllFromPOLocalized
+                            ? "jsonAllFromPOLocalized:" + key
+                            : null;
+
+    if (!mapKey) return null; // not a static array we track
+
+    if (!lookupMaps.has(mapKey)) {
+        const map = new Map();
+        for (const entry of array) {
+            if (entry[key] !== undefined) {
+                map.set(entry[key], entry);
+            }
+        }
+        lookupMaps.set(mapKey, map);
+    }
+    return lookupMaps.get(mapKey);
+}
+
+const patchDates = [
+    // date ranges of patches
+    { name: "Sprite 1.2", from: new Date("2026-07-02"), to: new Date("2026-11-29") },
+    { name: "Sprite 1.1", from: new Date("2026-06-24"), to: new Date("2026-07-01") },
+    { name: "Sprite 1.0", from: new Date("2026-06-16"), to: new Date("2026-06-23") },
+    { name: "Scorpion 1.2.1", from: new Date("2026-04-01"), to: new Date("2026-06-15") },
+    { name: "Scorpion 1.2", from: new Date("2026-03-24"), to: new Date("2026-03-31") },
+    { name: "Scorpion 1.1", from: new Date("2026-03-12"), to: new Date("2026-03-23") },
+    { name: "Scorpion 1.0", from: new Date("2026-03-09"), to: new Date("2026-03-11") },
+    { name: "Gargoyle 1.2.2", from: new Date("2025-12-09"), to: new Date("2026-03-08") },
+    { name: "Gargoyle 1.2.1", from: new Date("2025-11-26"), to: new Date("2025-12-08") },
+    { name: "Gargoyle 1.2", from: new Date("2025-11-25"), to: new Date("2025-11-25") },
+    { name: "Gargoyle 1.1", from: new Date("2025-11-13"), to: new Date("2025-11-24") },
+    { name: "Gargoyle 1.0", from: new Date("2025-11-11"), to: new Date("2025-11-12") },
+    { name: "Wisp", from: new Date("2025-09-30"), to: new Date("2025-11-10") },
+    { name: "Griffon 1.2", from: new Date("2025-08-26"), to: new Date("2025-09-29") },
+    { name: "Griffon 1.1", from: new Date("2025-08-14"), to: new Date("2025-08-25") },
+    { name: "Griffon 1.0", from: new Date("2025-08-12"), to: new Date("2025-11-13") },
+    { name: "Ogre 1.2.1", from: new Date("2025-04-29"), to: new Date("2025-08-11") },
+    { name: "Ogre 1.2", from: new Date("2025-04-15"), to: new Date("2025-04-28") }
+];
+
+function LocalizeUI(specific) {
+    // general ui lookup first
+    for (const id in jsonUIGeneric) {
+        let el = "";
+        if (specific != undefined) {
+            el = specific.querySelector("#" + id);
+            console.log(el);
+        } else {
+            el = document.getElementById(id);
+        }
+
+        if (el != null) {
+            let value = "error";
+
+            // check if there is a lookup in the baseConceptLookup file
+            if ("lookup" in jsonUIGeneric[id]) {
+                let test = jsonUIGeneric[id].lookup;
+
+                if (test.includes("&")) {
+                    test = test.split("&");
+
+                    const found = findBy(jsonAllFromPOLocalized, "id", test[0]);
+                    if (found) {
+                        value = found[test[1]];
+                    }
+                } else {
+                    const found = findBy(jsonAllFromPOLocalized, "id", test);
+                    if (found) {
+                        value = found.hyperlink;
+                    }
+                }
+                //   console.log(test);
+                value = value.replaceAll("<hyperlink>", "");
+                value = value.replaceAll("</hyperlink>", "");
+                value = value.split("^")[0];
+            } else if ("unit" in jsonUIGeneric[id]) {
+                let test = jsonUIGeneric[id].unit;
+                const abilityName = findBy(jsonUnitAbilities, "name", test);
+                console.log(abilityName.name);
+                const abilityNameLoc = findBy(jsonUnitAbilitiesLocalized, "slug", abilityName.slug);
+                value = abilityNameLoc.name;
+            } else {
+                // Assumes the image is first, text second
+                value = jsonUIGeneric[id].label;
+            }
+
+            el.childNodes[1].nodeValue = " " + value;
+        }
+    }
+    // then specific for ones that arent in the po file translations
+    for (const id in jsonUILocalized) {
+        const el = document.getElementById(id);
+        if (el) {
+            let value = "error";
+
+            // Assumes the image is first, text second
+            value = jsonUILocalized[id].label;
+
+            el.childNodes[1].nodeValue = " " + value;
+        }
+    }
+}

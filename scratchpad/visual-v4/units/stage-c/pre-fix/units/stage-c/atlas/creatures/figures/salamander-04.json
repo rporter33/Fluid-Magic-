@@ -1,0 +1,285 @@
+{
+ "figure": "salamander-04",
+ "unit": "salamander",
+ "face": "04",
+ "nation": "cinderHorde",
+ "key": "green",
+ "body": "salamander",
+ "portrait": "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/04.webp",
+ "views": {
+  "back": {
+   "idle": "frames/salamander-04.back/salamander-04.back.idle.png",
+   "heightWu": 97.59,
+   "anchorPx": [
+    336.0,
+    669.7
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": [
+    683,
+    84
+   ],
+   "atlas": {
+    "S": {
+     "prefix": "salamander-S",
+     "frame": "salamander-04.back.idle",
+     "shadow": "salamander-04.back.idle.shadow",
+     "scale": 0.1897,
+     "w": 135,
+     "h": 198,
+     "mouthWu": [
+      32.9,
+      -55.5
+     ]
+    },
+    "H": {
+     "prefix": "salamander-H",
+     "frame": "salamander-04.back.idle",
+     "shadow": "salamander-04.back.idle.shadow",
+     "scale": 0.3794,
+     "w": 269,
+     "h": 396,
+     "mouthWu": [
+      32.9,
+      -55.5
+     ]
+    }
+   },
+   "sheet": "stage-c/raw/creatures/sal04.back.redress.nb21.png",
+   "sha256": "5b9324570f364977ea57069806cf1830ea6613141abb0efbd350f0ce235617df",
+   "model": "gemini-nano-banana-2.1",
+   "job": "sal04.back.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "pilot/raw/r2/sal.back.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": null,
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.761,
+     "iouMirrored": 0.259,
+     "aspectRatio": 1.01,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      19.3,
+      1.6,
+      6.1
+     ],
+     "portraitLab": [
+      27.0,
+      2.8,
+      8.5
+     ],
+     "dE2000": 5.9,
+     "wholeDE2000": 7.9,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 22.8,
+      "groundL": 67.7,
+      "below": 45.0
+     },
+     "farmland": {
+      "bodyL": 22.8,
+      "groundL": 67.3,
+      "below": 44.5
+     },
+     "swamp": {
+      "bodyL": 22.4,
+      "groundL": 58.5,
+      "below": 36.0
+     },
+     "forest": {
+      "bodyL": 22.4,
+      "groundL": 58.7,
+      "below": 36.3
+     },
+     "worstBelow": 36.0,
+     "minContrast": 36.0,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 8.7,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 2.214,
+     "keyInUnitPct": 0.025,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.75,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     695,
+     1029
+    ],
+    "oversampleAtH": 2.64
+   },
+   "identity": {
+    "marks": {
+     "narrow wedge viper head": true,
+     "two long ram-like horns": true,
+     "torn ragged neck frill": true,
+     "dried-lava cracks, soot in creases": true,
+     "deep-set eyes under a heavy brow": "partly"
+    },
+    "note": "front view: the frill reads as a row of spines down the neck and back",
+    "by": "stage C creatures agent, 4x crops (review/identity-salamander-04.png)"
+   }
+  },
+  "front": {
+   "idle": "frames/salamander-04.front/salamander-04.front.idle.png",
+   "heightWu": 78.49,
+   "anchorPx": [
+    386.7,
+    826.3
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": [
+    20,
+    858
+   ],
+   "atlas": {
+    "S": {
+     "prefix": "salamander-S",
+     "frame": "salamander-04.front.idle",
+     "shadow": "salamander-04.front.idle.shadow",
+     "scale": 0.167,
+     "w": 126,
+     "h": 160,
+     "mouthWu": [
+      -30.6,
+      2.6
+     ]
+    },
+    "H": {
+     "prefix": "salamander-H",
+     "frame": "salamander-04.front.idle",
+     "shadow": "salamander-04.front.idle.shadow",
+     "scale": 0.334,
+     "w": 252,
+     "h": 319,
+     "mouthWu": [
+      -30.6,
+      2.6
+     ]
+    }
+   },
+   "sheet": "stage-c/raw/creatures/sal04.front.redress.nb21.png",
+   "sha256": "a7f479fe1864849a2e7dbb44cd47351814a96a1a9ca9793a9d4eb361a4f71e2c",
+   "model": "gemini-nano-banana-2.1",
+   "job": "sal04.front.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "pilot/raw/ad/sal.front.mark.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": null,
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.854,
+     "iouMirrored": 0.334,
+     "aspectRatio": 0.947,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      19.9,
+      0.3,
+      4.9
+     ],
+     "portraitLab": [
+      27.0,
+      2.8,
+      8.5
+     ],
+     "dE2000": 6.6,
+     "wholeDE2000": 7.0,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 22.9,
+      "groundL": 67.7,
+      "below": 44.8
+     },
+     "farmland": {
+      "bodyL": 22.9,
+      "groundL": 67.3,
+      "below": 44.4
+     },
+     "swamp": {
+      "bodyL": 22.6,
+      "groundL": 58.5,
+      "below": 35.9
+     },
+     "forest": {
+      "bodyL": 22.6,
+      "groundL": 58.7,
+      "below": 36.1
+     },
+     "worstBelow": 35.9,
+     "minContrast": 35.9,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 17.3,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 2.06,
+     "keyInUnitPct": 0.05,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.28,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     740,
+     940
+    ],
+    "oversampleAtH": 2.99
+   },
+   "identity": {
+    "marks": {
+     "narrow wedge viper head": true,
+     "two long ram-like horns": true,
+     "torn ragged neck frill": "partly",
+     "dried-lava cracks, soot in creases": true,
+     "deep-set eyes under a heavy brow": true
+    },
+    "note": "front view: the frill reads as a row of spines down the neck and back",
+    "by": "stage C creatures agent, 4x crops (review/identity-salamander-04.png)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

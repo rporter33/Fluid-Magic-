@@ -1,0 +1,168 @@
+{
+ "figure": "twChief",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.825,
+  "iouMirrored": 0.657,
+  "aspectRatio": 1.062,
+  "headDx": 0.044,
+  "guideHeadDx": -0.007,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.639,
+  "marchLegsIoU": 0.349,
+  "mostAlike": [
+   "marchA~strike",
+   0.676
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 1.112,
+   "marchB": 1.064
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 0.318,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 0.0,
+  "pass_": true,
+  "edgeDevThickPct": 0.0,
+  "deviatingChromaShift": 0.0
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "fall",
+   0.824
+  ],
+  "maxDE": [
+   "follow",
+   2.3
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.825,
+    0.168
+   ],
+   "idle2": [
+    0.8,
+    0.092
+   ],
+   "marchA": [
+    0.764,
+    0.258
+   ],
+   "marchB": [
+    0.701,
+    0.351
+   ],
+   "windup": [
+    0.591,
+    0.024
+   ],
+   "strike": [
+    0.732,
+    0.415
+   ],
+   "follow": [
+    0.512,
+    0.076
+   ],
+   "recoil": [
+    0.739,
+    0.094
+   ],
+   "actA": [
+    0.813,
+    0.243
+   ],
+   "actB": [
+    0.81,
+    0.204
+   ],
+   "fall": [
+    0.559,
+    0.554
+   ],
+   "deadA": [
+    0.655,
+    0.648
+   ],
+   "deadB": [
+    0.647,
+    0.273
+   ],
+   "fleeA": [
+    0.776,
+    0.434
+   ],
+   "fleeB": [
+    0.797,
+    0.624
+   ],
+   "cheer": [
+    0.797,
+    0.133
+   ]
+  },
+  "medianIoU": 0.752,
+  "medianMargin": 0.251,
+  "follow": "15/16",
+  "followShare": 0.94
+ },
+ "rim": {
+  "beforeMax": 0.0,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.145,
+  "worstBelow": 31.6,
+  "grounds": {
+   "plains": {
+    "share": 0.145,
+    "below": 40.1
+   },
+   "farmland": {
+    "share": 0.091,
+    "below": 39.7
+   },
+   "swamp": {
+    "share": 0.181,
+    "below": 31.6
+   },
+   "forest": {
+    "share": 0.143,
+    "below": 31.8
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": null,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/cmdB/refs/cmdChief.back.onmagenta.png"
+}

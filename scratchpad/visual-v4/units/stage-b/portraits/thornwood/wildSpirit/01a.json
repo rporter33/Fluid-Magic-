@@ -1,0 +1,104 @@
+{
+ "id": "wildSpirit-01a",
+ "unit": "wildSpirit",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "wildSpirit",
+ "promptFile": "stage-b/work/portraits/prompts-used/wildSpirit-thornwood.01a.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 20194,
+  "game": 7462,
+  "small": 1376
+ },
+ "sourceFile": "stage-b/raw/portraits/wildSpirit-thornwood.01a.nb21.png",
+ "sourceSha256": "90f0c4c9deaae62458a6147f519e214fec9bf9dc84785131132fc9ff8832dd97",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a grey clay maquette of this figure: follow its pose, its parts and its framing, the whole figure from head to foot filling the square as it does, seen three-quarter front from a little above. It is a crude blockout: take its pose, its parts and its framing, not its stubby proportions. Paint over it completely: no grey clay and no plain smooth shapes may remain. Image 2 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 2.\n\nA full-length painted portrait of the Wild Spirit, an elusive god of the deep wood: a great stag-like beast-spirit, hard to catch, in a regal pose: standing alert and proud on all four legs, head raised high and turned a little toward the right, one forefoot lifted. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the antlers about 6% from the top edge and the hooves and the trailing wisps about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the antlers, the head, the ruff and the back that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the hooves and the trailing wisps.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the branching antlers, the leaf ruff and the long legs against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the beast is its leaf ruff: deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Nothing in the image glows. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a lean, long-legged, deer-like beast the size of a horse, with a wolf's deep chest and a long tail; its hide is brown (#7A5638) with stripes of lichen grey-green (#909080) across the flanks and the legs; its outline is soft and a little misty, as if it is only half there. Head: a long, narrow, deer-like head with dark eyes. Antlers: tall, wide, branching antlers. Ruff: a thick collar of overlapping leaves around the neck and the chest, the leaves deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Wisps: thin pale wisps of mist trail from its legs and its tail.\nPaint it as described, the whole figure clearly in view.",
+ "references": [
+  "wildSpirit.png",
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "hide brown #7A5638",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: antlers; leaf ruff; wisps trail; stripes; translucent flicker",
+ "pose": "regal",
+ "tintZone": "the leaf ruff",
+ "cardCrop": {
+  "box512": [
+   230,
+   30,
+   480,
+   280
+  ],
+  "source": "override",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "tall branching antlers",
+   "read": true
+  },
+  {
+   "mark": "leaf ruff in the nation's colour",
+   "read": true
+  },
+  {
+   "mark": "stripes on the flanks and legs",
+   "read": true
+  },
+  {
+   "mark": "trailing mist wisps",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 2.9,
+   "bgSpread": 0.4,
+   "floor": 0.4,
+   "top": 0.084,
+   "low": 0.926,
+   "bottomCut": 0.0,
+   "cx": 0.536,
+   "subject": 0.133,
+   "light": 1.1,
+   "rim": 0.574,
+   "read48": 17.7,
+   "muted": 0.0001,
+   "satAll": 0.0001,
+   "side": {
+    "window": 0.068,
+    "lock": 0.2467
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "strong",
+  "note": "Lean striped stag-spirit with the green leaf ruff, half-misty outline and trailing wisps; card crop set by hand on the head.",
+  "marks": {
+   "tall branching antlers": true,
+   "leaf ruff in the nation's colour": true,
+   "stripes on the flanks and legs": true,
+   "trailing mist wisps": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

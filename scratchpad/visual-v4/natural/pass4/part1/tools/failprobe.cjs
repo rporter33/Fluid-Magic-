@@ -1,0 +1,14 @@
+// failing floor samples with pixel rows and crops: node failprobe.cjs <query> <viewExpr|''> <how: rest|hover:Name|select:Name> <outprefix>
+const { launch, open, ev, mev } = require('./lib.cjs'); const { execSync } = require('child_process');
+(async () => { const [q, vexpr, how, outp] = process.argv.slice(2); const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, q, settle: 1500, w: +(process.env.VW || 1440), h: +(process.env.VH || 900) }); await p.mouse.move(720, 896);
+  if (process.env.TMODE) { await mev(p, "setMode('terrain')"); await p.waitForFunction(() => window.__mock.look().clear, null, { timeout: 300000, polling: 300 }); await p.waitForTimeout(1500); }
+  if (vexpr) await ev(p, vexpr); await p.waitForTimeout(1800);
+  const r = await mev(p, `(() => { const [h, nm] = '${how}'.split(':'), i = nm ? names.indexOf(nm) : null, band = bandOf(cam.s); const P = rlFloorPlan(h === 'rest' ? rlFloorEdgesOf(null, band) : rlFloorEdgesOf(i, band));
+    let land, lines; if (h === 'rest') { rlFrame(RL_LF.LAND, true); land = rlReadPlan(P); rlFrame(RL_LF.LINES, true); lines = rlReadPlan(P); } else if (h === 'hover') { state.sel = null; hoverProv = -1; rlFrame(RL_LF.LAND, true); hoverProv = i; draw(); land = rlReadPlan(P); hoverProv = -1; rlFrame(RL_LF.LINES, true); hoverProv = i; draw(); lines = rlReadPlan(P); hoverProv = -1; }
+    else { state.sel = { type: 'prov', id: i }; rlFrame(RL_LF.LAND, true); land = rlReadPlan(P); rlFrame(RL_LF.LINES, true); lines = rlReadPlan(P); }
+    const bad = []; for (const pt of P.pts) { let bst = 0; const row = []; for (let k = pt.k0; k < pt.k1; k += 2) { const o = (k / 2) * 3, A = [lines[o], lines[o + 1], lines[o + 2]], B = [land[o], land[o + 1], land[o + 2]], c = rlWcag(A, B); row.push(rgb2hex(B) + '>' + rgb2hex(A) + ' ' + c.toFixed(2)); if (c > bst) bst = c; }
+      if (bst < RL_LF[pt.kind]) bad.push({ e: names[pt.e.i] + '/' + names[pt.e.j], kind: pt.kind, at: pt.at, best: +bst.toFixed(2), xy: [P.idx[pt.k0] / dpr, P.idx[pt.k0 + 1] / dpr, P.idx[pt.k1 - 2] / dpr, P.idx[pt.k1 - 1] / dpr], river: rlWorld4().riverOf.has(ekey(pt.e.i, pt.e.j)), wd: +(rlWaterDist(...toWorld(P.idx[pt.k0] / dpr, P.idx[pt.k0 + 1] / dpr)) * cam.s).toFixed(1), row }); }
+    const rc = canvas.getBoundingClientRect(); return { n: P.pts.length, bad, rect: [rc.left, rc.top], s: cam.s }; })()`);
+  console.log(JSON.stringify({ n: r.n, nbad: r.bad.length, s: r.s }), log.pageErrors);
+  for (const [n, x] of r.bad.slice(0, 3).entries()) { console.log(JSON.stringify(x)); const cx = (x.xy[0] + x.xy[2]) / 2, cy = (x.xy[1] + x.xy[3]) / 2; const f = `${outp}-${n}.png`; await p.screenshot({ path: f, clip: { x: r.rect[0] + cx - 30, y: r.rect[1] + cy - 22, width: 60, height: 44 } }); execSync(`python3 -c "from PIL import Image; a=Image.open('${f}'); a.resize((a.width*6,a.height*6),Image.NEAREST).save('${f}')"`); }
+  await b.close(); })();

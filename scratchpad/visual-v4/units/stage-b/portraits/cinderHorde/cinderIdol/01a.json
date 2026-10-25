@@ -1,0 +1,104 @@
+{
+ "id": "cinderIdol-01a",
+ "unit": "cinderIdol",
+ "nation": "cinderHorde",
+ "group": "gods",
+ "subject": "cinderIdol",
+ "promptFile": "stage-b/work/portraits/prompts-used/cinderIdol-cinderHorde.01a.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 28504,
+  "game": 9786,
+  "small": 1640
+ },
+ "sourceFile": "stage-b/raw/portraits/cinderIdol-cinderHorde.01a.nb21.png",
+ "sourceSha256": "e9c8ad8cbb318049707ae82bde9b9cdddc2807c925f7fca653e69c20101993b3",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing: this painting shows a whole figure from head to foot. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 1.\n\nA full-length painted portrait of the Cinder Idol, an immobile god of stone and old fire, worshipped with dread, in a regal pose: upright and perfectly still. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the brazier and its smoke about 6% from the top edge and the plinth about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the brazier, the smoke and the shoulders of the idol that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the plinth.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the brazier face with its column of smoke, the squat body and the stepped plinth against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the stone is the pigment in its carved glyphs: dull ember-orange (#C4532C), the Cinder Horde's colour. All metal is dull old gold (#C9A23E), darkened and worn. Nothing in the image glows except the low dull coals in the brazier; there are no flames. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a massive, squat stone idol of grey granite (#7D7A75) carved like a seated, featureless giant with a broad chest and no arms, blackened with soot and crossed by cracks crusted with soot. Face: a brazier face: its head is a great stone bowl carved with a stern face on its front, holding a bed of dull red coals that send up a thin column of grey smoke; no tall flames. Metal: a band of dull old gold (#C9A23E), darkened and worn around the brazier's rim. Base: it sits on a square, stepped stone plinth. Glyphs: carved glyphs on its chest and on the plinth, their grooves filled with a pigment of dull ember-orange (#C4532C), the Cinder Horde's colour.\nPaint it as described, the whole figure clearly in view.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "stone granite #7D7A75",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: brazier face; plinth base; soot-and-crack veins; glyphs; smoke",
+ "pose": "regal",
+ "tintZone": "the pigment in the carved glyphs",
+ "cardCrop": {
+  "box512": [
+   139,
+   0,
+   374,
+   235
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "brazier face with a carved stern face",
+   "read": null
+  },
+  {
+   "mark": "column of grey smoke",
+   "read": null
+  },
+  {
+   "mark": "soot-crusted cracks",
+   "read": null
+  },
+  {
+   "mark": "stepped plinth",
+   "read": null
+  },
+  {
+   "mark": "carved glyphs in ember-orange pigment",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 4.3,
+   "bgSpread": 4.8,
+   "floor": 9.7,
+   "top": 0.0,
+   "low": 0.934,
+   "bottomCut": 0.0,
+   "cx": 0.5,
+   "subject": 0.378,
+   "light": 0.9,
+   "rim": 0.592,
+   "read48": 13.1,
+   "muted": 0.0009,
+   "satAll": 0.0022,
+   "side": {
+    "window": 0.0099
+   }
+  },
+  "failed": [
+   "framing: top 0.0 outside [0.01, 0.14]",
+   "side window 0.0099 < 0.03"
+  ],
+  "overridden": [],
+  "passed": false
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "Smoke ran off the top edge, glyph colour too small; re-rolled.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

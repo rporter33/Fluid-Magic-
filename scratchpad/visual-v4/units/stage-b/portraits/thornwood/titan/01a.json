@@ -1,0 +1,102 @@
+{
+ "id": "titan-01a",
+ "unit": "titan",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "titan",
+ "promptFile": "stage-b/work/portraits/prompts-used/titan-thornwood.01a.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 29802,
+  "game": 10736,
+  "small": 2092
+ },
+ "sourceFile": "stage-b/raw/portraits/titan-thornwood.01a.nb21.png",
+ "sourceSha256": "ec23c0506768c52de264e7fe1ffe6d9734b86e2d153a3c44d37a0666e57b4bfd",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the tabard (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the tabard. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "titan-cinderHorde.01a.nb21.png"
+ ],
+ "route": "edit of titan-cinderHorde.01a",
+ "swatches": {
+  "material": "skin ash #8F8C88",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: great helm; no mantle; straight great sword; plain armour",
+ "pose": "regal",
+ "tintZone": "the tabard",
+ "cardCrop": {
+  "box512": [
+   154,
+   8,
+   368,
+   222
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "closed flat-topped great helm",
+   "read": null
+  },
+  {
+   "mark": "plain gold plate armour",
+   "read": null
+  },
+  {
+   "mark": "tabard in the nation's cloth",
+   "read": null
+  },
+  {
+   "mark": "straight great sword held point-down",
+   "read": null
+  },
+  {
+   "mark": "no cape",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 2.8,
+   "bgSpread": 0.8,
+   "floor": 0.0,
+   "top": 0.041,
+   "low": 0.953,
+   "bottomCut": 0.0,
+   "cx": 0.516,
+   "subject": 0.281,
+   "light": -1.9,
+   "rim": 0.513,
+   "read48": 20.1,
+   "muted": 0.0058,
+   "satAll": 0.0058,
+   "side": {
+    "window": 0.3005,
+    "lock": 0.3749
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "Edit of the squat first body; made again from the re-rolled body.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

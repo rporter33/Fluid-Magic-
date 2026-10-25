@@ -1,0 +1,388 @@
+{
+ "figure": "cmdCaster",
+ "view": "front",
+ "sheet": "keyed.png",
+ "grid": [
+  4,
+  4
+ ],
+ "cell": [
+  256.0,
+  256.0
+ ],
+ "frames": [
+  {
+   "name": "stand",
+   "file": "cmdCaster.front.stand.png",
+   "kind": "standing",
+   "box": [
+    71,
+    33,
+    187,
+    220
+   ],
+   "size": [
+    116,
+    187
+   ],
+   "anchor": [
+    76.5,
+    184.0
+   ],
+   "height": 183,
+   "width": 112,
+   "area": 8541,
+   "parts": 1
+  },
+  {
+   "name": "idle2",
+   "file": "cmdCaster.front.idle2.png",
+   "kind": "standing",
+   "box": [
+    327,
+    33,
+    441,
+    220
+   ],
+   "size": [
+    114,
+    187
+   ],
+   "anchor": [
+    63.3,
+    184.0
+   ],
+   "height": 183,
+   "width": 110,
+   "area": 8460,
+   "parts": 1
+  },
+  {
+   "name": "marchA",
+   "file": "cmdCaster.front.marchA.png",
+   "kind": "standing",
+   "box": [
+    578,
+    38,
+    700,
+    217
+   ],
+   "size": [
+    122,
+    179
+   ],
+   "anchor": [
+    80.8,
+    176.0
+   ],
+   "height": 175,
+   "width": 118,
+   "area": 8166,
+   "parts": 1
+  },
+  {
+   "name": "marchB",
+   "file": "cmdCaster.front.marchB.png",
+   "kind": "standing",
+   "box": [
+    834,
+    38,
+    955,
+    219
+   ],
+   "size": [
+    121,
+    181
+   ],
+   "anchor": [
+    80.6,
+    178.0
+   ],
+   "height": 177,
+   "width": 117,
+   "area": 8206,
+   "parts": 1
+  },
+  {
+   "name": "windup",
+   "file": "cmdCaster.front.windup.png",
+   "kind": "standing",
+   "box": [
+    90,
+    267,
+    192,
+    476
+   ],
+   "size": [
+    102,
+    209
+   ],
+   "anchor": [
+    59.5,
+    206.0
+   ],
+   "height": 205,
+   "width": 98,
+   "area": 9940,
+   "parts": 1
+  },
+  {
+   "name": "strike",
+   "file": "cmdCaster.front.strike.png",
+   "kind": "standing",
+   "box": [
+    323,
+    303,
+    441,
+    473
+   ],
+   "size": [
+    118,
+    170
+   ],
+   "anchor": [
+    66.5,
+    167.0
+   ],
+   "height": 166,
+   "width": 114,
+   "area": 7931,
+   "parts": 1
+  },
+  {
+   "name": "follow",
+   "file": "cmdCaster.front.follow.png",
+   "kind": "standing",
+   "box": [
+    615,
+    302,
+    696,
+    474
+   ],
+   "size": [
+    81,
+    172
+   ],
+   "anchor": [
+    43.4,
+    169.0
+   ],
+   "height": 168,
+   "width": 77,
+   "area": 6746,
+   "parts": 1
+  },
+  {
+   "name": "recoil",
+   "file": "cmdCaster.front.recoil.png",
+   "kind": "standing",
+   "box": [
+    793,
+    283,
+    987,
+    476
+   ],
+   "size": [
+    194,
+    193
+   ],
+   "anchor": [
+    122.1,
+    190.0
+   ],
+   "height": 189,
+   "width": 190,
+   "area": 10904,
+   "parts": 2
+  },
+  {
+   "name": "actA",
+   "file": "cmdCaster.front.actA.png",
+   "kind": "standing",
+   "box": [
+    108,
+    527,
+    188,
+    731
+   ],
+   "size": [
+    80,
+    204
+   ],
+   "anchor": [
+    41.5,
+    201.0
+   ],
+   "height": 200,
+   "width": 76,
+   "area": 9158,
+   "parts": 1
+  },
+  {
+   "name": "actB",
+   "file": "cmdCaster.front.actB.png",
+   "kind": "standing",
+   "box": [
+    306,
+    559,
+    443,
+    729
+   ],
+   "size": [
+    137,
+    170
+   ],
+   "anchor": [
+    95.8,
+    167.0
+   ],
+   "height": 166,
+   "width": 133,
+   "area": 8220,
+   "parts": 1
+  },
+  {
+   "name": "fall",
+   "file": "cmdCaster.front.fall.png",
+   "kind": "standing",
+   "box": [
+    619,
+    522,
+    762,
+    733
+   ],
+   "size": [
+    143,
+    211
+   ],
+   "anchor": [
+    44.5,
+    208.0
+   ],
+   "height": 207,
+   "width": 139,
+   "area": 11145,
+   "parts": 1
+  },
+  {
+   "name": "deadA",
+   "file": "cmdCaster.front.deadA.png",
+   "kind": "lying",
+   "box": [
+    867,
+    562,
+    1024,
+    696
+   ],
+   "size": [
+    157,
+    134
+   ],
+   "anchor": [
+    77.2,
+    98.8
+   ],
+   "height": 130,
+   "width": 155,
+   "area": 9591,
+   "touchesWindow": true,
+   "parts": 1
+  },
+  {
+   "name": "deadB",
+   "file": "cmdCaster.front.deadB.png",
+   "kind": "lying",
+   "box": [
+    4,
+    889,
+    178,
+    1021
+   ],
+   "size": [
+    174,
+    132
+   ],
+   "anchor": [
+    100.8,
+    97.2
+   ],
+   "height": 128,
+   "width": 170,
+   "area": 7871,
+   "parts": 1
+  },
+  {
+   "name": "fleeA",
+   "file": "cmdCaster.front.fleeA.png",
+   "kind": "standing",
+   "box": [
+    342,
+    820,
+    441,
+    989
+   ],
+   "size": [
+    99,
+    169
+   ],
+   "anchor": [
+    60.0,
+    166.0
+   ],
+   "height": 165,
+   "width": 95,
+   "area": 7636,
+   "parts": 1
+  },
+  {
+   "name": "fleeB",
+   "file": "cmdCaster.front.fleeB.png",
+   "kind": "standing",
+   "box": [
+    619,
+    819,
+    700,
+    982
+   ],
+   "size": [
+    81,
+    163
+   ],
+   "anchor": [
+    36.5,
+    160.0
+   ],
+   "height": 159,
+   "width": 77,
+   "area": 6992,
+   "parts": 1
+  },
+  {
+   "name": "cheer",
+   "file": "cmdCaster.front.cheer.png",
+   "kind": "standing",
+   "box": [
+    875,
+    781,
+    957,
+    988
+   ],
+   "size": [
+    82,
+    207
+   ],
+   "anchor": [
+    41.4,
+    204.0
+   ],
+   "height": 203,
+   "width": 78,
+   "area": 9264,
+   "parts": 1
+  }
+ ],
+ "missing": [],
+ "overlaps": [
+  "deadA"
+ ]
+}

@@ -1,0 +1,223 @@
+{
+ "figure": "hornetSwarm",
+ "unit": "hornetSwarm",
+ "nation": "thornwood",
+ "key": "magenta",
+ "layout": "hornet",
+ "body": "hornet",
+ "cloth": null,
+ "hueLocked": false,
+ "portrait": "stage-b/portraits/thornwood/hornetSwarm/01b.webp",
+ "kit": "One giant hornet of a Hornet Swarm summoned by Thornwood druids, as big as a sparrow: a black and amber-yellow striped abdomen, a dark brown thorax, a long black sting, two pairs of pale smoky wings (painted opaque, not see-through). The swarm itself is made in the game from many single hornets; each cell shows one hornet.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "hornetSwarm-S",
+     "scale": 0.0581,
+     "standPx": 10,
+     "bodyHeightSrc": 172,
+     "frames": [
+      "hornetSwarm.back.up0",
+      "hornetSwarm.back.up0.white",
+      "hornetSwarm.back.down0",
+      "hornetSwarm.back.up90",
+      "hornetSwarm.back.down90",
+      "hornetSwarm.back.up180",
+      "hornetSwarm.back.down180",
+      "hornetSwarm.back.sting0",
+      "hornetSwarm.back.sting90",
+      "hornetSwarm.back.glide0",
+      "hornetSwarm.back.glide90",
+      "hornetSwarm.back.deadA",
+      "hornetSwarm.back.deadB"
+     ]
+    },
+    "H": {
+     "prefix": "hornetSwarm-H",
+     "scale": 0.1163,
+     "standPx": 20,
+     "bodyHeightSrc": 172,
+     "frames": [
+      "hornetSwarm.back.up0",
+      "hornetSwarm.back.up0.white",
+      "hornetSwarm.back.down0",
+      "hornetSwarm.back.up90",
+      "hornetSwarm.back.down90",
+      "hornetSwarm.back.up180",
+      "hornetSwarm.back.down180",
+      "hornetSwarm.back.sting0",
+      "hornetSwarm.back.sting90",
+      "hornetSwarm.back.glide0",
+      "hornetSwarm.back.glide90",
+      "hornetSwarm.back.deadA",
+      "hornetSwarm.back.deadB"
+     ]
+    }
+   },
+   "frames": "frames/hornetSwarm.back/",
+   "sheet": "stage-c/raw/creatures/hornetSwarm.back.cfix.nb21.png",
+   "sha256": "cee547ae071a252e911c038d72f36847b3674de0acee21672d19d0dddfa5f2a5",
+   "model": "gemini-nano-banana-2.1",
+   "job": "hornetSwarm.back.cfix",
+   "route": "fill",
+   "references": [
+    "stage-c/work/fix/bases/hornetSwarm.back.cfix.base.png",
+    "stage-b/portraits/thornwood/hornetSwarm/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "fringe"
+   ],
+   "note": "keycast wasp: key-cast pixels max 17.21% -> 0.00% of a frame; magenta edge pass: 12174 edge pixels de-tinted",
+   "keycast": {
+    "rule": "wasp",
+    "window": [
+     285.0,
+     35.0
+    ],
+    "to": 60.0,
+    "castShareBefore": 0.1721,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "hornetSwarm.back.fill (shipped before the fix pass: a fuzzy amber bee)",
+    "hornetSwarm.back.paint"
+   ],
+   "checks": {
+    "cameraCells": "10/12",
+    "cameraFailing": [
+     "down180",
+     "up90"
+    ],
+    "cells": {
+     "up0": [
+      0.583,
+      0.421
+     ],
+     "down0": [
+      0.682,
+      0.327
+     ],
+     "up90": [
+      0.519,
+      0.393
+     ],
+     "down90": [
+      0.766,
+      0.412
+     ],
+     "up180": [
+      0.617,
+      0.465
+     ],
+     "down180": [
+      0.534,
+      0.286
+     ],
+     "sting0": [
+      0.74,
+      0.388
+     ],
+     "sting90": [
+      0.668,
+      0.503
+     ],
+     "glide0": [
+      0.638,
+      0.412
+     ],
+     "glide90": [
+      0.671,
+      0.383
+     ],
+     "deadA": [
+      0.593,
+      0.183
+     ],
+     "deadB": [
+      0.77,
+      0.374
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "up0~down0": 0.337
+     },
+     "mostAlike": [
+      "up0~glide0",
+      0.549
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {},
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.0,
+     "histMin": [
+      "down180",
+      0.785
+     ],
+     "maxDE": [
+      "up90",
+      3.4
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 12.9,
+     "afterMax": 0.4
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 5.0,
+     "neutral": {
+      "worstBelow": 19.1,
+      "below": {
+       "plains": 24.8,
+       "farmland": 24.5,
+       "swamp": 19.1,
+       "forest": 19.3
+      },
+      "minContrast": 19.1
+     },
+     "pass": true,
+     "rule": "block 15 L* below every ground"
+    },
+    "fringe": {
+     "spillEdgePct": 13.115,
+     "keyInUnitPct": 0.726,
+     "fringePct": 0.0,
+     "edgeDevPct": 6.37,
+     "pass_": false
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "narrow dull ochre bands": true,
+     "open jagged mandibles": "partly",
+     "swept-back antennae": true,
+     "torn wing edge": "partly",
+     "glossy black head and thorax (a wasp, not a bee)": true
+    },
+    "note": "R4: a hairless black-and-ochre wasp with smoky dark wings, against portrait B (provisional pick)",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  }
+ },
+ "approved": null
+}

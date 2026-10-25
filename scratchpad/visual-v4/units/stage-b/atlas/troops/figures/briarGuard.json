@@ -1,0 +1,429 @@
+{
+ "figure": "briarGuard",
+ "unit": "briarGuard",
+ "nation": "thornwood",
+ "key": "magenta",
+ "cloth": "#1F6A50",
+ "hueLocked": true,
+ "kit": "A Briar Guard, heavy infantry: thick armour of black-brown bark plates studded with short thorns on the shoulders, arms and legs; a sleeveless surcoat of deep bottle-green cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a thorn-studded belt, worn over the bark plates of the body; a closed bark helm crowned with a ring of thorns and a deep green leaf crest; a heavy deep bottle-green mantle across the shoulders and the upper back; a long halberd with a curved thorn-shaped blade, a back hook and a spike. No shield, no antlers. Big and broad.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.5045,
+     "standPx": 56,
+     "frames": [
+      "briarGuard.back.stand",
+      "briarGuard.back.stand.white",
+      "briarGuard.back.idle2",
+      "briarGuard.back.marchA",
+      "briarGuard.back.marchB",
+      "briarGuard.back.windup",
+      "briarGuard.back.strike",
+      "briarGuard.back.follow",
+      "briarGuard.back.brace",
+      "briarGuard.back.recoil",
+      "briarGuard.back.recoil.white",
+      "briarGuard.back.fall",
+      "briarGuard.back.deadA",
+      "briarGuard.back.deadB",
+      "briarGuard.back.fleeA",
+      "briarGuard.back.fleeB",
+      "briarGuard.back.cheer",
+      "briarGuard.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 1.009,
+     "standPx": 112,
+     "frames": [
+      "briarGuard.back.stand",
+      "briarGuard.back.stand.white",
+      "briarGuard.back.idle2",
+      "briarGuard.back.marchA",
+      "briarGuard.back.marchB",
+      "briarGuard.back.windup",
+      "briarGuard.back.strike",
+      "briarGuard.back.follow",
+      "briarGuard.back.brace",
+      "briarGuard.back.recoil",
+      "briarGuard.back.recoil.white",
+      "briarGuard.back.fall",
+      "briarGuard.back.deadA",
+      "briarGuard.back.deadB",
+      "briarGuard.back.fleeA",
+      "briarGuard.back.fleeB",
+      "briarGuard.back.cheer",
+      "briarGuard.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/t2a.briarGuard.back.dress.nb21.png",
+   "sha256": "34af8fad67ea1be2abcece019aff9fb360781ac514ea21987b75fee14e448a33",
+   "model": "gemini-nano-banana-2.1",
+   "job": "briarGuard.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops2/bases/bg.back.from-ashMilitia.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/07.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "14/15",
+    "cells": {
+     "stand": [
+      0.754,
+      0.147
+     ],
+     "idle2": [
+      0.762,
+      0.135
+     ],
+     "marchA": [
+      0.786,
+      0.261
+     ],
+     "marchB": [
+      0.806,
+      0.355
+     ],
+     "windup": [
+      0.423,
+      0.013
+     ],
+     "strike": [
+      0.667,
+      0.198
+     ],
+     "follow": [
+      0.603,
+      0.245
+     ],
+     "brace": [
+      0.784,
+      0.257
+     ],
+     "recoil": [
+      0.845,
+      0.178
+     ],
+     "fall": [
+      0.795,
+      0.772
+     ],
+     "deadA": [
+      0.66,
+      0.647
+     ],
+     "deadB": [
+      0.653,
+      0.634
+     ],
+     "fleeA": [
+      0.825,
+      0.429
+     ],
+     "fleeB": [
+      0.849,
+      0.57
+     ],
+     "cheer": [
+      0.794,
+      0.123
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.613,
+     "marchLegsIoU": 0.511,
+     "mostAlike": [
+      "marchA~strike",
+      0.616
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.009,
+      "marchA": 1.081,
+      "marchB": 1.045
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.32,
+     "histMin": [
+      "windup",
+      0.803
+     ],
+     "maxDE": [
+      "windup",
+      6.2
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 1.1,
+     "afterMax": 0.0
+    },
+    "side": {
+     "neutral": {
+      "share": 0.176,
+      "worstBelow": 33.4,
+      "below": {
+       "plains": 41.5,
+       "farmland": 41.1,
+       "swamp": 33.4,
+       "forest": 33.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.335,
+      "worstBelow": 31.2,
+      "below": {
+       "plains": 39.4,
+       "farmland": 39.0,
+       "swamp": 31.2,
+       "forest": 31.4
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 15.907,
+     "keyInUnitPct": 0.081,
+     "fringePct": 0.0,
+     "edgeDevPct": 3.01,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0482,
+    "meanShare": 0.0245
+   },
+   "replaces": {
+    "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.briarGuard.back.g3pro.png",
+    "status": "reported",
+    "failed": [
+     "camera",
+     "consistency"
+    ]
+   },
+   "madeBy": "stage B troops2 (stage-b/work/troops2)"
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.3862,
+     "standPx": 56,
+     "frames": [
+      "briarGuard.front.stand",
+      "briarGuard.front.stand.white",
+      "briarGuard.front.idle2",
+      "briarGuard.front.marchA",
+      "briarGuard.front.marchB",
+      "briarGuard.front.windup",
+      "briarGuard.front.strike",
+      "briarGuard.front.follow",
+      "briarGuard.front.brace",
+      "briarGuard.front.recoil",
+      "briarGuard.front.recoil.white",
+      "briarGuard.front.fall",
+      "briarGuard.front.deadA",
+      "briarGuard.front.deadB",
+      "briarGuard.front.fleeA",
+      "briarGuard.front.fleeB",
+      "briarGuard.front.cheer",
+      "briarGuard.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 0.7724,
+     "standPx": 112,
+     "frames": [
+      "briarGuard.front.stand",
+      "briarGuard.front.stand.white",
+      "briarGuard.front.idle2",
+      "briarGuard.front.marchA",
+      "briarGuard.front.marchB",
+      "briarGuard.front.windup",
+      "briarGuard.front.strike",
+      "briarGuard.front.follow",
+      "briarGuard.front.brace",
+      "briarGuard.front.recoil",
+      "briarGuard.front.recoil.white",
+      "briarGuard.front.fall",
+      "briarGuard.front.deadA",
+      "briarGuard.front.deadB",
+      "briarGuard.front.fleeA",
+      "briarGuard.front.fleeB",
+      "briarGuard.front.cheer",
+      "briarGuard.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/t2b.briarGuard.front.dress.nb21.png",
+   "sha256": "70b30756d3660e903ff545f3309be915873f947f71163507e650b07f26f30ae9",
+   "model": "gemini-nano-banana-2.1",
+   "job": "briarGuard.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r3.thornMilitia.front.edit.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/wardenCaptain/07.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.709,
+      0.078
+     ],
+     "idle2": [
+      0.695,
+      0.642
+     ],
+     "marchA": [
+      0.692,
+      0.085
+     ],
+     "marchB": [
+      0.719,
+      0.195
+     ],
+     "windup": [
+      0.683,
+      0.157
+     ],
+     "strike": [
+      0.655,
+      0.403
+     ],
+     "follow": [
+      0.794,
+      0.334
+     ],
+     "brace": [
+      0.618,
+      0.203
+     ],
+     "recoil": [
+      0.715,
+      0.146
+     ],
+     "fall": [
+      0.654,
+      0.397
+     ],
+     "deadA": [
+      0.742,
+      0.376
+     ],
+     "deadB": [
+      0.73,
+      0.703
+     ],
+     "fleeA": [
+      0.693,
+      0.155
+     ],
+     "fleeB": [
+      0.764,
+      0.378
+     ],
+     "cheer": [
+      0.67,
+      0.115
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.526,
+     "marchLegsIoU": 0.513,
+     "mostAlike": [
+      "stand~marchA",
+      0.76
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 0.986,
+      "marchA": 1.0,
+      "marchB": 0.931
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.32,
+     "histMin": [
+      "fleeB",
+      0.803
+     ],
+     "maxDE": [
+      "strike",
+      4.1
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 7.0,
+     "afterMax": 0.2
+    },
+    "side": {
+     "neutral": {
+      "share": 0.163,
+      "worstBelow": 33.4,
+      "below": {
+       "plains": 42.0,
+       "farmland": 41.6,
+       "swamp": 33.4,
+       "forest": 33.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.378,
+      "worstBelow": 31.6,
+      "below": {
+       "plains": 40.3,
+       "farmland": 39.9,
+       "swamp": 31.6,
+       "forest": 31.8
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 12.05,
+     "keyInUnitPct": 0.247,
+     "fringePct": 0.0,
+     "edgeDevPct": 5.72,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0295,
+    "meanShare": 0.0195
+   },
+   "replaces": {
+    "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.briarGuard.front.g3pro.png",
+    "status": "pass",
+    "failed": []
+   },
+   "madeBy": "stage B troops2 (stage-b/work/troops2)"
+  }
+ },
+ "approved": null
+}

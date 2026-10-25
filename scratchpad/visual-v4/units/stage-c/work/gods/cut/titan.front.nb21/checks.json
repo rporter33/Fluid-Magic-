@@ -1,0 +1,95 @@
+{
+ "god": "titan",
+ "view": "front",
+ "figure": "titan-cinderHorde",
+ "nation": "cinderHorde",
+ "raw": "stage-c/raw/gods/titan.front.nb21.png",
+ "cutout": "stage-c/work/gods/cut/titan.front.nb21/titan-cinderHorde.front.idle.png",
+ "camera": {
+  "iou": 0.797,
+  "iouMirrored": 0.739,
+  "aspectRatio": 0.918,
+  "headDx": -0.156,
+  "guideHeadDx": -0.052,
+  "facingMargin": 0.058,
+  "pass": false
+ },
+ "rim": {
+  "ringPx": 4335,
+  "keyHueShiftedPct": 0.05,
+  "pass_": true
+ },
+ "fringe": {
+  "fringePct": 0.0,
+  "keyInUnitPct": 0.001,
+  "edgeDevPct": 0.67,
+  "pass_": true
+ },
+ "value": {
+  "plains": {
+   "bodyL": 32.9,
+   "groundL": 67.7,
+   "below": 34.8
+  },
+  "farmland": {
+   "bodyL": 32.9,
+   "groundL": 67.3,
+   "below": 34.4
+  },
+  "swamp": {
+   "bodyL": 32.7,
+   "groundL": 58.5,
+   "below": 25.8
+  },
+  "forest": {
+   "bodyL": 32.7,
+   "groundL": 58.7,
+   "below": 26.0
+  },
+  "worstBelow": 25.8,
+  "pass": true
+ },
+ "side": {
+  "nation": "cinderHorde",
+  "window": 0.1469,
+  "portrait": {
+   "window": 0.1817
+  },
+  "pass": true
+ },
+ "size": {
+  "sizeClass": 4,
+  "ladder": 3.4,
+  "ladderWu": 95.2,
+  "worldHeightMen": 3.4,
+  "worldRatio": 1.0,
+  "heightWu": 92.0,
+  "widthWu": 57.6,
+  "lengthCapWu": 190.4,
+  "rule": "world height = ladder multiple",
+  "pass_": false
+ },
+ "identity": {
+  "dE_whole": 4.4,
+  "dE_upperThird": 4.7,
+  "figureL": 29.6,
+  "portraitL": 24.6,
+  "pass_": true
+ },
+ "parts": 1,
+ "specks": 0,
+ "cutoutPx": [
+  631,
+  1095
+ ],
+ "tierHpx": [
+  230,
+  368
+ ],
+ "tierHupscale": 0.34,
+ "pass": false,
+ "failed": [
+  "camera",
+  "size"
+ ]
+}

@@ -1,0 +1,417 @@
+{
+ "figure": "longbowHunter",
+ "unit": "longbowHunter",
+ "nation": "thornwood",
+ "key": "magenta",
+ "cloth": "#1F6A50",
+ "hueLocked": true,
+ "kit": "A Longbow Hunter: a bark-brown leather jerkin, worn under a sleeveless surcoat of deep bottle-green cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; a deep bottle-green hooded cloak with the hood up, over the shoulders and down the back to the knees with a ragged leaf-cut hem; leather bracers; bark-brown weathered skin; a long yew bow about as tall as the hunter himself, held upright and close to his body; a quiver of grey-fletched arrows on the back; a hunting knife at the belt (in the windup and strike cells the bow is slung on the back and the knife is in hand). No antlers.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.3889,
+     "standPx": 56,
+     "frames": [
+      "longbowHunter.back.stand",
+      "longbowHunter.back.stand.white",
+      "longbowHunter.back.marchA",
+      "longbowHunter.back.marchB",
+      "longbowHunter.back.nock",
+      "longbowHunter.back.draw",
+      "longbowHunter.back.loose",
+      "longbowHunter.back.windup",
+      "longbowHunter.back.strike",
+      "longbowHunter.back.recoil",
+      "longbowHunter.back.recoil.white",
+      "longbowHunter.back.fall",
+      "longbowHunter.back.deadA",
+      "longbowHunter.back.deadB",
+      "longbowHunter.back.fleeA",
+      "longbowHunter.back.fleeB",
+      "longbowHunter.back.cheer",
+      "longbowHunter.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 0.7778,
+     "standPx": 112,
+     "frames": [
+      "longbowHunter.back.stand",
+      "longbowHunter.back.stand.white",
+      "longbowHunter.back.marchA",
+      "longbowHunter.back.marchB",
+      "longbowHunter.back.nock",
+      "longbowHunter.back.draw",
+      "longbowHunter.back.loose",
+      "longbowHunter.back.windup",
+      "longbowHunter.back.strike",
+      "longbowHunter.back.recoil",
+      "longbowHunter.back.recoil.white",
+      "longbowHunter.back.fall",
+      "longbowHunter.back.deadA",
+      "longbowHunter.back.deadB",
+      "longbowHunter.back.fleeA",
+      "longbowHunter.back.fleeB",
+      "longbowHunter.back.cheer",
+      "longbowHunter.back.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r2.longbowHunter.back.dress.nb21.png",
+   "sha256": "626f7e06df2ae3a44566ce9e5ec85d732ed21ad05bffa7613caaf7cfe5e6f28c",
+   "model": "gemini-nano-banana-2.1",
+   "job": "longbowHunter.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.archer.back.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "consistency"
+   ],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.619,
+      0.016
+     ],
+     "marchA": [
+      0.584,
+      0.012
+     ],
+     "marchB": [
+      0.658,
+      0.104
+     ],
+     "nock": [
+      0.641,
+      0.081
+     ],
+     "draw": [
+      0.601,
+      0.047
+     ],
+     "loose": [
+      0.715,
+      0.083
+     ],
+     "windup": [
+      0.748,
+      0.069
+     ],
+     "strike": [
+      0.807,
+      0.428
+     ],
+     "recoil": [
+      0.541,
+      0.015
+     ],
+     "fall": [
+      0.774,
+      0.015
+     ],
+     "deadA": [
+      0.718,
+      0.335
+     ],
+     "deadB": [
+      0.739,
+      0.54
+     ],
+     "fleeA": [
+      0.799,
+      0.413
+     ],
+     "fleeB": [
+      0.825,
+      0.542
+     ],
+     "cheer": [
+      0.44,
+      0.014
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.687,
+     "marchLegsIoU": 0.549,
+     "mostAlike": [
+      "marchA~loose",
+      0.707
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.062,
+      "marchB": 0.986
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.512,
+     "histMin": [
+      "fall",
+      0.719
+     ],
+     "maxDE": [
+      "windup",
+      12.7
+     ],
+     "pass_": false,
+     "pass": false
+    },
+    "rim": {
+     "beforeMax": 15.1,
+     "afterMax": 0.4
+    },
+    "side": {
+     "neutral": {
+      "share": 0.396,
+      "worstBelow": 32.3,
+      "below": {
+       "plains": 41.0,
+       "farmland": 40.6,
+       "swamp": 32.3,
+       "forest": 32.6
+      }
+     },
+     "sideKeyline": {
+      "share": 0.52,
+      "worstBelow": 31.2,
+      "below": {
+       "plains": 39.9,
+       "farmland": 39.5,
+       "swamp": 31.2,
+       "forest": 31.4
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 10.438,
+     "keyInUnitPct": 0.314,
+     "fringePct": 0.0,
+     "edgeDevPct": 5.0,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0218,
+    "meanShare": 0.0107
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.2887,
+     "standPx": 56,
+     "frames": [
+      "longbowHunter.front.stand",
+      "longbowHunter.front.stand.white",
+      "longbowHunter.front.marchA",
+      "longbowHunter.front.marchB",
+      "longbowHunter.front.nock",
+      "longbowHunter.front.draw",
+      "longbowHunter.front.loose",
+      "longbowHunter.front.windup",
+      "longbowHunter.front.strike",
+      "longbowHunter.front.recoil",
+      "longbowHunter.front.recoil.white",
+      "longbowHunter.front.fall",
+      "longbowHunter.front.deadA",
+      "longbowHunter.front.deadB",
+      "longbowHunter.front.fleeA",
+      "longbowHunter.front.fleeB",
+      "longbowHunter.front.cheer",
+      "longbowHunter.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 0.5773,
+     "standPx": 112,
+     "frames": [
+      "longbowHunter.front.stand",
+      "longbowHunter.front.stand.white",
+      "longbowHunter.front.marchA",
+      "longbowHunter.front.marchB",
+      "longbowHunter.front.nock",
+      "longbowHunter.front.draw",
+      "longbowHunter.front.loose",
+      "longbowHunter.front.windup",
+      "longbowHunter.front.strike",
+      "longbowHunter.front.recoil",
+      "longbowHunter.front.recoil.white",
+      "longbowHunter.front.fall",
+      "longbowHunter.front.deadA",
+      "longbowHunter.front.deadB",
+      "longbowHunter.front.fleeA",
+      "longbowHunter.front.fleeB",
+      "longbowHunter.front.cheer",
+      "longbowHunter.front.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.longbowHunter.front.g3pro.png",
+   "sha256": "540895242ac60555eb74eceb86e0f0a943e1ebd25f4e3fde29aa0d918fb95399",
+   "model": "gemini-3-pro-image",
+   "job": "longbowHunter.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/longbowHunter.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/wd.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/04.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "checks": {
+    "cameraAll": "9/15",
+    "cells": {
+     "stand": [
+      0.666,
+      0.112
+     ],
+     "marchA": [
+      0.687,
+      0.134
+     ],
+     "marchB": [
+      0.673,
+      0.043
+     ],
+     "nock": [
+      0.642,
+      0.096
+     ],
+     "draw": [
+      0.561,
+      0.015
+     ],
+     "loose": [
+      0.571,
+      0.041
+     ],
+     "windup": [
+      0.494,
+      0.039
+     ],
+     "strike": [
+      0.494,
+      0.118
+     ],
+     "recoil": [
+      0.537,
+      0.107
+     ],
+     "fall": [
+      0.501,
+      0.199
+     ],
+     "deadA": [
+      0.58,
+      0.208
+     ],
+     "deadB": [
+      0.492,
+      0.182
+     ],
+     "fleeA": [
+      0.709,
+      0.061
+     ],
+     "fleeB": [
+      0.747,
+      0.426
+     ],
+     "cheer": [
+      0.56,
+      -0.039
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.718,
+     "marchLegsIoU": 0.546,
+     "mostAlike": [
+      "draw~loose",
+      0.834
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.005,
+      "marchB": 0.99
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.245,
+     "histMin": [
+      "fleeA",
+      0.829
+     ],
+     "maxDE": [
+      "fleeB",
+      3.3
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 13.9,
+     "afterMax": 0.5
+    },
+    "side": {
+     "neutral": {
+      "share": 0.214,
+      "worstBelow": 31.1,
+      "below": {
+       "plains": 39.5,
+       "farmland": 39.1,
+       "swamp": 31.1,
+       "forest": 31.3
+      }
+     },
+     "sideKeyline": {
+      "share": 0.371,
+      "worstBelow": 29.7,
+      "below": {
+       "plains": 38.3,
+       "farmland": 37.9,
+       "swamp": 29.7,
+       "forest": 30.0
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 9.102,
+     "keyInUnitPct": 0.251,
+     "fringePct": 0.0,
+     "edgeDevPct": 3.25,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.4586,
+    "meanShare": 0.0442
+   }
+  }
+ },
+ "approved": null
+}

@@ -1,0 +1,38 @@
+{
+  "file": "I1-02-B.png",
+  "sha256": "42e7963f545828d01180992d4f5704633b77f8e5612ff864ef08376fbfb98b84",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-22",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows, except where the subject below says a mage's eyes glow. No saturated red, orange, green or blue area larger than a small clasp or trim.\n\nSubject: A captain of a free village militia: a weathered human face, plain leather and iron, no insignia.\nAn Independent Captain in levy gear: a plain iron cap and a padded jerkin.\nPerson: a young woman about twenty-six, a broad round face with full cheeks and a wide nose, deep brown skin, dark eyes under straight brows, no hair visible, a small healed cut on the lower lip, a bold open determined look with the chin raised. Kit: a low plain iron skullcap worn over a coarse undyed wool hood whose thick folds cover the neck and shoulders and frame the face; a padded jerkin of dark slate-grey wool; a single wooden toggle at the throat.",
+  "references": [
+    "p0-gpt-rim.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1641,
+    "candidatesTokenCount": 1594,
+    "totalTokenCount": 3671,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 521
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 436,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.2,
+  "modelText": [],
+  "approved": null
+}

@@ -1,0 +1,794 @@
+{
+ "figures": "painted",
+ "battles": [
+  {
+   "key": "a",
+   "title": "The Wyrm at Callea",
+   "rerunMatches": true,
+   "duration": 59.1,
+   "phaseEnds": 28,
+   "figureMismatches": [],
+   "cardMismatches": [],
+   "figures": 352,
+   "deaths": 173,
+   "bodiesAtEnd": 173,
+   "bodiesOk": true,
+   "winnerShown": "attacker",
+   "winnerOk": true,
+   "deterministic": true,
+   "build": {
+    "script": 84.9,
+    "stage": 133.1,
+    "bake": 0,
+    "looks": 0,
+    "ground": 57.9
+   },
+   "overlap": {
+    "framesWithOverlap": 0,
+    "maxPairs": 0,
+    "first": null
+   },
+   "pick": {
+    "tried": 32,
+    "wrong": []
+   },
+   "colors": {
+    "variants": {
+     "near": "lighter",
+     "far": "darkest",
+     "painted": true
+    },
+    "nearRendered": "#714b33",
+    "farRendered": "#272e21",
+    "deltaE": {
+     "normal": 26.1,
+     "protan": 13,
+     "deutan": 17,
+     "tritan": 29.1
+    },
+    "belowGround": [
+     32.2,
+     49.8
+    ],
+    "ok": true
+   },
+   "paint": {
+    "troopGroups": 8,
+    "troopGroupsPainted": 8,
+    "commanders": 7,
+    "commandersPainted": 6,
+    "notPainted": [
+     {
+      "unit": "wardenCaptain",
+      "cmd": true,
+      "name": "Fenna",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "spriteChecks": 987,
+    "spritesNotPainted": 0,
+    "standInMoments": 0,
+    "reported": [
+     {
+      "look": "ashChieftain-05",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "deadB",
+       "fall",
+       "follow"
+      ]
+     },
+     {
+      "look": "cinderMagus-03",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "deadB",
+       "follow",
+       "recoil"
+      ]
+     },
+     {
+      "look": "berserker",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera"
+      ]
+     },
+     {
+      "look": "berserker",
+      "view": "front",
+      "status": "reported",
+      "failed": [
+       "side"
+      ]
+     },
+     {
+      "look": "emberSkirmisher",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera",
+       "side",
+       "fringe"
+      ]
+     },
+     {
+      "look": "briarGuard",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera",
+       "consistency"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "consistency"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "front",
+      "status": "reported",
+      "failed": [
+       "camera"
+      ]
+     }
+    ],
+    "allPainted": false,
+    "ok": true
+   },
+   "faces": {
+    "commanders": 7,
+    "matched": 6,
+    "mismatches": [],
+    "noArt": [
+     {
+      "unit": "wardenCaptain",
+      "name": "Fenna",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "ok": true
+   },
+   "variation": {
+    "blocks": 8,
+    "pairs": 947,
+    "identical": 0,
+    "differFrame": 860,
+    "differVariant": 751,
+    "differTint": 900,
+    "differTiming": 947,
+    "first": null,
+    "differFramePct": 90.8,
+    "differVariantPct": 79.3,
+    "differTintPct": 95,
+    "differTimingPct": 100,
+    "ok": true
+   },
+   "sideShare": {
+    "tier": "S",
+    "manPx": 28,
+    "sides": {
+     "attacker": {
+      "nation": "cinderHorde",
+      "near": true,
+      "sideLook": "lighter",
+      "sharePct": 43,
+      "groups": [
+       {
+        "unit": "cinderWarrior",
+        "share": 49.4
+       },
+       {
+        "unit": "flameArcher",
+        "share": 49.5
+       },
+       {
+        "unit": "ashMilitia",
+        "share": 46.2
+       },
+       {
+        "unit": "berserker",
+        "share": 17.8
+       },
+       {
+        "unit": "emberSkirmisher",
+        "share": 45.1
+       }
+      ]
+     },
+     "defender": {
+      "nation": "thornwood",
+      "near": false,
+      "sideLook": "darkest",
+      "sharePct": 23.5,
+      "groups": [
+       {
+        "unit": "warden",
+        "share": 33.4
+       },
+       {
+        "unit": "briarGuard",
+        "share": 22.9
+       },
+       {
+        "unit": "longbowHunter",
+        "share": 16.7
+       }
+      ]
+     }
+    },
+    "ok": false
+   },
+   "paintBuild": {
+    "bakeMs": 18.3,
+    "decodeMs": 426.8
+   }
+  },
+  {
+   "key": "b",
+   "title": "The Storm of Haldospire",
+   "rerunMatches": true,
+   "duration": 50.8,
+   "phaseEnds": 22,
+   "figureMismatches": [],
+   "cardMismatches": [],
+   "figures": 271,
+   "deaths": 102,
+   "bodiesAtEnd": 102,
+   "bodiesOk": true,
+   "winnerShown": "attacker",
+   "winnerOk": true,
+   "deterministic": true,
+   "build": {
+    "script": 39.9,
+    "stage": 294.3,
+    "bake": 107.9,
+    "looks": 0.1,
+    "ground": 125.4
+   },
+   "overlap": {
+    "framesWithOverlap": 0,
+    "maxPairs": 0,
+    "first": null
+   },
+   "pick": {
+    "tried": 28,
+    "wrong": []
+   },
+   "colors": {
+    "variants": {
+     "near": "dark",
+     "far": "lighter",
+     "painted": true
+    },
+    "nearRendered": "#1e3528",
+    "farRendered": "#824d31",
+    "deltaE": {
+     "normal": 34.5,
+     "protan": 14.5,
+     "deutan": 20.9,
+     "tritan": 40.5
+    },
+    "belowGround": [
+     56.7,
+     38.4
+    ],
+    "ok": true
+   },
+   "paint": {
+    "troopGroups": 8,
+    "troopGroupsPainted": 8,
+    "commanders": 7,
+    "commandersPainted": 3,
+    "notPainted": [
+     {
+      "unit": "wardenCaptain",
+      "cmd": true,
+      "name": "Rowan",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "wardenCaptain",
+      "cmd": true,
+      "name": "Alder",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "saplingDruid",
+      "cmd": true,
+      "name": "Sorrel",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "grovePriest",
+      "cmd": true,
+      "name": "Linnet",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "spriteChecks": 809,
+    "spritesNotPainted": 0,
+    "standInMoments": 0,
+    "reported": [
+     {
+      "look": "briarGuard",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera",
+       "consistency"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "consistency"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "front",
+      "status": "reported",
+      "failed": [
+       "camera"
+      ]
+     },
+     {
+      "look": "thornMilitia",
+      "view": "front",
+      "status": "reported",
+      "failed": [
+       "consistency"
+      ]
+     }
+    ],
+    "allPainted": false,
+    "ok": true
+   },
+   "faces": {
+    "commanders": 7,
+    "matched": 3,
+    "mismatches": [],
+    "noArt": [
+     {
+      "unit": "wardenCaptain",
+      "name": "Rowan",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "wardenCaptain",
+      "name": "Alder",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "saplingDruid",
+      "name": "Sorrel",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "grovePriest",
+      "name": "Linnet",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "ok": true
+   },
+   "variation": {
+    "blocks": 7,
+    "pairs": 705,
+    "identical": 0,
+    "differFrame": 618,
+    "differVariant": 559,
+    "differTint": 673,
+    "differTiming": 704,
+    "first": null,
+    "differFramePct": 87.7,
+    "differVariantPct": 79.3,
+    "differTintPct": 95.5,
+    "differTimingPct": 99.9,
+    "ok": true
+   },
+   "sideShare": {
+    "tier": "S",
+    "manPx": 28,
+    "sides": {
+     "attacker": {
+      "nation": "thornwood",
+      "near": true,
+      "sideLook": "dark",
+      "sharePct": 50,
+      "groups": [
+       {
+        "unit": "warden",
+        "share": 49.7
+       },
+       {
+        "unit": "briarGuard",
+        "share": 43.8
+       },
+       {
+        "unit": "longbowHunter",
+        "share": 43.6
+       },
+       {
+        "unit": "thornMilitia",
+        "share": 63.1
+       }
+      ]
+     },
+     "defender": {
+      "nation": "cinderHorde",
+      "near": false,
+      "sideLook": "lighter",
+      "sharePct": 54.2,
+      "groups": [
+       {
+        "unit": "cinderWarrior",
+        "share": 58.3
+       },
+       {
+        "unit": "flameArcher",
+        "share": 51
+       },
+       {
+        "unit": "ashMilitia",
+        "share": 54.2
+       },
+       {
+        "unit": "flameArcher",
+        "share": 50.4
+       }
+      ]
+     }
+    },
+    "ok": true
+   },
+   "paintBuild": {
+    "bakeMs": 35.4,
+    "decodeMs": 426.8
+   }
+  },
+  {
+   "key": "c",
+   "title": "The Fight in Wickemoss",
+   "rerunMatches": true,
+   "duration": 55,
+   "phaseEnds": 26,
+   "figureMismatches": [],
+   "cardMismatches": [],
+   "figures": 242,
+   "deaths": 159,
+   "bodiesAtEnd": 159,
+   "bodiesOk": true,
+   "winnerShown": "defender",
+   "winnerOk": true,
+   "deterministic": true,
+   "build": {
+    "script": 24.9,
+    "stage": 394,
+    "bake": 224.6,
+    "looks": 0,
+    "ground": 147.6
+   },
+   "overlap": {
+    "framesWithOverlap": 0,
+    "maxPairs": 0,
+    "first": null
+   },
+   "pick": {
+    "tried": 30,
+    "wrong": []
+   },
+   "colors": {
+    "variants": {
+     "near": "lighter",
+     "far": "darker",
+     "painted": true
+    },
+    "nearRendered": "#784e33",
+    "farRendered": "#303428",
+    "deltaE": {
+     "normal": 24.8,
+     "protan": 13.2,
+     "deutan": 17.2,
+     "tritan": 26.6
+    },
+    "belowGround": [
+     21.2,
+     37.5
+    ],
+    "ok": true
+   },
+   "paint": {
+    "troopGroups": 6,
+    "troopGroupsPainted": 6,
+    "commanders": 6,
+    "commandersPainted": 4,
+    "notPainted": [
+     {
+      "unit": "wardenCaptain",
+      "cmd": true,
+      "name": "Alder",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "saplingDruid",
+      "cmd": true,
+      "name": "Bram",
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "spriteChecks": 599,
+    "spritesNotPainted": 0,
+    "standInMoments": 6,
+    "reported": [
+     {
+      "look": "ashChieftain-03",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "deadB",
+       "follow"
+      ]
+     },
+     {
+      "look": "emberSkirmisher",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera",
+       "side",
+       "fringe"
+      ]
+     },
+     {
+      "look": "flamebrand",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "camera"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "back",
+      "status": "reported",
+      "failed": [
+       "consistency"
+      ]
+     },
+     {
+      "look": "longbowHunter",
+      "view": "front",
+      "status": "reported",
+      "failed": [
+       "camera"
+      ]
+     }
+    ],
+    "allPainted": false,
+    "ok": true
+   },
+   "faces": {
+    "commanders": 6,
+    "matched": 4,
+    "mismatches": [],
+    "noArt": [
+     {
+      "unit": "wardenCaptain",
+      "name": "Alder",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     },
+     {
+      "unit": "saplingDruid",
+      "name": "Bram",
+      "cardFace": null,
+      "why": "no painted figure: the cmdB run stopped on HTTP 402 before this face (stage-b report)"
+     }
+    ],
+    "ok": true
+   },
+   "variation": {
+    "blocks": 6,
+    "pairs": 511,
+    "identical": 0,
+    "differFrame": 452,
+    "differVariant": 398,
+    "differTint": 482,
+    "differTiming": 511,
+    "first": null,
+    "differFramePct": 88.5,
+    "differVariantPct": 77.9,
+    "differTintPct": 94.3,
+    "differTimingPct": 100,
+    "ok": true
+   },
+   "sideShare": {
+    "tier": "S",
+    "manPx": 28,
+    "sides": {
+     "attacker": {
+      "nation": "cinderHorde",
+      "near": true,
+      "sideLook": "lighter",
+      "sharePct": 47.8,
+      "groups": [
+       {
+        "unit": "cinderWarrior",
+        "share": 51.1
+       },
+       {
+        "unit": "flameArcher",
+        "share": 48.4
+       },
+       {
+        "unit": "emberSkirmisher",
+        "share": 43.1
+       },
+       {
+        "unit": "flamebrand",
+        "share": 52.6
+       }
+      ]
+     },
+     "defender": {
+      "nation": "thornwood",
+      "near": false,
+      "sideLook": "darker",
+      "sharePct": 24,
+      "groups": [
+       {
+        "unit": "warden",
+        "share": 34.1
+       },
+       {
+        "unit": "longbowHunter",
+        "share": 19.5
+       },
+       {
+        "unit": "wolfRider",
+        "share": 19.2
+       }
+      ]
+     }
+    },
+    "ok": false
+   },
+   "paintBuild": {
+    "bakeMs": 8.9,
+    "decodeMs": 426.8
+   }
+  }
+ ],
+ "frameTiming": [
+  {
+   "battle": "a",
+   "speed": 1,
+   "frames": 240,
+   "storySpan": 4.2,
+   "updateP50": 2.1,
+   "updateP95": 3.8,
+   "renderCpuP50": 2.3,
+   "renderCpuP95": 7.6,
+   "cpuP50": 4.5,
+   "cpuP95": 10.2,
+   "gpuWaitP50": 242.5,
+   "figures": 352,
+   "viewport": "1920x1080"
+  },
+  {
+   "battle": "a",
+   "speed": 4,
+   "frames": 240,
+   "storySpan": 16.7,
+   "updateP50": 2.4,
+   "updateP95": 8.4,
+   "renderCpuP50": 3,
+   "renderCpuP95": 12.1,
+   "cpuP50": 5.8,
+   "cpuP95": 20.2,
+   "gpuWaitP50": 302.1,
+   "figures": 352,
+   "viewport": "1920x1080"
+  },
+  {
+   "battle": "b",
+   "speed": 1,
+   "frames": 240,
+   "storySpan": 4.2,
+   "updateP50": 1.8,
+   "updateP95": 3.7,
+   "renderCpuP50": 1.8,
+   "renderCpuP95": 6.4,
+   "cpuP50": 3.7,
+   "cpuP95": 8.8,
+   "gpuWaitP50": 222.3,
+   "figures": 271,
+   "viewport": "1920x1080"
+  },
+  {
+   "battle": "b",
+   "speed": 4,
+   "frames": 240,
+   "storySpan": 16.7,
+   "updateP50": 1.9,
+   "updateP95": 6.5,
+   "renderCpuP50": 2.4,
+   "renderCpuP95": 8.4,
+   "cpuP50": 4.5,
+   "cpuP95": 13.6,
+   "gpuWaitP50": 309.4,
+   "figures": 271,
+   "viewport": "1920x1080"
+  },
+  {
+   "battle": "c",
+   "speed": 1,
+   "frames": 240,
+   "storySpan": 4.2,
+   "updateP50": 1.9,
+   "updateP95": 5.7,
+   "renderCpuP50": 2.1,
+   "renderCpuP95": 10.7,
+   "cpuP50": 4.1,
+   "cpuP95": 17.5,
+   "gpuWaitP50": 485.6,
+   "figures": 242,
+   "viewport": "1920x1080"
+  },
+  {
+   "battle": "c",
+   "speed": 4,
+   "frames": 240,
+   "storySpan": 16.7,
+   "updateP50": 1.7,
+   "updateP95": 3.6,
+   "renderCpuP50": 2.2,
+   "renderCpuP95": 11.1,
+   "cpuP50": 4.2,
+   "cpuP95": 13.8,
+   "gpuWaitP50": 350.6,
+   "figures": 242,
+   "viewport": "1920x1080"
+  }
+ ],
+ "clock": {
+  "firstFrames": [
+   {
+    "dt": 0,
+    "t": 0
+   }
+  ],
+  "staleStepT": 1,
+  "firstStepT": 1,
+  "ok": true
+ },
+ "textures": {
+  "afterEachRound": [
+   48,
+   48,
+   48
+  ],
+  "ok": true
+ },
+ "pageErrors": [],
+ "ok": true,
+ "paintOk": false,
+ "allPainted": false
+}

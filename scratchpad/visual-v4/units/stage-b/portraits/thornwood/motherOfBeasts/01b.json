@@ -1,0 +1,105 @@
+{
+ "id": "motherOfBeasts-01b",
+ "unit": "motherOfBeasts",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "motherOfBeasts",
+ "promptFile": "stage-b/work/portraits/prompts-used/motherOfBeasts-thornwood.01b.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 17488,
+  "game": 6508,
+  "small": 1634
+ },
+ "sourceFile": "stage-b/raw/portraits/motherOfBeasts-thornwood.01b.nb21.png",
+ "sourceSha256": "412267665838e404d37e840bb9cf7ddcce2e5c0c621a9df884dd2c1560e75e86",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a grey clay maquette of this figure: follow its pose, its parts and its framing, the whole figure from head to foot filling the square as it does, seen three-quarter front from a little above. It is a crude blockout: take its pose, its parts and its framing, not its stubby proportions. Paint over it completely: no grey clay and no plain smooth shapes may remain. Image 2 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 2.\n\nA full-length painted portrait of the Mother of Beasts, a towering mother-goddess of the wild whose wolves gather to her, twice a man's height, in a regal pose: standing tall and still, the maul resting head-down on the ground beside her, both hands on its haft, chin raised. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the antler crown about 6% from the top edge and the feet about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the antler crown, the bear pelt and the shoulders that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the feet.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the antler crown, the bear-pelt cloak and the maul against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the figure is her long dress: cloth of a deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. All metal is dull old gold (#C9A23E), darkened and worn. Nothing in the image glows. No other saturated area larger than a small clasp or trim.\n\nSubject: Headgear: an antler crown: short branching antlers set in a band around her brow. Face: the strong, broad, weathered face of a woman in her prime, her skin a deep brown like hide (#7A5638), long braided dark hair, a calm, fierce look; bands of lichen grey-green (#909080) warpaint across her cheeks. Pelt cloak: a heavy cloak made from a whole bear pelt over her shoulders and back, the bear's head resting on her shoulder. Body: under the cloak, a long tunic-dress of cloth of a deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour with a leather belt. Weapon: a plain, heavy maul: a thick wooden haft with a big plain head of dark wood bound with bands of dull old gold (#C9A23E), darkened and worn. Proportions: tall and heroic, a towering figure with long legs (the legs about half of its height) and the head about one eighth of its height; never squat, stocky, short-legged or dwarf-like.\nPaint it as described, the whole figure clearly in view; a little more weathered and ancient in its surfaces, with a heavier, more imposing stance.",
+ "references": [
+  "motherOfBeasts.png",
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "hide brown #7A5638",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: bear-pelt cloak; antler crown; plain maul; warpaint",
+ "pose": "regal",
+ "tintZone": "the dress",
+ "cardCrop": {
+  "box512": [
+   153,
+   21,
+   372,
+   240
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "antler crown",
+   "read": null
+  },
+  {
+   "mark": "bear-pelt cloak with the bear's head",
+   "read": null
+  },
+  {
+   "mark": "dress in the nation's cloth",
+   "read": null
+  },
+  {
+   "mark": "plain gold-banded maul",
+   "read": null
+  },
+  {
+   "mark": "warpaint bands",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.6,
+   "bgSpread": 1.1,
+   "floor": 7.9,
+   "top": 0.068,
+   "low": 0.936,
+   "bottomCut": 0.0,
+   "cx": 0.502,
+   "subject": 0.31,
+   "light": 0.0,
+   "rim": 0.47,
+   "read48": 9.2,
+   "muted": 0.0001,
+   "satAll": 0.0001,
+   "side": {
+    "window": 0.1946,
+    "lock": 0.238
+   }
+  },
+  "failed": [
+   "read48 9.2 < 12"
+  ],
+  "overridden": [],
+  "passed": false
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "Too dark (read48 9.2); re-rolled for the light.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

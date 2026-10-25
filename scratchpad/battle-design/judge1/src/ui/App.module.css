@@ -1,0 +1,47 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 40px;
+  letter-spacing: 0.04em;
+}
+
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 96px;
+  font-size: 14px;
+}
+
+.pip {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.status {
+  margin: 0;
+  opacity: 0.7;
+}

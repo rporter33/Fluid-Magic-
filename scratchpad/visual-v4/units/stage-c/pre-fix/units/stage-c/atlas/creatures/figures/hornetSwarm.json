@@ -1,0 +1,223 @@
+{
+ "figure": "hornetSwarm",
+ "unit": "hornetSwarm",
+ "nation": "thornwood",
+ "key": "magenta",
+ "layout": "hornet",
+ "body": "hornet",
+ "cloth": null,
+ "hueLocked": false,
+ "portrait": "stage-b/portraits/thornwood/hornetSwarm/01b.webp",
+ "kit": "One giant hornet of a Hornet Swarm summoned by Thornwood druids, as big as a sparrow: a black and amber-yellow striped abdomen, a dark brown thorax, a long black sting, two pairs of pale smoky wings (painted opaque, not see-through). The swarm itself is made in the game from many single hornets; each cell shows one hornet.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "hornetSwarm-S",
+     "scale": 0.0592,
+     "standPx": 10,
+     "bodyHeightSrc": 169,
+     "frames": [
+      "hornetSwarm.back.up0",
+      "hornetSwarm.back.up0.white",
+      "hornetSwarm.back.down0",
+      "hornetSwarm.back.up90",
+      "hornetSwarm.back.down90",
+      "hornetSwarm.back.up180",
+      "hornetSwarm.back.down180",
+      "hornetSwarm.back.sting0",
+      "hornetSwarm.back.sting90",
+      "hornetSwarm.back.glide0",
+      "hornetSwarm.back.glide90",
+      "hornetSwarm.back.deadA",
+      "hornetSwarm.back.deadB"
+     ]
+    },
+    "H": {
+     "prefix": "hornetSwarm-H",
+     "scale": 0.1183,
+     "standPx": 20,
+     "bodyHeightSrc": 169,
+     "frames": [
+      "hornetSwarm.back.up0",
+      "hornetSwarm.back.up0.white",
+      "hornetSwarm.back.down0",
+      "hornetSwarm.back.up90",
+      "hornetSwarm.back.down90",
+      "hornetSwarm.back.up180",
+      "hornetSwarm.back.down180",
+      "hornetSwarm.back.sting0",
+      "hornetSwarm.back.sting90",
+      "hornetSwarm.back.glide0",
+      "hornetSwarm.back.glide90",
+      "hornetSwarm.back.deadA",
+      "hornetSwarm.back.deadB"
+     ]
+    }
+   },
+   "frames": "frames/hornetSwarm.back/",
+   "sheet": "stage-c/raw/creatures/hornetSwarm.back.fill.nb21.png",
+   "sha256": "3e47fb5f43b410a64ba3572f011c34c6ab23e5d452a0948c885351e885062fa5",
+   "model": "gemini-nano-banana-2.1",
+   "job": "hornetSwarm.back.fill",
+   "route": "fill",
+   "references": [
+    "stage-c/work/creatures/bases/hornetSwarm.back.fill.base.png",
+    "stage-b/portraits/thornwood/hornetSwarm/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "fringe"
+   ],
+   "note": "keycast hornet: key-cast pixels max 45.41% -> 21.08% of a frame; magenta edge pass: 18657 edge pixels de-tinted",
+   "keycast": {
+    "rule": "hornet",
+    "window": [
+     280.0,
+     45.0
+    ],
+    "to": null,
+    "castShareBefore": 0.4541,
+    "castShareAfter": 0.2108
+   },
+   "otherAttempts": [
+    "hornetSwarm.back.paint"
+   ],
+   "checks": {
+    "cameraCells": "8/12",
+    "cameraFailing": [
+     "deadA",
+     "deadB",
+     "glide90",
+     "up90"
+    ],
+    "cells": {
+     "up0": [
+      0.585,
+      0.425
+     ],
+     "down0": [
+      0.7,
+      0.336
+     ],
+     "up90": [
+      0.374,
+      0.267
+     ],
+     "down90": [
+      0.763,
+      0.406
+     ],
+     "up180": [
+      0.611,
+      0.452
+     ],
+     "down180": [
+      0.608,
+      0.369
+     ],
+     "sting0": [
+      0.72,
+      0.366
+     ],
+     "sting90": [
+      0.692,
+      0.536
+     ],
+     "glide0": [
+      0.667,
+      0.438
+     ],
+     "glide90": [
+      0.467,
+      0.209
+     ],
+     "deadA": [
+      0.346,
+      -0.038
+     ],
+     "deadB": [
+      0.186,
+      -0.216
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "up0~down0": 0.337
+     },
+     "mostAlike": [
+      "up0~glide0",
+      0.562
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {},
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.0,
+     "histMin": [
+      "down180",
+      0.779
+     ],
+     "maxDE": [
+      "down180",
+      4.6
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 24.7,
+     "afterMax": 0.5
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 5.0,
+     "neutral": {
+      "worstBelow": 17.3,
+      "below": {
+       "plains": 23.0,
+       "farmland": 22.7,
+       "swamp": 17.3,
+       "forest": 17.5
+      },
+      "minContrast": 17.3
+     },
+     "pass": true,
+     "rule": "block 15 L* below every ground"
+    },
+    "fringe": {
+     "spillEdgePct": 14.799,
+     "keyInUnitPct": 0.922,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.51,
+     "pass_": false
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "narrow dull ochre bands": true,
+     "open jagged mandibles": "partly",
+     "swept-back antennae": true,
+     "torn wing edge": false
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-hornetSwarm.png)"
+   }
+  }
+ },
+ "approved": null
+}

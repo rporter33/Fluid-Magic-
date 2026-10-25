@@ -1,0 +1,8 @@
+/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/tools/v/modewild.cjs:9
+        const E = await ev(p, 'm.reliefWildEdge()'); const row = [mode, wn, vz, E.samples, E.fails, E.worstFailRatio, E.examples.slice(0, 2)]; out[nm].push(row); if (E.fails) { console.log(nm, ...row.map((q) => JSON.stringify(q))); await p.screenshot({ path: `${SHOTS}V-modewild-${nm}-${mode}-${wn.replace(/ /g, '')}-${vz}-dpr${dpr}.png` }); } } }
+                                                                                                                                 ^
+
+TypeError: Cannot read properties of undefined (reading 'slice')
+    at /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/tools/v/modewild.cjs:9:130
+
+Node.js v22.22.0

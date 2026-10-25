@@ -1,0 +1,108 @@
+{
+ "id": "oracle-01a",
+ "unit": "oracle",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "oracle",
+ "promptFile": "stage-b/work/portraits/prompts-used/oracle-thornwood.01a.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 14772,
+  "game": 5172,
+  "small": 1160
+ },
+ "sourceFile": "stage-b/raw/portraits/oracle-thornwood.01a.nb21.png",
+ "sourceSha256": "1694c8f5610cce89be7423e31c1faafcff2deb1147331598316e03a7b3dafe3d",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the robe and the cowl (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the robe and the cowl. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "oracle-cinderHorde.01a.nb21.png"
+ ],
+ "route": "edit of oracle-cinderHorde.01a",
+ "swatches": {
+  "material": "skin ash #8F8C88",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: cowl; no mantle; orb staff head; runic robe glyphs; floating hem",
+ "pose": "regal",
+ "tintZone": "the robe and the cowl",
+ "cardCrop": {
+  "box512": [
+   166,
+   19,
+   362,
+   215
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "deep cowl shadowing the face",
+   "read": "partly"
+  },
+  {
+   "mark": "robe in the nation's cloth",
+   "read": true
+  },
+  {
+   "mark": "runic glyph band on the robe",
+   "read": true
+  },
+  {
+   "mark": "floating ragged hem, no feet",
+   "read": true
+  },
+  {
+   "mark": "gold-caged orb staff",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.1,
+   "bgSpread": 0.8,
+   "floor": 1.7,
+   "top": 0.062,
+   "low": 0.895,
+   "bottomCut": 0.0,
+   "cx": 0.527,
+   "subject": 0.179,
+   "light": 5.7,
+   "rim": 0.52,
+   "read48": 13.6,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.594,
+    "lock": 0.8749
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Same body as the Cinder candidate; the tint zone repainted bottle green.",
+  "marks": {
+   "deep cowl shadowing the face": "partly",
+   "robe in the nation's cloth": true,
+   "runic glyph band on the robe": true,
+   "floating ragged hem, no feet": true,
+   "gold-caged orb staff": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

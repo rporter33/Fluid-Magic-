@@ -1,0 +1,13 @@
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+const [A0, B0, SEG, VIEW] = (process.argv[2] || 'Elmwick/Halebrook/4/mid').split('/');
+(async () => { const b = await launch(); const p = await open(b, PAGE, { settle: 1500, q: '?terrain=clear' }); await p.mouse.move(720, 895);
+  if (VIEW === 'mid') await ev(p, 'm.setScale(1.0, 640, 480)'); await p.waitForTimeout(1200);
+  const r = await mev(p, String.raw`(() => { const A = names.indexOf('${A0}'), B = names.indexOf('${B0}'), e = [...EDGE.values()].find((q) => (q.i === A && q.j === B) || (q.i === B && q.j === A));
+    const ctx0 = rlLineCtx(), log = []; const orig = rlHairGuard;
+    rlHairGuard = function (v, S, nx, ny, other, o) { const s = ${SEG}, sg = v[s], m = rlCovM(nx, ny), w = rlW(), diag = dpr < 1.5 && Math.abs(nx) > 0.34 && Math.abs(ny) > 0.34; const hw = sg.partner ? (diag ? 2 : w.ph) : w.h, pw = sg.partner ? (diag ? 1.5 : w.pp) : 0;
+      const fmt = (a) => a.map((q) => (q ? q[0].toFixed(3) + '@' + q[4] : '-')).join(' ');
+      const P = sg.partner ? rlPosExt(sg.partner.side > 0 ? S[s].lrA : S[s].ulA, hw / 2 + m, hw / 2 + pw - m) : null, An = rlHairAnchor(S[s], hw / 2 - m, sg.key);
+      log.push({ before: { key: sg.key, alpha: sg.alpha, partner: sg.partner }, m, hw, pw, n: S[s].lrA.n, anchor: fmt(An), partnerLo: P && fmt(P.lo), partnerHi: P && fmt(P.hi), offsLR: [...new Set(S[s].lrA.map((q) => q[4]))] });
+      const g = orig(v, S, nx, ny, other, o); log.push({ after: { alpha: sg.alpha, partner: sg.partner }, g }); return g; };
+    RL_LINES.cache.clear(); const st = rlSegStyles(e, 'hair', ctx0); rlHairGuard = orig; RL_LINES.cache.clear(); return { log, seg: st.segs[${SEG}], nseg: st.segs.length }; })()`);
+  console.log(JSON.stringify(r, null, 1)); await b.close(); })();

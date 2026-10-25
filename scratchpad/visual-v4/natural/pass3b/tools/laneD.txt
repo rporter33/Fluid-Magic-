@@ -1,0 +1,15 @@
+cd .. && timeout 2400 node readers.cjs - fin-1440 1440 900 1 '55@800,500;60@800,500;66@800,500;75@800,500;85@800,500;55@720,450;60@720,450;66@720,450;75@720,450;85@720,450' > ../out/logs/readers-fin-1440.txt 2>&1
+cd .. && timeout 2400 node readers.cjs - fin-1280 1280 720 1 'start;60@640,360;least@640,360' > ../out/logs/readers-fin-1280.txt 2>&1
+cd .. && timeout 2400 node readers.cjs /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/before/game-screen-v4.html bf-1280 1280 720 1 'start;60@640,360;least@640,360' > ../out/logs/readers-bf-1280.txt 2>&1
+cd .. && timeout 2400 node readers.cjs - fin-1920 1920 1080 1 '60@960,540;175.2@640,480' > ../out/logs/readers-fin-1920.txt 2>&1
+cd .. && timeout 2400 node readers.cjs /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/before/game-screen-v4.html bf-1920 1920 1080 1 '60@960,540;175.2@640,480' > ../out/logs/readers-bf-1920.txt 2>&1
+cd .. && timeout 2400 node phonereaders.cjs - fin > ../out/logs/phonereaders-fin.txt 2>&1
+cd .. && timeout 2400 node phonereaders.cjs /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/before/game-screen-v4.html bf > ../out/logs/phonereaders-bf.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs s7 > ../out/logs/seed3b-s7.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs s31 > ../out/logs/seed3b-s31.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs alt > ../out/logs/seed3b-alt.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs s44 > ../out/logs/seed3b-s44.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs s5 > ../out/logs/seed3b-s5.txt 2>&1
+cd .. && timeout 3600 node seedprobe3b.cjs s58 > ../out/logs/seed3b-s58.txt 2>&1
+cd .. && timeout 2400 node readwho.cjs - fin-1440 1440 900 '55@800,500;60@800,500;66@800,500;75@800,500;85@800,500;55@720,450;60@720,450;66@720,450;75@720,450;85@720,450' > ../out/logs/readwho-fin-1440.txt 2>&1
+cd .. && timeout 2400 node readwho.cjs - fin-1920 1920 1080 '60@960,540' > ../out/logs/readwho-fin-1920.txt 2>&1

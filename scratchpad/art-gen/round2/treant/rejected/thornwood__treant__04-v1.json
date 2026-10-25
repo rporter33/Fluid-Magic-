@@ -1,0 +1,38 @@
+{
+  "file": "thornwood__treant__04.png",
+  "sha256": "557b7d247501929d44cd82c712ae536f59909a8b68083634818df04d4247eea1",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-22",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one Treant, an ancient summoned walking tree (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the branch crown about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the branch crown and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and branch crown and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows; the knot eyes are dark and do not glow. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Treant, an ancient walking tree summoned by Thornwood druids: a face formed in deep bark, moss and lichen, small branches like a crown, two dark knot eyes.\nCreature: an old weathered treant, a narrow, gaunt face of reddish-brown cedar bark in long vertical stringy strips, a thin twisted root-like beard; a sad, far-seeing look, large deep knot eyes. Marks: a crown of spreading branches shaped like broad antlers with a few small pale blossoms, pale grey-green lichen crusting the brow and shoulders.",
+  "references": [
+    "p0-gpt-rim.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1630,
+    "candidatesTokenCount": 2230,
+    "totalTokenCount": 4993,
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 510
+      },
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 1133,
+    "serviceTier": "standard"
+  },
+  "seconds": 23.3,
+  "modelText": [],
+  "approved": null
+}

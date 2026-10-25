@@ -1,0 +1,292 @@
+{
+ "figure": "cmdChief",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "deadB"
+ ],
+ "camera": {
+  "iou": 0.707,
+  "iouMirrored": 0.573,
+  "aspectRatio": 1.077,
+  "headDx": -0.09,
+  "guideHeadDx": -0.061,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.513,
+  "marchLegsIoU": 0.559,
+  "mostAlike": [
+   "stand~marchA",
+   0.777
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.007,
+   "marchA": 1.0,
+   "marchB": 0.921
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 11.183,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.99,
+  "pass_": true,
+  "edgeDevThickPct": 1.62,
+  "deviatingChromaShift": 0.005
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.808
+  ],
+  "maxDE": [
+   "deadA",
+   1.5
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.707,
+    0.134
+   ],
+   "idle2": [
+    0.759,
+    0.218
+   ],
+   "marchA": [
+    0.756,
+    0.205
+   ],
+   "marchB": [
+    0.735,
+    0.355
+   ],
+   "windup": [
+    0.653,
+    0.091
+   ],
+   "strike": [
+    0.687,
+    0.3
+   ],
+   "follow": [
+    0.63,
+    0.181
+   ],
+   "recoil": [
+    0.645,
+    0.155
+   ],
+   "actA": [
+    0.631,
+    0.078
+   ],
+   "actB": [
+    0.685,
+    0.226
+   ],
+   "fall": [
+    0.458,
+    0.167
+   ],
+   "deadA": [
+    0.502,
+    0.171
+   ],
+   "deadB": [
+    0.751,
+    0.668
+   ],
+   "fleeA": [
+    0.708,
+    0.148
+   ],
+   "fleeB": [
+    0.754,
+    0.596
+   ],
+   "cheer": [
+    0.617,
+    0.04
+   ]
+  },
+  "medianIoU": 0.686,
+  "medianMargin": 0.176,
+  "follow": "14/16",
+  "followShare": 0.88
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.71,
+    0.133,
+    0.942
+   ],
+   "idle2": [
+    0.766,
+    0.217,
+    0.942
+   ],
+   "marchA": [
+    0.756,
+    0.205,
+    0.955
+   ],
+   "marchB": [
+    0.735,
+    0.355,
+    0.899
+   ],
+   "windup": [
+    0.69,
+    0.123,
+    0.899
+   ],
+   "strike": [
+    0.685,
+    0.299,
+    0.914
+   ],
+   "follow": [
+    0.632,
+    0.184,
+    0.945
+   ],
+   "recoil": [
+    0.645,
+    0.155,
+    0.966
+   ],
+   "actA": [
+    0.631,
+    0.078,
+    0.962
+   ],
+   "actB": [
+    0.695,
+    0.232,
+    0.97
+   ],
+   "fall": [
+    0.458,
+    0.167,
+    0.97
+   ],
+   "deadA": [
+    0.538,
+    0.18,
+    0.972
+   ],
+   "deadB": [
+    0.751,
+    0.668,
+    0.97
+   ],
+   "fleeA": [
+    0.708,
+    0.148,
+    0.954
+   ],
+   "fleeB": [
+    0.752,
+    0.593,
+    0.958
+   ],
+   "cheer": [
+    0.617,
+    0.04,
+    0.96
+   ]
+  },
+  "follow": "14/16",
+  "followN": 14,
+  "failing": [
+   "deadA",
+   "fall"
+  ],
+  "medianIoU": 0.692,
+  "inheritMedian": 0.956,
+  "inheritMin": [
+   0.899,
+   "marchB"
+  ]
+ },
+ "rim": {
+  "beforeMax": 2.4,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.13,
+  "worstBelow": 31.9,
+  "grounds": {
+   "plains": {
+    "share": 0.13,
+    "below": 40.5
+   },
+   "farmland": {
+    "share": 0.168,
+    "below": 40.0
+   },
+   "swamp": {
+    "share": 0.128,
+    "below": 31.9
+   },
+   "forest": {
+    "share": 0.142,
+    "below": 32.1
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 7.5,
+  "upperThirdLab": [
+   22.5,
+   -0.2,
+   4.7
+  ],
+  "portraitLab": [
+   30.9,
+   2.4,
+   7.9
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/ac02.front.redress.kit2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdChief.front.zonesonly.g3pro.png",
+  "ownKit": true,
+  "kit": {
+   "face": "ac02",
+   "weapon": "the double-bitted axe of dark iron, a blade on each side of the haft",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "ac02.front.redress.kit2"
+ }
+}

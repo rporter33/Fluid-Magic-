@@ -1,0 +1,3 @@
+[{"open":[1920,1080],"query":"?paused=1"},
+ {"moment":"death","dt":1.6,"wait":150},
+ {"eval":"({cards: document.querySelectorAll('.namecard').length, html: [...document.querySelectorAll('.namecard')].map(e=>e.outerHTML.slice(0,200))})","name":"nc"}]

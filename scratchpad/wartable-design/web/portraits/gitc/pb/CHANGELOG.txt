@@ -1,0 +1,152 @@
+By Romulien:
+
+Version 3.0.0 - 2018-??-??
+
+- Add support for Mono runtime (in addition to .NET runtime)
+- Switch from CSharpImageLibrary (incompatible with Mono) to dds-reader (a C# rewrite of DevIL)
+- Remove Costura/Fody (incompatible with Mono), and use a lib sub-folder to group dlls
+- Fix some hardcoded Windows path separtors for portability to Linux/Mac
+- Support CK2 binary lookup with names ck2.app (Mac) and ck2 (Linux)
+- Support CK2 default user directories on Linux/Mac
+- Fix log4net console appender failing on unix
+- Switch gamedir (binary) to gamedir.txt (text format) for easy edition
+- Exclude some vanilla gfx files with known parsing errors (mapitems.gfx, fonts.gfx, ...)
+- Fix duplicated custom characteristics
+- Upgrade SharpZipLib to 1.0-rc2
+- Upgrade target to .NET 4.6 
+
+Version 2.5.0 - 2018-01-27
+
+- Add labels for new vanilla 2.8 properties (p14 makeup, p15 makeup2, p16 jewelry and p17 immortality)
+- Add new 2.8 government frames
+- Allow selection of characteristics to update when clicking randomize button
+- Read mod directory from userdir.txt file in Steam CK2 folder, if any
+- Prevent crash when mod directory doesn't exist
+- Support unquoted values for spriteType name and texturefile
+- Show incompatible mods as disabled in the list, with the reason in tooltip (archived mods, no portrait data or invalid path)
+
+Version 2.4.0 - 2017-04-07
+
+- Support for clothing propertyType override, replacing sprites used by culture-indexed layers (c0->c5)
+- Support for a variable number of properties, with dynamic creation of characteristic comboboxes in the UI
+- Improve error reporting when parsing portraits.gfx when parsing string into integer or byte
+- Allow non-ordered flags in propertyType layers
+- Fix randomization that was never using the last frame
+- Solve some eye-related rendering issues caused by attempting to read pixels outside of the width/height of the source image
+
+Version 2.3.0 - 2016-09-03
+
+- Support mask (p12) and eyepatch (p13) new characteristics
+- Add dropdowns for head (p2), d5 and d10 characteristics, in case used by mods
+- Disable dropdown if sprite has only 1 frame (e.g. p2)
+- Remove randomization when dna/properties 'letter' is 0 , and use index 0 instead
+- 'letter' 0 is now used in output dna/properties strings with index 0, instead of (max - 1)
+
+Version 2.2.0 - 2016-07-03
+
+ UI:
+ - Add government dropdown
+ - Add some tooltips to UI controls
+
+ Engine:
+ - Implement override logic for religious and merchant special sprites
+ - Add file watchers to mod content, in order to auto-refresh in case of changes
+ - Add some safeties to .mod file parsing
+ - Add unhandled exceptions handlers in application
+
+ Code re-factoring:
+ - Upgrade dependencies and use NuGet to retrieve them
+ - Switch DDS lib from DevIL to CSharpImageLibrary
+ - Generate .pdb to always have line numbers for exceptions
+ - Use Costura.Fody to embed dependencies in assembly
+
+Version 2.1.0 - 2016-06-25
+
+ UI:
+ - Use better icon
+ - Add DLC/mod tabs
+ - Add "Toggle All" and "Reload" buttons for content.
+ - Keep selected portraitType when enabling DLC/mod
+ - Use 2 tabs instead of 3, and move hair/eye color to DNA tab
+ - Move PORTRAIT_ prefix as a label for portraitType dropdown
+ - Add d/p codes in labels
+ - Add warning for properties overridden via portrait_properties.txt
+ - Rename Earl to Count
+ - Add dropdown for Player (p11), used in certain mods
+ - Disable dropdown when a dna/property is not used by any portraitType layer, rather than adding index 0-26.
+ 
+ Engine:
+ - Split DLCs so they can be activated separately
+ - Support rendering from multiple mods
+ - Parse vanilla/DLCs/mods portrait data only once during startup
+ - Avoid unzipping DLCs at startup if not needed (use Reload button to force refresh)
+ - Filter files to unzip from DLC, to reduce loading time & size.
+ - Allow content to only contain sprites in gfx/characters/, without portraitTypes
+ - Fix bug were duplicate portraitType definition would not override previous one (byzantinegfx)
+ - Fix load order of assets that was using vanilla instead of mod
+ - Optimize memory usage, by unloading assets when reloading/unchecking content
+ - Catch parsing failures at spriteType / portraitType level
+ 
+ Code re-factoring:
+ - Simplify code structure within a single project
+ - Separate class concerns to have smaller files
+ - Adapt class namespaces to match new folder structure
+ - Replace redundant CustomFlags by proper characteristics
+
+Version 2.0.0  - 2016-06-04
+ - Compatibility with vanilla 2.5.2
+ - Update lookup of ck2.exe to CK2game.exe
+ - Support for offsets (inline and external)
+ - Support for extra proprty p11 (player overlay)
+ - Support for DLCs. Disable buggy mod loading, for now.
+ - Replace poorly usable BrowseFolderDialog by an OpenFileDialog, to locate CK2 .exe
+ - Rework the logging, using log4net, with various log levels
+ - Append the version to the window title
+ - Add an icon to the .exe
+ - Remove code duplication, and general cleanup of the code
+ - Fix some gfx parsing errors
+ - Try/catch around some bad .dds files like western_male_eyes2.dds that cause exceptions
+
+By Measter:
+
+Version 1.1.7 - 2012-11-24
+ - Added logging. Outputs log on error, and can be forced to output with -log.
+ - Now attempts to load portrait info from all .gfx files in \interface.
+ - Can now load mods from My Documents folder.
+ - Fixed crash when trying to parse a portrait type which already exists.
+
+Version 1.1.6
+ - Fixed bug in import validation.
+ - Changed notice text in import dialog to specify 11 digits.
+
+Version 1.1.5
+ - Updated for CKUtils 1.8.
+ - Now loads portrait sprites from portrait_sprites.gfx.
+ - Added selector for the 11th property digit.
+ - Importing now requires 11 digits for property code.
+
+Version 1.1.4
+ - Changed UI setup to not be dependent on certain keywords.
+
+Version 1.1.3
+ - Fixed bug in Muslim hair rendering in vanilla files.
+
+Version 1.1.2
+ - Added digit to DNA code output to prevent game crash(again).
+ - Fixed bug when importing DNA codes when using a female portrait set.
+ - DNA and Property codes are now no longer randomized when changing portrait sets.
+
+Version 1.1.1
+ - Fixed bug causing crash due to lack of beard on females.
+
+Version 1.1
+ - Rewrote the program to use CK2s portrait.gfx file instead of .portset files.
+
+Version 1.0.3
+ - Added randomization button.
+
+Version 1.0.2
+ - Fixed bug causing the first tile to have the wrong index.
+
+Version 1.0.1
+ - Changed the DNA output to match the length of that in the game's character definition.

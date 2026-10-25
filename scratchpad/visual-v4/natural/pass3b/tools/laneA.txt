@@ -1,0 +1,13 @@
+timeout 5400 node checksx.cjs natural 1 > ../../out/logs/checksx-natural-1.txt 2>&1
+timeout 5400 node checksx.cjs natural 2 > ../../out/logs/checksx-natural-2.txt 2>&1
+timeout 3600 node checksx.cjs natural 3 390 844 > ../../out/logs/checksx-natural-3-phone.txt 2>&1
+timeout 3600 node checksx.cjs natural 1 1280 720 > ../../out/logs/checksx-natural-1-1280.txt 2>&1
+VIEWS=start,far,min,mid,ref,nearMax,back3,extra timeout 3600 node checksx.cjs natural 1 1920 1080 > ../../out/logs/checksx-natural-1-1920.txt 2>&1
+timeout 3600 node checksx.cjs clear 1 > ../../out/logs/checksx-clear-1.txt 2>&1
+timeout 3600 node checksx.cjs terrain 1 > ../../out/logs/checksx-terrain-1.txt 2>&1
+timeout 3600 node checksx.cjs clear 2 > ../../out/logs/checksx-clear-2.txt 2>&1
+timeout 3600 node checksx.cjs terrain 2 > ../../out/logs/checksx-terrain-2.txt 2>&1
+timeout 3600 node checksx.cjs clear 3 390 844 > ../../out/logs/checksx-clear-3-phone.txt 2>&1
+timeout 3600 node checksx.cjs terrain 3 390 844 > ../../out/logs/checksx-terrain-3-phone.txt 2>&1
+MODE=dominion VIEWS=start,far,mid,ref,near1180 timeout 3600 node checksx.cjs natural 1 > ../../out/logs/checksx-natural-dominion-1.txt 2>&1
+MODE=springs VIEWS=start,mid,near1180,far timeout 3600 node checksx.cjs clear 2 > ../../out/logs/checksx-clear-springs-2.txt 2>&1

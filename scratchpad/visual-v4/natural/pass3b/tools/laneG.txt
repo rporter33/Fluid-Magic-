@@ -1,0 +1,7 @@
+timeout 3600 node det2.cjs natural 3 > ../../out/logs/det2-natural-warm.txt 2>&1
+timeout 3600 node det2.cjs clear 3 > ../../out/logs/det2-clear-warm.txt 2>&1
+cd .. && timeout 7200 node wfocus.cjs natural 1 > ../out/logs/wfocus-natural-1-warm.txt 2>&1
+timeout 3600 node session.cjs natural 1440 900 > ../../out/logs/session-natural-warm.txt 2>&1
+cd .. && timeout 1800 node perf.cjs now-r4 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/map/game-screen-v4.html 1 > ../out/logs/perf-now-r4.txt 2>&1
+cd .. && timeout 1800 node perf.cjs bf-r4 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/before/game-screen-v4.html 1 > ../out/logs/perf-bf-r4.txt 2>&1
+cd .. && timeout 1800 node perf.cjs now-r5 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/map/game-screen-v4.html 1 > ../out/logs/perf-now-r5.txt 2>&1

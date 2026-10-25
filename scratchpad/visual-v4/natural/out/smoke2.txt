@@ -1,0 +1,66 @@
+{
+ "look": {
+  "want": "natural",
+  "shown": "natural",
+  "natural": true,
+  "clear": false,
+  "preparing": null
+ },
+ "s": 0.5478775892930478,
+ "Dpx": 96,
+ "band": "mid",
+ "times": {
+  "firstLook": "natural",
+  "sharedStepsMs": {
+   "idRaster": 225.6,
+   "warpLookup": 244.4,
+   "heightWeights": 105.9,
+   "heightfield": 995.3,
+   "hillshade": 545.8,
+   "water": 68.7,
+   "modeRelief": 221.2
+  },
+  "naturalStepsMs": {
+   "coverBlend": 690.8,
+   "covers": 507,
+   "canopyShadow": 67.2,
+   "materials": 2369,
+   "corners": 49.1,
+   "canvas": 447.9
+  },
+  "clearStepsMs": null,
+  "lookCpu": {
+   "natural": {
+    "total": 5709,
+    "wall": 7428,
+    "slices": 62
+   },
+   "clear": null
+  },
+  "bakeCpuMs": 5709,
+  "bakeWallMs": 7428,
+  "slices": 62,
+  "figureAtlasMs": 2040,
+  "figureAtlas": "pixi.js 8.22.0",
+  "glowMs": 35.1,
+  "modeRasterMs": null,
+  "washComposites": 1,
+  "washMsTotal": 91,
+  "staticRenders": 7,
+  "staticMsMean": 143.5,
+  "firstPaintMs": 788,
+  "design": "GPU bake: a few ms to 15 ms on a GPU (estimate); CPU fallback 1.3 s at 1024 and 3.3 s at 2048 (measured under load in the research)"
+ },
+ "lines": {
+  "edges": 104,
+  "segs": 703,
+  "partners": 21,
+  "flips": 0,
+  "maxWidthPx": 4
+ },
+ "nat": {
+  "field": 309987,
+  "canopy": 513037
+ }
+} readyMs 8345
+errors []

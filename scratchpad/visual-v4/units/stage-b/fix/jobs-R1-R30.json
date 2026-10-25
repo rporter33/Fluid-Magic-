@@ -1,0 +1,84 @@
+{
+ "note": "Stage B fix pass re-rolls (critique section 2). Run through stage-b/fix/tools/fixgen.py (key \"fix\", cap 30, 3 used by the HTTP 402 probes). None ran: every call was refused with HTTP 402 (prepayment credits depleted) at 11:45Z, 12:16Z and 12:50Z.",
+ "jobs": [
+  {
+   "r": "R1",
+   "job": "twChief.front.body.edit",
+   "model": "gemini-nano-banana-2.1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/cmdB/refs/cmdChief.front.onmagenta.png"
+   ],
+   "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/fix/prompts/twChief.front.body.edit.txt",
+   "out": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/fix/twChief.front.body.edit.nb21.png",
+   "status": "ready (3 probes refused HTTP 402)"
+  },
+  {
+   "r": "R2",
+   "job": "twChief.back.body.edit",
+   "model": "gemini-nano-banana-2.1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/cmdB/refs/cmdChief.back.onmagenta.png"
+   ],
+   "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/fix/prompts/twChief.back.body.edit.txt",
+   "out": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/fix/twChief.back.body.edit.nb21.png",
+   "status": "ready"
+  },
+  {
+   "r": "R3",
+   "job": "twDruid.back.body.edit",
+   "model": "gemini-nano-banana-2.1",
+   "refs": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/cmdB/refs/cmdCaster.back.onmagenta.png"
+   ],
+   "promptFile": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/fix/prompts/twDruid.back.body.edit.txt",
+   "out": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/fix/twDruid.back.body.edit.nb21.png",
+   "status": "ready"
+  },
+  {
+   "r": "R4",
+   "job": "reserve: one re-roll of a failing body",
+   "status": "reserve"
+  },
+  {
+   "r": "R5-R12",
+   "job": "re-dresses wc04.front, wc05.back, wc07.back, wc07.front, gp01.back, sd03.back, sd08.front, ed08.back",
+   "how": "python3 work/cmdB/sbx/tools/cmdb.py redress front|back <faces> once R1-R3 pass (the builder asserts the body sheet); prompts carry the per-face kit (cmd_kits.py); sd08.front prompt already regenerated",
+   "status": "needs R1-R3"
+  },
+  {
+   "r": "R13",
+   "job": "reserve: one re-roll of a failing face",
+   "status": "reserve"
+  },
+  {
+   "r": "R14-R15",
+   "job": "Longbow Hunter front: re-dress of the keyed Flame Archer front frames laid on #FF00FF into the hunter kit",
+   "status": "needs its reference image and prompt built"
+  },
+  {
+   "r": "R16",
+   "job": "Briar Guard front surcoat edit of raw/troops/r1.briarGuard.front.g3pro.png",
+   "status": "needs its prompt"
+  },
+  {
+   "r": "R17",
+   "job": "thornMilitia.front (work/troops/jobs/r3.json)",
+   "status": "ready"
+  },
+  {
+   "r": "R18-R19",
+   "job": "Berserker back re-dress of the Ash Militia back; Berserker front kilt and sash edit",
+   "status": "need their prompts"
+  },
+  {
+   "r": "R20-R28",
+   "job": "nine troop busts: ashMilitia, berserker, briarGuard, cinderWarrior, emberSkirmisher, flameArcher, flamebrand, longbowHunter, thornMilitia (work/troops/jobs/b1.json, prompts b1.<unit>.bust.txt)",
+   "status": "ready"
+  },
+  {
+   "r": "R29-R30",
+   "job": "Wolf Rider back view (Pro) on refs/guides/wolfRider.back.png, blue key",
+   "status": "needs its prompt"
+  }
+ ]
+}

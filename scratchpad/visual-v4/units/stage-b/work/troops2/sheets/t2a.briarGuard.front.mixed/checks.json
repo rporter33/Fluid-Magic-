@@ -1,0 +1,255 @@
+{
+ "figure": "briarGuard",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.654,
+  "iouMirrored": 0.619,
+  "aspectRatio": 0.912,
+  "headDx": -0.066,
+  "guideHeadDx": -0.064,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.606,
+  "marchLegsIoU": 0.522,
+  "mostAlike": [
+   "stand~marchA",
+   0.795
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.227,
+   "marchA": 1.007,
+   "marchB": 0.953
+  },
+  "pass_": false
+ },
+ "fringe": {
+  "spillEdgePct": 9.788,
+  "keyInUnitPct": 0.004,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.42,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.214,
+  "histMin": [
+   "fleeA",
+   0.779
+  ],
+  "maxDE": [
+   "cheer",
+   4.7
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.841,
+    "de": 4.0,
+    "cloth": 0.21
+   },
+   "deadB": {
+    "hist": 0.793,
+    "de": 1.2,
+    "cloth": 0.085
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.654,
+    0.035
+   ],
+   "idle2": [
+    0.189,
+    -0.114
+   ],
+   "marchA": [
+    0.674,
+    0.049
+   ],
+   "marchB": [
+    0.674,
+    0.115
+   ],
+   "windup": [
+    0.53,
+    0.03
+   ],
+   "strike": [
+    0.332,
+    0.007
+   ],
+   "follow": [
+    0.723,
+    0.282
+   ],
+   "brace": [
+    0.625,
+    0.152
+   ],
+   "recoil": [
+    0.666,
+    0.079
+   ],
+   "fall": [
+    0.567,
+    0.293
+   ],
+   "deadA": [
+    0.665,
+    0.327
+   ],
+   "deadB": [
+    0.614,
+    0.55
+   ],
+   "fleeA": [
+    0.683,
+    0.126
+   ],
+   "fleeB": [
+    0.732,
+    0.411
+   ],
+   "cheer": [
+    0.543,
+    0.001
+   ]
+  },
+  "medianIoU": 0.654,
+  "medianMargin": 0.115,
+  "follow": "11/15",
+  "followShare": 0.73
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.644,
+    0.019
+   ],
+   "idle2": [
+    0.167,
+    -0.096
+   ],
+   "marchA": [
+    0.685,
+    0.061
+   ],
+   "marchB": [
+    0.681,
+    0.117
+   ],
+   "windup": [
+    0.683,
+    0.054
+   ],
+   "strike": [
+    0.32,
+    0.036
+   ],
+   "follow": [
+    0.662,
+    0.237
+   ],
+   "brace": [
+    0.637,
+    0.163
+   ],
+   "recoil": [
+    0.64,
+    0.008
+   ],
+   "fall": [
+    0.634,
+    0.359
+   ],
+   "fleeA": [
+    0.709,
+    0.147
+   ],
+   "fleeB": [
+    0.755,
+    0.432
+   ],
+   "cheer": [
+    0.699,
+    0.075
+   ]
+  },
+  "follow": "11/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.122,
+   "marchA": 0.993,
+   "marchB": 0.946
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 10.4,
+  "afterMax": 0.2
+ },
+ "side": {
+  "neutral": {
+   "share": 0.141,
+   "worstBelow": 30.1,
+   "below": {
+    "plains": 38.7,
+    "farmland": 38.3,
+    "swamp": 30.1,
+    "forest": 30.4
+   }
+  },
+  "sideKeyline": {
+   "share": 0.308,
+   "worstBelow": 28.6,
+   "below": {
+    "plains": 37.2,
+    "farmland": 36.8,
+    "swamp": 28.6,
+    "forest": 28.8
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "briarGuard.front.brace.png": 0.177,
+  "briarGuard.front.cheer.png": 0.249,
+  "briarGuard.front.deadA.png": 0.196,
+  "briarGuard.front.deadB.png": 0.07,
+  "briarGuard.front.dropped.png": 0.0,
+  "briarGuard.front.fall.png": 0.222,
+  "briarGuard.front.fleeA.png": 0.149,
+  "briarGuard.front.fleeB.png": 0.224,
+  "briarGuard.front.follow.png": 0.151,
+  "briarGuard.front.idle2.png": 0.285,
+  "briarGuard.front.marchA.png": 0.143,
+  "briarGuard.front.marchB.png": 0.179,
+  "briarGuard.front.recoil.png": 0.158,
+  "briarGuard.front.stand.png": 0.201,
+  "briarGuard.front.strike.png": 0.209,
+  "briarGuard.front.windup.png": 0.17
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/t2a.briarGuard.front.mixed.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

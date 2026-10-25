@@ -1,0 +1,417 @@
+{
+ "figure": "thornMilitia",
+ "unit": "thornMilitia",
+ "nation": "thornwood",
+ "key": "magenta",
+ "cloth": "#1F6A50",
+ "hueLocked": true,
+ "kit": "A Thorn Militia levy spearman: a bark-brown leather jerkin, worn under a sleeveless surcoat of deep bottle-green cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a knotted rope belt; a short deep bottle-green hooded cloak with the hood up, covering the shoulders and the upper back; padded sleeves and leather bracers; wrapped legs and soft boots; bark-brown weathered skin; a long dark hawthorn spear with a barbed head of bone and iron shaped like a great thorn. No shield, no antlers. Plain and poor.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.5185,
+     "standPx": 56,
+     "frames": [
+      "thornMilitia.back.stand",
+      "thornMilitia.back.stand.white",
+      "thornMilitia.back.idle2",
+      "thornMilitia.back.marchA",
+      "thornMilitia.back.marchB",
+      "thornMilitia.back.windup",
+      "thornMilitia.back.strike",
+      "thornMilitia.back.follow",
+      "thornMilitia.back.brace",
+      "thornMilitia.back.recoil",
+      "thornMilitia.back.recoil.white",
+      "thornMilitia.back.fall",
+      "thornMilitia.back.deadA",
+      "thornMilitia.back.deadB",
+      "thornMilitia.back.fleeA",
+      "thornMilitia.back.fleeB",
+      "thornMilitia.back.cheer",
+      "thornMilitia.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 1.037,
+     "standPx": 112,
+     "frames": [
+      "thornMilitia.back.stand",
+      "thornMilitia.back.stand.white",
+      "thornMilitia.back.idle2",
+      "thornMilitia.back.marchA",
+      "thornMilitia.back.marchB",
+      "thornMilitia.back.windup",
+      "thornMilitia.back.strike",
+      "thornMilitia.back.follow",
+      "thornMilitia.back.brace",
+      "thornMilitia.back.recoil",
+      "thornMilitia.back.recoil.white",
+      "thornMilitia.back.fall",
+      "thornMilitia.back.deadA",
+      "thornMilitia.back.deadB",
+      "thornMilitia.back.fleeA",
+      "thornMilitia.back.fleeB",
+      "thornMilitia.back.cheer",
+      "thornMilitia.back.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r2.thornMilitia.back.dress.nb21.png",
+   "sha256": "d9dcdc4259b5c9175b665fc2c416c9703f83e5a3816280b00c246af2cf3903e1",
+   "model": "gemini-nano-banana-2.1",
+   "job": "thornMilitia.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/bases/r1.ashMilitia.back.g3pro.to-magenta-1F6A50.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/01.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "14/15",
+    "cells": {
+     "stand": [
+      0.839,
+      0.182
+     ],
+     "idle2": [
+      0.816,
+      0.131
+     ],
+     "marchA": [
+      0.794,
+      0.26
+     ],
+     "marchB": [
+      0.847,
+      0.404
+     ],
+     "windup": [
+      0.438,
+      0.016
+     ],
+     "strike": [
+      0.794,
+      0.337
+     ],
+     "follow": [
+      0.846,
+      0.496
+     ],
+     "brace": [
+      0.847,
+      0.293
+     ],
+     "recoil": [
+      0.882,
+      0.234
+     ],
+     "fall": [
+      0.91,
+      0.901
+     ],
+     "deadA": [
+      0.84,
+      0.836
+     ],
+     "deadB": [
+      0.694,
+      0.69
+     ],
+     "fleeA": [
+      0.879,
+      0.533
+     ],
+     "fleeB": [
+      0.867,
+      0.621
+     ],
+     "cheer": [
+      0.866,
+      0.146
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.627,
+     "marchLegsIoU": 0.555,
+     "mostAlike": [
+      "marchA~marchB",
+      0.627
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.0,
+      "marchA": 1.065,
+      "marchB": 1.046
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.569,
+     "histMin": [
+      "fall",
+      0.655
+     ],
+     "maxDE": [
+      "cheer",
+      7.1
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 14.1,
+     "afterMax": 0.7
+    },
+    "side": {
+     "neutral": {
+      "share": 0.429,
+      "worstBelow": 25.7,
+      "below": {
+       "plains": 33.4,
+       "farmland": 33.0,
+       "swamp": 25.7,
+       "forest": 25.9
+      }
+     },
+     "sideKeyline": {
+      "share": 0.628,
+      "worstBelow": 24.2,
+      "below": {
+       "plains": 32.1,
+       "farmland": 31.7,
+       "swamp": 24.2,
+       "forest": 24.4
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.56,
+     "keyInUnitPct": 0.0,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.61,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0477,
+    "meanShare": 0.0236
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-thornwood-S",
+     "scale": 0.4375,
+     "standPx": 56,
+     "frames": [
+      "thornMilitia.front.stand",
+      "thornMilitia.front.stand.white",
+      "thornMilitia.front.idle2",
+      "thornMilitia.front.marchA",
+      "thornMilitia.front.marchB",
+      "thornMilitia.front.windup",
+      "thornMilitia.front.strike",
+      "thornMilitia.front.follow",
+      "thornMilitia.front.brace",
+      "thornMilitia.front.recoil",
+      "thornMilitia.front.recoil.white",
+      "thornMilitia.front.fall",
+      "thornMilitia.front.deadA",
+      "thornMilitia.front.deadB",
+      "thornMilitia.front.fleeA",
+      "thornMilitia.front.fleeB",
+      "thornMilitia.front.cheer",
+      "thornMilitia.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-thornwood-H",
+     "scale": 0.875,
+     "standPx": 112,
+     "frames": [
+      "thornMilitia.front.stand",
+      "thornMilitia.front.stand.white",
+      "thornMilitia.front.idle2",
+      "thornMilitia.front.marchA",
+      "thornMilitia.front.marchB",
+      "thornMilitia.front.windup",
+      "thornMilitia.front.strike",
+      "thornMilitia.front.follow",
+      "thornMilitia.front.brace",
+      "thornMilitia.front.recoil",
+      "thornMilitia.front.recoil.white",
+      "thornMilitia.front.fall",
+      "thornMilitia.front.deadA",
+      "thornMilitia.front.deadB",
+      "thornMilitia.front.fleeA",
+      "thornMilitia.front.fleeB",
+      "thornMilitia.front.cheer",
+      "thornMilitia.front.dropped"
+     ]
+    }
+   },
+   "sheet": "stage-b/raw/troops/r1.thornMilitia.front.g3pro.png",
+   "sha256": "e4cc172f29dab64ec29d8ac2d55e8d7d15a5679ef0b3138566854cd674e8281d",
+   "model": "gemini-3-pro-image",
+   "job": "thornMilitia.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/thornMilitia.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/wd.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/thornScout/01.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "consistency"
+   ],
+   "checks": {
+    "cameraAll": "13/15",
+    "cells": {
+     "stand": [
+      0.723,
+      0.088
+     ],
+     "idle2": [
+      0.541,
+      0.482
+     ],
+     "marchA": [
+      0.844,
+      0.218
+     ],
+     "marchB": [
+      0.803,
+      0.343
+     ],
+     "windup": [
+      0.741,
+      0.178
+     ],
+     "strike": [
+      0.546,
+      0.326
+     ],
+     "follow": [
+      0.804,
+      0.389
+     ],
+     "brace": [
+      0.697,
+      0.284
+     ],
+     "recoil": [
+      0.745,
+      0.186
+     ],
+     "fall": [
+      0.578,
+      0.326
+     ],
+     "deadA": [
+      0.626,
+      0.302
+     ],
+     "deadB": [
+      0.797,
+      0.767
+     ],
+     "fleeA": [
+      0.826,
+      0.251
+     ],
+     "fleeB": [
+      0.898,
+      0.601
+     ],
+     "cheer": [
+      0.614,
+      0.002
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.522,
+     "marchLegsIoU": 0.498,
+     "mostAlike": [
+      "stand~marchA",
+      0.759
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.008,
+      "marchA": 1.008,
+      "marchB": 0.922
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.27,
+     "histMin": [
+      "cheer",
+      0.811
+     ],
+     "maxDE": [
+      "cheer",
+      13.5
+     ],
+     "pass_": false,
+     "pass": false
+    },
+    "rim": {
+     "beforeMax": 23.6,
+     "afterMax": 1.7
+    },
+    "side": {
+     "neutral": {
+      "share": 0.215,
+      "worstBelow": 30.6,
+      "below": {
+       "plains": 39.0,
+       "farmland": 38.6,
+       "swamp": 30.6,
+       "forest": 30.8
+      }
+     },
+     "sideKeyline": {
+      "share": 0.418,
+      "worstBelow": 29.0,
+      "below": {
+       "plains": 37.6,
+       "farmland": 37.2,
+       "swamp": 29.0,
+       "forest": 29.2
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 10.005,
+     "keyInUnitPct": 0.119,
+     "fringePct": 0.0,
+     "edgeDevPct": 3.1,
+     "pass_": true
+    }
+   },
+   "keyCast": {
+    "tool": "units/tools/keycast.py",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0422,
+    "meanShare": 0.0211
+   }
+  }
+ },
+ "approved": null
+}

@@ -1,0 +1,2 @@
+const { launch, open, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(); for (const dpr of [1, 2]) { const p = await open(b, PAGE, { settle: 500, dpr }); const r = await mev(p, `[1, 1.25, 1.5, 2, 2.5, 3].map((w) => [w, [0, 15, 30, 45, 60, 75, 90].map((d) => rlCovBest(w * dpr, Math.cos(d * Math.PI / 180), Math.sin(d * Math.PI / 180)).toFixed(2)).join(' ')])`); console.log('dpr', dpr, JSON.stringify(r)); await p.context().close(); } await b.close(); })();

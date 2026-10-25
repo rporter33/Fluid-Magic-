@@ -1,0 +1,207 @@
+{
+ "figure": "hornetSwarm",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "variety": {
+  "mostAlike": [
+   null,
+   0.0
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {},
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 13.115,
+  "keyInUnitPct": 0.726,
+  "fringePct": 0.0,
+  "edgeDevPct": 6.37,
+  "pass_": false
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "down180",
+   0.785
+  ],
+  "maxDE": [
+   "up90",
+   3.4
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.779,
+    "de": 5.2,
+    "cloth": 0.0
+   },
+   "deadB": {
+    "hist": 0.849,
+    "de": 2.9,
+    "cloth": 0.0
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "up0": [
+    0.583,
+    0.421
+   ],
+   "down0": [
+    0.682,
+    0.327
+   ],
+   "up90": [
+    0.519,
+    0.393
+   ],
+   "down90": [
+    0.766,
+    0.412
+   ],
+   "up180": [
+    0.617,
+    0.465
+   ],
+   "down180": [
+    0.534,
+    0.286
+   ],
+   "sting0": [
+    0.74,
+    0.388
+   ],
+   "sting90": [
+    0.668,
+    0.503
+   ],
+   "glide0": [
+    0.638,
+    0.412
+   ],
+   "glide90": [
+    0.671,
+    0.383
+   ],
+   "deadA": [
+    0.593,
+    0.183
+   ],
+   "deadB": [
+    0.77,
+    0.374
+   ]
+  },
+  "medianIoU": 0.653,
+  "medianMargin": 0.391,
+  "follow": "10/12",
+  "followShare": 0.83
+ },
+ "cameraBody": {
+  "cells": {
+   "up0": [
+    0.388,
+    0.236
+   ],
+   "down0": [
+    0.63,
+    0.278
+   ],
+   "up90": [
+    0.341,
+    0.227
+   ],
+   "down90": [
+    0.771,
+    0.402
+   ],
+   "up180": [
+    0.61,
+    0.45
+   ],
+   "down180": [
+    0.47,
+    0.205
+   ],
+   "sting0": [
+    0.48,
+    0.175
+   ],
+   "sting90": [
+    0.508,
+    0.372
+   ],
+   "glide0": [
+    0.539,
+    0.33
+   ],
+   "glide90": [
+    0.463,
+    0.196
+   ]
+  },
+  "follow": "3/10",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {},
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 12.9,
+  "afterMax": 0.4
+ },
+ "side": {
+  "kind": "noSide",
+  "fPx": 5.0,
+  "neutral": {
+   "worstBelow": 19.1,
+   "below": {
+    "plains": 24.8,
+    "farmland": 24.5,
+    "swamp": 19.1,
+    "forest": 19.3
+   },
+   "minContrast": 19.1
+  },
+  "pass": true,
+  "rule": "block 15 L* below every ground"
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/hornetSwarm.back.cfix.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": false,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false,
+ "cameraGate": {
+  "follow": "10/12",
+  "excluded": [],
+  "missing": [],
+  "failing": [
+   "down180",
+   "up90"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "up0~down0": 0.337
+  },
+  "mostAlike": [
+   "up0~glide0",
+   0.549
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

@@ -1,0 +1,1127 @@
+{
+ "figure": "primordial-thornwood",
+ "family": "primordial-thornwood",
+ "body": "primordial",
+ "key": "green",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 263.46,
+    "wuPerPx": 0.14735,
+    "kind": "standing",
+    "anchorPx": [
+     536.0,
+     1501.2
+    ],
+    "points": {
+     "footFR": [
+      66.9,
+      -40.7
+     ],
+     "footFL": [
+      6.9,
+      -63.5
+     ],
+     "footBR": [
+      6.5,
+      27.5
+     ],
+     "footBL": [
+      -53.5,
+      4.7
+     ],
+     "mouth": [
+      67.9,
+      -190.1
+     ],
+     "weaponTip": [
+      94.5,
+      -206.2
+     ],
+     "head": [
+      99.3,
+      -176.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "primordial-thornwood.back.idle.white",
+      "scale": 0.2947,
+      "w": 440,
+      "h": 530
+     },
+     "H": {
+      "white": "primordial-thornwood.back.idle.white",
+      "scale": 0.5894,
+      "w": 880,
+      "h": 1060
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/primordial-thornwood.back/primordial-thornwood.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "bite": {
+    "heightWu": 267.16,
+    "wuPerPx": 0.13596,
+    "kind": "standing",
+    "anchorPx": [
+     657.4,
+     1722.1
+    ],
+    "points": {
+     "footFR": [
+      100.7,
+      -76.8
+     ],
+     "footFL": [
+      5.2,
+      -105.9
+     ],
+     "footBR": [
+      -3.3,
+      32.6
+     ],
+     "footBL": [
+      -71.2,
+      6.6
+     ],
+     "mouth": [
+      78.7,
+      -176.1
+     ],
+     "weaponTip": [
+      103.1,
+      -195.0
+     ],
+     "head": [
+      116.8,
+      -146.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.back.bite",
+      "shadow": "primordial-thornwood.back.bite.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2719,
+      "w": 452,
+      "h": 537
+     },
+     "H": {
+      "frame": "primordial-thornwood.back.bite",
+      "shadow": "primordial-thornwood.back.bite.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5438,
+      "w": 904,
+      "h": 1075
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.13596,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.back.bite.nb21.2k.r2.thornwood/primordial-thornwood.back.bite.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.back.bite.nb21.2k.r2.png",
+    "rawSha256": "a22b02c0a32438e2fc816b170184b902f608493572b1dc08e7ce3fa6f7f8c8e0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.bite.back.png",
+    "tag": "act.primordial-cinderHorde.back.bite.nb21.2k.r2",
+    "checks": {
+     "camera": {
+      "iou": 0.743,
+      "iouMirrored": 0.24,
+      "aspectRatio": 0.88,
+      "headDx": 0.115,
+      "guideHeadDx": 0.142,
+      "facingMargin": 0.503,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 10204,
+      "keyHueShiftedPct": 0.3,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 35.2,
+       "groundL": 67.7,
+       "below": 32.6
+      },
+      "farmland": {
+       "bodyL": 35.1,
+       "groundL": 67.3,
+       "below": 32.2
+      },
+      "swamp": {
+       "bodyL": 35.1,
+       "groundL": 58.5,
+       "below": 23.4
+      },
+      "forest": {
+       "bodyL": 35.1,
+       "groundL": 58.7,
+       "below": 23.6
+      },
+      "worstBelow": 23.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.7,
+      "dE_upperThird": 3.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.014
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5411,
+      "keyHueShiftedPct": 2.75,
+      "pass_": false,
+      "rimFixedShare": 0.201
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.003,
+      "edgeDevPct": 0.84,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.825,
+     "scale": 1.2852,
+     "aspect": 0.97,
+     "shear": 0.075,
+     "M": [
+      [
+       1.24665,
+       0.0918
+      ],
+      [
+       0.0,
+       1.32495
+      ]
+     ],
+     "t": [
+      -227.22,
+      -308.12
+     ],
+     "guideWuPerPx": 0.45078,
+     "rawPerGuidePx": 3.1384,
+     "idleCorrection": 1.1586,
+     "wuPerPxFromArea": 0.13596,
+     "wuPerPxFromThickness": 0.13408,
+     "wuPerPxFromFit": 0.12949,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "trample": {
+    "heightWu": 300.88,
+    "wuPerPx": 0.13059,
+    "kind": "standing",
+    "anchorPx": [
+     682.0,
+     2017.0
+    ],
+    "points": {
+     "footFR": [
+      89.5,
+      -149.5
+     ],
+     "footFL": [
+      10.2,
+      -155.0
+     ],
+     "footBR": [
+      3.9,
+      23.1
+     ],
+     "footBL": [
+      -64.9,
+      3.1
+     ],
+     "mouth": [
+      94.0,
+      -211.7
+     ],
+     "weaponTip": [
+      51.7,
+      -253.6
+     ],
+     "head": [
+      51.5,
+      -225.9
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.back.trample",
+      "shadow": "primordial-thornwood.back.trample.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2612,
+      "w": 394,
+      "h": 605
+     },
+     "H": {
+      "frame": "primordial-thornwood.back.trample",
+      "shadow": "primordial-thornwood.back.trample.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5224,
+      "w": 788,
+      "h": 1210
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.13059,
+    "groundFix": {
+     "applied": true,
+     "artDirector": true,
+     "shiftWu": 27.8
+    },
+    "anchorBeforeGroundFix": [
+     924.5,
+     1803.9
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.back.trample.nb21.2k.r2.thornwood/primordial-thornwood.back.trample.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.back.trample.nb21.2k.r2.png",
+    "rawSha256": "e85e856559d9e7e20c6ac2afd8abc166863c21f2d6b5b73f0c21a2ea5f518e47",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.trample.back.png",
+    "tag": "act.primordial-cinderHorde.back.trample.nb21.2k.r2",
+    "checks": {
+     "camera": {
+      "iou": 0.724,
+      "iouMirrored": 0.351,
+      "aspectRatio": 1.119,
+      "headDx": 0.081,
+      "guideHeadDx": 0.079,
+      "facingMargin": 0.373,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 11373,
+      "keyHueShiftedPct": 0.18,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 35.4,
+       "groundL": 67.7,
+       "below": 32.3
+      },
+      "farmland": {
+       "bodyL": 35.4,
+       "groundL": 67.3,
+       "below": 31.9
+      },
+      "swamp": {
+       "bodyL": 35.3,
+       "groundL": 58.5,
+       "below": 23.2
+      },
+      "forest": {
+       "bodyL": 35.3,
+       "groundL": 58.7,
+       "below": 23.4
+      },
+      "worstBelow": 23.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.7,
+      "dE_upperThird": 1.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.142
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5757,
+      "keyHueShiftedPct": 2.07,
+      "pass_": false,
+      "rimFixedShare": 0.191
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 0.82,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.799,
+     "scale": 1.1567,
+     "aspect": 1.08,
+     "shear": -0.038,
+     "M": [
+      [
+       1.24924,
+       -0.04381
+      ],
+      [
+       0.0,
+       1.07102
+      ]
+     ],
+     "t": [
+      -189.57,
+      -63.67
+     ],
+     "guideWuPerPx": 0.41058,
+     "rawPerGuidePx": 3.1176,
+     "idleCorrection": 1.1586,
+     "wuPerPxFromArea": 0.13059,
+     "wuPerPxFromThickness": 0.1287,
+     "wuPerPxFromFit": 0.13191,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 202.66,
+    "wuPerPx": 0.13041,
+    "kind": "lying",
+    "anchorPx": [
+     315.7,
+     1342.6
+    ],
+    "points": {
+     "footFR": [
+      74.1,
+      -55.2
+     ],
+     "footFL": [
+      64.3,
+      -169.4
+     ],
+     "footBR": [
+      -2.3,
+      22.7
+     ],
+     "footBL": [
+      -35.2,
+      -70.8
+     ],
+     "mouth": [
+      166.6,
+      -127.1
+     ],
+     "weaponTip": [
+      208.4,
+      -154.6
+     ],
+     "head": [
+      172.4,
+      -163.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.back.dead",
+      "shadow": "primordial-thornwood.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2608,
+      "w": 561,
+      "h": 408
+     },
+     "H": {
+      "frame": "primordial-thornwood.back.dead",
+      "shadow": "primordial-thornwood.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5216,
+      "w": 1122,
+      "h": 817
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.13313,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.back.dead.nb21.2k.thornwood/primordial-thornwood.back.dead.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.back.dead.nb21.2k.png",
+    "rawSha256": "b28d97321b29a3bb3a9dd9be1e1a5098aa44b096cf4283e9fa00a06b303b589c",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.dead.back.png",
+    "tag": "act.primordial-cinderHorde.back.dead.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.591,
+      "iouMirrored": 0.24,
+      "aspectRatio": 1.316,
+      "headDx": 0.599,
+      "guideHeadDx": 0.386,
+      "facingMargin": 0.351,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5903,
+      "keyHueShiftedPct": 3.56,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.2,
+       "groundL": 67.7,
+       "below": 35.6
+      },
+      "farmland": {
+       "bodyL": 32.1,
+       "groundL": 67.3,
+       "below": 35.2
+      },
+      "swamp": {
+       "bodyL": 32.1,
+       "groundL": 58.5,
+       "below": 26.4
+      },
+      "forest": {
+       "bodyL": 32.1,
+       "groundL": 58.7,
+       "below": 26.7
+      },
+      "worstBelow": 26.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.8,
+      "dE_upperThird": 8.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.785
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5760,
+      "keyHueShiftedPct": 0.5,
+      "pass_": true,
+      "rimFixedShare": 0.168
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.009,
+      "edgeDevPct": 5.0,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.7,
+     "scale": 1.3064,
+     "aspect": 1.06,
+     "shear": -0.138,
+     "M": [
+      [
+       1.38479,
+       -0.16632
+      ],
+      [
+       0.0,
+       1.23245
+      ]
+     ],
+     "t": [
+      -393.68,
+      -172.7
+     ],
+     "guideWuPerPx": 0.44742,
+     "rawPerGuidePx": 3.1537,
+     "idleCorrection": 1.1586,
+     "wuPerPxFromArea": 0.13588,
+     "wuPerPxFromThickness": 0.13041,
+     "wuPerPxFromFit": 0.12582,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 248.4,
+    "wuPerPx": 0.14707,
+    "kind": "standing",
+    "anchorPx": [
+     1156.7,
+     1378.5
+    ],
+    "points": {
+     "footFR": [
+      -91.3,
+      6.7
+     ],
+     "footFL": [
+      -25.1,
+      30.8
+     ],
+     "footBR": [
+      -25.3,
+      -65.4
+     ],
+     "footBL": [
+      40.8,
+      -41.3
+     ],
+     "mouth": [
+      -108.1,
+      37.9
+     ],
+     "weaponTip": [
+      -130.4,
+      -16.1
+     ],
+     "head": [
+      -100.3,
+      -24.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "primordial-thornwood.front.idle.white",
+      "scale": 0.2941,
+      "w": 536,
+      "h": 500
+     },
+     "H": {
+      "white": "primordial-thornwood.front.idle.white",
+      "scale": 0.5883,
+      "w": 1072,
+      "h": 1000
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/primordial-thornwood.front/primordial-thornwood.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "bite": {
+    "heightWu": 318.56,
+    "wuPerPx": 0.15716,
+    "kind": "standing",
+    "anchorPx": [
+     958.0,
+     1208.9
+    ],
+    "points": {
+     "footFR": [
+      -111.9,
+      31.8
+     ],
+     "footFL": [
+      -4.1,
+      65.9
+     ],
+     "footBR": [
+      -4.9,
+      -85.6
+     ],
+     "footBL": [
+      75.3,
+      -61.3
+     ],
+     "mouth": [
+      -84.2,
+      124.8
+     ],
+     "weaponTip": [
+      -126.0,
+      69.2
+     ],
+     "head": [
+      -93.7,
+      64.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.front.bite",
+      "shadow": "primordial-thornwood.front.bite.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3143,
+      "w": 512,
+      "h": 640
+     },
+     "H": {
+      "frame": "primordial-thornwood.front.bite",
+      "shadow": "primordial-thornwood.front.bite.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.6286,
+      "w": 1025,
+      "h": 1281
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.15716,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.front.bite.nb21.2k.thornwood/primordial-thornwood.front.bite.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.front.bite.nb21.2k.png",
+    "rawSha256": "d071ab6ac5748756e2f4f0d5b5e3d41dda8162f4ac2935a0b32074739e6a3be0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.bite.front.png",
+    "tag": "act.primordial-cinderHorde.front.bite.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.598,
+      "iouMirrored": 0.254,
+      "aspectRatio": 0.963,
+      "headDx": 0.202,
+      "guideHeadDx": 0.38,
+      "facingMargin": 0.344,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 6581,
+      "keyHueShiftedPct": 11.18,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 30.4,
+       "groundL": 67.7,
+       "below": 37.4
+      },
+      "farmland": {
+       "bodyL": 30.4,
+       "groundL": 67.3,
+       "below": 36.9
+      },
+      "swamp": {
+       "bodyL": 30.3,
+       "groundL": 58.5,
+       "below": 28.2
+      },
+      "forest": {
+       "bodyL": 30.3,
+       "groundL": 58.7,
+       "below": 28.4
+      },
+      "worstBelow": 28.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.9,
+      "dE_upperThird": 2.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.282
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 6581,
+      "keyHueShiftedPct": 1.37,
+      "pass_": true,
+      "rimFixedShare": 0.181
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.066,
+      "edgeDevPct": 5.47,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.765,
+     "scale": 1.163,
+     "aspect": 1.02,
+     "shear": 0.15,
+     "M": [
+      [
+       1.1863,
+       0.17104
+      ],
+      [
+       0.0,
+       1.14024
+      ]
+     ],
+     "t": [
+      -438.12,
+      -267.44
+     ],
+     "guideWuPerPx": 0.45078,
+     "rawPerGuidePx": 3.1384,
+     "idleCorrection": 1.2476,
+     "wuPerPxFromArea": 0.15716,
+     "wuPerPxFromThickness": 0.14789,
+     "wuPerPxFromFit": 0.15408,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "trample": {
+    "heightWu": 264.72,
+    "wuPerPx": 0.13157,
+    "kind": "standing",
+    "anchorPx": [
+     975.0,
+     2330.0
+    ],
+    "points": {
+     "footFR": [
+      -107.5,
+      -110.9
+     ],
+     "footFL": [
+      -28.4,
+      -79.1
+     ],
+     "footBR": [
+      -28.8,
+      -74.9
+     ],
+     "footBL": [
+      39.2,
+      -48.5
+     ],
+     "mouth": [
+      -93.8,
+      -129.9
+     ],
+     "weaponTip": [
+      -92.5,
+      -204.6
+     ],
+     "head": [
+      -77.4,
+      -199.9
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.front.trample",
+      "shadow": "primordial-thornwood.front.trample.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2631,
+      "w": 419,
+      "h": 532
+     },
+     "H": {
+      "frame": "primordial-thornwood.front.trample",
+      "shadow": "primordial-thornwood.front.trample.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5263,
+      "w": 837,
+      "h": 1065
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.13157,
+    "groundFix": {
+     "applied": true,
+     "artDirector": true,
+     "shiftWu": -40.0
+    },
+    "anchorBeforeGroundFix": [
+     685.7,
+     2633.8
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.front.trample.nb21.2k.r2.thornwood/primordial-thornwood.front.trample.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.front.trample.nb21.2k.r2.png",
+    "rawSha256": "2b0d41fb6e731d8ca16a457afaa9073b6121e4add0dbc7642daebeb81da9afbf",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.trample.front.png",
+    "tag": "act.primordial-cinderHorde.front.trample.nb21.2k.r2",
+    "checks": {
+     "camera": {
+      "iou": 0.629,
+      "iouMirrored": 0.428,
+      "aspectRatio": 0.931,
+      "headDx": -0.174,
+      "guideHeadDx": -0.159,
+      "facingMargin": 0.201,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 11324,
+      "keyHueShiftedPct": 0.76,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 27.4,
+       "groundL": 67.7,
+       "below": 40.3
+      },
+      "farmland": {
+       "bodyL": 27.4,
+       "groundL": 67.3,
+       "below": 39.9
+      },
+      "swamp": {
+       "bodyL": 27.3,
+       "groundL": 58.5,
+       "below": 31.1
+      },
+      "forest": {
+       "bodyL": 27.3,
+       "groundL": 58.7,
+       "below": 31.4
+      },
+      "worstBelow": 31.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 1.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.066
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5770,
+      "keyHueShiftedPct": 0.78,
+      "pass_": true,
+      "rimFixedShare": 0.243
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.049,
+      "edgeDevPct": 1.04,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.801,
+     "scale": 1.2291,
+     "aspect": 0.9,
+     "shear": 0.15,
+     "M": [
+      [
+       1.10622,
+       0.17728
+      ],
+      [
+       0.0,
+       1.36571
+      ]
+     ],
+     "t": [
+      -343.11,
+      -554.46
+     ],
+     "guideWuPerPx": 0.39116,
+     "rawPerGuidePx": 3.1384,
+     "idleCorrection": 1.2476,
+     "wuPerPxFromArea": 0.13157,
+     "wuPerPxFromThickness": 0.13892,
+     "wuPerPxFromFit": 0.12651,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 273.49,
+    "wuPerPx": 0.17431,
+    "kind": "lying",
+    "anchorPx": [
+     1233.0,
+     1289.6
+    ],
+    "points": {
+     "footFR": [
+      -63.8,
+      25.0
+     ],
+     "footFL": [
+      -35.4,
+      -70.0
+     ],
+     "footBR": [
+      20.9,
+      -68.3
+     ],
+     "footBL": [
+      57.7,
+      -172.5
+     ],
+     "mouth": [
+      -134.9,
+      21.3
+     ],
+     "weaponTip": [
+      -184.6,
+      -25.4
+     ],
+     "head": [
+      -145.8,
+      -36.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "primordial-thornwood.front.dead",
+      "shadow": "primordial-thornwood.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3486,
+      "w": 580,
+      "h": 550
+     },
+     "H": {
+      "frame": "primordial-thornwood.front.dead",
+      "shadow": "primordial-thornwood.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.6972,
+      "w": 1159,
+      "h": 1101
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.17431,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.primordial-cinderHorde.front.dead.nb21.2k.thornwood/primordial-thornwood.front.dead.png",
+    "raw": "stage-d/raw/act.primordial-cinderHorde.front.dead.nb21.2k.png",
+    "rawSha256": "db88deae8e38e3ace9bbfd9203da370348c3d3258806171e197ab9cc45c86e90",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/primordial.dead.front.png",
+    "tag": "act.primordial-cinderHorde.front.dead.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.8,
+      "iouMirrored": 0.494,
+      "aspectRatio": 1.058,
+      "headDx": 0.057,
+      "guideHeadDx": 0.05,
+      "facingMargin": 0.306,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 7693,
+      "keyHueShiftedPct": 5.38,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 29.3,
+       "groundL": 67.7,
+       "below": 38.4
+      },
+      "farmland": {
+       "bodyL": 29.3,
+       "groundL": 67.3,
+       "below": 38.0
+      },
+      "swamp": {
+       "bodyL": 29.2,
+       "groundL": 58.5,
+       "below": 29.2
+      },
+      "forest": {
+       "bodyL": 29.2,
+       "groundL": 58.7,
+       "below": 29.5
+      },
+      "worstBelow": 29.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.0,
+      "dE_upperThird": 5.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 5,
+     "specksDropped": 4,
+     "scale": {
+      "ratioToIdle": 1.101
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 7693,
+      "keyHueShiftedPct": 0.68,
+      "pass_": true,
+      "rimFixedShare": 0.105
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.015,
+      "edgeDevPct": 4.26,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.877,
+     "scale": 1.004,
+     "aspect": 1.005,
+     "shear": 0.0,
+     "M": [
+      [
+       1.009,
+       0.0
+      ],
+      [
+       0.0,
+       0.99898
+      ]
+     ],
+     "t": [
+      -7.9,
+      0.8
+     ],
+     "guideWuPerPx": 0.45423,
+     "rawPerGuidePx": 3.1411,
+     "idleCorrection": 1.2476,
+     "wuPerPxFromArea": 0.17431,
+     "wuPerPxFromThickness": 0.16919,
+     "wuPerPxFromFit": 0.1797,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "colour edit of the Cinder action frames (dd_tint.py, zero generations)",
+ "codeOnly": {
+  "hit": "the idle cutout tilted 6 degrees away from the blow, the one-frame white flash (idle.white), the mesh flinch"
+ },
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {}
+}

@@ -1,0 +1,290 @@
+{
+ "figure": "cmdCaster",
+ "view": "front",
+ "missing": [],
+ "overlaps": [
+  "deadA"
+ ],
+ "camera": {
+  "iou": 0.726,
+  "iouMirrored": 0.661,
+  "aspectRatio": 1.092,
+  "headDx": -0.056,
+  "guideHeadDx": -0.009,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.851,
+  "marchLegsIoU": 0.889,
+  "mostAlike": [
+   "stand~marchB",
+   0.863
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 0.946,
+   "marchB": 0.966
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.734,
+  "keyInUnitPct": 0.0,
+  "fringePct": 0.0,
+  "edgeDevPct": 6.56,
+  "pass_": true,
+  "edgeDevThickPct": 4.7,
+  "deviatingChromaShift": 0.003
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.688
+  ],
+  "maxDE": [
+   "deadB",
+   4.7
+  ],
+  "clothRatio": [
+   0.0,
+   4000.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.726,
+    0.065
+   ],
+   "idle2": [
+    0.769,
+    0.139
+   ],
+   "marchA": [
+    0.749,
+    0.126
+   ],
+   "marchB": [
+    0.777,
+    0.103
+   ],
+   "windup": [
+    0.655,
+    0.094
+   ],
+   "strike": [
+    0.762,
+    0.303
+   ],
+   "follow": [
+    0.825,
+    0.296
+   ],
+   "recoil": [
+    0.714,
+    0.148
+   ],
+   "actA": [
+    0.654,
+    0.033
+   ],
+   "actB": [
+    0.782,
+    0.209
+   ],
+   "fall": [
+    0.662,
+    0.399
+   ],
+   "deadA": [
+    0.66,
+    0.336
+   ],
+   "deadB": [
+    0.779,
+    0.732
+   ],
+   "fleeA": [
+    0.809,
+    0.223
+   ],
+   "fleeB": [
+    0.801,
+    0.129
+   ],
+   "cheer": [
+    0.69,
+    0.072
+   ]
+  },
+  "medianIoU": 0.756,
+  "medianMargin": 0.144,
+  "follow": "16/16",
+  "followShare": 1.0
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.738,
+    0.07,
+    0.876
+   ],
+   "idle2": [
+    0.764,
+    0.115,
+    0.762
+   ],
+   "marchA": [
+    0.758,
+    0.134,
+    0.897
+   ],
+   "marchB": [
+    0.764,
+    0.103,
+    0.873
+   ],
+   "windup": [
+    0.646,
+    0.068,
+    0.87
+   ],
+   "strike": [
+    0.738,
+    0.276,
+    0.738
+   ],
+   "follow": [
+    0.804,
+    0.288,
+    0.974
+   ],
+   "recoil": [
+    0.699,
+    0.139,
+    0.927
+   ],
+   "actA": [
+    0.673,
+    0.05,
+    0.909
+   ],
+   "actB": [
+    0.768,
+    0.196,
+    0.906
+   ],
+   "fall": [
+    0.664,
+    0.4,
+    0.91
+   ],
+   "deadA": [
+    0.66,
+    0.336,
+    0.935
+   ],
+   "deadB": [
+    0.779,
+    0.732,
+    0.758
+   ],
+   "fleeA": [
+    0.791,
+    0.206,
+    0.974
+   ],
+   "fleeB": [
+    0.78,
+    0.116,
+    0.945
+   ],
+   "cheer": [
+    0.673,
+    0.045,
+    0.892
+   ]
+  },
+  "follow": "16/16",
+  "followN": 16,
+  "failing": [],
+  "medianIoU": 0.748,
+  "inheritMedian": 0.901,
+  "inheritMin": [
+   0.738,
+   "strike"
+  ]
+ },
+ "rim": {
+  "beforeMax": 5.2,
+  "afterMax": 0.2
+ },
+ "sideCmd": {
+  "share": 0.147,
+  "worstBelow": 27.9,
+  "grounds": {
+   "plains": {
+    "share": 0.147,
+    "below": 36.4
+   },
+   "farmland": {
+    "share": 0.178,
+    "below": 36.0
+   },
+   "swamp": {
+    "share": 0.127,
+    "below": 27.9
+   },
+   "forest": {
+    "share": 0.158,
+    "below": 28.1
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 7.2,
+  "upperThirdLab": [
+   23.4,
+   -0.2,
+   5.3
+  ],
+  "portraitLab": [
+   31.7,
+   2.1,
+   8.0
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/ea02.front.redress.kit.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdCaster.front.body.g3pro.png",
+  "ownKit": true,
+  "kit": {
+   "face": "ea02",
+   "weapon": "the slender staff of blackened wood with a broad iron ring around its top",
+   "weaponChanged": true,
+   "mantle": null,
+   "mantleFrom": "portrait"
+  },
+  "job": "ea02.front.redress.kit"
+ }
+}

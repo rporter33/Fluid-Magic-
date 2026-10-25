@@ -1,0 +1,401 @@
+{
+ "figure": "ashMilitia",
+ "unit": "ashMilitia",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "An Ash Militia levy spearman: a quilted smoke-grey padded jack with patches, worn under a sleeveless surcoat of dull ember-orange cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a knotted rope belt; padded sleeves and wrapped forearms so that little skin shows; a plain dark iron skullcap wrapped with a dull ember-orange cloth band; a short dull ember-orange hooded shoulder cape (hood down) over both shoulders and the upper back; wrapped legs and soft boots; a long ash-wood spear with a leaf-shaped dark iron head. No shield, no horns. Poor and plain: patched, frayed, mismatched.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.5234,
+     "standPx": 56,
+     "frames": [
+      "ashMilitia.back.stand",
+      "ashMilitia.back.stand.white",
+      "ashMilitia.back.idle2",
+      "ashMilitia.back.marchA",
+      "ashMilitia.back.marchB",
+      "ashMilitia.back.windup",
+      "ashMilitia.back.strike",
+      "ashMilitia.back.follow",
+      "ashMilitia.back.brace",
+      "ashMilitia.back.recoil",
+      "ashMilitia.back.recoil.white",
+      "ashMilitia.back.fall",
+      "ashMilitia.back.deadA",
+      "ashMilitia.back.deadB",
+      "ashMilitia.back.fleeA",
+      "ashMilitia.back.fleeB",
+      "ashMilitia.back.cheer",
+      "ashMilitia.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 1.0467,
+     "standPx": 112,
+     "frames": [
+      "ashMilitia.back.stand",
+      "ashMilitia.back.stand.white",
+      "ashMilitia.back.idle2",
+      "ashMilitia.back.marchA",
+      "ashMilitia.back.marchB",
+      "ashMilitia.back.windup",
+      "ashMilitia.back.strike",
+      "ashMilitia.back.follow",
+      "ashMilitia.back.brace",
+      "ashMilitia.back.recoil",
+      "ashMilitia.back.recoil.white",
+      "ashMilitia.back.fall",
+      "ashMilitia.back.deadA",
+      "ashMilitia.back.deadB",
+      "ashMilitia.back.fleeA",
+      "ashMilitia.back.fleeB",
+      "ashMilitia.back.cheer",
+      "ashMilitia.back.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.ashMilitia.back.g3pro.png",
+   "sha256": "3d17f9f6ac74c0010718eac81acd1e592cc156a60ac154d3ec0345073143cec7",
+   "model": "gemini-3-pro-image",
+   "job": "ashMilitia.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/ashMilitia.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/r3/cw.back.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.847,
+      0.188
+     ],
+     "idle2": [
+      0.849,
+      0.17
+     ],
+     "marchA": [
+      0.842,
+      0.338
+     ],
+     "marchB": [
+      0.867,
+      0.428
+     ],
+     "windup": [
+      0.627,
+      0.028
+     ],
+     "strike": [
+      0.75,
+      0.292
+     ],
+     "follow": [
+      0.904,
+      0.544
+     ],
+     "brace": [
+      0.854,
+      0.316
+     ],
+     "recoil": [
+      0.875,
+      0.212
+     ],
+     "fall": [
+      0.896,
+      0.886
+     ],
+     "deadA": [
+      0.864,
+      0.861
+     ],
+     "deadB": [
+      0.875,
+      0.87
+     ],
+     "fleeA": [
+      0.882,
+      0.533
+     ],
+     "fleeB": [
+      0.894,
+      0.633
+     ],
+     "cheer": [
+      0.891,
+      0.186
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.62,
+     "marchLegsIoU": 0.513,
+     "mostAlike": [
+      "marchA~marchB",
+      0.62
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.009,
+      "marchA": 1.103,
+      "marchB": 1.065
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.397,
+     "histMin": [
+      "fall",
+      0.58
+     ],
+     "maxDE": [
+      "fall",
+      9.2
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 34.9,
+     "afterMax": 0.4
+    },
+    "side": {
+     "neutral": {
+      "share": 0.212,
+      "worstBelow": 19.8,
+      "below": {
+       "plains": 27.5,
+       "farmland": 27.1,
+       "swamp": 19.8,
+       "forest": 20.0
+      }
+     },
+     "sideKeyline": {
+      "share": 0.53,
+      "worstBelow": 16.8,
+      "below": {
+       "plains": 24.6,
+       "farmland": 24.2,
+       "swamp": 16.8,
+       "forest": 17.0
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 10.829,
+     "keyInUnitPct": 0.045,
+     "fringePct": 0.0,
+     "edgeDevPct": 4.12,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.4341,
+     "standPx": 56,
+     "frames": [
+      "ashMilitia.front.stand",
+      "ashMilitia.front.stand.white",
+      "ashMilitia.front.idle2",
+      "ashMilitia.front.marchA",
+      "ashMilitia.front.marchB",
+      "ashMilitia.front.windup",
+      "ashMilitia.front.strike",
+      "ashMilitia.front.follow",
+      "ashMilitia.front.brace",
+      "ashMilitia.front.recoil",
+      "ashMilitia.front.recoil.white",
+      "ashMilitia.front.fall",
+      "ashMilitia.front.deadA",
+      "ashMilitia.front.deadB",
+      "ashMilitia.front.fleeA",
+      "ashMilitia.front.fleeB",
+      "ashMilitia.front.cheer",
+      "ashMilitia.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.8682,
+     "standPx": 112,
+     "frames": [
+      "ashMilitia.front.stand",
+      "ashMilitia.front.stand.white",
+      "ashMilitia.front.idle2",
+      "ashMilitia.front.marchA",
+      "ashMilitia.front.marchB",
+      "ashMilitia.front.windup",
+      "ashMilitia.front.strike",
+      "ashMilitia.front.follow",
+      "ashMilitia.front.brace",
+      "ashMilitia.front.recoil",
+      "ashMilitia.front.recoil.white",
+      "ashMilitia.front.fall",
+      "ashMilitia.front.deadA",
+      "ashMilitia.front.deadB",
+      "ashMilitia.front.fleeA",
+      "ashMilitia.front.fleeB",
+      "ashMilitia.front.cheer",
+      "ashMilitia.front.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r2.ashMilitia.front.dress.nb21.png",
+   "sha256": "ba79c0e05e7fa49f27a68ce9117dd2df85fef39c18a43d4b88dfb2b935397179",
+   "model": "gemini-nano-banana-2.1",
+   "job": "ashMilitia.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/bases/r1.lightInfantry.front.g3pro.to-green.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/04.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.745,
+      0.095
+     ],
+     "idle2": [
+      0.68,
+      0.578
+     ],
+     "marchA": [
+      0.705,
+      0.065
+     ],
+     "marchB": [
+      0.769,
+      0.322
+     ],
+     "windup": [
+      0.783,
+      0.237
+     ],
+     "strike": [
+      0.809,
+      0.552
+     ],
+     "follow": [
+      0.801,
+      0.416
+     ],
+     "brace": [
+      0.812,
+      0.382
+     ],
+     "recoil": [
+      0.837,
+      0.303
+     ],
+     "fall": [
+      0.716,
+      0.495
+     ],
+     "deadA": [
+      0.725,
+      0.442
+     ],
+     "deadB": [
+      0.846,
+      0.827
+     ],
+     "fleeA": [
+      0.889,
+      0.269
+     ],
+     "fleeB": [
+      0.858,
+      0.617
+     ],
+     "cheer": [
+      0.743,
+      0.143
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.569,
+     "marchLegsIoU": 0.431,
+     "mostAlike": [
+      "stand~windup",
+      0.678
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "idle2": 1.0,
+      "marchA": 1.031,
+      "marchB": 0.915
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.402,
+     "histMin": [
+      "follow",
+      0.737
+     ],
+     "maxDE": [
+      "follow",
+      6.5
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 28.1,
+     "afterMax": 0.0
+    },
+    "side": {
+     "neutral": {
+      "share": 0.335,
+      "worstBelow": 22.2,
+      "below": {
+       "plains": 30.5,
+       "farmland": 30.1,
+       "swamp": 22.2,
+       "forest": 22.4
+      }
+     },
+     "sideKeyline": {
+      "share": 0.629,
+      "worstBelow": 19.4,
+      "below": {
+       "plains": 27.9,
+       "farmland": 27.5,
+       "swamp": 19.4,
+       "forest": 19.6
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.659,
+     "keyInUnitPct": 0.142,
+     "fringePct": 0.0,
+     "edgeDevPct": 5.58,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

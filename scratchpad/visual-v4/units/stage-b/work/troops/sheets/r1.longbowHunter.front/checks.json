@@ -1,0 +1,253 @@
+{
+ "figure": "longbowHunter",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.666,
+  "iouMirrored": 0.554,
+  "aspectRatio": 1.618,
+  "headDx": -0.079,
+  "guideHeadDx": -0.066,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.718,
+  "marchLegsIoU": 0.546,
+  "mostAlike": [
+   "draw~loose",
+   0.834
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.005,
+   "marchB": 0.985
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 9.102,
+  "keyInUnitPct": 0.251,
+  "fringePct": 0.0,
+  "edgeDevPct": 3.25,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.245,
+  "histMin": [
+   "fleeA",
+   0.829
+  ],
+  "maxDE": [
+   "fleeB",
+   3.3
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.904,
+    "de": 1.3,
+    "cloth": 0.238
+   },
+   "deadB": {
+    "hist": 0.85,
+    "de": 4.2,
+    "cloth": 0.279
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.666,
+    0.112
+   ],
+   "marchA": [
+    0.687,
+    0.134
+   ],
+   "marchB": [
+    0.673,
+    0.043
+   ],
+   "nock": [
+    0.642,
+    0.096
+   ],
+   "draw": [
+    0.561,
+    0.015
+   ],
+   "loose": [
+    0.571,
+    0.041
+   ],
+   "windup": [
+    0.494,
+    0.039
+   ],
+   "strike": [
+    0.494,
+    0.118
+   ],
+   "recoil": [
+    0.537,
+    0.107
+   ],
+   "fall": [
+    0.501,
+    0.199
+   ],
+   "deadA": [
+    0.58,
+    0.208
+   ],
+   "deadB": [
+    0.492,
+    0.182
+   ],
+   "fleeA": [
+    0.709,
+    0.061
+   ],
+   "fleeB": [
+    0.747,
+    0.426
+   ],
+   "cheer": [
+    0.56,
+    -0.039
+   ]
+  },
+  "medianIoU": 0.571,
+  "medianMargin": 0.107,
+  "follow": "9/15",
+  "followShare": 0.6
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.585,
+    0.054
+   ],
+   "marchA": [
+    0.62,
+    0.063
+   ],
+   "marchB": [
+    0.597,
+    0.053
+   ],
+   "nock": [
+    0.631,
+    0.076
+   ],
+   "draw": [
+    0.599,
+    0.064
+   ],
+   "loose": [
+    0.491,
+    0.038
+   ],
+   "windup": [
+    0.506,
+    0.046
+   ],
+   "strike": [
+    0.485,
+    0.113
+   ],
+   "recoil": [
+    0.537,
+    0.108
+   ],
+   "fall": [
+    0.513,
+    0.214
+   ],
+   "fleeA": [
+    0.716,
+    0.066
+   ],
+   "fleeB": [
+    0.753,
+    0.424
+   ],
+   "cheer": [
+    0.55,
+    -0.021
+   ]
+  },
+  "follow": "7/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "marchA": 1.005,
+   "marchB": 0.99
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 13.9,
+  "afterMax": 0.5
+ },
+ "side": {
+  "neutral": {
+   "share": 0.214,
+   "worstBelow": 31.1,
+   "below": {
+    "plains": 39.5,
+    "farmland": 39.1,
+    "swamp": 31.1,
+    "forest": 31.3
+   }
+  },
+  "sideKeyline": {
+   "share": 0.371,
+   "worstBelow": 29.7,
+   "below": {
+    "plains": 38.3,
+    "farmland": 37.9,
+    "swamp": 29.7,
+    "forest": 30.0
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "longbowHunter.front.cheer.png": 0.248,
+  "longbowHunter.front.deadA.png": 0.235,
+  "longbowHunter.front.deadB.png": 0.272,
+  "longbowHunter.front.draw.png": 0.215,
+  "longbowHunter.front.dropped.png": 0.0,
+  "longbowHunter.front.fall.png": 0.255,
+  "longbowHunter.front.fleeA.png": 0.213,
+  "longbowHunter.front.fleeB.png": 0.276,
+  "longbowHunter.front.loose.png": 0.202,
+  "longbowHunter.front.marchA.png": 0.204,
+  "longbowHunter.front.marchB.png": 0.185,
+  "longbowHunter.front.nock.png": 0.231,
+  "longbowHunter.front.recoil.png": 0.221,
+  "longbowHunter.front.stand.png": 0.231,
+  "longbowHunter.front.strike.png": 0.238,
+  "longbowHunter.front.windup.png": 0.239
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.longbowHunter.front.g3pro.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false
+}

@@ -1,0 +1,16 @@
+{
+  "judge": 1,
+  "evidence": {
+    "spectacle_measure_rerun": "battle-design/measure/measure.ts re-run: starting armies 6.72 rounds avg (max 10), 75 events, 5.6 KB; 300v300 fixture 8.7 rounds, 366 events, 25.4 KB, 33 casts, 4.3 commander deaths per battle. Claims hold.",
+    "rerun_check": "judge1/rerun.ts: setup JSON round trip with spells by id plus cloned rng re-ran 40 of 40 battles (both fixtures, seeds 1-20) to an identical replay and winner. Re-run record size: 4.1 KB (0.8 KB gz) starting armies, 9.6 KB (1.4 KB gz) 300v300 with 6 commanders a side; full setup 5.2 KB / 15.5 KB.",
+    "overkill_share": "judge1/spent.ts on a patched copy of src: hits that land on a troop already felled earlier in the same phase are 10.4% (small) and 15.3% (big) of all hits; big battle per run: 2,112 attacks, 1,124 hits, 280 rolled 0, 172 on fallen troops, 342 kills, so true wounds 330 while spectacle A2 formula hits-blocked-kills gives 502.",
+    "synth_bench": "judge1/bench: sound prototype re-run at 167x real time, bit-identical, variants distinct.",
+    "oac_determinism": "judge1/oac-det.mjs in /opt/pw-browsers chromium-1194: OfflineAudioContext oscillator graphs gave 5, 4, 4 distinct outputs of 6 identical renders. Confirms the sound proposal, refutes the spectacle's OfflineAudioContext bank as a deterministic basis.",
+    "playwright_version": "/opt/node-tools/node_modules/playwright is 1.56.1, matching the architecture proposal's pin."
+  },
+  "scores": {
+    "spectacle": { "visceral": 10, "readability": 8, "fidelity": 7.5, "determinism": 6, "feasibility": 7, "performance": 7 },
+    "architecture": { "visceral": 6, "readability": 6, "fidelity": 7.5, "determinism": 10, "feasibility": 8, "performance": 8.5 },
+    "sound": { "visceral": 9, "readability": 8, "fidelity": 8, "determinism": 9, "feasibility": 7, "performance": 7.5 }
+  }
+}

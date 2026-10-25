@@ -1,0 +1,519 @@
+{
+ "figure": "ashRider",
+ "unit": "ashRider",
+ "nation": "cinderHorde",
+ "key": "green",
+ "layout": "cavalry",
+ "body": "cavalry",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "portrait": "stage-b/portraits/cinderHorde/ashHorse/01b.webp",
+ "kit": "An Ash Rider, a lancer: the rider in blackened iron scale with a dull ember-orange shoulder cape and a rounded dark iron helm with a dull ember-orange horsehair crest, a long ash-wood lance with a dark iron head and a dull ember-orange pennon just below it, a sword at the hip (in the windup and strike cells the sword is in hand and the lance is gone). The horse: a heavy dark ash-grey horse with a soot-black mane and tail, a dull ember-orange caparison covering its back and rump from the saddle to the tail, a dark iron plate on its face.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "ashRider-S",
+     "scale": 0.4877,
+     "standPx": 79,
+     "bodyHeightSrc": 162,
+     "frames": [
+      "ashRider.back.stand",
+      "ashRider.back.stand.white",
+      "ashRider.back.walkA",
+      "ashRider.back.walkB",
+      "ashRider.back.gallopA",
+      "ashRider.back.gallopB",
+      "ashRider.back.charge",
+      "ashRider.back.windup",
+      "ashRider.back.strike",
+      "ashRider.back.recoil",
+      "ashRider.back.recoil.white",
+      "ashRider.back.fall",
+      "ashRider.back.deadA",
+      "ashRider.back.deadB",
+      "ashRider.back.boltA",
+      "ashRider.back.boltB",
+      "ashRider.back.cheer",
+      "ashRider.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "ashRider-H",
+     "scale": 0.9815,
+     "standPx": 159,
+     "bodyHeightSrc": 162,
+     "frames": [
+      "ashRider.back.stand",
+      "ashRider.back.stand.white",
+      "ashRider.back.walkA",
+      "ashRider.back.walkB",
+      "ashRider.back.gallopA",
+      "ashRider.back.gallopB",
+      "ashRider.back.charge",
+      "ashRider.back.windup",
+      "ashRider.back.strike",
+      "ashRider.back.recoil",
+      "ashRider.back.recoil.white",
+      "ashRider.back.fall",
+      "ashRider.back.deadA",
+      "ashRider.back.deadB",
+      "ashRider.back.boltA",
+      "ashRider.back.boltB",
+      "ashRider.back.cheer",
+      "ashRider.back.dropped"
+     ]
+    }
+   },
+   "frames": "frames/ashRider.back/",
+   "sheet": "stage-c/raw/creatures/ashRider.back.fill.nb21.png",
+   "sha256": "b25c120b79aa4e4cf3bc03082a7c0c4150d4f85382f144a091db43c3ff183c45",
+   "model": "gemini-nano-banana-2.1",
+   "job": "ashRider.back.fill",
+   "route": "fill",
+   "references": [
+    "stage-c/work/creatures/bases/ashRider.back.fill.base.png",
+    "stage-b/portraits/cinderHorde/ashHorse/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "fringe"
+   ],
+   "note": "frames taken from the other attempt: {'dropped': 'ashRider.back.paint'}; keycast nogreen: key-cast pixels max 6.52% -> 0.00% of a frame",
+   "keycast": {
+    "rule": "nogreen",
+    "window": [
+     85.0,
+     175.0
+    ],
+    "to": 70.0,
+    "castShareBefore": 0.0652,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "ashRider.back.paint"
+   ],
+   "checks": {
+    "cameraCells": "13/15",
+    "cameraFailing": [
+     "deadA",
+     "deadB"
+    ],
+    "cells": {
+     "stand": [
+      0.596,
+      0.402
+     ],
+     "walkA": [
+      0.564,
+      0.391
+     ],
+     "walkB": [
+      0.579,
+      0.389
+     ],
+     "gallopA": [
+      0.552,
+      0.488
+     ],
+     "gallopB": [
+      0.553,
+      0.319
+     ],
+     "charge": [
+      0.592,
+      0.536
+     ],
+     "windup": [
+      0.624,
+      0.435
+     ],
+     "strike": [
+      0.605,
+      0.448
+     ],
+     "recoil": [
+      0.619,
+      0.345
+     ],
+     "fall": [
+      0.597,
+      0.384
+     ],
+     "deadA": [
+      0.243,
+      -0.062
+     ],
+     "deadB": [
+      0.248,
+      0.034
+     ],
+     "boltA": [
+      0.667,
+      0.608
+     ],
+     "boltB": [
+      0.699,
+      0.491
+     ],
+     "cheer": [
+      0.685,
+      0.463
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "walkA~walkB": 0.851,
+      "gallopA~gallopB": 0.5
+     },
+     "mostAlike": [
+      "stand~windup",
+      0.778
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.178,
+     "histMin": [
+      "boltB",
+      0.744
+     ],
+     "maxDE": [
+      "windup",
+      2.8
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 24.5,
+     "afterMax": 1.5
+    },
+    "side": {
+     "fPx": 39.5,
+     "f28": {
+      "neutral": {
+       "share": 0.112,
+       "worstBelow": 15.2
+      },
+      "sideKeyline": {
+       "share": 0.367,
+       "worstBelow": 14.0
+      }
+     },
+     "neutral": {
+      "share": 0.13,
+      "worstBelow": 21.3,
+      "below": {
+       "plains": 27.3,
+       "farmland": 27.0,
+       "swamp": 21.3,
+       "forest": 21.4
+      }
+     },
+     "sideKeyline": {
+      "share": 0.38,
+      "worstBelow": 19.5,
+      "below": {
+       "plains": 25.7,
+       "farmland": 25.4,
+       "swamp": 19.5,
+       "forest": 19.6
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 15.852,
+     "keyInUnitPct": 0.529,
+     "fringePct": 0.0,
+     "edgeDevPct": 3.24,
+     "pass_": false
+    },
+    "gates": {
+     "camera": true,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "riveted iron face plate": "hidden in this view",
+     "soot-black mane and forelock": true,
+     "ember-orange caparison edge": true,
+     "iron bridle rings": "hidden in this view",
+     "greyer muzzle": "hidden in this view"
+    },
+    "note": "the coat is a lighter dappled grey than the portrait's dark charcoal with pale dapples",
+    "by": "stage C creatures agent, 4x crops (review/identity-ashRider.png)"
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "ashRider-S",
+     "scale": 0.5374,
+     "standPx": 79,
+     "bodyHeightSrc": 147,
+     "frames": [
+      "ashRider.front.stand",
+      "ashRider.front.stand.white",
+      "ashRider.front.walkA",
+      "ashRider.front.walkB",
+      "ashRider.front.gallopA",
+      "ashRider.front.gallopB",
+      "ashRider.front.charge",
+      "ashRider.front.windup",
+      "ashRider.front.strike",
+      "ashRider.front.recoil",
+      "ashRider.front.recoil.white",
+      "ashRider.front.fall",
+      "ashRider.front.deadA",
+      "ashRider.front.deadB",
+      "ashRider.front.boltA",
+      "ashRider.front.boltB",
+      "ashRider.front.cheer",
+      "ashRider.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "ashRider-H",
+     "scale": 1.0816,
+     "standPx": 159,
+     "bodyHeightSrc": 147,
+     "frames": [
+      "ashRider.front.stand",
+      "ashRider.front.stand.white",
+      "ashRider.front.walkA",
+      "ashRider.front.walkB",
+      "ashRider.front.gallopA",
+      "ashRider.front.gallopB",
+      "ashRider.front.charge",
+      "ashRider.front.windup",
+      "ashRider.front.strike",
+      "ashRider.front.recoil",
+      "ashRider.front.recoil.white",
+      "ashRider.front.fall",
+      "ashRider.front.deadA",
+      "ashRider.front.deadB",
+      "ashRider.front.boltA",
+      "ashRider.front.boltB",
+      "ashRider.front.cheer",
+      "ashRider.front.dropped"
+     ]
+    }
+   },
+   "frames": "frames/ashRider.front/",
+   "sheet": "stage-c/raw/creatures/ashRider.front.cfix.r2.nb21.png",
+   "sha256": "a2713d4441fc2747af8233f205b91b3738ced81d22b63c1f6fadae2a19ad21bb",
+   "model": "gemini-nano-banana-2.1",
+   "job": "ashRider.front.cfix.r2",
+   "route": "edit",
+   "references": [
+    "stage-c/raw/creatures/ashRider.front.fill.nb21.png",
+    "stage-b/portraits/cinderHorde/ashHorse/01b.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "side",
+    "fringe"
+   ],
+   "note": "keycast nogreen: key-cast pixels max 41.14% -> 0.02% of a frame",
+   "keycast": {
+    "rule": "nogreen",
+    "window": [
+     85.0,
+     175.0
+    ],
+    "to": 70.0,
+    "castShareBefore": 0.4114,
+    "castShareAfter": 0.0002
+   },
+   "otherAttempts": [
+    "ashRider.front.fill (shipped before the fix pass: light grey coat, no chest caparison)",
+    "ashRider.front.cfix (R6 fill route: caparison on the two clay cells only, the coat still light)",
+    "ashRider.front.paint"
+   ],
+   "checks": {
+    "cameraCells": "12/15",
+    "cameraFailing": [
+     "recoil",
+     "stand",
+     "walkA"
+    ],
+    "cells": {
+     "stand": [
+      0.422,
+      0.049
+     ],
+     "walkA": [
+      0.438,
+      0.063
+     ],
+     "walkB": [
+      0.57,
+      0.163
+     ],
+     "gallopA": [
+      0.578,
+      0.431
+     ],
+     "gallopB": [
+      0.572,
+      0.215
+     ],
+     "charge": [
+      0.775,
+      0.694
+     ],
+     "windup": [
+      0.612,
+      0.282
+     ],
+     "strike": [
+      0.685,
+      0.314
+     ],
+     "recoil": [
+      0.506,
+      0.102
+     ],
+     "fall": [
+      0.651,
+      0.443
+     ],
+     "deadA": [
+      0.706,
+      0.585
+     ],
+     "deadB": [
+      0.565,
+      0.369
+     ],
+     "boltA": [
+      0.731,
+      0.572
+     ],
+     "boltB": [
+      0.55,
+      0.205
+     ],
+     "cheer": [
+      0.591,
+      0.222
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "walkA~walkB": 0.637,
+      "gallopA~gallopB": 0.411
+     },
+     "mostAlike": [
+      "stand~walkA",
+      0.736
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.032,
+     "histMin": [
+      "boltB",
+      0.716
+     ],
+     "maxDE": [
+      "boltB",
+      6.1
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 26.5,
+     "afterMax": 0.4
+    },
+    "side": {
+     "fPx": 39.5,
+     "f28": {
+      "neutral": {
+       "share": 0.012,
+       "worstBelow": 19.5
+      },
+      "sideKeyline": {
+       "share": 0.219,
+       "worstBelow": 18.2
+      }
+     },
+     "neutral": {
+      "share": 0.022,
+      "worstBelow": 29.0,
+      "below": {
+       "plains": 35.6,
+       "farmland": 35.3,
+       "swamp": 29.0,
+       "forest": 29.1
+      }
+     },
+     "sideKeyline": {
+      "share": 0.243,
+      "worstBelow": 26.9,
+      "below": {
+       "plains": 33.9,
+       "farmland": 33.5,
+       "swamp": 26.9,
+       "forest": 27.1
+      }
+     },
+     "pass": false
+    },
+    "fringe": {
+     "spillEdgePct": 16.258,
+     "keyInUnitPct": 1.234,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.83,
+     "pass_": false
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": false,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "riveted iron face plate": true,
+     "soot-black mane and forelock": true,
+     "ember-orange caparison edge": "partly",
+     "iron bridle rings": "partly",
+     "greyer muzzle": "partly",
+     "dark charcoal coat with pale dapples": true
+    },
+    "note": "R6 re-roll (plain edit): the coat is now the portrait's dark charcoal with pale dapples; the caparison still does not cover the chest from the front",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  }
+ },
+ "approved": null
+}

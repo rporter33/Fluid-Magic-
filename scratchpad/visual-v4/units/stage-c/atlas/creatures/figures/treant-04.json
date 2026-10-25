@@ -1,0 +1,295 @@
+{
+ "figure": "treant-04",
+ "unit": "treant",
+ "face": "04",
+ "nation": "thornwood",
+ "key": "magenta",
+ "body": "treant",
+ "portrait": "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/04.webp",
+ "views": {
+  "back": {
+   "idle": "frames/treant-04.back/treant-04.back.idle.png",
+   "heightWu": 114.15,
+   "anchorPx": [
+    203.0,
+    1149.0
+   ],
+   "anchorFrom": "the shipped cutout's maquette anchor carried through the crown edit (stage C fix 5)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-04.back.idle",
+     "shadow": "treant-04.back.idle.shadow",
+     "scale": 0.1961,
+     "w": 116,
+     "h": 231,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-04.back.idle",
+     "shadow": "treant-04.back.idle.shadow",
+     "scale": 0.3923,
+     "w": 232,
+     "h": 462,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant04.back.cfix.r2.nb21.png",
+   "sha256": "206d72870a92c9ac5c4d34f7d36f14b9cf6ef4e789b807fcd4a82b25e4a4390e",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant04.back.cfix.r2",
+   "route": "edit",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/fix/bases/treant04.back.cfix.r2.base.png"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "note": "keycast magthin: key-cast pixels max 2.27% -> 1.49% of a frame; magenta edge pass: 13111 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.0227,
+    "castShareAfter": 0.0149
+   },
+   "otherAttempts": [
+    "treant04.back.redress.v2 (shipped before the fix pass: the stems cut flat by the top edge)",
+    "treant04.back.cfix (R2: the stems carried up to the new edge, cut again)",
+    "treant04.back.redress",
+    "treant04.back.redress.r2"
+   ],
+   "checks": {
+    "camera": {
+     "iou": 0.548,
+     "iouMirrored": 0.45,
+     "aspectRatio": 1.064,
+     "pass": false
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      42.6,
+      2.4,
+      9.5
+     ],
+     "portraitLab": [
+      42.9,
+      2.1,
+      11.2
+     ],
+     "dE2000": 1.4,
+     "wholeDE2000": 9.1,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 36.6,
+      "groundL": 67.7,
+      "below": 31.2
+     },
+     "farmland": {
+      "bodyL": 36.5,
+      "groundL": 67.3,
+      "below": 30.8
+     },
+     "swamp": {
+      "bodyL": 36.0,
+      "groundL": 58.5,
+      "below": 22.4
+     },
+     "forest": {
+      "bodyL": 36.0,
+      "groundL": 58.7,
+      "below": 22.7
+     },
+     "worstBelow": 22.4,
+     "minContrast": 22.4,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 10.6,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 5.679,
+     "keyInUnitPct": 0.038,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.42,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     576,
+     1164
+    ],
+    "oversampleAtH": 3.05
+   },
+   "identity": {
+    "marks": {
+     "white birch bark, black lenticels and patches": true,
+     "top forked into two stems": true,
+     "drooping dark twigs, yellow-brown leaves": true,
+     "almond knot-scar eyes, thin scar": "hidden in this view",
+     "dark moss only on the shoulders": true
+    },
+    "note": "R2 re-roll: the two stems end in a crown of twigs inside the frame",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  },
+  "front": {
+   "idle": "frames/treant-04.front/treant-04.front.idle.png",
+   "heightWu": 122.77,
+   "anchorPx": [
+    376.7,
+    1113.7
+   ],
+   "anchorFrom": "the shipped cutout's maquette anchor carried through the crown edit (stage C fix 5)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-04.front.idle",
+     "shadow": "treant-04.front.idle.shadow",
+     "scale": 0.209,
+     "w": 122,
+     "h": 248,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-04.front.idle",
+     "shadow": "treant-04.front.idle.shadow",
+     "scale": 0.4179,
+     "w": 243,
+     "h": 497,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant04.front.cfix.r2.nb21.png",
+   "sha256": "2746622e64814100935848b04fe7bc44692bcda487ad7797dd4f2b9bfe008d63",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant04.front.cfix.r2",
+   "route": "edit",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/fix/bases/treant04.front.cfix.r2.base.png"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "note": "keycast magthin: key-cast pixels max 1.87% -> 0.82% of a frame; magenta edge pass: 6817 edge pixels de-tinted",
+   "keycast": {
+    "rule": "magthin",
+    "window": [
+     300.0,
+     45.0
+    ],
+    "to": 58.0,
+    "castShareBefore": 0.0187,
+    "castShareAfter": 0.0082
+   },
+   "otherAttempts": [
+    "treant04.front.redress (shipped before the fix pass: the stems cut flat by the top edge)",
+    "treant04.front.cfix (R2: the stems carried up to the new edge, cut again)"
+   ],
+   "checks": {
+    "camera": {
+     "iou": 0.488,
+     "iouMirrored": 0.411,
+     "aspectRatio": 1.099,
+     "pass": false
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      39.5,
+      2.0,
+      9.1
+     ],
+     "portraitLab": [
+      42.9,
+      2.1,
+      11.2
+     ],
+     "dE2000": 3.4,
+     "wholeDE2000": 5.1,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 40.6,
+      "groundL": 67.7,
+      "below": 27.2
+     },
+     "farmland": {
+      "bodyL": 40.6,
+      "groundL": 67.3,
+      "below": 26.8
+     },
+     "swamp": {
+      "bodyL": 39.9,
+      "groundL": 58.5,
+      "below": 18.6
+     },
+     "forest": {
+      "bodyL": 39.9,
+      "groundL": 58.7,
+      "below": 18.8
+     },
+     "worstBelow": 18.6,
+     "minContrast": 18.6,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 11.6,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 7.468,
+     "keyInUnitPct": 0.087,
+     "fringePct": 0.0,
+     "edgeDevPct": 2.84,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     568,
+     1175
+    ],
+    "oversampleAtH": 2.92
+   },
+   "identity": {
+    "marks": {
+     "white birch bark, black lenticels and patches": true,
+     "top forked into two stems": true,
+     "drooping dark twigs, yellow-brown leaves": true,
+     "almond knot-scar eyes, thin scar": true,
+     "dark moss only on the shoulders": true
+    },
+    "note": "R2 re-roll: the two stems end in a crown of twigs inside the frame",
+    "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

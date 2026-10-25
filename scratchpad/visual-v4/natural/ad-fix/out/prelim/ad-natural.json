@@ -1,0 +1,513 @@
+{
+ "all": {
+  "look": "natural",
+  "mode": "ownership",
+  "hit": {
+   "samples": 400,
+   "wrong": 0,
+   "cornerSamples": 180,
+   "cornerWrong": 0
+  },
+  "layout": {
+   "band": "mid",
+   "scale": 0.548,
+   "Dpx": 96,
+   "armyBase": 22.1,
+   "names": 6,
+   "numberChips": 0,
+   "wildNames": 3,
+   "provincesInView": 60,
+   "namedInView": 6,
+   "pctNamed": 10,
+   "labelOverlaps": 0,
+   "labelPieceOverlaps": 0,
+   "pieceOverlaps": 0,
+   "namesUnderRibbon": [],
+   "armiesInFront": 0,
+   "armiesOutsideInset": 0,
+   "examples": {
+    "lpList": [],
+    "ppList": []
+   }
+  },
+  "means": {
+   "applicable": false,
+   "look": "natural",
+   "note": "not applicable (Natural): the province-mean and 20 / 12 terrain-pair rules bind Clear terrain colours and the Terrain mode; reliefNatural() holds the natural view"
+  },
+  "natural": {
+   "look": "natural",
+   "chroma": {
+    "texels": 1189679,
+    "over010": 0,
+    "max": 0.089,
+    "p99": 0.085,
+    "cap": 0.1,
+    "materialsMax": [
+     "plains.light",
+     "#6e7734",
+     0.092
+    ],
+    "materialsOver010": 0,
+    "pass": true
+   },
+   "cover": {
+    "sourceScan": {
+     "transcendentals": [],
+     "pass": true
+    },
+    "provinces": 60,
+    "wholeMin": 0.811,
+    "wholeMedian": 0.926,
+    "wholeOwnCopsesMin": 0.828,
+    "coreMin": 0.988,
+    "coreCopsesAsForestMin": 0.8,
+    "copseCoreMax": 0.2,
+    "worst": "Karford (farmland) 0.811",
+    "byTerrain": {
+     "hills": {
+      "n": 8,
+      "wholeMin": 0.876,
+      "coreMin": 1
+     },
+     "plains": {
+      "n": 15,
+      "wholeMin": 0.846,
+      "coreMin": 1
+     },
+     "forest": {
+      "n": 13,
+      "wholeMin": 0.947,
+      "coreMin": 1
+     },
+     "wasteland": {
+      "n": 5,
+      "wholeMin": 0.868,
+      "coreMin": 1
+     },
+     "mountains": {
+      "n": 5,
+      "wholeMin": 0.876,
+      "coreMin": 1
+     },
+     "farmland": {
+      "n": 8,
+      "wholeMin": 0.811,
+      "coreMin": 0.988
+     },
+     "swamp": {
+      "n": 6,
+      "wholeMin": 0.879,
+      "coreMin": 1
+     }
+    },
+    "need": {
+     "whole": 0.7,
+     "core": 0.95,
+     "copseCore": 0.25
+    },
+    "pass": true
+   },
+   "snow": {
+    "look": "natural",
+    "byTerrain": {
+     "hills": {
+      "texels": 308881,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 32.4,
+      "minCvd": 31.8
+     },
+     "plains": {
+      "texels": 604637,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 29.9,
+      "minCvd": 28.9
+     },
+     "forest": {
+      "texels": 547483,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 32.5,
+      "minCvd": 32
+     },
+     "wasteland": {
+      "texels": 179088,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 23.2,
+      "minCvd": 22.7
+     },
+     "mountains": {
+      "texels": 189953,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 28.7,
+      "minCvd": 28.5
+     },
+     "farmland": {
+      "texels": 313289,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 30,
+      "minCvd": 29.3
+     },
+     "swamp": {
+      "texels": 235860,
+      "within2012": 0,
+      "withinUnderHaze": 0,
+      "minNormal": 32.3,
+      "minCvd": 31.7
+     }
+    },
+    "pass": true
+   },
+   "readers": {
+    "scale": 0.548,
+    "Dpx": 96,
+    "band": "mid",
+    "look": "natural",
+    "normal": {
+     "lightness": {
+      "patches": 800,
+      "patchAcc": 0.978,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     },
+     "texture": {
+      "patches": 800,
+      "patchAcc": 0.89,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     },
+     "unexplored": {
+      "patches": 800,
+      "patchAcc": 0.927,
+      "provinces": 60,
+      "provinceAcc": 0.95,
+      "missed": [
+       "Halegate (hills read plains)",
+       "Karreach (hills read plains)",
+       "Ashvale (hills read plains)"
+      ]
+     },
+     "unexploredTexture": {
+      "patches": 800,
+      "patchAcc": 0.886,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     }
+    },
+    "deutan": {
+     "lightness": {
+      "patches": 800,
+      "patchAcc": 0.976,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     },
+     "texture": {
+      "patches": 800,
+      "patchAcc": 0.879,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     }
+    },
+    "tritan": {
+     "lightness": {
+      "patches": 800,
+      "patchAcc": 0.976,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     },
+     "texture": {
+      "patches": 800,
+      "patchAcc": 0.886,
+      "provinces": 60,
+      "provinceAcc": 0.983,
+      "missed": [
+       "Stagmarch (plains read hills)"
+      ]
+     }
+    },
+    "protan": {
+     "lightness": {
+      "patches": 800,
+      "patchAcc": 0.98,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     },
+     "texture": {
+      "patches": 800,
+      "patchAcc": 0.897,
+      "provinces": 60,
+      "provinceAcc": 1,
+      "missed": []
+     }
+    },
+    "need": {
+     "province": 0.95,
+     "patch": 0.9,
+     "note": "at Mid, in sight and on unexplored land"
+    },
+    "pass": true
+   }
+  },
+  "snow": {
+   "look": "natural",
+   "byTerrain": {
+    "hills": {
+     "texels": 308881,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32.4,
+     "minCvd": 31.8
+    },
+    "plains": {
+     "texels": 604637,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 29.9,
+     "minCvd": 28.9
+    },
+    "forest": {
+     "texels": 547483,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32.5,
+     "minCvd": 32
+    },
+    "wasteland": {
+     "texels": 179088,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 23.2,
+     "minCvd": 22.7
+    },
+    "mountains": {
+     "texels": 189953,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 28.7,
+     "minCvd": 28.5
+    },
+    "farmland": {
+     "texels": 313289,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 30,
+     "minCvd": 29.3
+    },
+    "swamp": {
+     "texels": 235860,
+     "within2012": 0,
+     "withinUnderHaze": 0,
+     "minNormal": 32.3,
+     "minCvd": 31.7
+    }
+   },
+   "pass": true
+  },
+  "rails": {
+   "scale": 0.548,
+   "dpr": 1,
+   "widths": {
+    "d": 1.5,
+    "b": 2,
+    "l": 1.5,
+    "ib": 1.5,
+    "ik": 2.5,
+    "h": 2,
+    "hp": 2,
+    "ph": 1.5,
+    "pp": 1.5
+   },
+   "samples": 51,
+   "fails": 0,
+   "passByBannerAlone": 28,
+   "dottedEdgesSkipped": 4,
+   "worstContrast": 3.49,
+   "worstAt": "Torbarrow (farmland) against Stagmarch",
+   "failList": []
+  },
+  "lines": {
+   "look": "natural",
+   "band": "mid",
+   "dpr": 1,
+   "hairline": {
+    "samples": 455,
+    "min": 2.649,
+    "median": 3.093,
+    "under": 0,
+    "limit": 2.3
+   },
+   "internal": {
+    "samples": 167,
+    "min": 3.79,
+    "median": 7.101,
+    "under": 0,
+    "limit": 3.2
+   },
+   "worst": {
+    "hair": {
+     "c": 2.65,
+     "at": "Stagmoor/Marholt",
+     "key": "light",
+     "partner": false
+    },
+    "int": {
+     "c": 3.79,
+     "at": "Ashdale/Rookford",
+     "key": "light",
+     "partner": false
+    }
+   },
+   "bevel": {
+    "ulLight": 73,
+    "ulDark": 0,
+    "lrLight": 0,
+    "lrDark": 73,
+    "softLips": 63
+   },
+   "edges": 104,
+   "segs": 703,
+   "partners": 4,
+   "keylineFlipsAlongEdges": 0,
+   "maxHairWidthPx": 3,
+   "skippedFogDashed": 10,
+   "pass": true
+  },
+  "seats": {
+   "band": "mid",
+   "Dpx": 96,
+   "limit": 2.5,
+   "look": "natural",
+   "town": {
+    "seats": 8,
+    "p95Worst": 4.491,
+    "p95Median": 2.781,
+    "over": "towns are not muted (bases with rims)"
+   },
+   "pass": true
+  },
+  "stable": {
+   "first": 1779794247,
+   "second": 1779794247,
+   "identical": true
+  },
+  "design": {
+   "ownTerrainShare": {
+    "min": 0.865,
+    "under80": 0,
+    "need": 0.8
+   },
+   "glowCore": {
+    "min": 0.791,
+    "median": 0.912,
+    "need": 0.7,
+    "note": "owned provinces; the core is untouched by the glow and the fog hem"
+   },
+   "meanResidualL": null,
+   "reliefInvariants": {
+    "peakMin": 1.198,
+    "passableMax": 0.998,
+    "peaksAbove": true,
+    "mereMax": -0.05,
+    "landMin": -0.05,
+    "meresBelow": true,
+    "note": "checked map-wide (stricter than within 2 D and 1 D)"
+   },
+   "water": {
+    "lakes": 4,
+    "ponds": 8,
+    "streams": 9,
+    "waterfalls": 2,
+    "lakeMaxShare": 0.045,
+    "pondMaxShare": 0.018,
+    "minClearD": 0.101,
+    "needD": 0.1,
+    "streamPointsOutsideTheirProvince": 0,
+    "note": "clearance for waterfalls is measured off the south edge they fall from"
+   },
+   "escarpment": "Clear not baked yet",
+   "coreSwing": "Clear not baked yet",
+   "reliefRulesPass": {
+    "invariants": true,
+    "escarpmentAtMost3": true,
+    "coreSwingThirdOfCap": true,
+    "ownTerrain80": true,
+    "glowCore70": true,
+    "meanResidual": true,
+    "all": true
+   }
+  },
+  "memory": {
+   "looksBaked": [
+    "natural"
+   ],
+   "bakeMB": 10,
+   "mipsMB": 3.13,
+   "bakeWithMipsMB": 13.13,
+   "liveRastersMB": 2.5,
+   "rimMB": 6.5,
+   "figureAtlasMB": 0.95,
+   "screenCachesMB": 34.21,
+   "rastersKeptMB": 48.28,
+   "unwashedCopiesMB": 13.13,
+   "totalCanvasMB": 57.29,
+   "jsHeapMB": 124.93,
+   "design": "bake RGBA8 with mips 14.0 MB on GPU (2048 x 1280); this mockup holds CPU canvases instead of GPU textures, plus the CPU rasters the checks read"
+  },
+  "times": {
+   "firstLook": "natural",
+   "sharedStepsMs": {
+    "idRaster": 154.4,
+    "warpLookup": 512.1,
+    "heightWeights": 153.9,
+    "heightfield": 1233.8,
+    "hillshade": 417.4,
+    "water": 60.1,
+    "modeRelief": 198.3
+   },
+   "naturalStepsMs": {
+    "coverBlend": 625.2,
+    "covers": 960.7,
+    "canopyShadow": 72.7,
+    "materials": 3039.8,
+    "corners": 58.5,
+    "canvas": 386.5
+   },
+   "clearStepsMs": null,
+   "lookCpu": {
+    "natural": {
+     "total": 6862,
+     "wall": 9070,
+     "slices": 62
+    },
+    "clear": null
+   },
+   "bakeCpuMs": 6862,
+   "bakeWallMs": 9070,
+   "slices": 62,
+   "figureAtlasMs": 2734,
+   "figureAtlas": "pixi.js 8.22.0",
+   "glowMs": 28,
+   "modeRasterMs": null,
+   "washComposites": 1,
+   "washMsTotal": 103.3,
+   "staticRenders": 37,
+   "staticMsMean": 50.9,
+   "firstPaintMs": 1017,
+   "design": "GPU bake: a few ms to 15 ms on a GPU (estimate); CPU fallback 1.3 s at 1024 and 3.3 s at 2048 (measured under load in the research)"
+  }
+ },
+ "checkMs": 11635,
+ "readyMs": 10099
+}

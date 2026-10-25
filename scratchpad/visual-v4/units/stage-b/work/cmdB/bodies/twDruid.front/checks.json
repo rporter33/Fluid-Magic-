@@ -1,0 +1,169 @@
+{
+ "figure": "twDruid",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.794,
+  "iouMirrored": 0.712,
+  "aspectRatio": 1.01,
+  "headDx": -0.088,
+  "guideHeadDx": 0.009,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.73,
+  "marchLegsIoU": 0.687,
+  "mostAlike": [
+   "marchA~marchB",
+   0.73
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.0,
+   "marchA": 0.969,
+   "marchB": 0.943
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 8.376,
+  "keyInUnitPct": 0.11,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.48,
+  "pass_": true,
+  "edgeDevThickPct": 1.26,
+  "deviatingChromaShift": 0.008
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "deadB",
+   0.831
+  ],
+  "maxDE": [
+   "deadB",
+   3.3
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.794,
+    0.082
+   ],
+   "idle2": [
+    0.825,
+    0.279
+   ],
+   "marchA": [
+    0.776,
+    0.068
+   ],
+   "marchB": [
+    0.788,
+    0.045
+   ],
+   "windup": [
+    0.808,
+    0.174
+   ],
+   "strike": [
+    0.771,
+    0.33
+   ],
+   "follow": [
+    0.705,
+    0.18
+   ],
+   "recoil": [
+    0.746,
+    0.148
+   ],
+   "actA": [
+    0.796,
+    0.134
+   ],
+   "actB": [
+    0.784,
+    0.2
+   ],
+   "fall": [
+    0.785,
+    0.56
+   ],
+   "deadA": [
+    0.791,
+    0.482
+   ],
+   "deadB": [
+    0.814,
+    0.75
+   ],
+   "fleeA": [
+    0.664,
+    0.099
+   ],
+   "fleeB": [
+    0.704,
+    0.098
+   ],
+   "cheer": [
+    0.785,
+    0.113
+   ]
+  },
+  "medianIoU": 0.785,
+  "medianMargin": 0.161,
+  "follow": "16/16",
+  "followShare": 1.0
+ },
+ "rim": {
+  "beforeMax": 38.4,
+  "afterMax": 0.4
+ },
+ "sideCmd": {
+  "share": 0.15,
+  "worstBelow": 26.1,
+  "grounds": {
+   "plains": {
+    "share": 0.15,
+    "below": 34.4
+   },
+   "farmland": {
+    "share": 0.096,
+    "below": 34.1
+   },
+   "swamp": {
+    "share": 0.171,
+    "below": 26.1
+   },
+   "forest": {
+    "share": 0.152,
+    "below": 26.3
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": null,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/cal/raw/cmdDruid.front.body.g3pro.png"
+}

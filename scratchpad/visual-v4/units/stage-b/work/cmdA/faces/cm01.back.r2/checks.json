@@ -1,0 +1,287 @@
+{
+ "figure": "cmdCaster",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.67,
+  "iouMirrored": 0.631,
+  "aspectRatio": 0.89,
+  "headDx": -0.059,
+  "guideHeadDx": 0.127,
+  "pass": false
+ },
+ "variety": {
+  "marchIoU": 0.665,
+  "marchLegsIoU": 0.678,
+  "mostAlike": [
+   "marchA~marchB",
+   0.665
+  ],
+  "robe": true,
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.982,
+   "marchA": 1.012,
+   "marchB": 0.971
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 11.06,
+  "keyInUnitPct": 0.002,
+  "fringePct": 0.0,
+  "edgeDevPct": 2.54,
+  "pass_": true,
+  "edgeDevThickPct": 1.03,
+  "deviatingChromaShift": 0.007
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "fall",
+   0.788
+  ],
+  "maxDE": [
+   "fall",
+   2.0
+  ],
+  "clothRatio": [
+   0.0,
+   0.0
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.67,
+    0.039
+   ],
+   "idle2": [
+    0.631,
+    0.024
+   ],
+   "marchA": [
+    0.622,
+    0.043
+   ],
+   "marchB": [
+    0.581,
+    0.01
+   ],
+   "windup": [
+    0.591,
+    0.002
+   ],
+   "strike": [
+    0.556,
+    0.09
+   ],
+   "follow": [
+    0.591,
+    0.012
+   ],
+   "recoil": [
+    0.48,
+    -0.002
+   ],
+   "actA": [
+    0.677,
+    0.079
+   ],
+   "actB": [
+    0.67,
+    0.068
+   ],
+   "fall": [
+    0.171,
+    -0.121
+   ],
+   "deadA": [
+    0.116,
+    -0.082
+   ],
+   "deadB": [
+    0.649,
+    0.322
+   ],
+   "fleeA": [
+    0.57,
+    0.046
+   ],
+   "fleeB": [
+    0.606,
+    0.143
+   ],
+   "cheer": [
+    0.699,
+    0.058
+   ]
+  },
+  "medianIoU": 0.599,
+  "medianMargin": 0.041,
+  "follow": "13/16",
+  "followShare": 0.81
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.69,
+    0.058,
+    0.826
+   ],
+   "idle2": [
+    0.718,
+    0.047,
+    0.84
+   ],
+   "marchA": [
+    0.674,
+    0.085,
+    0.843
+   ],
+   "marchB": [
+    0.593,
+    0.037,
+    0.84
+   ],
+   "windup": [
+    0.617,
+    0.0,
+    0.85
+   ],
+   "strike": [
+    0.634,
+    0.185,
+    0.84
+   ],
+   "follow": [
+    0.595,
+    -0.017,
+    0.686
+   ],
+   "recoil": [
+    0.569,
+    -0.002,
+    0.803
+   ],
+   "actA": [
+    0.674,
+    0.078,
+    0.814
+   ],
+   "actB": [
+    0.597,
+    0.064,
+    0.847
+   ],
+   "fall": [
+    0.17,
+    -0.124,
+    0.094
+   ],
+   "deadA": [
+    0.122,
+    -0.074,
+    0.212
+   ],
+   "deadB": [
+    0.662,
+    0.336,
+    0.913
+   ],
+   "fleeA": [
+    0.656,
+    0.168,
+    0.852
+   ],
+   "fleeB": [
+    0.582,
+    0.151,
+    0.776
+   ],
+   "cheer": [
+    0.681,
+    0.057,
+    0.828
+   ]
+  },
+  "follow": "12/16",
+  "followN": 12,
+  "failing": [
+   "deadA",
+   "fall",
+   "follow",
+   "recoil"
+  ],
+  "medianIoU": 0.625,
+  "inheritMedian": 0.834,
+  "inheritMin": [
+   0.094,
+   "fall"
+  ]
+ },
+ "rim": {
+  "beforeMax": 0.0,
+  "afterMax": 0.0
+ },
+ "sideCmd": {
+  "share": 0.162,
+  "worstBelow": 27.8,
+  "grounds": {
+   "plains": {
+    "share": 0.162,
+    "below": 36.1
+   },
+   "farmland": {
+    "share": 0.189,
+    "below": 35.7
+   },
+   "swamp": {
+    "share": 0.149,
+    "below": 27.8
+   },
+   "forest": {
+    "share": 0.173,
+    "below": 28.0
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "identity": {
+  "dE2000": 5.9,
+  "upperThirdLab": [
+   21.9,
+   -0.6,
+   6.7
+  ],
+  "portraitLab": [
+   28.7,
+   1.7,
+   7.3
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": false,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": false,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cm01.back.redress.r2.nb21.png",
+ "a2": {
+  "body": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdA/cmdCaster.back.body.r2.nb21.png",
+  "ownKit": false,
+  "kit": "as the passing other view (unchanged)",
+  "job": "cm01.back.redress.r2"
+ }
+}

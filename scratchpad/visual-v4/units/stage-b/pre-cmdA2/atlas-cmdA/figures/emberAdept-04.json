@@ -1,0 +1,1054 @@
+{
+ "figure": "emberAdept-04",
+ "unit": "emberAdept",
+ "face": "04",
+ "nation": "cinderHorde",
+ "body": "cmdCaster",
+ "layout": "commander",
+ "act": "cast",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/ea04.front.redress.nb21.png",
+   "sheetSha256": "9fc2bba0afca1f898c20c649b93f591ef9b61d6b7663c69c5e290b4310ec88b4",
+   "body": "stage-b/cal/raw/cmdCaster.front.body.g3pro.png",
+   "bodySha256": "925f5a0dea2eaeace278408b7c6e5e198b5d7cda1cc6662cf8f4d26f0539ee0f",
+   "key": "green",
+   "layout": "commander",
+   "scale": {
+    "S": 0.4507,
+    "H": 0.90141
+   },
+   "scaleFrom": {
+    "bodyH": 142,
+    "from_": "body cmdCaster.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "emberAdept-04.front.stand",
+     "srcBox": [
+      72,
+      63,
+      178,
+      220
+     ],
+     "srcAnchor": [
+      75.4,
+      154.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6997,
+       "y": 0.9645
+      },
+      "H": {
+       "x": 0.6997,
+       "y": 0.9645
+      }
+     }
+    },
+    "idle2": {
+     "frame": "emberAdept-04.front.idle2",
+     "srcBox": [
+      331,
+      63,
+      431,
+      220
+     ],
+     "srcAnchor": [
+      67.2,
+      154.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6657,
+       "y": 0.9645
+      },
+      "H": {
+       "x": 0.6657,
+       "y": 0.9645
+      }
+     }
+    },
+    "marchA": {
+     "frame": "emberAdept-04.front.marchA",
+     "srcBox": [
+      580,
+      67,
+      687,
+      217
+     ],
+     "srcAnchor": [
+      78.0,
+      147.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7231,
+       "y": 0.9608
+      },
+      "H": {
+       "x": 0.7231,
+       "y": 0.9677
+      }
+     }
+    },
+    "marchB": {
+     "frame": "emberAdept-04.front.marchB",
+     "srcBox": [
+      835,
+      66,
+      944,
+      219
+     ],
+     "srcAnchor": [
+      78.2,
+      150.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7107,
+       "y": 0.9663
+      },
+      "H": {
+       "x": 0.7107,
+       "y": 0.9663
+      }
+     }
+    },
+    "windup": {
+     "frame": "emberAdept-04.front.windup",
+     "srcBox": [
+      98,
+      269,
+      190,
+      476
+     ],
+     "srcAnchor": [
+      50.5,
+      204.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5526,
+       "y": 0.9784
+      },
+      "H": {
+       "x": 0.5462,
+       "y": 0.9732
+      }
+     }
+    },
+    "strike": {
+     "frame": "emberAdept-04.front.strike",
+     "srcBox": [
+      329,
+      331,
+      433,
+      473
+     ],
+     "srcAnchor": [
+      70.4,
+      139.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.668,
+       "y": 0.9644
+      },
+      "H": {
+       "x": 0.668,
+       "y": 0.9644
+      }
+     }
+    },
+    "follow": {
+     "frame": "emberAdept-04.front.follow",
+     "srcBox": [
+      617,
+      330,
+      685,
+      474
+     ],
+     "srcAnchor": [
+      40.4,
+      141.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5821,
+       "y": 0.9634
+      },
+      "H": {
+       "x": 0.591,
+       "y": 0.9634
+      }
+     }
+    },
+    "recoil": {
+     "frame": "emberAdept-04.front.recoil",
+     "srcBox": [
+      794,
+      312,
+      987,
+      476
+     ],
+     "srcAnchor": [
+      120.6,
+      161.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.622,
+       "y": 0.9679
+      },
+      "H": {
+       "x": 0.622,
+       "y": 0.9679
+      }
+     }
+    },
+    "actA": {
+     "frame": "emberAdept-04.front.actA",
+     "srcBox": [
+      110,
+      528,
+      179,
+      732
+     ],
+     "srcAnchor": [
+      36.4,
+      201.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5274,
+       "y": 0.9744
+      },
+      "H": {
+       "x": 0.5274,
+       "y": 0.9744
+      }
+     }
+    },
+    "actB": {
+     "frame": "emberAdept-04.front.actB",
+     "srcBox": [
+      311,
+      588,
+      429,
+      730
+     ],
+     "srcAnchor": [
+      90.4,
+      139.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.759,
+       "y": 0.9644
+      },
+      "H": {
+       "x": 0.759,
+       "y": 0.9644
+      }
+     }
+    },
+    "fall": {
+     "frame": "emberAdept-04.front.fall",
+     "srcBox": [
+      626,
+      524,
+      762,
+      733
+     ],
+     "srcAnchor": [
+      31.7,
+      206.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2427,
+       "y": 0.9776
+      },
+      "H": {
+       "x": 0.2407,
+       "y": 0.9776
+      }
+     }
+    },
+    "deadA": {
+     "frame": "emberAdept-04.front.deadA",
+     "srcBox": [
+      870,
+      564,
+      1024,
+      697
+     ],
+     "srcAnchor": [
+      71.6,
+      98.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4686,
+       "y": 0.7285
+      },
+      "H": {
+       "x": 0.4653,
+       "y": 0.7285
+      }
+     }
+    },
+    "deadB": {
+     "frame": "emberAdept-04.front.deadB",
+     "srcBox": [
+      6,
+      891,
+      174,
+      1015
+     ],
+     "srcAnchor": [
+      102.1,
+      91.2
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6028,
+       "y": 0.7259
+      },
+      "H": {
+       "x": 0.6067,
+       "y": 0.7259
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "emberAdept-04.front.fleeA",
+     "srcBox": [
+      341,
+      851,
+      437,
+      986
+     ],
+     "srcAnchor": [
+      61.3,
+      132.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6362,
+       "y": 0.9602
+      },
+      "H": {
+       "x": 0.6292,
+       "y": 0.9602
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "emberAdept-04.front.fleeB",
+     "srcBox": [
+      620,
+      850,
+      699,
+      980
+     ],
+     "srcAnchor": [
+      31.4,
+      127.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3987,
+       "y": 0.9547
+      },
+      "H": {
+       "x": 0.4041,
+       "y": 0.9626
+      }
+     }
+    },
+    "cheer": {
+     "frame": "emberAdept-04.front.cheer",
+     "srcBox": [
+      879,
+      784,
+      949,
+      988
+     ],
+     "srcAnchor": [
+      34.6,
+      201.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4881,
+       "y": 0.9744
+      },
+      "H": {
+       "x": 0.4954,
+       "y": 0.9744
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "16/16",
+    "failing": [],
+    "inherit": 0.714,
+    "variety": true,
+    "marchIoU": 0.902,
+    "rimAfter": 0.0,
+    "edgeDev": 4.55,
+    "keyIn": 0.052,
+    "side": 0.151,
+    "valueBelow": 28.7,
+    "identityDE": 7.1,
+    "consHist": [
+     "fleeB",
+     0.84
+    ],
+    "consDE": [
+     "strike",
+     1.1
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ea04.front.redress.nb21.png",
+    "marksFront": "yypyny"
+   },
+   "pass": true,
+   "scaleNote": null
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/ea04.back.redress.nb21.png",
+   "sheetSha256": "b75315afcc5f139c187dbddb06b06e25dc07e1601334f529fe248d0e4a890279",
+   "body": "stage-b/raw/cmdA/cmdCaster.back.body.edit.nb21.png",
+   "bodySha256": "09e9addfd92246dd31ea856a414c24d0e0311a039219a9844957b00b2d925918",
+   "key": "green",
+   "layout": "commander",
+   "scale": {
+    "S": 0.46043,
+    "H": 0.92086
+   },
+   "scaleFrom": {
+    "bodyH": 139,
+    "from_": "body cmdCaster.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "emberAdept-04.back.stand",
+     "srcBox": [
+      88,
+      38,
+      169,
+      183
+     ],
+     "srcAnchor": [
+      34.7,
+      142.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4353,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.4298,
+       "y": 0.962
+      }
+     }
+    },
+    "idle2": {
+     "frame": "emberAdept-04.back.idle2",
+     "srcBox": [
+      346,
+      38,
+      445,
+      183
+     ],
+     "srcAnchor": [
+      32.9,
+      142.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3364,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.34,
+       "y": 0.962
+      }
+     }
+    },
+    "marchA": {
+     "frame": "emberAdept-04.back.marchA",
+     "srcBox": [
+      604,
+      38,
+      693,
+      187
+     ],
+     "srcAnchor": [
+      23.1,
+      146.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2706,
+       "y": 0.9609
+      },
+      "H": {
+       "x": 0.2706,
+       "y": 0.9677
+      }
+     }
+    },
+    "marchB": {
+     "frame": "emberAdept-04.back.marchB",
+     "srcBox": [
+      852,
+      38,
+      949,
+      179
+     ],
+     "srcAnchor": [
+      24.2,
+      138.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2583,
+       "y": 0.9633
+      },
+      "H": {
+       "x": 0.2611,
+       "y": 0.9633
+      }
+     }
+    },
+    "windup": {
+     "frame": "emberAdept-04.back.windup",
+     "srcBox": [
+      73,
+      275,
+      204,
+      437
+     ],
+     "srcAnchor": [
+      48.3,
+      159.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3748,
+       "y": 0.9637
+      },
+      "H": {
+       "x": 0.3718,
+       "y": 0.97
+      }
+     }
+    },
+    "strike": {
+     "frame": "emberAdept-04.back.strike",
+     "srcBox": [
+      349,
+      297,
+      439,
+      444
+     ],
+     "srcAnchor": [
+      21.2,
+      144.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2503,
+       "y": 0.9615
+      },
+      "H": {
+       "x": 0.2474,
+       "y": 0.9684
+      }
+     }
+    },
+    "follow": {
+     "frame": "emberAdept-04.back.follow",
+     "srcBox": [
+      612,
+      299,
+      686,
+      441
+     ],
+     "srcAnchor": [
+      21.5,
+      139.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3028,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.3028,
+       "y": 0.963
+      }
+     }
+    },
+    "recoil": {
+     "frame": "emberAdept-04.back.recoil",
+     "srcBox": [
+      815,
+      301,
+      998,
+      442
+     ],
+     "srcAnchor": [
+      70.5,
+      138.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3891,
+       "y": 0.9633
+      },
+      "H": {
+       "x": 0.3868,
+       "y": 0.9633
+      }
+     }
+    },
+    "actA": {
+     "frame": "emberAdept-04.back.actA",
+     "srcBox": [
+      59,
+      515,
+      150,
+      684
+     ],
+     "srcAnchor": [
+      60.6,
+      166.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6569,
+       "y": 0.9679
+      },
+      "H": {
+       "x": 0.6569,
+       "y": 0.9679
+      }
+     }
+    },
+    "actB": {
+     "frame": "emberAdept-04.back.actB",
+     "srcBox": [
+      327,
+      550,
+      472,
+      685
+     ],
+     "srcAnchor": [
+      50.7,
+      132.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3528,
+       "y": 0.9653
+      },
+      "H": {
+       "x": 0.3528,
+       "y": 0.9653
+      }
+     }
+    },
+    "fall": {
+     "frame": "emberAdept-04.back.fall",
+     "srcBox": [
+      534,
+      617,
+      671,
+      762
+     ],
+     "srcAnchor": [
+      127.2,
+      142.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.9164,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.9164,
+       "y": 0.962
+      }
+     }
+    },
+    "deadA": {
+     "frame": "emberAdept-04.back.deadA",
+     "srcBox": [
+      781,
+      618,
+      923,
+      762
+     ],
+     "srcAnchor": [
+      74.0,
+      106.2
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5235,
+       "y": 0.7338
+      },
+      "H": {
+       "x": 0.5196,
+       "y": 0.7284
+      }
+     }
+    },
+    "deadB": {
+     "frame": "emberAdept-04.back.deadB",
+     "srcBox": [
+      97,
+      793,
+      250,
+      901
+     ],
+     "srcAnchor": [
+      61.1,
+      79.2
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4046,
+       "y": 0.7205
+      },
+      "H": {
+       "x": 0.4018,
+       "y": 0.7275
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "emberAdept-04.back.fleeA",
+     "srcBox": [
+      348,
+      806,
+      442,
+      956
+     ],
+     "srcAnchor": [
+      19.9,
+      147.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2258,
+       "y": 0.9674
+      },
+      "H": {
+       "x": 0.2234,
+       "y": 0.9674
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "emberAdept-04.back.fleeB",
+     "srcBox": [
+      590,
+      809,
+      693,
+      950
+     ],
+     "srcAnchor": [
+      19.8,
+      138.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2065,
+       "y": 0.9633
+      },
+      "H": {
+       "x": 0.2044,
+       "y": 0.9633
+      }
+     }
+    },
+    "cheer": {
+     "frame": "emberAdept-04.back.cheer",
+     "srcBox": [
+      851,
+      771,
+      921,
+      941
+     ],
+     "srcAnchor": [
+      39.4,
+      167.0
+     ],
+     "atlas": {
+      "S": "emberAdept.S.0.png",
+      "H": "emberAdept.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.563,
+       "y": 0.9737
+      },
+      "H": {
+       "x": 0.563,
+       "y": 0.9676
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "14/16",
+    "failing": [
+     "fall",
+     "recoil"
+    ],
+    "inherit": 0.817,
+    "variety": true,
+    "marchIoU": 0.672,
+    "rimAfter": 0.6,
+    "edgeDev": 6.25,
+    "keyIn": 0.052,
+    "side": 0.158,
+    "valueBelow": 30.5,
+    "identityDE": 10.1,
+    "consHist": [
+     "fall",
+     0.84
+    ],
+    "consDE": [
+     "fall",
+     2.7
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "ea04.back.redress.nb21.png",
+    "marksFront": null
+   },
+   "pass": true,
+   "scaleNote": null
+  }
+ },
+ "marks": [
+  {
+   "mark": "his black hair gathered on the crown into a tight high topknot bound with an iron ring, the sides of the head shaved close",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the thin blackened-iron circlet worn low across the brow",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his lean beardless face with black soot rubbed along the eyelids",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the charcoal robe with a high wrapped collar crossing over the chest and a dull ember-red trim",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the row of small iron studs along the collar",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the slender staff of blackened wood",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "his black hair gathered on the crown into a tight high topknot bound with an iron ring, the sides of the head shaved close",
+    "tick": "y"
+   },
+   {
+    "mark": "the thin blackened-iron circlet worn low across the brow",
+    "tick": "y"
+   },
+   {
+    "mark": "his lean beardless face with black soot rubbed along the eyelids",
+    "tick": "p"
+   },
+   {
+    "mark": "the charcoal robe with a high wrapped collar crossing over the chest and a dull ember-red trim",
+    "tick": "y"
+   },
+   {
+    "mark": "the row of small iron studs along the collar",
+    "tick": "n"
+   },
+   {
+    "mark": "the slender staff of blackened wood",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "ea04",
+  "weapon": "the slender staff of blackened wood whose top forks around a small iron bead",
+  "weaponChanged": true,
+  "mantle": null,
+  "mantleFrom": "portrait"
+ }
+}

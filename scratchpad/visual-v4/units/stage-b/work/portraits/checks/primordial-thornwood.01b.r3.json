@@ -1,0 +1,30 @@
+{
+ "job": "primordial-thornwood.01b",
+ "tag": "r3",
+ "measures": {
+  "background": 3.6,
+  "bgSpread": 5.3,
+  "floor": 10.2,
+  "top": 0.086,
+  "low": 0.932,
+  "bottomCut": 0.0,
+  "cx": 0.491,
+  "subject": 0.507,
+  "light": 0.0,
+  "rim": 0.48,
+  "read48": 11.9,
+  "muted": 0.0021,
+  "satAll": 0.0022,
+  "side": {
+   "window": 0.0553,
+   "lock": 0.1462
+  }
+ },
+ "failed": [],
+ "overridden": [
+  {
+   "gate": "read48 11.9 < 12",
+   "reason": "fix2: 11.9 against 12, inside the measure's noise; the same body read 12.3 in its Cinder palette"
+  }
+ ]
+}

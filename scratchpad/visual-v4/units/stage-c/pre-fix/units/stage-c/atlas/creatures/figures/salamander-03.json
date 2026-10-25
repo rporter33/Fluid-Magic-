@@ -1,0 +1,287 @@
+{
+ "figure": "salamander-03",
+ "unit": "salamander",
+ "face": "03",
+ "nation": "cinderHorde",
+ "key": "green",
+ "body": "salamander",
+ "portrait": "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/03.webp",
+ "views": {
+  "back": {
+   "idle": "frames/salamander-03.back/salamander-03.back.idle.png",
+   "heightWu": 97.59,
+   "anchorPx": [
+    355.2,
+    645.7
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": [
+    723,
+    13
+   ],
+   "atlas": {
+    "S": {
+     "prefix": "salamander-S",
+     "frame": "salamander-03.back.idle",
+     "shadow": "salamander-03.back.idle.shadow",
+     "scale": 0.1968,
+     "w": 147,
+     "h": 198,
+     "mouthWu": [
+      36.2,
+      -62.2
+     ]
+    },
+    "H": {
+     "prefix": "salamander-H",
+     "frame": "salamander-03.back.idle",
+     "shadow": "salamander-03.back.idle.shadow",
+     "scale": 0.3935,
+     "w": 295,
+     "h": 396,
+     "mouthWu": [
+      36.2,
+      -62.2
+     ]
+    }
+   },
+   "sheet": "stage-c/raw/creatures/sal03.back.redress.nb21.png",
+   "sha256": "d256012e7b1104c5b10abd8bb056fbbd217f9aca4de40b1389f5508f99d108a9",
+   "model": "gemini-nano-banana-2.1",
+   "job": "sal03.back.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "pilot/raw/r2/sal.back.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": null,
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.751,
+     "iouMirrored": 0.266,
+     "aspectRatio": 1.108,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      23.5,
+      2.0,
+      6.5
+     ],
+     "portraitLab": [
+      28.2,
+      2.7,
+      7.7
+     ],
+     "dE2000": 3.7,
+     "wholeDE2000": 6.9,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 24.3,
+      "groundL": 67.7,
+      "below": 43.5
+     },
+     "farmland": {
+      "bodyL": 24.2,
+      "groundL": 67.3,
+      "below": 43.1
+     },
+     "swamp": {
+      "bodyL": 23.9,
+      "groundL": 58.5,
+      "below": 34.5
+     },
+     "forest": {
+      "bodyL": 24.0,
+      "groundL": 58.7,
+      "below": 34.8
+     },
+     "worstBelow": 34.5,
+     "minContrast": 34.5,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 10.4,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 2.012,
+     "keyInUnitPct": 0.009,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.64,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     735,
+     992
+    ],
+    "oversampleAtH": 2.54
+   },
+   "identity": {
+    "marks": {
+     "long narrow crocodile snout": true,
+     "three claw scars": true,
+     "hooked horns, one chipped": "partly",
+     "scute ridge on the head": true,
+     "slightly open mouth, blunt teeth": "hidden in this view",
+     "slit-pupil eye": "hidden in this view"
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-salamander-03.png)"
+   }
+  },
+  "front": {
+   "idle": "frames/salamander-03.front/salamander-03.front.idle.png",
+   "heightWu": 78.49,
+   "anchorPx": [
+    401.3,
+    814.1
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": [
+    48,
+    865
+   ],
+   "atlas": {
+    "S": {
+     "prefix": "salamander-S",
+     "frame": "salamander-03.front.idle",
+     "shadow": "salamander-03.front.idle.shadow",
+     "scale": 0.1695,
+     "w": 133,
+     "h": 160,
+     "mouthWu": [
+      -29.9,
+      4.3
+     ]
+    },
+    "H": {
+     "prefix": "salamander-H",
+     "frame": "salamander-03.front.idle",
+     "shadow": "salamander-03.front.idle.shadow",
+     "scale": 0.339,
+     "w": 266,
+     "h": 319,
+     "mouthWu": [
+      -29.9,
+      4.3
+     ]
+    }
+   },
+   "sheet": "stage-c/raw/creatures/sal03.front.redress.nb21.png",
+   "sha256": "e9024414e39d726ad4da40d72d37d6f5fd1a9699455c8f5079d8fa67b62f11d2",
+   "model": "gemini-nano-banana-2.1",
+   "job": "sal03.front.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "pilot/raw/ad/sal.front.mark.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/salamander/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": null,
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "camera": {
+     "iou": 0.893,
+     "iouMirrored": 0.318,
+     "aspectRatio": 0.998,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      24.4,
+      0.2,
+      5.3
+     ],
+     "portraitLab": [
+      28.2,
+      2.7,
+      7.7
+     ],
+     "dE2000": 4.6,
+     "wholeDE2000": 6.7,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 24.4,
+      "groundL": 67.7,
+      "below": 43.4
+     },
+     "farmland": {
+      "bodyL": 24.4,
+      "groundL": 67.3,
+      "below": 43.0
+     },
+     "swamp": {
+      "bodyL": 24.0,
+      "groundL": 58.5,
+      "below": 34.4
+     },
+     "forest": {
+      "bodyL": 24.1,
+      "groundL": 58.7,
+      "below": 34.7
+     },
+     "worstBelow": 34.4,
+     "minContrast": 34.4,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 25.1,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 2.013,
+     "keyInUnitPct": 0.003,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.29,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": true
+    },
+    "srcPx": [
+     768,
+     926
+    ],
+    "oversampleAtH": 2.95
+   },
+   "identity": {
+    "marks": {
+     "long narrow crocodile snout": true,
+     "three claw scars": true,
+     "hooked horns, one chipped": "partly",
+     "scute ridge on the head": true,
+     "slightly open mouth, blunt teeth": true,
+     "slit-pupil eye": "partly"
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-salamander-03.png)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

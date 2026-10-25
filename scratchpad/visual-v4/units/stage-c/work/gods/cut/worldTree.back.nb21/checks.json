@@ -1,0 +1,97 @@
+{
+ "god": "worldTree",
+ "view": "back",
+ "figure": "worldTree-thornwood",
+ "nation": "thornwood",
+ "raw": "stage-c/raw/gods/worldTree.back.nb21.png",
+ "cutout": "stage-c/work/gods/cut/worldTree.back.nb21/worldTree-thornwood.back.idle.png",
+ "camera": {
+  "iou": 0.833,
+  "iouMirrored": 0.805,
+  "aspectRatio": 1.033,
+  "headDx": -0.021,
+  "guideHeadDx": -0.007,
+  "facingMargin": 0.028,
+  "pass": false
+ },
+ "rim": {
+  "ringPx": 5001,
+  "keyHueShiftedPct": 0.14,
+  "pass_": true
+ },
+ "fringe": {
+  "fringePct": 0.0,
+  "keyInUnitPct": 0.083,
+  "edgeDevPct": 0.44,
+  "pass_": true
+ },
+ "value": {
+  "plains": {
+   "bodyL": 20.2,
+   "groundL": 67.7,
+   "below": 47.5
+  },
+  "farmland": {
+   "bodyL": 20.2,
+   "groundL": 67.3,
+   "below": 47.1
+  },
+  "swamp": {
+   "bodyL": 20.1,
+   "groundL": 58.5,
+   "below": 38.4
+  },
+  "forest": {
+   "bodyL": 20.1,
+   "groundL": 58.7,
+   "below": 38.6
+  },
+  "worstBelow": 38.4,
+  "pass": true
+ },
+ "side": {
+  "nation": "thornwood",
+  "window": 0.5184,
+  "portrait": {
+   "window": 0.5335,
+   "lock": 0.7678
+  },
+  "lock": 0.7591,
+  "pass": true
+ },
+ "size": {
+  "sizeClass": 6,
+  "ladder": 6.0,
+  "ladderWu": 168.0,
+  "worldHeightMen": 6.0,
+  "worldRatio": 1.0,
+  "heightWu": 180.5,
+  "widthWu": 133.5,
+  "lengthCapWu": 336.0,
+  "rule": "world height = ladder multiple",
+  "pass_": false
+ },
+ "identity": {
+  "dE_whole": 4.2,
+  "dE_upperThird": 2.3,
+  "figureL": 15.6,
+  "portraitL": 19.8,
+  "pass_": true
+ },
+ "parts": 1,
+ "specks": 0,
+ "cutoutPx": [
+  794,
+  1037
+ ],
+ "tierHpx": [
+  534,
+  722
+ ],
+ "tierHupscale": 0.7,
+ "pass": false,
+ "failed": [
+  "camera",
+  "size"
+ ]
+}

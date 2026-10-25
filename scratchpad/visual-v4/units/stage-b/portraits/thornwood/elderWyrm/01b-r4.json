@@ -1,0 +1,113 @@
+{
+ "id": "elderWyrm-01b-r4",
+ "unit": "elderWyrm",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "elderWyrm",
+ "promptFile": "stage-b/work/portraits/prompts-used/elderWyrm-thornwood.01b.r4.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "b-r4",
+ "files": {
+  "master": "01b-r4-512.webp",
+  "game": "01b-r4.webp",
+  "small": "01b-r4-64.webp"
+ },
+ "bytes": {
+  "master": 32742,
+  "game": 11384,
+  "small": 1874
+ },
+ "sourceFile": "stage-b/raw/portraits/elderWyrm-thornwood.01b.r4.nb21.png",
+ "sourceSha256": "0cbe898a9566d27e7c85c4eeb70897ec36cf06c8e352ff6bbb89c210918075fe",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing: this painting shows a whole figure from head to foot. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 1.\n\nA full-length painted portrait of the Elder Wyrm, a colossal wingless dragon-god that never flies: slow, vast and regenerating, it tramples whatever is small, in a regal pose: crawling low like a giant lizard: its belly a hand's breadth above the ground, its short, powerful legs splayed out to the sides, its thick neck carried low and forward and its head held level a little above the ground, jaws closed; seen three-quarter front from a little above, the head and forelegs near the lower right of the square and the long body and longer tail running back in a shallow S toward the upper left, so the long, low figure fills the square. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the crown of spines about 6% from the top edge and the feet and tail about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the spines, the head, the neck and the mossy back that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the feet and tail.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the crown of spines, the long mossy back and the club tail against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the beast is the moss along its back: deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Nothing in the image glows: no fire, no smoke, the jaws are closed. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a long, heavy, low-slung four-legged dragon built like a giant salamander, about three times as long as it is tall, with no wings at all, a long thick neck and a long heavy tail; scales of bronze-brown (#8A6A3E) in broad bands, a paler bronze belly of broad plates. Head: a broad, heavy head with a deep jaw, closed, and dark amber eyes. Horns: a crown of spines: a ring of long sharp spines rising around the back of the head. Back: a thick mantle of moss grows along its spine from the neck to the tail, deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Tail: a heavy tail ending in a bony club. It has no wings.\nPaint it as described, the whole figure clearly in view; a little more weathered and ancient in its surfaces, with a heavier, more imposing stance.\n\nCorrections from the previous attempt, which must be fixed: the wyrm must be long and low, at most half as tall as it is long, its belly near the ground and its head held low and level near the ground; never sitting up, rearing or raising its chest and head high. Also, the previous attempt failed its framing: the long low wyrm sat small in the middle of the square (top 0.15, lowest 0.77). Lay the long body diagonally across the whole square: the raised club of the tail curling up near the top edge, about 6% from the top, and the head and the front claws low near the bottom, about 92% from the top, so that the figure fills the height of the square; the body itself stays long and low, its belly near the ground.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "scale bronze #8A6A3E",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: crown of spines; moss back; club tail; scale pattern; no wings",
+ "pose": "regal",
+ "tintZone": "the moss along its back",
+ "cardCrop": {
+  "box512": [
+   300,
+   130,
+   500,
+   330
+  ],
+  "source": "override",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "crown of spines",
+   "read": true
+  },
+  {
+   "mark": "moss back in the nation's colour",
+   "read": true
+  },
+  {
+   "mark": "club tail",
+   "read": true
+  },
+  {
+   "mark": "banded bronze scales",
+   "read": true
+  },
+  {
+   "mark": "no wings",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.2,
+   "bgSpread": 2.3,
+   "floor": 4.3,
+   "top": 0.131,
+   "low": 0.836,
+   "bottomCut": 0.0,
+   "cx": 0.513,
+   "subject": 0.25,
+   "light": -3.1,
+   "rim": 0.49,
+   "read48": 17.6,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.0135,
+    "lock": 0.3541
+   }
+  },
+  "failed": [],
+  "overridden": [
+   {
+    "gate": "framing: body fills 0.705 of the height < 0.72",
+    "reason": "fix2: 0.705 against 0.72; a long, low-slung wyrm laid across the square, tail club near the top and claws at about 0.83; nothing is cut"
+   }
+  ],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Fills the square now, the tail club curling up near the top; long and low-slung, its height well under half its length, but it walks on straighter legs than the rig's splayed crawl, so the belly is clear of the ground. Body-fill 0.705 against 0.72 overridden.",
+  "marks": {
+   "crown of spines": true,
+   "moss back in the nation's colour": true,
+   "club tail": true,
+   "banded bronze scales": true,
+   "no wings": true
+  },
+  "by": "art director (stage B fix2)"
+ }
+}

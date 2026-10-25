@@ -1,0 +1,2 @@
+const { launch, open, mev } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const t0 = Date.now(); try { const p = await open(b, process.argv[2], { log, settle: 200, q: process.argv[3] || '' }); console.log('ok', Date.now() - t0, await mev(p, 'rlShownLook()')); } catch (e) { console.log('fail', e.message.slice(0, 100)); } console.log(JSON.stringify(log.pageErrors.slice(0, 3)), JSON.stringify(log.console.slice(0, 3)), log.requests.slice(0, 5)); await b.close(); })();

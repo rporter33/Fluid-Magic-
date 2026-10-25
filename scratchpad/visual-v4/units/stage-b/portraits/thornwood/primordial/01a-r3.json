@@ -1,0 +1,103 @@
+{
+ "id": "primordial-01a-r3",
+ "unit": "primordial",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "primordial",
+ "promptFile": "stage-b/work/portraits/prompts-used/primordial-thornwood.01a.r3.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a-r3",
+ "files": {
+  "master": "01a-r3-512.webp",
+  "game": "01a-r3.webp",
+  "small": "01a-r3-64.webp"
+ },
+ "bytes": {
+  "master": 33476,
+  "game": 11812,
+  "small": 1916
+ },
+ "sourceFile": "stage-b/raw/portraits/primordial-thornwood.01a.r3.nb21.png",
+ "sourceSha256": "6f1ddddb57a4c0fb7d40f2da7d526c5e082bd2763811315631faa1fd433d1287",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the moss on its back (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the moss on its back. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "primordial-cinderHorde.01a.r3.nb21.png"
+ ],
+ "route": "edit of primordial-cinderHorde.01a r2",
+ "swatches": {
+  "material": "hide brown #7A5638",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: ram horns; moss back; club tail; mottled hide",
+ "pose": "regal",
+ "tintZone": "the moss on its back",
+ "cardCrop": {
+  "box512": [
+   20,
+   100,
+   290,
+   370
+  ],
+  "source": "override",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "huge curling ram's horns",
+   "read": true
+  },
+  {
+   "mark": "moss back in the nation's colour",
+   "read": true
+  },
+  {
+   "mark": "mottled brown hide",
+   "read": true
+  },
+  {
+   "mark": "club tail",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 4.5,
+   "bgSpread": 1.5,
+   "floor": 1.7,
+   "top": 0.113,
+   "low": 0.93,
+   "bottomCut": 0.0,
+   "cx": 0.508,
+   "subject": 0.221,
+   "light": 3.3,
+   "rim": 0.54,
+   "read48": 20.8,
+   "muted": 0.0052,
+   "satAll": 0.0052,
+   "side": {
+    "window": 0.0845,
+    "lock": 0.2205
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Edit of the r3 body; the moss repainted bottle green (window 0.085, lock 0.22).",
+  "marks": {
+   "huge curling ram's horns": true,
+   "moss back in the nation's colour": true,
+   "mottled brown hide": true,
+   "club tail": true
+  },
+  "by": "art director (stage B fix2)"
+ }
+}

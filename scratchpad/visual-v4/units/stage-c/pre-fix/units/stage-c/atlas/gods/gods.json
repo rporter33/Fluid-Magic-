@@ -1,0 +1,7661 @@
+{
+ "version": "stage-c-gods-1",
+ "date": "2026-10-24",
+ "wuPerPx": {
+  "S": 0.5,
+  "H": 0.25
+ },
+ "format": "per figure and view: the idle cutout and its slice json (anchor = maquette ground anchor in cutout px; heightWu = true screen height), and the bundler-ready tiers (premultiplied downscale, keyline 1 px at S / 2 px at H #1C1A17 60%, silhouette shadow black 0.42 blurred 5 wu); tiers.ax/ay and shadow.ax/ay are normalised as stage-b/integrate/bundle.py writes the Salamander; mouth in wu from the anchor",
+ "decisions": [
+  "Route: the Salamander pilot route. Nano Banana 2.1, Image 1 the exact-camera clay maquette of the god (work/gods/guides, posed as its approved portrait, its tint zone in the nation's cloth), Image 2 the approved portrait (the raw source of the picked candidate); the body text is the portrait's own description with portrait-only parts removed.",
+  "Thornwood palettes of the six generic gods: tint-zone edits of their Cinder figures, no new generation and no new body. The zone (the pixels at the zone's own ember hue and chroma, a soft mask, specks dropped) is moved in OKLCH by the transform the owner-approved portrait edit made, measured on that portrait pair (lightness fitted linearly, chroma by the median ratio, hue by the median shift). Where the portrait's green sat below the Thornwood cloth window (Living Monolith 131 deg, Primordial 139 deg) the target hue is raised to 146 deg. Every other pixel is the Cinder painting.",
+  "Size: every maquette is built at its size's ladder height (battle-overhead.md 3.2) in world height, a man being 1.0 (weapons held above the head left out). The Elder Wyrm, a serpent, keeps the approved Salamander's body plan at size 6 (world height 0.48 of the ladder; the Salamander 0.50). Gods draw at their size's height without the commander factor, as the Salamander and the mockup's Great Wyrm (H 168) do. heightWu is the body's true screen box from its maquette, the bundler's scale; long bodies stand taller on screen than their ladder height because their length runs into the depth at 40 degrees, as the approved Salamander does (1.52x back, 1.23x front): Great Wyrm 1.47/1.27, Primordial 1.36/1.29, Elder Wyrm 1.77/1.60.",
+  "Effects the game draws are not painted: the Cinder Idol's smoke, the Ash Colossus' and the Ash Phoenix's embers, the Wild Spirit's mist and flicker, the Great Wyrm's breath. Nothing glows except the dull coals in the two braziers, as in the portraits.",
+  "The Living Monolith and the Cinder Idol carry their glyphs on both broad faces, so the side colour shows in the near side's back view.",
+  "Output size: 2K where the tier H texture would exceed the painted figure in a 1K frame (fewer than 4.5 px a wu at 1K): Great Wyrm, Primordial, Cinder Idol, Elder Wyrm, and the Living Monolith's back re-roll; 1K for the rest. No tier H texture is upscaled from its source.",
+  "Keys (art plan 5.2): green for the Cinder palette (generic gods, Pyre Lord, Ember Hierophant), blue for the ember bodies (Ash Colossus, Ash Phoenix, Cinder Idol), magenta for the Thornwood realm gods.",
+  "Maquettes corrected after first paintings: the Living Monolith gained the portrait's mound of earth, roots and stones (its first paintings failed only the aspect gate on the missing mound; its front painting is checked against the corrected maquette); the Ash Phoenix's wings were rebuilt as broad fans; both corrected maquettes are the ones these figures carry.",
+  "The facing gate (IoU against the mirrored maquette) is not applied to the World Tree, which has no front.",
+  "The size check passes only with the camera check: the body's scale comes from its maquette and holds only when the painted silhouette matches it."
+ ],
+ "generations": {
+  "key": "C gods",
+  "calls": 45,
+  "failedCalls": "2 (HTTP 502 upstream, no image)",
+  "images": 43,
+  "base": 32,
+  "rerolls": 11,
+  "log": "units/gen-log.tsv, purpose \"C gods: ...\""
+ },
+ "battleUse": {
+  "greatWyrm-thornwood": "battle a/b/c Thornwood Great Wyrm (the mockup's procedural god)"
+ },
+ "figures": {
+  "greatWyrm-cinderHorde": {
+   "god": "greatWyrm",
+   "nation": "cinderHorde",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/greatWyrm/01b.webp",
+    "master": "stage-b/portraits/cinderHorde/greatWyrm/01b-512.webp",
+    "job": "greatWyrm-cinderHorde.01b",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      207,
+      29,
+      423,
+      245
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "aff50e78bf70a276ca8a4b3ae9beff2f408d28625a2f1d376d6384c5b8b363f4"
+   },
+   "tintZone": "the wing membranes",
+   "marks": {
+    "marks": [
+     {
+      "mark": "swept-back horns",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "smooth wing membranes in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "banded bronze scales",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "spade-tipped tail",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "four legs and two wings",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: the S-neck rises toward the camera, so from 40 degrees above the head shows in front of the chest rather than high over it"
+   },
+   "views": {
+    "back": {
+     "cutout": "greatWyrm-cinderHorde.back/greatWyrm-cinderHorde.back.idle.png",
+     "json": "greatWyrm-cinderHorde.back/greatWyrm-cinderHorde.back.idle.json",
+     "heightWu": 247.7,
+     "widthWu": 221.4,
+     "anchor": [
+      834.2,
+      1468.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1793,
+     "width": 1694,
+     "size": [
+      1698,
+      1797
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/greatWyrm-cinderHorde.back.S.png",
+       "w": 471,
+       "h": 499,
+       "ax": 0.4915,
+       "ay": 0.8151,
+       "shadow": {
+        "file": "tiers/greatWyrm-cinderHorde.back.S.shadow.png",
+        "w": 531,
+        "h": 559,
+        "ax": 0.4924,
+        "ay": 0.7812
+       },
+       "withinBudget": true,
+       "mouth": [
+        65.7,
+        -182.1
+       ]
+      },
+      "H": {
+       "file": "tiers/greatWyrm-cinderHorde.back.H.png",
+       "w": 942,
+       "h": 997,
+       "ax": 0.4915,
+       "ay": 0.8159,
+       "shadow": {
+        "file": "tiers/greatWyrm-cinderHorde.back.H.shadow.png",
+        "w": 1062,
+        "h": 1117,
+        "ax": 0.4924,
+        "ay": 0.7819
+       },
+       "withinBudget": true,
+       "mouth": [
+        65.7,
+        -182.1
+       ]
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/greatWyrm.back.nb21.2k.png",
+      "sha256": "2501ca43efa2ec71c36a38c8379155b20acc605490fb2c288f6321ca112831c3",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/greatWyrm.back.txt",
+      "references": [
+       "greatWyrm.idle.back.png",
+       "greatWyrm-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.672,
+       "iouMirrored": 0.344,
+       "aspectRatio": 1.057,
+       "headDx": -0.135,
+       "guideHeadDx": -0.174,
+       "facingMargin": 0.328,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 13319,
+       "keyHueShiftedPct": 0.05,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.001,
+       "edgeDevPct": 0.02,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 33.5,
+        "groundL": 67.7,
+        "below": 34.2
+       },
+       "farmland": {
+        "bodyL": 33.5,
+        "groundL": 67.3,
+        "below": 33.8
+       },
+       "swamp": {
+        "bodyL": 33.4,
+        "groundL": 58.5,
+        "below": 25.1
+       },
+       "forest": {
+        "bodyL": 33.4,
+        "groundL": 58.7,
+        "below": 25.3
+       },
+       "worstBelow": 25.1,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.2989,
+       "portrait": {
+        "window": 0.0891
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 247.7,
+       "widthWu": 221.4,
+       "lengthCapWu": 436.8,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.2,
+       "dE_upperThird": 8.1,
+       "figureL": 31.7,
+       "portraitL": 19.7,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "greatWyrm.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "greatWyrm-cinderHorde.front/greatWyrm-cinderHorde.front.idle.png",
+     "json": "greatWyrm-cinderHorde.front/greatWyrm-cinderHorde.front.idle.json",
+     "heightWu": 213.2,
+     "widthWu": 221.2,
+     "anchor": [
+      914.3,
+      1536.8
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1775,
+     "width": 1799,
+     "size": [
+      1803,
+      1779
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/greatWyrm-cinderHorde.front.S.png",
+       "w": 435,
+       "h": 429,
+       "ax": 0.5072,
+       "ay": 0.8629,
+       "shadow": {
+        "file": "tiers/greatWyrm-cinderHorde.front.S.shadow.png",
+        "w": 495,
+        "h": 489,
+        "ax": 0.5063,
+        "ay": 0.8184
+       },
+       "withinBudget": true,
+       "mouth": [
+        -62.4,
+        -57.0
+       ]
+      },
+      "H": {
+       "file": "tiers/greatWyrm-cinderHorde.front.H.png",
+       "w": 870,
+       "h": 859,
+       "ax": 0.5072,
+       "ay": 0.8619,
+       "shadow": {
+        "file": "tiers/greatWyrm-cinderHorde.front.H.shadow.png",
+        "w": 990,
+        "h": 979,
+        "ax": 0.5063,
+        "ay": 0.8175
+       },
+       "withinBudget": true,
+       "mouth": [
+        -62.4,
+        -57.0
+       ]
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/greatWyrm.front.nb21.2k.png",
+      "sha256": "f1a8c4f8923ab321a7f56a26a1c1b312df830c6134c1f444f3b9f12b63d019eb",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/greatWyrm.front.txt",
+      "references": [
+       "greatWyrm.idle.front.png",
+       "greatWyrm-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.825,
+       "iouMirrored": 0.392,
+       "aspectRatio": 0.977,
+       "headDx": -0.36,
+       "guideHeadDx": -0.379,
+       "facingMargin": 0.433,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 12187,
+       "keyHueShiftedPct": 0.01,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.22,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 33.3,
+        "groundL": 67.7,
+        "below": 34.4
+       },
+       "farmland": {
+        "bodyL": 33.3,
+        "groundL": 67.3,
+        "below": 34.0
+       },
+       "swamp": {
+        "bodyL": 33.1,
+        "groundL": 58.5,
+        "below": 25.3
+       },
+       "forest": {
+        "bodyL": 33.1,
+        "groundL": 58.7,
+        "below": 25.6
+       },
+       "worstBelow": 25.3,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1447,
+       "portrait": {
+        "window": 0.0891
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 213.2,
+       "widthWu": 221.2,
+       "lengthCapWu": 436.8,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.2,
+       "dE_upperThird": 9.0,
+       "figureL": 31.6,
+       "portraitL": 19.7,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "greatWyrm.front.nb21.2k",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "greatWyrm-thornwood": {
+   "god": "greatWyrm",
+   "nation": "thornwood",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "tint-zone edit of greatWyrm-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/greatWyrm/01b.webp",
+    "master": "stage-b/portraits/thornwood/greatWyrm/01b-512.webp",
+    "job": "greatWyrm-thornwood.01b",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      206,
+      29,
+      422,
+      245
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "0585e8131861ca6f3780315dc60ebbe0ec70d787b301b73d14c76f05985cd930"
+   },
+   "tintZone": "the wing membranes",
+   "marks": {
+    "marks": [
+     {
+      "mark": "swept-back horns",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "smooth wing membranes in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "banded bronze scales",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "spade-tipped tail",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "four legs and two wings",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: the S-neck rises toward the camera, so from 40 degrees above the head shows in front of the chest rather than high over it"
+   },
+   "views": {
+    "back": {
+     "cutout": "greatWyrm-thornwood.back/greatWyrm-thornwood.back.idle.png",
+     "json": "greatWyrm-thornwood.back/greatWyrm-thornwood.back.idle.json",
+     "heightWu": 247.7,
+     "widthWu": 221.4,
+     "anchor": [
+      834.2,
+      1468.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1793,
+     "width": 1694,
+     "size": [
+      1698,
+      1797
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/greatWyrm-thornwood.back.S.png",
+       "w": 471,
+       "h": 499,
+       "ax": 0.4915,
+       "ay": 0.8151,
+       "shadow": {
+        "file": "tiers/greatWyrm-thornwood.back.S.shadow.png",
+        "w": 531,
+        "h": 559,
+        "ax": 0.4924,
+        "ay": 0.7812
+       },
+       "withinBudget": true,
+       "mouth": [
+        65.7,
+        -182.1
+       ]
+      },
+      "H": {
+       "file": "tiers/greatWyrm-thornwood.back.H.png",
+       "w": 942,
+       "h": 997,
+       "ax": 0.4915,
+       "ay": 0.8159,
+       "shadow": {
+        "file": "tiers/greatWyrm-thornwood.back.H.shadow.png",
+        "w": 1062,
+        "h": 1117,
+        "ax": 0.4924,
+        "ay": 0.7819
+       },
+       "withinBudget": true,
+       "mouth": [
+        65.7,
+        -182.1
+       ]
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/greatWyrm.back.nb21.2k.png",
+      "sha256": "2501ca43efa2ec71c36a38c8379155b20acc605490fb2c288f6321ca112831c3",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/greatWyrm.back.txt",
+      "references": [
+       "greatWyrm.idle.back.png",
+       "greatWyrm-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": "greatWyrm.back.nb21.2k"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.672,
+       "iouMirrored": 0.344,
+       "aspectRatio": 1.057,
+       "headDx": -0.135,
+       "guideHeadDx": -0.174,
+       "facingMargin": 0.328,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 13319,
+       "keyHueShiftedPct": 0.05,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.001,
+       "edgeDevPct": 0.02,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.7,
+        "groundL": 67.7,
+        "below": 36.0
+       },
+       "farmland": {
+        "bodyL": 31.7,
+        "groundL": 67.3,
+        "below": 35.6
+       },
+       "swamp": {
+        "bodyL": 31.5,
+        "groundL": 58.5,
+        "below": 26.9
+       },
+       "forest": {
+        "bodyL": 31.5,
+        "groundL": 58.7,
+        "below": 27.2
+       },
+       "worstBelow": 26.9,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.281,
+       "portrait": {
+        "window": 0.132,
+        "lock": 0.203
+       },
+       "lock": 0.3799,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 247.7,
+       "widthWu": 221.4,
+       "lengthCapWu": 436.8,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.1,
+       "dE_upperThird": 9.9,
+       "figureL": 29.8,
+       "portraitL": 19.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "greatWyrm.back.thornwood",
+      "from": "greatWyrm.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "greatWyrm-thornwood.front/greatWyrm-thornwood.front.idle.png",
+     "json": "greatWyrm-thornwood.front/greatWyrm-thornwood.front.idle.json",
+     "heightWu": 213.2,
+     "widthWu": 221.2,
+     "anchor": [
+      914.3,
+      1536.8
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1775,
+     "width": 1799,
+     "size": [
+      1803,
+      1779
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/greatWyrm-thornwood.front.S.png",
+       "w": 435,
+       "h": 429,
+       "ax": 0.5072,
+       "ay": 0.8629,
+       "shadow": {
+        "file": "tiers/greatWyrm-thornwood.front.S.shadow.png",
+        "w": 495,
+        "h": 489,
+        "ax": 0.5063,
+        "ay": 0.8184
+       },
+       "withinBudget": true,
+       "mouth": [
+        -62.4,
+        -57.0
+       ]
+      },
+      "H": {
+       "file": "tiers/greatWyrm-thornwood.front.H.png",
+       "w": 870,
+       "h": 859,
+       "ax": 0.5072,
+       "ay": 0.8619,
+       "shadow": {
+        "file": "tiers/greatWyrm-thornwood.front.H.shadow.png",
+        "w": 990,
+        "h": 979,
+        "ax": 0.5063,
+        "ay": 0.8175
+       },
+       "withinBudget": true,
+       "mouth": [
+        -62.4,
+        -57.0
+       ]
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/greatWyrm.front.nb21.2k.png",
+      "sha256": "f1a8c4f8923ab321a7f56a26a1c1b312df830c6134c1f444f3b9f12b63d019eb",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/greatWyrm.front.txt",
+      "references": [
+       "greatWyrm.idle.front.png",
+       "greatWyrm-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": "greatWyrm.front.nb21.2k"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.825,
+       "iouMirrored": 0.392,
+       "aspectRatio": 0.977,
+       "headDx": -0.36,
+       "guideHeadDx": -0.379,
+       "facingMargin": 0.433,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 12187,
+       "keyHueShiftedPct": 0.06,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.22,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 32.2,
+        "groundL": 67.7,
+        "below": 35.5
+       },
+       "farmland": {
+        "bodyL": 32.2,
+        "groundL": 67.3,
+        "below": 35.1
+       },
+       "swamp": {
+        "bodyL": 32.1,
+        "groundL": 58.5,
+        "below": 26.4
+       },
+       "forest": {
+        "bodyL": 32.1,
+        "groundL": 58.7,
+        "below": 26.6
+       },
+       "worstBelow": 26.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1487,
+       "portrait": {
+        "window": 0.132,
+        "lock": 0.203
+       },
+       "lock": 0.2481,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 213.2,
+       "widthWu": 221.2,
+       "lengthCapWu": 436.8,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 8.8,
+       "dE_upperThird": 10.0,
+       "figureL": 30.6,
+       "portraitL": 19.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "greatWyrm.front.thornwood",
+      "from": "greatWyrm.front.nb21.2k",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "titan-cinderHorde": {
+   "god": "titan",
+   "nation": "cinderHorde",
+   "sizeClass": 4,
+   "ladder": 3.4,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/titan/01a-r2.webp",
+    "master": "stage-b/portraits/cinderHorde/titan/01a-r2-512.webp",
+    "job": "titan-cinderHorde.01a.r2",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      153,
+      11,
+      367,
+      225
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "d32523fff6b41d09b418f191621d7c0812e95b712648308dcd66c43b5ed18409"
+   },
+   "tintZone": "the tabard",
+   "marks": {
+    "marks": [
+     {
+      "mark": "closed flat-topped great helm",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "plain gold plate armour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "tabard in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "straight great sword held point-down",
+      "back": "hidden",
+      "front": true
+     },
+     {
+      "mark": "no cape",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "back view: the sword is in front of the body, out of sight"
+   },
+   "views": {
+    "back": {
+     "cutout": "titan-cinderHorde.back/titan-cinderHorde.back.idle.png",
+     "json": "titan-cinderHorde.back/titan-cinderHorde.back.idle.json",
+     "heightWu": 89.1,
+     "widthWu": 57.5,
+     "anchor": [
+      312.2,
+      1032.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1039,
+     "width": 631,
+     "size": [
+      635,
+      1043
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/titan-cinderHorde.back.S.png",
+       "w": 111,
+       "h": 181,
+       "ax": 0.4914,
+       "ay": 0.9841,
+       "shadow": {
+        "file": "tiers/titan-cinderHorde.back.S.shadow.png",
+        "w": 171,
+        "h": 241,
+        "ax": 0.4944,
+        "ay": 0.8636
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/titan-cinderHorde.back.H.png",
+       "w": 222,
+       "h": 362,
+       "ax": 0.4914,
+       "ay": 0.9841,
+       "shadow": {
+        "file": "tiers/titan-cinderHorde.back.H.shadow.png",
+        "w": 342,
+        "h": 482,
+        "ax": 0.4944,
+        "ay": 0.8636
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/titan.back.nb21.png",
+      "sha256": "ce3b6558ce6eccf17d899e2dd5112d3cda639435ca91e85158395cd83b84eb8b",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/titan.back.txt",
+      "references": [
+       "titan.idle.back.png",
+       "titan-cinderHorde.01a.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.86,
+       "iouMirrored": 0.696,
+       "aspectRatio": 0.941,
+       "headDx": -0.086,
+       "guideHeadDx": -0.095,
+       "facingMargin": 0.164,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 3849,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.002,
+       "edgeDevPct": 0.69,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.8,
+        "groundL": 67.7,
+        "below": 35.9
+       },
+       "farmland": {
+        "bodyL": 31.8,
+        "groundL": 67.3,
+        "below": 35.5
+       },
+       "swamp": {
+        "bodyL": 31.6,
+        "groundL": 58.5,
+        "below": 26.9
+       },
+       "forest": {
+        "bodyL": 31.6,
+        "groundL": 58.7,
+        "below": 27.1
+       },
+       "worstBelow": 26.9,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.2962,
+       "portrait": {
+        "window": 0.1817
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 89.1,
+       "widthWu": 57.5,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.5,
+       "dE_upperThird": 3.6,
+       "figureL": 29.1,
+       "portraitL": 24.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "titan.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "titan-cinderHorde.front/titan-cinderHorde.front.idle.png",
+     "json": "titan-cinderHorde.front/titan-cinderHorde.front.idle.json",
+     "heightWu": 92.0,
+     "widthWu": 57.6,
+     "anchor": [
+      317.8,
+      1016.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1056,
+     "width": 625,
+     "size": [
+      629,
+      1060
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/titan-cinderHorde.front.S.png",
+       "w": 112,
+       "h": 187,
+       "ax": 0.5033,
+       "ay": 0.9524,
+       "shadow": {
+        "file": "tiers/titan-cinderHorde.front.S.shadow.png",
+        "w": 172,
+        "h": 247,
+        "ax": 0.5022,
+        "ay": 0.8425
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/titan-cinderHorde.front.H.png",
+       "w": 223,
+       "h": 373,
+       "ax": 0.5056,
+       "ay": 0.955,
+       "shadow": {
+        "file": "tiers/titan-cinderHorde.front.H.shadow.png",
+        "w": 343,
+        "h": 493,
+        "ax": 0.5036,
+        "ay": 0.8442
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/titan.front.nb21.r2.png",
+      "sha256": "a0a5548e7628c232d3be883bf47fd3b73579543dbf2e43f8afe2b3828299e1fd",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/titan.front.txt",
+      "references": [
+       "titan.idle.front.png",
+       "titan-cinderHorde.01a.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.861,
+       "iouMirrored": 0.767,
+       "aspectRatio": 0.945,
+       "headDx": -0.091,
+       "guideHeadDx": -0.052,
+       "facingMargin": 0.094,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 4201,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.001,
+       "edgeDevPct": 0.18,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 35.1,
+        "groundL": 67.7,
+        "below": 32.6
+       },
+       "farmland": {
+        "bodyL": 35.1,
+        "groundL": 67.3,
+        "below": 32.2
+       },
+       "swamp": {
+        "bodyL": 34.9,
+        "groundL": 58.5,
+        "below": 23.6
+       },
+       "forest": {
+        "bodyL": 34.9,
+        "groundL": 58.7,
+        "below": 23.8
+       },
+       "worstBelow": 23.6,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1028,
+       "portrait": {
+        "window": 0.1817
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 92.0,
+       "widthWu": 57.6,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 5.9,
+       "dE_upperThird": 4.2,
+       "figureL": 31.8,
+       "portraitL": 24.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "titan.front.nb21.r2",
+      "status": "pass",
+      "rerolls": [
+       "titan.front.nb21 (camera: head offset 0.104 off the maquette's, gate 0.10)"
+      ]
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "titan-thornwood": {
+   "god": "titan",
+   "nation": "thornwood",
+   "sizeClass": 4,
+   "ladder": 3.4,
+   "route": "tint-zone edit of titan-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/titan/01a-r2.webp",
+    "master": "stage-b/portraits/thornwood/titan/01a-r2-512.webp",
+    "job": "titan-thornwood.01a.r2",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      153,
+      11,
+      367,
+      225
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "e05dbab755d7be3011e78c8c68bcbcecca68d50d5d689f8359139804370001bd"
+   },
+   "tintZone": "the tabard",
+   "marks": {
+    "marks": [
+     {
+      "mark": "closed flat-topped great helm",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "plain gold plate armour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "tabard in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "straight great sword held point-down",
+      "back": "hidden",
+      "front": true
+     },
+     {
+      "mark": "no cape",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "back view: the sword is in front of the body, out of sight"
+   },
+   "views": {
+    "back": {
+     "cutout": "titan-thornwood.back/titan-thornwood.back.idle.png",
+     "json": "titan-thornwood.back/titan-thornwood.back.idle.json",
+     "heightWu": 89.1,
+     "widthWu": 57.5,
+     "anchor": [
+      312.2,
+      1032.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1039,
+     "width": 631,
+     "size": [
+      635,
+      1043
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/titan-thornwood.back.S.png",
+       "w": 111,
+       "h": 181,
+       "ax": 0.4914,
+       "ay": 0.9841,
+       "shadow": {
+        "file": "tiers/titan-thornwood.back.S.shadow.png",
+        "w": 171,
+        "h": 241,
+        "ax": 0.4944,
+        "ay": 0.8636
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/titan-thornwood.back.H.png",
+       "w": 222,
+       "h": 362,
+       "ax": 0.4914,
+       "ay": 0.9841,
+       "shadow": {
+        "file": "tiers/titan-thornwood.back.H.shadow.png",
+        "w": 342,
+        "h": 482,
+        "ax": 0.4944,
+        "ay": 0.8636
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/titan.back.nb21.png",
+      "sha256": "ce3b6558ce6eccf17d899e2dd5112d3cda639435ca91e85158395cd83b84eb8b",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/titan.back.txt",
+      "references": [
+       "titan.idle.back.png",
+       "titan-cinderHorde.01a.r2.nb21.png"
+      ],
+      "tintFrom": "titan.back.nb21"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.86,
+       "iouMirrored": 0.696,
+       "aspectRatio": 0.941,
+       "headDx": -0.086,
+       "guideHeadDx": -0.095,
+       "facingMargin": 0.164,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 3849,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.002,
+       "edgeDevPct": 0.69,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 30.2,
+        "groundL": 67.7,
+        "below": 37.6
+       },
+       "farmland": {
+        "bodyL": 30.2,
+        "groundL": 67.3,
+        "below": 37.1
+       },
+       "swamp": {
+        "bodyL": 29.9,
+        "groundL": 58.5,
+        "below": 28.5
+       },
+       "forest": {
+        "bodyL": 29.9,
+        "groundL": 58.7,
+        "below": 28.8
+       },
+       "worstBelow": 28.5,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.3088,
+       "portrait": {
+        "window": 0.2781,
+        "lock": 0.3931
+       },
+       "lock": 0.3726,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 89.1,
+       "widthWu": 57.5,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 2.6,
+       "dE_upperThird": 5.0,
+       "figureL": 25.5,
+       "portraitL": 23.5,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "titan.back.thornwood",
+      "from": "titan.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "titan-thornwood.front/titan-thornwood.front.idle.png",
+     "json": "titan-thornwood.front/titan-thornwood.front.idle.json",
+     "heightWu": 92.0,
+     "widthWu": 57.6,
+     "anchor": [
+      317.8,
+      1016.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1056,
+     "width": 625,
+     "size": [
+      629,
+      1060
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/titan-thornwood.front.S.png",
+       "w": 112,
+       "h": 187,
+       "ax": 0.5033,
+       "ay": 0.9524,
+       "shadow": {
+        "file": "tiers/titan-thornwood.front.S.shadow.png",
+        "w": 172,
+        "h": 247,
+        "ax": 0.5022,
+        "ay": 0.8425
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/titan-thornwood.front.H.png",
+       "w": 223,
+       "h": 373,
+       "ax": 0.5056,
+       "ay": 0.955,
+       "shadow": {
+        "file": "tiers/titan-thornwood.front.H.shadow.png",
+        "w": 343,
+        "h": 493,
+        "ax": 0.5036,
+        "ay": 0.8442
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/titan.front.nb21.r2.png",
+      "sha256": "a0a5548e7628c232d3be883bf47fd3b73579543dbf2e43f8afe2b3828299e1fd",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/titan.front.txt",
+      "references": [
+       "titan.idle.front.png",
+       "titan-cinderHorde.01a.r2.nb21.png"
+      ],
+      "tintFrom": "titan.front.nb21.r2"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.861,
+       "iouMirrored": 0.767,
+       "aspectRatio": 0.945,
+       "headDx": -0.091,
+       "guideHeadDx": -0.052,
+       "facingMargin": 0.094,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 4201,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.001,
+       "edgeDevPct": 0.18,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 34.3,
+        "groundL": 67.7,
+        "below": 33.4
+       },
+       "farmland": {
+        "bodyL": 34.3,
+        "groundL": 67.3,
+        "below": 33.0
+       },
+       "swamp": {
+        "bodyL": 34.0,
+        "groundL": 58.5,
+        "below": 24.4
+       },
+       "forest": {
+        "bodyL": 34.1,
+        "groundL": 58.7,
+        "below": 24.7
+       },
+       "worstBelow": 24.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1345,
+       "portrait": {
+        "window": 0.2781,
+        "lock": 0.3931
+       },
+       "lock": 0.1895,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 92.0,
+       "widthWu": 57.6,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 5.2,
+       "dE_upperThird": 6.2,
+       "figureL": 30.4,
+       "portraitL": 23.5,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "titan.front.thornwood",
+      "from": "titan.front.nb21.r2",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "oracle-cinderHorde": {
+   "god": "oracle",
+   "nation": "cinderHorde",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/oracle/01a.webp",
+    "master": "stage-b/portraits/cinderHorde/oracle/01a-512.webp",
+    "job": "oracle-cinderHorde.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      165,
+      18,
+      361,
+      214
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "224bd007228c74d4874cf23d0a4acd0d7334c8d749a10284d373dc370eeeb14f"
+   },
+   "tintZone": "the robe and the cowl",
+   "marks": {
+    "marks": [
+     {
+      "mark": "deep cowl shadowing the face",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "robe in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "runic glyph band on the robe",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "floating ragged hem, no feet",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "gold-caged orb staff",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: the face shows under the cowl as in the portrait"
+   },
+   "views": {
+    "back": {
+     "cutout": "oracle-cinderHorde.back/oracle-cinderHorde.back.idle.png",
+     "json": "oracle-cinderHorde.back/oracle-cinderHorde.back.idle.json",
+     "heightWu": 37.4,
+     "widthWu": 21.2,
+     "anchor": [
+      270.6,
+      1211.8
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1161,
+     "width": 672,
+     "size": [
+      676,
+      1165
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/oracle-cinderHorde.back.S.png",
+       "w": 46,
+       "h": 77,
+       "ax": 0.4007,
+       "ay": 1.0269,
+       "shadow": {
+        "file": "tiers/oracle-cinderHorde.back.S.shadow.png",
+        "w": 106,
+        "h": 137,
+        "ax": 0.4569,
+        "ay": 0.7962
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/oracle-cinderHorde.back.H.png",
+       "w": 91,
+       "h": 154,
+       "ax": 0.4051,
+       "ay": 1.0269,
+       "shadow": {
+        "file": "tiers/oracle-cinderHorde.back.H.shadow.png",
+        "w": 211,
+        "h": 274,
+        "ax": 0.4591,
+        "ay": 0.7962
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/oracle.back.nb21.png",
+      "sha256": "a8df793e19d73fcc8586e5b6fb810de7581b3f5b52491207fa96f16b0b2d493d",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/oracle.back.txt",
+      "references": [
+       "oracle.idle.back.png",
+       "oracle-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.906,
+       "iouMirrored": 0.638,
+       "aspectRatio": 1.018,
+       "headDx": 0.071,
+       "guideHeadDx": 0.051,
+       "facingMargin": 0.268,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5990,
+       "keyHueShiftedPct": 0.3,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.115,
+       "edgeDevPct": 0.04,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 33.5,
+        "groundL": 67.7,
+        "below": 34.3
+       },
+       "farmland": {
+        "bodyL": 33.4,
+        "groundL": 67.3,
+        "below": 33.9
+       },
+       "swamp": {
+        "bodyL": 32.5,
+        "groundL": 58.5,
+        "below": 26.0
+       },
+       "forest": {
+        "bodyL": 32.5,
+        "groundL": 58.7,
+        "below": 26.2
+       },
+       "worstBelow": 26.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.429,
+       "portrait": {
+        "window": 0.3479
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 37.4,
+       "widthWu": 21.2,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.8,
+       "dE_upperThird": 5.8,
+       "figureL": 27.0,
+       "portraitL": 20.3,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "oracle.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "oracle-cinderHorde.front/oracle-cinderHorde.front.idle.png",
+     "json": "oracle-cinderHorde.front/oracle-cinderHorde.front.idle.json",
+     "heightWu": 39.2,
+     "widthWu": 21.2,
+     "anchor": [
+      416.5,
+      1177.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1141,
+     "width": 694,
+     "size": [
+      698,
+      1145
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/oracle-cinderHorde.front.S.png",
+       "w": 50,
+       "h": 81,
+       "ax": 0.5924,
+       "ay": 1.0108,
+       "shadow": {
+        "file": "tiers/oracle-cinderHorde.front.S.shadow.png",
+        "w": 110,
+        "h": 141,
+        "ax": 0.542,
+        "ay": 0.7934
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/oracle-cinderHorde.front.H.png",
+       "w": 100,
+       "h": 161,
+       "ax": 0.5924,
+       "ay": 1.0171,
+       "shadow": {
+        "file": "tiers/oracle-cinderHorde.front.H.shadow.png",
+        "w": 220,
+        "h": 281,
+        "ax": 0.542,
+        "ay": 0.7963
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/oracle.front.nb21.png",
+      "sha256": "c9f6e063b89160370dd2b46139fd9234e0533cc1b44384f20f5fc23bd1f27b3a",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/oracle.front.txt",
+      "references": [
+       "oracle.idle.front.png",
+       "oracle-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.682,
+       "iouMirrored": 0.631,
+       "aspectRatio": 1.123,
+       "headDx": -0.14,
+       "guideHeadDx": -0.048,
+       "facingMargin": 0.051,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6199,
+       "keyHueShiftedPct": 0.32,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.121,
+       "edgeDevPct": 0.12,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.2,
+        "groundL": 67.7,
+        "below": 36.6
+       },
+       "farmland": {
+        "bodyL": 31.1,
+        "groundL": 67.3,
+        "below": 36.2
+       },
+       "swamp": {
+        "bodyL": 30.3,
+        "groundL": 58.5,
+        "below": 28.1
+       },
+       "forest": {
+        "bodyL": 30.4,
+        "groundL": 58.7,
+        "below": 28.4
+       },
+       "worstBelow": 28.1,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.4,
+       "portrait": {
+        "window": 0.3479
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 39.2,
+       "widthWu": 21.2,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.7,
+       "dE_upperThird": 2.8,
+       "figureL": 25.3,
+       "portraitL": 20.3,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "oracle.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "oracle-thornwood": {
+   "god": "oracle",
+   "nation": "thornwood",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "tint-zone edit of oracle-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/oracle/01a.webp",
+    "master": "stage-b/portraits/thornwood/oracle/01a-512.webp",
+    "job": "oracle-thornwood.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      166,
+      19,
+      362,
+      215
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "dac0888fef6ba1126ee677664d060d3724f9d7208033cba2e4c4af8588131403"
+   },
+   "tintZone": "the robe and the cowl",
+   "marks": {
+    "marks": [
+     {
+      "mark": "deep cowl shadowing the face",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "robe in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "runic glyph band on the robe",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "floating ragged hem, no feet",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "gold-caged orb staff",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: the face shows under the cowl as in the portrait"
+   },
+   "views": {
+    "back": {
+     "cutout": "oracle-thornwood.back/oracle-thornwood.back.idle.png",
+     "json": "oracle-thornwood.back/oracle-thornwood.back.idle.json",
+     "heightWu": 37.4,
+     "widthWu": 21.2,
+     "anchor": [
+      270.6,
+      1211.8
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1161,
+     "width": 672,
+     "size": [
+      676,
+      1165
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/oracle-thornwood.back.S.png",
+       "w": 46,
+       "h": 77,
+       "ax": 0.4007,
+       "ay": 1.0269,
+       "shadow": {
+        "file": "tiers/oracle-thornwood.back.S.shadow.png",
+        "w": 106,
+        "h": 137,
+        "ax": 0.4569,
+        "ay": 0.7962
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/oracle-thornwood.back.H.png",
+       "w": 91,
+       "h": 154,
+       "ax": 0.4051,
+       "ay": 1.0269,
+       "shadow": {
+        "file": "tiers/oracle-thornwood.back.H.shadow.png",
+        "w": 211,
+        "h": 274,
+        "ax": 0.4591,
+        "ay": 0.7962
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/oracle.back.nb21.png",
+      "sha256": "a8df793e19d73fcc8586e5b6fb810de7581b3f5b52491207fa96f16b0b2d493d",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/oracle.back.txt",
+      "references": [
+       "oracle.idle.back.png",
+       "oracle-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": "oracle.back.nb21"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.906,
+       "iouMirrored": 0.638,
+       "aspectRatio": 1.018,
+       "headDx": 0.071,
+       "guideHeadDx": 0.051,
+       "facingMargin": 0.268,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5990,
+       "keyHueShiftedPct": 0.18,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.115,
+       "edgeDevPct": 0.04,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 30.8,
+        "groundL": 67.7,
+        "below": 36.9
+       },
+       "farmland": {
+        "bodyL": 30.8,
+        "groundL": 67.3,
+        "below": 36.5
+       },
+       "swamp": {
+        "bodyL": 29.9,
+        "groundL": 58.5,
+        "below": 28.6
+       },
+       "forest": {
+        "bodyL": 29.9,
+        "groundL": 58.7,
+        "below": 28.8
+       },
+       "worstBelow": 28.6,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.5303,
+       "portrait": {
+        "window": 0.594,
+        "lock": 0.8749
+       },
+       "lock": 0.6065,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 37.4,
+       "widthWu": 21.2,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.1,
+       "dE_upperThird": 4.6,
+       "figureL": 24.1,
+       "portraitL": 18.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "oracle.back.thornwood",
+      "from": "oracle.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "oracle-thornwood.front/oracle-thornwood.front.idle.png",
+     "json": "oracle-thornwood.front/oracle-thornwood.front.idle.json",
+     "heightWu": 39.2,
+     "widthWu": 21.2,
+     "anchor": [
+      416.5,
+      1177.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1141,
+     "width": 694,
+     "size": [
+      698,
+      1145
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/oracle-thornwood.front.S.png",
+       "w": 50,
+       "h": 81,
+       "ax": 0.5924,
+       "ay": 1.0108,
+       "shadow": {
+        "file": "tiers/oracle-thornwood.front.S.shadow.png",
+        "w": 110,
+        "h": 141,
+        "ax": 0.542,
+        "ay": 0.7934
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/oracle-thornwood.front.H.png",
+       "w": 100,
+       "h": 161,
+       "ax": 0.5924,
+       "ay": 1.0171,
+       "shadow": {
+        "file": "tiers/oracle-thornwood.front.H.shadow.png",
+        "w": 220,
+        "h": 281,
+        "ax": 0.542,
+        "ay": 0.7963
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/oracle.front.nb21.png",
+      "sha256": "c9f6e063b89160370dd2b46139fd9234e0533cc1b44384f20f5fc23bd1f27b3a",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/oracle.front.txt",
+      "references": [
+       "oracle.idle.front.png",
+       "oracle-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": "oracle.front.nb21"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.682,
+       "iouMirrored": 0.631,
+       "aspectRatio": 1.123,
+       "headDx": -0.14,
+       "guideHeadDx": -0.048,
+       "facingMargin": 0.051,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6199,
+       "keyHueShiftedPct": 0.44,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.121,
+       "edgeDevPct": 0.12,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 28.7,
+        "groundL": 67.7,
+        "below": 39.1
+       },
+       "farmland": {
+        "bodyL": 28.6,
+        "groundL": 67.3,
+        "below": 38.7
+       },
+       "swamp": {
+        "bodyL": 27.8,
+        "groundL": 58.5,
+        "below": 30.6
+       },
+       "forest": {
+        "bodyL": 27.9,
+        "groundL": 58.7,
+        "below": 30.9
+       },
+       "worstBelow": 30.6,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.5107,
+       "portrait": {
+        "window": 0.594,
+        "lock": 0.8749
+       },
+       "lock": 0.6207,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 39.2,
+       "widthWu": 21.2,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.4,
+       "dE_upperThird": 3.1,
+       "figureL": 22.4,
+       "portraitL": 18.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "oracle.front.thornwood",
+      "from": "oracle.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "livingMonolith-cinderHorde": {
+   "god": "livingMonolith",
+   "nation": "cinderHorde",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/livingMonolith/01b.webp",
+    "master": "stage-b/portraits/cinderHorde/livingMonolith/01b-512.webp",
+    "job": "livingMonolith-cinderHorde.01b",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      146,
+      19,
+      366,
+      239
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "92b6517ae4f1a7643838b43e85c5af9545e42a49c683e1116ce8fe1e507ee212"
+   },
+   "tintZone": "the pigment in the carved glyphs",
+   "marks": {
+    "marks": [
+     {
+      "mark": "plain broken top, no capstone",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "carved runic glyphs filled with the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no face",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no overgrowth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "root-gripped base",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "the glyph rows are carved on both broad faces (a rule added for the field: the colour shows from either side)"
+   },
+   "views": {
+    "back": {
+     "cutout": "livingMonolith-cinderHorde.back/livingMonolith-cinderHorde.back.idle.png",
+     "json": "livingMonolith-cinderHorde.back/livingMonolith-cinderHorde.back.idle.json",
+     "heightWu": 184.9,
+     "widthWu": 130.9,
+     "anchor": [
+      647.0,
+      1772.5
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1715,
+     "width": 1293,
+     "size": [
+      1297,
+      1719
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/livingMonolith-cinderHorde.back.S.png",
+       "w": 282,
+       "h": 373,
+       "ax": 0.4983,
+       "ay": 1.0273,
+       "shadow": {
+        "file": "tiers/livingMonolith-cinderHorde.back.S.shadow.png",
+        "w": 342,
+        "h": 433,
+        "ax": 0.4986,
+        "ay": 0.9543
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/livingMonolith-cinderHorde.back.H.png",
+       "w": 563,
+       "h": 745,
+       "ax": 0.4991,
+       "ay": 1.0287,
+       "shadow": {
+        "file": "tiers/livingMonolith-cinderHorde.back.H.shadow.png",
+        "w": 683,
+        "h": 865,
+        "ax": 0.4993,
+        "ay": 0.9554
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/livingMonolith.back.nb21.2k.r2b.png",
+      "sha256": "73ba2dcd623330734f1f888dfa8bcad3eaafddc527b96444d81eaa5203bc265e",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/livingMonolith.back.txt",
+      "references": [
+       "livingMonolith.idle.back.png",
+       "livingMonolith-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.852,
+       "iouMirrored": 0.788,
+       "aspectRatio": 1.064,
+       "headDx": -0.055,
+       "guideHeadDx": -0.106,
+       "facingMargin": 0.064,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5919,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.095,
+       "edgeDevPct": 0.9,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 32.1,
+        "groundL": 67.7,
+        "below": 35.7
+       },
+       "farmland": {
+        "bodyL": 32.1,
+        "groundL": 67.3,
+        "below": 35.2
+       },
+       "swamp": {
+        "bodyL": 32.0,
+        "groundL": 58.5,
+        "below": 26.5
+       },
+       "forest": {
+        "bodyL": 32.0,
+        "groundL": 58.7,
+        "below": 26.7
+       },
+       "worstBelow": 26.5,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.038,
+       "portrait": {
+        "window": 0.0403
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 184.9,
+       "widthWu": 130.9,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.4,
+       "dE_upperThird": 3.0,
+       "figureL": 30.5,
+       "portraitL": 35.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "livingMonolith.back.nb21.2k.r2b",
+      "status": "pass",
+      "rerolls": [
+       "livingMonolith.back.nb21 (moss: key colour in the unit 0.93%, side 0.022, facing 0.0)",
+       "livingMonolith.back.nb21.2k.r2 (HTTP 502, no image)"
+      ]
+     }
+    },
+    "front": {
+     "cutout": "livingMonolith-cinderHorde.front/livingMonolith-cinderHorde.front.idle.png",
+     "json": "livingMonolith-cinderHorde.front/livingMonolith-cinderHorde.front.idle.json",
+     "heightWu": 184.9,
+     "widthWu": 130.9,
+     "anchor": [
+      363.1,
+      872.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 843,
+     "width": 724,
+     "size": [
+      728,
+      847
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/livingMonolith-cinderHorde.front.S.png",
+       "w": 321,
+       "h": 374,
+       "ax": 0.4993,
+       "ay": 1.0259,
+       "shadow": {
+        "file": "tiers/livingMonolith-cinderHorde.front.S.shadow.png",
+        "w": 381,
+        "h": 434,
+        "ax": 0.4994,
+        "ay": 0.9532
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/livingMonolith-cinderHorde.front.H.png",
+       "w": 643,
+       "h": 747,
+       "ax": 0.4985,
+       "ay": 1.0273,
+       "shadow": {
+        "file": "tiers/livingMonolith-cinderHorde.front.H.shadow.png",
+        "w": 763,
+        "h": 867,
+        "ax": 0.4988,
+        "ay": 0.9543
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/livingMonolith.front.nb21.png",
+      "sha256": "9731cefb1b32e70599b0ffcf97e992b2a4b4c030e6f64d5c6574aeb81826ff21",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/livingMonolith.front.txt",
+      "references": [
+       "livingMonolith.idle.front.png",
+       "livingMonolith-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.829,
+       "iouMirrored": 0.7,
+       "aspectRatio": 1.212,
+       "headDx": -0.144,
+       "guideHeadDx": -0.078,
+       "facingMargin": 0.129,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 3950,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.004,
+       "edgeDevPct": 0.09,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 37.7,
+        "groundL": 67.7,
+        "below": 30.1
+       },
+       "farmland": {
+        "bodyL": 37.7,
+        "groundL": 67.3,
+        "below": 29.7
+       },
+       "swamp": {
+        "bodyL": 37.5,
+        "groundL": 58.5,
+        "below": 21.0
+       },
+       "forest": {
+        "bodyL": 37.5,
+        "groundL": 58.7,
+        "below": 21.2
+       },
+       "worstBelow": 21.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.0529,
+       "portrait": {
+        "window": 0.0403
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 184.9,
+       "widthWu": 130.9,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 2.9,
+       "dE_upperThird": 3.2,
+       "figureL": 37.2,
+       "portraitL": 35.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "livingMonolith.front.nb21.g2",
+      "status": "pass",
+      "note": "checked against the corrected maquette (the earth mound of the portrait added); against the first maquette it failed only the aspect gate (1.68)"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "livingMonolith-thornwood": {
+   "god": "livingMonolith",
+   "nation": "thornwood",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "tint-zone edit of livingMonolith-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/livingMonolith/01b.webp",
+    "master": "stage-b/portraits/thornwood/livingMonolith/01b-512.webp",
+    "job": "livingMonolith-thornwood.01b",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      143,
+      19,
+      363,
+      239
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "212b56128e0b1b82307c68917aaeaaca989e9b779869f841facdd1c0f5f53105"
+   },
+   "tintZone": "the pigment in the carved glyphs",
+   "marks": {
+    "marks": [
+     {
+      "mark": "plain broken top, no capstone",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "carved runic glyphs filled with the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no face",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no overgrowth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "root-gripped base",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "the glyph rows are carved on both broad faces (a rule added for the field: the colour shows from either side)"
+   },
+   "views": {
+    "back": {
+     "cutout": "livingMonolith-thornwood.back/livingMonolith-thornwood.back.idle.png",
+     "json": "livingMonolith-thornwood.back/livingMonolith-thornwood.back.idle.json",
+     "heightWu": 184.9,
+     "widthWu": 130.9,
+     "anchor": [
+      647.0,
+      1772.5
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1715,
+     "width": 1293,
+     "size": [
+      1297,
+      1719
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/livingMonolith-thornwood.back.S.png",
+       "w": 282,
+       "h": 373,
+       "ax": 0.4983,
+       "ay": 1.0273,
+       "shadow": {
+        "file": "tiers/livingMonolith-thornwood.back.S.shadow.png",
+        "w": 342,
+        "h": 433,
+        "ax": 0.4986,
+        "ay": 0.9543
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/livingMonolith-thornwood.back.H.png",
+       "w": 563,
+       "h": 745,
+       "ax": 0.4991,
+       "ay": 1.0287,
+       "shadow": {
+        "file": "tiers/livingMonolith-thornwood.back.H.shadow.png",
+        "w": 683,
+        "h": 865,
+        "ax": 0.4993,
+        "ay": 0.9554
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/livingMonolith.back.nb21.2k.r2b.png",
+      "sha256": "73ba2dcd623330734f1f888dfa8bcad3eaafddc527b96444d81eaa5203bc265e",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/livingMonolith.back.txt",
+      "references": [
+       "livingMonolith.idle.back.png",
+       "livingMonolith-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": "livingMonolith.back.nb21.2k.r2b"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.852,
+       "iouMirrored": 0.788,
+       "aspectRatio": 1.064,
+       "headDx": -0.055,
+       "guideHeadDx": -0.106,
+       "facingMargin": 0.064,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5919,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.095,
+       "edgeDevPct": 0.9,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.6,
+        "groundL": 67.7,
+        "below": 36.1
+       },
+       "farmland": {
+        "bodyL": 31.6,
+        "groundL": 67.3,
+        "below": 35.7
+       },
+       "swamp": {
+        "bodyL": 31.6,
+        "groundL": 58.5,
+        "below": 26.9
+       },
+       "forest": {
+        "bodyL": 31.6,
+        "groundL": 58.7,
+        "below": 27.2
+       },
+       "worstBelow": 26.9,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.016,
+       "portrait": {
+        "window": 0.0112,
+        "lock": 0.0865
+       },
+       "lock": 0.0508,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 184.9,
+       "widthWu": 130.9,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.5,
+       "dE_upperThird": 2.2,
+       "figureL": 29.8,
+       "portraitL": 34.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "livingMonolith.back.thornwood",
+      "from": "livingMonolith.back.nb21.2k.r2b",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "livingMonolith-thornwood.front/livingMonolith-thornwood.front.idle.png",
+     "json": "livingMonolith-thornwood.front/livingMonolith-thornwood.front.idle.json",
+     "heightWu": 184.9,
+     "widthWu": 130.9,
+     "anchor": [
+      363.1,
+      872.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 843,
+     "width": 724,
+     "size": [
+      728,
+      847
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/livingMonolith-thornwood.front.S.png",
+       "w": 321,
+       "h": 374,
+       "ax": 0.4993,
+       "ay": 1.0259,
+       "shadow": {
+        "file": "tiers/livingMonolith-thornwood.front.S.shadow.png",
+        "w": 381,
+        "h": 434,
+        "ax": 0.4994,
+        "ay": 0.9532
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/livingMonolith-thornwood.front.H.png",
+       "w": 643,
+       "h": 747,
+       "ax": 0.4985,
+       "ay": 1.0273,
+       "shadow": {
+        "file": "tiers/livingMonolith-thornwood.front.H.shadow.png",
+        "w": 763,
+        "h": 867,
+        "ax": 0.4988,
+        "ay": 0.9543
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/livingMonolith.front.nb21.png",
+      "sha256": "9731cefb1b32e70599b0ffcf97e992b2a4b4c030e6f64d5c6574aeb81826ff21",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/livingMonolith.front.txt",
+      "references": [
+       "livingMonolith.idle.front.png",
+       "livingMonolith-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": "livingMonolith.front.nb21.g2"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.829,
+       "iouMirrored": 0.7,
+       "aspectRatio": 1.212,
+       "headDx": -0.144,
+       "guideHeadDx": -0.078,
+       "facingMargin": 0.129,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 3950,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.004,
+       "edgeDevPct": 0.09,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 37.2,
+        "groundL": 67.7,
+        "below": 30.6
+       },
+       "farmland": {
+        "bodyL": 37.2,
+        "groundL": 67.3,
+        "below": 30.1
+       },
+       "swamp": {
+        "bodyL": 37.0,
+        "groundL": 58.5,
+        "below": 21.4
+       },
+       "forest": {
+        "bodyL": 37.0,
+        "groundL": 58.7,
+        "below": 21.7
+       },
+       "worstBelow": 21.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.0147,
+       "portrait": {
+        "window": 0.0112,
+        "lock": 0.0865
+       },
+       "lock": 0.1082,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 184.9,
+       "widthWu": 130.9,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 2.1,
+       "dE_upperThird": 3.6,
+       "figureL": 36.3,
+       "portraitL": 34.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "livingMonolith.front.thornwood",
+      "from": "livingMonolith.front.nb21.g2",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "ascendedHero-cinderHorde": {
+   "god": "ascendedHero",
+   "nation": "cinderHorde",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/ascendedHero/01a.webp",
+    "master": "stage-b/portraits/cinderHorde/ascendedHero/01a-512.webp",
+    "job": "ascendedHero-cinderHorde.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      169,
+      23,
+      376,
+      230
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "73cdfc7721c9374bcdef9c9caa3e5620ae220bad0644799e3989708c78e470c1"
+   },
+   "tintZone": "the cape",
+   "marks": {
+    "marks": [
+     {
+      "mark": "gold circlet",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "long cape in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "plain breastplate, no device",
+      "back": "hidden",
+      "front": true
+     },
+     {
+      "mark": "straight sword held upright",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: slimmer and more square to the camera than the maquette (camera check reported)"
+   },
+   "views": {
+    "back": {
+     "cutout": "ascendedHero-cinderHorde.back/ascendedHero-cinderHorde.back.idle.png",
+     "json": "ascendedHero-cinderHorde.back/ascendedHero-cinderHorde.back.idle.json",
+     "heightWu": 42.2,
+     "widthWu": 21.5,
+     "anchor": [
+      258.3,
+      1137.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1153,
+     "width": 576,
+     "size": [
+      580,
+      1157
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ascendedHero-cinderHorde.back.S.png",
+       "w": 44,
+       "h": 87,
+       "ax": 0.4524,
+       "ay": 0.9681,
+       "shadow": {
+        "file": "tiers/ascendedHero-cinderHorde.back.S.shadow.png",
+        "w": 104,
+        "h": 147,
+        "ax": 0.4799,
+        "ay": 0.7771
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ascendedHero-cinderHorde.back.H.png",
+       "w": 89,
+       "h": 173,
+       "ax": 0.4474,
+       "ay": 0.9737,
+       "shadow": {
+        "file": "tiers/ascendedHero-cinderHorde.back.H.shadow.png",
+        "w": 209,
+        "h": 293,
+        "ax": 0.4776,
+        "ay": 0.7797
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ascendedHero.back.nb21.png",
+      "sha256": "8a29086d3a249c6689990b58746981cf87b8f59ae604e7980deab1fcbb78e128",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ascendedHero.back.txt",
+      "references": [
+       "ascendedHero.idle.back.png",
+       "ascendedHero-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.751,
+       "iouMirrored": 0.649,
+       "aspectRatio": 0.979,
+       "headDx": -0.086,
+       "guideHeadDx": -0.07,
+       "facingMargin": 0.102,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 4951,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.43,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 32.7,
+        "groundL": 67.7,
+        "below": 35.0
+       },
+       "farmland": {
+        "bodyL": 32.7,
+        "groundL": 67.3,
+        "below": 34.7
+       },
+       "swamp": {
+        "bodyL": 31.8,
+        "groundL": 58.5,
+        "below": 26.7
+       },
+       "forest": {
+        "bodyL": 31.8,
+        "groundL": 58.7,
+        "below": 26.9
+       },
+       "worstBelow": 26.7,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.523,
+       "portrait": {
+        "window": 0.2732
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 42.2,
+       "widthWu": 21.5,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 8.9,
+       "dE_upperThird": 6.9,
+       "figureL": 28.3,
+       "portraitL": 25.8,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "ascendedHero.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "ascendedHero-cinderHorde.front/ascendedHero-cinderHorde.front.idle.png",
+     "json": "ascendedHero-cinderHorde.front/ascendedHero-cinderHorde.front.idle.json",
+     "heightWu": 35.0,
+     "widthWu": 21.5,
+     "anchor": [
+      333.6,
+      1057.1
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1091,
+     "width": 600,
+     "size": [
+      604,
+      1095
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ascendedHero-cinderHorde.front.S.png",
+       "w": 41,
+       "h": 72,
+       "ax": 0.5464,
+       "ay": 0.9559,
+       "shadow": {
+        "file": "tiers/ascendedHero-cinderHorde.front.S.shadow.png",
+        "w": 101,
+        "h": 132,
+        "ax": 0.5189,
+        "ay": 0.7487
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ascendedHero-cinderHorde.front.H.png",
+       "w": 82,
+       "h": 145,
+       "ax": 0.5464,
+       "ay": 0.9493,
+       "shadow": {
+        "file": "tiers/ascendedHero-cinderHorde.front.H.shadow.png",
+        "w": 202,
+        "h": 265,
+        "ax": 0.5189,
+        "ay": 0.7458
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ascendedHero.front.nb21.r2.png",
+      "sha256": "c75a49f519d93b4c3bc7c80618e7233dcbe83e6fd1543d72a3999e796c63cfef",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ascendedHero.front.txt",
+      "references": [
+       "ascendedHero.idle.front.png",
+       "ascendedHero-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.588,
+       "iouMirrored": 0.611,
+       "aspectRatio": 0.893,
+       "headDx": -0.087,
+       "guideHeadDx": -0.092,
+       "facingMargin": -0.023,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 5034,
+       "keyHueShiftedPct": 0.16,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.03,
+       "edgeDevPct": 0.72,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 33.6,
+        "groundL": 67.7,
+        "below": 34.2
+       },
+       "farmland": {
+        "bodyL": 33.5,
+        "groundL": 67.3,
+        "below": 33.8
+       },
+       "swamp": {
+        "bodyL": 32.5,
+        "groundL": 58.5,
+        "below": 26.0
+       },
+       "forest": {
+        "bodyL": 32.5,
+        "groundL": 58.7,
+        "below": 26.2
+       },
+       "worstBelow": 26.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.2491,
+       "portrait": {
+        "window": 0.2732
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 35.0,
+       "widthWu": 21.5,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 7.0,
+       "dE_upperThird": 4.2,
+       "figureL": 26.9,
+       "portraitL": 25.8,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "ascendedHero.front.nb21.r2",
+      "status": "reported",
+      "failed": "camera: IoU 0.588 (gate 0.60), facing margin -0.023 (gate 0.03)",
+      "rerolls": [
+       "ascendedHero.front.nb21 (camera: IoU 0.568, facing 0.003; an older bald face)"
+      ],
+      "why": "the re-roll has the portrait's short dark hair and young face; both front paintings are slimmer than the bulky maquette and stand nearly square to the camera"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "ascendedHero-thornwood": {
+   "god": "ascendedHero",
+   "nation": "thornwood",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "tint-zone edit of ascendedHero-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/ascendedHero/01a.webp",
+    "master": "stage-b/portraits/thornwood/ascendedHero/01a-512.webp",
+    "job": "ascendedHero-thornwood.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      167,
+      23,
+      374,
+      230
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "3ca33fc726dcb9af49f02d8c9a4f1e91572d9651ccab6e69e1b9715214bc9229"
+   },
+   "tintZone": "the cape",
+   "marks": {
+    "marks": [
+     {
+      "mark": "gold circlet",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "long cape in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "plain breastplate, no device",
+      "back": "hidden",
+      "front": true
+     },
+     {
+      "mark": "straight sword held upright",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "front view: slimmer and more square to the camera than the maquette (camera check reported)"
+   },
+   "views": {
+    "back": {
+     "cutout": "ascendedHero-thornwood.back/ascendedHero-thornwood.back.idle.png",
+     "json": "ascendedHero-thornwood.back/ascendedHero-thornwood.back.idle.json",
+     "heightWu": 42.2,
+     "widthWu": 21.5,
+     "anchor": [
+      258.3,
+      1137.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1153,
+     "width": 576,
+     "size": [
+      580,
+      1157
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ascendedHero-thornwood.back.S.png",
+       "w": 44,
+       "h": 87,
+       "ax": 0.4524,
+       "ay": 0.9681,
+       "shadow": {
+        "file": "tiers/ascendedHero-thornwood.back.S.shadow.png",
+        "w": 104,
+        "h": 147,
+        "ax": 0.4799,
+        "ay": 0.7771
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ascendedHero-thornwood.back.H.png",
+       "w": 89,
+       "h": 173,
+       "ax": 0.4474,
+       "ay": 0.9737,
+       "shadow": {
+        "file": "tiers/ascendedHero-thornwood.back.H.shadow.png",
+        "w": 209,
+        "h": 293,
+        "ax": 0.4776,
+        "ay": 0.7797
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ascendedHero.back.nb21.png",
+      "sha256": "8a29086d3a249c6689990b58746981cf87b8f59ae604e7980deab1fcbb78e128",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ascendedHero.back.txt",
+      "references": [
+       "ascendedHero.idle.back.png",
+       "ascendedHero-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": "ascendedHero.back.nb21"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.751,
+       "iouMirrored": 0.649,
+       "aspectRatio": 0.979,
+       "headDx": -0.086,
+       "guideHeadDx": -0.07,
+       "facingMargin": 0.102,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 4951,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.43,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 29.2,
+        "groundL": 67.7,
+        "below": 38.5
+       },
+       "farmland": {
+        "bodyL": 29.2,
+        "groundL": 67.3,
+        "below": 38.2
+       },
+       "swamp": {
+        "bodyL": 28.3,
+        "groundL": 58.5,
+        "below": 30.2
+       },
+       "forest": {
+        "bodyL": 28.3,
+        "groundL": 58.7,
+        "below": 30.4
+       },
+       "worstBelow": 30.2,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.5678,
+       "portrait": {
+        "window": 0.2643,
+        "lock": 0.441
+       },
+       "lock": 0.603,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 42.2,
+       "widthWu": 21.5,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 10.1,
+       "dE_upperThird": 4.0,
+       "figureL": 23.0,
+       "portraitL": 24.5,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "ascendedHero.back.thornwood",
+      "from": "ascendedHero.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "ascendedHero-thornwood.front/ascendedHero-thornwood.front.idle.png",
+     "json": "ascendedHero-thornwood.front/ascendedHero-thornwood.front.idle.json",
+     "heightWu": 35.0,
+     "widthWu": 21.5,
+     "anchor": [
+      333.6,
+      1057.1
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1091,
+     "width": 600,
+     "size": [
+      604,
+      1095
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ascendedHero-thornwood.front.S.png",
+       "w": 41,
+       "h": 72,
+       "ax": 0.5464,
+       "ay": 0.9559,
+       "shadow": {
+        "file": "tiers/ascendedHero-thornwood.front.S.shadow.png",
+        "w": 101,
+        "h": 132,
+        "ax": 0.5189,
+        "ay": 0.7487
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ascendedHero-thornwood.front.H.png",
+       "w": 82,
+       "h": 145,
+       "ax": 0.5464,
+       "ay": 0.9493,
+       "shadow": {
+        "file": "tiers/ascendedHero-thornwood.front.H.shadow.png",
+        "w": 202,
+        "h": 265,
+        "ax": 0.5189,
+        "ay": 0.7458
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ascendedHero.front.nb21.r2.png",
+      "sha256": "c75a49f519d93b4c3bc7c80618e7233dcbe83e6fd1543d72a3999e796c63cfef",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ascendedHero.front.txt",
+      "references": [
+       "ascendedHero.idle.front.png",
+       "ascendedHero-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": "ascendedHero.front.nb21.r2"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.588,
+       "iouMirrored": 0.611,
+       "aspectRatio": 0.893,
+       "headDx": -0.087,
+       "guideHeadDx": -0.092,
+       "facingMargin": -0.023,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 5034,
+       "keyHueShiftedPct": 0.28,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.03,
+       "edgeDevPct": 0.72,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.7,
+        "groundL": 67.7,
+        "below": 36.0
+       },
+       "farmland": {
+        "bodyL": 31.7,
+        "groundL": 67.3,
+        "below": 35.6
+       },
+       "swamp": {
+        "bodyL": 30.6,
+        "groundL": 58.5,
+        "below": 27.8
+       },
+       "forest": {
+        "bodyL": 30.7,
+        "groundL": 58.7,
+        "below": 28.1
+       },
+       "worstBelow": 27.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.2667,
+       "portrait": {
+        "window": 0.2643,
+        "lock": 0.441
+       },
+       "lock": 0.348,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 35.0,
+       "widthWu": 21.5,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 2.5,
+       "dE_upperThird": 2.5,
+       "figureL": 22.6,
+       "portraitL": 24.5,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "ascendedHero.front.thornwood",
+      "from": "ascendedHero.front.nb21.r2",
+      "status": "reported",
+      "failed": "camera, as its Cinder figure"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "primordial-cinderHorde": {
+   "god": "primordial",
+   "nation": "cinderHorde",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/primordial/01b-r3.webp",
+    "master": "stage-b/portraits/cinderHorde/primordial/01b-r3-512.webp",
+    "job": "primordial-cinderHorde.01b.r3",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      15,
+      120,
+      285,
+      390
+     ],
+     "source": "override",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "0cf0d0045c581669de7a590ac3bbb1f777fa5731634d95d44f17faced624212b"
+   },
+   "tintZone": "the moss on its back",
+   "marks": {
+    "marks": [
+     {
+      "mark": "huge curling ram's horns",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "moss back in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "mottled brown hide",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "club tail",
+      "back": true,
+      "front": true
+     }
+    ]
+   },
+   "views": {
+    "back": {
+     "cutout": "primordial-cinderHorde.back/primordial-cinderHorde.back.idle.png",
+     "json": "primordial-cinderHorde.back/primordial-cinderHorde.back.idle.json",
+     "heightWu": 229.1,
+     "widthWu": 188.5,
+     "anchor": [
+      536.0,
+      1501.2
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1788,
+     "width": 1483,
+     "size": [
+      1487,
+      1792
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/primordial-cinderHorde.back.S.png",
+       "w": 383,
+       "h": 461,
+       "ax": 0.3612,
+       "ay": 0.8367,
+       "shadow": {
+        "file": "tiers/primordial-cinderHorde.back.S.shadow.png",
+        "w": 443,
+        "h": 521,
+        "ax": 0.38,
+        "ay": 0.7979
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/primordial-cinderHorde.back.H.png",
+       "w": 766,
+       "h": 922,
+       "ax": 0.3612,
+       "ay": 0.8367,
+       "shadow": {
+        "file": "tiers/primordial-cinderHorde.back.H.shadow.png",
+        "w": 886,
+        "h": 1042,
+        "ax": 0.38,
+        "ay": 0.7979
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/primordial.back.nb21.2k.png",
+      "sha256": "833d105c2e66bdfe8f3d6bde02338e18eecaa080424f15f91aa3b3416ff5afd0",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/primordial.back.txt",
+      "references": [
+       "primordial.idle.back.png",
+       "primordial-cinderHorde.01b.r3.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.868,
+       "iouMirrored": 0.267,
+       "aspectRatio": 1.008,
+       "headDx": 0.163,
+       "guideHeadDx": 0.144,
+       "facingMargin": 0.601,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 9046,
+       "keyHueShiftedPct": 0.61,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.038,
+       "edgeDevPct": 1.67,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 34.2,
+        "groundL": 67.7,
+        "below": 33.5
+       },
+       "farmland": {
+        "bodyL": 34.2,
+        "groundL": 67.3,
+        "below": 33.1
+       },
+       "swamp": {
+        "bodyL": 34.1,
+        "groundL": 58.5,
+        "below": 24.3
+       },
+       "forest": {
+        "bodyL": 34.2,
+        "groundL": 58.7,
+        "below": 24.6
+       },
+       "worstBelow": 24.3,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1911,
+       "portrait": {
+        "window": 0.1023
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 229.1,
+       "widthWu": 188.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.9,
+       "dE_upperThird": 2.9,
+       "figureL": 31.1,
+       "portraitL": 17.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "primordial.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "primordial-cinderHorde.front/primordial-cinderHorde.front.idle.png",
+     "json": "primordial-cinderHorde.front/primordial-cinderHorde.front.idle.json",
+     "heightWu": 216.0,
+     "widthWu": 188.2,
+     "anchor": [
+      1156.7,
+      1378.5
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1689,
+     "width": 1811,
+     "size": [
+      1815,
+      1693
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/primordial-cinderHorde.front.S.png",
+       "w": 466,
+       "h": 435,
+       "ax": 0.637,
+       "ay": 0.8128,
+       "shadow": {
+        "file": "tiers/primordial-cinderHorde.front.S.shadow.png",
+        "w": 526,
+        "h": 495,
+        "ax": 0.6214,
+        "ay": 0.7749
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/primordial-cinderHorde.front.H.png",
+       "w": 932,
+       "h": 870,
+       "ax": 0.637,
+       "ay": 0.8128,
+       "shadow": {
+        "file": "tiers/primordial-cinderHorde.front.H.shadow.png",
+        "w": 1052,
+        "h": 990,
+        "ax": 0.6214,
+        "ay": 0.7749
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/primordial.front.nb21.2k.png",
+      "sha256": "4a30e360dfb9f096ac777645667b423af0b27443bd53a2e2d11354f22827c9a6",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/primordial.front.txt",
+      "references": [
+       "primordial.idle.front.png",
+       "primordial-cinderHorde.01b.r3.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.661,
+       "iouMirrored": 0.434,
+       "aspectRatio": 1.23,
+       "headDx": -0.043,
+       "guideHeadDx": 0.123,
+       "facingMargin": 0.227,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 9946,
+       "keyHueShiftedPct": 0.74,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.092,
+       "edgeDevPct": 1.58,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 27.5,
+        "groundL": 67.7,
+        "below": 40.2
+       },
+       "farmland": {
+        "bodyL": 27.5,
+        "groundL": 67.3,
+        "below": 39.8
+       },
+       "swamp": {
+        "bodyL": 27.4,
+        "groundL": 58.5,
+        "below": 31.0
+       },
+       "forest": {
+        "bodyL": 27.4,
+        "groundL": 58.7,
+        "below": 31.3
+       },
+       "worstBelow": 31.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1351,
+       "portrait": {
+        "window": 0.1023
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 216.0,
+       "widthWu": 188.2,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 5.1,
+       "dE_upperThird": 1.3,
+       "figureL": 24.6,
+       "portraitL": 17.6,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "primordial.front.nb21.2k",
+      "status": "reported",
+      "failed": "camera: head offset -0.043 against the maquette's +0.123 (gate 0.10); IoU 0.661 and facing +0.227 pass",
+      "rerolls": [
+       "primordial.front.nb21.2k.r2 (camera: IoU 0.395, facing -0.187: it repainted the portrait's side-on eye-level view)"
+      ]
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "primordial-thornwood": {
+   "god": "primordial",
+   "nation": "thornwood",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "tint-zone edit of primordial-cinderHorde (gd_tint.py)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/primordial/01b-r3.webp",
+    "master": "stage-b/portraits/thornwood/primordial/01b-r3-512.webp",
+    "job": "primordial-thornwood.01b.r3",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      15,
+      120,
+      285,
+      390
+     ],
+     "source": "override",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "2c52663df1dc532ea443140dde4f28acd98216c8964627ee15fbe909ac545308"
+   },
+   "tintZone": "the moss on its back",
+   "marks": {
+    "marks": [
+     {
+      "mark": "huge curling ram's horns",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "moss back in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "mottled brown hide",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "club tail",
+      "back": true,
+      "front": true
+     }
+    ]
+   },
+   "views": {
+    "back": {
+     "cutout": "primordial-thornwood.back/primordial-thornwood.back.idle.png",
+     "json": "primordial-thornwood.back/primordial-thornwood.back.idle.json",
+     "heightWu": 229.1,
+     "widthWu": 188.5,
+     "anchor": [
+      536.0,
+      1501.2
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1788,
+     "width": 1483,
+     "size": [
+      1487,
+      1792
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/primordial-thornwood.back.S.png",
+       "w": 383,
+       "h": 461,
+       "ax": 0.3612,
+       "ay": 0.8367,
+       "shadow": {
+        "file": "tiers/primordial-thornwood.back.S.shadow.png",
+        "w": 443,
+        "h": 521,
+        "ax": 0.38,
+        "ay": 0.7979
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/primordial-thornwood.back.H.png",
+       "w": 766,
+       "h": 922,
+       "ax": 0.3612,
+       "ay": 0.8367,
+       "shadow": {
+        "file": "tiers/primordial-thornwood.back.H.shadow.png",
+        "w": 886,
+        "h": 1042,
+        "ax": 0.38,
+        "ay": 0.7979
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/primordial.back.nb21.2k.png",
+      "sha256": "833d105c2e66bdfe8f3d6bde02338e18eecaa080424f15f91aa3b3416ff5afd0",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/primordial.back.txt",
+      "references": [
+       "primordial.idle.back.png",
+       "primordial-cinderHorde.01b.r3.nb21.png"
+      ],
+      "tintFrom": "primordial.back.nb21.2k"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.868,
+       "iouMirrored": 0.267,
+       "aspectRatio": 1.008,
+       "headDx": 0.163,
+       "guideHeadDx": 0.144,
+       "facingMargin": 0.601,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 9046,
+       "keyHueShiftedPct": 0.61,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.038,
+       "edgeDevPct": 1.67,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 32.7,
+        "groundL": 67.7,
+        "below": 35.1
+       },
+       "farmland": {
+        "bodyL": 32.7,
+        "groundL": 67.3,
+        "below": 34.6
+       },
+       "swamp": {
+        "bodyL": 32.6,
+        "groundL": 58.5,
+        "below": 25.9
+       },
+       "forest": {
+        "bodyL": 32.6,
+        "groundL": 58.7,
+        "below": 26.1
+       },
+       "worstBelow": 25.9,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1288,
+       "portrait": {
+        "window": 0.0553,
+        "lock": 0.1462
+       },
+       "lock": 0.2249,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 229.1,
+       "widthWu": 188.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 8.7,
+       "dE_upperThird": 7.7,
+       "figureL": 28.9,
+       "portraitL": 16.7,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "primordial.back.thornwood",
+      "from": "primordial.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "primordial-thornwood.front/primordial-thornwood.front.idle.png",
+     "json": "primordial-thornwood.front/primordial-thornwood.front.idle.json",
+     "heightWu": 216.0,
+     "widthWu": 188.2,
+     "anchor": [
+      1156.7,
+      1378.5
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1689,
+     "width": 1811,
+     "size": [
+      1815,
+      1693
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/primordial-thornwood.front.S.png",
+       "w": 466,
+       "h": 435,
+       "ax": 0.637,
+       "ay": 0.8128,
+       "shadow": {
+        "file": "tiers/primordial-thornwood.front.S.shadow.png",
+        "w": 526,
+        "h": 495,
+        "ax": 0.6214,
+        "ay": 0.7749
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/primordial-thornwood.front.H.png",
+       "w": 932,
+       "h": 870,
+       "ax": 0.637,
+       "ay": 0.8128,
+       "shadow": {
+        "file": "tiers/primordial-thornwood.front.H.shadow.png",
+        "w": 1052,
+        "h": 990,
+        "ax": 0.6214,
+        "ay": 0.7749
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/primordial.front.nb21.2k.png",
+      "sha256": "4a30e360dfb9f096ac777645667b423af0b27443bd53a2e2d11354f22827c9a6",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/primordial.front.txt",
+      "references": [
+       "primordial.idle.front.png",
+       "primordial-cinderHorde.01b.r3.nb21.png"
+      ],
+      "tintFrom": "primordial.front.nb21.2k"
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.661,
+       "iouMirrored": 0.434,
+       "aspectRatio": 1.23,
+       "headDx": -0.043,
+       "guideHeadDx": 0.123,
+       "facingMargin": 0.227,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 9946,
+       "keyHueShiftedPct": 0.74,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.092,
+       "edgeDevPct": 1.58,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 26.6,
+        "groundL": 67.7,
+        "below": 41.2
+       },
+       "farmland": {
+        "bodyL": 26.6,
+        "groundL": 67.3,
+        "below": 40.8
+       },
+       "swamp": {
+        "bodyL": 26.5,
+        "groundL": 58.5,
+        "below": 32.0
+       },
+       "forest": {
+        "bodyL": 26.5,
+        "groundL": 58.7,
+        "below": 32.2
+       },
+       "worstBelow": 32.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.0715,
+       "portrait": {
+        "window": 0.0553,
+        "lock": 0.1462
+       },
+       "lock": 0.1306,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 216.0,
+       "widthWu": 188.2,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 5.0,
+       "dE_upperThird": 8.6,
+       "figureL": 23.9,
+       "portraitL": 16.7,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "primordial.front.thornwood",
+      "from": "primordial.front.nb21.2k",
+      "status": "reported",
+      "failed": "camera, as its Cinder figure"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "ashColossus-cinderHorde": {
+   "god": "ashColossus",
+   "nation": "cinderHorde",
+   "sizeClass": 5,
+   "ladder": 4.6,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/ashColossus/01a.webp",
+    "master": "stage-b/portraits/cinderHorde/ashColossus/01a-512.webp",
+    "job": "ashColossus-cinderHorde.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      188,
+      12,
+      351,
+      175
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "03ba571f7fb0abe4b8c0c360461d4680c863ff5f86ecdaa950fb18ec6a46dbef"
+   },
+   "tintZone": "the kilt",
+   "marks": {
+    "marks": [
+     {
+      "mark": "brazier head with low coals",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "net of vein cracks",
+      "back": true,
+      "front": "partly"
+     },
+     {
+      "mark": "bare shoulders",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "bare rock-like fists",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "kilt in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "drifting ember specks",
+      "back": "game",
+      "front": "game"
+     }
+    ],
+    "note": "stockier legs than the portrait (the maquette proportions came through)"
+   },
+   "views": {
+    "back": {
+     "cutout": "ashColossus-cinderHorde.back/ashColossus-cinderHorde.back.idle.png",
+     "json": "ashColossus-cinderHorde.back/ashColossus-cinderHorde.back.idle.json",
+     "heightWu": 126.6,
+     "widthWu": 82.3,
+     "anchor": [
+      345.3,
+      1077.2
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1081,
+     "width": 725,
+     "size": [
+      729,
+      1085
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ashColossus-cinderHorde.back.S.png",
+       "w": 173,
+       "h": 256,
+       "ax": 0.4733,
+       "ay": 0.9895,
+       "shadow": {
+        "file": "tiers/ashColossus-cinderHorde.back.S.shadow.png",
+        "w": 233,
+        "h": 316,
+        "ax": 0.4802,
+        "ay": 0.8966
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ashColossus-cinderHorde.back.H.png",
+       "w": 346,
+       "h": 512,
+       "ax": 0.4733,
+       "ay": 0.9895,
+       "shadow": {
+        "file": "tiers/ashColossus-cinderHorde.back.H.shadow.png",
+        "w": 466,
+        "h": 632,
+        "ax": 0.4802,
+        "ay": 0.8966
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ashColossus.back.nb21.png",
+      "sha256": "714806526dc167f465133ad2ee08aba8dac6a98b4cb6ea572e08a240f4c76677",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ashColossus.back.txt",
+      "references": [
+       "ashColossus.idle.back.png",
+       "ashColossus-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.849,
+       "iouMirrored": 0.525,
+       "aspectRatio": 1.031,
+       "headDx": -0.089,
+       "guideHeadDx": -0.079,
+       "facingMargin": 0.324,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5512,
+       "keyHueShiftedPct": 0.04,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.001,
+       "edgeDevPct": 0.17,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 22.5,
+        "groundL": 67.7,
+        "below": 45.3
+       },
+       "farmland": {
+        "bodyL": 22.5,
+        "groundL": 67.3,
+        "below": 44.8
+       },
+       "swamp": {
+        "bodyL": 22.2,
+        "groundL": 58.5,
+        "below": 36.2
+       },
+       "forest": {
+        "bodyL": 22.2,
+        "groundL": 58.7,
+        "below": 36.5
+       },
+       "worstBelow": 36.2,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.079,
+       "portrait": {
+        "window": 0.177
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 5,
+       "ladder": 4.6,
+       "ladderWu": 128.8,
+       "worldHeightMen": 4.6,
+       "worldRatio": 1.0,
+       "heightWu": 126.6,
+       "widthWu": 82.3,
+       "lengthCapWu": 257.6,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 8.3,
+       "dE_upperThird": 2.6,
+       "figureL": 17.0,
+       "portraitL": 21.8,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "ashColossus.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "ashColossus-cinderHorde.front/ashColossus-cinderHorde.front.idle.png",
+     "json": "ashColossus-cinderHorde.front/ashColossus-cinderHorde.front.idle.json",
+     "heightWu": 128.3,
+     "widthWu": 82.4,
+     "anchor": [
+      355.5,
+      1103.3
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1121,
+     "width": 674,
+     "size": [
+      678,
+      1125
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ashColossus-cinderHorde.front.S.png",
+       "w": 157,
+       "h": 260,
+       "ax": 0.5247,
+       "ay": 0.9752,
+       "shadow": {
+        "file": "tiers/ashColossus-cinderHorde.front.S.shadow.png",
+        "w": 217,
+        "h": 320,
+        "ax": 0.5179,
+        "ay": 0.8861
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ashColossus-cinderHorde.front.H.png",
+       "w": 314,
+       "h": 519,
+       "ax": 0.5247,
+       "ay": 0.9771,
+       "shadow": {
+        "file": "tiers/ashColossus-cinderHorde.front.H.shadow.png",
+        "w": 434,
+        "h": 639,
+        "ax": 0.5179,
+        "ay": 0.8875
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ashColossus.front.nb21.png",
+      "sha256": "33fa36ed443f314dca8b9f382ded0e58ed9b2cd895d52fe3720bb233ccf3a84a",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ashColossus.front.txt",
+      "references": [
+       "ashColossus.idle.front.png",
+       "ashColossus-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.761,
+       "iouMirrored": 0.582,
+       "aspectRatio": 0.935,
+       "headDx": -0.067,
+       "guideHeadDx": -0.065,
+       "facingMargin": 0.179,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5598,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.002,
+       "edgeDevPct": 2.47,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 25.3,
+        "groundL": 67.7,
+        "below": 42.5
+       },
+       "farmland": {
+        "bodyL": 25.3,
+        "groundL": 67.3,
+        "below": 42.0
+       },
+       "swamp": {
+        "bodyL": 25.0,
+        "groundL": 58.5,
+        "below": 33.4
+       },
+       "forest": {
+        "bodyL": 25.0,
+        "groundL": 58.7,
+        "below": 33.7
+       },
+       "worstBelow": 33.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1092,
+       "portrait": {
+        "window": 0.177
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 5,
+       "ladder": 4.6,
+       "ladderWu": 128.8,
+       "worldHeightMen": 4.6,
+       "worldRatio": 1.0,
+       "heightWu": 128.3,
+       "widthWu": 82.4,
+       "lengthCapWu": 257.6,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 7.9,
+       "dE_upperThird": 4.2,
+       "figureL": 22.2,
+       "portraitL": 21.8,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "ashColossus.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "ashPhoenix-cinderHorde": {
+   "god": "ashPhoenix",
+   "nation": "cinderHorde",
+   "sizeClass": 3,
+   "ladder": 2.3,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/ashPhoenix/01b.webp",
+    "master": "stage-b/portraits/cinderHorde/ashPhoenix/01b-512.webp",
+    "job": "ashPhoenix-cinderHorde.01b",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      142,
+      22,
+      347,
+      227
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "a70c121b3d9b3c98324e52839aea23e7bd97051d3a2e840c661b79dec30a04aa"
+   },
+   "tintZone": "the flight feathers",
+   "marks": {
+    "marks": [
+     {
+      "mark": "tall plume crest",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "fan-spread wings in ember-orange",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "barred coal-dark feathers",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "long trailing tail",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "gold hooked beak",
+      "back": "partly",
+      "front": true
+     }
+    ],
+    "note": "front view: the first roll is used (natural feathered wings, as the portrait); the re-roll copied the maquette fans as flat paddles"
+   },
+   "views": {
+    "back": {
+     "cutout": "ashPhoenix-cinderHorde.back/ashPhoenix-cinderHorde.back.idle.png",
+     "json": "ashPhoenix-cinderHorde.back/ashPhoenix-cinderHorde.back.idle.json",
+     "heightWu": 75.8,
+     "widthWu": 60.2,
+     "anchor": [
+      388.5,
+      923.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1063,
+     "width": 803,
+     "size": [
+      807,
+      1067
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ashPhoenix-cinderHorde.back.S.png",
+       "w": 117,
+       "h": 154,
+       "ax": 0.4821,
+       "ay": 0.8616,
+       "shadow": {
+        "file": "tiers/ashPhoenix-cinderHorde.back.S.shadow.png",
+        "w": 177,
+        "h": 214,
+        "ax": 0.4882,
+        "ay": 0.7602
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ashPhoenix-cinderHorde.back.H.png",
+       "w": 234,
+       "h": 308,
+       "ax": 0.4821,
+       "ay": 0.8616,
+       "shadow": {
+        "file": "tiers/ashPhoenix-cinderHorde.back.H.shadow.png",
+        "w": 354,
+        "h": 428,
+        "ax": 0.4882,
+        "ay": 0.7602
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ashPhoenix.back.nb21.r2.png",
+      "sha256": "46cf40542c7aaa53d72c304fbc6947d9406f7f089128c2ecadd67ecb6a2e6033",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ashPhoenix.back.txt",
+      "references": [
+       "ashPhoenix.idle.back.png",
+       "ashPhoenix-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.607,
+       "iouMirrored": 0.131,
+       "aspectRatio": 0.951,
+       "headDx": -0.081,
+       "guideHeadDx": -0.18,
+       "facingMargin": 0.476,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6942,
+       "keyHueShiftedPct": 0.12,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.167,
+       "edgeDevPct": 0.81,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 30.4,
+        "groundL": 67.7,
+        "below": 37.3
+       },
+       "farmland": {
+        "bodyL": 30.4,
+        "groundL": 67.3,
+        "below": 36.9
+       },
+       "swamp": {
+        "bodyL": 29.5,
+        "groundL": 58.5,
+        "below": 28.9
+       },
+       "forest": {
+        "bodyL": 29.5,
+        "groundL": 58.7,
+        "below": 29.2
+       },
+       "worstBelow": 28.9,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1733,
+       "portrait": {
+        "window": 0.1347
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 3,
+       "ladder": 2.3,
+       "ladderWu": 64.4,
+       "worldHeightMen": 2.3,
+       "worldRatio": 1.0,
+       "heightWu": 75.8,
+       "widthWu": 60.2,
+       "lengthCapWu": 167.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.8,
+       "dE_upperThird": 10.1,
+       "figureL": 23.8,
+       "portraitL": 18.6,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "ashPhoenix.back.nb21.r2",
+      "status": "pass",
+      "rerolls": [
+       "ashPhoenix.back.nb21 (camera: IoU 0.567 against the first maquette, 0.521 against the corrected wings)"
+      ]
+     }
+    },
+    "front": {
+     "cutout": "ashPhoenix-cinderHorde.front/ashPhoenix-cinderHorde.front.idle.png",
+     "json": "ashPhoenix-cinderHorde.front/ashPhoenix-cinderHorde.front.idle.json",
+     "heightWu": 58.9,
+     "widthWu": 60.1,
+     "anchor": [
+      418.3,
+      1019.6
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 971,
+     "width": 804,
+     "size": [
+      808,
+      975
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/ashPhoenix-cinderHorde.front.S.png",
+       "w": 100,
+       "h": 120,
+       "ax": 0.5175,
+       "ay": 1.0391,
+       "shadow": {
+        "file": "tiers/ashPhoenix-cinderHorde.front.S.shadow.png",
+        "w": 160,
+        "h": 180,
+        "ax": 0.5109,
+        "ay": 0.8594
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/ashPhoenix-cinderHorde.front.H.png",
+       "w": 200,
+       "h": 241,
+       "ax": 0.5175,
+       "ay": 1.0348,
+       "shadow": {
+        "file": "tiers/ashPhoenix-cinderHorde.front.H.shadow.png",
+        "w": 320,
+        "h": 361,
+        "ax": 0.5109,
+        "ay": 0.857
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/ashPhoenix.front.nb21.png",
+      "sha256": "4319604d4ad0daa36321986159979940eb50b648b38a71c64be2c4a46265cd3f",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "1:1",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/ashPhoenix.front.txt",
+      "references": [
+       "ashPhoenix.idle.front.png",
+       "ashPhoenix-cinderHorde.01b.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.28,
+       "iouMirrored": 0.296,
+       "aspectRatio": 0.81,
+       "headDx": 0.036,
+       "guideHeadDx": -0.469,
+       "facingMargin": -0.016,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 8709,
+       "keyHueShiftedPct": 0.05,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.133,
+       "edgeDevPct": 0.55,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 26.9,
+        "groundL": 67.7,
+        "below": 40.9
+       },
+       "farmland": {
+        "bodyL": 26.8,
+        "groundL": 67.3,
+        "below": 40.5
+       },
+       "swamp": {
+        "bodyL": 25.7,
+        "groundL": 58.5,
+        "below": 32.8
+       },
+       "forest": {
+        "bodyL": 25.7,
+        "groundL": 58.7,
+        "below": 33.0
+       },
+       "worstBelow": 32.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.1461,
+       "portrait": {
+        "window": 0.1347
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 3,
+       "ladder": 2.3,
+       "ladderWu": 64.4,
+       "worldHeightMen": 2.3,
+       "worldRatio": 1.0,
+       "heightWu": 58.9,
+       "widthWu": 60.1,
+       "lengthCapWu": 167.4,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 3.5,
+       "dE_upperThird": 9.8,
+       "figureL": 18.9,
+       "portraitL": 18.6,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "ashPhoenix.front.nb21.g2",
+      "status": "reported",
+      "failed": "camera: IoU 0.280 against the corrected maquette (0.325 against the first), facing -0.016: the wings are raised in the portrait's natural V of feathers, not the maquette's fans, and the long tail laid along the ground moves the silhouette's ground point",
+      "rerolls": [
+       "ashPhoenix.front.nb21.r2 (camera: IoU 0.264, facing 0.007; it copied the maquette's fans as flat paddles and reads less like the portrait)"
+      ],
+      "why": "the first roll reads as the portrait (feathered wings raised in a V, crest, tail); same raw image as ashPhoenix.front.nb21, re-checked against the corrected maquette"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "pyreLord-cinderHorde": {
+   "god": "pyreLord",
+   "nation": "cinderHorde",
+   "sizeClass": 4,
+   "ladder": 3.4,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/pyreLord/01a.webp",
+    "master": "stage-b/portraits/cinderHorde/pyreLord/01a-512.webp",
+    "job": "pyreLord-cinderHorde.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      170,
+      18,
+      346,
+      194
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "a84c49278d9bff54a627c32958953bbbea502e120cd839029866193a102c6684"
+   },
+   "tintZone": "the mantle",
+   "marks": {
+    "marks": [
+     {
+      "mark": "gold flame crown",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "ember mantle in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "glaive",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "ash stripes on the face and arms",
+      "back": false,
+      "front": false
+     },
+     {
+      "mark": "dark scale armour",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "the ash stripes are absent in the approved portrait too (its art director note)"
+   },
+   "views": {
+    "back": {
+     "cutout": "pyreLord-cinderHorde.back/pyreLord-cinderHorde.back.idle.png",
+     "json": "pyreLord-cinderHorde.back/pyreLord-cinderHorde.back.idle.json",
+     "heightWu": 112.1,
+     "widthWu": 66.4,
+     "anchor": [
+      237.5,
+      968.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1013,
+     "width": 555,
+     "size": [
+      559,
+      1017
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/pyreLord-cinderHorde.back.S.png",
+       "w": 126,
+       "h": 227,
+       "ax": 0.4251,
+       "ay": 0.9482,
+       "shadow": {
+        "file": "tiers/pyreLord-cinderHorde.back.S.shadow.png",
+        "w": 186,
+        "h": 287,
+        "ax": 0.4493,
+        "ay": 0.8545
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/pyreLord-cinderHorde.back.H.png",
+       "w": 251,
+       "h": 454,
+       "ax": 0.4268,
+       "ay": 0.9482,
+       "shadow": {
+        "file": "tiers/pyreLord-cinderHorde.back.H.shadow.png",
+        "w": 371,
+        "h": 574,
+        "ax": 0.4505,
+        "ay": 0.8545
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/pyreLord.back.nb21.png",
+      "sha256": "212420da9449cb7ed2189fb2b37561c2d654ebf2cd488db959bc7808d0b4ea52",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/pyreLord.back.txt",
+      "references": [
+       "pyreLord.idle.back.png",
+       "pyreLord-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.771,
+       "iouMirrored": 0.601,
+       "aspectRatio": 0.923,
+       "headDx": 0.193,
+       "guideHeadDx": 0.255,
+       "facingMargin": 0.17,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5460,
+       "keyHueShiftedPct": 0.16,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.068,
+       "edgeDevPct": 0.12,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 26.5,
+        "groundL": 67.7,
+        "below": 41.3
+       },
+       "farmland": {
+        "bodyL": 26.5,
+        "groundL": 67.3,
+        "below": 40.8
+       },
+       "swamp": {
+        "bodyL": 26.1,
+        "groundL": 58.5,
+        "below": 32.4
+       },
+       "forest": {
+        "bodyL": 26.1,
+        "groundL": 58.7,
+        "below": 32.6
+       },
+       "worstBelow": 32.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.3035,
+       "portrait": {
+        "window": 0.1557
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 112.1,
+       "widthWu": 66.4,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.9,
+       "dE_upperThird": 9.7,
+       "figureL": 22.1,
+       "portraitL": 22.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "pyreLord.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "pyreLord-cinderHorde.front/pyreLord-cinderHorde.front.idle.png",
+     "json": "pyreLord-cinderHorde.front/pyreLord-cinderHorde.front.idle.json",
+     "heightWu": 113.8,
+     "widthWu": 66.4,
+     "anchor": [
+      387.2,
+      1062.5
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1086,
+     "width": 672,
+     "size": [
+      676,
+      1090
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/pyreLord-cinderHorde.front.S.png",
+       "w": 144,
+       "h": 230,
+       "ax": 0.5705,
+       "ay": 0.9725,
+       "shadow": {
+        "file": "tiers/pyreLord-cinderHorde.front.S.shadow.png",
+        "w": 204,
+        "h": 290,
+        "ax": 0.5497,
+        "ay": 0.8747
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/pyreLord-cinderHorde.front.H.png",
+       "w": 287,
+       "h": 461,
+       "ax": 0.5725,
+       "ay": 0.9704,
+       "shadow": {
+        "file": "tiers/pyreLord-cinderHorde.front.H.shadow.png",
+        "w": 407,
+        "h": 581,
+        "ax": 0.5511,
+        "ay": 0.8732
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/pyreLord.front.nb21.r2.png",
+      "sha256": "b239abec16e0d1c88a1ea4debad80043bd88558e5420284619855b212ee8a138",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/pyreLord.front.txt",
+      "references": [
+       "pyreLord.idle.front.png",
+       "pyreLord-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.646,
+       "iouMirrored": 0.602,
+       "aspectRatio": 1.059,
+       "headDx": -0.258,
+       "guideHeadDx": -0.33,
+       "facingMargin": 0.044,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6183,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.085,
+       "edgeDevPct": 0.29,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 21.5,
+        "groundL": 67.7,
+        "below": 46.2
+       },
+       "farmland": {
+        "bodyL": 21.5,
+        "groundL": 67.3,
+        "below": 45.8
+       },
+       "swamp": {
+        "bodyL": 21.1,
+        "groundL": 58.5,
+        "below": 37.4
+       },
+       "forest": {
+        "bodyL": 21.1,
+        "groundL": 58.7,
+        "below": 37.6
+       },
+       "worstBelow": 37.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.0835,
+       "portrait": {
+        "window": 0.1557
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 113.8,
+       "widthWu": 66.4,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.4,
+       "dE_upperThird": 6.9,
+       "figureL": 16.2,
+       "portraitL": 22.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "pyreLord.front.nb21.r2",
+      "status": "pass",
+      "rerolls": [
+       "pyreLord.front.nb21 (camera: head offset 0.108 off the maquette's, gate 0.10)"
+      ]
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "cinderIdol-cinderHorde": {
+   "god": "cinderIdol",
+   "nation": "cinderHorde",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/cinderIdol/01b-r4.webp",
+    "master": "stage-b/portraits/cinderHorde/cinderIdol/01b-r4-512.webp",
+    "job": "cinderIdol-cinderHorde.01b.r4",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      159,
+      0,
+      373,
+      214
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "ec21ea192672fb13a4d3aeb5d5c25f95c29cfa94a225537f0a4fc133234c25df"
+   },
+   "tintZone": "the pigment in the carved glyphs",
+   "marks": {
+    "marks": [
+     {
+      "mark": "brazier face with a carved stern face",
+      "back": "partly",
+      "front": true
+     },
+     {
+      "mark": "column of grey smoke",
+      "back": "game",
+      "front": "game"
+     },
+     {
+      "mark": "soot-crusted cracks",
+      "back": "partly",
+      "front": "partly"
+     },
+     {
+      "mark": "stepped plinth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "carved glyphs in ember-orange pigment",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "back view: the brazier and its gold rim show, the carved face is on the far side; glyphs carved on the back face too"
+   },
+   "views": {
+    "back": {
+     "cutout": "cinderIdol-cinderHorde.back/cinderIdol-cinderHorde.back.idle.png",
+     "json": "cinderIdol-cinderHorde.back/cinderIdol-cinderHorde.back.idle.json",
+     "heightWu": 204.8,
+     "widthWu": 136.5,
+     "anchor": [
+      588.7,
+      1819.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1761,
+     "width": 1176,
+     "size": [
+      1180,
+      1765
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/cinderIdol-cinderHorde.back.S.png",
+       "w": 276,
+       "h": 413,
+       "ax": 0.4997,
+       "ay": 1.0271,
+       "shadow": {
+        "file": "tiers/cinderIdol-cinderHorde.back.S.shadow.png",
+        "w": 336,
+        "h": 473,
+        "ax": 0.4998,
+        "ay": 0.9602
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/cinderIdol-cinderHorde.back.H.png",
+       "w": 553,
+       "h": 825,
+       "ax": 0.4988,
+       "ay": 1.0283,
+       "shadow": {
+        "file": "tiers/cinderIdol-cinderHorde.back.H.shadow.png",
+        "w": 673,
+        "h": 945,
+        "ax": 0.499,
+        "ay": 0.9612
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/cinderIdol.back.nb21.2k.png",
+      "sha256": "f8ac72617ec24008856ea0ae0934802f7312ecb93f0366a632e3ff4a173c5b76",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/cinderIdol.back.txt",
+      "references": [
+       "cinderIdol.idle.back.png",
+       "cinderIdol-cinderHorde.01b.r4.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.984,
+       "iouMirrored": 0.888,
+       "aspectRatio": 1.001,
+       "headDx": -0.102,
+       "guideHeadDx": -0.099,
+       "facingMargin": 0.096,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6016,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 2.79,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.1,
+        "groundL": 67.7,
+        "below": 36.6
+       },
+       "farmland": {
+        "bodyL": 31.1,
+        "groundL": 67.3,
+        "below": 36.2
+       },
+       "swamp": {
+        "bodyL": 31.0,
+        "groundL": 58.5,
+        "below": 27.4
+       },
+       "forest": {
+        "bodyL": 31.0,
+        "groundL": 58.7,
+        "below": 27.7
+       },
+       "worstBelow": 27.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.043,
+       "portrait": {
+        "window": 0.044
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 204.8,
+       "widthWu": 136.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.4,
+       "dE_upperThird": 3.6,
+       "figureL": 30.5,
+       "portraitL": 30.7,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "cinderIdol.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "cinderIdol-cinderHorde.front/cinderIdol-cinderHorde.front.idle.png",
+     "json": "cinderIdol-cinderHorde.front/cinderIdol-cinderHorde.front.idle.json",
+     "heightWu": 204.8,
+     "widthWu": 136.5,
+     "anchor": [
+      591.2,
+      1815.3
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1757,
+     "width": 1181,
+     "size": [
+      1185,
+      1761
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/cinderIdol-cinderHorde.front.S.png",
+       "w": 278,
+       "h": 413,
+       "ax": 0.4994,
+       "ay": 1.0271,
+       "shadow": {
+        "file": "tiers/cinderIdol-cinderHorde.front.S.shadow.png",
+        "w": 338,
+        "h": 473,
+        "ax": 0.4995,
+        "ay": 0.9602
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/cinderIdol-cinderHorde.front.H.png",
+       "w": 557,
+       "h": 825,
+       "ax": 0.4985,
+       "ay": 1.0283,
+       "shadow": {
+        "file": "tiers/cinderIdol-cinderHorde.front.H.shadow.png",
+        "w": 677,
+        "h": 945,
+        "ax": 0.4987,
+        "ay": 0.9613
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/cinderIdol.front.nb21.2k.r2.png",
+      "sha256": "685fda278696da61b7adce453bc76aeffa0ab4c2ef65038306c9fddb9768f288",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/cinderIdol.front.txt",
+      "references": [
+       "cinderIdol.idle.front.png",
+       "cinderIdol-cinderHorde.01b.r4.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.97,
+       "iouMirrored": 0.89,
+       "aspectRatio": 1.007,
+       "headDx": -0.096,
+       "guideHeadDx": -0.099,
+       "facingMargin": 0.08,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6055,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.52,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 31.4,
+        "groundL": 67.7,
+        "below": 36.3
+       },
+       "farmland": {
+        "bodyL": 31.4,
+        "groundL": 67.3,
+        "below": 35.9
+       },
+       "swamp": {
+        "bodyL": 31.4,
+        "groundL": 58.5,
+        "below": 27.1
+       },
+       "forest": {
+        "bodyL": 31.4,
+        "groundL": 58.7,
+        "below": 27.3
+       },
+       "worstBelow": 27.1,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.0542,
+       "portrait": {
+        "window": 0.044
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 204.8,
+       "widthWu": 136.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.3,
+       "dE_upperThird": 6.2,
+       "figureL": 28.9,
+       "portraitL": 30.7,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "cinderIdol.front.nb21.2k.r2",
+      "status": "pass",
+      "rerolls": [
+       "cinderIdol.front.nb21.2k (side: glyph pigment 0.027, gate 0.03)"
+      ]
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "emberHierophant-cinderHorde": {
+   "god": "emberHierophant",
+   "nation": "cinderHorde",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/cinderHorde/emberHierophant/01a.webp",
+    "master": "stage-b/portraits/cinderHorde/emberHierophant/01a-512.webp",
+    "job": "emberHierophant-cinderHorde.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      157,
+      18,
+      364,
+      225
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "40f6e3946864ded1c27ad7e7bdc44ec48cb4db2741c498fa2e15198b846a6d7e"
+   },
+   "tintZone": "the mantle",
+   "marks": {
+    "marks": [
+     {
+      "mark": "gold face-mask",
+      "back": "hidden",
+      "front": true
+     },
+     {
+      "mark": "ember mantle in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "orb staff in a gold claw",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "robe glyphs",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "charcoal hood",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "back view: the hood ends in a small dark knob (the maquette peak)"
+   },
+   "views": {
+    "back": {
+     "cutout": "emberHierophant-cinderHorde.back/emberHierophant-cinderHorde.back.idle.png",
+     "json": "emberHierophant-cinderHorde.back/emberHierophant-cinderHorde.back.idle.json",
+     "heightWu": 39.1,
+     "widthWu": 22.9,
+     "anchor": [
+      242.1,
+      998.1
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1035,
+     "width": 596,
+     "size": [
+      600,
+      1039
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/emberHierophant-cinderHorde.back.S.png",
+       "w": 47,
+       "h": 81,
+       "ax": 0.4105,
+       "ay": 0.9434,
+       "shadow": {
+        "file": "tiers/emberHierophant-cinderHorde.back.S.shadow.png",
+        "w": 107,
+        "h": 141,
+        "ax": 0.4607,
+        "ay": 0.7547
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/emberHierophant-cinderHorde.back.H.png",
+       "w": 95,
+       "h": 161,
+       "ax": 0.4061,
+       "ay": 0.9492,
+       "shadow": {
+        "file": "tiers/emberHierophant-cinderHorde.back.H.shadow.png",
+        "w": 215,
+        "h": 281,
+        "ax": 0.4585,
+        "ay": 0.7574
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/emberHierophant.back.nb21.png",
+      "sha256": "6eab83279e13406643f811648dd35ef1f3bd1d445fc571d1d79b4bdc0d2c8864",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/emberHierophant.back.txt",
+      "references": [
+       "emberHierophant.idle.back.png",
+       "emberHierophant-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.886,
+       "iouMirrored": 0.676,
+       "aspectRatio": 0.981,
+       "headDx": 0.078,
+       "guideHeadDx": 0.03,
+       "facingMargin": 0.21,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5341,
+       "keyHueShiftedPct": 1.22,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.019,
+       "edgeDevPct": 1.26,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 32.0,
+        "groundL": 67.7,
+        "below": 35.7
+       },
+       "farmland": {
+        "bodyL": 32.0,
+        "groundL": 67.3,
+        "below": 35.3
+       },
+       "swamp": {
+        "bodyL": 31.2,
+        "groundL": 58.5,
+        "below": 27.3
+       },
+       "forest": {
+        "bodyL": 31.2,
+        "groundL": 58.7,
+        "below": 27.5
+       },
+       "worstBelow": 27.3,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.354,
+       "portrait": {
+        "window": 0.2638
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 39.1,
+       "widthWu": 22.9,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 9.0,
+       "dE_upperThird": 6.5,
+       "figureL": 26.6,
+       "portraitL": 22.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "emberHierophant.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "emberHierophant-cinderHorde.front/emberHierophant-cinderHorde.front.idle.png",
+     "json": "emberHierophant-cinderHorde.front/emberHierophant-cinderHorde.front.idle.json",
+     "heightWu": 40.9,
+     "widthWu": 23.0,
+     "anchor": [
+      377.5,
+      1012.6
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1060,
+     "width": 631,
+     "size": [
+      635,
+      1064
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/emberHierophant-cinderHorde.front.S.png",
+       "w": 51,
+       "h": 84,
+       "ax": 0.5908,
+       "ay": 0.9422,
+       "shadow": {
+        "file": "tiers/emberHierophant-cinderHorde.front.S.shadow.png",
+        "w": 111,
+        "h": 144,
+        "ax": 0.5417,
+        "ay": 0.7579
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/emberHierophant-cinderHorde.front.H.png",
+       "w": 102,
+       "h": 168,
+       "ax": 0.5908,
+       "ay": 0.9422,
+       "shadow": {
+        "file": "tiers/emberHierophant-cinderHorde.front.H.shadow.png",
+        "w": 222,
+        "h": 288,
+        "ax": 0.5417,
+        "ay": 0.7579
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/emberHierophant.front.nb21.png",
+      "sha256": "7a525ddcebfd65822a7b48b86111d7838fa5cd3e5754cccb2fcdc86e3f3093f6",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/emberHierophant.front.txt",
+      "references": [
+       "emberHierophant.idle.front.png",
+       "emberHierophant-cinderHorde.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.753,
+       "iouMirrored": 0.699,
+       "aspectRatio": 1.058,
+       "headDx": -0.124,
+       "guideHeadDx": -0.05,
+       "facingMargin": 0.054,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5241,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.065,
+       "edgeDevPct": 0.04,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 26.5,
+        "groundL": 67.7,
+        "below": 41.2
+       },
+       "farmland": {
+        "bodyL": 26.5,
+        "groundL": 67.3,
+        "below": 40.8
+       },
+       "swamp": {
+        "bodyL": 25.7,
+        "groundL": 58.5,
+        "below": 32.8
+       },
+       "forest": {
+        "bodyL": 25.7,
+        "groundL": 58.7,
+        "below": 33.0
+       },
+       "worstBelow": 32.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "cinderHorde",
+       "window": 0.171,
+       "portrait": {
+        "window": 0.2638
+       },
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 40.9,
+       "widthWu": 23.0,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 11.7,
+       "dE_upperThird": 5.6,
+       "figureL": 20.9,
+       "portraitL": 22.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "emberHierophant.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "wildSpirit-thornwood": {
+   "god": "wildSpirit",
+   "nation": "thornwood",
+   "sizeClass": 2,
+   "ladder": 1.5,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/wildSpirit/01b-r2.webp",
+    "master": "stage-b/portraits/thornwood/wildSpirit/01b-r2-512.webp",
+    "job": "wildSpirit-thornwood.01b.r2",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      210,
+      20,
+      460,
+      270
+     ],
+     "source": "override",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "6d7103265e4d69dcc65bffd458959ea2ccb4c33d20d65de6b5c54954a3775f6b"
+   },
+   "tintZone": "the leaf ruff",
+   "marks": {
+    "marks": [
+     {
+      "mark": "tall branching antlers",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "leaf ruff in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "stripes on the flanks and legs",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "trailing mist wisps",
+      "back": "game",
+      "front": "game"
+     }
+    ],
+    "note": "back view: the body runs straight away from the camera, so it stands tall on screen (camera check reported)"
+   },
+   "views": {
+    "back": {
+     "cutout": "wildSpirit-thornwood.back/wildSpirit-thornwood.back.idle.png",
+     "json": "wildSpirit-thornwood.back/wildSpirit-thornwood.back.idle.json",
+     "heightWu": 53.4,
+     "widthWu": 21.9,
+     "anchor": [
+      227.3,
+      1106.1
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1239,
+     "width": 569,
+     "size": [
+      573,
+      1243
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/wildSpirit-thornwood.back.S.png",
+       "w": 51,
+       "h": 109,
+       "ax": 0.4038,
+       "ay": 0.8839,
+       "shadow": {
+        "file": "tiers/wildSpirit-thornwood.back.S.shadow.png",
+        "w": 111,
+        "h": 169,
+        "ax": 0.4558,
+        "ay": 0.7476
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/wildSpirit-thornwood.back.H.png",
+       "w": 103,
+       "h": 218,
+       "ax": 0.3999,
+       "ay": 0.8839,
+       "shadow": {
+        "file": "tiers/wildSpirit-thornwood.back.H.shadow.png",
+        "w": 223,
+        "h": 338,
+        "ax": 0.4537,
+        "ay": 0.7476
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/wildSpirit.back.nb21.r2.png",
+      "sha256": "fa79695644356ce3ee00a821809f51f9d9ddfa73692c0b55b3755324a939234f",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "9:16",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/wildSpirit.back.txt",
+      "references": [
+       "wildSpirit.idle.back.png",
+       "wildSpirit-thornwood.01b.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.598,
+       "iouMirrored": 0.168,
+       "aspectRatio": 1.118,
+       "headDx": 0.476,
+       "guideHeadDx": 0.237,
+       "facingMargin": 0.43,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 5802,
+       "keyHueShiftedPct": 0.24,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.107,
+       "edgeDevPct": 3.72,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 33.6,
+        "groundL": 67.7,
+        "below": 34.1
+       },
+       "farmland": {
+        "bodyL": 33.5,
+        "groundL": 67.3,
+        "below": 33.8
+       },
+       "swamp": {
+        "bodyL": 32.0,
+        "groundL": 58.5,
+        "below": 26.4
+       },
+       "forest": {
+        "bodyL": 32.1,
+        "groundL": 58.7,
+        "below": 26.6
+       },
+       "worstBelow": 26.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1364,
+       "portrait": {
+        "window": 0.0688,
+        "lock": 0.1237
+       },
+       "lock": 0.239,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 53.4,
+       "widthWu": 21.9,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 4.6,
+       "dE_upperThird": 3.8,
+       "figureL": 23.1,
+       "portraitL": 18.1,
+       "pass_": true
+      }
+     },
+     "failed": [
+      "camera",
+      "size"
+     ],
+     "status": "reported",
+     "selection": {
+      "tag": "wildSpirit.back.nb21.r2",
+      "status": "reported",
+      "failed": "camera: IoU 0.598 (gate 0.60), head offset +0.476 against the maquette's +0.237",
+      "rerolls": [
+       "wildSpirit.back.nb21 (camera: IoU 0.500, head offset -0.028)"
+      ]
+     }
+    },
+    "front": {
+     "cutout": "wildSpirit-thornwood.front/wildSpirit-thornwood.front.idle.png",
+     "json": "wildSpirit-thornwood.front/wildSpirit-thornwood.front.idle.json",
+     "heightWu": 36.4,
+     "widthWu": 21.9,
+     "anchor": [
+      379.1,
+      912.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1084,
+     "width": 626,
+     "size": [
+      630,
+      1088
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/wildSpirit-thornwood.front.S.png",
+       "w": 44,
+       "h": 75,
+       "ax": 0.6014,
+       "ay": 0.8306,
+       "shadow": {
+        "file": "tiers/wildSpirit-thornwood.front.S.shadow.png",
+        "w": 104,
+        "h": 135,
+        "ax": 0.5429,
+        "ay": 0.6837
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/wildSpirit-thornwood.front.H.png",
+       "w": 89,
+       "h": 150,
+       "ax": 0.5946,
+       "ay": 0.8306,
+       "shadow": {
+        "file": "tiers/wildSpirit-thornwood.front.H.shadow.png",
+        "w": 209,
+        "h": 270,
+        "ax": 0.5403,
+        "ay": 0.6837
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/wildSpirit.front.nb21.png",
+      "sha256": "d8c0c508f53282f6db48be491dfeb11781cf1cad4470ac4eda144e002ee747cf",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/wildSpirit.front.txt",
+      "references": [
+       "wildSpirit.idle.front.png",
+       "wildSpirit-thornwood.01b.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.773,
+       "iouMirrored": 0.37,
+       "aspectRatio": 0.958,
+       "headDx": 0.14,
+       "guideHeadDx": 0.185,
+       "facingMargin": 0.403,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 7581,
+       "keyHueShiftedPct": 0.01,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.02,
+       "edgeDevPct": 1.59,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 34.1,
+        "groundL": 67.7,
+        "below": 33.6
+       },
+       "farmland": {
+        "bodyL": 34.0,
+        "groundL": 67.3,
+        "below": 33.3
+       },
+       "swamp": {
+        "bodyL": 32.4,
+        "groundL": 58.5,
+        "below": 26.0
+       },
+       "forest": {
+        "bodyL": 32.5,
+        "groundL": 58.7,
+        "below": 26.3
+       },
+       "worstBelow": 26.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1334,
+       "portrait": {
+        "window": 0.0688,
+        "lock": 0.1237
+       },
+       "lock": 0.1914,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 2,
+       "ladder": 1.5,
+       "ladderWu": 42.0,
+       "worldHeightMen": 1.5,
+       "worldRatio": 1.0,
+       "heightWu": 36.4,
+       "widthWu": 21.9,
+       "lengthCapWu": 84.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.3,
+       "dE_upperThird": 6.8,
+       "figureL": 22.1,
+       "portraitL": 18.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "wildSpirit.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "worldTree-thornwood": {
+   "god": "worldTree",
+   "nation": "thornwood",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/worldTree/01b-r2.webp",
+    "master": "stage-b/portraits/thornwood/worldTree/01b-r2-512.webp",
+    "job": "worldTree-thornwood.01b.r2",
+    "pick": "B",
+    "cardCrop": {
+     "box512": [
+      0,
+      0,
+      512,
+      512
+     ],
+     "source": "override",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "415d43edad20dc540fd78ffcf88f200f3f7770516ad8dad3198030f68c9cb843"
+   },
+   "tintZone": "the leaves",
+   "marks": {
+    "marks": [
+     {
+      "mark": "round dome canopy in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "ridged bark",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "faceless trunk",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "spreading roots",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no blossom, no fruit",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "the trunk twists less than the portrait's"
+   },
+   "views": {
+    "back": {
+     "cutout": "worldTree-thornwood.back/worldTree-thornwood.back.idle.png",
+     "json": "worldTree-thornwood.back/worldTree-thornwood.back.idle.json",
+     "heightWu": 180.5,
+     "widthWu": 133.5,
+     "anchor": [
+      393.9,
+      963.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1033,
+     "width": 790,
+     "size": [
+      794,
+      1037
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/worldTree-thornwood.back.S.png",
+       "w": 279,
+       "h": 364,
+       "ax": 0.497,
+       "ay": 0.928,
+       "shadow": {
+        "file": "tiers/worldTree-thornwood.back.S.shadow.png",
+        "w": 339,
+        "h": 424,
+        "ax": 0.4975,
+        "ay": 0.8674
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/worldTree-thornwood.back.H.png",
+       "w": 559,
+       "h": 729,
+       "ax": 0.4961,
+       "ay": 0.9267,
+       "shadow": {
+        "file": "tiers/worldTree-thornwood.back.H.shadow.png",
+        "w": 679,
+        "h": 849,
+        "ax": 0.4968,
+        "ay": 0.8664
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/worldTree.back.nb21.png",
+      "sha256": "d31439701589a3db6c3d7b4aee2e7465895729c16ea68c37da6fccb2a0a8f315",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/worldTree.back.txt",
+      "references": [
+       "worldTree.idle.back.png",
+       "worldTree-thornwood.01b.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.833,
+       "iouMirrored": 0.805,
+       "aspectRatio": 1.033,
+       "headDx": -0.021,
+       "guideHeadDx": -0.007,
+       "facingMargin": 0.028,
+       "pass": false
+      },
+      "rim": {
+       "ringPx": 5001,
+       "keyHueShiftedPct": 0.14,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.083,
+       "edgeDevPct": 0.44,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 20.2,
+        "groundL": 67.7,
+        "below": 47.5
+       },
+       "farmland": {
+        "bodyL": 20.2,
+        "groundL": 67.3,
+        "below": 47.1
+       },
+       "swamp": {
+        "bodyL": 20.1,
+        "groundL": 58.5,
+        "below": 38.4
+       },
+       "forest": {
+        "bodyL": 20.1,
+        "groundL": 58.7,
+        "below": 38.6
+       },
+       "worstBelow": 38.4,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.5184,
+       "portrait": {
+        "window": 0.5335,
+        "lock": 0.7678
+       },
+       "lock": 0.7591,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 180.5,
+       "widthWu": 133.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": false
+      },
+      "identity": {
+       "dE_whole": 4.2,
+       "dE_upperThird": 2.3,
+       "figureL": 15.6,
+       "portraitL": 19.8,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "worldTree.back.nb21",
+      "status": "pass",
+      "facingNA": true,
+      "note": "a tree has no front: the facing gate (IoU against the mirrored maquette) does not apply to a radially symmetric body; facing margin 0.028 (front 0.034), IoU 0.833, every other check passes"
+     }
+    },
+    "front": {
+     "cutout": "worldTree-thornwood.front/worldTree-thornwood.front.idle.png",
+     "json": "worldTree-thornwood.front/worldTree-thornwood.front.idle.json",
+     "heightWu": 180.3,
+     "widthWu": 133.5,
+     "anchor": [
+      401.6,
+      1026.1
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1101,
+     "width": 796,
+     "size": [
+      800,
+      1105
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/worldTree-thornwood.front.S.png",
+       "w": 264,
+       "h": 364,
+       "ax": 0.502,
+       "ay": 0.926,
+       "shadow": {
+        "file": "tiers/worldTree-thornwood.front.S.shadow.png",
+        "w": 324,
+        "h": 424,
+        "ax": 0.5016,
+        "ay": 0.8657
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/worldTree-thornwood.front.H.png",
+       "w": 528,
+       "h": 728,
+       "ax": 0.502,
+       "ay": 0.926,
+       "shadow": {
+        "file": "tiers/worldTree-thornwood.front.H.shadow.png",
+        "w": 648,
+        "h": 848,
+        "ax": 0.5016,
+        "ay": 0.8657
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/worldTree.front.nb21.png",
+      "sha256": "237ad0bc7f3eb24b04a1b4abe80381122f01597f20053dd2e91b33b1c361d2b4",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/worldTree.front.txt",
+      "references": [
+       "worldTree.idle.front.png",
+       "worldTree-thornwood.01b.r2.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.843,
+       "iouMirrored": 0.809,
+       "aspectRatio": 0.976,
+       "headDx": -0.008,
+       "guideHeadDx": -0.02,
+       "facingMargin": 0.034,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5274,
+       "keyHueShiftedPct": 0.11,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.203,
+       "edgeDevPct": 0.0,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 21.9,
+        "groundL": 67.7,
+        "below": 45.8
+       },
+       "farmland": {
+        "bodyL": 21.9,
+        "groundL": 67.3,
+        "below": 45.4
+       },
+       "swamp": {
+        "bodyL": 21.8,
+        "groundL": 58.5,
+        "below": 36.7
+       },
+       "forest": {
+        "bodyL": 21.8,
+        "groundL": 58.7,
+        "below": 36.9
+       },
+       "worstBelow": 36.7,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.4513,
+       "portrait": {
+        "window": 0.5335,
+        "lock": 0.7678
+       },
+       "lock": 0.6586,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 6.0,
+       "worldRatio": 1.0,
+       "heightWu": 180.3,
+       "widthWu": 133.5,
+       "lengthCapWu": 336.0,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.2,
+       "dE_upperThird": 3.3,
+       "figureL": 19.3,
+       "portraitL": 19.8,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "worldTree.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "hornedHunter-thornwood": {
+   "god": "hornedHunter",
+   "nation": "thornwood",
+   "sizeClass": 4,
+   "ladder": 3.4,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/hornedHunter/01a.webp",
+    "master": "stage-b/portraits/thornwood/hornedHunter/01a-512.webp",
+    "job": "hornedHunter-thornwood.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      118,
+      24,
+      318,
+      224
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "7ef73515b13f6ba5a1267f8b91072791dde5deacd5c0164d652066f22c60917b"
+   },
+   "tintZone": "the leaf mantle",
+   "marks": {
+    "marks": [
+     {
+      "mark": "branching antlers",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "leaf mantle in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "leaf-bladed gold spear",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "stripe warpaint",
+      "back": "partly",
+      "front": true
+     }
+    ],
+    "note": "back view: teal shoulder plates appear under the mantle (not in the portrait)"
+   },
+   "views": {
+    "back": {
+     "cutout": "hornedHunter-thornwood.back/hornedHunter-thornwood.back.idle.png",
+     "json": "hornedHunter-thornwood.back/hornedHunter-thornwood.back.idle.json",
+     "heightWu": 91.6,
+     "widthWu": 50.2,
+     "anchor": [
+      239.1,
+      1059.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1074,
+     "width": 583,
+     "size": [
+      587,
+      1078
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/hornedHunter-thornwood.back.S.png",
+       "w": 102,
+       "h": 186,
+       "ax": 0.4097,
+       "ay": 0.9769,
+       "shadow": {
+        "file": "tiers/hornedHunter-thornwood.back.S.shadow.png",
+        "w": 162,
+        "h": 246,
+        "ax": 0.4431,
+        "ay": 0.8606
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/hornedHunter-thornwood.back.H.png",
+       "w": 204,
+       "h": 372,
+       "ax": 0.4097,
+       "ay": 0.9769,
+       "shadow": {
+        "file": "tiers/hornedHunter-thornwood.back.H.shadow.png",
+        "w": 324,
+        "h": 492,
+        "ax": 0.4431,
+        "ay": 0.8606
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/hornedHunter.back.nb21.png",
+      "sha256": "3023c2dbbb98c20197052d58d50bc0b468d74c7086a6324aff185a06f9ad5b2e",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/hornedHunter.back.txt",
+      "references": [
+       "hornedHunter.idle.back.png",
+       "hornedHunter-thornwood.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.862,
+       "iouMirrored": 0.52,
+       "aspectRatio": 0.99,
+       "headDx": 0.148,
+       "guideHeadDx": 0.226,
+       "facingMargin": 0.342,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6704,
+       "keyHueShiftedPct": 0.31,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.04,
+       "edgeDevPct": 2.72,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 26.5,
+        "groundL": 67.7,
+        "below": 41.2
+       },
+       "farmland": {
+        "bodyL": 26.5,
+        "groundL": 67.3,
+        "below": 40.8
+       },
+       "swamp": {
+        "bodyL": 26.0,
+        "groundL": 58.5,
+        "below": 32.5
+       },
+       "forest": {
+        "bodyL": 26.0,
+        "groundL": 58.7,
+        "below": 32.7
+       },
+       "worstBelow": 32.5,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.3968,
+       "portrait": {
+        "window": 0.154,
+        "lock": 0.2889
+       },
+       "lock": 0.5576,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 91.6,
+       "widthWu": 50.2,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 13.7,
+       "dE_upperThird": 1.7,
+       "figureL": 19.6,
+       "portraitL": 23.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "hornedHunter.back.nb21",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "hornedHunter-thornwood.front/hornedHunter-thornwood.front.idle.png",
+     "json": "hornedHunter-thornwood.front/hornedHunter-thornwood.front.idle.json",
+     "heightWu": 94.8,
+     "widthWu": 50.2,
+     "anchor": [
+      349.4,
+      1123.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1152,
+     "width": 587,
+     "size": [
+      591,
+      1156
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/hornedHunter-thornwood.front.S.png",
+       "w": 99,
+       "h": 192,
+       "ax": 0.591,
+       "ay": 0.9684,
+       "shadow": {
+        "file": "tiers/hornedHunter-thornwood.front.S.shadow.png",
+        "w": 159,
+        "h": 252,
+        "ax": 0.5566,
+        "ay": 0.8569
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/hornedHunter-thornwood.front.H.png",
+       "w": 199,
+       "h": 385,
+       "ax": 0.588,
+       "ay": 0.9659,
+       "shadow": {
+        "file": "tiers/hornedHunter-thornwood.front.H.shadow.png",
+        "w": 319,
+        "h": 505,
+        "ax": 0.5549,
+        "ay": 0.8552
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/hornedHunter.front.nb21.png",
+      "sha256": "b662bf6b010f152af1585ab386296accf97620649734002593e2f2c6f57275b1",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/hornedHunter.front.txt",
+      "references": [
+       "hornedHunter.idle.front.png",
+       "hornedHunter-thornwood.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.651,
+       "iouMirrored": 0.566,
+       "aspectRatio": 0.962,
+       "headDx": -0.317,
+       "guideHeadDx": -0.324,
+       "facingMargin": 0.085,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 6578,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.007,
+       "edgeDevPct": 1.54,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 25.1,
+        "groundL": 67.7,
+        "below": 42.7
+       },
+       "farmland": {
+        "bodyL": 25.0,
+        "groundL": 67.3,
+        "below": 42.3
+       },
+       "swamp": {
+        "bodyL": 24.4,
+        "groundL": 58.5,
+        "below": 34.0
+       },
+       "forest": {
+        "bodyL": 24.5,
+        "groundL": 58.7,
+        "below": 34.3
+       },
+       "worstBelow": 34.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1627,
+       "portrait": {
+        "window": 0.154,
+        "lock": 0.2889
+       },
+       "lock": 0.3203,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 94.8,
+       "widthWu": 50.2,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.6,
+       "dE_upperThird": 2.6,
+       "figureL": 17.9,
+       "portraitL": 23.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "hornedHunter.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "elderWyrm-thornwood": {
+   "god": "elderWyrm",
+   "nation": "thornwood",
+   "sizeClass": 6,
+   "ladder": 6.0,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/elderWyrm/01a-r3.webp",
+    "master": "stage-b/portraits/thornwood/elderWyrm/01a-r3-512.webp",
+    "job": "elderWyrm-thornwood.01a.r3",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      285,
+      225,
+      495,
+      435
+     ],
+     "source": "override",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "c3d6ce1fa4dad6d087060546acb1207cf06d8496238adb1fef4c5b0917d8db7f"
+   },
+   "tintZone": "the moss along its back",
+   "marks": {
+    "marks": [
+     {
+      "mark": "crown of spines",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "moss back in the nation's colour",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "club tail",
+      "back": "partly",
+      "front": true
+     },
+     {
+      "mark": "banded bronze scales",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "no wings",
+      "back": true,
+      "front": true
+     }
+    ],
+    "note": "back view: the tail ends in a spiked knob rather than a full club"
+   },
+   "views": {
+    "back": {
+     "cutout": "elderWyrm-thornwood.back/elderWyrm-thornwood.back.idle.png",
+     "json": "elderWyrm-thornwood.back/elderWyrm-thornwood.back.idle.json",
+     "heightWu": 298.2,
+     "widthWu": 185.2,
+     "anchor": [
+      623.3,
+      1382.7
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 2187,
+     "width": 1356,
+     "size": [
+      1360,
+      2191
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/elderWyrm-thornwood.back.S.png",
+       "w": 373,
+       "h": 599,
+       "ax": 0.4584,
+       "ay": 0.6312,
+       "shadow": {
+        "file": "tiers/elderWyrm-thornwood.back.S.shadow.png",
+        "w": 433,
+        "h": 659,
+        "ax": 0.4641,
+        "ay": 0.6192
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/elderWyrm-thornwood.back.H.png",
+       "w": 746,
+       "h": 1199,
+       "ax": 0.4584,
+       "ay": 0.6306,
+       "shadow": {
+        "file": "tiers/elderWyrm-thornwood.back.H.shadow.png",
+        "w": 866,
+        "h": 1319,
+        "ax": 0.4641,
+        "ay": 0.6187
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/elderWyrm.back.nb21.2k.png",
+      "sha256": "3136922ac44edf821424e713330630fac425434d1e824fcc9963ba63e02569c3",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "2:3",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/elderWyrm.back.txt",
+      "references": [
+       "elderWyrm.idle.back.png",
+       "elderWyrm-thornwood.01a.r3.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.829,
+       "iouMirrored": 0.163,
+       "aspectRatio": 0.997,
+       "headDx": 0.278,
+       "guideHeadDx": 0.295,
+       "facingMargin": 0.666,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 11296,
+       "keyHueShiftedPct": 0.0,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.045,
+       "edgeDevPct": 0.07,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 25.8,
+        "groundL": 67.7,
+        "below": 41.9
+       },
+       "farmland": {
+        "bodyL": 25.8,
+        "groundL": 67.3,
+        "below": 41.5
+       },
+       "swamp": {
+        "bodyL": 25.6,
+        "groundL": 58.5,
+        "below": 32.8
+       },
+       "forest": {
+        "bodyL": 25.6,
+        "groundL": 58.7,
+        "below": 33.1
+       },
+       "worstBelow": 32.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.3012,
+       "portrait": {
+        "window": 0.1183,
+        "lock": 0.215
+       },
+       "lock": 0.3372,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 2.888,
+       "worldRatio": 0.481,
+       "heightWu": 298.2,
+       "widthWu": 185.2,
+       "lengthCapWu": 336.0,
+       "rule": "serpent: the Salamander body plan (its world height 0.50 of its ladder)",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 4.5,
+       "dE_upperThird": 8.0,
+       "figureL": 22.2,
+       "portraitL": 17.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "elderWyrm.back.nb21.2k",
+      "status": "pass"
+     }
+    },
+    "front": {
+     "cutout": "elderWyrm-thornwood.front/elderWyrm-thornwood.front.idle.png",
+     "json": "elderWyrm-thornwood.front/elderWyrm-thornwood.front.idle.json",
+     "heightWu": 269.6,
+     "widthWu": 185.4,
+     "anchor": [
+      769.5,
+      1871.8
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 2058,
+     "width": 1420,
+     "size": [
+      1424,
+      2062
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/elderWyrm-thornwood.front.S.png",
+       "w": 375,
+       "h": 542,
+       "ax": 0.5403,
+       "ay": 0.9067,
+       "shadow": {
+        "file": "tiers/elderWyrm-thornwood.front.S.shadow.png",
+        "w": 435,
+        "h": 602,
+        "ax": 0.5347,
+        "ay": 0.8661
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/elderWyrm-thornwood.front.H.png",
+       "w": 750,
+       "h": 1084,
+       "ax": 0.5403,
+       "ay": 0.9067,
+       "shadow": {
+        "file": "tiers/elderWyrm-thornwood.front.H.shadow.png",
+        "w": 870,
+        "h": 1204,
+        "ax": 0.5347,
+        "ay": 0.8661
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/elderWyrm.front.nb21.2k.t2r2.png",
+      "sha256": "3817658103a31a8d8ef57078c2df99032d49a5261ebf64e7cba5d2f6b88d6449",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "2K",
+      "prompt": "stage-c/work/gods/prompts/elderWyrm.front.txt",
+      "references": [
+       "elderWyrm.idle.front.png",
+       "elderWyrm-thornwood.01a.r3.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.77,
+       "iouMirrored": 0.21,
+       "aspectRatio": 1.002,
+       "headDx": 0.305,
+       "guideHeadDx": 0.373,
+       "facingMargin": 0.56,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 10445,
+       "keyHueShiftedPct": 0.12,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.0,
+       "edgeDevPct": 0.46,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 22.8,
+        "groundL": 67.7,
+        "below": 45.0
+       },
+       "farmland": {
+        "bodyL": 22.8,
+        "groundL": 67.3,
+        "below": 44.6
+       },
+       "swamp": {
+        "bodyL": 22.6,
+        "groundL": 58.5,
+        "below": 35.8
+       },
+       "forest": {
+        "bodyL": 22.6,
+        "groundL": 58.7,
+        "below": 36.1
+       },
+       "worstBelow": 35.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.2159,
+       "portrait": {
+        "window": 0.1183,
+        "lock": 0.215
+       },
+       "lock": 0.2785,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 6,
+       "ladder": 6.0,
+       "ladderWu": 168.0,
+       "worldHeightMen": 2.888,
+       "worldRatio": 0.481,
+       "heightWu": 269.6,
+       "widthWu": 185.4,
+       "lengthCapWu": 336.0,
+       "rule": "serpent: the Salamander body plan (its world height 0.50 of its ladder)",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.0,
+       "dE_upperThird": 7.2,
+       "figureL": 19.8,
+       "portraitL": 17.2,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "elderWyrm.front.nb21.2k.t2r2",
+      "status": "pass",
+      "rerolls": [
+       "elderWyrm.front.nb21.2k (HTTP 502, no image)",
+       "elderWyrm.front.nb21.2k.t2 (camera: head offset 0.087 against the maquette's 0.373: the tail's club, the top of the silhouette, curled the other way)"
+      ]
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  },
+  "motherOfBeasts-thornwood": {
+   "god": "motherOfBeasts",
+   "nation": "thornwood",
+   "sizeClass": 4,
+   "ladder": 3.4,
+   "route": "generated (nb21: exact-camera maquette + approved portrait)",
+   "portrait": {
+    "file": "stage-b/portraits/thornwood/motherOfBeasts/01a.webp",
+    "master": "stage-b/portraits/thornwood/motherOfBeasts/01a-512.webp",
+    "job": "motherOfBeasts-thornwood.01a",
+    "pick": "A",
+    "cardCrop": {
+     "box512": [
+      160,
+      22,
+      365,
+      227
+     ],
+     "source": "auto",
+     "note": "head and upper body for the 64 px card"
+    },
+    "sha256": "d0744ec56caacc4953a90c0ac742f95d444cf6ca43df48b1442efc49b2a2d7d5"
+   },
+   "tintZone": "the dress",
+   "marks": {
+    "marks": [
+     {
+      "mark": "antler crown",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "bear-pelt cloak with the bear's head",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "dress in the nation's cloth",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "plain gold-banded maul",
+      "back": true,
+      "front": true
+     },
+     {
+      "mark": "warpaint bands",
+      "back": "hidden",
+      "front": true
+     }
+    ]
+   },
+   "views": {
+    "back": {
+     "cutout": "motherOfBeasts-thornwood.back/motherOfBeasts-thornwood.back.idle.png",
+     "json": "motherOfBeasts-thornwood.back/motherOfBeasts-thornwood.back.idle.json",
+     "heightWu": 89.8,
+     "widthWu": 58.9,
+     "anchor": [
+      249.7,
+      1039.0
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1077,
+     "width": 636,
+     "size": [
+      640,
+      1081
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/motherOfBeasts-thornwood.back.S.png",
+       "w": 109,
+       "h": 182,
+       "ax": 0.3912,
+       "ay": 0.9575,
+       "shadow": {
+        "file": "tiers/motherOfBeasts-thornwood.back.S.shadow.png",
+        "w": 169,
+        "h": 242,
+        "ax": 0.4298,
+        "ay": 0.8441
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/motherOfBeasts-thornwood.back.H.png",
+       "w": 217,
+       "h": 365,
+       "ax": 0.393,
+       "ay": 0.9549,
+       "shadow": {
+        "file": "tiers/motherOfBeasts-thornwood.back.H.shadow.png",
+        "w": 337,
+        "h": 485,
+        "ax": 0.4311,
+        "ay": 0.8423
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/motherOfBeasts.back.nb21.r2.png",
+      "sha256": "48be46c6f07ed0e95832016fc409794770bb97ccd68c3bac531591bd4b926ed7",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/motherOfBeasts.back.txt",
+      "references": [
+       "motherOfBeasts.idle.back.png",
+       "motherOfBeasts-thornwood.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.714,
+       "iouMirrored": 0.462,
+       "aspectRatio": 0.9,
+       "headDx": -0.107,
+       "guideHeadDx": -0.075,
+       "facingMargin": 0.252,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 5082,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.025,
+       "edgeDevPct": 0.64,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 25.1,
+        "groundL": 67.7,
+        "below": 42.7
+       },
+       "farmland": {
+        "bodyL": 25.1,
+        "groundL": 67.3,
+        "below": 42.2
+       },
+       "swamp": {
+        "bodyL": 24.7,
+        "groundL": 58.5,
+        "below": 33.8
+       },
+       "forest": {
+        "bodyL": 24.7,
+        "groundL": 58.7,
+        "below": 34.0
+       },
+       "worstBelow": 33.8,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.1649,
+       "portrait": {
+        "window": 0.3357,
+        "lock": 0.4664
+       },
+       "lock": 0.2238,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 89.8,
+       "widthWu": 58.9,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 2.6,
+       "dE_upperThird": 2.4,
+       "figureL": 19.7,
+       "portraitL": 19.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "motherOfBeasts.back.nb21.r2",
+      "status": "pass",
+      "rerolls": [
+       "motherOfBeasts.back.nb21 (camera: head offset +0.062 against the maquette's -0.075)"
+      ]
+     }
+    },
+    "front": {
+     "cutout": "motherOfBeasts-thornwood.front/motherOfBeasts-thornwood.front.idle.png",
+     "json": "motherOfBeasts-thornwood.front/motherOfBeasts-thornwood.front.idle.json",
+     "heightWu": 93.2,
+     "widthWu": 58.9,
+     "anchor": [
+      395.6,
+      1021.4
+     ],
+     "anchorFrom": "maquette (guide ground anchor mapped onto the cutout box: pilot review change 12)",
+     "height": 1069,
+     "width": 647,
+     "size": [
+      651,
+      1073
+     ],
+     "tiers": {
+      "S": {
+       "file": "tiers/motherOfBeasts-thornwood.front.S.png",
+       "w": 116,
+       "h": 189,
+       "ax": 0.6033,
+       "ay": 0.9476,
+       "shadow": {
+        "file": "tiers/motherOfBeasts-thornwood.front.S.shadow.png",
+        "w": 176,
+        "h": 249,
+        "ax": 0.5681,
+        "ay": 0.8398
+       },
+       "withinBudget": true
+      },
+      "H": {
+       "file": "tiers/motherOfBeasts-thornwood.front.H.png",
+       "w": 231,
+       "h": 378,
+       "ax": 0.6059,
+       "ay": 0.9476,
+       "shadow": {
+        "file": "tiers/motherOfBeasts-thornwood.front.H.shadow.png",
+        "w": 351,
+        "h": 498,
+        "ax": 0.5697,
+        "ay": 0.8398
+       },
+       "withinBudget": true
+      }
+     },
+     "source": {
+      "raw": "stage-c/raw/gods/motherOfBeasts.front.nb21.png",
+      "sha256": "766241293851760e2ba96788de504bd176c7a4de6b95cbfa0a11202e62f1e742",
+      "model": "gemini-nano-banana-2.1",
+      "aspect": "3:4",
+      "imageSize": "1K",
+      "prompt": "stage-c/work/gods/prompts/motherOfBeasts.front.txt",
+      "references": [
+       "motherOfBeasts.idle.front.png",
+       "motherOfBeasts-thornwood.01a.nb21.png"
+      ],
+      "tintFrom": null
+     },
+     "checks": {
+      "camera": {
+       "iou": 0.771,
+       "iouMirrored": 0.556,
+       "aspectRatio": 0.957,
+       "headDx": -0.071,
+       "guideHeadDx": -0.038,
+       "facingMargin": 0.215,
+       "pass": true
+      },
+      "rim": {
+       "ringPx": 4901,
+       "keyHueShiftedPct": 0.02,
+       "pass_": true
+      },
+      "fringe": {
+       "fringePct": 0.0,
+       "keyInUnitPct": 0.066,
+       "edgeDevPct": 3.12,
+       "pass_": true
+      },
+      "value": {
+       "plains": {
+        "bodyL": 23.9,
+        "groundL": 67.7,
+        "below": 43.8
+       },
+       "farmland": {
+        "bodyL": 23.9,
+        "groundL": 67.3,
+        "below": 43.4
+       },
+       "swamp": {
+        "bodyL": 23.5,
+        "groundL": 58.5,
+        "below": 35.0
+       },
+       "forest": {
+        "bodyL": 23.5,
+        "groundL": 58.7,
+        "below": 35.2
+       },
+       "worstBelow": 35.0,
+       "pass": true
+      },
+      "side": {
+       "nation": "thornwood",
+       "window": 0.2561,
+       "portrait": {
+        "window": 0.3357,
+        "lock": 0.4664
+       },
+       "lock": 0.3748,
+       "pass": true
+      },
+      "size": {
+       "sizeClass": 4,
+       "ladder": 3.4,
+       "ladderWu": 95.2,
+       "worldHeightMen": 3.4,
+       "worldRatio": 1.0,
+       "heightWu": 93.2,
+       "widthWu": 58.9,
+       "lengthCapWu": 190.4,
+       "rule": "world height = ladder multiple",
+       "pass_": true
+      },
+      "identity": {
+       "dE_whole": 3.6,
+       "dE_upperThird": 2.0,
+       "figureL": 19.0,
+       "portraitL": 19.1,
+       "pass_": true
+      }
+     },
+     "failed": [],
+     "status": "pass",
+     "selection": {
+      "tag": "motherOfBeasts.front.nb21",
+      "status": "pass"
+     }
+    }
+   },
+   "status": "for owner review 2 (stage C, standing in the game)",
+   "approved": null
+  }
+ }
+}

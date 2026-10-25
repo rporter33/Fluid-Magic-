@@ -1,0 +1,2800 @@
+{
+ "figure": "motherOfBeasts-thornwood",
+ "family": "motherOfBeasts",
+ "body": "motherOfBeasts",
+ "key": "magenta",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 103.27,
+    "wuPerPx": 0.09589,
+    "kind": "standing",
+    "anchorPx": [
+     249.7,
+     1039.0
+    ],
+    "points": {
+     "footR": [
+      5.7,
+      -10.5
+     ],
+     "footL": [
+      -6.4,
+      -15.4
+     ],
+     "mouth": [
+      13.0,
+      -87.5
+     ],
+     "handR": [
+      25.2,
+      -44.5
+     ],
+     "handL": [
+      -10.0,
+      -57.6
+     ],
+     "weaponTip": [
+      30.9,
+      -12.5
+     ],
+     "head": [
+      -0.9,
+      -81.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "motherOfBeasts-thornwood.back.idle.white",
+      "scale": 0.1918,
+      "w": 125,
+      "h": 209
+     },
+     "H": {
+      "white": "motherOfBeasts-thornwood.back.idle.white",
+      "scale": 0.3836,
+      "w": 249,
+      "h": 419
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/motherOfBeasts-thornwood.back/motherOfBeasts-thornwood.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 105.59,
+    "wuPerPx": 0.11552,
+    "kind": "standing",
+    "anchorPx": [
+     235.3,
+     871.5
+    ],
+    "points": {
+     "footR": [
+      11.9,
+      -0.4
+     ],
+     "footL": [
+      -22.2,
+      3.6
+     ],
+     "mouth": [
+      11.1,
+      -70.9
+     ],
+     "handR": [
+      19.8,
+      -39.2
+     ],
+     "handL": [
+      -12.9,
+      -53.1
+     ],
+     "weaponTip": [
+      32.9,
+      -79.0
+     ],
+     "butt": [
+      17.2,
+      -31.8
+     ],
+     "head": [
+      -4.9,
+      -75.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.stepA",
+      "shadow": "motherOfBeasts-thornwood.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.231,
+      "w": 145,
+      "h": 214
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.stepA",
+      "shadow": "motherOfBeasts-thornwood.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4621,
+      "w": 291,
+      "h": 428
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11199,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 10.3,
+     "anchorY": 871.5,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     235.3,
+     782.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.A.nb21.2k/motherOfBeasts-thornwood.back.stepA.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.A.nb21.2k.png",
+    "rawSha256": "f8ab26f9f0c2d079e416564178cd9c82b1017d13c264d476153525bebef15246",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.607,
+      "iouMirrored": 0.6,
+      "aspectRatio": 1.015,
+      "headDx": 0.169,
+      "guideHeadDx": 0.113,
+      "facingMargin": 0.007,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1660,
+      "keyHueShiftedPct": 0.36,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.6,
+       "groundL": 67.7,
+       "below": 43.1
+      },
+      "farmland": {
+       "bodyL": 24.6,
+       "groundL": 67.3,
+       "below": 42.7
+      },
+      "swamp": {
+       "bodyL": 24.2,
+       "groundL": 58.5,
+       "below": 34.3
+      },
+      "forest": {
+       "bodyL": 24.2,
+       "groundL": 58.7,
+       "below": 34.5
+      },
+      "worstBelow": 34.3,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 2.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.991,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1715,
+      "keyHueShiftedPct": 0.12,
+      "pass_": true,
+      "rimFixedShare": 0.063
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 6.01,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.735,
+     "scale": 0.9389,
+     "aspect": 1.085,
+     "shear": 0.113,
+     "M": [
+      [
+       1.01867,
+       0.11481
+      ],
+      [
+       0.0,
+       0.86531
+      ]
+     ],
+     "t": [
+      -65.06,
+      64.8
+     ],
+     "guideWuPerPx": 0.28335,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.11135,
+     "wuPerPxFromThickness": 0.11552,
+     "wuPerPxFromFit": 0.12103,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 99.88,
+    "wuPerPx": 0.10976,
+    "kind": "standing",
+    "anchorPx": [
+     223.5,
+     872.8
+    ],
+    "points": {
+     "footR": [
+      -12.7,
+      3.6
+     ],
+     "footL": [
+      0.5,
+      -1.4
+     ],
+     "mouth": [
+      13.7,
+      -67.4
+     ],
+     "handR": [
+      21.7,
+      -34.6
+     ],
+     "handL": [
+      -13.1,
+      -43.1
+     ],
+     "weaponTip": [
+      34.0,
+      -75.3
+     ],
+     "butt": [
+      20.5,
+      -25.0
+     ],
+     "head": [
+      1.1,
+      -71.4
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.stepB",
+      "shadow": "motherOfBeasts-thornwood.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2195,
+      "w": 141,
+      "h": 203
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.stepB",
+      "shadow": "motherOfBeasts-thornwood.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.439,
+      "w": 283,
+      "h": 405
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11299,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -3.5,
+     "anchorY": 872.8,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     223.5,
+     904.6
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.A.nb21.2k/motherOfBeasts-thornwood.back.stepB.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.A.nb21.2k.png",
+    "rawSha256": "f8ab26f9f0c2d079e416564178cd9c82b1017d13c264d476153525bebef15246",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.602,
+      "iouMirrored": 0.6,
+      "aspectRatio": 1.07,
+      "headDx": 0.185,
+      "guideHeadDx": 0.133,
+      "facingMargin": 0.002,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1752,
+      "keyHueShiftedPct": 0.11,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.3,
+       "groundL": 67.7,
+       "below": 43.4
+      },
+      "farmland": {
+       "bodyL": 24.3,
+       "groundL": 67.3,
+       "below": 43.0
+      },
+      "swamp": {
+       "bodyL": 24.0,
+       "groundL": 58.5,
+       "below": 34.5
+      },
+      "forest": {
+       "bodyL": 24.0,
+       "groundL": 58.7,
+       "below": 34.7
+      },
+      "worstBelow": 34.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.1,
+      "dE_upperThird": 1.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.996,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1702,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.064
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 6.01,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.669,
+     "scale": 1.0184,
+     "aspect": 1.0,
+     "shear": 0.013,
+     "M": [
+      [
+       1.0184,
+       0.01273
+      ],
+      [
+       0.0,
+       1.0184
+      ]
+     ],
+     "t": [
+      -17.57,
+      61.41
+     ],
+     "guideWuPerPx": 0.27874,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.10976,
+     "wuPerPxFromThickness": 0.11373,
+     "wuPerPxFromFit": 0.10976,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "windup": {
+    "heightWu": 92.4,
+    "wuPerPx": 0.10512,
+    "kind": "standing",
+    "anchorPx": [
+     393.7,
+     841.3
+    ],
+    "points": {
+     "footR": [
+      5.3,
+      3.6
+     ],
+     "footL": [
+      -4.7,
+      -0.2
+     ],
+     "mouth": [
+      7.3,
+      -63.6
+     ],
+     "handR": [
+      -6.7,
+      -50.6
+     ],
+     "handL": [
+      -12.2,
+      -68.8
+     ],
+     "weaponTip": [
+      -36.6,
+      -78.5
+     ],
+     "butt": [
+      -1.6,
+      -45.7
+     ],
+     "head": [
+      -10.0,
+      -65.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.windup",
+      "shadow": "motherOfBeasts-thornwood.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2102,
+      "w": 123,
+      "h": 188
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.windup",
+      "shadow": "motherOfBeasts-thornwood.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4205,
+      "w": 245,
+      "h": 375
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11353,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -7.8,
+     "anchorY": 841.3,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     393.7,
+     915.4
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.A.nb21.2k/motherOfBeasts-thornwood.back.windup.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.A.nb21.2k.png",
+    "rawSha256": "f8ab26f9f0c2d079e416564178cd9c82b1017d13c264d476153525bebef15246",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.649,
+      "iouMirrored": 0.589,
+      "aspectRatio": 1.365,
+      "headDx": -0.223,
+      "guideHeadDx": -0.169,
+      "facingMargin": 0.06,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2041,
+      "keyHueShiftedPct": 0.15,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.8,
+       "groundL": 67.7,
+       "below": 42.9
+      },
+      "farmland": {
+       "bodyL": 24.8,
+       "groundL": 67.3,
+       "below": 42.5
+      },
+      "swamp": {
+       "bodyL": 24.4,
+       "groundL": 58.5,
+       "below": 34.0
+      },
+      "forest": {
+       "bodyL": 24.4,
+       "groundL": 58.7,
+       "below": 34.3
+      },
+      "worstBelow": 34.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 0.8,
+      "dE_upperThird": 1.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.966
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1912,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.067
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 6.01,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.688,
+     "scale": 0.9956,
+     "aspect": 0.97,
+     "shear": 0.088,
+     "M": [
+      [
+       0.96577,
+       0.08067
+      ],
+      [
+       0.0,
+       1.02643
+      ]
+     ],
+     "t": [
+      -118.23,
+      43.78
+     ],
+     "guideWuPerPx": 0.26099,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.09697,
+     "wuPerPxFromThickness": 0.11999,
+     "wuPerPxFromFit": 0.10512,
+     "fitAtAreaScale": 0.678,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 112.2,
+    "wuPerPx": 0.12664,
+    "kind": "standing",
+    "anchorPx": [
+     292.2,
+     805.2
+    ],
+    "points": {
+     "footR": [
+      -10.0,
+      3.6
+     ],
+     "footL": [
+      -0.2,
+      2.8
+     ],
+     "mouth": [
+      4.7,
+      -64.2
+     ],
+     "handR": [
+      16.4,
+      -68.3
+     ],
+     "handL": [
+      -20.3,
+      -64.9
+     ],
+     "weaponTip": [
+      -13.3,
+      -70.3
+     ],
+     "butt": [
+      21.1,
+      -68.1
+     ],
+     "head": [
+      6.2,
+      -76.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.strike",
+      "shadow": "motherOfBeasts-thornwood.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2533,
+      "w": 215,
+      "h": 227
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.strike",
+      "shadow": "motherOfBeasts-thornwood.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5066,
+      "w": 430,
+      "h": 455
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.13677,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 3.0,
+     "anchorY": 805.2,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     292.2,
+     781.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.A.nb21.2k/motherOfBeasts-thornwood.back.strike.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.A.nb21.2k.png",
+    "rawSha256": "f8ab26f9f0c2d079e416564178cd9c82b1017d13c264d476153525bebef15246",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.601,
+      "iouMirrored": 0.541,
+      "aspectRatio": 1.485,
+      "headDx": 0.309,
+      "guideHeadDx": 0.031,
+      "facingMargin": 0.06,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2598,
+      "keyHueShiftedPct": 0.15,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.9,
+       "groundL": 67.7,
+       "below": 42.9
+      },
+      "farmland": {
+       "bodyL": 24.9,
+       "groundL": 67.3,
+       "below": 42.4
+      },
+      "swamp": {
+       "bodyL": 24.6,
+       "groundL": 58.5,
+       "below": 33.9
+      },
+      "forest": {
+       "bodyL": 24.6,
+       "groundL": 58.7,
+       "below": 34.1
+      },
+      "worstBelow": 33.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.2,
+      "dE_upperThird": 1.7,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.173
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2345,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.085
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 6.01,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.627,
+     "scale": 0.869,
+     "aspect": 1.03,
+     "shear": -0.088,
+     "M": [
+      [
+       0.89506,
+       -0.0704
+      ],
+      [
+       0.0,
+       0.84368
+      ]
+     ],
+     "t": [
+      18.82,
+      85.95
+     ],
+     "guideWuPerPx": 0.27441,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.107,
+     "wuPerPxFromThickness": 0.13677,
+     "wuPerPxFromFit": 0.12664,
+     "fitAtAreaScale": 0.646,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 105.08,
+    "wuPerPx": 0.11311,
+    "kind": "standing",
+    "anchorPx": [
+     436.1,
+     886.8
+    ],
+    "points": {
+     "footR": [
+      7.0,
+      3.6
+     ],
+     "footL": [
+      -12.5,
+      -6.5
+     ],
+     "mouth": [
+      2.5,
+      -80.1
+     ],
+     "handR": [
+      25.2,
+      -40.4
+     ],
+     "handL": [
+      -42.8,
+      -76.7
+     ],
+     "weaponTip": [
+      37.8,
+      -14.6
+     ],
+     "butt": [
+      18.1,
+      -43.9
+     ],
+     "head": [
+      -11.7,
+      -83.3
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.hit",
+      "shadow": "motherOfBeasts-thornwood.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "motherOfBeasts-thornwood.back.hit.white",
+      "scale": 0.2262,
+      "w": 186,
+      "h": 213
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.hit",
+      "shadow": "motherOfBeasts-thornwood.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "motherOfBeasts-thornwood.back.hit.white",
+      "scale": 0.4524,
+      "w": 371,
+      "h": 426
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11105,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 10.1,
+     "anchorY": 886.8,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     436.1,
+     797.1
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.B.nb21.2k/motherOfBeasts-thornwood.back.hit.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.B.nb21.2k.png",
+    "rawSha256": "05971e00756246d52376043574fe60f1615f4c142cdb9c0a1a4b2ed0d9e8d569",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.669,
+      "iouMirrored": 0.442,
+      "aspectRatio": 0.992,
+      "headDx": -0.237,
+      "guideHeadDx": -0.131,
+      "facingMargin": 0.227,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1991,
+      "keyHueShiftedPct": 0.15,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.5,
+       "groundL": 67.7,
+       "below": 42.3
+      },
+      "farmland": {
+       "bodyL": 25.5,
+       "groundL": 67.3,
+       "below": 41.9
+      },
+      "swamp": {
+       "bodyL": 25.1,
+       "groundL": 58.5,
+       "below": 33.4
+      },
+      "forest": {
+       "bodyL": 25.1,
+       "groundL": 58.7,
+       "below": 33.6
+      },
+      "worstBelow": 33.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.4,
+      "dE_upperThird": 2.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.999
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2039,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.092
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.014,
+      "edgeDevPct": 4.95,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.729,
+     "scale": 0.9489,
+     "aspect": 0.96,
+     "shear": 0.088,
+     "M": [
+      [
+       0.91094,
+       0.0856
+      ],
+      [
+       0.0,
+       0.98843
+      ]
+     ],
+     "t": [
+      -3.54,
+      -29.9
+     ],
+     "guideWuPerPx": 0.26764,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.10972,
+     "wuPerPxFromThickness": 0.116,
+     "wuPerPxFromFit": 0.11311,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 96.51,
+    "wuPerPx": 0.11712,
+    "kind": "lying",
+    "anchorPx": [
+     672.0,
+     421.5
+    ],
+    "points": {
+     "footR": [
+      1.2,
+      -23.6
+     ],
+     "footL": [
+      -12.4,
+      -27.2
+     ],
+     "mouth": [
+      -53.2,
+      -5.2
+     ],
+     "handR": [
+      5.6,
+      17.9
+     ],
+     "handL": [
+      -77.3,
+      -12.6
+     ],
+     "weaponTip": [
+      54.2,
+      33.9
+     ],
+     "butt": [
+      -4.0,
+      14.6
+     ],
+     "head": [
+      -50.2,
+      15.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.dead",
+      "shadow": "motherOfBeasts-thornwood.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2342,
+      "w": 211,
+      "h": 196
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.dead",
+      "shadow": "motherOfBeasts-thornwood.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4685,
+      "w": 423,
+      "h": 392
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11947,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.B.nb21.2k/motherOfBeasts-thornwood.back.dead.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.B.nb21.2k.png",
+    "rawSha256": "05971e00756246d52376043574fe60f1615f4c142cdb9c0a1a4b2ed0d9e8d569",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.291,
+      "iouMirrored": 0.155,
+      "aspectRatio": 0.7,
+      "headDx": -0.044,
+      "guideHeadDx": -0.621,
+      "facingMargin": 0.136,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2106,
+      "keyHueShiftedPct": 0.14,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 28.4,
+       "groundL": 67.7,
+       "below": 39.4
+      },
+      "farmland": {
+       "bodyL": 28.4,
+       "groundL": 67.3,
+       "below": 38.9
+      },
+      "swamp": {
+       "bodyL": 28.0,
+       "groundL": 58.5,
+       "below": 30.5
+      },
+      "forest": {
+       "bodyL": 28.0,
+       "groundL": 58.7,
+       "below": 30.7
+      },
+      "worstBelow": 30.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 6.2,
+      "dE_upperThird": 20.9,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.953
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2089,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.103
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.014,
+      "edgeDevPct": 4.95,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.706,
+     "scale": 1.2584,
+     "aspect": 1.08,
+     "shear": 0.05,
+     "M": [
+      [
+       1.35906,
+       0.06169
+      ],
+      [
+       0.0,
+       1.16518
+      ]
+     ],
+     "t": [
+      -95.78,
+      -60.19
+     ],
+     "guideWuPerPx": 0.36753,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.11164,
+     "wuPerPxFromThickness": 0.12953,
+     "wuPerPxFromFit": 0.11712,
+     "fitAtAreaScale": 0.706,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "follow": {
+    "heightWu": 99.16,
+    "wuPerPx": 0.10549,
+    "kind": "standing",
+    "anchorPx": [
+     456.4,
+     846.1
+    ],
+    "points": {
+     "footR": [
+      -6.3,
+      4.9
+     ],
+     "footL": [
+      -1.4,
+      4.3
+     ],
+     "mouth": [
+      -12.1,
+      -69.7
+     ],
+     "handR": [
+      -1.6,
+      -46.2
+     ],
+     "handL": [
+      -37.6,
+      -25.2
+     ],
+     "weaponTip": [
+      -39.6,
+      -9.9
+     ],
+     "butt": [
+      5.1,
+      -52.7
+     ],
+     "head": [
+      -0.1,
+      -72.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.follow",
+      "shadow": "motherOfBeasts-thornwood.back.follow.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.211,
+      "w": 145,
+      "h": 201
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.follow",
+      "shadow": "motherOfBeasts-thornwood.back.follow.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.422,
+      "w": 290,
+      "h": 401
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.10459,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.3,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.B.nb21.2k/motherOfBeasts-thornwood.back.follow.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.B.nb21.2k.png",
+    "rawSha256": "05971e00756246d52376043574fe60f1615f4c142cdb9c0a1a4b2ed0d9e8d569",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.673,
+      "iouMirrored": 0.513,
+      "aspectRatio": 1.076,
+      "headDx": -0.107,
+      "guideHeadDx": 0.014,
+      "facingMargin": 0.16,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1416,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.1,
+       "groundL": 67.7,
+       "below": 42.6
+      },
+      "farmland": {
+       "bodyL": 25.1,
+       "groundL": 67.3,
+       "below": 42.2
+      },
+      "swamp": {
+       "bodyL": 24.8,
+       "groundL": 58.5,
+       "below": 33.7
+      },
+      "forest": {
+       "bodyL": 24.8,
+       "groundL": 58.7,
+       "below": 33.9
+      },
+      "worstBelow": 33.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.1,
+      "dE_upperThird": 2.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.952
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1433,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.065
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.014,
+      "edgeDevPct": 4.95,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.707,
+     "scale": 1.0365,
+     "aspect": 1.03,
+     "shear": -0.025,
+     "M": [
+      [
+       1.06757,
+       -0.02617
+      ],
+      [
+       0.0,
+       1.00629
+      ]
+     ],
+     "t": [
+      -21.89,
+      -32.37
+     ],
+     "guideWuPerPx": 0.27541,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.10549,
+     "wuPerPxFromThickness": 0.1034,
+     "wuPerPxFromFit": 0.10656,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "fall": {
+    "heightWu": 96.48,
+    "wuPerPx": 0.11102,
+    "kind": "standing",
+    "anchorPx": [
+     224.5,
+     773.2
+    ],
+    "points": {
+     "footR": [
+      17.7,
+      1.5
+     ],
+     "footL": [
+      -22.0,
+      3.6
+     ],
+     "mouth": [
+      31.7,
+      -62.7
+     ],
+     "handR": [
+      28.1,
+      -19.5
+     ],
+     "handL": [
+      -11.9,
+      -31.3
+     ],
+     "weaponTip": [
+      30.2,
+      21.5
+     ],
+     "butt": [
+      24.4,
+      -26.6
+     ],
+     "head": [
+      18.5,
+      -67.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.back.fall",
+      "shadow": "motherOfBeasts-thornwood.back.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.222,
+      "w": 167,
+      "h": 196
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.back.fall",
+      "shadow": "motherOfBeasts-thornwood.back.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4441,
+      "w": 334,
+      "h": 392
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11713,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -14.1,
+     "anchorY": 773.2,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     224.5,
+     900.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.back.B.nb21.2k/motherOfBeasts-thornwood.back.fall.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.back.B.nb21.2k.png",
+    "rawSha256": "05971e00756246d52376043574fe60f1615f4c142cdb9c0a1a4b2ed0d9e8d569",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.back.png",
+    "tag": "act.motherOfBeasts-thornwood.back.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.548,
+      "iouMirrored": 0.53,
+      "aspectRatio": 1.516,
+      "headDx": 0.201,
+      "guideHeadDx": -0.269,
+      "facingMargin": 0.018,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2073,
+      "keyHueShiftedPct": 0.05,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.4,
+       "groundL": 67.7,
+       "below": 42.4
+      },
+      "farmland": {
+       "bodyL": 25.4,
+       "groundL": 67.3,
+       "below": 42.0
+      },
+      "swamp": {
+       "bodyL": 25.0,
+       "groundL": 58.5,
+       "below": 33.5
+      },
+      "forest": {
+       "bodyL": 25.0,
+       "groundL": 58.7,
+       "below": 33.7
+      },
+      "worstBelow": 33.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.8,
+      "dE_upperThird": 3.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 5,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.986
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1966,
+      "keyHueShiftedPct": 0.05,
+      "pass_": true,
+      "rimFixedShare": 0.079
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.014,
+      "edgeDevPct": 4.95,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.708,
+     "scale": 1.1369,
+     "aspect": 1.02,
+     "shear": -0.113,
+     "M": [
+      [
+       1.15964,
+       -0.12123
+      ],
+      [
+       0.0,
+       1.11461
+      ]
+     ],
+     "t": [
+      1.94,
+      -7.58
+     ],
+     "guideWuPerPx": 0.31475,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.0694,
+     "wuPerPxFromArea": 0.10954,
+     "wuPerPxFromThickness": 0.12691,
+     "wuPerPxFromFit": 0.11102,
+     "fitAtAreaScale": 0.706,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 107.18,
+    "wuPerPx": 0.10026,
+    "kind": "standing",
+    "anchorPx": [
+     395.6,
+     1021.4
+    ],
+    "points": {
+     "footR": [
+      -5.4,
+      -16.4
+     ],
+     "footL": [
+      8.0,
+      -11.5
+     ],
+     "mouth": [
+      -8.6,
+      -62.9
+     ],
+     "handR": [
+      -21.4,
+      -47.2
+     ],
+     "handL": [
+      11.9,
+      -35.3
+     ],
+     "weaponTip": [
+      -33.4,
+      -16.1
+     ],
+     "head": [
+      0.7,
+      -82.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "motherOfBeasts-thornwood.front.idle.white",
+      "scale": 0.2005,
+      "w": 133,
+      "h": 217
+     },
+     "H": {
+      "white": "motherOfBeasts-thornwood.front.idle.white",
+      "scale": 0.401,
+      "w": 265,
+      "h": 434
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/motherOfBeasts-thornwood.front/motherOfBeasts-thornwood.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 108.65,
+    "wuPerPx": 0.11425,
+    "kind": "standing",
+    "anchorPx": [
+     590.4,
+     767.8
+    ],
+    "points": {
+     "footR": [
+      -10.7,
+      3.6
+     ],
+     "footL": [
+      26.2,
+      -27.4
+     ],
+     "mouth": [
+      -6.6,
+      -46.9
+     ],
+     "handR": [
+      -16.8,
+      -34.9
+     ],
+     "handL": [
+      10.5,
+      -17.9
+     ],
+     "weaponTip": [
+      -30.4,
+      -61.1
+     ],
+     "butt": [
+      -14.1,
+      -29.8
+     ],
+     "head": [
+      5.5,
+      -67.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.stepA",
+      "shadow": "motherOfBeasts-thornwood.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2285,
+      "w": 206,
+      "h": 220
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.stepA",
+      "shadow": "motherOfBeasts-thornwood.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.457,
+      "w": 412,
+      "h": 440
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.12339,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -9.1,
+     "anchorY": 767.8,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     590.4,
+     847.4
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.A.nb21.2k/motherOfBeasts-thornwood.front.stepA.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.A.nb21.2k.png",
+    "rawSha256": "89669af40f9a2f13d9dd8c8f52057f5b98de225d48e13d3019108853fc1b6b03",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.549,
+      "iouMirrored": 0.597,
+      "aspectRatio": 1.184,
+      "headDx": -0.14,
+      "guideHeadDx": -0.133,
+      "facingMargin": -0.048,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 2076,
+      "keyHueShiftedPct": 0.58,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.1,
+       "groundL": 67.7,
+       "below": 42.7
+      },
+      "farmland": {
+       "bodyL": 25.1,
+       "groundL": 67.3,
+       "below": 42.2
+      },
+      "swamp": {
+       "bodyL": 24.8,
+       "groundL": 58.5,
+       "below": 33.7
+      },
+      "forest": {
+       "bodyL": 24.8,
+       "groundL": 58.7,
+       "below": 33.9
+      },
+      "worstBelow": 33.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.9,
+      "dE_upperThird": 1.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.095,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1905,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.127
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.028,
+      "edgeDevPct": 6.06,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.603,
+     "scale": 0.9194,
+     "aspect": 0.94,
+     "shear": -0.15,
+     "M": [
+      [
+       0.86427,
+       -0.1277
+      ],
+      [
+       0.0,
+       0.97813
+      ]
+     ],
+     "t": [
+      277.44,
+      -31.37
+     ],
+     "guideWuPerPx": 0.24872,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.10008,
+     "wuPerPxFromThickness": 0.12638,
+     "wuPerPxFromFit": 0.11425,
+     "fitAtAreaScale": 0.661,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 100.31,
+    "wuPerPx": 0.10604,
+    "kind": "standing",
+    "anchorPx": [
+     404.5,
+     879.1
+    ],
+    "points": {
+     "footR": [
+      15.1,
+      4.3
+     ],
+     "footL": [
+      2.9,
+      -3.5
+     ],
+     "mouth": [
+      -0.7,
+      -52.3
+     ],
+     "handR": [
+      -18.6,
+      -37.7
+     ],
+     "handL": [
+      16.6,
+      -28.3
+     ],
+     "weaponTip": [
+      -30.8,
+      -55.8
+     ],
+     "butt": [
+      -16.8,
+      -33.2
+     ],
+     "head": [
+      7.5,
+      -73.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.stepB",
+      "shadow": "motherOfBeasts-thornwood.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2121,
+      "w": 158,
+      "h": 203
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.stepB",
+      "shadow": "motherOfBeasts-thornwood.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4242,
+      "w": 316,
+      "h": 407
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.1124,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 0.8,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.A.nb21.2k/motherOfBeasts-thornwood.front.stepB.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.A.nb21.2k.png",
+    "rawSha256": "89669af40f9a2f13d9dd8c8f52057f5b98de225d48e13d3019108853fc1b6b03",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.63,
+      "iouMirrored": 0.6,
+      "aspectRatio": 1.063,
+      "headDx": -0.132,
+      "guideHeadDx": -0.031,
+      "facingMargin": 0.03,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1936,
+      "keyHueShiftedPct": 0.15,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 25.5,
+       "groundL": 67.7,
+       "below": 42.2
+      },
+      "farmland": {
+       "bodyL": 25.5,
+       "groundL": 67.3,
+       "below": 41.8
+      },
+      "swamp": {
+       "bodyL": 25.2,
+       "groundL": 58.5,
+       "below": 33.3
+      },
+      "forest": {
+       "bodyL": 25.2,
+       "groundL": 58.7,
+       "below": 33.5
+      },
+      "worstBelow": 33.3,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.1,
+      "dE_upperThird": 1.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 6,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.992,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1831,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.142
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.028,
+      "edgeDevPct": 6.06,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.689,
+     "scale": 1.0073,
+     "aspect": 0.97,
+     "shear": -0.15,
+     "M": [
+      [
+       0.97709,
+       -0.14254
+      ],
+      [
+       0.0,
+       1.03846
+      ]
+     ],
+     "t": [
+      54.61,
+      -12.02
+     ],
+     "guideWuPerPx": 0.2529,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.10156,
+     "wuPerPxFromThickness": 0.12451,
+     "wuPerPxFromFit": 0.10604,
+     "fitAtAreaScale": 0.703,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 91.39,
+    "wuPerPx": 0.0961,
+    "kind": "standing",
+    "anchorPx": [
+     447.4,
+     825.9
+    ],
+    "points": {
+     "footR": [
+      12.7,
+      3.6
+     ],
+     "footL": [
+      3.2,
+      2.2
+     ],
+     "mouth": [
+      3.4,
+      -40.4
+     ],
+     "handR": [
+      -9.6,
+      -23.2
+     ],
+     "handL": [
+      23.9,
+      -20.5
+     ],
+     "weaponTip": [
+      11.5,
+      22.3
+     ],
+     "butt": [
+      -13.8,
+      -32.4
+     ],
+     "head": [
+      5.2,
+      -61.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.strike",
+      "shadow": "motherOfBeasts-thornwood.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1922,
+      "w": 150,
+      "h": 186
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.strike",
+      "shadow": "motherOfBeasts-thornwood.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3844,
+      "w": 300,
+      "h": 371
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.09946,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -4.0,
+     "anchorY": 825.9,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     447.4,
+     867.6
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.A.nb21.2k/motherOfBeasts-thornwood.front.strike.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.A.nb21.2k.png",
+    "rawSha256": "89669af40f9a2f13d9dd8c8f52057f5b98de225d48e13d3019108853fc1b6b03",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.A.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.A.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.527,
+      "iouMirrored": 0.601,
+      "aspectRatio": 1.295,
+      "headDx": -0.206,
+      "guideHeadDx": -0.1,
+      "facingMargin": -0.074,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1597,
+      "keyHueShiftedPct": 0.25,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.4,
+       "groundL": 67.7,
+       "below": 43.4
+      },
+      "farmland": {
+       "bodyL": 24.3,
+       "groundL": 67.3,
+       "below": 43.0
+      },
+      "swamp": {
+       "bodyL": 24.1,
+       "groundL": 58.5,
+       "below": 34.4
+      },
+      "forest": {
+       "bodyL": 24.1,
+       "groundL": 58.7,
+       "below": 34.6
+      },
+      "worstBelow": 34.4,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.4,
+      "dE_upperThird": 1.4,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 4,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.883
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1510,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.135
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.028,
+      "edgeDevPct": 6.06,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.707,
+     "scale": 1.1767,
+     "aspect": 1.0,
+     "shear": -0.081,
+     "M": [
+      [
+       1.17667,
+       -0.09193
+      ],
+      [
+       0.0,
+       1.17667
+      ]
+     ],
+     "t": [
+      -35.76,
+      1.96
+     ],
+     "guideWuPerPx": 0.25743,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.0961,
+     "wuPerPxFromThickness": 0.10398,
+     "wuPerPxFromFit": 0.0924,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 105.39,
+    "wuPerPx": 0.10332,
+    "kind": "standing",
+    "anchorPx": [
+     475.3,
+     978.5
+    ],
+    "points": {
+     "footR": [
+      -8.9,
+      -5.7
+     ],
+     "footL": [
+      13.7,
+      3.6
+     ],
+     "mouth": [
+      -3.4,
+      -59.3
+     ],
+     "handR": [
+      -26.3,
+      -79.3
+     ],
+     "handL": [
+      45.6,
+      -42.8
+     ],
+     "weaponTip": [
+      -37.7,
+      -111.9
+     ],
+     "butt": [
+      -23.9,
+      -72.7
+     ],
+     "head": [
+      5.4,
+      -78.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.hit",
+      "shadow": "motherOfBeasts-thornwood.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "motherOfBeasts-thornwood.front.hit.white",
+      "scale": 0.2066,
+      "w": 192,
+      "h": 214
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.hit",
+      "shadow": "motherOfBeasts-thornwood.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "motherOfBeasts-thornwood.front.hit.white",
+      "scale": 0.4133,
+      "w": 384,
+      "h": 427
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.10295,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 2.4,
+     "anchorY": 978.5,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     475.3,
+     954.8
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.B.nb21.2k/motherOfBeasts-thornwood.front.hit.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.B.nb21.2k.png",
+    "rawSha256": "19f98374b06d14ca1d49493d810e88cc1231f5fee7ed661adc397ca9359611b0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.52,
+      "iouMirrored": 0.535,
+      "aspectRatio": 1.194,
+      "headDx": -0.135,
+      "guideHeadDx": -0.305,
+      "facingMargin": -0.015,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1931,
+      "keyHueShiftedPct": 0.31,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 23.0,
+       "groundL": 67.7,
+       "below": 44.7
+      },
+      "farmland": {
+       "bodyL": 23.0,
+       "groundL": 67.3,
+       "below": 44.3
+      },
+      "swamp": {
+       "bodyL": 22.7,
+       "groundL": 58.5,
+       "below": 35.8
+      },
+      "forest": {
+       "bodyL": 22.7,
+       "groundL": 58.7,
+       "below": 36.0
+      },
+      "worstBelow": 35.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.8,
+      "dE_upperThird": 2.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 4,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.98
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1918,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.099
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.019,
+      "edgeDevPct": 2.83,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.732,
+     "scale": 1.2975,
+     "aspect": 1.06,
+     "shear": 0.0,
+     "M": [
+      [
+       1.37535,
+       0.0
+      ],
+      [
+       0.0,
+       1.22406
+      ]
+     ],
+     "t": [
+      -122.03,
+      -188.97
+     ],
+     "guideWuPerPx": 0.32387,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.10332,
+     "wuPerPxFromThickness": 0.1013,
+     "wuPerPxFromFit": 0.10543,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 76.89,
+    "wuPerPx": 0.10577,
+    "kind": "lying",
+    "anchorPx": [
+     422.1,
+     823.3
+    ],
+    "points": {
+     "footR": [
+      -18.3,
+      -27.3
+     ],
+     "footL": [
+      -3.1,
+      -22.5
+     ],
+     "mouth": [
+      22.1,
+      -80.4
+     ],
+     "handR": [
+      -26.5,
+      -74.0
+     ],
+     "handL": [
+      62.8,
+      -43.2
+     ],
+     "weaponTip": [
+      -81.7,
+      -83.2
+     ],
+     "butt": [
+      -18.9,
+      -78.7
+     ],
+     "head": [
+      32.8,
+      -76.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.dead",
+      "shadow": "motherOfBeasts-thornwood.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2115,
+      "w": 218,
+      "h": 157
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.dead",
+      "shadow": "motherOfBeasts-thornwood.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4231,
+      "w": 435,
+      "h": 313
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.10937,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.B.nb21.2k/motherOfBeasts-thornwood.front.dead.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.B.nb21.2k.png",
+    "rawSha256": "19f98374b06d14ca1d49493d810e88cc1231f5fee7ed661adc397ca9359611b0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.574,
+      "iouMirrored": 0.384,
+      "aspectRatio": 0.862,
+      "headDx": 0.346,
+      "guideHeadDx": -0.183,
+      "facingMargin": 0.19,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1884,
+      "keyHueShiftedPct": 0.32,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.9,
+       "groundL": 67.7,
+       "below": 42.8
+      },
+      "farmland": {
+       "bodyL": 24.9,
+       "groundL": 67.3,
+       "below": 42.4
+      },
+      "swamp": {
+       "bodyL": 24.6,
+       "groundL": 58.5,
+       "below": 33.8
+      },
+      "forest": {
+       "bodyL": 24.6,
+       "groundL": 58.7,
+       "below": 34.1
+      },
+      "worstBelow": 33.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.3,
+      "dE_upperThird": 3.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 4,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.742
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1804,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.151
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.019,
+      "edgeDevPct": 2.83,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.656,
+     "scale": 1.4823,
+     "aspect": 1.1,
+     "shear": 0.15,
+     "M": [
+      [
+       1.63056,
+       0.22015
+      ],
+      [
+       0.0,
+       1.34757
+      ]
+     ],
+     "t": [
+      -550.19,
+      -92.98
+     ],
+     "guideWuPerPx": 0.36753,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.10577,
+     "wuPerPxFromThickness": 0.10959,
+     "wuPerPxFromFit": 0.10472,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "follow": {
+    "heightWu": 95.43,
+    "wuPerPx": 0.10152,
+    "kind": "standing",
+    "anchorPx": [
+     298.4,
+     894.8
+    ],
+    "points": {
+     "footR": [
+      6.2,
+      -6.1
+     ],
+     "footL": [
+      1.8,
+      3.6
+     ],
+     "mouth": [
+      5.8,
+      -51.7
+     ],
+     "handR": [
+      3.0,
+      -40.5
+     ],
+     "handL": [
+      38.5,
+      -47.5
+     ],
+     "weaponTip": [
+      40.9,
+      -47.7
+     ],
+     "butt": [
+      -3.5,
+      -39.4
+     ],
+     "head": [
+      3.0,
+      -72.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.follow",
+      "shadow": "motherOfBeasts-thornwood.front.follow.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.203,
+      "w": 156,
+      "h": 194
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.follow",
+      "shadow": "motherOfBeasts-thornwood.front.follow.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4061,
+      "w": 312,
+      "h": 387
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.10152,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 7.3,
+     "anchorY": 894.8,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     298.4,
+     823.0
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.B.nb21.2k/motherOfBeasts-thornwood.front.follow.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.B.nb21.2k.png",
+    "rawSha256": "19f98374b06d14ca1d49493d810e88cc1231f5fee7ed661adc397ca9359611b0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.726,
+      "iouMirrored": 0.626,
+      "aspectRatio": 1.03,
+      "headDx": 0.081,
+      "guideHeadDx": 0.104,
+      "facingMargin": 0.1,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 1576,
+      "keyHueShiftedPct": 0.13,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.1,
+       "groundL": 67.7,
+       "below": 43.6
+      },
+      "farmland": {
+       "bodyL": 24.1,
+       "groundL": 67.3,
+       "below": 43.2
+      },
+      "swamp": {
+       "bodyL": 23.8,
+       "groundL": 58.5,
+       "below": 34.7
+      },
+      "forest": {
+       "bodyL": 23.8,
+       "groundL": 58.7,
+       "below": 34.9
+      },
+      "worstBelow": 34.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 1.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.89
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1576,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.102
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.019,
+      "edgeDevPct": 2.83,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.771,
+     "scale": 0.9745,
+     "aspect": 1.0,
+     "shear": -0.006,
+     "M": [
+      [
+       0.97453,
+       -0.00634
+      ],
+      [
+       0.0,
+       0.97453
+      ]
+     ],
+     "t": [
+      15.62,
+      2.14
+     ],
+     "guideWuPerPx": 0.244,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.10152,
+     "wuPerPxFromThickness": 0.12074,
+     "wuPerPxFromFit": 0.10575,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "fall": {
+    "heightWu": 69.17,
+    "wuPerPx": 0.0855,
+    "kind": "standing",
+    "anchorPx": [
+     444.9,
+     741.3
+    ],
+    "points": {
+     "footR": [
+      -15.5,
+      3.6
+     ],
+     "footL": [
+      18.0,
+      -44.2
+     ],
+     "mouth": [
+      -13.1,
+      -35.3
+     ],
+     "handR": [
+      -19.1,
+      -32.9
+     ],
+     "handL": [
+      19.0,
+      -20.1
+     ],
+     "weaponTip": [
+      -30.7,
+      4.1
+     ],
+     "butt": [
+      -16.6,
+      -39.5
+     ],
+     "head": [
+      -5.7,
+      -52.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "motherOfBeasts-thornwood.front.fall",
+      "shadow": "motherOfBeasts-thornwood.front.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.171,
+      "w": 126,
+      "h": 141
+     },
+     "H": {
+      "frame": "motherOfBeasts-thornwood.front.fall",
+      "shadow": "motherOfBeasts-thornwood.front.fall.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.342,
+      "w": 252,
+      "h": 282
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.0855,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": -14.0,
+     "anchorY": 741.3,
+     "idleAnchorBelowSoleWu": -3.6,
+     "feet": [
+      "footR",
+      "footL"
+     ],
+     "anchorX": 444.9,
+     "brokenRegistration": true
+    },
+    "anchorBeforeGroundFix": [
+     426.6,
+     905.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.motherOfBeasts-thornwood.front.B.nb21.2k/motherOfBeasts-thornwood.front.fall.png",
+    "raw": "stage-d/raw/act.motherOfBeasts-thornwood.front.B.nb21.2k.png",
+    "rawSha256": "19f98374b06d14ca1d49493d810e88cc1231f5fee7ed661adc397ca9359611b0",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/motherOfBeasts.B.front.png",
+    "tag": "act.motherOfBeasts-thornwood.front.B.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.804,
+      "iouMirrored": 0.554,
+      "aspectRatio": 0.988,
+      "headDx": 0.275,
+      "guideHeadDx": 0.089,
+      "facingMargin": 0.25,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 1348,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.0,
+       "groundL": 67.7,
+       "below": 43.7
+      },
+      "farmland": {
+       "bodyL": 24.0,
+       "groundL": 67.3,
+       "below": 43.3
+      },
+      "swamp": {
+       "bodyL": 23.7,
+       "groundL": 58.5,
+       "below": 34.8
+      },
+      "forest": {
+       "bodyL": 23.7,
+       "groundL": 58.7,
+       "below": 35.0
+      },
+      "worstBelow": 34.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.4,
+      "dE_upperThird": 1.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.645
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1348,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.121
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.019,
+      "edgeDevPct": 2.83,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.838,
+     "scale": 1.0166,
+     "aspect": 0.965,
+     "shear": -0.094,
+     "M": [
+      [
+       0.98098,
+       -0.0953
+      ],
+      [
+       0.0,
+       1.05343
+      ]
+     ],
+     "t": [
+      78.59,
+      -33.76
+     ],
+     "guideWuPerPx": 0.20579,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 1.1263,
+     "wuPerPxFromArea": 0.0855,
+     "wuPerPxFromThickness": 0.10879,
+     "wuPerPxFromFit": 0.0855,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {},
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {
+  "front": {
+   "windup": "painted from behind in the front view (the bear pelt toward the camera); held back: the idle with the hammer arm region raised by the mesh, then the strike frame"
+  }
+ }
+}

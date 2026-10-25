@@ -1,0 +1,94 @@
+{
+ "id": "ashHorse-01b",
+ "unit": "ashHorse",
+ "nation": "cinderHorde",
+ "group": "mounts",
+ "subject": "ashHorse",
+ "promptFile": "stage-b/work/portraits/prompts-used/ashHorse.01b.txt",
+ "kind": "mount head-and-neck bust (plan 3.1)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 51446,
+  "game": 17162,
+  "small": 1674
+ },
+ "sourceFile": "stage-b/raw/portraits/ashHorse.01b.nb21.png",
+ "sourceSha256": "979a32739d7d1f6ccd681f5ec4a67421f21d3a8160179c56151fb988691b9b2e",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-neck portrait bust of one Ash Horse, a Cinder Horde war mount (a beast, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the ears about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at the base of the neck and the top of the chest, where the tack begins, with dark empty space above and around the head. One beast only, no rider, no people. No hooves, paws or legs in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the ears and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and ears and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy, except the side's cloth on its tack: dull ember-orange cloth (#C4532C), the Cinder Horde's colour, which shows clearly at the bottom of the image (the caparison's front edge at the withers), so the card reads as that side at a glance. Nothing in the image glows; the eyes do not shine or glow. Apart from the side's cloth, no saturated area larger than a thin crack or a small patch.\n\nSubject: An Ash Horse of the Cinder Horde, bred to carry, not to fight: a heavy dark ash-grey warhorse in its battle tack, the mount of the Ash Riders.\nCreature: an older, heavier horse's head turned three-quarters toward the right and lowered a little, ears half back, steady dark eyes, a patient, stubborn look, the muzzle greyer below the plate. Tack: a plate of dark iron (a chanfron) over the face from the brow to the nose, riveted, with rusted edges and a short blunt ridge down its middle, the eyes and nostrils left open; a bridle of blackened leather with iron rings; at the bottom of the image, over the withers and the base of the neck, the front edge of a cloth caparison of the side's dull ember-orange, its hem bordered with a charcoal band. Coat: dark ash-grey with paler ash dappling on the neck; a thick soot-black mane falling on the near side and a soot-black forelock over the plate. Marks: the riveted iron face plate, the soot-black mane and forelock, the ember-orange caparison's edge, the iron bridle rings, the grey muzzle.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "riveted iron face plate",
+   "read": true
+  },
+  {
+   "mark": "soot-black mane and forelock",
+   "read": true
+  },
+  {
+   "mark": "ember-orange caparison edge",
+   "read": true
+  },
+  {
+   "mark": "iron bridle rings",
+   "read": true
+  },
+  {
+   "mark": "greyer muzzle",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.5,
+   "bgSpread": 3.1,
+   "floor": 4.0,
+   "top": 0.059,
+   "low": 1.0,
+   "bottomCut": 0.313,
+   "cx": 0.435,
+   "subject": 0.318,
+   "light": -4.9,
+   "rim": 0.715,
+   "read48": 21.2,
+   "muted": 0.0002,
+   "satAll": 0.0084,
+   "side": {
+    "window": 0.0745
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "strong",
+  "note": "Older horse, head lowered, greyer muzzle, the same tack; the caparison shows a little more.",
+  "marks": {
+   "riveted iron face plate": true,
+   "soot-black mane and forelock": true,
+   "ember-orange caparison edge": true,
+   "iron bridle rings": true,
+   "greyer muzzle": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

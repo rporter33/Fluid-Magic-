@@ -1,0 +1,108 @@
+{
+ "id": "titan-01a-r2",
+ "unit": "titan",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "titan",
+ "promptFile": "stage-b/work/portraits/prompts-used/titan-thornwood.01a.r2.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a-r2",
+ "files": {
+  "master": "01a-r2-512.webp",
+  "game": "01a-r2.webp",
+  "small": "01a-r2-64.webp"
+ },
+ "bytes": {
+  "master": 16312,
+  "game": 5584,
+  "small": 1450
+ },
+ "sourceFile": "stage-b/raw/portraits/titan-thornwood.01a.r2.nb21.png",
+ "sourceSha256": "0dad948f9432a9c1636110c037ab529f6e59fdf68225682591c62f341ec44486",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a finished oil painting. Repaint it exactly as it is: the same figure, the same pose, the same framing and size in the square, the same candle light, rim light, brushwork and dark background. Change only one thing: repaint the tabard (now dull ember-orange) in a deep bottle green, the green of jade in shade (#1F6A50), the Thornwood's colour, clearly coloured, never grey, slate, olive, yellow-green or teal; keep all the painted shading, folds, texture and highlights of the tabard. Do not change anything else: not the skin, the gold, the dark metal, the stone, the scales or the hide, the lichen grey-green trim, bands and embroidery, the face, the eyes or the background. No text, no border.",
+ "references": [
+  "titan-cinderHorde.01a.r2.nb21.png"
+ ],
+ "route": "edit of titan-cinderHorde.01a r2 (re-roll r2)",
+ "swatches": {
+  "material": "skin ash #8F8C88",
+  "metal": "metal gold #C9A23E",
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: great helm; no mantle; straight great sword; plain armour",
+ "pose": "regal",
+ "tintZone": "the tabard",
+ "cardCrop": {
+  "box512": [
+   153,
+   11,
+   367,
+   225
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "closed flat-topped great helm",
+   "read": true
+  },
+  {
+   "mark": "plain gold plate armour",
+   "read": true
+  },
+  {
+   "mark": "tabard in the nation's cloth",
+   "read": true
+  },
+  {
+   "mark": "straight great sword held point-down",
+   "read": true
+  },
+  {
+   "mark": "no cape",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 2.6,
+   "bgSpread": 0.7,
+   "floor": 0.3,
+   "top": 0.047,
+   "low": 0.961,
+   "bottomCut": 0.0,
+   "cx": 0.493,
+   "subject": 0.16,
+   "light": 1.5,
+   "rim": 0.59,
+   "read48": 17.7,
+   "muted": 0.0,
+   "satAll": 0.0002,
+   "side": {
+    "window": 0.2781,
+    "lock": 0.3931
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Re-edited from the re-rolled body; tabard bottle green.",
+  "marks": {
+   "closed flat-topped great helm": true,
+   "plain gold plate armour": true,
+   "tabard in the nation's cloth": true,
+   "straight great sword held point-down": true,
+   "no cape": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

@@ -1,0 +1,13 @@
+// wild names against their wild: label pixels (labels on minus off) that fall outside the wild's own cells or on its outline band (2 px), per wild, at several zooms and sizes
+const { launch, open, ev, mev, PAGE, OUT } = require('./lib.cjs'); const fs = require('fs');
+const IN = String.raw`(() => { const redraw = (skip) => { const was = new Set(SKIP); for (const k of skip) SKIP.add(k); RCK = null; draw(); const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data.slice(); SKIP.clear(); for (const k of was) SKIP.add(k); RCK = null; draw(); return d; };
+  const A = redraw([]), B = redraw(['labels']), W2 = canvas.width, H2 = canvas.height, lay = RL_PIECE_CACHE.get('L'), k = cam.s / lay.s, out = [];
+  for (const o of lay.wildOps) { const boxes = (o.gl ? glyphBoxes(o.gl, 0) : o.box ? [o.box] : []).map((b) => b.map((q, j) => q * k + (j % 2 ? cam.y : cam.x))); if (!boxes.length) continue; let n = 0, outW = 0, edge = 0;
+    for (const b of boxes) for (let Y = Math.max(0, Math.floor(b[1] * dpr)); Y < Math.min(H2, b[3] * dpr); Y++) for (let X = Math.max(0, Math.floor(b[0] * dpr)); X < Math.min(W2, b[2] * dpr); X++) { const q = (Y * W2 + X) * 4; if (A[q] === B[q] && A[q + 1] === B[q + 1] && A[q + 2] === B[q + 2]) continue; n++; const [wx, wy] = toWorld(X / dpr, Y / dpr); const i = provinceAt(wx, wy); if (!o.w.cells.includes(i)) outW++; else { let near = false; for (const [dx, dy] of [[2, 0], [-2, 0], [0, 2], [0, -2]]) { const j = provinceAt(...toWorld(X / dpr + dx, Y / dpr + dy)); if (!o.w.cells.includes(j)) near = true; } if (near) edge++; } }
+    out.push({ wild: o.w.name, px: n, outsideWild: outW, onOutlineBand: edge }); }
+  const shown = new Set(lay.wildOps.map((o) => o.w.name)); return { band: bandOf(cam.s), Dpx: +(cam.s * MED_DIAM).toFixed(1), named: out, unnamed: WILDS.map((w) => w.name).filter((n) => !shown.has(n)) }; })()`;
+(async () => { const b = await launch(), res = {};
+  for (const [w, h] of [[1440, 900], [1280, 720], [1920, 1080], [390, 844]]) { const p = await open(b, PAGE, { w, h, settle: 1200 }); await p.mouse.move(w / 2, 5);
+    for (const [zn, src] of [['start', null], ['fit', 'm.setScale(m.fitScale(), m.ev("W") / 2, m.ev("H") / 2)'], ['least', 'm.setScale(m.minScale(), m.ev("W") / 2, m.ev("H") / 2)'], ['mid', 'm.setScale(1.0, 640, 480)']]) { if (src) await ev(p, src); await p.waitForTimeout(1200); const r = await mev(p, IN); res[`${w}x${h}-${zn}`] = r; console.log(`${w}x${h}`, zn, r.band, r.Dpx, JSON.stringify(r.named), 'unnamed', JSON.stringify(r.unnamed)); }
+    await p.context().close(); }
+  fs.writeFileSync(OUT + 'wildnames.json', JSON.stringify(res, null, 1)); await b.close(); })();

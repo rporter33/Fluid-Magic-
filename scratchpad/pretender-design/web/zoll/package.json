@@ -1,0 +1,31 @@
+{
+  "homepage": "http://zollqir.github.io/pretenders-dom6",
+  "name": "pretenders-dom6",
+  "version": "2.00.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-select": "^5.10.0",
+    "sass": "^1.85.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "gh-pages": "^6.1.1",
+    "vite": "^6.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

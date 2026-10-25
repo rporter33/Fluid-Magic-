@@ -1,0 +1,180 @@
+{
+ "_note": "the art director's choice per job (a tag = every frame from that cut; {action: tag} per frame); jobs not listed take their first generation",
+ "pyreLord-cinderHorde.back.B": "act.pyreLord-cinderHorde.back.B.nb21.2k.r3",
+ "primordial-cinderHorde.back.bite": "act.primordial-cinderHorde.back.bite.nb21.2k.r2",
+ "primordial-cinderHorde.back.trample": "act.primordial-cinderHorde.back.trample.nb21.2k.r2",
+ "primordial-cinderHorde.front.trample": "act.primordial-cinderHorde.front.trample.nb21.2k.r2",
+ "worldTree-thornwood.back.windup": "act.worldTree-thornwood.back.windup.nb21.2k.r2",
+ "scale": {
+  "treant-01.back.S/slam": 0.8,
+  "livingMonolith-cinderHorde.back.shattered/shattered": 1.2,
+  "livingMonolith-cinderHorde.front.shattered/shattered": 1.24,
+  "elderWyrm-thornwood.front.trample/trample": 1.3,
+  "hornedHunter-thornwood.back.A/stepB": 0.85,
+  "cinderIdol-cinderHorde.back.shattered/shattered": 1.2,
+  "cinderIdol-cinderHorde.front.shattered/shattered": 1.2,
+  "giant-02.back.A/stepB": 0.86
+ },
+ "_flaws": {
+  "elderWyrm-thornwood.back.bite": "both attempts are the idle pose with the jaws opened (the first reared slightly, the re-roll r2 kept the stance and added the maquette's clay blue on the belly); the first is kept (cleaner); the bite lunge itself is the mesh: neck and head regions forward 40 wu (art plan 6). The back trample likewise lifts the forelegs only a little: the mesh lift does the rest",
+  "elderWyrm-thornwood.front.dead": "reads as a twisting, living wyrm rather than a corpse; its re-roll failed (HTTP 502, then the API's HTTP 402: prepaid credits depleted); held back from the atlas: the front death is the idle collapse (tilt and settle) into the god's colour dissolve until a re-roll",
+  "salamander-02.front.S/tailLash": "the painting had a grey-green motion smear (tinted by the key) above the tail; removed in a cleaned copy of the raw (dd_desmear.py, zero generations) and re-posted as its own tag",
+  "treant-04.back.S/slam": "the top branch tips ran off the generated image (unfixable without a generation); the top 4% fades out (fadeTop) so the cut reads as twig ends; the pose turns the treant sideways",
+  "giant-01.back.B/fall": "the painting copied the idle stance (no buckling); held back: the back fall is the hit frame tilting into the dead frame (crossfade) in code",
+  "elderWyrm-thornwood.back.trample/trample": "the painting kept the maquette's grey rod and ball under the tail tip and its clay-blue underside: erased (polygon, eraseClay) and warmed to the belly tan (warmClay) at pack time, zero generations",
+  "elderWyrm-thornwood.front.trample/trample": "the rear is weak (a low, hunched lunge); its re-roll could not run (HTTP 402); kept, with the mesh lift of the forelegs doing the rest; its registration failed (the mapped anchor fell 158 wu below the frame): the art director set the ground anchor between the planted foreleg and hind foot; the broken registration also left it 23% small: scaled 1.3 by the head and claw sizes against the idle",
+  "livingMonolith-cinderHorde/shattered": "the area scale shrank the rubble (less stone than the standing pillar); the art director scaled it so its pedestal matches the idle's width (back 1.20 from the base widths at 10, 15 and 20% height, which agree; front 1.24 from the lower third, its base half hidden by fallen blocks) and set the anchor by the base (baseMatch)",
+  "giant-02.back.B/fall": "a walking stride, not a fall (as Giant 01 back); held back: hit tilting into dead in code",
+  "giant-02.front.B/follow": "painted from behind (his back to the camera in the front view); held back: the strike frame eases back to the idle in code",
+  "oracle-cinderHorde.front.B/castA": "painted from behind (the back of the hood toward the camera in the front view); held back: the front cast is castB alone (staff thrust), with the idle's arms lifted by the mesh for the raise",
+  "ascendedHero-cinderHorde.front.A/windup": "painted from behind (cape and the back of his head toward the camera in the front view); held back: the front windup is the idle with the sword arm region raised by the mesh, then the strike frame",
+  "pyreLord-cinderHorde.back.B/fall": "the registration left the kneeling figure floating 49 wu up (the glaive hangs below the knees, so the sole walk could not decide); the art director set the anchor at the knee and boot line",
+  "primordial-cinderHorde/trample": "both trample registrations misplaced the anchor (back 28 wu, front 40 wu); set by the hind feet (see _anchorNote)",
+  "emberHierophant-cinderHorde.front.A/windup": "painted from behind in the front view (the hood, no mask); held back: the idle with the staff arm region raised by the mesh, then the strike frame",
+  "emberHierophant-cinderHorde.front.B/castA": "painted from behind in the front view (arms and staff overhead, back to the camera); held back: the front cast is castB alone",
+  "motherOfBeasts-thornwood.front.A/windup": "painted from behind in the front view (the bear pelt toward the camera); held back: the idle with the hammer arm region raised by the mesh, then the strike frame",
+  "hornedHunter-thornwood.back.A/stepB": "the median scale took the thickness and fit estimates of a wide stride (38% over the idle); scaled 0.85, back to the area estimate",
+  "hornedHunter-thornwood.front.A/windup": "painted from behind in the front view (the leaf cloak toward the camera); held back: the idle with the spear arm region raised by the mesh, then the strike frame",
+  "cinderIdol-cinderHorde/shattered": "the area scale shrank the rubble; scaled 1.2 by the pillar stump's cross-section and the brazier bowl against the idle (both views agree within 5%); the spilled coals and the fallen face block reach below the plinth, so the anchor is set from the plinth (back: its top right corner, front: its bottom front corner) with the idle's offset in wu; the painted plinth is not the idle's exact shape (its faces run at other lengths), a known approximation",
+  "titan-cinderHorde/A sword tips": "the sword tips of the back stepA, stepB and strike and the front strike ran off the generated image (a few wu of blade); the cut end fades over 3% of the frame (fadeEdge) so it reads as a tip in motion; a re-roll could not run (HTTP 402)",
+  "anchors/aligned": "dd_align.py (each four-footed frame slid over its idle) found broken registrations on poses close to the idle: Elder Wyrm back trample floating 81 wu, back bite 14 wu aside, front bite 9 wu, Great Wyrm front breath floating 45 wu; their anchors are now the aligned ones (alignAnchor). Rearing frames cannot be aligned this way (the body moves): their anchors are hand-set by the hind feet or registered, about 10 to 20 wu uncertain",
+  "giant-02.back.A/stepB": "the median scale (thickness and fit of a wide stride) made it 19% taller than the idle; scaled 0.86 to the same paint scale as its sheet-mate stepA (both cells hold the same body)"
+ },
+ "elderWyrm-thornwood.front.dead": "skip",
+ "salamander-02.front.S": {
+  "tailLash": "act.salamander-02.front.S.nb21.2k.clean"
+ },
+ "fadeTop": [
+  "treant-04.back.S/slam"
+ ],
+ "giant-01.back.B": {
+  "fall": "skip"
+ },
+ "eraseClay": {
+  "elderWyrm-thornwood.back.trample/trample": [
+   [
+    [
+     366,
+     2045
+    ],
+    [
+     377,
+     2033
+    ],
+    [
+     452,
+     2168
+    ],
+    [
+     486,
+     2176
+    ],
+    [
+     486,
+     2238
+    ],
+    [
+     540,
+     2238
+    ],
+    [
+     540,
+     2367
+    ],
+    [
+     355,
+     2367
+    ],
+    [
+     355,
+     2238
+    ],
+    [
+     392,
+     2238
+    ],
+    [
+     378,
+     2120
+    ]
+   ],
+   [
+    474,
+    2178,
+    489,
+    2240,
+    "all"
+   ]
+  ]
+ },
+ "warmClay": [
+  "elderWyrm-thornwood.back.trample/trample"
+ ],
+ "anchor": {
+  "elderWyrm-thornwood.front.trample/trample": [
+   830,
+   1460
+  ],
+  "pyreLord-cinderHorde.back.B/fall": [
+   230,
+   680
+  ],
+  "primordial-cinderHorde.back.trample/trample": [
+   682,
+   2017
+  ],
+  "primordial-cinderHorde.front.trample/trample": [
+   975,
+   2330
+  ],
+  "cinderIdol-cinderHorde.back.shattered/shattered": [
+   1232,
+   1238
+  ],
+  "cinderIdol-cinderHorde.front.shattered/shattered": [
+   891,
+   1242
+  ]
+ },
+ "baseMatch": [
+  "livingMonolith-cinderHorde.back.shattered/shattered",
+  "livingMonolith-cinderHorde.front.shattered/shattered"
+ ],
+ "giant-02.back.B": {
+  "fall": "skip"
+ },
+ "giant-02.front.B": {
+  "follow": "skip"
+ },
+ "oracle-cinderHorde.front.B": {
+  "castA": "skip"
+ },
+ "ascendedHero-cinderHorde.front.A": {
+  "windup": "skip"
+ },
+ "_anchorNote": "anchors set by the art director for rearing four-footed frames: the planted hind feet keep their idle offsets from the ground anchor (in wu, from the idle's snapped foot points); the Primordial back trample's two hind feet agree within 2 wu ([682, 2017]); the front trample's within 20 wu (mean [975, 2330], below the texture: the rearing body stands behind its anchor as the idle does); the Elder Wyrm front trample's painting compressed the body (its foreleg and hind foot disagree by 80 wu): y from the planted foreleg (the stomp), x between the two",
+ "emberHierophant-cinderHorde.front.A": {
+  "windup": "skip"
+ },
+ "emberHierophant-cinderHorde.front.B": {
+  "castA": "skip"
+ },
+ "motherOfBeasts-thornwood.front.A": {
+  "windup": "skip"
+ },
+ "hornedHunter-thornwood.front.A": {
+  "windup": "skip"
+ },
+ "fadeEdge": {
+  "titan-cinderHorde.back.A/stepA": "top",
+  "titan-cinderHorde.back.A/stepB": "top",
+  "titan-cinderHorde.back.A/strike": "right",
+  "titan-cinderHorde.front.A/strike": "right"
+ },
+ "alignAnchor": [
+  "elderWyrm-thornwood.back.trample/trample",
+  "elderWyrm-thornwood.back.bite/bite",
+  "elderWyrm-thornwood.front.bite/bite",
+  "greatWyrm-cinderHorde.front.breath/breath"
+ ]
+}

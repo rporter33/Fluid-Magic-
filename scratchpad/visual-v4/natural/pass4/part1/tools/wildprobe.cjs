@@ -1,0 +1,6 @@
+const { launch, open, ev, mev } = require('./lib.cjs'); const { execSync } = require('child_process');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, q: process.argv[2] || '', settle: 1500 }); await p.mouse.move(720, 896);
+  const r = await mev(p, `(() => { const V = rlWildSweepViews()[27]; const keepAll = RL_DBG.focusAll; RL_DBG.focusAll = true; window.__mock.setScale(V[1], V[2], V[3]); const M = rlWildEdgeMargins(); const rc = canvas.getBoundingClientRect(); const out = { view: V, Dpx: cam.s * MED_DIAM, min: M.min, fails: M.fails, samples: M.samples, rect: [rc.left, rc.top], wd: M.min ? rlWaterDist(...toWorld(M.min.sx, M.min.sy)) * cam.s : null }; return out; })()`);
+  console.log(JSON.stringify(r));
+  if (r.min) { const f = '/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass4/part1/wip/wild27.png'; await p.screenshot({ path: f, clip: { x: r.rect[0] + r.min.sx - 40, y: r.rect[1] + r.min.sy - 30, width: 80, height: 60 } }); execSync(`python3 -c "from PIL import Image; a=Image.open('${f}'); a.resize((a.width*6,a.height*6),Image.NEAREST).save('${f}')"`); }
+  await b.close(); })();

@@ -1,0 +1,4 @@
+const { launch, open, ev, mev } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, settle: 1500, w: 1920, h: 1080 }); await p.mouse.move(960, 1076);
+  const r = await mev(p, `(() => { const F = rlBridgeFeet(), [x, y] = toWorld(${process.argv[2]}, ${process.argv[3]}); return { band: bandOf(cam.s), s: cam.s, feet: F.map((f) => ({ along: +(((x - f.x) * f.tx + (y - f.y) * f.ty) * cam.s).toFixed(1), across: +((-(x - f.x) * f.ty + (y - f.y) * f.tx) * cam.s).toFixed(1), t1: +(f.t1 * cam.s).toFixed(1), s1: +(f.s1 * cam.s).toFixed(1), lim: +((f.t1 + 0.9 * RLK) * cam.s + 4).toFixed(1) })).filter((q) => Math.abs(q.along) < 40 && Math.abs(q.across) < 40), wd: +(rlWaterDist(x, y) * cam.s).toFixed(1) }; })()`);
+  console.log(JSON.stringify(r)); await b.close(); })();

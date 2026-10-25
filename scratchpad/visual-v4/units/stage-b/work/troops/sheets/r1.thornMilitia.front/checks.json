@@ -1,0 +1,255 @@
+{
+ "figure": "thornMilitia",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.723,
+  "iouMirrored": 0.635,
+  "aspectRatio": 1.14,
+  "headDx": -0.074,
+  "guideHeadDx": -0.05,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.522,
+  "marchLegsIoU": 0.498,
+  "mostAlike": [
+   "stand~marchA",
+   0.759
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.154,
+   "marchA": 1.0,
+   "marchB": 0.931
+  },
+  "pass_": false
+ },
+ "fringe": {
+  "spillEdgePct": 10.005,
+  "keyInUnitPct": 0.119,
+  "fringePct": 0.0,
+  "edgeDevPct": 3.1,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.27,
+  "histMin": [
+   "cheer",
+   0.811
+  ],
+  "maxDE": [
+   "cheer",
+   13.5
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.847,
+    "de": 5.3,
+    "cloth": 0.309
+   },
+   "deadB": {
+    "hist": 0.718,
+    "de": 19.1,
+    "cloth": 0.51
+   }
+  },
+  "pass_": false,
+  "pass": false
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.723,
+    0.088
+   ],
+   "idle2": [
+    0.541,
+    0.482
+   ],
+   "marchA": [
+    0.844,
+    0.218
+   ],
+   "marchB": [
+    0.803,
+    0.343
+   ],
+   "windup": [
+    0.741,
+    0.178
+   ],
+   "strike": [
+    0.546,
+    0.326
+   ],
+   "follow": [
+    0.804,
+    0.389
+   ],
+   "brace": [
+    0.697,
+    0.284
+   ],
+   "recoil": [
+    0.745,
+    0.186
+   ],
+   "fall": [
+    0.578,
+    0.326
+   ],
+   "deadA": [
+    0.626,
+    0.302
+   ],
+   "deadB": [
+    0.797,
+    0.767
+   ],
+   "fleeA": [
+    0.826,
+    0.251
+   ],
+   "fleeB": [
+    0.898,
+    0.601
+   ],
+   "cheer": [
+    0.614,
+    0.002
+   ]
+  },
+  "medianIoU": 0.741,
+  "medianMargin": 0.302,
+  "follow": "13/15",
+  "followShare": 0.87
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.727,
+    0.107
+   ],
+   "idle2": [
+    0.567,
+    0.518
+   ],
+   "marchA": [
+    0.83,
+    0.199
+   ],
+   "marchB": [
+    0.782,
+    0.319
+   ],
+   "windup": [
+    0.705,
+    0.118
+   ],
+   "strike": [
+    0.531,
+    0.311
+   ],
+   "follow": [
+    0.829,
+    0.419
+   ],
+   "brace": [
+    0.706,
+    0.301
+   ],
+   "recoil": [
+    0.714,
+    0.147
+   ],
+   "fall": [
+    0.61,
+    0.352
+   ],
+   "fleeA": [
+    0.842,
+    0.268
+   ],
+   "fleeB": [
+    0.898,
+    0.601
+   ],
+   "cheer": [
+    0.667,
+    0.03
+   ]
+  },
+  "follow": "12/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.008,
+   "marchA": 1.008,
+   "marchB": 0.922
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 23.6,
+  "afterMax": 1.7
+ },
+ "side": {
+  "neutral": {
+   "share": 0.215,
+   "worstBelow": 30.6,
+   "below": {
+    "plains": 39.0,
+    "farmland": 38.6,
+    "swamp": 30.6,
+    "forest": 30.8
+   }
+  },
+  "sideKeyline": {
+   "share": 0.418,
+   "worstBelow": 29.0,
+   "below": {
+    "plains": 37.6,
+    "farmland": 37.2,
+    "swamp": 29.0,
+    "forest": 29.2
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "thornMilitia.front.brace.png": 0.254,
+  "thornMilitia.front.cheer.png": 0.396,
+  "thornMilitia.front.deadA.png": 0.295,
+  "thornMilitia.front.deadB.png": 0.496,
+  "thornMilitia.front.dropped.png": 0.375,
+  "thornMilitia.front.fall.png": 0.334,
+  "thornMilitia.front.fleeA.png": 0.293,
+  "thornMilitia.front.fleeB.png": 0.35,
+  "thornMilitia.front.follow.png": 0.382,
+  "thornMilitia.front.idle2.png": 0.25,
+  "thornMilitia.front.marchA.png": 0.182,
+  "thornMilitia.front.marchB.png": 0.271,
+  "thornMilitia.front.recoil.png": 0.372,
+  "thornMilitia.front.stand.png": 0.257,
+  "thornMilitia.front.strike.png": 0.245,
+  "thornMilitia.front.windup.png": 0.247
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/troops/r1.thornMilitia.front.g3pro.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": false,
+  "scale": true
+ },
+ "pass": false
+}

@@ -1,0 +1,1437 @@
+{
+ "figure": "salamander-01",
+ "family": "salamander",
+ "body": "salamander",
+ "key": "green",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 97.59,
+    "wuPerPx": 0.09907,
+    "kind": "standing",
+    "anchorPx": [
+     325.3,
+     643.1
+    ],
+    "points": {
+     "footFR": [
+      28.4,
+      -17.7
+     ],
+     "footFL": [
+      -6.9,
+      -30.7
+     ],
+     "footBR": [
+      9.4,
+      3.2
+     ],
+     "footBL": [
+      -26.0,
+      -9.7
+     ],
+     "mouth": [
+      32.6,
+      -60.9
+     ],
+     "tailTip": [
+      -29.7,
+      32.3
+     ],
+     "head": [
+      27.3,
+      -56.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "salamander-01.back.idle.white",
+      "scale": 0.1981,
+      "w": 135,
+      "h": 198
+     },
+     "H": {
+      "white": "salamander-01.back.idle.white",
+      "scale": 0.3963,
+      "w": 271,
+      "h": 396
+     }
+    },
+    "texture": "stage C: pilot/ad/frames/salamander-01.back/salamander-01.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "breath": {
+    "heightWu": 101.64,
+    "wuPerPx": 0.10744,
+    "kind": "standing",
+    "anchorPx": [
+     308.0,
+     602.8
+    ],
+    "points": {
+     "footFR": [
+      29.9,
+      -19.0
+     ],
+     "footFL": [
+      -6.7,
+      -31.0
+     ],
+     "footBR": [
+      10.3,
+      4.9
+     ],
+     "footBL": [
+      -27.2,
+      -7.5
+     ],
+     "mouth": [
+      34.3,
+      -61.9
+     ],
+     "tailTip": [
+      -36.8,
+      37.5
+     ],
+     "head": [
+      26.4,
+      -56.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.back.breath",
+      "shadow": "salamander-01.back.breath.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2149,
+      "w": 141,
+      "h": 206
+     },
+     "H": {
+      "frame": "salamander-01.back.breath",
+      "shadow": "salamander-01.back.breath.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4298,
+      "w": 282,
+      "h": 412
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.10744,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.back.S.nb21.2k/salamander-01.back.breath.png",
+    "raw": "stage-d/raw/act.salamander-01.back.S.nb21.2k.png",
+    "rawSha256": "72df66554174225f8287bc939b3283739b99fd5c50d5963d6aec8bf4456ab768",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.back.png",
+    "tag": "act.salamander-01.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.77,
+      "iouMirrored": 0.025,
+      "aspectRatio": 1.026,
+      "headDx": 0.538,
+      "guideHeadDx": 0.553,
+      "facingMargin": 0.745,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 4273,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.2,
+       "groundL": 67.7,
+       "below": 43.5
+      },
+      "farmland": {
+       "bodyL": 24.2,
+       "groundL": 67.3,
+       "below": 43.1
+      },
+      "swamp": {
+       "bodyL": 23.8,
+       "groundL": 58.5,
+       "below": 34.6
+      },
+      "forest": {
+       "bodyL": 23.8,
+       "groundL": 58.7,
+       "below": 34.9
+      },
+      "worstBelow": 34.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.1,
+      "dE_upperThird": 1.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.042
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1734,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.081
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.0,
+      "edgeDevPct": 0.37,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.875,
+     "scale": 1.1601,
+     "aspect": 1.055,
+     "shear": 0.031,
+     "M": [
+      [
+       1.2239,
+       0.03625
+      ],
+      [
+       0.0,
+       1.09962
+      ]
+     ],
+     "t": [
+      -98.47,
+      -20.81
+     ],
+     "guideWuPerPx": 0.2514,
+     "rawPerGuidePx": 2.0,
+     "idleCorrection": 0.9916,
+     "wuPerPxFromArea": 0.10744,
+     "wuPerPxFromThickness": 0.10327,
+     "wuPerPxFromFit": 0.10744,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "tailLash": {
+    "heightWu": 73.62,
+    "wuPerPx": 0.09935,
+    "kind": "standing",
+    "anchorPx": [
+     675.5,
+     646.3
+    ],
+    "points": {
+     "footFR": [
+      26.6,
+      -19.4
+     ],
+     "footFL": [
+      -7.5,
+      -30.1
+     ],
+     "footBR": [
+      8.9,
+      3.1
+     ],
+     "footBL": [
+      -21.6,
+      -8.9
+     ],
+     "mouth": [
+      13.3,
+      -64.0
+     ],
+     "tailTip": [
+      -59.4,
+      2.6
+     ],
+     "head": [
+      12.6,
+      -58.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.back.tailLash",
+      "shadow": "salamander-01.back.tailLash.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1987,
+      "w": 201,
+      "h": 150
+     },
+     "H": {
+      "frame": "salamander-01.back.tailLash",
+      "shadow": "salamander-01.back.tailLash.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3974,
+      "w": 401,
+      "h": 300
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.09935,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.back.S.nb21.2k/salamander-01.back.tailLash.png",
+    "raw": "stage-d/raw/act.salamander-01.back.S.nb21.2k.png",
+    "rawSha256": "72df66554174225f8287bc939b3283739b99fd5c50d5963d6aec8bf4456ab768",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.back.png",
+    "tag": "act.salamander-01.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.701,
+      "iouMirrored": 0.084,
+      "aspectRatio": 1.027,
+      "headDx": 0.652,
+      "guideHeadDx": 0.746,
+      "facingMargin": 0.617,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 4792,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.2,
+       "groundL": 67.7,
+       "below": 43.5
+      },
+      "farmland": {
+       "bodyL": 24.2,
+       "groundL": 67.3,
+       "below": 43.1
+      },
+      "swamp": {
+       "bodyL": 23.8,
+       "groundL": 58.5,
+       "below": 34.6
+      },
+      "forest": {
+       "bodyL": 23.9,
+       "groundL": 58.7,
+       "below": 34.9
+      },
+      "worstBelow": 34.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.1,
+      "dE_upperThird": 1.7,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.754
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1736,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.086
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.0,
+      "edgeDevPct": 0.37,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.846,
+     "scale": 1.0531,
+     "aspect": 0.985,
+     "shear": 0.031,
+     "M": [
+      [
+       1.03726,
+       0.03428
+      ],
+      [
+       0.0,
+       1.06909
+      ]
+     ],
+     "t": [
+      -48.61,
+      -39.17
+     ],
+     "guideWuPerPx": 0.21981,
+     "rawPerGuidePx": 2.0,
+     "idleCorrection": 0.9916,
+     "wuPerPxFromArea": 0.09935,
+     "wuPerPxFromThickness": 0.10778,
+     "wuPerPxFromFit": 0.10349,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 100.84,
+    "wuPerPx": 0.10417,
+    "kind": "standing",
+    "anchorPx": [
+     302.6,
+     681.6
+    ],
+    "points": {
+     "footFR": [
+      30.8,
+      -25.5
+     ],
+     "footFL": [
+      -6.5,
+      -37.0
+     ],
+     "footBR": [
+      11.0,
+      0.9
+     ],
+     "footBL": [
+      -26.3,
+      -10.7
+     ],
+     "mouth": [
+      33.7,
+      -68.8
+     ],
+     "tailTip": [
+      -7.8,
+      37.7
+     ],
+     "head": [
+      29.9,
+      -62.0
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.back.hit",
+      "shadow": "salamander-01.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "salamander-01.back.hit.white",
+      "scale": 0.2083,
+      "w": 141,
+      "h": 205
+     },
+     "H": {
+      "frame": "salamander-01.back.hit",
+      "shadow": "salamander-01.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "salamander-01.back.hit.white",
+      "scale": 0.4167,
+      "w": 282,
+      "h": 409
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.10417,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.back.S.nb21.2k/salamander-01.back.hit.png",
+    "raw": "stage-d/raw/act.salamander-01.back.S.nb21.2k.png",
+    "rawSha256": "72df66554174225f8287bc939b3283739b99fd5c50d5963d6aec8bf4456ab768",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.back.png",
+    "tag": "act.salamander-01.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.509,
+      "iouMirrored": 0.141,
+      "aspectRatio": 1.32,
+      "headDx": 0.288,
+      "guideHeadDx": 0.287,
+      "facingMargin": 0.368,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5145,
+      "keyHueShiftedPct": 0.02,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 24.1,
+       "groundL": 67.7,
+       "below": 43.7
+      },
+      "farmland": {
+       "bodyL": 24.0,
+       "groundL": 67.3,
+       "below": 43.3
+      },
+      "swamp": {
+       "bodyL": 23.7,
+       "groundL": 58.5,
+       "below": 34.8
+      },
+      "forest": {
+       "bodyL": 23.7,
+       "groundL": 58.7,
+       "below": 35.0
+      },
+      "worstBelow": 34.8,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.1,
+      "dE_upperThird": 1.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.033
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1944,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.088
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.0,
+      "edgeDevPct": 0.37,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.783,
+     "scale": 1.3149,
+     "aspect": 1.1,
+     "shear": -0.025,
+     "M": [
+      [
+       1.44642,
+       -0.03372
+      ],
+      [
+       0.0,
+       1.19539
+      ]
+     ],
+     "t": [
+      -123.43,
+      -84.43
+     ],
+     "guideWuPerPx": 0.28336,
+     "rawPerGuidePx": 2.0,
+     "idleCorrection": 0.9916,
+     "wuPerPxFromArea": 0.10417,
+     "wuPerPxFromThickness": 0.10092,
+     "wuPerPxFromFit": 0.10684,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 62.96,
+    "wuPerPx": 0.09383,
+    "kind": "lying",
+    "anchorPx": [
+     542.6,
+     526.8
+    ],
+    "points": {
+     "footFR": [
+      13.6,
+      -17.0
+     ],
+     "footFL": [
+      -6.0,
+      -43.6
+     ],
+     "footBR": [
+      -4.4,
+      -1.8
+     ],
+     "footBL": [
+      -19.0,
+      -32.9
+     ],
+     "mouth": [
+      21.5,
+      -35.6
+     ],
+     "tailTip": [
+      -32.6,
+      35.2
+     ],
+     "head": [
+      31.8,
+      -33.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.back.dead",
+      "shadow": "salamander-01.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1877,
+      "w": 173,
+      "h": 129
+     },
+     "H": {
+      "frame": "salamander-01.back.dead",
+      "shadow": "salamander-01.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3753,
+      "w": 347,
+      "h": 257
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.10133,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.back.S.nb21.2k/salamander-01.back.dead.png",
+    "raw": "stage-d/raw/act.salamander-01.back.S.nb21.2k.png",
+    "rawSha256": "72df66554174225f8287bc939b3283739b99fd5c50d5963d6aec8bf4456ab768",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.back.png",
+    "tag": "act.salamander-01.back.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.047,
+      "iouMirrored": 0.412,
+      "aspectRatio": 1.438,
+      "headDx": -0.586,
+      "guideHeadDx": 0.642,
+      "facingMargin": -0.365,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5102,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 35.6,
+       "groundL": 67.7,
+       "below": 32.1
+      },
+      "farmland": {
+       "bodyL": 35.6,
+       "groundL": 67.3,
+       "below": 31.7
+      },
+      "swamp": {
+       "bodyL": 35.2,
+       "groundL": 58.5,
+       "below": 23.3
+      },
+      "forest": {
+       "bodyL": 35.2,
+       "groundL": 58.7,
+       "below": 23.5
+      },
+      "worstBelow": 23.3,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 12.2,
+      "dE_upperThird": 12.0,
+      "pass_": false
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.697
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1686,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.091
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.0,
+      "edgeDevPct": 0.37,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "identity"
+    ],
+    "registration": {
+     "fitIoU": 0.303,
+     "scale": 1.214,
+     "aspect": 1.1,
+     "shear": 0.15,
+     "M": [
+      [
+       1.3354,
+       0.16861
+      ],
+      [
+       0.0,
+       1.10363
+      ]
+     ],
+     "t": [
+      -176.52,
+      72.8
+     ],
+     "guideWuPerPx": 0.22974,
+     "rawPerGuidePx": 2.0,
+     "idleCorrection": 0.9916,
+     "wuPerPxFromArea": 0.09227,
+     "wuPerPxFromThickness": 0.10133,
+     "wuPerPxFromFit": 0.09383,
+     "fitAtAreaScale": 0.31,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 78.49,
+    "wuPerPx": 0.08467,
+    "kind": "standing",
+    "anchorPx": [
+     394.0,
+     791.4
+    ],
+    "points": {
+     "footFR": [
+      -28.1,
+      -6.9
+     ],
+     "footFL": [
+      6.9,
+      5.8
+     ],
+     "footBR": [
+      -9.4,
+      -27.6
+     ],
+     "footBL": [
+      25.5,
+      -14.8
+     ],
+     "mouth": [
+      -31.0,
+      4.1
+     ],
+     "tailTip": [
+      28.8,
+      -65.4
+     ],
+     "head": [
+      -23.4,
+      -2.3
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "salamander-01.front.idle.white",
+      "scale": 0.1693,
+      "w": 130,
+      "h": 160
+     },
+     "H": {
+      "white": "salamander-01.front.idle.white",
+      "scale": 0.3387,
+      "w": 259,
+      "h": 319
+     }
+    },
+    "texture": "stage C: pilot/ad/frames/salamander-01.front/salamander-01.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "breath": {
+    "heightWu": 66.19,
+    "wuPerPx": 0.08121,
+    "kind": "standing",
+    "anchorPx": [
+     420.5,
+     674.7
+    ],
+    "points": {
+     "footFR": [
+      -28.3,
+      -6.4
+     ],
+     "footFL": [
+      5.2,
+      6.0
+     ],
+     "footBR": [
+      -9.3,
+      -25.1
+     ],
+     "footBL": [
+      25.1,
+      -12.3
+     ],
+     "mouth": [
+      -33.7,
+      -1.0
+     ],
+     "tailTip": [
+      35.7,
+      -52.9
+     ],
+     "head": [
+      -23.6,
+      -0.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.front.breath",
+      "shadow": "salamander-01.front.breath.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1624,
+      "w": 145,
+      "h": 135
+     },
+     "H": {
+      "frame": "salamander-01.front.breath",
+      "shadow": "salamander-01.front.breath.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3248,
+      "w": 290,
+      "h": 270
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.08121,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.front.S.nb21.2k/salamander-01.front.breath.png",
+    "raw": "stage-d/raw/act.salamander-01.front.S.nb21.2k.png",
+    "rawSha256": "686458cfd72baaea1be2618b4291abdcb964b41acb76dcd14e7d932181867b58",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.front.png",
+    "tag": "act.salamander-01.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.929,
+      "iouMirrored": 0.185,
+      "aspectRatio": 0.994,
+      "headDx": 0.805,
+      "guideHeadDx": 0.789,
+      "facingMargin": 0.744,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 4501,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 26.3,
+       "groundL": 67.7,
+       "below": 41.4
+      },
+      "farmland": {
+       "bodyL": 26.3,
+       "groundL": 67.3,
+       "below": 41.0
+      },
+      "swamp": {
+       "bodyL": 26.0,
+       "groundL": 58.5,
+       "below": 32.5
+      },
+      "forest": {
+       "bodyL": 26.0,
+       "groundL": 58.7,
+       "below": 32.8
+      },
+      "worstBelow": 32.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 2.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.843
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1325,
+      "keyHueShiftedPct": 0.08,
+      "pass_": true,
+      "rimFixedShare": 0.127
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 0.44,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.936,
+     "scale": 0.9982,
+     "aspect": 1.0,
+     "shear": -0.006,
+     "M": [
+      [
+       0.99819,
+       -0.00627
+      ],
+      [
+       0.0,
+       0.99819
+      ]
+     ],
+     "t": [
+      3.98,
+      1.69
+     ],
+     "guideWuPerPx": 0.22236,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 0.9771,
+     "wuPerPxFromArea": 0.08121,
+     "wuPerPxFromThickness": 0.0834,
+     "wuPerPxFromFit": 0.08162,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "tailLash": {
+    "heightWu": 60.25,
+    "wuPerPx": 0.10534,
+    "kind": "standing",
+    "anchorPx": [
+     325.6,
+     472.1
+    ],
+    "points": {
+     "footFR": [
+      -28.2,
+      -5.0
+     ],
+     "footFL": [
+      6.6,
+      5.9
+     ],
+     "footBR": [
+      -8.3,
+      -27.7
+     ],
+     "footBL": [
+      22.7,
+      -11.6
+     ],
+     "mouth": [
+      -16.3,
+      10.2
+     ],
+     "tailTip": [
+      63.2,
+      -36.4
+     ],
+     "head": [
+      -14.4,
+      1.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.front.tailLash",
+      "shadow": "salamander-01.front.tailLash.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2107,
+      "w": 197,
+      "h": 123
+     },
+     "H": {
+      "frame": "salamander-01.front.tailLash",
+      "shadow": "salamander-01.front.tailLash.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4214,
+      "w": 393,
+      "h": 247
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11272,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.front.S.nb21.2k/salamander-01.front.tailLash.png",
+    "raw": "stage-d/raw/act.salamander-01.front.S.nb21.2k.png",
+    "rawSha256": "686458cfd72baaea1be2618b4291abdcb964b41acb76dcd14e7d932181867b58",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.front.png",
+    "tag": "act.salamander-01.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.352,
+      "iouMirrored": 0.284,
+      "aspectRatio": 1.008,
+      "headDx": 0.731,
+      "guideHeadDx": 0.65,
+      "facingMargin": 0.068,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5297,
+      "keyHueShiftedPct": 0.04,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 27.0,
+       "groundL": 67.7,
+       "below": 40.8
+      },
+      "farmland": {
+       "bodyL": 27.0,
+       "groundL": 67.3,
+       "below": 40.3
+      },
+      "swamp": {
+       "bodyL": 26.6,
+       "groundL": 58.5,
+       "below": 31.9
+      },
+      "forest": {
+       "bodyL": 26.6,
+       "groundL": 58.7,
+       "below": 32.1
+      },
+      "worstBelow": 31.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.9,
+      "dE_upperThird": 2.3,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.821
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 2096,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.119
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 0.44,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "camera"
+    ],
+    "registration": {
+     "fitIoU": 0.658,
+     "scale": 1.0194,
+     "aspect": 1.0,
+     "shear": -0.038,
+     "M": [
+      [
+       1.01944,
+       -0.03573
+      ],
+      [
+       0.0,
+       1.01944
+      ]
+     ],
+     "t": [
+      13.02,
+      -7.39
+     ],
+     "guideWuPerPx": 0.29309,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 0.9771,
+     "wuPerPxFromArea": 0.08953,
+     "wuPerPxFromThickness": 0.11272,
+     "wuPerPxFromFit": 0.10534,
+     "fitAtAreaScale": 0.573,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 62.66,
+    "wuPerPx": 0.07235,
+    "kind": "standing",
+    "anchorPx": [
+     507.2,
+     880.7
+    ],
+    "points": {
+     "footFR": [
+      -27.7,
+      -18.4
+     ],
+     "footFL": [
+      6.7,
+      -5.4
+     ],
+     "footBR": [
+      -10.7,
+      -28.3
+     ],
+     "footBL": [
+      23.7,
+      -15.3
+     ],
+     "mouth": [
+      -32.9,
+      -36.4
+     ],
+     "tailTip": [
+      4.9,
+      -45.8
+     ],
+     "head": [
+      -24.9,
+      -32.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.front.hit",
+      "shadow": "salamander-01.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "salamander-01.front.hit.white",
+      "scale": 0.1447,
+      "w": 131,
+      "h": 128
+     },
+     "H": {
+      "frame": "salamander-01.front.hit",
+      "shadow": "salamander-01.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "salamander-01.front.hit.white",
+      "scale": 0.2894,
+      "w": 262,
+      "h": 256
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.06982,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.front.S.nb21.2k/salamander-01.front.hit.png",
+    "raw": "stage-d/raw/act.salamander-01.front.S.nb21.2k.png",
+    "rawSha256": "686458cfd72baaea1be2618b4291abdcb964b41acb76dcd14e7d932181867b58",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.front.png",
+    "tag": "act.salamander-01.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.481,
+      "iouMirrored": 0.376,
+      "aspectRatio": 0.734,
+      "headDx": -0.216,
+      "guideHeadDx": 0.063,
+      "facingMargin": 0.105,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5516,
+      "keyHueShiftedPct": 0.05,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 26.1,
+       "groundL": 67.7,
+       "below": 41.7
+      },
+      "farmland": {
+       "bodyL": 26.0,
+       "groundL": 67.3,
+       "below": 41.3
+      },
+      "swamp": {
+       "bodyL": 25.6,
+       "groundL": 58.5,
+       "below": 32.9
+      },
+      "forest": {
+       "bodyL": 25.6,
+       "groundL": 58.7,
+       "below": 33.1
+      },
+      "worstBelow": 32.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.2,
+      "dE_upperThird": 3.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.77
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1391,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.146
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 0.44,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.706,
+     "scale": 1.0072,
+     "aspect": 0.985,
+     "shear": 0.025,
+     "M": [
+      [
+       0.99212,
+       0.02609
+      ],
+      [
+       0.0,
+       1.02257
+      ]
+     ],
+     "t": [
+      -11.73,
+      -14.05
+     ],
+     "guideWuPerPx": 0.19889,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 0.9771,
+     "wuPerPxFromArea": 0.06453,
+     "wuPerPxFromThickness": 0.07396,
+     "wuPerPxFromFit": 0.07235,
+     "fitAtAreaScale": 0.694,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 76.32,
+    "wuPerPx": 0.08885,
+    "kind": "lying",
+    "anchorPx": [
+     472.5,
+     621.0
+    ],
+    "points": {
+     "footFR": [
+      -11.0,
+      6.2
+     ],
+     "footFL": [
+      -8.1,
+      -18.6
+     ],
+     "footBR": [
+      -2.9,
+      -15.7
+     ],
+     "footBL": [
+      11.0,
+      -37.5
+     ],
+     "mouth": [
+      -39.2,
+      21.1
+     ],
+     "tailTip": [
+      33.9,
+      -46.8
+     ],
+     "head": [
+      -32.8,
+      8.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "salamander-01.front.dead",
+      "shadow": "salamander-01.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1777,
+      "w": 153,
+      "h": 155
+     },
+     "H": {
+      "frame": "salamander-01.front.dead",
+      "shadow": "salamander-01.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3554,
+      "w": 306,
+      "h": 311
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.09596,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.salamander-01.front.S.nb21.2k/salamander-01.front.dead.png",
+    "raw": "stage-d/raw/act.salamander-01.front.S.nb21.2k.png",
+    "rawSha256": "686458cfd72baaea1be2618b4291abdcb964b41acb76dcd14e7d932181867b58",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/salamander.S.front.png",
+    "tag": "act.salamander-01.front.S.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.502,
+      "iouMirrored": 0.129,
+      "aspectRatio": 1.003,
+      "headDx": 0.515,
+      "guideHeadDx": 0.684,
+      "facingMargin": 0.373,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 5252,
+      "keyHueShiftedPct": 0.02,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 38.7,
+       "groundL": 67.7,
+       "below": 29.1
+      },
+      "farmland": {
+       "bodyL": 38.7,
+       "groundL": 67.3,
+       "below": 28.7
+      },
+      "swamp": {
+       "bodyL": 38.3,
+       "groundL": 58.5,
+       "below": 20.2
+      },
+      "forest": {
+       "bodyL": 38.3,
+       "groundL": 58.7,
+       "below": 20.4
+      },
+      "worstBelow": 20.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 12.1,
+      "dE_upperThird": 18.9,
+      "pass_": false
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.05
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 1657,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.071
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.001,
+      "edgeDevPct": 0.44,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "identity"
+    ],
+    "registration": {
+     "fitIoU": 0.556,
+     "scale": 0.9953,
+     "aspect": 1.1,
+     "shear": 0.075,
+     "M": [
+      [
+       1.09479,
+       0.06912
+      ],
+      [
+       0.0,
+       0.90478
+      ]
+     ],
+     "t": [
+      -53.97,
+      44.22
+     ],
+     "guideWuPerPx": 0.24134,
+     "rawPerGuidePx": 2.6667,
+     "idleCorrection": 0.9771,
+     "wuPerPxFromArea": 0.08014,
+     "wuPerPxFromThickness": 0.09596,
+     "wuPerPxFromFit": 0.08885,
+     "fitAtAreaScale": 0.633,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {},
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {}
+}

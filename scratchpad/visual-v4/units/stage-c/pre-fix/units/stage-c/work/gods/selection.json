@@ -1,0 +1,283 @@
+{
+ "note": "Stage C gods: the cut used for each god body, nation and view (work/gods/cut/<tag>). status: pass = every automatic check passed; reported = failed after its one re-roll (the better of the two is used, the failure stated). The Thornwood palette of the six generic gods is the tint-zone edit (gd_tint.py) of the Cinder cut named in from.",
+ "figures": {
+  "greatWyrm-cinderHorde": {
+   "back": {
+    "tag": "greatWyrm.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "greatWyrm.front.nb21.2k",
+    "status": "pass"
+   }
+  },
+  "greatWyrm-thornwood": {
+   "back": {
+    "tag": "greatWyrm.back.thornwood",
+    "from": "greatWyrm.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "greatWyrm.front.thornwood",
+    "from": "greatWyrm.front.nb21.2k",
+    "status": "pass"
+   }
+  },
+  "titan-cinderHorde": {
+   "back": {
+    "tag": "titan.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "titan.front.nb21.r2",
+    "status": "pass",
+    "rerolls": [
+     "titan.front.nb21 (camera: head offset 0.104 off the maquette's, gate 0.10)"
+    ]
+   }
+  },
+  "titan-thornwood": {
+   "back": {
+    "tag": "titan.back.thornwood",
+    "from": "titan.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "titan.front.thornwood",
+    "from": "titan.front.nb21.r2",
+    "status": "pass"
+   }
+  },
+  "oracle-cinderHorde": {
+   "back": {
+    "tag": "oracle.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "oracle.front.nb21",
+    "status": "pass"
+   }
+  },
+  "oracle-thornwood": {
+   "back": {
+    "tag": "oracle.back.thornwood",
+    "from": "oracle.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "oracle.front.thornwood",
+    "from": "oracle.front.nb21",
+    "status": "pass"
+   }
+  },
+  "livingMonolith-cinderHorde": {
+   "back": {
+    "tag": "livingMonolith.back.nb21.2k.r2b",
+    "status": "pass",
+    "rerolls": [
+     "livingMonolith.back.nb21 (moss: key colour in the unit 0.93%, side 0.022, facing 0.0)",
+     "livingMonolith.back.nb21.2k.r2 (HTTP 502, no image)"
+    ]
+   },
+   "front": {
+    "tag": "livingMonolith.front.nb21.g2",
+    "status": "pass",
+    "note": "checked against the corrected maquette (the earth mound of the portrait added); against the first maquette it failed only the aspect gate (1.68)"
+   }
+  },
+  "livingMonolith-thornwood": {
+   "back": {
+    "tag": "livingMonolith.back.thornwood",
+    "from": "livingMonolith.back.nb21.2k.r2b",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "livingMonolith.front.thornwood",
+    "from": "livingMonolith.front.nb21.g2",
+    "status": "pass"
+   }
+  },
+  "ascendedHero-cinderHorde": {
+   "back": {
+    "tag": "ascendedHero.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "ascendedHero.front.nb21.r2",
+    "status": "reported",
+    "failed": "camera: IoU 0.588 (gate 0.60), facing margin -0.023 (gate 0.03)",
+    "rerolls": [
+     "ascendedHero.front.nb21 (camera: IoU 0.568, facing 0.003; an older bald face)"
+    ],
+    "why": "the re-roll has the portrait's short dark hair and young face; both front paintings are slimmer than the bulky maquette and stand nearly square to the camera"
+   }
+  },
+  "ascendedHero-thornwood": {
+   "back": {
+    "tag": "ascendedHero.back.thornwood",
+    "from": "ascendedHero.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "ascendedHero.front.thornwood",
+    "from": "ascendedHero.front.nb21.r2",
+    "status": "reported",
+    "failed": "camera, as its Cinder figure"
+   }
+  },
+  "primordial-cinderHorde": {
+   "back": {
+    "tag": "primordial.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "primordial.front.nb21.2k",
+    "status": "reported",
+    "failed": "camera: head offset -0.043 against the maquette's +0.123 (gate 0.10); IoU 0.661 and facing +0.227 pass",
+    "rerolls": [
+     "primordial.front.nb21.2k.r2 (camera: IoU 0.395, facing -0.187: it repainted the portrait's side-on eye-level view)"
+    ]
+   }
+  },
+  "primordial-thornwood": {
+   "back": {
+    "tag": "primordial.back.thornwood",
+    "from": "primordial.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "primordial.front.thornwood",
+    "from": "primordial.front.nb21.2k",
+    "status": "reported",
+    "failed": "camera, as its Cinder figure"
+   }
+  },
+  "ashColossus-cinderHorde": {
+   "back": {
+    "tag": "ashColossus.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "ashColossus.front.nb21",
+    "status": "pass"
+   }
+  },
+  "ashPhoenix-cinderHorde": {
+   "back": {
+    "tag": "ashPhoenix.back.nb21.r2",
+    "status": "pass",
+    "rerolls": [
+     "ashPhoenix.back.nb21 (camera: IoU 0.567 against the first maquette, 0.521 against the corrected wings)"
+    ]
+   },
+   "front": {
+    "tag": "ashPhoenix.front.nb21.g2",
+    "status": "reported",
+    "failed": "camera: IoU 0.280 against the corrected maquette (0.325 against the first), facing -0.016: the wings are raised in the portrait's natural V of feathers, not the maquette's fans, and the long tail laid along the ground moves the silhouette's ground point",
+    "rerolls": [
+     "ashPhoenix.front.nb21.r2 (camera: IoU 0.264, facing 0.007; it copied the maquette's fans as flat paddles and reads less like the portrait)"
+    ],
+    "why": "the first roll reads as the portrait (feathered wings raised in a V, crest, tail); same raw image as ashPhoenix.front.nb21, re-checked against the corrected maquette"
+   }
+  },
+  "pyreLord-cinderHorde": {
+   "back": {
+    "tag": "pyreLord.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "pyreLord.front.nb21.r2",
+    "status": "pass",
+    "rerolls": [
+     "pyreLord.front.nb21 (camera: head offset 0.108 off the maquette's, gate 0.10)"
+    ]
+   }
+  },
+  "cinderIdol-cinderHorde": {
+   "back": {
+    "tag": "cinderIdol.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "cinderIdol.front.nb21.2k.r2",
+    "status": "pass",
+    "rerolls": [
+     "cinderIdol.front.nb21.2k (side: glyph pigment 0.027, gate 0.03)"
+    ]
+   }
+  },
+  "emberHierophant-cinderHorde": {
+   "back": {
+    "tag": "emberHierophant.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "emberHierophant.front.nb21",
+    "status": "pass"
+   }
+  },
+  "wildSpirit-thornwood": {
+   "back": {
+    "tag": "wildSpirit.back.nb21.r2",
+    "status": "reported",
+    "failed": "camera: IoU 0.598 (gate 0.60), head offset +0.476 against the maquette's +0.237",
+    "rerolls": [
+     "wildSpirit.back.nb21 (camera: IoU 0.500, head offset -0.028)"
+    ]
+   },
+   "front": {
+    "tag": "wildSpirit.front.nb21",
+    "status": "pass"
+   }
+  },
+  "worldTree-thornwood": {
+   "back": {
+    "tag": "worldTree.back.nb21",
+    "status": "pass",
+    "facingNA": true,
+    "note": "a tree has no front: the facing gate (IoU against the mirrored maquette) does not apply to a radially symmetric body; facing margin 0.028 (front 0.034), IoU 0.833, every other check passes"
+   },
+   "front": {
+    "tag": "worldTree.front.nb21",
+    "status": "pass"
+   }
+  },
+  "hornedHunter-thornwood": {
+   "back": {
+    "tag": "hornedHunter.back.nb21",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "hornedHunter.front.nb21",
+    "status": "pass"
+   }
+  },
+  "elderWyrm-thornwood": {
+   "back": {
+    "tag": "elderWyrm.back.nb21.2k",
+    "status": "pass"
+   },
+   "front": {
+    "tag": "elderWyrm.front.nb21.2k.t2r2",
+    "status": "pass",
+    "rerolls": [
+     "elderWyrm.front.nb21.2k (HTTP 502, no image)",
+     "elderWyrm.front.nb21.2k.t2 (camera: head offset 0.087 against the maquette's 0.373: the tail's club, the top of the silhouette, curled the other way)"
+    ]
+   }
+  },
+  "motherOfBeasts-thornwood": {
+   "back": {
+    "tag": "motherOfBeasts.back.nb21.r2",
+    "status": "pass",
+    "rerolls": [
+     "motherOfBeasts.back.nb21 (camera: head offset +0.062 against the maquette's -0.075)"
+    ]
+   },
+   "front": {
+    "tag": "motherOfBeasts.front.nb21",
+    "status": "pass"
+   }
+  }
+ }
+}

@@ -1,0 +1,223 @@
+{
+ "figure": "wolf",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.61,
+  "iouMirrored": 0.338,
+  "aspectRatio": 1.097,
+  "headDx": 0.155,
+  "guideHeadDx": 0.268,
+  "pass": false
+ },
+ "variety": {
+  "mostAlike": [
+   "stand~recoil",
+   0.444
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.957
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 10.385,
+  "keyInUnitPct": 0.081,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.06,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.0,
+  "histMin": [
+   "lopeA",
+   0.686
+  ],
+  "maxDE": [
+   "lopeA",
+   6.1
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.707,
+    "de": 5.4,
+    "cloth": 0.0
+   },
+   "deadB": {
+    "hist": 0.724,
+    "de": 3.8,
+    "cloth": 0.0
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.61,
+    0.272
+   ],
+   "idle2": [
+    0.554,
+    0.189
+   ],
+   "lopeA": [
+    0.58,
+    0.425
+   ],
+   "lopeB": [
+    0.554,
+    0.263
+   ],
+   "leapA": [
+    0.6,
+    0.488
+   ],
+   "leapB": [
+    0.647,
+    0.391
+   ],
+   "bite": [
+    0.461,
+    0.344
+   ],
+   "howl": [
+    0.377,
+    -0.024
+   ],
+   "recoil": [
+    0.352,
+    0.204
+   ],
+   "fall": [
+    0.752,
+    0.556
+   ],
+   "deadA": [
+    0.717,
+    0.504
+   ],
+   "deadB": [
+    0.35,
+    0.177
+   ]
+  },
+  "medianIoU": 0.567,
+  "medianMargin": 0.308,
+  "follow": "8/12",
+  "followShare": 0.67
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.611,
+    0.269
+   ],
+   "idle2": [
+    0.562,
+    0.196
+   ],
+   "lopeA": [
+    0.6,
+    0.443
+   ],
+   "lopeB": [
+    0.557,
+    0.266
+   ],
+   "leapA": [
+    0.58,
+    0.469
+   ],
+   "leapB": [
+    0.657,
+    0.396
+   ],
+   "bite": [
+    0.339,
+    0.223
+   ],
+   "howl": [
+    0.393,
+    -0.0
+   ],
+   "recoil": [
+    0.452,
+    0.28
+   ],
+   "fall": [
+    0.506,
+    0.324
+   ]
+  },
+  "follow": "6/10",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 0.963
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 0.0,
+  "afterMax": 0.0
+ },
+ "side": {
+  "kind": "noSide",
+  "fPx": 29.1,
+  "neutral": {
+   "worstBelow": 27.5,
+   "below": {
+    "plains": 35.4,
+    "farmland": 35.1,
+    "swamp": 27.5,
+    "forest": 27.7
+   },
+   "minContrast": 27.5
+  },
+  "pass": true,
+  "rule": "block 15 L* below every ground"
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/wolf.front.fill.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false,
+ "cameraGate": {
+  "follow": "8/12",
+  "excluded": [],
+  "missing": [],
+  "failing": [
+   "bite",
+   "deadB",
+   "howl",
+   "recoil"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "lopeA~lopeB": 0.59
+  },
+  "mostAlike": [
+   "lopeA~bite",
+   0.688
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

@@ -1,0 +1,6 @@
+timeout 3600 node dump.cjs clear 1 start,mid,ref,nearW,far60 > ../out/logs/dump-clear-now.txt 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html TAGP=bf- timeout 3600 node dump.cjs clear 1 start,mid,ref,nearW,far60 > ../out/logs/dump-clear-bf.txt 2>&1
+timeout 3600 node dump.cjs terrain 1 start,mid,ref,nearW > ../out/logs/dump-terrain-now.txt 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/fix/before/game-screen-v4.html TAGP=bf- timeout 3600 node dump.cjs terrain 1 start,mid,ref,nearW > ../out/logs/dump-terrain-bf.txt 2>&1
+python3 -I samecmp.py clear start mid ref nearW far60 > ../out/logs/samecmp-clear.txt 2>&1
+python3 -I samecmp.py terrain start mid ref nearW > ../out/logs/samecmp-terrain.txt 2>&1

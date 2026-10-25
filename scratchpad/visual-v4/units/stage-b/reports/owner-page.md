@@ -1,0 +1,20 @@
+The stage B review page is built, but its main decision, the portrait picks, can't be made from pictures. None of the 60 creature, mount and god portraits exist. The image service has refused requests for lack of credit since 09:13Z. My task gave me no generation budget, so I made no calls.
+
+**Path:** /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/review.html
+
+**Size:** 4,056,608 bytes (about 4.1 MB, under the 12 MB limit). It has 238 embedded WebP images, and its only outside links are Google Fonts.
+
+**For the publisher:** the mockup link in section 5 is `<a id="mockup-link" href="#mockup-url">`. Replace `#mockup-url` with the battle mockup's URL. It is the only unresolved link on the page.
+
+**Shots:** I shot the page at 1440 and 390 wide and looked at every slice. After fixes there is no sideways scroll on the phone and no page errors, and the fonts load.
+- The Copy verdict line comes out right, and picks survive a reload.
+- The page still works when browser storage is blocked.
+- The two Giant faces have A and B greyed out, because both candidates were to be painted from the same description.
+- Shots are in /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/review-build/page-shots/.
+
+**Summary for the owner:**
+Stage B painted all 14 foot soldier types in both views, and the ten that fight in the three battles now stand in them. Men in a block differ through tints, eight shared shield designs, size, rest pose and timing, with no new painted sheets, as you asked. The page shows close crops of varied blocks and a gallery of every troop type with its card. Nine of the ten cards in the battles are still crops of the figure; only the Warden has a painted bust. 66 of the 128 commander faces have their own field figure made from their portrait: every Cinder Horde leader, the hunter and levy captains, and two Elder Druids. The page shows each one beside its portrait, grouped by kind, with Keep or Redo per kind. It says plainly that the six Thornwood leaders in the battles are still flat stand-ins, and that the Cinder Scouts' back view faces the wrong way in four poses. It also explains that each face getting its own weapon comes in the next pass, which needs new paintings. The image service's prepaid credit ran out this morning, so none of the monster, mount or god portraits could be painted. Instead, each of the 24 subjects shows its two written directions, and you can pick A or B now (we then paint only that one), ask for a redo with a note, or wait for the paintings. The six gods either nation can take are listed once each, since the Thornwood version is a green recolour of the Cinder one. On mounts: the Wolf Rider's rider was drawn 1.56 times too big, which is now fixed at no cost. Painting mounts apart from their riders works by editing the joint picture, at about 7 more pictures per mounted unit, and we suggest doing it later, in stage C. Topping up the image account's credit restarts about 70 portrait pictures, 30 queued fixes and about 150 for the remaining commanders.
+
+**What I did beyond reading:** I shot new close-up and play-zoom crops of six blocks and of the Wolf Riders from the current mockup, without editing the mockup. For the four independent troop types, which had no card, I made stand-in card crops with the bundle's own cropping method, labelled as stand-ins. I did not show the god clay models or the test-run stand-in images. Nothing in the repository was touched.
+
+The builder is `build_review.py` in /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/review-build/, alongside `assets.py`, `content.py`, `page.css`, `shoot_blocks.js` and `shoot_page.cjs`.

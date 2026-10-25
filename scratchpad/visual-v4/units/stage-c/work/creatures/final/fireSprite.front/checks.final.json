@@ -1,0 +1,204 @@
+{
+ "figure": "fireSprite",
+ "view": "front",
+ "missing": [
+  "burstB"
+ ],
+ "overlaps": [],
+ "variety": {
+  "mostAlike": [
+   "strike~recoil",
+   0.538
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {},
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 10.064,
+  "keyInUnitPct": 2.181,
+  "fringePct": 0.0,
+  "edgeDevPct": 0.49,
+  "pass_": false
+ },
+ "consistency": {
+  "standCloth": 0.537,
+  "histMin": [
+   "dive",
+   0.739
+  ],
+  "maxDE": [
+   "recoil",
+   5.2
+  ],
+  "lying": {},
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "wingUp": [
+    0.398,
+    0.038
+   ],
+   "wingMid": [
+    0.436,
+    0.015
+   ],
+   "wingDown": [
+    0.479,
+    0.061
+   ],
+   "glide": [
+    0.44,
+    0.088
+   ],
+   "dive": [
+    0.374,
+    0.088
+   ],
+   "strike": [
+    0.382,
+    -0.074
+   ],
+   "recoil": [
+    0.4,
+    -0.066
+   ],
+   "burstA": [
+    0.677,
+    0.553
+   ],
+   "mark": [
+    0.831,
+    0.013
+   ],
+   "wingUp2": [
+    0.436,
+    0.034
+   ],
+   "wingDown2": [
+    0.487,
+    -0.004
+   ]
+  },
+  "medianIoU": 0.436,
+  "medianMargin": 0.034,
+  "follow": "2/11",
+  "followShare": 0.18
+ },
+ "cameraBody": {
+  "cells": {
+   "wingUp": [
+    0.335,
+    0.05
+   ],
+   "wingMid": [
+    0.297,
+    0.009
+   ],
+   "wingDown": [
+    0.336,
+    0.036
+   ],
+   "glide": [
+    0.417,
+    0.07
+   ],
+   "dive": [
+    0.418,
+    0.139
+   ],
+   "strike": [
+    0.383,
+    -0.081
+   ],
+   "recoil": [
+    0.338,
+    -0.082
+   ],
+   "burstA": [
+    0.203,
+    0.032
+   ],
+   "wingUp2": [
+    0.314,
+    0.036
+   ],
+   "wingDown2": [
+    0.347,
+    0.001
+   ]
+  },
+  "follow": "0/10",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {},
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 57.9,
+  "afterMax": 1.1
+ },
+ "side": {
+  "kind": "noSide",
+  "fPx": 20.0,
+  "neutral": {
+   "worstBelow": 23.8,
+   "below": {
+    "plains": 31.1,
+    "farmland": 30.7,
+    "swamp": 23.8,
+    "forest": 24.0
+   },
+   "minContrast": 23.8
+  },
+  "pass": true,
+  "rule": "contrast either way (self-lit flame)"
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/fireSprite.front.paint.r2.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": false,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false,
+ "cameraGate": {
+  "follow": "0/9",
+  "excluded": [
+   "burstA",
+   "mark"
+  ],
+  "missing": [],
+  "failing": [
+   "dive",
+   "glide",
+   "recoil",
+   "strike",
+   "wingDown",
+   "wingDown2",
+   "wingMid",
+   "wingUp",
+   "wingUp2"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "wingUp~wingDown": 0.551
+  },
+  "mostAlike": [
+   "wingMid~strike",
+   0.564
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

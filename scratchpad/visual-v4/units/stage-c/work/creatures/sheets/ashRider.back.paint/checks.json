@@ -1,0 +1,264 @@
+{
+ "figure": "ashRider",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.58,
+  "iouMirrored": 0.162,
+  "aspectRatio": 1.151,
+  "headDx": 0.481,
+  "guideHeadDx": 0.204,
+  "pass": false
+ },
+ "variety": {
+  "mostAlike": [
+   "stand~windup",
+   0.839
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 15.565,
+  "keyInUnitPct": 0.441,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.47,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.1,
+  "histMin": [
+   "boltA",
+   0.834
+  ],
+  "maxDE": [
+   "windup",
+   1.5
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.782,
+    "de": 2.7,
+    "cloth": 0.128
+   },
+   "deadB": {
+    "hist": 0.861,
+    "de": 0.7,
+    "cloth": 0.099
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.58,
+    0.418
+   ],
+   "walkA": [
+    0.563,
+    0.399
+   ],
+   "walkB": [
+    0.564,
+    0.393
+   ],
+   "gallopA": [
+    0.453,
+    0.388
+   ],
+   "gallopB": [
+    0.535,
+    0.301
+   ],
+   "charge": [
+    0.602,
+    0.546
+   ],
+   "windup": [
+    0.614,
+    0.42
+   ],
+   "strike": [
+    0.613,
+    0.455
+   ],
+   "recoil": [
+    0.625,
+    0.421
+   ],
+   "fall": [
+    0.595,
+    0.377
+   ],
+   "deadA": [
+    0.511,
+    0.168
+   ],
+   "deadB": [
+    0.46,
+    0.378
+   ],
+   "boltA": [
+    0.719,
+    0.658
+   ],
+   "boltB": [
+    0.689,
+    0.488
+   ],
+   "cheer": [
+    0.728,
+    0.524
+   ]
+  },
+  "medianIoU": 0.595,
+  "medianMargin": 0.418,
+  "follow": "11/15",
+  "followShare": 0.73
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.599,
+    0.434
+   ],
+   "walkA": [
+    0.59,
+    0.427
+   ],
+   "walkB": [
+    0.482,
+    0.306
+   ],
+   "gallopA": [
+    0.538,
+    0.467
+   ],
+   "gallopB": [
+    0.601,
+    0.364
+   ],
+   "charge": [
+    0.564,
+    0.506
+   ],
+   "windup": [
+    0.464,
+    0.287
+   ],
+   "strike": [
+    0.534,
+    0.374
+   ],
+   "recoil": [
+    0.474,
+    0.299
+   ],
+   "fall": [
+    0.458,
+    0.245
+   ],
+   "boltA": [
+    0.58,
+    0.52
+   ],
+   "boltB": [
+    0.668,
+    0.462
+   ],
+   "cheer": [
+    0.759,
+    0.545
+   ]
+  },
+  "follow": "7/13",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 14.9,
+  "afterMax": 0.3
+ },
+ "side": {
+  "fPx": 39.5,
+  "f28": {
+   "neutral": {
+    "share": 0.075,
+    "worstBelow": 15.0
+   },
+   "sideKeyline": {
+    "share": 0.299,
+    "worstBelow": 13.7
+   }
+  },
+  "neutral": {
+   "share": 0.084,
+   "worstBelow": 20.8,
+   "below": {
+    "plains": 26.5,
+    "farmland": 26.2,
+    "swamp": 20.8,
+    "forest": 20.9
+   }
+  },
+  "sideKeyline": {
+   "share": 0.325,
+   "worstBelow": 19.0,
+   "below": {
+    "plains": 25.1,
+    "farmland": 24.7,
+    "swamp": 19.0,
+    "forest": 19.2
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": null,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/ashRider.back.paint.nb21.png",
+ "gates": {
+  "camera": false,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": false,
+ "cameraGate": {
+  "follow": "11/15",
+  "excluded": [],
+  "missing": [],
+  "failing": [
+   "deadA",
+   "deadB",
+   "gallopA",
+   "gallopB"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "walkA~walkB": 0.833,
+   "gallopA~gallopB": 0.415
+  },
+  "mostAlike": [
+   "stand~windup",
+   0.839
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

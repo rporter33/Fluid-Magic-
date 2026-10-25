@@ -1,0 +1,38 @@
+{
+  "file": "thornwood__grovePriest__01.png",
+  "sha256": "21a21def1abf6edddd7a0ab65764760cdb790848c319e82efcf34f53e40954a3",
+  "tool": "Gemini API (network secret)",
+  "model": "gemini-nano-banana-2.1",
+  "date": "2026-10-22",
+  "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one fantasy war leader, three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or headgear about 9% from the top edge, the eyes about 39% from the top, the chin about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One figure only. No hands, no weapons raised toward the face, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head or headgear, the hair and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the headgear or hair and the light face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows, except where the subject below says a mage's eyes glow. No saturated red, orange, green or blue area larger than a small clasp or trim.\n\nSubject: A warden of the Thornwood, forest clans who live among ancient trees: bark-brown weathered skin, bark-and-leaf clothing and armor in moss green and bark brown.\nA Grove Priest: a living wreath crown, moss in the hair, a plain robe with a carved clasp.\nPerson: about seventy-five, an old serene face, a long white beard, pale weathered skin. Kit: a wreath of oak leaves and acorns; a green-grey robe; a clasp carved as an oak leaf.",
+  "references": [
+    "p0-gpt-rim.png"
+  ],
+  "aspect": "1:1",
+  "usage": {
+    "promptTokenCount": 1603,
+    "candidatesTokenCount": 1623,
+    "totalTokenCount": 3360,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 483
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 1120
+      }
+    ],
+    "thoughtsTokenCount": 134,
+    "serviceTier": "standard"
+  },
+  "seconds": 11.4,
+  "modelText": [],
+  "approved": null
+}

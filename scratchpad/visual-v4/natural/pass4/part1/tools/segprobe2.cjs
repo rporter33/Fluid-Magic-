@@ -1,0 +1,17 @@
+// a failing bank sample against the solver's view: node segprobe2.cjs <query> <viewExpr> <A> <B> <side> [tmode]
+const { launch, open, ev, mev } = require('./lib.cjs'); const { execSync } = require('child_process');
+(async () => { const [q, vexpr, A, B2, side] = process.argv.slice(2); const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.env.PAGEFILE, { log, q, settle: 1500 }); await p.mouse.move(720, 896);
+  if (process.env.TMODE) { await mev(p, "setMode('terrain')"); await p.waitForFunction(() => window.__mock.look().clear, null, { timeout: 300000, polling: 300 }); await p.waitForTimeout(1500); }
+  if (vexpr) await ev(p, vexpr); await p.waitForTimeout(1800);
+  const r = await mev(p, `(() => { const a = names.indexOf('${A}'), c = names.indexOf('${B2}'), sd = names.indexOf('${side}'), k = ekey(a, c), e = EDGE.get(k), band = bandOf(cam.s); const P = rlFloorPlan(rlFloorEdgesOf(sd, band).filter((o) => o.e === e));
+    state.sel = null; hoverProv = -1; rlFrame(RL_LF.LAND, true); hoverProv = sd; draw(); const land = rlReadPlan(P); hoverProv = -1; rlFrame(RL_LF.LINES, true); hoverProv = sd; draw(); const lines = rlReadPlan(P); hoverProv = -1;
+    const ctx = rlCtxTinted(rlLineCtx(), sd, false), st = rlBankStyle(e, k, sd, ctx), R = rlRiverGeo()[RL_WAT.edge.get(k).r], idx = RL_WAT.edge.get(k).idx; SKIP.clear(); RCK = null; draw();
+    const bad = []; for (const pt of P.pts) { let bst = 0; const row = []; for (let kk = pt.k0; kk < pt.k1; kk += 2) { const o = (kk / 2) * 3, X = [lines[o], lines[o + 1], lines[o + 2]], Y = [land[o], land[o + 1], land[o + 2]], cc = rlWcag(X, Y); row.push(rgb2hex(Y) + '>' + rgb2hex(X) + ' ' + cc.toFixed(2)); if (cc > bst) bst = cc; }
+      if (bst < 2.3) bad.push({ at: pt.at, best: +bst.toFixed(2), xy: [P.idx[pt.k0] / dpr, P.idx[pt.k0 + 1] / dpr], row }); }
+    const segs = st.seg.map((s, m) => { const p0 = R.S[idx[m]], p1 = R.S[idx[m + 1]], L = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) || 1, sg = rlBankSign(e, sd), nx = (-(p1[1] - p0[1]) / L) * sg, ny = ((p1[0] - p0[0]) / L) * sg, h = R.hw[idx[m]] * cam.s, w = rlW();
+      const gi = rlGroundSides(p0[0], p0[1], p1[0], p1[1], nx, ny, ctx.look, ctx.lvl, ctx.states, [h + 0.5 + w.h / 2])[0]; const byT = {}; for (const g of gi) byT[g[5]] = rgb2hex([g[1], g[2], g[3]]);
+      return { m, from: toScreen(...p0).map(Math.round), to: toScreen(...p1).map(Math.round), i: s.i && [s.i[0], +s.i[1].toFixed(2)], o: s.o && [s.o[0], +s.o[1].toFixed(2)], served: s.served, of: s.of, innerGround: Object.values(byT).join(' ') }; });
+    const rc = canvas.getBoundingClientRect(); return { key: st.key, segs, bad, rect: [rc.left, rc.top], ctxKey: ctx.key.slice(0, 60) }; })()`);
+  console.log(JSON.stringify({ key: r.key, ctx: r.ctxKey })); for (const s of r.segs) console.log(JSON.stringify(s)); for (const x of r.bad) console.log('BAD', JSON.stringify(x));
+  if (r.bad.length) { const [x, y] = r.bad[0].xy, f = process.argv[8] || '/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass4/part1/wip/seg2.png'; await ev(p, `m.ev('hoverProv = names.indexOf("${side}"); draw()')`); await p.waitForTimeout(300); await p.screenshot({ path: f, clip: { x: r.rect[0] + x - 40, y: r.rect[1] + y - 30, width: 80, height: 60 } }); execSync(`python3 -c "from PIL import Image; a=Image.open('${f}'); a.resize((a.width*6,a.height*6),Image.NEAREST).save('${f}')"`); }
+  await b.close(); })();

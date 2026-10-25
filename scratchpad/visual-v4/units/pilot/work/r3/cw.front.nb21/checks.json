@@ -1,0 +1,245 @@
+{
+ "figure": "cinderWarrior",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.702,
+  "iouMirrored": 0.632,
+  "aspectRatio": 0.949,
+  "headDx": -0.096,
+  "guideHeadDx": -0.054,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.624,
+  "marchLegsIoU": 0.453,
+  "mostAlike": [
+   "stand~marchA",
+   0.746
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.006,
+   "marchA": 1.0,
+   "marchB": 0.944
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 7.605,
+  "keyInUnitPct": 0.145,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.86,
+  "pass_": true
+ },
+ "side": {
+  "plains": {
+   "share": 0.148,
+   "blockL": 30.6,
+   "groundL": 67.7,
+   "below": 37.1
+  },
+  "farmland": {
+   "share": 0.148,
+   "blockL": 30.6,
+   "groundL": 67.3,
+   "below": 36.7
+  },
+  "swamp": {
+   "share": 0.148,
+   "blockL": 29.8,
+   "groundL": 58.5,
+   "below": 28.6
+  },
+  "forest": {
+   "share": 0.148,
+   "blockL": 29.9,
+   "groundL": 58.7,
+   "below": 28.9
+  },
+  "share": 0.148,
+  "pass": false
+ },
+ "thresholds": {
+  "cameraIoU": 0.6,
+  "aspectRatio": [
+   0.75,
+   1.33
+  ],
+  "headDx": 0.1,
+  "facingMargin": 0.03,
+  "marchIoU": 0.86,
+  "marchLegsIoU": 0.72,
+  "distinctIoU": 0.92,
+  "marchIoURobe": 0.95,
+  "distinctIoURobe": 0.95,
+  "scaleSpread": 0.15,
+  "fringePct": 0.2,
+  "keyInUnitPct": 0.5,
+  "edgeDevPct": 8.0,
+  "sideShare": 0.3,
+  "valueBelowGround": 15.0
+ },
+ "consistency": {
+  "standCloth": 0.246,
+  "frames": {
+   "idle2": {
+    "hist": 0.917,
+    "de": 1.2,
+    "cloth": 0.301
+   },
+   "marchA": {
+    "hist": 0.905,
+    "de": 1.3,
+    "cloth": 0.206
+   },
+   "marchB": {
+    "hist": 0.864,
+    "de": 3.0,
+    "cloth": 0.157
+   },
+   "windup": {
+    "hist": 0.887,
+    "de": 0.9,
+    "cloth": 0.254
+   },
+   "strike": {
+    "hist": 0.88,
+    "de": 2.6,
+    "cloth": 0.274
+   },
+   "follow": {
+    "hist": 0.915,
+    "de": 1.5,
+    "cloth": 0.27
+   },
+   "brace": {
+    "hist": 0.906,
+    "de": 1.6,
+    "cloth": 0.228
+   },
+   "recoil": {
+    "hist": 0.879,
+    "de": 1.8,
+    "cloth": 0.221
+   },
+   "fall": {
+    "hist": 0.867,
+    "de": 2.3,
+    "cloth": 0.196
+   },
+   "deadA": {
+    "hist": 0.85,
+    "de": 3.7,
+    "cloth": 0.136
+   },
+   "deadB": {
+    "hist": 0.874,
+    "de": 0.6,
+    "cloth": 0.258
+   },
+   "fleeA": {
+    "hist": 0.878,
+    "de": 3.0,
+    "cloth": 0.178
+   },
+   "fleeB": {
+    "hist": 0.896,
+    "de": 2.7,
+    "cloth": 0.195
+   },
+   "cheer": {
+    "hist": 0.851,
+    "de": 3.8,
+    "cloth": 0.181
+   }
+  },
+  "histMin": [
+   "deadA",
+   0.85
+  ],
+  "maxDE": [
+   "cheer",
+   3.8
+  ],
+  "clothRatio": [
+   0.55,
+   1.22
+  ],
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.702,
+    0.07
+   ],
+   "idle2": [
+    0.75,
+    0.189
+   ],
+   "marchA": [
+    0.726,
+    0.134
+   ],
+   "marchB": [
+    0.663,
+    0.069
+   ],
+   "windup": [
+    0.723,
+    0.15
+   ],
+   "strike": [
+    0.66,
+    0.294
+   ],
+   "follow": [
+    0.595,
+    0.157
+   ],
+   "brace": [
+    0.585,
+    0.146
+   ],
+   "recoil": [
+    0.632,
+    0.117
+   ],
+   "fall": [
+    0.548,
+    0.279
+   ],
+   "deadA": [
+    0.694,
+    0.369
+   ],
+   "deadB": [
+    0.823,
+    0.71
+   ],
+   "fleeA": [
+    0.606,
+    0.075
+   ],
+   "fleeB": [
+    0.776,
+    0.478
+   ],
+   "cheer": [
+    0.653,
+    0.102
+   ]
+  },
+  "medianIoU": 0.663,
+  "medianMargin": 0.15,
+  "follow": "14/15",
+  "followShare": 0.93
+ },
+ "sheet": "pilot/raw/r3/cw.front.nb21.png",
+ "model": "nb21"
+}

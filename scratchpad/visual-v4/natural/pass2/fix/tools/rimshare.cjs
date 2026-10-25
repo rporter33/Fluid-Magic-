@@ -1,0 +1,5 @@
+// the rim's share of each wild's outline at a few scales, and per edge (land terrain)
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }, p = await open(b, PAGE, { log, settle: 800 }); await p.mouse.move(720, 894);
+  const r = await mev(p, `(() => { rlWildRimMap(); const out = {}; for (const s of [minScale, 96 / MED_DIAM, 1.0, 1.142, maxScale * 0.8]) { const row = {}; for (const w of WILDS) { let t = 0, rr = 0; const per = {}; for (const e of rlWildOutline(w)) { const E = RL_WRIM.map.get(e.c + ':' + e.j); const L = E.L, f = rlWildRimRuns(E, s).reduce((a, [p, q]) => a + q - p, 0); t += L; rr += L * f; const k = terr[e.j]; per[k] = per[k] || [0, 0]; per[k][0] += L * f; per[k][1] += L; } row[w.name] = { share: +(rr / t).toFixed(2), len: Math.round(t), byTerrain: Object.fromEntries(Object.entries(per).map(([k, v]) => [k, +(v[0] / v[1]).toFixed(2) + ' of ' + Math.round(v[1])])) }; } out[(s * MED_DIAM).toFixed(0)] = row; } return out; })()`);
+  console.log(JSON.stringify(r, null, 1)); await b.close(); })();

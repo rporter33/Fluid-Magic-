@@ -1,0 +1,93 @@
+{
+ "id": "oakheart-01a",
+ "unit": "oakheart",
+ "nation": "thornwood",
+ "group": "creatures",
+ "subject": "oakheart",
+ "promptFile": "stage-b/work/portraits/prompts-used/oakheart.01a.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 56786,
+  "game": 18880,
+  "small": 1780
+ },
+ "sourceFile": "stage-b/raw/portraits/oakheart.01a.nb21.png",
+ "sourceSha256": "4036734e2fa0aab51e17370e380a20b3f04fc26b69d78227f62f8563ed90e041",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one Oakheart, a sacred warrior of living oak wood (a creature, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the thorned helm about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at mid-chest, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the thorned helm and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and thorned helm and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy, except the side's cloth: cloth of a deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour, which shows clearly on the shoulders (the mantle), so the card reads as that side at a glance. Nothing in the image glows; the knot eyes are dark and do not glow. Apart from the side's cloth, no saturated area larger than a thin crack or a small patch.\n\nSubject: An Oakheart, a walking oak under thornplate, a sacred warrior of the Thornwood: a broad-shouldered warrior whose whole body is living oak wood, armoured in grown thornplate; not a tree with a face, but a warrior made of oak.\nCreature: its head is a block of living oak wood with a face only suggested in the grain, turned three-quarters toward the right: a heavy brow ridge of bark, two deep dark knotholes for eyes with no whites, no irises and no eyeballs, a straight split in the wood for a mouth, a jaw of rough brown bark; small oak twigs with a few lobed oak leaves sprouting at the temples. Thornplate: a helm of dark, overlapping plates of hard bark bristling with long sharp thorns, grown, not forged; heavy thornplate pauldrons with thorns along their edges; a mantle of the side's cloth over the shoulders and the upper chest under the pauldrons; a cord of acorns at the throat. Marks: the thorned bark helm, the lobed oak leaves at the temples, the dark knothole eyes, the thorny pauldrons, the bottle-green mantle.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "thorned bark helm",
+   "read": null
+  },
+  {
+   "mark": "lobed oak leaves at the temples",
+   "read": null
+  },
+  {
+   "mark": "dark knothole eyes",
+   "read": null
+  },
+  {
+   "mark": "thorny pauldrons",
+   "read": null
+  },
+  {
+   "mark": "bottle-green mantle",
+   "read": null
+  },
+  {
+   "mark": "cord of acorns",
+   "read": null
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.5,
+   "bgSpread": 2.6,
+   "floor": 3.8,
+   "top": 0.061,
+   "low": 1.0,
+   "bottomCut": 0.531,
+   "cx": 0.446,
+   "subject": 0.4,
+   "light": -0.6,
+   "rim": 0.575,
+   "read48": 19.5,
+   "muted": 0.0019,
+   "satAll": 0.0019,
+   "side": {
+    "window": 0.1677,
+    "lock": 0.1975
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "replaced",
+  "note": "A carved man's face with eyes, lids, a nose and a beard; re-rolled.",
+  "marks": {},
+  "by": "art director (stage B portraits, resume)"
+ }
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Fluid Magic game screen with the v4 relief map (Map look: Relief | Painted (v3)) and the natural view (Terrain colours: Natural | Clear; the Terrain mode);
+# parts copied from wartable-design/mock-work/parts. natural/design-final.md §13: p58 split into a (base), b (shared rasters), c (Clear), d (wilds, water, scheduler),
+# n (natural covers), m (natural materials); p59 into the draw, a (rim) and b (lines, water); p60 into the draw, a (camera) and b (mode colours);
+# p61 into the layout, p62 (figures) and p63 (labels); p80d into the rest and e (start); p88 the natural view's checks. AD critique (natural/critique.md): p59c, the Near detail pass.
+cd "$(dirname "$0")"
+OUT=game-screen-v4.html
+{ cat parts/p00a-head.html; sed -n '2,264p' parts/orig-css.txt; cat parts/p00b-css.css parts/p00d-relief.css parts/p00c-body.html parts/p10a-icons.js parts/p10b-core.js parts/p12-edges.js parts/p20-time.js parts/p30a-tips.js parts/p30b-provtip.js parts/p40-scene.js parts/p50-deco.js parts/p52-stamps.js parts/p54-feat.js parts/p55-paint.js parts/p57-letter.js parts/p58a-relief-base.js parts/p58b-relief-shared.js parts/p58c-relief-clear.js parts/p58d-relief-water.js parts/p58n-covers.js parts/p58m-materials.js parts/p58w-natural-wilds.js parts/p59-relief-draw.js parts/p59a-relief-rim.js parts/p59b-relief-lines.js parts/p59c-relief-detail.js parts/p60-draw.js parts/p60a-camera.js parts/p60b-modes.js parts/p61a-figlib.js parts/p61-relief-pieces.js parts/p62-relief-figures.js parts/p63-relief-labels.js parts/p70-portraits.js parts/p80a-tips.js parts/p80b-outliner.js parts/p80c-sel.js parts/p80d-rest.js parts/p80e-start.js parts/p85-tryart.js parts/p86-checks.js parts/p87-relief-checks.js parts/p88-natural-checks.js parts/p89-pass2-checks.js parts/p99-end.html; } > "$OUT"
+wc -c "$OUT"

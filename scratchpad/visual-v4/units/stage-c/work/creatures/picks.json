@@ -1,0 +1,895 @@
+{
+ "figures": {
+  "fireSprite": {
+   "back": {
+    "job": "fireSprite.back.paint.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/fireSprite.back",
+    "others": [
+     "fireSprite.back.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "rim",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "fire",
+     "window": [
+      200.0,
+      352.0
+     ],
+     "to": null,
+     "castShareBefore": 0.3493,
+     "castShareAfter": 0.0
+    },
+    "merged": {},
+    "note": "keycast fire: key-cast pixels max 34.93% -> 0.00% of a frame; blue edge pass: 15393 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "swept-back flame hair": true,
+      "two horn-like flame points": "partly",
+      "slanted dark eye-slits": "hidden in this view",
+      "ragged roaring mouth": "hidden in this view",
+      "no body or limbs": "partly"
+     },
+     "note": "no arms or legs; the flier layout adds a flame tail and two flame wings the bust does not show",
+     "by": "stage C creatures agent, 4x crops (review/identity-fireSprite.png)"
+    }
+   },
+   "front": {
+    "job": "fireSprite.front.paint.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/fireSprite.front",
+    "others": [
+     "fireSprite.front.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "fire",
+     "window": [
+      200.0,
+      352.0
+     ],
+     "to": null,
+     "castShareBefore": 0.2802,
+     "castShareAfter": 0.0
+    },
+    "merged": {},
+    "note": "keycast fire: key-cast pixels max 28.02% -> 0.00% of a frame; blue edge pass: 11949 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "swept-back flame hair": true,
+      "two horn-like flame points": true,
+      "slanted dark eye-slits": "partly",
+      "ragged roaring mouth": true,
+      "no body or limbs": "partly"
+     },
+     "note": "no arms or legs; the flier layout adds a flame tail and two flame wings the bust does not show",
+     "by": "stage C creatures agent, 4x crops (review/identity-fireSprite.png)"
+    }
+   }
+  },
+  "hornetSwarm": {
+   "back": {
+    "job": "hornetSwarm.back.cfix",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/hornetSwarm.back",
+    "others": [
+     "hornetSwarm.back.fill (shipped before the fix pass: a fuzzy amber bee)",
+     "hornetSwarm.back.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "wasp",
+     "window": [
+      285.0,
+      35.0
+     ],
+     "to": 60.0,
+     "castShareBefore": 0.1721,
+     "castShareAfter": 0.0
+    },
+    "merged": {},
+    "note": "keycast wasp: key-cast pixels max 17.21% -> 0.00% of a frame; magenta edge pass: 12174 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "narrow dull ochre bands": true,
+      "open jagged mandibles": "partly",
+      "swept-back antennae": true,
+      "torn wing edge": "partly",
+      "glossy black head and thorax (a wasp, not a bee)": true
+     },
+     "note": "R4: a hairless black-and-ochre wasp with smoky dark wings, against portrait B (provisional pick)",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   }
+  },
+  "wolf": {
+   "back": {
+    "job": "wolf.back.paint",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/wolf.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "mauve edge turned warm grey on 10202 px (stage C fix 12); blue edge pass: 13397 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "grizzled pale muzzle": "hidden in this view",
+      "scar across the near eye": "hidden in this view",
+      "one fang showing": "hidden in this view",
+      "shaggy ruff": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-wolf.png)"
+    }
+   },
+   "front": {
+    "job": "wolf.front.fill",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/wolf.front",
+    "others": [
+     "wolf.front.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "keycast": null,
+    "merged": {},
+    "note": "mauve edge turned warm grey on 9772 px (stage C fix 12); blue edge pass: 13682 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "grizzled pale muzzle": "partly",
+      "scar across the near eye": false,
+      "one fang showing": "partly",
+      "shaggy ruff": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-wolf.png)"
+    }
+   }
+  },
+  "oakheart": {
+   "back": {
+    "job": "oakheart.back.cfix.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/oakheart.back",
+    "others": [
+     "oakheart.back.fill (shipped before the fix pass: a low flat cap)",
+     "oakheart.back.cfix (R1 fill route: the painted figures kept their caps)",
+     "oakheart.back.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.1296,
+     "castShareAfter": 0.1238
+    },
+    "merged": {},
+    "note": "hue lock redone from 135 degrees with the pale fade (the yellow-green helm leaves kept as leaves); keycast magthin: key-cast pixels max 12.96% -> 12.38% of a frame; magenta edge pass: 34938 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "tall helm of upright bark planks": true,
+      "crown of curved thorns on the helm": true,
+      "fringe of oak leaves": true,
+      "crack across the face": "hidden in this view",
+      "moss in the furrows": "partly",
+      "bottle-green mantle": true
+     },
+     "note": "R1 re-roll (plain edit): the tall plank helm and thorn ring seen from behind on every cell",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   },
+   "front": {
+    "job": "oakheart.front.cfix.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/oakheart.front",
+    "others": [
+     "oakheart.front.fill (shipped before the fix pass: a low flat cap)",
+     "oakheart.front.cfix (R1 fill route: the painted figures kept their caps)",
+     "oakheart.front.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "side"
+    ],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.436,
+     "castShareAfter": 0.3208
+    },
+    "merged": {},
+    "note": "hue lock redone from 135 degrees with the pale fade (the yellow-green helm leaves kept as leaves); keycast magthin: key-cast pixels max 43.60% -> 32.08% of a frame; magenta edge pass: 24531 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "tall helm of upright bark planks": true,
+      "crown of curved thorns on the helm": true,
+      "fringe of oak leaves": true,
+      "crack across the face": "partly",
+      "moss in the furrows": "partly",
+      "bottle-green mantle": true
+     },
+     "note": "R1 re-roll (plain edit): the low cap became the portrait's tall plank helm on every cell; the skull mask reads, its crack only at 4x",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   }
+  },
+  "ashRider": {
+   "back": {
+    "job": "ashRider.back.fill",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/ashRider.back",
+    "others": [
+     "ashRider.back.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "variety",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "nogreen",
+     "window": [
+      85.0,
+      175.0
+     ],
+     "to": 70.0,
+     "castShareBefore": 0.0636,
+     "castShareAfter": 0.0
+    },
+    "merged": {
+     "dropped": "ashRider.back.paint"
+    },
+    "note": "frames taken from the other attempt: {'dropped': 'ashRider.back.paint'}; keycast nogreen: key-cast pixels max 6.36% -> 0.00% of a frame",
+    "identity": {
+     "marks": {
+      "riveted iron face plate": "hidden in this view",
+      "soot-black mane and forelock": true,
+      "ember-orange caparison edge": true,
+      "iron bridle rings": "hidden in this view",
+      "greyer muzzle": "hidden in this view"
+     },
+     "note": "the coat is a lighter dappled grey than the portrait's dark charcoal with pale dapples",
+     "by": "stage C creatures agent, 4x crops (review/identity-ashRider.png)"
+    }
+   },
+   "front": {
+    "job": "ashRider.front.cfix.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/ashRider.front",
+    "others": [
+     "ashRider.front.fill (shipped before the fix pass: light grey coat, no chest caparison)",
+     "ashRider.front.cfix (R6 fill route: caparison on the two clay cells only, the coat still light)",
+     "ashRider.front.paint"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "side",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "nogreen",
+     "window": [
+      85.0,
+      175.0
+     ],
+     "to": 70.0,
+     "castShareBefore": 0.1818,
+     "castShareAfter": 0.0002
+    },
+    "merged": {},
+    "note": "keycast nogreen: key-cast pixels max 18.18% -> 0.02% of a frame",
+    "identity": {
+     "marks": {
+      "riveted iron face plate": true,
+      "soot-black mane and forelock": true,
+      "ember-orange caparison edge": "partly",
+      "iron bridle rings": "partly",
+      "greyer muzzle": "partly",
+      "dark charcoal coat with pale dapples": true
+     },
+     "note": "R6 re-roll (plain edit): the coat is now the portrait's dark charcoal with pale dapples; the caparison still does not cover the chest from the front",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   }
+  },
+  "wolfRider": {
+   "back": {
+    "job": "wolfRider.back.paint.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/wolfRider.back",
+    "others": [
+     "wolfRider.back.fill",
+     "stage B t2r32 (reported, 7/16)"
+    ],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "blue edge pass: 16616 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "bark-plate breast harness": "partly",
+      "bottle-green saddle blanket edge": true,
+      "bone-coloured cord": true,
+      "grey-brown shaggy coat, dark along the neck": true,
+      "pale muzzle": "hidden in this view"
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+    }
+   },
+   "front": {
+    "job": "wolfRider.front.harness",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/wolfRider.front",
+    "others": [
+     "wolfRider.front.harness.r2",
+     "wolfRider.front.kept"
+    ],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "cloth relocked with lightness moved toward 0.38 by at most 0.07 (16 frames; stage C fix 2); coat matched to the lope cells in stand, recoil, fall (stage C fix 2): stand b 0.79 -> 1.31; recoil b 0.93 -> 1.31; fall b 1.22 -> 1.31; blue edge pass: 11225 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "bark-plate breast harness": true,
+      "bottle-green saddle blanket edge": true,
+      "bone-coloured cord": true,
+      "grey-brown shaggy coat, dark along the neck": "partly",
+      "pale muzzle": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+    }
+   },
+   "frontKept": {
+    "job": "wolfRider.front.kept",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/wolfRider.frontKept",
+    "others": [],
+    "status": "reported",
+    "failed": [
+     "side"
+    ],
+    "keycast": null,
+    "merged": {},
+    "note": "cloth relocked with lightness moved toward 0.38 by at most 0.07 (16 frames; stage C fix 2); blue edge pass: 6920 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "bark-plate breast harness": false,
+      "bottle-green saddle blanket edge": true,
+      "bone-coloured cord": false,
+      "grey-brown shaggy coat, dark along the neck": "partly",
+      "pale muzzle": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+    }
+   }
+  },
+  "salamander-02": {
+   "back": {
+    "job": "sal02.back.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-02.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "massive square head": true,
+      "thick worn jaw horns": true,
+      "largest horn snapped to a stump": "partly",
+      "warty brow knobs": true,
+      "ash-dusted scales": "partly",
+      "dewlap": "hidden in this view",
+      "heavy-lidded cloudy eyes": "hidden in this view"
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-02.png)"
+    }
+   },
+   "front": {
+    "job": "sal02.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-02.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "massive square head": true,
+      "thick worn jaw horns": true,
+      "largest horn snapped to a stump": true,
+      "warty brow knobs": true,
+      "ash-dusted scales": "partly",
+      "dewlap": "partly",
+      "heavy-lidded cloudy eyes": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-02.png)"
+    }
+   }
+  },
+  "salamander-03": {
+   "back": {
+    "job": "sal03.back.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-03.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "long narrow crocodile snout": true,
+      "three claw scars": true,
+      "hooked horns, one chipped": "partly",
+      "scute ridge on the head": true,
+      "slightly open mouth, blunt teeth": "hidden in this view",
+      "slit-pupil eye": "hidden in this view"
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-03.png)"
+    }
+   },
+   "front": {
+    "job": "sal03.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-03.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "long narrow crocodile snout": true,
+      "three claw scars": true,
+      "hooked horns, one chipped": "partly",
+      "scute ridge on the head": true,
+      "slightly open mouth, blunt teeth": true,
+      "slit-pupil eye": "partly"
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-03.png)"
+    }
+   }
+  },
+  "salamander-04": {
+   "back": {
+    "job": "sal04.back.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-04.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "narrow wedge viper head": true,
+      "two long ram-like horns": true,
+      "torn ragged neck frill": true,
+      "dried-lava cracks, soot in creases": true,
+      "deep-set eyes under a heavy brow": "partly"
+     },
+     "note": "front view: the frill reads as a row of spines down the neck and back",
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-04.png)"
+    }
+   },
+   "front": {
+    "job": "sal04.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/salamander-04.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": null,
+    "identity": {
+     "marks": {
+      "narrow wedge viper head": true,
+      "two long ram-like horns": true,
+      "torn ragged neck frill": "partly",
+      "dried-lava cracks, soot in creases": true,
+      "deep-set eyes under a heavy brow": true
+     },
+     "note": "front view: the frill reads as a row of spines down the neck and back",
+     "by": "stage C creatures agent, 4x crops (review/identity-salamander-04.png)"
+    }
+   }
+  },
+  "treant-01": {
+   "back": {
+    "job": "treant01.back.norump",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-01.back",
+    "others": [
+     "treant01.back.guide.2k (passed; rounded rump, AD finding)",
+     "treant01.back.guide"
+    ],
+    "status": "pass",
+    "failed": [],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0115,
+     "castShareAfter": 0.0059
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 1.15% -> 0.59% of a frame; magenta edge pass: 6277 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "grey-green alder bark with moss": true,
+      "low budding twig crown": true,
+      "fern fronds on the shoulders": true,
+      "brow ridge, knothole eyes, nose bulge": "hidden in this view",
+      "crooked split mouth": "hidden in this view"
+     },
+     "note": "no-rump back (re-made from the straight-trunk Treant 01 back)",
+     "by": "stage C creatures agent, 4x crops (review/identity-treant-01.png)"
+    }
+   },
+   "front": {
+    "job": "treant01.front.guide.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-01.front",
+    "others": [
+     "treant01.front.guide"
+    ],
+    "status": "pass",
+    "failed": [],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0125,
+     "castShareAfter": 0.0049
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 1.25% -> 0.49% of a frame; magenta edge pass: 6091 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "grey-green alder bark with moss": true,
+      "low budding twig crown": true,
+      "fern fronds on the shoulders": true,
+      "brow ridge, knothole eyes, nose bulge": true,
+      "crooked split mouth": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-treant-01.png)"
+    }
+   }
+  },
+  "treant-02": {
+   "back": {
+    "job": "treant02.back.cfix",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-02.back",
+    "others": [
+     "treant02.back.redress.v2.r2 (shipped before the fix pass: the willow crown cut flat by the top edge)",
+     "treant02.back.redress.v2",
+     "treant02.back.redress.r2",
+     "treant02.back.redress"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera",
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "willow",
+     "window": [
+      285.0,
+      40.0
+     ],
+     "to": 125.0,
+     "castShareBefore": 0.0451,
+     "castShareAfter": 0.0
+    },
+    "merged": {},
+    "note": "keycast willow: key-cast pixels max 4.51% -> 0.00% of a frame; magenta edge pass: 11919 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "pale furrowed willow bark": "partly",
+      "long drooping willow fronds": true,
+      "two knotholes at different heights": "hidden in this view",
+      "long ragged split": "hidden in this view",
+      "no brow, nose or jaw": "hidden in this view"
+     },
+     "note": "R2: the willow crown completed inside the frame; the bark still reads olive with moss streaks",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   },
+   "front": {
+    "job": "treant02.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-02.front",
+    "others": [
+     "treant02.front.redress.r2"
+    ],
+    "status": "reported",
+    "failed": [
+     "fringe"
+    ],
+    "keycast": {
+     "rule": "willow",
+     "window": [
+      285.0,
+      40.0
+     ],
+     "to": 125.0,
+     "castShareBefore": 0.035,
+     "castShareAfter": 0.0
+    },
+    "merged": {},
+    "note": "keycast willow: key-cast pixels max 3.50% -> 0.00% of a frame; magenta edge pass: 15955 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "pale furrowed willow bark": true,
+      "long drooping willow fronds": true,
+      "two knotholes at different heights": true,
+      "long ragged split": true,
+      "no brow, nose or jaw": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-treant-02.png)"
+    }
+   }
+  },
+  "treant-03": {
+   "back": {
+    "job": "treant03.back.redress.v2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-03.back",
+    "others": [
+     "treant03.back.redress (passed; rounded rump)"
+    ],
+    "status": "pass",
+    "failed": [],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0057,
+     "castShareAfter": 0.0023
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 0.57% -> 0.23% of a frame; magenta edge pass: 5115 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "dark-brown split-oak bark": true,
+      "crown of twisted thorny black branches": true,
+      "ivy around the trunk": true,
+      "lightning scar down one cheek": "partly",
+      "burl nose, crack mouth": "partly"
+     },
+     "note": "no-rump back (re-made from the straight-trunk Treant 01 back)",
+     "by": "stage C creatures agent, 4x crops (review/identity-treant-03.png)"
+    }
+   },
+   "front": {
+    "job": "treant03.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-03.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0224,
+     "castShareAfter": 0.0129
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 2.24% -> 1.29% of a frame; magenta edge pass: 6672 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "dark-brown split-oak bark": true,
+      "crown of twisted thorny black branches": true,
+      "ivy around the trunk": true,
+      "lightning scar down one cheek": true,
+      "burl nose, crack mouth": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-treant-03.png)"
+    }
+   }
+  },
+  "treant-04": {
+   "back": {
+    "job": "treant04.back.cfix.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-04.back",
+    "others": [
+     "treant04.back.redress.v2 (shipped before the fix pass: the stems cut flat by the top edge)",
+     "treant04.back.cfix (R2: the stems carried up to the new edge, cut again)",
+     "treant04.back.redress",
+     "treant04.back.redress.r2"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0227,
+     "castShareAfter": 0.0149
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 2.27% -> 1.49% of a frame; magenta edge pass: 13111 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "white birch bark, black lenticels and patches": true,
+      "top forked into two stems": true,
+      "drooping dark twigs, yellow-brown leaves": true,
+      "almond knot-scar eyes, thin scar": "hidden in this view",
+      "dark moss only on the shoulders": true
+     },
+     "note": "R2 re-roll: the two stems end in a crown of twigs inside the frame",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   },
+   "front": {
+    "job": "treant04.front.cfix.r2",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/treant-04.front",
+    "others": [
+     "treant04.front.redress (shipped before the fix pass: the stems cut flat by the top edge)",
+     "treant04.front.cfix (R2: the stems carried up to the new edge, cut again)"
+    ],
+    "status": "reported",
+    "failed": [
+     "camera"
+    ],
+    "keycast": {
+     "rule": "magthin",
+     "window": [
+      300.0,
+      45.0
+     ],
+     "to": 58.0,
+     "castShareBefore": 0.0187,
+     "castShareAfter": 0.0082
+    },
+    "merged": {},
+    "note": "keycast magthin: key-cast pixels max 1.87% -> 0.82% of a frame; magenta edge pass: 6817 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "white birch bark, black lenticels and patches": true,
+      "top forked into two stems": true,
+      "drooping dark twigs, yellow-brown leaves": true,
+      "almond knot-scar eyes, thin scar": true,
+      "dark moss only on the shoulders": true
+     },
+     "note": "R2 re-roll: the two stems end in a crown of twigs inside the frame",
+     "by": "stage C fix pass, 3x-4x crops of the final frames (ad-c/tmp_final*.png, shots/fix-*)"
+    }
+   }
+  },
+  "giant-01": {
+   "back": {
+    "job": "giant01.back.guide",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/giant-01.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "magenta edge pass: 4121 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "broken flattened nose": "hidden in this view",
+      "bald head with grey wisps": true,
+      "stones knotted in the grey beard": "partly",
+      "necklace of huge teeth": "partly",
+      "hide cloak": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-giant-01.png)"
+    }
+   },
+   "front": {
+    "job": "giant01.front.guide",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/giant-01.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "magenta edge pass: 6645 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "broken flattened nose": "partly",
+      "bald head with grey wisps": true,
+      "stones knotted in the grey beard": "partly",
+      "necklace of huge teeth": true,
+      "hide cloak": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-giant-01.png)"
+    }
+   }
+  },
+  "giant-02": {
+   "back": {
+    "job": "giant02.back.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/giant-02.back",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "magenta edge pass: 7439 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "clouded white eye with a scar": "hidden in this view",
+      "wild dark mane": true,
+      "crude iron chain": true,
+      "slate shoulder guard": true,
+      "fleece mantle": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-giant-02.png)"
+    }
+   },
+   "front": {
+    "job": "giant02.front.redress",
+    "dir": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/work/creatures/final/giant-02.front",
+    "others": [],
+    "status": "pass",
+    "failed": [],
+    "keycast": null,
+    "merged": {},
+    "note": "magenta edge pass: 9705 edge pixels de-tinted",
+    "identity": {
+     "marks": {
+      "clouded white eye with a scar": true,
+      "wild dark mane": true,
+      "crude iron chain": true,
+      "slate shoulder guard": true,
+      "fleece mantle": true
+     },
+     "note": null,
+     "by": "stage C creatures agent, 4x crops (review/identity-giant-02.png)"
+    }
+   }
+  }
+ },
+ "note": "stage C creatures picks: the passing sheet, else the best reported attempt (stand-in)"
+}

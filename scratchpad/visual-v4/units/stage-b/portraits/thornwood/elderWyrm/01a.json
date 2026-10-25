@@ -1,0 +1,108 @@
+{
+ "id": "elderWyrm-01a",
+ "unit": "elderWyrm",
+ "nation": "thornwood",
+ "group": "gods",
+ "subject": "elderWyrm",
+ "promptFile": "stage-b/work/portraits/prompts-used/elderWyrm-thornwood.01a.txt",
+ "kind": "god body portrait (plan 3.1: whole body, regal pose, variant 0, swatch 0)",
+ "face": "01",
+ "candidate": "a",
+ "files": {
+  "master": "01a-512.webp",
+  "game": "01a.webp",
+  "small": "01a-64.webp"
+ },
+ "bytes": {
+  "master": 27202,
+  "game": 10190,
+  "small": 2022
+ },
+ "sourceFile": "stage-b/raw/portraits/elderWyrm-thornwood.01a.nb21.png",
+ "sourceSha256": "7e2ba1d1ba2e1a247710b8b648b5b2a4d79bbc2c9b6a5ee123cd2bd0920283c2",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, candle lighting, rim light, muted colours and dark background. Do not copy its head-and-shoulders framing: this painting shows a whole figure from head to foot. The subject, its face, its headgear and every ornament must follow the description below exactly; do not copy the man, the helm, the horns, the fur or the trim from Image 1.\n\nA full-length painted portrait of the Elder Wyrm, a colossal wingless dragon-god that never flies: slow, vast and regenerating, it tramples whatever is small, in a regal pose: standing four-square on short, powerful legs, its long body and tail curving behind it, its neck raised and its head held high and level, jaws closed. Three-quarter front view, the body and the face turned slightly toward the right side of the image. Square image. Framing: the whole figure fills the height of the square: the top of the crown of spines about 6% from the top edge and the feet and tail about 94% from the top, centred, with dark empty space around the silhouette. One figure only: no people, no worshippers, no other creatures, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the spines, the head, the neck and the mossy back that separates the whole silhouette clearly from the background. As in the style reference, much of the figure falls into deep warm shadow: the candle picks out the upper left of the head, the shoulders and the chest, and the lower body and the far side sink into the dark; it is not evenly lit. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects, no landscape, no horizon and no floor: the dark background runs unbroken to the bottom edge, with only a faint soft shadow under the feet and tail.\nMedium: painterly oil on a wood panel, loose visible brushwork and soft edges as in the style reference, moderate detail, never a crisp, clean digital illustration; a strong readable silhouette: the shape of the crown of spines, the long mossy back and the club tail against the dark background must still read when the image is shrunk to 64 pixels.\nColors: muted and earthy. The one clear colour of the beast is the moss along its back: deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Nothing in the image glows: no fire, no smoke, the jaws are closed. No other saturated area larger than a small clasp or trim.\n\nSubject: Body: a long, heavy, low four-legged dragon with no wings at all, a long thick neck and a long heavy tail; scales of bronze-brown (#8A6A3E) in broad bands, a paler bronze belly of broad plates. Head: a broad, heavy head with a deep jaw, closed, and dark amber eyes. Horns: a crown of spines: a ring of long sharp spines rising around the back of the head. Back: a thick mantle of moss grows along its spine from the neck to the tail, deep bottle green, the green of jade in shade, clearly coloured, never grey, slate, olive or yellow-green (#1F6A50), the Thornwood's colour. Tail: a heavy tail ending in a bony club. It has no wings.\nPaint it as described, the whole figure clearly in view.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": {
+  "material": "scale bronze #8A6A3E",
+  "metal": null,
+  "accent": "accent lichen #909080"
+ },
+ "variant0": "variant 0 of every slot: crown of spines; moss back; club tail; scale pattern; no wings",
+ "pose": "regal",
+ "tintZone": "the moss along its back",
+ "cardCrop": {
+  "box512": [
+   247,
+   33,
+   440,
+   226
+  ],
+  "source": "auto",
+  "note": "head and upper body for the 64 px card"
+ },
+ "identityMarks": [
+  {
+   "mark": "crown of spines",
+   "read": true
+  },
+  {
+   "mark": "moss back in the nation's colour",
+   "read": true
+  },
+  {
+   "mark": "club tail",
+   "read": true
+  },
+  {
+   "mark": "banded bronze scales",
+   "read": true
+  },
+  {
+   "mark": "no wings",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 2.8,
+   "bgSpread": 0.0,
+   "floor": 0.6,
+   "top": 0.09,
+   "low": 0.936,
+   "bottomCut": 0.0,
+   "cx": 0.541,
+   "subject": 0.247,
+   "light": -3.9,
+   "rim": 0.569,
+   "read48": 17.8,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": {
+    "window": 0.1135,
+    "lock": 0.208
+   }
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "good",
+  "note": "Wingless bronze dragon with the crown of spines, green moss back and club tail; compact rather than long and low.",
+  "marks": {
+   "crown of spines": true,
+   "moss back in the nation's colour": true,
+   "club tail": true,
+   "banded bronze scales": true,
+   "no wings": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

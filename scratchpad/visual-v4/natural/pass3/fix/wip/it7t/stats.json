@@ -1,0 +1,92 @@
+{
+ "01-start": {
+  "samples": 305,
+  "fails": 0,
+  "share": 0.431,
+  "worst": null,
+  "ex": []
+ },
+ "04-mid-grey-mere": {
+  "samples": 341,
+  "fails": 0,
+  "share": 0.18,
+  "worst": null,
+  "ex": []
+ },
+ "08-max-ash": {
+  "samples": 700,
+  "fails": 0,
+  "share": 0.122,
+  "worst": null,
+  "ex": []
+ },
+ "09-max-grey": {
+  "samples": 380,
+  "fails": 0,
+  "share": 0.122,
+  "worst": null,
+  "ex": []
+ },
+ "look": {
+  "peaks": {
+   "texels": 65834,
+   "Lp5": 11.5,
+   "Lp50": 34.6,
+   "Lp95": 54.3,
+   "Lmax": 77.6,
+   "textelsOutsideTheirCells": 0,
+   "cap": 54.85,
+   "passableRockP999": 52.35,
+   "overCap": 0,
+   "rockOverCap": 0,
+   "snowShare": 0.0533,
+   "snowOverCapShare": 0.024,
+   "snowLmax": 77.6,
+   "snowMax": 80,
+   "snowShareMax": 0.08,
+   "rule": "pass 3 prototype: rock under the cap; snow on the top crests to snowMax on at most snowShareMax",
+   "snowPass": true
+  },
+  "mere": {
+   "texels": 14159,
+   "Lp5": 27.9,
+   "Lp50": 33.6,
+   "Lp95": 44.6,
+   "Lmax": 52.7,
+   "textelsOutsideTheirCells": 0,
+   "waterMeanLab": [
+    32.8,
+    -18.7,
+    1.1
+   ],
+   "naturalWaterLab": [
+    36.8,
+    -23.8,
+    -3.1
+   ],
+   "waterDE": 5.3,
+   "fringeShare": 0.116
+  },
+  "pass": true
+ },
+ "times": {
+  "bakeCpu": 10128,
+  "nat": {
+   "wilds": 1633.5,
+   "coverBlend": 581.9,
+   "covers": 693.1,
+   "canopyShadow": 137.1,
+   "materials": 2080.3,
+   "wildTexels": 3268.5,
+   "corners": 43.6,
+   "canvas": 620.3
+  }
+ },
+ "msT": {
+  "landHeight": 111.8,
+  "low": 238.9,
+  "fine": 523.6,
+  "cast": 594.4,
+  "landShadow": 157.6
+ }
+}

@@ -1,0 +1,47 @@
+terrain 1440x900 full pageErrors 0 failedSteps 0 []
+  shift7 "terrain"
+  hover-start {"label":"start","reachable":60,"hovered":50,"hoverHits":47,"tipNamesProvince":47,"tipNamesTerrain":47,"byFog":{"sight":39,"unexplored":7,"outofsight":1},"hoverMiss":["Elmgate->null","Deepmoss->null","Karford->null"],"tipMiss":["Elmgate (Plains, sight): WyrmarchFarmlandOwnerIndependentPopulation5,900Supply (eaten / given)0","Deepmoss (Forest, outofsight): WyrmarchFarmlandOwnerIndependentPopulation5,900Supply (eaten / given)0","Karford (Farmland, sight): BriarmoorForestOwnerCinder HordePopulation5,500Supply (eaten / given)0"],"lines":{"provincesWithLinesMeasured":44,"provincesWithAnySampleUnder
+  hover-mid {"label":"mid","reachable":25,"hovered":20,"hoverHits":19,"tipNamesProvince":19,"tipNamesTerrain":20,"byFog":{"sight":20},"hoverMiss":["Kharnath->null"],"tipMiss":[],"lines":{"provincesWithLinesMeasured":18,"provincesWithAnySampleUnderFloor":5,"focusMinNeutral":1.551,"focusMinInternal":1.622,"othersNeutralP90max":7.682,"othersInternalP90max":10.171,"othersMaxOfMax":12.617,"under":["Briardale: Morholt/Briardale internal min 1.622 p10 1.924 under 54/93; Sunmere/Briardale internal min 1.901 p10 2.965 under 24/131","Ashmoor: Stagmoor/Ashmoor neutral min 1.626 p10 2.032 under 29/142; Ashmoor/Marhol
+  hover-near {"label":"near","reachable":8,"hovered":8,"hoverHits":8,"tipNamesProvince":8,"tipNamesTerrain":8,"byFog":{"sight":8},"hoverMiss":[],"tipMiss":[],"lines":{"provincesWithLinesMeasured":8,"provincesWithAnySampleUnderFloor":1,"focusMinNeutral":1.437,"focusMinInternal":5.113,"othersNeutralP90max":7.454,"othersInternalP90max":14.196,"othersMaxOfMax":13.894,"under":["Ashmoor: Stagmoor/Ashmoor neutral min 1.437 p10 1.923 under 58/246; Ashmoor/Marholt neutral min 1.564 p10 1.929 under 38/206"],"rows":[["Ashfen",0,1,null,5.113,0,7.454,13.894,14.196],["Tormere",2,0,3.303,null,0,7.205,13.894,14.196],["Sta
+  hover-unexplored [["Oakford","Wasteland",true,true,false],["Bramreach","Mountains",true,true,false],["Cinford","Plains",true,true,false],["Rookmarch","Wasteland",true,true,false],["Rookford","Plains",true,true,false],["Thornwick","Plains",true,true,false]]
+  selectProvince {"s":"prov:Ashmoor","dock":true,"tabs":["Overview","Forces","History"],"dockNamesTerrain":true}
+  selectArmyByClick {"sel":"cmd:varo","armyTipNamesTerrain":true}
+  stripButtons 7
+  keyboardSelectPiece {"enter":"varo","space":"varo","pausedBefore":true,"pausedAfter":true}
+  rightClickAcross {"target":"Ashvale","path":"Morholt>Ashvale 8d the Ashspine","chips":{"chips":3,"overlaps":0,"examples":[],"pass":true}}
+  wheelOutAfterMove ["far@0.307 chipOverlaps 0  rib 0","far@0.307 chipOverlaps 0  rib 0","far@0.307 chipOverlaps 0  rib 0","far@0.307 chipOverlaps 0  rib 0"]
+  rightClickEnemyPiece {"line":"Tormere 3d","lastToast":"Varo marches to Tormere: 3 days."}
+  rightClickWild "No path crosses the Ashspine."
+  wildsAll [{"id":"ashspine","hover":["The Ashspine",true],"tipImpassable":false,"tip":null,"toast":"No path crosses the Ashspine.","moveLine":null},{"id":"stillmere","hover":["The Still Mere",true],"tipImpassable":true,"tip":"The Still MereMere · ImpassableA wild is not a province. No one owns, enters, crosses or targets it: movement, retreat, ","toast":"No path crosses the Still Mere. | No path crosses the Still Mere.","moveLine":null},{"id":"greyteeth","hover":["The Greyteeth",true],"tipImpassable":true,"tip":"The GreyteethPeaks · ImpassableA wild is not a province. No one owns, enters, crosses or tar
+  rightClickTable [true,true,true,true,true,true,false]
+  fanStack {"stackIn":"Kharnath","fanned":3}
+  modes {"seen":"dominion,supply,unrest,population,springs,terrain,ownership,dominion,supply,unrest,population,springs,terrain,ownership,S1:ownership,S2:dominion,S3:supply,S4:unrest,S5:population,S6:springs,S7:terrain,rail:ownership","captionAfterChange":["legend captemp capshow","1","visible"],"caption4600msLater":["legend captemp capshow","1","visible"],"captionOnHover":["legend captemp capshow","1"]}
+  wheelBands "far@0.307 mid@0.728 near@1.726 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397 near@2.397"
+  dragPanNear {"dx":-180,"dy":-72}
+  zKey "mid@0.548"
+  fitButton "mid@0.548 fit 0.484"
+  openControls true
+  controls "shown:clear terrain=clear terrain=natural tint=on tint=off table=simple table=off table=full detail=reduced detail=full chrome=warm chrome=approved parch=on parch=off"
+  vision "ok"
+  reducedMotion false
+  passability "ok"
+  portraits true
+  tryArt "ok"
+  lookSwitch {"v3Relief":false,"v3checks":{"hit":{"samples":200,"wrong":0},"labels":6,"stable":{"first":2257611181,"second":2257611181,"identical":true}},"v3tip":null,"back":true,"shown":"natural"}
+  shiftNames {"before":6,"held":60,"released":6}
+  numbers 60
+  keys 1
+  timelapseDrag "Y6 M10"
+  timelapseAll "Y1 M3"
+  clockRuns {"date":"Y1 M3 D17","paused":[true,false,false,true]}
+  research [true,true]
+  codex 20
+  ledger false
+  topbarTips [16,16]
+  rail "ok"
+  outliner {"rows":10,"sel":"Sunmere,varo,titan,seren,ondra,Ashfen,Ashmoor,Thornbrook,Halevale,Sunmere"}
+  feed {"chips":6,"lit":["Morholt:-","Morholt:-","Tormere:-","Ashfen:-","Kharnath:-","Kharnath:-"],"report":true}
+  ribbon 5
+  pausechip "ilsa"
+  dockAndClose null
+console ["[1440x900 dpr1] warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read"]

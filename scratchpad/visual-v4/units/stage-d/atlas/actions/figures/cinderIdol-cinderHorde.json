@@ -1,0 +1,354 @@
+{
+ "figure": "cinderIdol-cinderHorde",
+ "family": "cinderIdol",
+ "body": "cinderIdol",
+ "key": "blue",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 235.52,
+    "wuPerPx": 0.13374,
+    "kind": "standing",
+    "anchorPx": [
+     588.7,
+     1819.4
+    ],
+    "points": {},
+    "atlas": {
+     "S": {
+      "white": "cinderIdol-cinderHorde.back.idle.white",
+      "scale": 0.2675,
+      "w": 318,
+      "h": 474
+     },
+     "H": {
+      "white": "cinderIdol-cinderHorde.back.idle.white",
+      "scale": 0.535,
+      "w": 635,
+      "h": 948
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/cinderIdol-cinderHorde.back/cinderIdol-cinderHorde.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "shattered": {
+    "heightWu": 206.66,
+    "wuPerPx": 0.13963,
+    "kind": "lying",
+    "anchorPx": [
+     1232.0,
+     1238.0
+    ],
+    "points": {},
+    "atlas": {
+     "S": {
+      "frame": "cinderIdol-cinderHorde.back.shattered",
+      "shadow": "cinderIdol-cinderHorde.back.shattered.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2793,
+      "w": 535,
+      "h": 416
+     },
+     "H": {
+      "frame": "cinderIdol-cinderHorde.back.shattered",
+      "shadow": "cinderIdol-cinderHorde.back.shattered.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5585,
+      "w": 1069,
+      "h": 833
+     }
+    },
+    "scaleRule": "area x1.2 (art director)",
+    "wuPerPxPost": 0.11636,
+    "groundFix": {
+     "applied": true,
+     "artDirector": true,
+     "shiftWu": -20.0
+    },
+    "anchorBeforeGroundFix": [
+     1070.6,
+     1381.3
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.cinderIdol-cinderHorde.back.shattered.nb21.2k/cinderIdol-cinderHorde.back.shattered.png",
+    "raw": "stage-d/raw/act.cinderIdol-cinderHorde.back.shattered.nb21.2k.png",
+    "rawSha256": "cce6617d28fa1870f199725d3bc6e8ddfeaef06850047961617ebeefc03849c3",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/cinderIdol.shattered.back.png",
+    "tag": "act.cinderIdol-cinderHorde.back.shattered.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.531,
+      "iouMirrored": 0.452,
+      "aspectRatio": 1.055,
+      "headDx": -0.236,
+      "guideHeadDx": -0.07,
+      "facingMargin": 0.079,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 4295,
+      "keyHueShiftedPct": 0.37,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 33.9,
+       "groundL": 67.7,
+       "below": 33.9
+      },
+      "farmland": {
+       "bodyL": 33.9,
+       "groundL": 67.3,
+       "below": 33.5
+      },
+      "swamp": {
+       "bodyL": 33.8,
+       "groundL": 58.5,
+       "below": 24.7
+      },
+      "forest": {
+       "bodyL": 33.8,
+       "groundL": 58.7,
+       "below": 25.0
+      },
+      "worstBelow": 24.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.8,
+      "dE_upperThird": 5.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 28,
+     "specksDropped": 27,
+     "scale": {
+      "ratioToIdle": 0.731
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5204,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.04
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.044,
+      "edgeDevPct": 0.37,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.81,
+     "scale": 1.0251,
+     "aspect": 1.0,
+     "shear": -0.006,
+     "M": [
+      [
+       1.0251,
+       -0.00689
+      ],
+      [
+       0.0,
+       1.0251
+      ]
+     ],
+     "t": [
+      -33.04,
+      -18.6
+     ],
+     "guideWuPerPx": 0.35221,
+     "rawPerGuidePx": 3.1537,
+     "idleCorrection": 1.1484,
+     "wuPerPxFromArea": 0.11636,
+     "wuPerPxFromThickness": 0.13039,
+     "wuPerPxFromFit": 0.12511,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 235.52,
+    "wuPerPx": 0.13405,
+    "kind": "standing",
+    "anchorPx": [
+     591.2,
+     1815.3
+    ],
+    "points": {},
+    "atlas": {
+     "S": {
+      "white": "cinderIdol-cinderHorde.front.idle.white",
+      "scale": 0.2681,
+      "w": 320,
+      "h": 474
+     },
+     "H": {
+      "white": "cinderIdol-cinderHorde.front.idle.white",
+      "scale": 0.5362,
+      "w": 639,
+      "h": 948
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/cinderIdol-cinderHorde.front/cinderIdol-cinderHorde.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "shattered": {
+    "heightWu": 232.09,
+    "wuPerPx": 0.14773,
+    "kind": "lying",
+    "anchorPx": [
+     891.0,
+     1242.0
+    ],
+    "points": {},
+    "atlas": {
+     "S": {
+      "frame": "cinderIdol-cinderHorde.front.shattered",
+      "shadow": "cinderIdol-cinderHorde.front.shattered.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2955,
+      "w": 516,
+      "h": 467
+     },
+     "H": {
+      "frame": "cinderIdol-cinderHorde.front.shattered",
+      "shadow": "cinderIdol-cinderHorde.front.shattered.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.5909,
+      "w": 1033,
+      "h": 935
+     }
+    },
+    "scaleRule": "area x1.2 (art director)",
+    "wuPerPxPost": 0.12311,
+    "groundFix": {
+     "applied": true,
+     "artDirector": true,
+     "shiftWu": -12.9
+    },
+    "anchorBeforeGroundFix": [
+     855.3,
+     1329.5
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.cinderIdol-cinderHorde.front.shattered.nb21.2k/cinderIdol-cinderHorde.front.shattered.png",
+    "raw": "stage-d/raw/act.cinderIdol-cinderHorde.front.shattered.nb21.2k.png",
+    "rawSha256": "62bdc33ef3b8c3f0f62e1c337e5a314accad3e9d32383615693eba05a52937df",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "2K",
+    "guide": "stage-d/prod/guides/cinderIdol.shattered.front.png",
+    "tag": "act.cinderIdol-cinderHorde.front.shattered.nb21.2k",
+    "checks": {
+     "camera": {
+      "iou": 0.742,
+      "iouMirrored": 0.272,
+      "aspectRatio": 0.911,
+      "headDx": 0.219,
+      "guideHeadDx": 0.247,
+      "facingMargin": 0.47,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 4386,
+      "keyHueShiftedPct": 0.02,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 34.0,
+       "groundL": 67.7,
+       "below": 33.7
+      },
+      "farmland": {
+       "bodyL": 34.0,
+       "groundL": 67.3,
+       "below": 33.3
+      },
+      "swamp": {
+       "bodyL": 33.9,
+       "groundL": 58.5,
+       "below": 24.6
+      },
+      "forest": {
+       "bodyL": 33.9,
+       "groundL": 58.7,
+       "below": 24.8
+      },
+      "worstBelow": 24.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.9,
+      "dE_upperThird": 3.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 8,
+     "specksDropped": 7,
+     "scale": {
+      "ratioToIdle": 0.821
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 5352,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.017
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.003,
+      "edgeDevPct": 1.83,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.798,
+     "scale": 1.0272,
+     "aspect": 0.96,
+     "shear": 0.0,
+     "M": [
+      [
+       0.98607,
+       0.0
+      ],
+      [
+       0.0,
+       1.06995
+      ]
+     ],
+     "t": [
+      23.25,
+      -35.19
+     ],
+     "guideWuPerPx": 0.35863,
+     "rawPerGuidePx": 3.1411,
+     "idleCorrection": 1.1537,
+     "wuPerPxFromArea": 0.12311,
+     "wuPerPxFromThickness": 0.15393,
+     "wuPerPxFromFit": 0.12824,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {
+  "hit": "the idle cutout tilted 6 degrees away from the blow, the one-frame white flash (idle.white), the mesh flinch",
+  "pulse": "the idle with the glyph emissive mask driven by the ability (no painted frame)"
+ },
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {}
+}

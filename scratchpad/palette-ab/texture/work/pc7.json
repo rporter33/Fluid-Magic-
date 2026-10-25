@@ -1,0 +1,307 @@
+{
+ "paintcheck": {
+  "ms": 1020,
+  "paint": [
+   {
+    "terrain": "hills",
+    "n": 7,
+    "meanDE": 0.76,
+    "worstDE": 2.58,
+    "meanDL": -0.53,
+    "lift": 3.4,
+    "pass": false
+   },
+   {
+    "terrain": "plains",
+    "n": 11,
+    "meanDE": 0.64,
+    "worstDE": 1.61,
+    "meanDL": -0.68,
+    "lift": 4.9,
+    "pass": true
+   },
+   {
+    "terrain": "forest",
+    "n": 13,
+    "meanDE": 0.81,
+    "worstDE": 1.81,
+    "meanDL": -0.34,
+    "lift": 2.5,
+    "pass": true
+   },
+   {
+    "terrain": "wasteland",
+    "n": 3,
+    "meanDE": 0.56,
+    "worstDE": 0.79,
+    "meanDL": -0.56,
+    "lift": 2.8,
+    "pass": true
+   },
+   {
+    "terrain": "mountains",
+    "n": 4,
+    "meanDE": 1.19,
+    "worstDE": 1.97,
+    "meanDL": -1.27,
+    "lift": 7.1,
+    "pass": true
+   },
+   {
+    "terrain": "swamp",
+    "n": 6,
+    "meanDE": 0.59,
+    "worstDE": 1.84,
+    "meanDL": -0.53,
+    "lift": 2.7,
+    "pass": true
+   },
+   {
+    "terrain": "farmland",
+    "n": 8,
+    "meanDE": 0.53,
+    "worstDE": 1.35,
+    "meanDL": -0.52,
+    "lift": 3.2,
+    "pass": true
+   }
+  ],
+  "farPairsUnder": [
+   {
+    "pair": "hills/forest",
+    "normal": 21.3,
+    "protan": 10.1,
+    "deutan": 12.7,
+    "tritan": 29.3,
+    "under": true
+   },
+   {
+    "pair": "hills/wasteland",
+    "normal": 17.6,
+    "protan": 16,
+    "deutan": 14.7,
+    "tritan": 10.2,
+    "under": true
+   },
+   {
+    "pair": "hills/swamp",
+    "normal": 18.8,
+    "protan": 15.9,
+    "deutan": 17.9,
+    "tritan": 25.4,
+    "under": true
+   },
+   {
+    "pair": "plains/mountains",
+    "normal": 21.2,
+    "protan": 20.3,
+    "deutan": 20.4,
+    "tritan": 11.5,
+    "under": true
+   },
+   {
+    "pair": "plains/farmland",
+    "normal": 15.8,
+    "protan": 13.2,
+    "deutan": 12.4,
+    "tritan": 18.3,
+    "under": true
+   },
+   {
+    "pair": "forest/swamp",
+    "normal": 18.6,
+    "protan": 18.6,
+    "deutan": 18,
+    "tritan": 10.7,
+    "under": true
+   },
+   {
+    "pair": "wasteland/mountains",
+    "normal": 19.3,
+    "protan": 17.6,
+    "deutan": 17.3,
+    "tritan": 24.7,
+    "under": true
+   },
+   {
+    "pair": "wasteland/swamp",
+    "normal": 20.7,
+    "protan": 10,
+    "deutan": 13.2,
+    "tritan": 25.8,
+    "under": true
+   }
+  ],
+  "farPairs": [
+   {
+    "pair": "hills/plains",
+    "normal": 33.9,
+    "protan": 33.2,
+    "deutan": 31.4,
+    "tritan": 34.3,
+    "under": false
+   },
+   {
+    "pair": "hills/forest",
+    "normal": 21.3,
+    "protan": 10.1,
+    "deutan": 12.7,
+    "tritan": 29.3,
+    "under": true
+   },
+   {
+    "pair": "hills/wasteland",
+    "normal": 17.6,
+    "protan": 16,
+    "deutan": 14.7,
+    "tritan": 10.2,
+    "under": true
+   },
+   {
+    "pair": "hills/mountains",
+    "normal": 32.4,
+    "protan": 34,
+    "deutan": 32.6,
+    "tritan": 34,
+    "under": false
+   },
+   {
+    "pair": "hills/swamp",
+    "normal": 18.8,
+    "protan": 15.9,
+    "deutan": 17.9,
+    "tritan": 25.4,
+    "under": true
+   },
+   {
+    "pair": "hills/farmland",
+    "normal": 24.8,
+    "protan": 24.8,
+    "deutan": 24.7,
+    "tritan": 24.3,
+    "under": false
+   },
+   {
+    "pair": "plains/forest",
+    "normal": 49.2,
+    "protan": 48,
+    "deutan": 49.2,
+    "tritan": 50.3,
+    "under": false
+   },
+   {
+    "pair": "plains/wasteland",
+    "normal": 30.1,
+    "protan": 25,
+    "deutan": 23.1,
+    "tritan": 24.2,
+    "under": false
+   },
+   {
+    "pair": "plains/mountains",
+    "normal": 21.2,
+    "protan": 20.3,
+    "deutan": 20.4,
+    "tritan": 11.5,
+    "under": true
+   },
+   {
+    "pair": "plains/swamp",
+    "normal": 36.1,
+    "protan": 35.6,
+    "deutan": 37,
+    "tritan": 35.3,
+    "under": false
+   },
+   {
+    "pair": "plains/farmland",
+    "normal": 15.8,
+    "protan": 13.2,
+    "deutan": 12.4,
+    "tritan": 18.3,
+    "under": true
+   },
+   {
+    "pair": "forest/wasteland",
+    "normal": 34.9,
+    "protan": 23.2,
+    "deutan": 23.2,
+    "tritan": 32.1,
+    "under": false
+   },
+   {
+    "pair": "forest/mountains",
+    "normal": 46.1,
+    "protan": 45.3,
+    "deutan": 44.5,
+    "tritan": 40.7,
+    "under": false
+   },
+   {
+    "pair": "forest/swamp",
+    "normal": 18.6,
+    "protan": 18.6,
+    "deutan": 18,
+    "tritan": 10.7,
+    "under": true
+   },
+   {
+    "pair": "forest/farmland",
+    "normal": 42.7,
+    "protan": 36.9,
+    "deutan": 41.3,
+    "tritan": 49.4,
+    "under": false
+   },
+   {
+    "pair": "wasteland/mountains",
+    "normal": 19.3,
+    "protan": 17.6,
+    "deutan": 17.3,
+    "tritan": 24.7,
+    "under": true
+   },
+   {
+    "pair": "wasteland/swamp",
+    "normal": 20.7,
+    "protan": 10,
+    "deutan": 13.2,
+    "tritan": 25.8,
+    "under": true
+   },
+   {
+    "pair": "wasteland/farmland",
+    "normal": 25.2,
+    "protan": 22.7,
+    "deutan": 22.1,
+    "tritan": 15.5,
+    "under": false
+   },
+   {
+    "pair": "mountains/swamp",
+    "normal": 27.6,
+    "protan": 26.6,
+    "deutan": 27,
+    "tritan": 26.7,
+    "under": false
+   },
+   {
+    "pair": "mountains/farmland",
+    "normal": 26.7,
+    "protan": 27.6,
+    "deutan": 28,
+    "tritan": 25.9,
+    "under": false
+   },
+   {
+    "pair": "swamp/farmland",
+    "normal": 34.7,
+    "protan": 32.1,
+    "deutan": 35.6,
+    "tritan": 38.8,
+    "under": false
+   }
+  ]
+ }
+}
+ERRORS []

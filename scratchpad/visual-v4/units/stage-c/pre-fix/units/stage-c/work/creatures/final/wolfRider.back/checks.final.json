@@ -1,0 +1,285 @@
+{
+ "figure": "wolfRider",
+ "view": "back",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.735,
+  "iouMirrored": 0.238,
+  "aspectRatio": 1.006,
+  "headDx": 0.227,
+  "guideHeadDx": 0.075,
+  "pass": false
+ },
+ "variety": {
+  "mostAlike": [
+   "windup~recoil",
+   0.68
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 13.474,
+  "keyInUnitPct": 0.18,
+  "fringePct": 0.0,
+  "edgeDevPct": 1.15,
+  "pass_": true
+ },
+ "consistency": {
+  "standCloth": 0.44,
+  "histMin": [
+   "boltA",
+   0.626
+  ],
+  "maxDE": [
+   "boltA",
+   4.4
+  ],
+  "lying": {
+   "deadA": {
+    "hist": 0.733,
+    "de": 2.7,
+    "cloth": 0.248
+   },
+   "deadB": {
+    "hist": 0.715,
+    "de": 2.4,
+    "cloth": 0.266
+   }
+  },
+  "pass_": true,
+  "pass": true
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.735,
+    0.497
+   ],
+   "lopeA": [
+    0.749,
+    0.684
+   ],
+   "lopeB": [
+    0.781,
+    0.539
+   ],
+   "leapA": [
+    0.704,
+    0.626
+   ],
+   "leapB": [
+    0.761,
+    0.512
+   ],
+   "charge": [
+    0.72,
+    0.653
+   ],
+   "windup": [
+    0.656,
+    0.447
+   ],
+   "strike": [
+    0.601,
+    0.485
+   ],
+   "bite": [
+    0.655,
+    0.583
+   ],
+   "recoil": [
+    0.681,
+    0.381
+   ],
+   "fall": [
+    0.586,
+    0.364
+   ],
+   "deadA": [
+    0.54,
+    0.313
+   ],
+   "deadB": [
+    0.634,
+    0.495
+   ],
+   "boltA": [
+    0.759,
+    0.683
+   ],
+   "boltB": [
+    0.704,
+    0.538
+   ],
+   "cheer": [
+    0.642,
+    0.399
+   ]
+  },
+  "medianIoU": 0.693,
+  "medianMargin": 0.504,
+  "follow": "15/16",
+  "followShare": 0.94
+ },
+ "cameraBody": {
+  "cells": {
+   "stand": [
+    0.692,
+    0.452
+   ],
+   "lopeA": [
+    0.749,
+    0.686
+   ],
+   "lopeB": [
+    0.771,
+    0.53
+   ],
+   "leapA": [
+    0.677,
+    0.595
+   ],
+   "leapB": [
+    0.757,
+    0.508
+   ],
+   "charge": [
+    0.675,
+    0.61
+   ],
+   "windup": [
+    0.679,
+    0.463
+   ],
+   "strike": [
+    0.599,
+    0.484
+   ],
+   "bite": [
+    0.632,
+    0.553
+   ],
+   "recoil": [
+    0.646,
+    0.343
+   ],
+   "fall": [
+    0.577,
+    0.366
+   ],
+   "boltA": [
+    0.776,
+    0.701
+   ],
+   "boltB": [
+    0.65,
+    0.48
+   ],
+   "cheer": [
+    0.647,
+    0.404
+   ]
+  },
+  "follow": "14/14",
+  "note": "upright cells only, body-height normalised"
+ },
+ "scaleBody": {
+  "heights": {
+   "stand": 1.0
+  },
+  "pass_": true
+ },
+ "rim": {
+  "beforeMax": 9.3,
+  "afterMax": 0.0
+ },
+ "side": {
+  "fPx": 32.5,
+  "f28": {
+   "neutral": {
+    "share": 0.327,
+    "worstBelow": 15.1
+   },
+   "sideKeyline": {
+    "share": 0.512,
+    "worstBelow": 14.7
+   }
+  },
+  "neutral": {
+   "share": 0.335,
+   "worstBelow": 18.1,
+   "below": {
+    "plains": 23.2,
+    "farmland": 23.0,
+    "swamp": 18.1,
+    "forest": 18.2
+   }
+  },
+  "sideKeyline": {
+   "share": 0.531,
+   "worstBelow": 17.6,
+   "below": {
+    "plains": 23.1,
+    "farmland": 22.9,
+    "swamp": 17.6,
+    "forest": 17.8
+   }
+  },
+  "pass": true
+ },
+ "hueLockShare": {
+  "wolfRider.back.bite.png": 0.356,
+  "wolfRider.back.boltA.png": 0.094,
+  "wolfRider.back.boltB.png": 0.099,
+  "wolfRider.back.charge.png": 0.346,
+  "wolfRider.back.cheer.png": 0.291,
+  "wolfRider.back.deadA.png": 0.206,
+  "wolfRider.back.deadB.png": 0.243,
+  "wolfRider.back.fall.png": 0.223,
+  "wolfRider.back.leapA.png": 0.334,
+  "wolfRider.back.leapB.png": 0.404,
+  "wolfRider.back.lopeA.png": 0.4,
+  "wolfRider.back.lopeB.png": 0.413,
+  "wolfRider.back.recoil.png": 0.167,
+  "wolfRider.back.stand.png": 0.417,
+  "wolfRider.back.strike.png": 0.372,
+  "wolfRider.back.windup.png": 0.332
+ },
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-c/raw/creatures/wolfRider.back.paint.r2.nb21.png",
+ "gates": {
+  "camera": true,
+  "variety": true,
+  "rim": true,
+  "side": true,
+  "fringe": true,
+  "consistency": true,
+  "scale": true
+ },
+ "pass": true,
+ "cameraGate": {
+  "follow": "15/16",
+  "excluded": [],
+  "missing": [],
+  "failing": [
+   "deadA"
+  ]
+ },
+ "variety2": {
+  "pairs": {
+   "lopeA~lopeB": 0.507
+  },
+  "mostAlike": [
+   "lopeA~charge",
+   0.761
+  ],
+  "pass_": true,
+  "pass_bool": true
+ }
+}

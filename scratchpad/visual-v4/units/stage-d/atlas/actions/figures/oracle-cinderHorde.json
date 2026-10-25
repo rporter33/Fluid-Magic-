@@ -1,0 +1,2796 @@
+{
+ "figure": "oracle-cinderHorde",
+ "family": "oracle-cinderHorde",
+ "body": "oracle",
+ "key": "green",
+ "views": {
+  "back": {
+   "idle": {
+    "heightWu": 43.01,
+    "wuPerPx": 0.03705,
+    "kind": "standing",
+    "anchorPx": [
+     270.6,
+     1211.8
+    ],
+    "points": {
+     "footR": [
+      3.1,
+      -7.0
+     ],
+     "footL": [
+      -2.9,
+      -9.1
+     ],
+     "mouth": [
+      4.2,
+      -40.2
+     ],
+     "handR": [
+      12.8,
+      -27.3
+     ],
+     "handL": [
+      -7.3,
+      -32.6
+     ],
+     "weaponTip": [
+      13.0,
+      -44.4
+     ],
+     "head": [
+      -0.6,
+      -36.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "oracle-cinderHorde.back.idle.white",
+      "scale": 0.0741,
+      "w": 52,
+      "h": 88
+     },
+     "H": {
+      "white": "oracle-cinderHorde.back.idle.white",
+      "scale": 0.1482,
+      "w": 104,
+      "h": 177
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/oracle-cinderHorde.back/oracle-cinderHorde.back.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 44.44,
+    "wuPerPx": 0.10008,
+    "kind": "standing",
+    "anchorPx": [
+     117.4,
+     467.9
+    ],
+    "points": {
+     "footR": [
+      4.6,
+      -5.3
+     ],
+     "footL": [
+      -3.9,
+      -2.3
+     ],
+     "mouth": [
+      9.7,
+      -38.4
+     ],
+     "handR": [
+      15.7,
+      -25.9
+     ],
+     "handL": [
+      -2.3,
+      -33.2
+     ],
+     "weaponTip": [
+      26.3,
+      -46.6
+     ],
+     "butt": [
+      6.4,
+      -7.7
+     ],
+     "head": [
+      4.2,
+      -38.6
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.stepA",
+      "shadow": "oracle-cinderHorde.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2002,
+      "w": 72,
+      "h": 92
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.stepA",
+      "shadow": "oracle-cinderHorde.back.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4003,
+      "w": 145,
+      "h": 183
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.10008,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 3.0,
+     "anchorY": 467.9,
+     "idleAnchorBelowSoleWu": 2.3,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     117.4,
+     437.9
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.A.nb21/oracle-cinderHorde.back.stepA.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.A.nb21.png",
+    "rawSha256": "b95f0a2dff75fe36928c56f8c54f349a18eb3aa62995e3b6b1efb602fc319d17",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.back.png",
+    "tag": "act.oracle-cinderHorde.back.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.617,
+      "iouMirrored": 0.505,
+      "aspectRatio": 1.088,
+      "headDx": 0.358,
+      "guideHeadDx": 0.178,
+      "facingMargin": 0.112,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 556,
+      "keyHueShiftedPct": 4.5,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.1,
+       "groundL": 67.7,
+       "below": 36.6
+      },
+      "farmland": {
+       "bodyL": 31.1,
+       "groundL": 67.3,
+       "below": 36.2
+      },
+      "swamp": {
+       "bodyL": 30.3,
+       "groundL": 58.5,
+       "below": 28.2
+      },
+      "forest": {
+       "bodyL": 30.3,
+       "groundL": 58.7,
+       "below": 28.4
+      },
+      "worstBelow": 28.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.6,
+      "dE_upperThird": 1.4,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.033,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 556,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.203
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.161,
+      "edgeDevPct": 2.62,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.816,
+     "scale": 1.0185,
+     "aspect": 1.03,
+     "shear": -0.088,
+     "M": [
+      [
+       1.04907,
+       -0.08824
+      ],
+      [
+       0.0,
+       0.98885
+      ]
+     ],
+     "t": [
+      49.96,
+      -9.29
+     ],
+     "guideWuPerPx": 0.11863,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.10008,
+     "wuPerPxFromThickness": 0.10324,
+     "wuPerPxFromFit": 0.09909,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 43.52,
+    "wuPerPx": 0.09868,
+    "kind": "standing",
+    "anchorPx": [
+     134.8,
+     444.9
+    ],
+    "points": {
+     "footR": [
+      1.5,
+      -1.6
+     ],
+     "footL": [
+      -1.6,
+      -2.7
+     ],
+     "mouth": [
+      7.1,
+      -39.4
+     ],
+     "handR": [
+      14.4,
+      -25.5
+     ],
+     "handL": [
+      -7.8,
+      -28.8
+     ],
+     "weaponTip": [
+      21.8,
+      -47.6
+     ],
+     "butt": [
+      8.0,
+      -6.0
+     ],
+     "head": [
+      2.4,
+      -35.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.stepB",
+      "shadow": "oracle-cinderHorde.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1974,
+      "w": 68,
+      "h": 90
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.stepB",
+      "shadow": "oracle-cinderHorde.back.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3947,
+      "w": 135,
+      "h": 180
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.09868,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 0.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.A.nb21/oracle-cinderHorde.back.stepB.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.A.nb21.png",
+    "rawSha256": "b95f0a2dff75fe36928c56f8c54f349a18eb3aa62995e3b6b1efb602fc319d17",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.back.png",
+    "tag": "act.oracle-cinderHorde.back.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.619,
+      "iouMirrored": 0.569,
+      "aspectRatio": 1.166,
+      "headDx": 0.325,
+      "guideHeadDx": 0.332,
+      "facingMargin": 0.05,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 552,
+      "keyHueShiftedPct": 4.71,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.1,
+       "groundL": 67.7,
+       "below": 36.6
+      },
+      "farmland": {
+       "bodyL": 31.1,
+       "groundL": 67.3,
+       "below": 36.2
+      },
+      "swamp": {
+       "bodyL": 30.4,
+       "groundL": 58.5,
+       "below": 28.1
+      },
+      "forest": {
+       "bodyL": 30.4,
+       "groundL": 58.7,
+       "below": 28.3
+      },
+      "worstBelow": 28.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.5,
+      "dE_upperThird": 1.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.012,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 552,
+      "keyHueShiftedPct": 0.18,
+      "pass_": true,
+      "rimFixedShare": 0.226
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.161,
+      "edgeDevPct": 2.62,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.787,
+     "scale": 1.1361,
+     "aspect": 1.04,
+     "shear": -0.05,
+     "M": [
+      [
+       1.18154,
+       -0.05569
+      ],
+      [
+       0.0,
+       1.0924
+      ]
+     ],
+     "t": [
+      3.96,
+      -49.1
+     ],
+     "guideWuPerPx": 0.1292,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.09868,
+     "wuPerPxFromThickness": 0.10168,
+     "wuPerPxFromFit": 0.09675,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "windup": {
+    "heightWu": 43.38,
+    "wuPerPx": 0.09452,
+    "kind": "standing",
+    "anchorPx": [
+     171.1,
+     467.5
+    ],
+    "points": {
+     "footR": [
+      0.3,
+      -2.0
+     ],
+     "footL": [
+      -1.7,
+      -1.6
+     ],
+     "mouth": [
+      4.6,
+      -36.0
+     ],
+     "handR": [
+      -1.5,
+      -29.5
+     ],
+     "handL": [
+      -2.5,
+      -36.6
+     ],
+     "weaponTip": [
+      -15.4,
+      -43.4
+     ],
+     "butt": [
+      9.3,
+      -19.1
+     ],
+     "head": [
+      -2.9,
+      -34.9
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.windup",
+      "shadow": "oracle-cinderHorde.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.189,
+      "w": 58,
+      "h": 90
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.windup",
+      "shadow": "oracle-cinderHorde.back.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3781,
+      "w": 116,
+      "h": 179
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.09452,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 0.7,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.A.nb21/oracle-cinderHorde.back.windup.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.A.nb21.png",
+    "rawSha256": "b95f0a2dff75fe36928c56f8c54f349a18eb3aa62995e3b6b1efb602fc319d17",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.back.png",
+    "tag": "act.oracle-cinderHorde.back.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.743,
+      "iouMirrored": 0.654,
+      "aspectRatio": 1.031,
+      "headDx": -0.138,
+      "guideHeadDx": -0.16,
+      "facingMargin": 0.089,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 443,
+      "keyHueShiftedPct": 3.84,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.5,
+       "groundL": 67.7,
+       "below": 36.3
+      },
+      "farmland": {
+       "bodyL": 31.4,
+       "groundL": 67.3,
+       "below": 35.9
+      },
+      "swamp": {
+       "bodyL": 30.6,
+       "groundL": 58.5,
+       "below": 27.9
+      },
+      "forest": {
+       "bodyL": 30.6,
+       "groundL": 58.7,
+       "below": 28.1
+      },
+      "worstBelow": 27.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 3.9,
+      "dE_upperThird": 7.9,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.009
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 443,
+      "keyHueShiftedPct": 0.23,
+      "pass_": true,
+      "rimFixedShare": 0.238
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.161,
+      "edgeDevPct": 2.62,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.848,
+     "scale": 0.9835,
+     "aspect": 1.0,
+     "shear": 0.0,
+     "M": [
+      [
+       0.9835,
+       0.0
+      ],
+      [
+       0.0,
+       0.9835
+      ]
+     ],
+     "t": [
+      2.35,
+      3.56
+     ],
+     "guideWuPerPx": 0.10927,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.09452,
+     "wuPerPxFromThickness": 0.10985,
+     "wuPerPxFromFit": 0.09452,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 43.42,
+    "wuPerPx": 0.0978,
+    "kind": "standing",
+    "anchorPx": [
+     247.2,
+     465.4
+    ],
+    "points": {
+     "footR": [
+      -4.4,
+      -4.3
+     ],
+     "footL": [
+      -1.1,
+      -2.3
+     ],
+     "mouth": [
+      -1.5,
+      -42.9
+     ],
+     "handR": [
+      3.1,
+      -35.3
+     ],
+     "handL": [
+      -14.6,
+      -34.6
+     ],
+     "weaponTip": [
+      -11.5,
+      -36.2
+     ],
+     "butt": [
+      13.6,
+      -35.0
+     ],
+     "head": [
+      -1.2,
+      -38.4
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.strike",
+      "shadow": "oracle-cinderHorde.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1956,
+      "w": 90,
+      "h": 90
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.strike",
+      "shadow": "oracle-cinderHorde.back.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3912,
+      "w": 180,
+      "h": 179
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.0978,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 4.0,
+     "anchorY": 465.4,
+     "idleAnchorBelowSoleWu": 2.3,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     247.2,
+     424.5
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.A.nb21/oracle-cinderHorde.back.strike.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.A.nb21.png",
+    "rawSha256": "b95f0a2dff75fe36928c56f8c54f349a18eb3aa62995e3b6b1efb602fc319d17",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.back.png",
+    "tag": "act.oracle-cinderHorde.back.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.669,
+      "iouMirrored": 0.723,
+      "aspectRatio": 1.49,
+      "headDx": -0.002,
+      "guideHeadDx": 0.052,
+      "facingMargin": -0.054,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 569,
+      "keyHueShiftedPct": 10.19,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 30.5,
+       "groundL": 67.7,
+       "below": 37.2
+      },
+      "farmland": {
+       "bodyL": 30.5,
+       "groundL": 67.3,
+       "below": 36.8
+      },
+      "swamp": {
+       "bodyL": 29.8,
+       "groundL": 58.5,
+       "below": 28.6
+      },
+      "forest": {
+       "bodyL": 29.9,
+       "groundL": 58.7,
+       "below": 28.9
+      },
+      "worstBelow": 28.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 3.1,
+      "dE_upperThird": 7.7,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.01
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 569,
+      "keyHueShiftedPct": 0.18,
+      "pass_": true,
+      "rimFixedShare": 0.25
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.161,
+      "edgeDevPct": 2.62,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.798,
+     "scale": 1.0284,
+     "aspect": 1.065,
+     "shear": 0.031,
+     "M": [
+      [
+       1.09522,
+       0.03263
+      ],
+      [
+       0.0,
+       0.96561
+      ]
+     ],
+     "t": [
+      -18.51,
+      9.93
+     ],
+     "guideWuPerPx": 0.12002,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.0978,
+     "wuPerPxFromThickness": 0.10324,
+     "wuPerPxFromFit": 0.09929,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 42.91,
+    "wuPerPx": 0.0915,
+    "kind": "standing",
+    "anchorPx": [
+     251.7,
+     475.0
+    ],
+    "points": {
+     "footR": [
+      3.7,
+      -2.3
+     ],
+     "footL": [
+      -6.2,
+      -3.2
+     ],
+     "mouth": [
+      0.7,
+      -39.2
+     ],
+     "handR": [
+      10.2,
+      -17.8
+     ],
+     "handL": [
+      -21.7,
+      -32.5
+     ],
+     "weaponTip": [
+      16.2,
+      -4.9
+     ],
+     "butt": [
+      4.9,
+      -29.1
+     ],
+     "head": [
+      -4.3,
+      -35.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.hit",
+      "shadow": "oracle-cinderHorde.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "oracle-cinderHorde.back.hit.white",
+      "scale": 0.183,
+      "w": 87,
+      "h": 89
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.hit",
+      "shadow": "oracle-cinderHorde.back.hit.shadow",
+      "shadowScale": 2,
+      "white": "oracle-cinderHorde.back.hit.white",
+      "scale": 0.366,
+      "w": 173,
+      "h": 177
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.0915,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 2.7,
+     "anchorY": 475.0,
+     "idleAnchorBelowSoleWu": 2.3,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     251.7,
+     445.9
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.B.nb21/oracle-cinderHorde.back.hit.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.B.nb21.png",
+    "rawSha256": "adaff03d33ca9bffd2645597c9feda1cb07ceed649d5a9b54e0c3a4f67f0284a",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.back.png",
+    "tag": "act.oracle-cinderHorde.back.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.748,
+      "iouMirrored": 0.476,
+      "aspectRatio": 1.043,
+      "headDx": -0.101,
+      "guideHeadDx": -0.079,
+      "facingMargin": 0.272,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 595,
+      "keyHueShiftedPct": 3.87,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.5,
+       "groundL": 67.7,
+       "below": 36.2
+      },
+      "farmland": {
+       "bodyL": 31.5,
+       "groundL": 67.3,
+       "below": 35.8
+      },
+      "swamp": {
+       "bodyL": 30.8,
+       "groundL": 58.5,
+       "below": 27.6
+      },
+      "forest": {
+       "bodyL": 30.9,
+       "groundL": 58.7,
+       "below": 27.8
+      },
+      "worstBelow": 27.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.3,
+      "dE_upperThird": 0.7,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.998
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 595,
+      "keyHueShiftedPct": 0.84,
+      "pass_": true,
+      "rimFixedShare": 0.21
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.299,
+      "edgeDevPct": 2.55,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.81,
+     "scale": 1.0137,
+     "aspect": 1.04,
+     "shear": 0.038,
+     "M": [
+      [
+       1.0543,
+       0.03802
+      ],
+      [
+       0.0,
+       0.97476
+      ]
+     ],
+     "t": [
+      -21.99,
+      5.88
+     ],
+     "guideWuPerPx": 0.10903,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.0915,
+     "wuPerPxFromThickness": 0.09378,
+     "wuPerPxFromFit": 0.0915,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 36.94,
+    "wuPerPx": 0.10434,
+    "kind": "lying",
+    "anchorPx": [
+     323.3,
+     99.1
+    ],
+    "points": {
+     "footR": [
+      0.7,
+      -2.6
+     ],
+     "footL": [
+      -5.8,
+      -4.3
+     ],
+     "mouth": [
+      -24.0,
+      5.6
+     ],
+     "handR": [
+      3.8,
+      15.3
+     ],
+     "handL": [
+      -33.4,
+      3.9
+     ],
+     "weaponTip": [
+      29.0,
+      23.1
+     ],
+     "butt": [
+      -18.3,
+      8.5
+     ],
+     "head": [
+      -20.0,
+      15.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.dead",
+      "shadow": "oracle-cinderHorde.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2087,
+      "w": 100,
+      "h": 77
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.dead",
+      "shadow": "oracle-cinderHorde.back.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4174,
+      "w": 200,
+      "h": 153
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.10434,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.B.nb21/oracle-cinderHorde.back.dead.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.B.nb21.png",
+    "rawSha256": "adaff03d33ca9bffd2645597c9feda1cb07ceed649d5a9b54e0c3a4f67f0284a",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.back.png",
+    "tag": "act.oracle-cinderHorde.back.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.394,
+      "iouMirrored": 0.406,
+      "aspectRatio": 0.834,
+      "headDx": 0.041,
+      "guideHeadDx": -0.685,
+      "facingMargin": -0.012,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 559,
+      "keyHueShiftedPct": 5.9,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 33.6,
+       "groundL": 67.7,
+       "below": 34.2
+      },
+      "farmland": {
+       "bodyL": 33.6,
+       "groundL": 67.3,
+       "below": 33.8
+      },
+      "swamp": {
+       "bodyL": 32.9,
+       "groundL": 58.5,
+       "below": 25.6
+      },
+      "forest": {
+       "bodyL": 32.9,
+       "groundL": 58.7,
+       "below": 25.8
+      },
+      "worstBelow": 25.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.5,
+      "dE_upperThird": 3.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.859
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 559,
+      "keyHueShiftedPct": 0.18,
+      "pass_": true,
+      "rimFixedShare": 0.227
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.299,
+      "edgeDevPct": 2.55,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.759,
+     "scale": 1.2801,
+     "aspect": 1.1,
+     "shear": 0.15,
+     "M": [
+      [
+       1.40806,
+       0.19795
+      ],
+      [
+       0.0,
+       1.16369
+      ]
+     ],
+     "t": [
+      -75.33,
+      -25.4
+     ],
+     "guideWuPerPx": 0.16185,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.10434,
+     "wuPerPxFromThickness": 0.09261,
+     "wuPerPxFromFit": 0.10757,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "castA": {
+    "heightWu": 57.53,
+    "wuPerPx": 0.11936,
+    "kind": "standing",
+    "anchorPx": [
+     91.8,
+     488.9
+    ],
+    "points": {
+     "footR": [
+      3.4,
+      -1.5
+     ],
+     "footL": [
+      -3.0,
+      -1.4
+     ],
+     "mouth": [
+      8.0,
+      -35.7
+     ],
+     "handR": [
+      9.7,
+      -39.4
+     ],
+     "handL": [
+      -6.9,
+      -45.3
+     ],
+     "weaponTip": [
+      10.2,
+      -58.1
+     ],
+     "butt": [
+      10.1,
+      -23.6
+     ],
+     "head": [
+      -0.3,
+      -36.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.castA",
+      "shadow": "oracle-cinderHorde.back.castA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2387,
+      "w": 50,
+      "h": 118
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.castA",
+      "shadow": "oracle-cinderHorde.back.castA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4774,
+      "w": 100,
+      "h": 236
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.11936,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 0.9,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.B.nb21/oracle-cinderHorde.back.castA.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.B.nb21.png",
+    "rawSha256": "adaff03d33ca9bffd2645597c9feda1cb07ceed649d5a9b54e0c3a4f67f0284a",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.back.png",
+    "tag": "act.oracle-cinderHorde.back.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.757,
+      "iouMirrored": 0.727,
+      "aspectRatio": 1.12,
+      "headDx": 0.174,
+      "guideHeadDx": 0.141,
+      "facingMargin": 0.03,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 627,
+      "keyHueShiftedPct": 3.51,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.3,
+       "groundL": 67.7,
+       "below": 35.5
+      },
+      "farmland": {
+       "bodyL": 32.2,
+       "groundL": 67.3,
+       "below": 35.1
+      },
+      "swamp": {
+       "bodyL": 31.5,
+       "groundL": 58.5,
+       "below": 27.0
+      },
+      "forest": {
+       "bodyL": 31.5,
+       "groundL": 58.7,
+       "below": 27.2
+      },
+      "worstBelow": 27.0,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 0.8,
+      "dE_upperThird": 7.1,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.338
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 627,
+      "keyHueShiftedPct": 0.32,
+      "pass_": true,
+      "rimFixedShare": 0.182
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.299,
+      "edgeDevPct": 2.55,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.851,
+     "scale": 1.1314,
+     "aspect": 1.05,
+     "shear": 0.0,
+     "M": [
+      [
+       1.18802,
+       0.0
+      ],
+      [
+       0.0,
+       1.07757
+      ]
+     ],
+     "t": [
+      -13.87,
+      -33.76
+     ],
+     "guideWuPerPx": 0.15264,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.11936,
+     "wuPerPxFromThickness": 0.11285,
+     "wuPerPxFromFit": 0.11477,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "castB": {
+    "heightWu": 52.14,
+    "wuPerPx": 0.11023,
+    "kind": "standing",
+    "anchorPx": [
+     117.3,
+     490.8
+    ],
+    "points": {
+     "footR": [
+      -1.6,
+      -2.3
+     ],
+     "footL": [
+      -0.9,
+      -2.4
+     ],
+     "mouth": [
+      10.1,
+      -34.9
+     ],
+     "handR": [
+      20.1,
+      -36.0
+     ],
+     "handL": [
+      -2.0,
+      -40.4
+     ],
+     "weaponTip": [
+      31.7,
+      -53.4
+     ],
+     "butt": [
+      8.0,
+      -20.0
+     ],
+     "head": [
+      3.5,
+      -38.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.back.castB",
+      "shadow": "oracle-cinderHorde.back.castB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2205,
+      "w": 93,
+      "h": 107
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.back.castB",
+      "shadow": "oracle-cinderHorde.back.castB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4409,
+      "w": 187,
+      "h": 214
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.11023,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 2.5,
+     "anchorY": 490.8,
+     "idleAnchorBelowSoleWu": 2.3,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     117.3,
+     468.2
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.back.B.nb21/oracle-cinderHorde.back.castB.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.back.B.nb21.png",
+    "rawSha256": "adaff03d33ca9bffd2645597c9feda1cb07ceed649d5a9b54e0c3a4f67f0284a",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.back.png",
+    "tag": "act.oracle-cinderHorde.back.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.647,
+      "iouMirrored": 0.454,
+      "aspectRatio": 1.228,
+      "headDx": 0.608,
+      "guideHeadDx": 0.522,
+      "facingMargin": 0.193,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 605,
+      "keyHueShiftedPct": 3.31,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.4,
+       "groundL": 67.7,
+       "below": 35.4
+      },
+      "farmland": {
+       "bodyL": 32.3,
+       "groundL": 67.3,
+       "below": 35.0
+      },
+      "swamp": {
+       "bodyL": 31.5,
+       "groundL": 58.5,
+       "below": 26.9
+      },
+      "forest": {
+       "bodyL": 31.5,
+       "groundL": 58.7,
+       "below": 27.2
+      },
+      "worstBelow": 26.9,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 0.5,
+      "dE_upperThird": 7.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.212
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 605,
+      "keyHueShiftedPct": 0.5,
+      "pass_": true,
+      "rimFixedShare": 0.161
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.299,
+      "edgeDevPct": 2.55,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.83,
+     "scale": 1.1605,
+     "aspect": 1.08,
+     "shear": -0.056,
+     "M": [
+      [
+       1.25337,
+       -0.06307
+      ],
+      [
+       0.0,
+       1.07456
+      ]
+     ],
+     "t": [
+      -18.34,
+      -38.13
+     ],
+     "guideWuPerPx": 0.14529,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.1343,
+     "wuPerPxFromArea": 0.11023,
+     "wuPerPxFromThickness": 0.11182,
+     "wuPerPxFromFit": 0.1065,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  },
+  "front": {
+   "idle": {
+    "heightWu": 45.08,
+    "wuPerPx": 0.03951,
+    "kind": "standing",
+    "anchorPx": [
+     416.5,
+     1177.0
+    ],
+    "points": {
+     "footR": [
+      -2.0,
+      -9.5
+     ],
+     "footL": [
+      3.5,
+      -7.4
+     ],
+     "mouth": [
+      -5.2,
+      -29.6
+     ],
+     "handR": [
+      -12.3,
+      -25.4
+     ],
+     "handL": [
+      5.6,
+      -18.1
+     ],
+     "weaponTip": [
+      -14.2,
+      -46.1
+     ],
+     "head": [
+      -1.3,
+      -38.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "white": "oracle-cinderHorde.front.idle.white",
+      "scale": 0.079,
+      "w": 57,
+      "h": 92
+     },
+     "H": {
+      "white": "oracle-cinderHorde.front.idle.white",
+      "scale": 0.158,
+      "w": 114,
+      "h": 185
+     }
+    },
+    "texture": "stage C: stage-c/atlas/gods/oracle-cinderHorde.front/oracle-cinderHorde.front.idle.png",
+    "note": "the idle texture is stage C's (not repacked); its white flash is here"
+   },
+   "stepA": {
+    "heightWu": 42.16,
+    "wuPerPx": 0.08989,
+    "kind": "standing",
+    "anchorPx": [
+     229.2,
+     497.7
+    ],
+    "points": {
+     "footR": [
+      -3.8,
+      -2.5
+     ],
+     "footL": [
+      3.5,
+      -5.1
+     ],
+     "mouth": [
+      -7.5,
+      -28.6
+     ],
+     "handR": [
+      -12.9,
+      -25.2
+     ],
+     "handL": [
+      3.6,
+      -15.7
+     ],
+     "weaponTip": [
+      -20.3,
+      -39.8
+     ],
+     "butt": [
+      -5.7,
+      -14.5
+     ],
+     "head": [
+      -2.7,
+      -37.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.stepA",
+      "shadow": "oracle-cinderHorde.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1798,
+      "w": 65,
+      "h": 87
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.stepA",
+      "shadow": "oracle-cinderHorde.front.stepA.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3596,
+      "w": 129,
+      "h": 174
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.08989,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 2.1,
+     "anchorY": 497.7,
+     "idleAnchorBelowSoleWu": 2.5,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     229.2,
+     474.4
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.A.nb21/oracle-cinderHorde.front.stepA.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.A.nb21.png",
+    "rawSha256": "b95d8eaa4e369f31f491226c7e4473300f2c36ee23bc7576b559fd7bf4c47029",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.front.png",
+    "tag": "act.oracle-cinderHorde.front.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.7,
+      "iouMirrored": 0.544,
+      "aspectRatio": 0.961,
+      "headDx": -0.075,
+      "guideHeadDx": -0.063,
+      "facingMargin": 0.156,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 585,
+      "keyHueShiftedPct": 2.22,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.4,
+       "groundL": 67.7,
+       "below": 36.3
+      },
+      "farmland": {
+       "bodyL": 31.4,
+       "groundL": 67.3,
+       "below": 36.0
+      },
+      "swamp": {
+       "bodyL": 30.4,
+       "groundL": 58.5,
+       "below": 28.1
+      },
+      "forest": {
+       "bodyL": 30.4,
+       "groundL": 58.7,
+       "below": 28.3
+      },
+      "worstBelow": 28.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 0.5,
+      "dE_upperThird": 1.9,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.935,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 585,
+      "keyHueShiftedPct": 0.34,
+      "pass_": true,
+      "rimFixedShare": 0.24
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.171,
+      "edgeDevPct": 3.35,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.775,
+     "scale": 0.9647,
+     "aspect": 0.94,
+     "shear": 0.056,
+     "M": [
+      [
+       0.90682,
+       0.05426
+      ],
+      [
+       0.0,
+       1.02628
+      ]
+     ],
+     "t": [
+      -24.75,
+      -5.03
+     ],
+     "guideWuPerPx": 0.1077,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.08989,
+     "wuPerPxFromThickness": 0.11228,
+     "wuPerPxFromFit": 0.08989,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "stepB": {
+    "heightWu": 42.17,
+    "wuPerPx": 0.0903,
+    "kind": "standing",
+    "anchorPx": [
+     134.9,
+     474.0
+    ],
+    "points": {
+     "footR": [
+      -0.3,
+      -0.9
+     ],
+     "footL": [
+      2.3,
+      -1.3
+     ],
+     "mouth": [
+      0.2,
+      -25.0
+     ],
+     "handR": [
+      -8.8,
+      -20.2
+     ],
+     "handL": [
+      12.6,
+      -14.3
+     ],
+     "weaponTip": [
+      -12.8,
+      -30.6
+     ],
+     "butt": [
+      -5.3,
+      -10.8
+     ],
+     "head": [
+      4.4,
+      -34.1
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.stepB",
+      "shadow": "oracle-cinderHorde.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1806,
+      "w": 65,
+      "h": 87
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.stepB",
+      "shadow": "oracle-cinderHorde.front.stepB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3612,
+      "w": 129,
+      "h": 174
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.09181,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.A.nb21/oracle-cinderHorde.front.stepB.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.A.nb21.png",
+    "rawSha256": "b95d8eaa4e369f31f491226c7e4473300f2c36ee23bc7576b559fd7bf4c47029",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.front.png",
+    "tag": "act.oracle-cinderHorde.front.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.576,
+      "iouMirrored": 0.686,
+      "aspectRatio": 1.016,
+      "headDx": 0.138,
+      "guideHeadDx": -0.011,
+      "facingMargin": -0.11,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 607,
+      "keyHueShiftedPct": 1.48,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.1,
+       "groundL": 67.7,
+       "below": 36.6
+      },
+      "farmland": {
+       "bodyL": 31.1,
+       "groundL": 67.3,
+       "below": 36.2
+      },
+      "swamp": {
+       "bodyL": 30.2,
+       "groundL": 58.5,
+       "below": 28.2
+      },
+      "forest": {
+       "bodyL": 30.3,
+       "groundL": 58.7,
+       "below": 28.5
+      },
+      "worstBelow": 28.2,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.0,
+      "dE_upperThird": 2.0,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 2,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.951,
+      "pass_": true
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 584,
+      "keyHueShiftedPct": 0.34,
+      "pass_": true,
+      "rimFixedShare": 0.211
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.171,
+      "edgeDevPct": 3.35,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing"
+    ],
+    "registration": {
+     "fitIoU": 0.739,
+     "scale": 0.994,
+     "aspect": 0.98,
+     "shear": -0.15,
+     "M": [
+      [
+       0.97407,
+       -0.14617
+      ],
+      [
+       0.0,
+       1.01424
+      ]
+     ],
+     "t": [
+      4.36,
+      8.37
+     ],
+     "guideWuPerPx": 0.10928,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.0903,
+     "wuPerPxFromThickness": 0.10431,
+     "wuPerPxFromFit": 0.08853,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "windup": {
+    "heightWu": 50.49,
+    "wuPerPx": 0.10305,
+    "kind": "standing",
+    "anchorPx": [
+     214.3,
+     500.2
+    ],
+    "points": {
+     "footR": [
+      -1.4,
+      -2.7
+     ],
+     "footL": [
+      1.4,
+      -2.5
+     ],
+     "mouth": [
+      -9.6,
+      -29.9
+     ],
+     "handR": [
+      -3.3,
+      -44.4
+     ],
+     "handL": [
+      -1.7,
+      -37.3
+     ],
+     "weaponTip": [
+      7.1,
+      -61.4
+     ],
+     "butt": [
+      -12.5,
+      -29.5
+     ],
+     "head": [
+      -0.7,
+      -35.7
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.windup",
+      "shadow": "oracle-cinderHorde.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.2061,
+      "w": 69,
+      "h": 104
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.windup",
+      "shadow": "oracle-cinderHorde.front.windup.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.4122,
+      "w": 137,
+      "h": 208
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.1113,
+    "groundFix": {
+     "applied": true,
+     "shiftWu": 2.4,
+     "anchorY": 500.2,
+     "idleAnchorBelowSoleWu": 2.5,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": [
+     214.3,
+     477.0
+    ],
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.A.nb21/oracle-cinderHorde.front.windup.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.A.nb21.png",
+    "rawSha256": "b95d8eaa4e369f31f491226c7e4473300f2c36ee23bc7576b559fd7bf4c47029",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.front.png",
+    "tag": "act.oracle-cinderHorde.front.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.401,
+      "iouMirrored": 0.448,
+      "aspectRatio": 1.706,
+      "headDx": -0.102,
+      "guideHeadDx": 0.203,
+      "facingMargin": -0.047,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 635,
+      "keyHueShiftedPct": 2.36,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.8,
+       "groundL": 67.7,
+       "below": 36.0
+      },
+      "farmland": {
+       "bodyL": 31.7,
+       "groundL": 67.3,
+       "below": 35.6
+      },
+      "swamp": {
+       "bodyL": 30.9,
+       "groundL": 58.5,
+       "below": 27.6
+      },
+      "forest": {
+       "bodyL": 30.9,
+       "groundL": 58.7,
+       "below": 27.8
+      },
+      "worstBelow": 27.6,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.7,
+      "dE_upperThird": 2.5,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.21
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 591,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.263
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.171,
+      "edgeDevPct": 3.35,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.711,
+     "scale": 1.3935,
+     "aspect": 1.06,
+     "shear": 0.119,
+     "M": [
+      [
+       1.47712,
+       0.15322
+      ],
+      [
+       0.0,
+       1.31463
+      ]
+     ],
+     "t": [
+      -86.78,
+      -166.59
+     ],
+     "guideWuPerPx": 0.17835,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.10293,
+     "wuPerPxFromThickness": 0.12479,
+     "wuPerPxFromFit": 0.10305,
+     "fitAtAreaScale": 0.712,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "strike": {
+    "heightWu": 38.85,
+    "wuPerPx": 0.09035,
+    "kind": "standing",
+    "anchorPx": [
+     201.4,
+     446.5
+    ],
+    "points": {
+     "footR": [
+      5.9,
+      -2.9
+     ],
+     "footL": [
+      1.9,
+      -1.4
+     ],
+     "mouth": [
+      2.9,
+      -23.3
+     ],
+     "handR": [
+      -1.6,
+      -15.2
+     ],
+     "handL": [
+      10.7,
+      -15.2
+     ],
+     "weaponTip": [
+      5.5,
+      7.2
+     ],
+     "butt": [
+      -7.8,
+      -35.0
+     ],
+     "head": [
+      4.2,
+      -33.2
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.strike",
+      "shadow": "oracle-cinderHorde.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1807,
+      "w": 67,
+      "h": 80
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.strike",
+      "shadow": "oracle-cinderHorde.front.strike.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3614,
+      "w": 133,
+      "h": 161
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.09608,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": -0.4,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.A.nb21/oracle-cinderHorde.front.strike.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.A.nb21.png",
+    "rawSha256": "b95d8eaa4e369f31f491226c7e4473300f2c36ee23bc7576b559fd7bf4c47029",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.A.front.png",
+    "tag": "act.oracle-cinderHorde.front.A.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.331,
+      "iouMirrored": 0.497,
+      "aspectRatio": 1.472,
+      "headDx": 0.196,
+      "guideHeadDx": -0.165,
+      "facingMargin": -0.166,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 583,
+      "keyHueShiftedPct": 2.57,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 31.1,
+       "groundL": 67.7,
+       "below": 36.6
+      },
+      "farmland": {
+       "bodyL": 31.1,
+       "groundL": 67.3,
+       "below": 36.2
+      },
+      "swamp": {
+       "bodyL": 30.4,
+       "groundL": 58.5,
+       "below": 28.1
+      },
+      "forest": {
+       "bodyL": 30.4,
+       "groundL": 58.7,
+       "below": 28.3
+      },
+      "worstBelow": 28.1,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.7,
+      "dE_upperThird": 1.6,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.917
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 551,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.344
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.171,
+      "edgeDevPct": 3.35,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.625,
+     "scale": 1.0969,
+     "aspect": 0.9,
+     "shear": -0.15,
+     "M": [
+      [
+       0.98724,
+       -0.15235
+      ],
+      [
+       0.0,
+       1.21881
+      ]
+     ],
+     "t": [
+      4.73,
+      6.03
+     ],
+     "guideWuPerPx": 0.1212,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.09035,
+     "wuPerPxFromThickness": 0.09608,
+     "wuPerPxFromFit": 0.08897,
+     "fitAtAreaScale": 0.63,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "hit": {
+    "heightWu": 46.81,
+    "wuPerPx": 0.10473,
+    "kind": "standing",
+    "anchorPx": [
+     285.7,
+     450.1
+    ],
+    "points": {
+     "footR": [
+      -4.9,
+      -1.3
+     ],
+     "footL": [
+      4.4,
+      -3.5
+     ],
+     "mouth": [
+      -5.9,
+      -25.6
+     ],
+     "handR": [
+      -15.8,
+      -33.9
+     ],
+     "handL": [
+      13.1,
+      -14.5
+     ],
+     "weaponTip": [
+      -23.4,
+      -48.7
+     ],
+     "butt": [
+      -9.0,
+      -20.9
+     ],
+     "head": [
+      -2.1,
+      -34.3
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.hit",
+      "shadow": "oracle-cinderHorde.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "oracle-cinderHorde.front.hit.white",
+      "scale": 0.2095,
+      "w": 98,
+      "h": 96
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.hit",
+      "shadow": "oracle-cinderHorde.front.hit.shadow",
+      "shadowScale": 2,
+      "white": "oracle-cinderHorde.front.hit.white",
+      "scale": 0.4189,
+      "w": 195,
+      "h": 193
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.11311,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.2,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.B.nb21/oracle-cinderHorde.front.hit.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.B.nb21.png",
+    "rawSha256": "7a21b83a8089307840521b58d1706905f8d16a550097464703bc0ef76bcab6f9",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.front.png",
+    "tag": "act.oracle-cinderHorde.front.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.37,
+      "iouMirrored": 0.368,
+      "aspectRatio": 1.411,
+      "headDx": -0.312,
+      "guideHeadDx": -0.301,
+      "facingMargin": 0.002,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 776,
+      "keyHueShiftedPct": 3.22,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 32.7,
+       "groundL": 67.7,
+       "below": 35.0
+      },
+      "farmland": {
+       "bodyL": 32.7,
+       "groundL": 67.3,
+       "below": 34.6
+      },
+      "swamp": {
+       "bodyL": 32.0,
+       "groundL": 58.5,
+       "below": 26.5
+      },
+      "forest": {
+       "bodyL": 32.0,
+       "groundL": 58.7,
+       "below": 26.7
+      },
+      "worstBelow": 26.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.3,
+      "dE_upperThird": 1.8,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 1,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 1.122
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 694,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.199
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.184,
+      "edgeDevPct": 3.98,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "facing",
+     "camera",
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.534,
+     "scale": 1.1071,
+     "aspect": 1.085,
+     "shear": 0.15,
+     "M": [
+      [
+       1.20118,
+       0.15376
+      ],
+      [
+       0.0,
+       1.02035
+      ]
+     ],
+     "t": [
+      -29.06,
+      -23.32
+     ],
+     "guideWuPerPx": 0.144,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.09515,
+     "wuPerPxFromThickness": 0.11311,
+     "wuPerPxFromFit": 0.10473,
+     "fitAtAreaScale": 0.553,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "dead": {
+    "heightWu": 35.1,
+    "wuPerPx": 0.09777,
+    "kind": "lying",
+    "anchorPx": [
+     143.3,
+     302.6
+    ],
+    "points": {
+     "footR": [
+      -5.7,
+      -3.9
+     ],
+     "footL": [
+      0.3,
+      -1.7
+     ],
+     "mouth": [
+      20.7,
+      -29.2
+     ],
+     "handR": [
+      -2.4,
+      -26.2
+     ],
+     "handL": [
+      31.3,
+      -11.8
+     ],
+     "weaponTip": [
+      -28.8,
+      -27.6
+     ],
+     "butt": [
+      15.0,
+      -24.3
+     ],
+     "head": [
+      18.9,
+      -24.8
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.dead",
+      "shadow": "oracle-cinderHorde.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1955,
+      "w": 93,
+      "h": 73
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.dead",
+      "shadow": "oracle-cinderHorde.front.dead.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3911,
+      "w": 186,
+      "h": 146
+     }
+    },
+    "scaleRule": "median",
+    "wuPerPxPost": 0.1008,
+    "groundFix": null,
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.B.nb21/oracle-cinderHorde.front.dead.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.B.nb21.png",
+    "rawSha256": "7a21b83a8089307840521b58d1706905f8d16a550097464703bc0ef76bcab6f9",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.front.png",
+    "tag": "act.oracle-cinderHorde.front.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.608,
+      "iouMirrored": 0.265,
+      "aspectRatio": 0.749,
+      "headDx": 0.319,
+      "guideHeadDx": -0.023,
+      "facingMargin": 0.343,
+      "pass": false
+     },
+     "rim": {
+      "ringPx": 656,
+      "keyHueShiftedPct": 2.9,
+      "pass_": false
+     },
+     "value": {
+      "plains": {
+       "bodyL": 33.7,
+       "groundL": 67.7,
+       "below": 34.0
+      },
+      "farmland": {
+       "bodyL": 33.7,
+       "groundL": 67.3,
+       "below": 33.6
+      },
+      "swamp": {
+       "bodyL": 32.7,
+       "groundL": 58.5,
+       "below": 25.7
+      },
+      "forest": {
+       "bodyL": 32.8,
+       "groundL": 58.7,
+       "below": 25.9
+      },
+      "worstBelow": 25.7,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 2.7,
+      "dE_upperThird": 4.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.803
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 631,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.226
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.184,
+      "edgeDevPct": 3.98,
+      "pass_": true
+     }
+    },
+    "flags": [
+     "rim"
+    ],
+    "registration": {
+     "fitIoU": 0.727,
+     "scale": 1.3596,
+     "aspect": 1.08,
+     "shear": -0.013,
+     "M": [
+      [
+       1.46834,
+       -0.01666
+      ],
+      [
+       0.0,
+       1.25887
+      ]
+     ],
+     "t": [
+      -180.27,
+      -27.37
+     ],
+     "guideWuPerPx": 0.16185,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.09777,
+     "wuPerPxFromThickness": 0.1109,
+     "wuPerPxFromFit": 0.09585,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   },
+   "castB": {
+    "heightWu": 40.55,
+    "wuPerPx": 0.09257,
+    "kind": "standing",
+    "anchorPx": [
+     297.9,
+     443.5
+    ],
+    "points": {
+     "footR": [
+      1.0,
+      -1.0
+     ],
+     "footL": [
+      1.1,
+      -0.9
+     ],
+     "mouth": [
+      -5.5,
+      -22.9
+     ],
+     "handR": [
+      -15.8,
+      -22.2
+     ],
+     "handL": [
+      3.2,
+      -14.6
+     ],
+     "weaponTip": [
+      -27.2,
+      -16.8
+     ],
+     "butt": [
+      -6.5,
+      -27.1
+     ],
+     "head": [
+      -2.0,
+      -31.5
+     ]
+    },
+    "atlas": {
+     "S": {
+      "frame": "oracle-cinderHorde.front.castB",
+      "shadow": "oracle-cinderHorde.front.castB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.1851,
+      "w": 84,
+      "h": 84
+     },
+     "H": {
+      "frame": "oracle-cinderHorde.front.castB",
+      "shadow": "oracle-cinderHorde.front.castB.shadow",
+      "shadowScale": 2,
+      "white": null,
+      "scale": 0.3703,
+      "w": 169,
+      "h": 168
+     }
+    },
+    "scaleRule": "area",
+    "wuPerPxPost": 0.09257,
+    "groundFix": {
+     "applied": false,
+     "shiftWu": 1.6,
+     "feet": [
+      "footR",
+      "footL"
+     ]
+    },
+    "anchorBeforeGroundFix": null,
+    "pixelFixes": {},
+    "file": "stage-d/prod/cut/act.oracle-cinderHorde.front.B.nb21/oracle-cinderHorde.front.castB.png",
+    "raw": "stage-d/raw/act.oracle-cinderHorde.front.B.nb21.png",
+    "rawSha256": "7a21b83a8089307840521b58d1706905f8d16a550097464703bc0ef76bcab6f9",
+    "model": "gemini-nano-banana-2.1",
+    "imageSize": "1K",
+    "guide": "stage-d/prod/guides/oracle.B.front.png",
+    "tag": "act.oracle-cinderHorde.front.B.nb21",
+    "checks": {
+     "camera": {
+      "iou": 0.672,
+      "iouMirrored": 0.434,
+      "aspectRatio": 1.028,
+      "headDx": -0.103,
+      "guideHeadDx": -0.047,
+      "facingMargin": 0.238,
+      "pass": true
+     },
+     "rim": {
+      "ringPx": 530,
+      "keyHueShiftedPct": 1.13,
+      "pass_": true
+     },
+     "value": {
+      "plains": {
+       "bodyL": 30.7,
+       "groundL": 67.7,
+       "below": 37.0
+      },
+      "farmland": {
+       "bodyL": 30.7,
+       "groundL": 67.3,
+       "below": 36.6
+      },
+      "swamp": {
+       "bodyL": 30.0,
+       "groundL": 58.5,
+       "below": 28.5
+      },
+      "forest": {
+       "bodyL": 30.0,
+       "groundL": 58.7,
+       "below": 28.7
+      },
+      "worstBelow": 28.5,
+      "pass": true
+     },
+     "identity": {
+      "dE_whole": 1.2,
+      "dE_upperThird": 1.2,
+      "pass_": true
+     },
+     "cutoff": false,
+     "parts": 3,
+     "specksDropped": 0,
+     "scale": {
+      "ratioToIdle": 0.899
+     },
+     "rimAfterFixTierH": {
+      "ringPx": 530,
+      "keyHueShiftedPct": 0.0,
+      "pass_": true,
+      "rimFixedShare": 0.229
+     },
+     "fringe": {
+      "fringePct": 0.0,
+      "keyInUnitPct": 0.184,
+      "edgeDevPct": 3.98,
+      "pass_": true
+     }
+    },
+    "flags": [],
+    "registration": {
+     "fitIoU": 0.773,
+     "scale": 0.9247,
+     "aspect": 1.01,
+     "shear": 0.025,
+     "M": [
+      [
+       0.93393,
+       0.02359
+      ],
+      [
+       0.0,
+       0.91552
+      ]
+     ],
+     "t": [
+      -16.85,
+      39.6
+     ],
+     "guideWuPerPx": 0.10847,
+     "rawPerGuidePx": 1.3333,
+     "idleCorrection": 1.0736,
+     "wuPerPxFromArea": 0.09257,
+     "wuPerPxFromThickness": 0.10021,
+     "wuPerPxFromFit": 0.09445,
+     "fitAtAreaScale": null,
+     "scaleRule": "area against the idle where the fit at that scale is 0.75 or better, body thickness against the idle where it is 0.65 or worse, blended between; the fit at the chosen scale places the anchor and the parts"
+    }
+   }
+  }
+ },
+ "approved": null,
+ "route": "generated (nb21: action maquette + approved idle cutout)",
+ "codeOnly": {},
+ "note": "every action is its own texture on a 24 x 16 MeshPlane (art plan 5.3); anchors are wu offsets from the ground anchor (x right, y down); scale per frame from the area of the paint against the approved idle (or the body's thickness where the painting departed from its maquette), so every action keeps the idle's size",
+ "heldBack": {
+  "front": {
+   "castA": "painted from behind (the back of the hood toward the camera in the front view); held back: the front cast is castB alone (staff thrust), with the idle's arms lifted by the mesh for the raise"
+  }
+ }
+}

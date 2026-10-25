@@ -1,0 +1,315 @@
+{
+ "figure": "twChief",
+ "view": "front",
+ "missing": [],
+ "overlaps": [],
+ "camera": {
+  "iou": 0.615,
+  "iouMirrored": 0.565,
+  "aspectRatio": 1.08,
+  "headDx": -0.079,
+  "guideHeadDx": -0.061,
+  "pass": true
+ },
+ "variety": {
+  "marchIoU": 0.54,
+  "marchLegsIoU": 0.564,
+  "mostAlike": [
+   "stand~marchA",
+   0.777
+  ],
+  "pass": true
+ },
+ "scale": {
+  "heights": {
+   "stand": 1.0,
+   "idle2": 1.006,
+   "marchA": 0.989,
+   "marchB": 0.931
+  },
+  "pass_": true
+ },
+ "fringe": {
+  "spillEdgePct": 11.92,
+  "keyInUnitPct": 0.061,
+  "fringePct": 0.0,
+  "edgeDevPct": 10.02,
+  "pass_": true,
+  "edgeDevThickPct": 6.84,
+  "deviatingChromaShift": 0.003
+ },
+ "consistency": {
+  "standCloth": 0.056,
+  "histMin": [
+   "deadB",
+   0.53
+  ],
+  "maxDE": [
+   "deadB",
+   10.6
+  ],
+  "clothRatio": [
+   0.0,
+   1.08
+  ],
+  "pass": false
+ },
+ "cameraAll": {
+  "cells": {
+   "stand": [
+    0.615,
+    0.05
+   ],
+   "idle2": [
+    0.615,
+    0.003
+   ],
+   "marchA": [
+    0.56,
+    0.068
+   ],
+   "marchB": [
+    0.565,
+    0.187
+   ],
+   "windup": [
+    0.672,
+    0.085
+   ],
+   "strike": [
+    0.542,
+    0.164
+   ],
+   "follow": [
+    0.669,
+    0.258
+   ],
+   "recoil": [
+    0.468,
+    -0.022
+   ],
+   "actA": [
+    0.614,
+    0.052
+   ],
+   "actB": [
+    0.595,
+    0.124
+   ],
+   "fall": [
+    0.435,
+    0.143
+   ],
+   "deadA": [
+    0.46,
+    0.206
+   ],
+   "deadB": [
+    0.604,
+    0.45
+   ],
+   "fleeA": [
+    0.556,
+    0.078
+   ],
+   "fleeB": [
+    0.605,
+    0.404
+   ],
+   "cheer": [
+    0.611,
+    0.023
+   ]
+  },
+  "medianIoU": 0.599,
+  "medianMargin": 0.105,
+  "follow": "12/16",
+  "followShare": 0.75
+ },
+ "cameraRel": {
+  "cells": {
+   "stand": [
+    0.688,
+    0.093,
+    0.979
+   ],
+   "idle2": [
+    0.624,
+    -0.059,
+    0.975
+   ],
+   "marchA": [
+    0.672,
+    0.168,
+    0.985
+   ],
+   "marchB": [
+    0.61,
+    0.21,
+    0.974
+   ],
+   "windup": [
+    0.604,
+    0.062,
+    0.969
+   ],
+   "strike": [
+    0.646,
+    0.269,
+    0.979
+   ],
+   "follow": [
+    0.64,
+    0.22,
+    0.943
+   ],
+   "recoil": [
+    0.592,
+    0.121,
+    0.943
+   ],
+   "actA": [
+    0.595,
+    0.048,
+    0.963
+   ],
+   "actB": [
+    0.656,
+    0.198,
+    0.982
+   ],
+   "fall": [
+    0.446,
+    0.152,
+    0.986
+   ],
+   "deadA": [
+    0.551,
+    0.221,
+    0.979
+   ],
+   "deadB": [
+    0.611,
+    0.457,
+    0.987
+   ],
+   "fleeA": [
+    0.663,
+    0.147,
+    0.974
+   ],
+   "fleeB": [
+    0.642,
+    0.437,
+    0.867
+   ],
+   "cheer": [
+    0.602,
+    0.03,
+    0.953
+   ]
+  },
+  "follow": "14/16",
+  "followN": 14,
+  "failing": [
+   "fall",
+   "idle2"
+  ],
+  "medianIoU": 0.617,
+  "inheritMedian": 0.974,
+  "inheritMin": [
+   0.867,
+   "fleeB"
+  ],
+  "scaleFrom": "../bodies/src.twChief.front/frames"
+ },
+ "rim": {
+  "beforeMax": 45.7,
+  "afterMax": 0.3
+ },
+ "sideCmd": {
+  "share": 0.162,
+  "worstBelow": 27.0,
+  "grounds": {
+   "plains": {
+    "share": 0.162,
+    "below": 35.3
+   },
+   "farmland": {
+    "share": 0.112,
+    "below": 34.9
+   },
+   "swamp": {
+    "share": 0.185,
+    "below": 27.0
+   },
+   "forest": {
+    "share": 0.162,
+    "below": 27.2
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "sideCmdLocked": {
+  "share": 0.183,
+  "worstBelow": 27.0,
+  "grounds": {
+   "plains": {
+    "share": 0.183,
+    "below": 35.3
+   },
+   "farmland": {
+    "share": 0.131,
+    "below": 34.9
+   },
+   "swamp": {
+    "share": 0.204,
+    "below": 27.0
+   },
+   "forest": {
+    "share": 0.183,
+    "below": 27.2
+   }
+  },
+  "fPx": 32.0,
+  "pass": true
+ },
+ "hueLock": {
+  "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+  "shipped": false,
+  "lockedShareMax": 0.122,
+  "lockedShareMean": 0.087
+ },
+ "keyCast": {
+  "key": "magenta",
+  "scope": "thin",
+  "maxShare": 0.008,
+  "meanShare": 0.003
+ },
+ "identity": {
+  "dE2000": 1.2,
+  "upperThirdLab": [
+   33.0,
+   3.6,
+   16.8
+  ],
+  "portraitLab": [
+   34.2,
+   4.2,
+   17.2
+  ],
+  "pass_": true
+ },
+ "gate": {
+  "cells": true,
+  "variety": true,
+  "rim": true,
+  "fringe": true,
+  "side": true,
+  "identity": true,
+  "missing": []
+ },
+ "pass": true,
+ "sheet": "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/raw/cmdB/wc04.front.redress.r2.nb21.png"
+}

@@ -1,0 +1,1 @@
+(() => { layout(); return JSON.stringify({ appW: app.clientWidth, appH: app.clientHeight, inner: [innerWidth, innerHeight], phone: app.classList.contains('phone'), fitDpx: +(fitScale * MED_DIAM).toFixed(1), minDpx: +(minScale * MED_DIAM).toFixed(1), startDpx: +(startScale() * MED_DIAM).toFixed(1) }); })()

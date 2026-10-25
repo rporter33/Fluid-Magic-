@@ -1,0 +1,3 @@
+// The design's frost #929DA6 against pass 3's massif snow (proto-massif p58y: L* = 72 + 14 sv lit, 72 + 22 sv shaded; a* -0.8; b* = -2 + 7 sv shaded), sv in [-1, 1]
+(() => { const out = []; for (let sv = -1; sv <= 1.0001; sv += 0.125) { const L = Math.min(86, sv > 0 ? 72 + 14 * sv : 72 + 22 * sv), b = -2 + (sv < 0 ? 7 * sv : 0), o = [0, 0, 0]; rlLabTo(L, -0.8, b, o, 0); const e = rlPairDE(hex2rgb('#929DA6'), o); out.push({ sv: +sv.toFixed(3), snowLab: [+L.toFixed(1), -0.8, +b.toFixed(1)], hex: rgb2hex(o), normal: +e.normal.toFixed(1), cvd: +e.cvd.toFixed(1) }); }
+  return JSON.stringify({ frost: '#929DA6', vsMassifSnow: out, minNormal: Math.min(...out.map((r) => r.normal)), minCvd: Math.min(...out.map((r) => r.cvd)) }); })()

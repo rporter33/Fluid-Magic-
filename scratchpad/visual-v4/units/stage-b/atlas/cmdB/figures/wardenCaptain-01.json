@@ -1,0 +1,1061 @@
+{
+ "figure": "wardenCaptain-01",
+ "unit": "wardenCaptain",
+ "face": "01",
+ "nation": "thornwood",
+ "body": "twChief",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdB",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdB/wc01.front.redress.nb21.png",
+   "sheetSha256": "54d554d98aa2e13701ace9a0ef4333c9198bc965f0a3a39880212a437ca0fae1",
+   "body": "stage-b/raw/cmdB/twChief.front.body.edit.nb21.png",
+   "bodySha256": "6abec3a09376addf22634ed9286104fbd468efba2d2188205d0b39dbc7ac0ce9",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.42953,
+    "H": 0.85906
+   },
+   "scaleFrom": {
+    "bodyH": 149,
+    "from_": "body twChief.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "wardenCaptain-01.front.stand",
+     "srcBox": [
+      49,
+      39,
+      187,
+      218
+     ],
+     "srcAnchor": [
+      92.8,
+      176.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6698,
+       "y": 0.9696
+      },
+      "H": {
+       "x": 0.6644,
+       "y": 0.9696
+      }
+     }
+    },
+    "idle2": {
+     "frame": "wardenCaptain-01.front.idle2",
+     "srcBox": [
+      330,
+      40,
+      440,
+      222
+     ],
+     "srcAnchor": [
+      70.5,
+      179.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6384,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.6384,
+       "y": 0.9736
+      }
+     }
+    },
+    "marchA": {
+     "frame": "wardenCaptain-01.front.marchA",
+     "srcBox": [
+      562,
+      49,
+      696,
+      228
+     ],
+     "srcAnchor": [
+      91.1,
+      176.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6688,
+       "y": 0.9696
+      },
+      "H": {
+       "x": 0.6745,
+       "y": 0.9696
+      }
+     }
+    },
+    "marchB": {
+     "frame": "wardenCaptain-01.front.marchB",
+     "srcBox": [
+      818,
+      47,
+      965,
+      215
+     ],
+     "srcAnchor": [
+      69.2,
+      165.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4727,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.4727,
+       "y": 0.9712
+      }
+     }
+    },
+    "windup": {
+     "frame": "wardenCaptain-01.front.windup",
+     "srcBox": [
+      89,
+      264,
+      187,
+      476
+     ],
+     "srcAnchor": [
+      56.9,
+      209.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5782,
+       "y": 0.976
+      },
+      "H": {
+       "x": 0.5782,
+       "y": 0.976
+      }
+     }
+    },
+    "strike": {
+     "frame": "wardenCaptain-01.front.strike",
+     "srcBox": [
+      324,
+      318,
+      439,
+      486
+     ],
+     "srcAnchor": [
+      71.4,
+      165.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.621,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.6149,
+       "y": 0.9712
+      }
+     }
+    },
+    "follow": {
+     "frame": "wardenCaptain-01.front.follow",
+     "srcBox": [
+      597,
+      315,
+      704,
+      482
+     ],
+     "srcAnchor": [
+      56.3,
+      164.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5246,
+       "y": 0.9654
+      },
+      "H": {
+       "x": 0.5246,
+       "y": 0.972
+      }
+     }
+    },
+    "recoil": {
+     "frame": "wardenCaptain-01.front.recoil",
+     "srcBox": [
+      790,
+      287,
+      984,
+      471
+     ],
+     "srcAnchor": [
+      127.0,
+      181.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6535,
+       "y": 0.9722
+      },
+      "H": {
+       "x": 0.6497,
+       "y": 0.9722
+      }
+     }
+    },
+    "actA": {
+     "frame": "wardenCaptain-01.front.actA",
+     "srcBox": [
+      103,
+      512,
+      202,
+      728
+     ],
+     "srcAnchor": [
+      45.1,
+      213.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4527,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.4578,
+       "y": 0.9736
+      }
+     }
+    },
+    "actB": {
+     "frame": "wardenCaptain-01.front.actB",
+     "srcBox": [
+      297,
+      566,
+      439,
+      728
+     ],
+     "srcAnchor": [
+      103.6,
+      159.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7222,
+       "y": 0.9624
+      },
+      "H": {
+       "x": 0.7222,
+       "y": 0.9692
+      }
+     }
+    },
+    "fall": {
+     "frame": "wardenCaptain-01.front.fall",
+     "srcBox": [
+      615,
+      505,
+      761,
+      725
+     ],
+     "srcAnchor": [
+      47.8,
+      217.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3313,
+       "y": 0.9813
+      },
+      "H": {
+       "x": 0.3338,
+       "y": 0.9762
+      }
+     }
+    },
+    "deadA": {
+     "frame": "wardenCaptain-01.front.deadA",
+     "srcBox": [
+      861,
+      553,
+      1020,
+      685
+     ],
+     "srcAnchor": [
+      85.7,
+      97.2
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5402,
+       "y": 0.7246
+      },
+      "H": {
+       "x": 0.5363,
+       "y": 0.7308
+      }
+     }
+    },
+    "deadB": {
+     "frame": "wardenCaptain-01.front.deadB",
+     "srcBox": [
+      26,
+      904,
+      166,
+      1013
+     ],
+     "srcAnchor": [
+      70.6,
+      80.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5052,
+       "y": 0.7217
+      },
+      "H": {
+       "x": 0.5052,
+       "y": 0.7217
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "wardenCaptain-01.front.fleeA",
+     "srcBox": [
+      292,
+      842,
+      441,
+      999
+     ],
+     "srcAnchor": [
+      101.7,
+      154.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.677,
+       "y": 0.9732
+      },
+      "H": {
+       "x": 0.677,
+       "y": 0.9662
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "wardenCaptain-01.front.fleeB",
+     "srcBox": [
+      571,
+      839,
+      714,
+      989
+     ],
+     "srcAnchor": [
+      53.8,
+      147.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3827,
+       "y": 0.9718
+      },
+      "H": {
+       "x": 0.3797,
+       "y": 0.9645
+      }
+     }
+    },
+    "cheer": {
+     "frame": "wardenCaptain-01.front.cheer",
+     "srcBox": [
+      869,
+      772,
+      953,
+      985
+     ],
+     "srcAnchor": [
+      46.6,
+      210.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5531,
+       "y": 0.9807
+      },
+      "H": {
+       "x": 0.5531,
+       "y": 0.9754
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "14/16",
+    "failing": [
+     "fall",
+     "idle2"
+    ],
+    "inherit": 0.952,
+    "variety": true,
+    "marchIoU": 0.534,
+    "rimAfter": 0.3,
+    "edgeDev": 8.97,
+    "keyIn": 0.143,
+    "side": 0.139,
+    "valueBelow": 31.1,
+    "identityDE": 4.4,
+    "consHist": [
+     "deadB",
+     0.515
+    ],
+    "consDE": [
+     "deadB",
+     13.1
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "wc01.front.redress.nb21.png",
+    "marks": "ypynyy"
+   },
+   "status": "pass",
+   "failedGates": [],
+   "rolls": 1,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0121,
+    "meanShare": 0.0036
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.605,
+    "lockedShareMean": 0.172,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdB/wc01.back.redress.nb21.png",
+   "sheetSha256": "c394cf136578d328af057db6fe555010caa3c910acc849668d9ee0212ca5f490",
+   "body": "stage-b/raw/cmdB/twChief.back.body.edit.nb21.png",
+   "bodySha256": "cda3c33619cf8dc72712d77c8ec12edf7a31e80f6ba686b74a0816f686a5e0ca",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.51613,
+    "H": 1.03226
+   },
+   "scaleFrom": {
+    "bodyH": 124,
+    "from_": "body twChief.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "wardenCaptain-01.back.stand",
+     "srcBox": [
+      85,
+      18,
+      177,
+      170
+     ],
+     "srcAnchor": [
+      36.6,
+      149.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4059,
+       "y": 0.9738
+      },
+      "H": {
+       "x": 0.4018,
+       "y": 0.9677
+      }
+     }
+    },
+    "idle2": {
+     "frame": "wardenCaptain-01.back.idle2",
+     "srcBox": [
+      342,
+      19,
+      446,
+      171
+     ],
+     "srcAnchor": [
+      36.6,
+      149.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3552,
+       "y": 0.9738
+      },
+      "H": {
+       "x": 0.3584,
+       "y": 0.9677
+      }
+     }
+    },
+    "marchA": {
+     "frame": "wardenCaptain-01.back.marchA",
+     "srcBox": [
+      592,
+      19,
+      693,
+      183
+     ],
+     "srcAnchor": [
+      32.3,
+      161.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3272,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.3272,
+       "y": 0.9722
+      }
+     }
+    },
+    "marchB": {
+     "frame": "wardenCaptain-01.back.marchB",
+     "srcBox": [
+      845,
+      16,
+      947,
+      176
+     ],
+     "srcAnchor": [
+      26.3,
+      157.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.265,
+       "y": 0.9651
+      },
+      "H": {
+       "x": 0.2674,
+       "y": 0.9708
+      }
+     }
+    },
+    "windup": {
+     "frame": "wardenCaptain-01.back.windup",
+     "srcBox": [
+      75,
+      282,
+      166,
+      433
+     ],
+     "srcAnchor": [
+      47.4,
+      148.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5197,
+       "y": 0.9673
+      },
+      "H": {
+       "x": 0.5197,
+       "y": 0.9673
+      }
+     }
+    },
+    "strike": {
+     "frame": "wardenCaptain-01.back.strike",
+     "srcBox": [
+      336,
+      276,
+      438,
+      441
+     ],
+     "srcAnchor": [
+      30.1,
+      162.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3006,
+       "y": 0.9726
+      },
+      "H": {
+       "x": 0.3034,
+       "y": 0.9726
+      }
+     }
+    },
+    "follow": {
+     "frame": "wardenCaptain-01.back.follow",
+     "srcBox": [
+      601,
+      275,
+      678,
+      439
+     ],
+     "srcAnchor": [
+      27.7,
+      161.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3642,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.3686,
+       "y": 0.9722
+      }
+     }
+    },
+    "recoil": {
+     "frame": "wardenCaptain-01.back.recoil",
+     "srcBox": [
+      816,
+      319,
+      997,
+      434
+     ],
+     "srcAnchor": [
+      67.4,
+      112.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3767,
+       "y": 0.964
+      },
+      "H": {
+       "x": 0.3747,
+       "y": 0.9562
+      }
+     }
+    },
+    "actA": {
+     "frame": "wardenCaptain-01.back.actA",
+     "srcBox": [
+      61,
+      519,
+      149,
+      679
+     ],
+     "srcAnchor": [
+      60.3,
+      157.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6835,
+       "y": 0.9651
+      },
+      "H": {
+       "x": 0.6763,
+       "y": 0.9708
+      }
+     }
+    },
+    "actB": {
+     "frame": "wardenCaptain-01.back.actB",
+     "srcBox": [
+      343,
+      526,
+      468,
+      682
+     ],
+     "srcAnchor": [
+      34.8,
+      153.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.283,
+       "y": 0.9635
+      },
+      "H": {
+       "x": 0.2851,
+       "y": 0.9693
+      }
+     }
+    },
+    "fall": {
+     "frame": "wardenCaptain-01.back.fall",
+     "srcBox": [
+      535,
+      619,
+      672,
+      758
+     ],
+     "srcAnchor": [
+      85.7,
+      136.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6196,
+       "y": 0.9621
+      },
+      "H": {
+       "x": 0.6239,
+       "y": 0.9686
+      }
+     }
+    },
+    "deadA": {
+     "frame": "wardenCaptain-01.back.deadA",
+     "srcBox": [
+      783,
+      620,
+      923,
+      757
+     ],
+     "srcAnchor": [
+      66.9,
+      101.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4801,
+       "y": 0.7278
+      },
+      "H": {
+       "x": 0.4769,
+       "y": 0.7328
+      }
+     }
+    },
+    "deadB": {
+     "frame": "wardenCaptain-01.back.deadB",
+     "srcBox": [
+      98,
+      792,
+      247,
+      899
+     ],
+     "srcAnchor": [
+      60.7,
+      78.5
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4092,
+       "y": 0.7284
+      },
+      "H": {
+       "x": 0.4092,
+       "y": 0.7284
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "wardenCaptain-01.back.fleeA",
+     "srcBox": [
+      332,
+      784,
+      441,
+      955
+     ],
+     "srcAnchor": [
+      31.0,
+      168.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2931,
+       "y": 0.9746
+      },
+      "H": {
+       "x": 0.2906,
+       "y": 0.9692
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "wardenCaptain-01.back.fleeB",
+     "srcBox": [
+      589,
+      784,
+      673,
+      948
+     ],
+     "srcAnchor": [
+      14.2,
+      161.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1851,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.1831,
+       "y": 0.9722
+      }
+     }
+    },
+    "cheer": {
+     "frame": "wardenCaptain-01.back.cheer",
+     "srcBox": [
+      851,
+      770,
+      920,
+      937
+     ],
+     "srcAnchor": [
+      38.5,
+      164.0
+     ],
+     "atlas": {
+      "S": "wardenCaptain.S.0.png",
+      "H": "wardenCaptain.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5492,
+       "y": 0.9732
+      },
+      "H": {
+       "x": 0.5566,
+       "y": 0.9732
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": false,
+    "rolls": 1,
+    "cells": "13/16",
+    "failing": [
+     "deadA",
+     "deadB",
+     "fall"
+    ],
+    "inherit": 0.949,
+    "variety": true,
+    "marchIoU": 0.668,
+    "rimAfter": 0.0,
+    "edgeDev": 2.5,
+    "keyIn": 0.119,
+    "side": 0.125,
+    "valueBelow": 28.3,
+    "identityDE": 4.0,
+    "consHist": [
+     "windup",
+     0.787
+    ],
+    "consDE": [
+     "cheer",
+     7.0
+    ],
+    "gate": {
+     "cells": false,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "wc01.back.redress.nb21.png",
+    "marks": "y-y-yy"
+   },
+   "status": "reported",
+   "failedGates": [
+    "cells"
+   ],
+   "rolls": 1,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0295,
+    "meanShare": 0.0075
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.549,
+    "lockedShareMean": 0.492,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  }
+ },
+ "marks": [
+  {
+   "mark": "the helm of dark oak-bark plates with a pair of antlers",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "his full dark beard and long dark-brown braids hanging over the chest",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the cloak of large dark green oak leaves over the shoulders and down the back",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the carved wooden acorn clasp at the chest",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the armour of layered bark plates",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the plain straight sword with a simple cross guard",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": null,
+ "approved": null,
+ "productionKit": {
+  "weapon": "the plain straight sword with a simple cross guard",
+  "weaponChanged": false,
+  "mantle": null,
+  "mantleFrom": "portrait"
+ }
+}

@@ -1,0 +1,400 @@
+{
+ "figure": "flameArcher",
+ "unit": "flameArcher",
+ "nation": "cinderHorde",
+ "key": "green",
+ "cloth": "#C4532C",
+ "hueLocked": false,
+ "kit": "A Flame Archer: a padded smoke-grey jack, worn under a sleeveless surcoat of dull ember-orange cloth that covers his whole chest and belly from the collar down to just below the knees, front and back, split at the front below the belt so the legs can stride and held at the waist by a belt; leather bracers; a deep dull ember-orange hood worn up with a short hooded cape over the shoulders; a soot-black scarf over the lower face; a short recurve bow of dark horn; a leather quiver on the back with arrows whose heads are wrapped in black pitch-soaked rag; a long knife at the belt for melee. No horns. The arrow heads are not lit in the image (the game draws their flame); in the windup and strike cells the bow is slung on the back and the knife is in hand.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.3944,
+     "standPx": 56,
+     "frames": [
+      "flameArcher.back.stand",
+      "flameArcher.back.stand.white",
+      "flameArcher.back.marchA",
+      "flameArcher.back.marchB",
+      "flameArcher.back.nock",
+      "flameArcher.back.draw",
+      "flameArcher.back.loose",
+      "flameArcher.back.windup",
+      "flameArcher.back.strike",
+      "flameArcher.back.recoil",
+      "flameArcher.back.recoil.white",
+      "flameArcher.back.fall",
+      "flameArcher.back.deadA",
+      "flameArcher.back.deadB",
+      "flameArcher.back.fleeA",
+      "flameArcher.back.fleeB",
+      "flameArcher.back.cheer",
+      "flameArcher.back.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.7887,
+     "standPx": 112,
+     "frames": [
+      "flameArcher.back.stand",
+      "flameArcher.back.stand.white",
+      "flameArcher.back.marchA",
+      "flameArcher.back.marchB",
+      "flameArcher.back.nock",
+      "flameArcher.back.draw",
+      "flameArcher.back.loose",
+      "flameArcher.back.windup",
+      "flameArcher.back.strike",
+      "flameArcher.back.recoil",
+      "flameArcher.back.recoil.white",
+      "flameArcher.back.fall",
+      "flameArcher.back.deadA",
+      "flameArcher.back.deadB",
+      "flameArcher.back.fleeA",
+      "flameArcher.back.fleeB",
+      "flameArcher.back.cheer",
+      "flameArcher.back.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.flameArcher.back.g3pro.png",
+   "sha256": "a6b25b4b6ebc0c406af6cd114d8f3ecb1321abc6e23e8eb47d6d304097b29718",
+   "model": "gemini-3-pro-image",
+   "job": "flameArcher.back",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/flameArcher.back.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/r3/cw.back.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "14/15",
+    "cells": {
+     "stand": [
+      0.761,
+      0.121
+     ],
+     "marchA": [
+      0.762,
+      0.11
+     ],
+     "marchB": [
+      0.751,
+      0.214
+     ],
+     "nock": [
+      0.754,
+      0.141
+     ],
+     "draw": [
+      0.776,
+      0.106
+     ],
+     "loose": [
+      0.767,
+      0.115
+     ],
+     "windup": [
+      0.685,
+      0.054
+     ],
+     "strike": [
+      0.75,
+      0.349
+     ],
+     "recoil": [
+      0.432,
+      0.019
+     ],
+     "fall": [
+      0.871,
+      0.082
+     ],
+     "deadA": [
+      0.827,
+      0.46
+     ],
+     "deadB": [
+      0.821,
+      0.54
+     ],
+     "fleeA": [
+      0.813,
+      0.421
+     ],
+     "fleeB": [
+      0.808,
+      0.462
+     ],
+     "cheer": [
+      0.844,
+      0.123
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.662,
+     "marchLegsIoU": 0.416,
+     "mostAlike": [
+      "draw~loose",
+      0.84
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.063,
+      "marchB": 1.014
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.426,
+     "histMin": [
+      "fall",
+      0.61
+     ],
+     "maxDE": [
+      "fall",
+      7.3
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 38.3,
+     "afterMax": 0.5
+    },
+    "side": {
+     "neutral": {
+      "share": 0.239,
+      "worstBelow": 25.2,
+      "below": {
+       "plains": 33.8,
+       "farmland": 33.4,
+       "swamp": 25.2,
+       "forest": 25.4
+      }
+     },
+     "sideKeyline": {
+      "share": 0.482,
+      "worstBelow": 22.5,
+      "below": {
+       "plains": 31.3,
+       "farmland": 30.9,
+       "swamp": 22.5,
+       "forest": 22.8
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 7.732,
+     "keyInUnitPct": 0.219,
+     "fringePct": 0.0,
+     "edgeDevPct": 4.26,
+     "pass_": true
+    }
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "troops-cinderHorde-S",
+     "scale": 0.3862,
+     "standPx": 56,
+     "frames": [
+      "flameArcher.front.stand",
+      "flameArcher.front.stand.white",
+      "flameArcher.front.marchA",
+      "flameArcher.front.marchB",
+      "flameArcher.front.nock",
+      "flameArcher.front.draw",
+      "flameArcher.front.loose",
+      "flameArcher.front.windup",
+      "flameArcher.front.strike",
+      "flameArcher.front.recoil",
+      "flameArcher.front.recoil.white",
+      "flameArcher.front.fall",
+      "flameArcher.front.deadA",
+      "flameArcher.front.deadB",
+      "flameArcher.front.fleeA",
+      "flameArcher.front.fleeB",
+      "flameArcher.front.cheer",
+      "flameArcher.front.dropped"
+     ]
+    },
+    "H": {
+     "prefix": "troops-cinderHorde-H",
+     "scale": 0.7724,
+     "standPx": 112,
+     "frames": [
+      "flameArcher.front.stand",
+      "flameArcher.front.stand.white",
+      "flameArcher.front.marchA",
+      "flameArcher.front.marchB",
+      "flameArcher.front.nock",
+      "flameArcher.front.draw",
+      "flameArcher.front.loose",
+      "flameArcher.front.windup",
+      "flameArcher.front.strike",
+      "flameArcher.front.recoil",
+      "flameArcher.front.recoil.white",
+      "flameArcher.front.fall",
+      "flameArcher.front.deadA",
+      "flameArcher.front.deadB",
+      "flameArcher.front.fleeA",
+      "flameArcher.front.fleeB",
+      "flameArcher.front.cheer",
+      "flameArcher.front.dropped"
+     ]
+    }
+   },
+   "sheet": "raw/troops/r1.flameArcher.front.g3pro.png",
+   "sha256": "78620a660197a8c9312291a9ed2a5288effb2b25b1058417a6ccf90c6864a648",
+   "model": "gemini-3-pro-image",
+   "job": "flameArcher.front",
+   "references": [
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/stage-b/work/troops/sbx/refs/guides/flameArcher.front.png",
+    "/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/units/pilot/raw/ad/cw.front.g3pro.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/cinderHorde/cinderScout/03.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "checks": {
+    "cameraAll": "15/15",
+    "cells": {
+     "stand": [
+      0.801,
+      0.08
+     ],
+     "marchA": [
+      0.788,
+      0.151
+     ],
+     "marchB": [
+      0.802,
+      0.242
+     ],
+     "nock": [
+      0.848,
+      0.191
+     ],
+     "draw": [
+      0.805,
+      0.092
+     ],
+     "loose": [
+      0.859,
+      0.159
+     ],
+     "windup": [
+      0.727,
+      0.168
+     ],
+     "strike": [
+      0.855,
+      0.399
+     ],
+     "recoil": [
+      0.832,
+      0.265
+     ],
+     "fall": [
+      0.859,
+      0.683
+     ],
+     "deadA": [
+      0.804,
+      0.543
+     ],
+     "deadB": [
+      0.921,
+      0.776
+     ],
+     "fleeA": [
+      0.908,
+      0.316
+     ],
+     "fleeB": [
+      0.933,
+      0.618
+     ],
+     "cheer": [
+      0.859,
+      0.129
+     ]
+    },
+    "variety": {
+     "marchIoU": 0.529,
+     "marchLegsIoU": 0.404,
+     "mostAlike": [
+      "draw~loose",
+      0.865
+     ],
+     "pass": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0,
+      "marchA": 1.034,
+      "marchB": 0.972
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.377,
+     "histMin": [
+      "windup",
+      0.802
+     ],
+     "maxDE": [
+      "recoil",
+      2.6
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 29.2,
+     "afterMax": 1.6
+    },
+    "side": {
+     "neutral": {
+      "share": 0.267,
+      "worstBelow": 26.8,
+      "below": {
+       "plains": 35.3,
+       "farmland": 34.9,
+       "swamp": 26.8,
+       "forest": 27.1
+      }
+     },
+     "sideKeyline": {
+      "share": 0.505,
+      "worstBelow": 24.1,
+      "below": {
+       "plains": 32.7,
+       "farmland": 32.3,
+       "swamp": 24.1,
+       "forest": 24.3
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 8.22,
+     "keyInUnitPct": 0.116,
+     "fringePct": 0.0,
+     "edgeDevPct": 4.4,
+     "pass_": true
+    }
+   }
+  }
+ },
+ "approved": null
+}

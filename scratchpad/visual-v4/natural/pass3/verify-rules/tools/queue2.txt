@@ -1,0 +1,13 @@
+timeout 3600 node dump.cjs natural 1 far60,far75 > ../out/logs/dump-natural-far.txt 2>&1
+PAGEFILE=/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/before/game-screen-v4.html TAGP=bf- timeout 3600 node dump.cjs natural 1 far60,far75,mid75,midE,midSW,midNE,midNW,midSE,refW,nearC,nearE,nearS > ../out/logs/dump-bf-natural2.txt 2>&1
+MODE=supply VIEWS=start,mid,ref,near1180,nearMax,far timeout 3600 node checksx.cjs natural 1 > ../out/logs/checksx-natural-supply-1.txt 2>&1
+MODE=dominion VIEWS=start,mid,ref,near1180,far timeout 3600 node checksx.cjs clear 2 > ../out/logs/checksx-clear-dominion-2.txt 2>&1
+timeout 3600 node hist.cjs natural 1 > ../out/logs/hist-natural-1.txt 2>&1
+timeout 3600 node hist.cjs natural 2 > ../out/logs/hist-natural-2.txt 2>&1
+timeout 3600 node hist.cjs clear 1 > ../out/logs/hist-clear-1.txt 2>&1
+END=6 HOVER=1 timeout 5400 node vprobe.cjs natural 1 > ../out/logs/vprobe-natural-1-end6.txt 2>&1
+END=6 timeout 5400 node vprobe.cjs natural 2 > ../out/logs/vprobe-natural-2-end6.txt 2>&1
+HOVER=0 timeout 5400 node vprobe.cjs mode:supply 1 > ../out/logs/vprobe-supply-1.txt 2>&1
+HOVER=0 NR=6 timeout 5400 node vprobe.cjs mode:unrest 2 > ../out/logs/vprobe-unrest-2.txt 2>&1
+HOVER=0 NR=0 timeout 5400 node vprobe.cjs clear 1 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/before/game-screen-v4.html bf > ../out/logs/vprobe-bf-clear-1.txt 2>&1
+HOVER=0 END=6 timeout 5400 node vprobe.cjs natural 1 /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3/before/game-screen-v4.html bf > ../out/logs/vprobe-bf-natural-1-end6.txt 2>&1

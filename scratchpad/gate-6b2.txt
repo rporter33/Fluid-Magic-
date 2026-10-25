@@ -1,0 +1,27 @@
+
+> fluid-magic@0.0.0 typecheck
+> tsc -p tsconfig.json && tsc -p tsconfig.sim.json
+
+
+> fluid-magic@0.0.0 lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> fluid-magic@0.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /home/user/fm-6b
+
+
+ Test Files  90 passed (90)
+      Tests  1496 passed (1496)
+   Start at  00:21:03
+   Duration  27.72s (tests 87%, import 11%, transform 1%, worker 1%)
+
+    Isolate  90 workers spawned · ~153ms startup each (spawn + environment, per file)
+             at least ~4.45s faster with isolate: false — reuses workers across files instead of one per file
+
+exit 0

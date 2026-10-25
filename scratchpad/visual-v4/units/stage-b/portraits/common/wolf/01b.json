@@ -1,0 +1,87 @@
+{
+ "id": "wolf-01b",
+ "unit": "wolf",
+ "nation": "common",
+ "group": "creatures",
+ "subject": "wolf",
+ "promptFile": "stage-b/work/portraits/prompts-used/wolf.01b.txt",
+ "kind": "creature bust (plan 3.1)",
+ "face": "01",
+ "candidate": "b",
+ "files": {
+  "master": "01b-512.webp",
+  "game": "01b.webp",
+  "small": "01b-64.webp"
+ },
+ "bytes": {
+  "master": 53162,
+  "game": 15740,
+  "small": 1572
+ },
+ "sourceFile": "stage-b/raw/portraits/wolf.01b.nb21.png",
+ "sourceSha256": "2c18c041c12e3d779368acfa1ef9c3b2427f459b04de9fd17fc3f2b69106fa89",
+ "tool": "Gemini API (network secret)",
+ "model": "gemini-nano-banana-2.1",
+ "date": "2026-10-23",
+ "prompt": "Image 1 is a style reference only: match its painting style, brushwork, lighting, rim light, framing, background and proportions. The person, the face, the headgear and every ornament must be different from Image 1 and must follow the description below exactly; do not copy the man, the helm, the horns or the trim from Image 1.\n\nHead-and-shoulders portrait bust of one grey wolf of the deep wood, a summoned wolf (a beast, not a person), three-quarter view, the face turned toward the right side of the image. Square image. Framing: the top of the head or the ears about 9% from the top edge, the eyes about 39% from the top, the jaw about 62% from the top, the image cut at the chest, with dark empty space above and around the head. One creature only, no people, no riders. No claws, limbs or hands in view, no text, no border, no frame, no signature, no logo.\nLighting: a single warm candle key light from the upper left, a dim warm fill, deep warm shadows, and a thin soft warm rim light along the back of the head, the ears and the shoulders that separates the whole silhouette clearly from the background. Background: plain, unpatterned, very dark warm brown close to #1C1A17, with no objects.\nMedium: painterly oil on a wood panel, visible brushwork, moderate detail, a strong readable silhouette: the shape of the head and ears and the lit face against the dark background must still read when the image is shrunk to 48 pixels.\nColors: muted and earthy. Nothing in the image glows; the eyes are amber and do not shine or glow. No saturated red, orange, green or blue area larger than a thin crack or a small patch.\n\nSubject: A Wolf, a grey wolf of the deep wood, summoned by Thornwood druids and the gods of the hunt: wild, with no harness or collar.\nCreature: an old, heavy grey wolf, the head turned three-quarters toward the right, ears half back, the lips drawn back a little to show one long fang, amber eyes under a heavy brow, a hard look; grizzled grey fur going pale on the muzzle, a thick shaggy ruff. Marks: the grizzled pale muzzle, a healed scar across the near eye, one fang showing.",
+ "references": [
+  "anchor-style.webp"
+ ],
+ "route": "new",
+ "swatches": null,
+ "variant0": null,
+ "pose": null,
+ "tintZone": null,
+ "cardCrop": null,
+ "identityMarks": [
+  {
+   "mark": "grizzled pale muzzle",
+   "read": "partly"
+  },
+  {
+   "mark": "scar across the near eye",
+   "read": true
+  },
+  {
+   "mark": "one fang showing",
+   "read": true
+  },
+  {
+   "mark": "shaggy ruff",
+   "read": true
+  }
+ ],
+ "checks": {
+  "measures": {
+   "background": 3.7,
+   "bgSpread": 1.9,
+   "floor": 3.3,
+   "top": 0.068,
+   "low": 1.0,
+   "bottomCut": 0.436,
+   "cx": 0.431,
+   "subject": 0.391,
+   "light": -5.3,
+   "rim": 0.66,
+   "read48": 25.2,
+   "muted": 0.0,
+   "satAll": 0.0,
+   "side": null
+  },
+  "failed": [],
+  "overridden": [],
+  "passed": true
+ },
+ "approved": null,
+ "review": {
+  "verdict": "strong",
+  "note": "Old wolf with the scar across the near eye and one fang showing; the more characterful of the pair.",
+  "marks": {
+   "grizzled pale muzzle": "partly",
+   "scar across the near eye": true,
+   "one fang showing": true,
+   "shaggy ruff": true
+  },
+  "by": "art director (stage B portraits, resume)"
+ }
+}

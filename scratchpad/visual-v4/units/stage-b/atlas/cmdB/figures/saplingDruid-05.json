@@ -1,0 +1,1057 @@
+{
+ "figure": "saplingDruid-05",
+ "unit": "saplingDruid",
+ "face": "05",
+ "nation": "thornwood",
+ "body": "twDruid",
+ "layout": "commander",
+ "act": "cast",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdB",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdB/sd05.front.redress.r2.nb21.png",
+   "sheetSha256": "5c6bd6077bdc7a193490c3ff1fda875ef86c80ea8b7c6c0b78d904c884ae91a7",
+   "body": "stage-b/cal/raw/cmdDruid.front.body.g3pro.png",
+   "bodySha256": "a3b9b41be6db7277ef06cb0e9506e426f075e599e9d6853a3fb091cf2a224501",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.40764,
+    "H": 0.81529
+   },
+   "scaleFrom": {
+    "bodyH": 157,
+    "from_": "body twDruid.front"
+   },
+   "frames": {
+    "stand": {
+     "frame": "saplingDruid-05.front.stand",
+     "srcBox": [
+      75,
+      60,
+      190,
+      223
+     ],
+     "srcAnchor": [
+      75.4,
+      160.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6477,
+       "y": 0.9739
+      },
+      "H": {
+       "x": 0.6477,
+       "y": 0.9668
+      }
+     }
+    },
+    "idle2": {
+     "frame": "saplingDruid-05.front.idle2",
+     "srcBox": [
+      331,
+      60,
+      443,
+      223
+     ],
+     "srcAnchor": [
+      66.8,
+      160.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5881,
+       "y": 0.9739
+      },
+      "H": {
+       "x": 0.5943,
+       "y": 0.9668
+      }
+     }
+    },
+    "marchA": {
+     "frame": "saplingDruid-05.front.marchA",
+     "srcBox": [
+      571,
+      65,
+      707,
+      222
+     ],
+     "srcAnchor": [
+      77.9,
+      154.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5747,
+       "y": 0.9663
+      },
+      "H": {
+       "x": 0.5697,
+       "y": 0.9663
+      }
+     }
+    },
+    "marchB": {
+     "frame": "saplingDruid-05.front.marchB",
+     "srcBox": [
+      830,
+      64,
+      966,
+      216
+     ],
+     "srcAnchor": [
+      85.3,
+      149.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6276,
+       "y": 0.9647
+      },
+      "H": {
+       "x": 0.6221,
+       "y": 0.9647
+      }
+     }
+    },
+    "windup": {
+     "frame": "saplingDruid-05.front.windup",
+     "srcBox": [
+      93,
+      263,
+      193,
+      478
+     ],
+     "srcAnchor": [
+      58.4,
+      212.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5769,
+       "y": 0.9713
+      },
+      "H": {
+       "x": 0.5769,
+       "y": 0.9768
+      }
+     }
+    },
+    "strike": {
+     "frame": "saplingDruid-05.front.strike",
+     "srcBox": [
+      323,
+      339,
+      451,
+      478
+     ],
+     "srcAnchor": [
+      71.4,
+      136.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5575,
+       "y": 0.9566
+      },
+      "H": {
+       "x": 0.5575,
+       "y": 0.9648
+      }
+     }
+    },
+    "follow": {
+     "frame": "saplingDruid-05.front.follow",
+     "srcBox": [
+      581,
+      336,
+      711,
+      478
+     ],
+     "srcAnchor": [
+      72.0,
+      139.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5518,
+       "y": 0.961
+      },
+      "H": {
+       "x": 0.5518,
+       "y": 0.961
+      }
+     }
+    },
+    "recoil": {
+     "frame": "saplingDruid-05.front.recoil",
+     "srcBox": [
+      791,
+      314,
+      986,
+      479
+     ],
+     "srcAnchor": [
+      127.2,
+      162.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6525,
+       "y": 0.9716
+      },
+      "H": {
+       "x": 0.6485,
+       "y": 0.9646
+      }
+     }
+    },
+    "actA": {
+     "frame": "saplingDruid-05.front.actA",
+     "srcBox": [
+      107,
+      521,
+      196,
+      734
+     ],
+     "srcAnchor": [
+      45.0,
+      210.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5091,
+       "y": 0.9731
+      },
+      "H": {
+       "x": 0.5024,
+       "y": 0.9731
+      }
+     }
+    },
+    "actB": {
+     "frame": "saplingDruid-05.front.actB",
+     "srcBox": [
+      306,
+      592,
+      455,
+      733
+     ],
+     "srcAnchor": [
+      100.7,
+      138.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6675,
+       "y": 0.9704
+      },
+      "H": {
+       "x": 0.6728,
+       "y": 0.9623
+      }
+     }
+    },
+    "fall": {
+     "frame": "saplingDruid-05.front.fall",
+     "srcBox": [
+      618,
+      517,
+      765,
+      731
+     ],
+     "srcAnchor": [
+      48.5,
+      211.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.335,
+       "y": 0.9777
+      },
+      "H": {
+       "x": 0.335,
+       "y": 0.9777
+      }
+     }
+    },
+    "deadA": {
+     "frame": "saplingDruid-05.front.deadA",
+     "srcBox": [
+      861,
+      563,
+      1020,
+      700
+     ],
+     "srcAnchor": [
+      79.7,
+      101.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4998,
+       "y": 0.7271
+      },
+      "H": {
+       "x": 0.4998,
+       "y": 0.7271
+      }
+     }
+    },
+    "deadB": {
+     "frame": "saplingDruid-05.front.deadB",
+     "srcBox": [
+      3,
+      889,
+      195,
+      1020
+     ],
+     "srcAnchor": [
+      108.7,
+      96.5
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5664,
+       "y": 0.7334
+      },
+      "H": {
+       "x": 0.5629,
+       "y": 0.7268
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "saplingDruid-05.front.fleeA",
+     "srcBox": [
+      317,
+      855,
+      469,
+      989
+     ],
+     "srcAnchor": [
+      73.0,
+      131.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4806,
+       "y": 0.9544
+      },
+      "H": {
+       "x": 0.4806,
+       "y": 0.9629
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "saplingDruid-05.front.fleeB",
+     "srcBox": [
+      617,
+      855,
+      710,
+      976
+     ],
+     "srcAnchor": [
+      35.2,
+      118.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3837,
+       "y": 0.9628
+      },
+      "H": {
+       "x": 0.3837,
+       "y": 0.9534
+      }
+     }
+    },
+    "cheer": {
+     "frame": "saplingDruid-05.front.cheer",
+     "srcBox": [
+      875,
+      777,
+      964,
+      991
+     ],
+     "srcAnchor": [
+      45.4,
+      211.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5133,
+       "y": 0.9777
+      },
+      "H": {
+       "x": 0.5067,
+       "y": 0.9777
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 2,
+    "cells": "15/16",
+    "failing": [
+     "cheer"
+    ],
+    "inherit": 0.74,
+    "variety": true,
+    "marchIoU": 0.743,
+    "rimAfter": 1.1,
+    "edgeDev": 1.7,
+    "keyIn": 0.178,
+    "side": 0.109,
+    "valueBelow": 30.8,
+    "identityDE": 10.5,
+    "consHist": [
+     "deadB",
+     0.811
+    ],
+    "consDE": [
+     "deadB",
+     2.7
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "sd05.front.redress.r2.nb21.png",
+    "marks": "pyynpy"
+   },
+   "status": "pass",
+   "failedGates": [],
+   "rolls": 2,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.0108,
+    "meanShare": 0.004
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.239,
+    "lockedShareMean": 0.151,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdB/sd05.back.redress.nb21.png",
+   "sheetSha256": "fe0793a6b205a93981db0c2458dac96e2b2eccaffc0546808ef90ac1bbbb1aec",
+   "body": "stage-b/raw/cmdB/twDruid.back.body.edit.r2.nb21.png",
+   "bodySha256": "77e4a326d23e4fb405dbf4f46a33b95c778ed42da019b88503518816ffa295db",
+   "key": "magenta",
+   "layout": "commander",
+   "scale": {
+    "S": 0.46377,
+    "H": 0.92754
+   },
+   "scaleFrom": {
+    "bodyH": 138,
+    "from_": "body twDruid.back"
+   },
+   "frames": {
+    "stand": {
+     "frame": "saplingDruid-05.back.stand",
+     "srcBox": [
+      86,
+      29,
+      179,
+      182
+     ],
+     "srcAnchor": [
+      35.3,
+      150.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.386,
+       "y": 0.9666
+      },
+      "H": {
+       "x": 0.386,
+       "y": 0.9666
+      }
+     }
+    },
+    "idle2": {
+     "frame": "saplingDruid-05.back.idle2",
+     "srcBox": [
+      345,
+      37,
+      453,
+      183
+     ],
+     "srcAnchor": [
+      33.9,
+      143.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3216,
+       "y": 0.9617
+      },
+      "H": {
+       "x": 0.3216,
+       "y": 0.9686
+      }
+     }
+    },
+    "marchA": {
+     "frame": "saplingDruid-05.back.marchA",
+     "srcBox": [
+      596,
+      37,
+      705,
+      186
+     ],
+     "srcAnchor": [
+      30.6,
+      146.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2866,
+       "y": 0.9677
+      },
+      "H": {
+       "x": 0.2894,
+       "y": 0.9677
+      }
+     }
+    },
+    "marchB": {
+     "frame": "saplingDruid-05.back.marchB",
+     "srcBox": [
+      839,
+      36,
+      962,
+      178
+     ],
+     "srcAnchor": [
+      36.8,
+      139.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3062,
+       "y": 0.9627
+      },
+      "H": {
+       "x": 0.3062,
+       "y": 0.9627
+      }
+     }
+    },
+    "windup": {
+     "frame": "saplingDruid-05.back.windup",
+     "srcBox": [
+      73,
+      265,
+      206,
+      436
+     ],
+     "srcAnchor": [
+      47.2,
+      168.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3577,
+       "y": 0.9742
+      },
+      "H": {
+       "x": 0.3605,
+       "y": 0.9683
+      }
+     }
+    },
+    "strike": {
+     "frame": "saplingDruid-05.back.strike",
+     "srcBox": [
+      333,
+      295,
+      451,
+      443
+     ],
+     "srcAnchor": [
+      37.0,
+      145.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3186,
+       "y": 0.9612
+      },
+      "H": {
+       "x": 0.3214,
+       "y": 0.968
+      }
+     }
+    },
+    "follow": {
+     "frame": "saplingDruid-05.back.follow",
+     "srcBox": [
+      601,
+      299,
+      698,
+      441
+     ],
+     "srcAnchor": [
+      42.3,
+      139.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4387,
+       "y": 0.9627
+      },
+      "H": {
+       "x": 0.4387,
+       "y": 0.9627
+      }
+     }
+    },
+    "recoil": {
+     "frame": "saplingDruid-05.back.recoil",
+     "srcBox": [
+      815,
+      301,
+      1004,
+      441
+     ],
+     "srcAnchor": [
+      71.2,
+      137.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.378,
+       "y": 0.9632
+      },
+      "H": {
+       "x": 0.3801,
+       "y": 0.9632
+      }
+     }
+    },
+    "actA": {
+     "frame": "saplingDruid-05.back.actA",
+     "srcBox": [
+      60,
+      511,
+      151,
+      685
+     ],
+     "srcAnchor": [
+      59.8,
+      171.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.653,
+       "y": 0.9675
+      },
+      "H": {
+       "x": 0.653,
+       "y": 0.9734
+      }
+     }
+    },
+    "actB": {
+     "frame": "saplingDruid-05.back.actB",
+     "srcBox": [
+      327,
+      546,
+      479,
+      685
+     ],
+     "srcAnchor": [
+      50.3,
+      136.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3379,
+       "y": 0.9708
+      },
+      "H": {
+       "x": 0.3356,
+       "y": 0.9635
+      }
+     }
+    },
+    "fall": {
+     "frame": "saplingDruid-05.back.fall",
+     "srcBox": [
+      535,
+      618,
+      682,
+      769
+     ],
+     "srcAnchor": [
+      133.3,
+      148.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.8974,
+       "y": 0.9672
+      },
+      "H": {
+       "x": 0.8974,
+       "y": 0.9672
+      }
+     }
+    },
+    "deadA": {
+     "frame": "saplingDruid-05.back.deadA",
+     "srcBox": [
+      781,
+      619,
+      933,
+      826
+     ],
+     "srcAnchor": [
+      79.4,
+      153.5
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5253,
+       "y": 0.7366
+      },
+      "H": {
+       "x": 0.5217,
+       "y": 0.7366
+      }
+     }
+    },
+    "deadB": {
+     "frame": "saplingDruid-05.back.deadB",
+     "srcBox": [
+      97,
+      792,
+      260,
+      905
+     ],
+     "srcAnchor": [
+      64.7,
+      83.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3975,
+       "y": 0.7313
+      },
+      "H": {
+       "x": 0.4001,
+       "y": 0.7246
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "saplingDruid-05.back.fleeA",
+     "srcBox": [
+      333,
+      803,
+      450,
+      955
+     ],
+     "srcAnchor": [
+      35.3,
+      149.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3102,
+       "y": 0.9736
+      },
+      "H": {
+       "x": 0.3075,
+       "y": 0.9669
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "saplingDruid-05.back.fleeB",
+     "srcBox": [
+      587,
+      808,
+      701,
+      949
+     ],
+     "srcAnchor": [
+      22.2,
+      138.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2054,
+       "y": 0.9701
+      },
+      "H": {
+       "x": 0.2054,
+       "y": 0.963
+      }
+     }
+    },
+    "cheer": {
+     "frame": "saplingDruid-05.back.cheer",
+     "srcBox": [
+      804,
+      710,
+      933,
+      942
+     ],
+     "srcAnchor": [
+      86.2,
+      229.0
+     ],
+     "atlas": {
+      "S": "saplingDruid.S.0.png",
+      "H": "saplingDruid.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6609,
+       "y": 0.9746
+      },
+      "H": {
+       "x": 0.6609,
+       "y": 0.979
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": false,
+    "rolls": 1,
+    "cells": "12/16",
+    "failing": [
+     "deadA",
+     "deadB",
+     "fall",
+     "follow"
+    ],
+    "inherit": 0.887,
+    "variety": true,
+    "marchIoU": 0.656,
+    "rimAfter": 0.2,
+    "edgeDev": 2.46,
+    "keyIn": 0.074,
+    "side": 0.124,
+    "valueBelow": 29.3,
+    "identityDE": 11.5,
+    "consHist": [
+     "fleeB",
+     0.804
+    ],
+    "consDE": [
+     "recoil",
+     4.3
+    ],
+    "gate": {
+     "cells": false,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "sd05.back.redress.nb21.png",
+    "marks": "pyy-py"
+   },
+   "status": "reported",
+   "failedGates": [
+    "cells"
+   ],
+   "rolls": 1,
+   "keyCast": {
+    "tool": "units/tools/keycast.py (sandbox copy)",
+    "key": "magenta",
+    "scope": "thin",
+    "maxShare": 0.016,
+    "meanShare": 0.0058
+   },
+   "hueLock": {
+    "tool": "tr_huelock.py (thornwood: hue 90-230 at chroma >= 0.02, band 25 deg about the cloth hue)",
+    "shipped": false,
+    "lockedShareMax": 0.396,
+    "lockedShareMean": 0.32,
+    "note": "measured, not shipped: on commanders it turns the portrait greens turquoise (cmdB resumed run)"
+   }
+  }
+ },
+ "marks": [
+  {
+   "mark": "the circlet of dark yew twigs",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "her straight black hair cut in a blunt line at the jaw, with a short fringe",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the moss-green hood thrown back onto the shoulders",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the bone clasp shaped like a snail shell",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the tall gnarled staff of dark wood",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": null,
+ "approved": null,
+ "productionKit": {
+  "weapon": "the tall staff of dark wood with a crook at the top bound in ivy",
+  "weaponChanged": true,
+  "mantle": "a thick collar of dark fur over the shoulders",
+  "mantleFrom": "kit list"
+ }
+}

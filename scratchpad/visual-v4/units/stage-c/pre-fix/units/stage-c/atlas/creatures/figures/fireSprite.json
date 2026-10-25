@@ -1,0 +1,439 @@
+{
+ "figure": "fireSprite",
+ "unit": "fireSprite",
+ "nation": "cinderHorde",
+ "key": "blue",
+ "layout": "sprite",
+ "body": "sprite",
+ "cloth": null,
+ "hueLocked": false,
+ "portrait": "stage-b/portraits/cinderHorde/fireSprite/01b-r3.webp",
+ "kit": "A Fire Sprite, a small spirit of living flame summoned by Cinder Horde mages: a slender wispy imp-like body made of flame with a brighter hollow core, a small head with two dark ember eyes, two short flickering wings of flame, no legs: the body tapers into a flame tail. Orange and yellow flame with dark smoky red tips. It hovers. It is a flying construct about two-thirds the height of a man.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "fireSprite-S",
+     "scale": 0.241,
+     "standPx": 40,
+     "bodyHeightSrc": 166,
+     "frames": [
+      "fireSprite.back.wingUp",
+      "fireSprite.back.wingMid",
+      "fireSprite.back.wingMid.white",
+      "fireSprite.back.wingDown",
+      "fireSprite.back.glide",
+      "fireSprite.back.dive",
+      "fireSprite.back.strike",
+      "fireSprite.back.recoil",
+      "fireSprite.back.recoil.white",
+      "fireSprite.back.burstA",
+      "fireSprite.back.burstB",
+      "fireSprite.back.mark",
+      "fireSprite.back.wingUp2",
+      "fireSprite.back.wingDown2"
+     ]
+    },
+    "H": {
+     "prefix": "fireSprite-H",
+     "scale": 0.4819,
+     "standPx": 80,
+     "bodyHeightSrc": 166,
+     "frames": [
+      "fireSprite.back.wingUp",
+      "fireSprite.back.wingMid",
+      "fireSprite.back.wingMid.white",
+      "fireSprite.back.wingDown",
+      "fireSprite.back.glide",
+      "fireSprite.back.dive",
+      "fireSprite.back.strike",
+      "fireSprite.back.recoil",
+      "fireSprite.back.recoil.white",
+      "fireSprite.back.burstA",
+      "fireSprite.back.burstB",
+      "fireSprite.back.mark",
+      "fireSprite.back.wingUp2",
+      "fireSprite.back.wingDown2"
+     ]
+    }
+   },
+   "frames": "frames/fireSprite.back/",
+   "sheet": "stage-c/raw/creatures/fireSprite.back.paint.r2.nb21.png",
+   "sha256": "c95666d4596992294323ec802b8d2c11aa6dda2d312ddfaabec06fc9a67104ed",
+   "model": "gemini-nano-banana-2.1",
+   "job": "fireSprite.back.paint.r2",
+   "route": "paint",
+   "references": [
+    "stage-c/work/creatures/sbx/refs/guides/fireSprite.back.png",
+    "stage-b/portraits/cinderHorde/fireSprite/01b-r3.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "rim",
+    "fringe"
+   ],
+   "note": "keycast fire: key-cast pixels max 34.93% -> 0.00% of a frame; blue edge pass: 15393 edge pixels de-tinted",
+   "keycast": {
+    "rule": "fire",
+    "window": [
+     200.0,
+     352.0
+    ],
+    "to": null,
+    "castShareBefore": 0.3493,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "fireSprite.back.paint"
+   ],
+   "checks": {
+    "cameraCells": "1/9",
+    "cameraFailing": [
+     "dive",
+     "glide",
+     "recoil",
+     "strike",
+     "wingDown",
+     "wingMid",
+     "wingUp",
+     "wingUp2"
+    ],
+    "cells": {
+     "wingUp": [
+      0.463,
+      -0.021
+     ],
+     "wingMid": [
+      0.384,
+      0.006
+     ],
+     "wingDown": [
+      0.271,
+      -0.177
+     ],
+     "glide": [
+      0.252,
+      0.012
+     ],
+     "dive": [
+      0.419,
+      0.272
+     ],
+     "strike": [
+      0.487,
+      0.218
+     ],
+     "recoil": [
+      0.434,
+      0.41
+     ],
+     "burstA": [
+      0.154,
+      -0.021
+     ],
+     "mark": [
+      0.909,
+      0.125
+     ],
+     "wingUp2": [
+      0.543,
+      0.013
+     ],
+     "wingDown2": [
+      0.644,
+      0.028
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "wingUp~wingDown": 0.409
+     },
+     "mostAlike": [
+      "strike~recoil",
+      0.441
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {},
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.49,
+     "histMin": [
+      "recoil",
+      0.805
+     ],
+     "maxDE": [
+      "wingUp",
+      4.2
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 35.3,
+     "afterMax": 4.3
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 20.0,
+     "neutral": {
+      "worstBelow": 25.8,
+      "below": {
+       "plains": 33.1,
+       "farmland": 32.7,
+       "swamp": 25.8,
+       "forest": 26.0
+      },
+      "minContrast": 25.8
+     },
+     "pass": true,
+     "rule": "contrast either way (self-lit flame)"
+    },
+    "fringe": {
+     "spillEdgePct": 14.641,
+     "keyInUnitPct": 2.619,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.45,
+     "pass_": false
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": false,
+     "side": true,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "swept-back flame hair": true,
+     "two horn-like flame points": "partly",
+     "slanted dark eye-slits": "hidden in this view",
+     "ragged roaring mouth": "hidden in this view",
+     "no body or limbs": "partly"
+    },
+    "note": "no arms or legs; the flier layout adds a flame tail and two flame wings the bust does not show",
+    "by": "stage C creatures agent, 4x crops (review/identity-fireSprite.png)"
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "fireSprite-S",
+     "scale": 0.2381,
+     "standPx": 40,
+     "bodyHeightSrc": 168,
+     "frames": [
+      "fireSprite.front.wingUp",
+      "fireSprite.front.wingMid",
+      "fireSprite.front.wingMid.white",
+      "fireSprite.front.wingDown",
+      "fireSprite.front.glide",
+      "fireSprite.front.dive",
+      "fireSprite.front.strike",
+      "fireSprite.front.recoil",
+      "fireSprite.front.recoil.white",
+      "fireSprite.front.burstA",
+      "fireSprite.front.burstB",
+      "fireSprite.front.mark",
+      "fireSprite.front.wingUp2",
+      "fireSprite.front.wingDown2"
+     ]
+    },
+    "H": {
+     "prefix": "fireSprite-H",
+     "scale": 0.4762,
+     "standPx": 80,
+     "bodyHeightSrc": 168,
+     "frames": [
+      "fireSprite.front.wingUp",
+      "fireSprite.front.wingMid",
+      "fireSprite.front.wingMid.white",
+      "fireSprite.front.wingDown",
+      "fireSprite.front.glide",
+      "fireSprite.front.dive",
+      "fireSprite.front.strike",
+      "fireSprite.front.recoil",
+      "fireSprite.front.recoil.white",
+      "fireSprite.front.burstA",
+      "fireSprite.front.burstB",
+      "fireSprite.front.mark",
+      "fireSprite.front.wingUp2",
+      "fireSprite.front.wingDown2"
+     ]
+    }
+   },
+   "frames": "frames/fireSprite.front/",
+   "sheet": "stage-c/raw/creatures/fireSprite.front.paint.r2.nb21.png",
+   "sha256": "d0e778d89e147ed08ffda09ed1dca150d4086e71af2aff2b594da743b4c6e9fc",
+   "model": "gemini-nano-banana-2.1",
+   "job": "fireSprite.front.paint.r2",
+   "route": "paint",
+   "references": [
+    "stage-c/work/creatures/sbx/refs/guides/fireSprite.front.png",
+    "stage-b/portraits/cinderHorde/fireSprite/01b-r3.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera",
+    "fringe"
+   ],
+   "note": "keycast fire: key-cast pixels max 28.02% -> 0.00% of a frame; blue edge pass: 11949 edge pixels de-tinted",
+   "keycast": {
+    "rule": "fire",
+    "window": [
+     200.0,
+     352.0
+    ],
+    "to": null,
+    "castShareBefore": 0.2802,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "fireSprite.front.paint"
+   ],
+   "checks": {
+    "cameraCells": "0/9",
+    "cameraFailing": [
+     "dive",
+     "glide",
+     "recoil",
+     "strike",
+     "wingDown",
+     "wingDown2",
+     "wingMid",
+     "wingUp",
+     "wingUp2"
+    ],
+    "cells": {
+     "wingUp": [
+      0.398,
+      0.038
+     ],
+     "wingMid": [
+      0.436,
+      0.015
+     ],
+     "wingDown": [
+      0.479,
+      0.061
+     ],
+     "glide": [
+      0.44,
+      0.088
+     ],
+     "dive": [
+      0.374,
+      0.088
+     ],
+     "strike": [
+      0.382,
+      -0.074
+     ],
+     "recoil": [
+      0.4,
+      -0.066
+     ],
+     "burstA": [
+      0.677,
+      0.553
+     ],
+     "mark": [
+      0.831,
+      0.013
+     ],
+     "wingUp2": [
+      0.436,
+      0.034
+     ],
+     "wingDown2": [
+      0.487,
+      -0.004
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "wingUp~wingDown": 0.551
+     },
+     "mostAlike": [
+      "wingMid~strike",
+      0.564
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {},
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.537,
+     "histMin": [
+      "dive",
+      0.739
+     ],
+     "maxDE": [
+      "recoil",
+      5.2
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 57.9,
+     "afterMax": 1.1
+    },
+    "side": {
+     "kind": "noSide",
+     "fPx": 20.0,
+     "neutral": {
+      "worstBelow": 23.8,
+      "below": {
+       "plains": 31.1,
+       "farmland": 30.7,
+       "swamp": 23.8,
+       "forest": 24.0
+      },
+      "minContrast": 23.8
+     },
+     "pass": true,
+     "rule": "contrast either way (self-lit flame)"
+    },
+    "fringe": {
+     "spillEdgePct": 10.064,
+     "keyInUnitPct": 2.181,
+     "fringePct": 0.0,
+     "edgeDevPct": 0.49,
+     "pass_": false
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": false,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "swept-back flame hair": true,
+     "two horn-like flame points": true,
+     "slanted dark eye-slits": "partly",
+     "ragged roaring mouth": true,
+     "no body or limbs": "partly"
+    },
+    "note": "no arms or legs; the flier layout adds a flame tail and two flame wings the bust does not show",
+    "by": "stage C creatures agent, 4x crops (review/identity-fireSprite.png)"
+   }
+  }
+ },
+ "approved": null
+}

@@ -1,0 +1,14 @@
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.goto: net::ERR_INVALID_URL at file://../map/game-screen-v4.html
+Call log:
+[2m  - navigating to "file://../map/game-screen-v4.html", waiting until "load"[22m
+
+    at open (/tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/tools/lib.cjs:22:14)
+    at async /tmp/claude-0/-home-user-Fluid-Magic-/1ae2f9cd-f592-5f18-abd3-80de7f069d69/scratchpad/visual-v4/natural/pass3b/tools/footstats.cjs:4:105 {
+  name: 'Error'
+}
+
+Node.js v22.22.0

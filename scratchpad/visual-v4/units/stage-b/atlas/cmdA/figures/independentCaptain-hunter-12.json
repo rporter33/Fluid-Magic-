@@ -1,0 +1,1066 @@
+{
+ "figure": "independentCaptain-hunter-12",
+ "unit": "independentCaptain-hunter",
+ "face": "12",
+ "nation": "independent",
+ "body": "cmdLevy",
+ "layout": "commander",
+ "act": "rally",
+ "heightPx": {
+  "S": 64,
+  "H": 128
+ },
+ "task": "stage B cmdA (+ cmdA2 fixes and own kits)",
+ "views": {
+  "front": {
+   "sheet": "stage-b/raw/cmdA/hu12.front.redress.nb21.png",
+   "sheetSha256": "db71c9d193f285915d444b19f18d9490e33009ee7e700ddb763d17719f74dded",
+   "body": "stage-b/raw/cmdA/cmdLevy.front.body.g3pro.png",
+   "bodySha256": "1a1b304a39d3af2cd46d625dc66d325bfc10585f6d01112366a0539a0e14af1f",
+   "key": "blue",
+   "keyer": "key.py",
+   "dir": "hu12.front",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.47761,
+    "H": 0.95522
+   },
+   "scaleFrom": {
+    "bodyH": 134,
+    "from_": "body cmdLevy.front.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "independentCaptain-hunter-12.front.stand",
+     "srcBox": [
+      76,
+      69,
+      181,
+      219
+     ],
+     "srcAnchor": [
+      67.2,
+      147.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6365,
+       "y": 0.9623
+      },
+      "H": {
+       "x": 0.6365,
+       "y": 0.9688
+      }
+     }
+    },
+    "idle2": {
+     "frame": "independentCaptain-hunter-12.front.idle2",
+     "srcBox": [
+      334,
+      71,
+      436,
+      219
+     ],
+     "srcAnchor": [
+      62.9,
+      145.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6087,
+       "y": 0.9624
+      },
+      "H": {
+       "x": 0.6147,
+       "y": 0.969
+      }
+     }
+    },
+    "marchA": {
+     "frame": "independentCaptain-hunter-12.front.marchA",
+     "srcBox": [
+      586,
+      77,
+      693,
+      229
+     ],
+     "srcAnchor": [
+      68.7,
+      149.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.638,
+       "y": 0.9622
+      },
+      "H": {
+       "x": 0.638,
+       "y": 0.9686
+      }
+     }
+    },
+    "marchB": {
+     "frame": "independentCaptain-hunter-12.front.marchB",
+     "srcBox": [
+      843,
+      76,
+      971,
+      216
+     ],
+     "srcAnchor": [
+      46.0,
+      137.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3646,
+       "y": 0.9628
+      },
+      "H": {
+       "x": 0.3646,
+       "y": 0.9628
+      }
+     }
+    },
+    "windup": {
+     "frame": "independentCaptain-hunter-12.front.windup",
+     "srcBox": [
+      94,
+      275,
+      188,
+      477
+     ],
+     "srcAnchor": [
+      53.1,
+      199.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5609,
+       "y": 0.98
+      },
+      "H": {
+       "x": 0.5609,
+       "y": 0.9751
+      }
+     }
+    },
+    "strike": {
+     "frame": "independentCaptain-hunter-12.front.strike",
+     "srcBox": [
+      329,
+      343,
+      441,
+      486
+     ],
+     "srcAnchor": [
+      69.4,
+      140.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6208,
+       "y": 0.9695
+      },
+      "H": {
+       "x": 0.6152,
+       "y": 0.9626
+      }
+     }
+    },
+    "follow": {
+     "frame": "independentCaptain-hunter-12.front.follow",
+     "srcBox": [
+      610,
+      337,
+      707,
+      483
+     ],
+     "srcAnchor": [
+      46.4,
+      143.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4825,
+       "y": 0.9625
+      },
+      "H": {
+       "x": 0.4776,
+       "y": 0.9692
+      }
+     }
+    },
+    "recoil": {
+     "frame": "independentCaptain-hunter-12.front.recoil",
+     "srcBox": [
+      794,
+      317,
+      987,
+      473
+     ],
+     "srcAnchor": [
+      124.5,
+      153.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6432,
+       "y": 0.962
+      },
+      "H": {
+       "x": 0.6432,
+       "y": 0.9683
+      }
+     }
+    },
+    "actA": {
+     "frame": "independentCaptain-hunter-12.front.actA",
+     "srcBox": [
+      108,
+      523,
+      206,
+      729
+     ],
+     "srcAnchor": [
+      37.0,
+      203.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3811,
+       "y": 0.9796
+      },
+      "H": {
+       "x": 0.3811,
+       "y": 0.9747
+      }
+     }
+    },
+    "actB": {
+     "frame": "independentCaptain-hunter-12.front.actB",
+     "srcBox": [
+      301,
+      589,
+      436,
+      728
+     ],
+     "srcAnchor": [
+      98.7,
+      136.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.7294,
+       "y": 0.9699
+      },
+      "H": {
+       "x": 0.7239,
+       "y": 0.9628
+      }
+     }
+    },
+    "fall": {
+     "frame": "independentCaptain-hunter-12.front.fall",
+     "srcBox": [
+      623,
+      522,
+      762,
+      726
+     ],
+     "srcAnchor": [
+      32.9,
+      201.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2458,
+       "y": 0.9798
+      },
+      "H": {
+       "x": 0.244,
+       "y": 0.9749
+      }
+     }
+    },
+    "deadA": {
+     "frame": "independentCaptain-hunter-12.front.deadA",
+     "srcBox": [
+      873,
+      574,
+      1022,
+      680
+     ],
+     "srcAnchor": [
+      73.5,
+      77.8
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4946,
+       "y": 0.72
+      },
+      "H": {
+       "x": 0.4946,
+       "y": 0.7268
+      }
+     }
+    },
+    "deadB": {
+     "frame": "independentCaptain-hunter-12.front.deadB",
+     "srcBox": [
+      6,
+      898,
+      163,
+      1013
+     ],
+     "srcAnchor": [
+      94.0,
+      84.5
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.596,
+       "y": 0.7256
+      },
+      "H": {
+       "x": 0.596,
+       "y": 0.7256
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "independentCaptain-hunter-12.front.fleeA",
+     "srcBox": [
+      337,
+      864,
+      441,
+      999
+     ],
+     "srcAnchor": [
+      59.8,
+      132.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5685,
+       "y": 0.9704
+      },
+      "H": {
+       "x": 0.574,
+       "y": 0.9631
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "independentCaptain-hunter-12.front.fleeB",
+     "srcBox": [
+      613,
+      865,
+      705,
+      991
+     ],
+     "srcAnchor": [
+      16.0,
+      123.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1879,
+       "y": 0.9636
+      },
+      "H": {
+       "x": 0.1879,
+       "y": 0.9636
+      }
+     }
+    },
+    "cheer": {
+     "frame": "independentCaptain-hunter-12.front.cheer",
+     "srcBox": [
+      874,
+      791,
+      950,
+      985
+     ],
+     "srcAnchor": [
+      38.5,
+      191.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5102,
+       "y": 0.9708
+      },
+      "H": {
+       "x": 0.5036,
+       "y": 0.9759
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "16/16",
+    "failing": [],
+    "inherit": 0.72,
+    "variety": true,
+    "marchIoU": 0.553,
+    "rimAfter": 0.0,
+    "edgeDev": 7.77,
+    "keyIn": 0.175,
+    "side": null,
+    "valueBelow": 22.5,
+    "identityDE": 10.6,
+    "consHist": [
+     "deadB",
+     0.635
+    ],
+    "consDE": [
+     "deadB",
+     8.3
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "hu12.front.redress.nb21.png",
+    "marksFront": "pyypny",
+    "dir": "hu12.front",
+    "ownKit": false,
+    "keyer": "key.py",
+    "body": null
+   },
+   "pass": true
+  },
+  "back": {
+   "sheet": "stage-b/raw/cmdA/hu12.back.redress.nb21.png",
+   "sheetSha256": "1727397afd124a0769c4afed76392a46afb581258c55fe31b1e4219eb7ca99ad",
+   "body": "stage-b/raw/cmdA/cmdLevy.back.body.g3pro.png",
+   "bodySha256": "a523cb689b557d97ecf2dfcfa7dc543943b92363db74a47bfad11ace7264fffb",
+   "key": "blue",
+   "keyer": "key.py",
+   "dir": "hu12.back",
+   "ownKit": false,
+   "layout": "commander",
+   "scale": {
+    "S": 0.512,
+    "H": 1.024
+   },
+   "scaleFrom": {
+    "bodyH": 125,
+    "from_": "body cmdLevy.back.body.g3pro.png"
+   },
+   "frames": {
+    "stand": {
+     "frame": "independentCaptain-hunter-12.back.stand",
+     "srcBox": [
+      81,
+      36,
+      174,
+      174
+     ],
+     "srcAnchor": [
+      39.2,
+      135.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4214,
+       "y": 0.9605
+      },
+      "H": {
+       "x": 0.4257,
+       "y": 0.9672
+      }
+     }
+    },
+    "idle2": {
+     "frame": "independentCaptain-hunter-12.back.idle2",
+     "srcBox": [
+      336,
+      38,
+      434,
+      176
+     ],
+     "srcAnchor": [
+      40.8,
+      135.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.421,
+       "y": 0.9605
+      },
+      "H": {
+       "x": 0.421,
+       "y": 0.9672
+      }
+     }
+    },
+    "marchA": {
+     "frame": "independentCaptain-hunter-12.back.marchA",
+     "srcBox": [
+      592,
+      38,
+      691,
+      189
+     ],
+     "srcAnchor": [
+      27.8,
+      148.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2874,
+       "y": 0.9718
+      },
+      "H": {
+       "x": 0.2902,
+       "y": 0.9657
+      }
+     }
+    },
+    "marchB": {
+     "frame": "independentCaptain-hunter-12.back.marchB",
+     "srcBox": [
+      849,
+      41,
+      945,
+      181
+     ],
+     "srcAnchor": [
+      16.9,
+      137.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1893,
+       "y": 0.9614
+      },
+      "H": {
+       "x": 0.1893,
+       "y": 0.9679
+      }
+     }
+    },
+    "windup": {
+     "frame": "independentCaptain-hunter-12.back.windup",
+     "srcBox": [
+      73,
+      284,
+      165,
+      437
+     ],
+     "srcAnchor": [
+      45.7,
+      150.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4979,
+       "y": 0.9725
+      },
+      "H": {
+       "x": 0.4979,
+       "y": 0.9665
+      }
+     }
+    },
+    "strike": {
+     "frame": "independentCaptain-hunter-12.back.strike",
+     "srcBox": [
+      329,
+      298,
+      437,
+      445
+     ],
+     "srcAnchor": [
+      34.1,
+      144.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3238,
+       "y": 0.9705
+      },
+      "H": {
+       "x": 0.321,
+       "y": 0.9642
+      }
+     }
+    },
+    "follow": {
+     "frame": "independentCaptain-hunter-12.back.follow",
+     "srcBox": [
+      594,
+      300,
+      681,
+      445
+     ],
+     "srcAnchor": [
+      27.5,
+      142.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3209,
+       "y": 0.9698
+      },
+      "H": {
+       "x": 0.3243,
+       "y": 0.9698
+      }
+     }
+    },
+    "recoil": {
+     "frame": "independentCaptain-hunter-12.back.recoil",
+     "srcBox": [
+      813,
+      305,
+      993,
+      442
+     ],
+     "srcAnchor": [
+      65.6,
+      134.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3679,
+       "y": 0.9668
+      },
+      "H": {
+       "x": 0.3679,
+       "y": 0.9668
+      }
+     }
+    },
+    "actA": {
+     "frame": "independentCaptain-hunter-12.back.actA",
+     "srcBox": [
+      58,
+      525,
+      146,
+      687
+     ],
+     "srcAnchor": [
+      61.7,
+      159.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.6934,
+       "y": 0.9695
+      },
+      "H": {
+       "x": 0.6934,
+       "y": 0.9695
+      }
+     }
+    },
+    "actB": {
+     "frame": "independentCaptain-hunter-12.back.actB",
+     "srcBox": [
+      336,
+      552,
+      463,
+      687
+     ],
+     "srcAnchor": [
+      42.2,
+      132.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.3374,
+       "y": 0.966
+      },
+      "H": {
+       "x": 0.3374,
+       "y": 0.966
+      }
+     }
+    },
+    "fall": {
+     "frame": "independentCaptain-hunter-12.back.fall",
+     "srcBox": [
+      535,
+      615,
+      663,
+      762
+     ],
+     "srcAnchor": [
+      120.4,
+      144.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.9212,
+       "y": 0.9705
+      },
+      "H": {
+       "x": 0.9281,
+       "y": 0.9642
+      }
+     }
+    },
+    "deadA": {
+     "frame": "independentCaptain-hunter-12.back.deadA",
+     "srcBox": [
+      780,
+      611,
+      918,
+      761
+     ],
+     "srcAnchor": [
+      69.9,
+      110.8
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.504,
+       "y": 0.7308
+      },
+      "H": {
+       "x": 0.5074,
+       "y": 0.7308
+      }
+     }
+    },
+    "deadB": {
+     "frame": "independentCaptain-hunter-12.back.deadB",
+     "srcBox": [
+      88,
+      789,
+      244,
+      899
+     ],
+     "srcAnchor": [
+      69.1,
+      80.8
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.4436,
+       "y": 0.7305
+      },
+      "H": {
+       "x": 0.4436,
+       "y": 0.7243
+      }
+     }
+    },
+    "fleeA": {
+     "frame": "independentCaptain-hunter-12.back.fleeA",
+     "srcBox": [
+      337,
+      811,
+      429,
+      960
+     ],
+     "srcAnchor": [
+      21.5,
+      146.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.2451,
+       "y": 0.9712
+      },
+      "H": {
+       "x": 0.2451,
+       "y": 0.965
+      }
+     }
+    },
+    "fleeB": {
+     "frame": "independentCaptain-hunter-12.back.fleeB",
+     "srcBox": [
+      590,
+      811,
+      667,
+      952
+     ],
+     "srcAnchor": [
+      10.0,
+      138.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.1.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.1493,
+       "y": 0.9683
+      },
+      "H": {
+       "x": 0.1475,
+       "y": 0.9683
+      }
+     }
+    },
+    "cheer": {
+     "frame": "independentCaptain-hunter-12.back.cheer",
+     "srcBox": [
+      850,
+      774,
+      917,
+      943
+     ],
+     "srcAnchor": [
+      38.5,
+      166.0
+     ],
+     "atlas": {
+      "S": "independentCaptain-hunter.S.0.png",
+      "H": "independentCaptain-hunter.H.0.png"
+     },
+     "anchor": {
+      "S": {
+       "x": 0.5753,
+       "y": 0.9662
+      },
+      "H": {
+       "x": 0.5675,
+       "y": 0.9717
+      }
+     }
+    }
+   },
+   "checks": {
+    "pass_": true,
+    "rolls": 1,
+    "cells": "14/16",
+    "failing": [
+     "deadB",
+     "fall"
+    ],
+    "inherit": 0.834,
+    "variety": true,
+    "marchIoU": 0.585,
+    "rimAfter": 0.0,
+    "edgeDev": 6.95,
+    "keyIn": 0.125,
+    "side": null,
+    "valueBelow": 21.1,
+    "identityDE": 14.4,
+    "consHist": [
+     "deadB",
+     0.715
+    ],
+    "consDE": [
+     "deadB",
+     3.6
+    ],
+    "gate": {
+     "cells": true,
+     "variety": true,
+     "rim": true,
+     "fringe": true,
+     "side": true,
+     "identity": true,
+     "missing": []
+    },
+    "sheet": "hu12.back.redress.nb21.png",
+    "marksFront": null,
+    "dir": "hu12.back",
+    "ownKit": false,
+    "keyer": "key.py",
+    "body": null
+   },
+   "pass": true
+  }
+ },
+ "marks": [
+  {
+   "mark": "the hood of shaggy goatskin with long rough cream-white fur all around the face and over the shoulders",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the thick russet-grey beard on a broad heavy weathered face",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the leather jerkin",
+   "seenFromBehind": true
+  },
+  {
+   "mark": "the horn toggle at the throat",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "his flattened nose",
+   "seenFromBehind": false
+  },
+  {
+   "mark": "the plain straight sword with a simple cross guard",
+   "seenFromBehind": true
+  }
+ ],
+ "marksTicked": {
+  "method": "front-view stand frame upper half at 4x (sheet px) beside the portrait, plus both stand frames at tier H; y = reads, p = partly, n = absent (review/identity-*.png)",
+  "ticks": [
+   {
+    "mark": "the hood of shaggy goatskin with long rough cream-white fur all around the face and over the shoulders",
+    "tick": "p"
+   },
+   {
+    "mark": "the thick russet-grey beard on a broad heavy weathered face",
+    "tick": "y"
+   },
+   {
+    "mark": "the leather jerkin",
+    "tick": "y"
+   },
+   {
+    "mark": "the horn toggle at the throat",
+    "tick": "p"
+   },
+   {
+    "mark": "his flattened nose",
+    "tick": "n"
+   },
+   {
+    "mark": "the plain straight sword with a simple cross guard",
+    "tick": "y"
+   }
+  ]
+ },
+ "approved": null,
+ "productionKit": {
+  "face": "hu12",
+  "weapon": "the plain straight sword with a simple cross guard",
+  "weaponChanged": false,
+  "mantle": null,
+  "note": "unchanged"
+ }
+}

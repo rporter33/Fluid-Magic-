@@ -1,0 +1,739 @@
+{
+ "figure": "wolfRider",
+ "unit": "wolfRider",
+ "nation": "thornwood",
+ "key": "blue",
+ "layout": "wolfrider",
+ "body": "wolfrider",
+ "cloth": "#1F6A50",
+ "hueLocked": true,
+ "portrait": "stage-b/portraits/thornwood/warWolf/01a.webp",
+ "kit": "A Wolf Rider: the rider in bark armor with a deep pine-green hooded cloak (hood up) and a spear with a leaf-shaped head. The mount: a huge grey timber wolf, its shoulder as high as a man's chest, shaggy grey-brown fur darker along the spine, a deep pine-green saddle blanket over its back under a small bark saddle, a bark-plate harness across its chest.",
+ "views": {
+  "back": {
+   "atlas": {
+    "S": {
+     "prefix": "wolfRider-S",
+     "scale": 0.592,
+     "standPx": 74,
+     "bodyHeightSrc": 125,
+     "frames": [
+      "wolfRider.back.stand",
+      "wolfRider.back.stand.white",
+      "wolfRider.back.lopeA",
+      "wolfRider.back.lopeB",
+      "wolfRider.back.leapA",
+      "wolfRider.back.leapB",
+      "wolfRider.back.charge",
+      "wolfRider.back.windup",
+      "wolfRider.back.strike",
+      "wolfRider.back.bite",
+      "wolfRider.back.recoil",
+      "wolfRider.back.recoil.white",
+      "wolfRider.back.fall",
+      "wolfRider.back.deadA",
+      "wolfRider.back.deadB",
+      "wolfRider.back.boltA",
+      "wolfRider.back.boltB",
+      "wolfRider.back.cheer"
+     ]
+    },
+    "H": {
+     "prefix": "wolfRider-H",
+     "scale": 1.184,
+     "standPx": 148,
+     "bodyHeightSrc": 125,
+     "frames": [
+      "wolfRider.back.stand",
+      "wolfRider.back.stand.white",
+      "wolfRider.back.lopeA",
+      "wolfRider.back.lopeB",
+      "wolfRider.back.leapA",
+      "wolfRider.back.leapB",
+      "wolfRider.back.charge",
+      "wolfRider.back.windup",
+      "wolfRider.back.strike",
+      "wolfRider.back.bite",
+      "wolfRider.back.recoil",
+      "wolfRider.back.recoil.white",
+      "wolfRider.back.fall",
+      "wolfRider.back.deadA",
+      "wolfRider.back.deadB",
+      "wolfRider.back.boltA",
+      "wolfRider.back.boltB",
+      "wolfRider.back.cheer"
+     ]
+    }
+   },
+   "frames": "frames/wolfRider.back/",
+   "sheet": "stage-c/raw/creatures/wolfRider.back.paint.r2.nb21.png",
+   "sha256": "c7e5caf2bf8113a251942b13c9ae9c675c1dca42304128a219e02b4a8f07642b",
+   "model": "gemini-nano-banana-2.1",
+   "job": "wolfRider.back.paint.r2",
+   "route": "paint",
+   "references": [
+    "stage-b/work/troops2/guides/wolfRider.back.blue.png",
+    "stage-b/portraits/thornwood/warWolf/01a.webp"
+   ],
+   "status": "pass",
+   "failedGates": [],
+   "note": "blue edge pass: 16616 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [
+    "wolfRider.back.fill",
+    "stage B t2r32 (reported, 7/16)"
+   ],
+   "checks": {
+    "cameraCells": "15/16",
+    "cameraFailing": [
+     "deadA"
+    ],
+    "cells": {
+     "stand": [
+      0.735,
+      0.497
+     ],
+     "lopeA": [
+      0.749,
+      0.684
+     ],
+     "lopeB": [
+      0.781,
+      0.539
+     ],
+     "leapA": [
+      0.704,
+      0.626
+     ],
+     "leapB": [
+      0.761,
+      0.512
+     ],
+     "charge": [
+      0.72,
+      0.653
+     ],
+     "windup": [
+      0.656,
+      0.447
+     ],
+     "strike": [
+      0.601,
+      0.485
+     ],
+     "bite": [
+      0.655,
+      0.583
+     ],
+     "recoil": [
+      0.681,
+      0.381
+     ],
+     "fall": [
+      0.586,
+      0.364
+     ],
+     "deadA": [
+      0.54,
+      0.313
+     ],
+     "deadB": [
+      0.634,
+      0.495
+     ],
+     "boltA": [
+      0.759,
+      0.683
+     ],
+     "boltB": [
+      0.704,
+      0.538
+     ],
+     "cheer": [
+      0.642,
+      0.399
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "lopeA~lopeB": 0.507
+     },
+     "mostAlike": [
+      "lopeA~charge",
+      0.761
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.44,
+     "histMin": [
+      "boltA",
+      0.626
+     ],
+     "maxDE": [
+      "boltA",
+      4.4
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 9.3,
+     "afterMax": 0.0
+    },
+    "side": {
+     "fPx": 32.5,
+     "f28": {
+      "neutral": {
+       "share": 0.327,
+       "worstBelow": 15.1
+      },
+      "sideKeyline": {
+       "share": 0.512,
+       "worstBelow": 14.7
+      }
+     },
+     "neutral": {
+      "share": 0.335,
+      "worstBelow": 18.1,
+      "below": {
+       "plains": 23.2,
+       "farmland": 23.0,
+       "swamp": 18.1,
+       "forest": 18.2
+      }
+     },
+     "sideKeyline": {
+      "share": 0.531,
+      "worstBelow": 17.6,
+      "below": {
+       "plains": 23.1,
+       "farmland": 22.9,
+       "swamp": 17.6,
+       "forest": 17.8
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 13.474,
+     "keyInUnitPct": 0.18,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.15,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "bark-plate breast harness": "partly",
+     "bottle-green saddle blanket edge": true,
+     "bone-coloured cord": true,
+     "grey-brown shaggy coat, dark along the neck": true,
+     "pale muzzle": "hidden in this view"
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+   }
+  },
+  "front": {
+   "atlas": {
+    "S": {
+     "prefix": "wolfRider-S",
+     "scale": 0.5175,
+     "standPx": 74,
+     "bodyHeightSrc": 143,
+     "frames": [
+      "wolfRider.front.stand",
+      "wolfRider.front.stand.white",
+      "wolfRider.front.lopeA",
+      "wolfRider.front.lopeB",
+      "wolfRider.front.leapA",
+      "wolfRider.front.leapB",
+      "wolfRider.front.charge",
+      "wolfRider.front.windup",
+      "wolfRider.front.strike",
+      "wolfRider.front.bite",
+      "wolfRider.front.recoil",
+      "wolfRider.front.recoil.white",
+      "wolfRider.front.fall",
+      "wolfRider.front.deadA",
+      "wolfRider.front.deadB",
+      "wolfRider.front.boltA",
+      "wolfRider.front.boltB",
+      "wolfRider.front.cheer"
+     ]
+    },
+    "H": {
+     "prefix": "wolfRider-H",
+     "scale": 1.035,
+     "standPx": 148,
+     "bodyHeightSrc": 143,
+     "frames": [
+      "wolfRider.front.stand",
+      "wolfRider.front.stand.white",
+      "wolfRider.front.lopeA",
+      "wolfRider.front.lopeB",
+      "wolfRider.front.leapA",
+      "wolfRider.front.leapB",
+      "wolfRider.front.charge",
+      "wolfRider.front.windup",
+      "wolfRider.front.strike",
+      "wolfRider.front.bite",
+      "wolfRider.front.recoil",
+      "wolfRider.front.recoil.white",
+      "wolfRider.front.fall",
+      "wolfRider.front.deadA",
+      "wolfRider.front.deadB",
+      "wolfRider.front.boltA",
+      "wolfRider.front.boltB",
+      "wolfRider.front.cheer"
+     ]
+    }
+   },
+   "frames": "frames/wolfRider.front/",
+   "sheet": "stage-c/raw/creatures/wolfRider.front.harness.nb21.png",
+   "sha256": "bbbc78666581806a3015350fead669d655739699e8eda924005280e9c43f18d8",
+   "model": "gemini-nano-banana-2.1",
+   "job": "wolfRider.front.harness",
+   "route": "edit",
+   "references": [
+    "pilot/raw/ad/wr.front.blue.g3pro.png",
+    "stage-b/portraits/thornwood/warWolf/01a.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "camera"
+   ],
+   "note": "cloth relocked with lightness moved toward 0.38 by at most 0.07 (16 frames; stage C fix 2); coat matched to the lope cells in stand, recoil, fall (stage C fix 2): stand b 0.79 -> 1.31; recoil b 0.93 -> 1.31; fall b 1.22 -> 1.31; blue edge pass: 10149 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [
+    "wolfRider.front.harness.r2",
+    "wolfRider.front.kept"
+   ],
+   "checks": {
+    "cameraCells": "13/16",
+    "cameraFailing": [
+     "leapB",
+     "stand",
+     "strike"
+    ],
+    "cells": {
+     "stand": [
+      0.536,
+      0.089
+     ],
+     "lopeA": [
+      0.771,
+      0.608
+     ],
+     "lopeB": [
+      0.731,
+      0.21
+     ],
+     "leapA": [
+      0.612,
+      0.518
+     ],
+     "leapB": [
+      0.402,
+      0.118
+     ],
+     "charge": [
+      0.636,
+      0.525
+     ],
+     "windup": [
+      0.675,
+      0.273
+     ],
+     "strike": [
+      0.542,
+      0.171
+     ],
+     "bite": [
+      0.824,
+      0.67
+     ],
+     "recoil": [
+      0.593,
+      0.296
+     ],
+     "fall": [
+      0.728,
+      0.411
+     ],
+     "deadA": [
+      0.677,
+      0.516
+     ],
+     "deadB": [
+      0.818,
+      0.662
+     ],
+     "boltA": [
+      0.821,
+      0.71
+     ],
+     "boltB": [
+      0.829,
+      0.552
+     ],
+     "cheer": [
+      0.679,
+      0.22
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "lopeA~lopeB": 0.488
+     },
+     "mostAlike": [
+      "charge~bite",
+      0.843
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.168,
+     "histMin": [
+      "leapB",
+      0.591
+     ],
+     "maxDE": [
+      "leapB",
+      4.3
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 5.8,
+     "afterMax": 0.7
+    },
+    "side": {
+     "fPx": 32.5,
+     "f28": {
+      "neutral": {
+       "share": 0.144,
+       "worstBelow": 14.5
+      },
+      "sideKeyline": {
+       "share": 0.34,
+       "worstBelow": 14.2
+      }
+     },
+     "neutral": {
+      "share": 0.14,
+      "worstBelow": 16.7,
+      "below": {
+       "plains": 22.2,
+       "farmland": 22.0,
+       "swamp": 16.7,
+       "forest": 16.9
+      }
+     },
+     "sideKeyline": {
+      "share": 0.346,
+      "worstBelow": 16.3,
+      "below": {
+       "plains": 22.2,
+       "farmland": 21.9,
+       "swamp": 16.3,
+       "forest": 16.5
+      }
+     },
+     "pass": true
+    },
+    "fringe": {
+     "spillEdgePct": 11.924,
+     "keyInUnitPct": 0.387,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.66,
+     "pass_": true
+    },
+    "gates": {
+     "camera": false,
+     "variety": true,
+     "rim": true,
+     "side": true,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "bark-plate breast harness": true,
+     "bottle-green saddle blanket edge": true,
+     "bone-coloured cord": true,
+     "grey-brown shaggy coat, dark along the neck": "partly",
+     "pale muzzle": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+   }
+  },
+  "frontKept": {
+   "atlas": {
+    "S": {
+     "prefix": "wolfRider-S",
+     "scale": 0.5139,
+     "standPx": 74,
+     "bodyHeightSrc": 144,
+     "frames": [
+      "wolfRider.frontKept.stand",
+      "wolfRider.frontKept.stand.white",
+      "wolfRider.frontKept.lopeA",
+      "wolfRider.frontKept.lopeB",
+      "wolfRider.frontKept.leapA",
+      "wolfRider.frontKept.leapB",
+      "wolfRider.frontKept.charge",
+      "wolfRider.frontKept.windup",
+      "wolfRider.frontKept.strike",
+      "wolfRider.frontKept.bite",
+      "wolfRider.frontKept.recoil",
+      "wolfRider.frontKept.recoil.white",
+      "wolfRider.frontKept.fall",
+      "wolfRider.frontKept.deadA",
+      "wolfRider.frontKept.deadB",
+      "wolfRider.frontKept.boltA",
+      "wolfRider.frontKept.boltB",
+      "wolfRider.frontKept.cheer"
+     ]
+    },
+    "H": {
+     "prefix": "wolfRider-H",
+     "scale": 1.0278,
+     "standPx": 148,
+     "bodyHeightSrc": 144,
+     "frames": [
+      "wolfRider.frontKept.stand",
+      "wolfRider.frontKept.stand.white",
+      "wolfRider.frontKept.lopeA",
+      "wolfRider.frontKept.lopeB",
+      "wolfRider.frontKept.leapA",
+      "wolfRider.frontKept.leapB",
+      "wolfRider.frontKept.charge",
+      "wolfRider.frontKept.windup",
+      "wolfRider.frontKept.strike",
+      "wolfRider.frontKept.bite",
+      "wolfRider.frontKept.recoil",
+      "wolfRider.frontKept.recoil.white",
+      "wolfRider.frontKept.fall",
+      "wolfRider.frontKept.deadA",
+      "wolfRider.frontKept.deadB",
+      "wolfRider.frontKept.boltA",
+      "wolfRider.frontKept.boltB",
+      "wolfRider.frontKept.cheer"
+     ]
+    }
+   },
+   "frames": "frames/wolfRider.frontKept/",
+   "sheet": "pilot/raw/ad/wr.front.blue.g3pro.png",
+   "sha256": "7ff7625137b4fecc962718f2fcfa84039acbe3412f4d398d0334d5cd9b70b2e9",
+   "model": "gemini-3-pro-image",
+   "job": "wolfRider.front.kept",
+   "route": null,
+   "references": [],
+   "status": "reported",
+   "failedGates": [
+    "side"
+   ],
+   "note": "cloth relocked with lightness moved toward 0.38 by at most 0.07 (16 frames; stage C fix 2); blue edge pass: 6783 edge pixels de-tinted",
+   "keycast": null,
+   "otherAttempts": [],
+   "checks": {
+    "cameraCells": "14/16",
+    "cameraFailing": [
+     "leapB",
+     "stand"
+    ],
+    "cells": {
+     "stand": [
+      0.484,
+      0.053
+     ],
+     "lopeA": [
+      0.729,
+      0.583
+     ],
+     "lopeB": [
+      0.723,
+      0.196
+     ],
+     "leapA": [
+      0.61,
+      0.519
+     ],
+     "leapB": [
+      0.389,
+      0.112
+     ],
+     "charge": [
+      0.652,
+      0.545
+     ],
+     "windup": [
+      0.659,
+      0.253
+     ],
+     "strike": [
+      0.603,
+      0.293
+     ],
+     "bite": [
+      0.826,
+      0.678
+     ],
+     "recoil": [
+      0.762,
+      0.48
+     ],
+     "fall": [
+      0.746,
+      0.431
+     ],
+     "deadA": [
+      0.673,
+      0.519
+     ],
+     "deadB": [
+      0.764,
+      0.617
+     ],
+     "boltA": [
+      0.83,
+      0.727
+     ],
+     "boltB": [
+      0.837,
+      0.567
+     ],
+     "cheer": [
+      0.681,
+      0.256
+     ]
+    },
+    "variety": {
+     "pairs": {
+      "lopeA~lopeB": 0.464
+     },
+     "mostAlike": [
+      "charge~bite",
+      0.833
+     ],
+     "pass_": true,
+     "pass_bool": true
+    },
+    "scale": {
+     "heights": {
+      "stand": 1.0
+     },
+     "pass_": true
+    },
+    "consistency": {
+     "standCloth": 0.199,
+     "histMin": [
+      "leapB",
+      0.679
+     ],
+     "maxDE": [
+      "leapB",
+      6.2
+     ],
+     "pass_": true,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 3.7,
+     "afterMax": 0.4
+    },
+    "side": {
+     "fPx": 32.5,
+     "f28": {
+      "neutral": {
+       "share": 0.165,
+       "worstBelow": 12.2
+      },
+      "sideKeyline": {
+       "share": 0.349,
+       "worstBelow": 11.8
+      }
+     },
+     "neutral": {
+      "share": 0.161,
+      "worstBelow": 15.0,
+      "below": {
+       "plains": 20.2,
+       "farmland": 20.0,
+       "swamp": 15.0,
+       "forest": 15.1
+      }
+     },
+     "sideKeyline": {
+      "share": 0.376,
+      "worstBelow": 14.6,
+      "below": {
+       "plains": 20.2,
+       "farmland": 20.0,
+       "swamp": 14.6,
+       "forest": 14.7
+      }
+     },
+     "pass": false
+    },
+    "fringe": {
+     "spillEdgePct": 8.483,
+     "keyInUnitPct": 0.19,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.76,
+     "pass_": true
+    },
+    "gates": {
+     "camera": true,
+     "variety": true,
+     "rim": true,
+     "side": false,
+     "fringe": true,
+     "consistency": true,
+     "scale": true
+    }
+   },
+   "identity": {
+    "marks": {
+     "bark-plate breast harness": false,
+     "bottle-green saddle blanket edge": true,
+     "bone-coloured cord": false,
+     "grey-brown shaggy coat, dark along the neck": "partly",
+     "pale muzzle": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-wolfRider.png)"
+   }
+  }
+ },
+ "approved": null
+}

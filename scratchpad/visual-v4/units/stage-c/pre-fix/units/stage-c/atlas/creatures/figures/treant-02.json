@@ -1,0 +1,295 @@
+{
+ "figure": "treant-02",
+ "unit": "treant",
+ "face": "02",
+ "nation": "thornwood",
+ "key": "magenta",
+ "body": "treant",
+ "portrait": "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/02.webp",
+ "views": {
+  "back": {
+   "idle": "frames/treant-02.back/treant-02.back.idle.png",
+   "heightWu": 95.26,
+   "anchorPx": [
+    223.5,
+    1121.0
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-02.back.idle",
+     "shadow": "treant-02.back.idle.shadow",
+     "scale": 0.1673,
+     "w": 113,
+     "h": 193,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-02.back.idle",
+     "shadow": "treant-02.back.idle.shadow",
+     "scale": 0.3345,
+     "w": 227,
+     "h": 386,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant02.back.redress.v2.r2.nb21.png",
+   "sha256": "2827ce7ecd1406c50bf53f90ea528524aaf6a2a4af053f53d2b27ef42f2f58ee",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant02.back.redress.v2.r2",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "stage-c/work/creatures/bases/treant01.back.norump.base1k.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/02.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "fringe"
+   ],
+   "note": "keycast willow: key-cast pixels max 2.06% -> 0.00% of a frame; magenta edge pass: 16707 edge pixels de-tinted",
+   "keycast": {
+    "rule": "willow",
+    "window": [
+     285.0,
+     40.0
+    ],
+    "to": 125.0,
+    "castShareBefore": 0.0206,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "treant02.back.redress.v2",
+    "treant02.back.redress.r2",
+    "treant02.back.redress"
+   ],
+   "checks": {
+    "camera": {
+     "iou": 0.641,
+     "iouMirrored": 0.488,
+     "aspectRatio": 1.247,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      32.3,
+      -0.0,
+      10.5
+     ],
+     "portraitLab": [
+      35.6,
+      0.5,
+      9.4
+     ],
+     "dE2000": 2.9,
+     "wholeDE2000": 6.3,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 33.9,
+      "groundL": 67.7,
+      "below": 33.8
+     },
+     "farmland": {
+      "bodyL": 33.9,
+      "groundL": 67.3,
+      "below": 33.4
+     },
+     "swamp": {
+      "bodyL": 33.5,
+      "groundL": 58.5,
+      "below": 25.0
+     },
+     "forest": {
+      "bodyL": 33.5,
+      "groundL": 58.7,
+      "below": 25.2
+     },
+     "worstBelow": 25.0,
+     "minContrast": 25.0,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 12.4,
+     "afterMax": 0.0
+    },
+    "fringe": {
+     "spillEdgePct": 5.857,
+     "keyInUnitPct": 1.287,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.04,
+     "pass_": false
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": false
+    },
+    "srcPx": [
+     662,
+     1139
+    ],
+    "oversampleAtH": 2.99
+   },
+   "identity": {
+    "marks": {
+     "pale furrowed willow bark": "partly",
+     "long drooping willow fronds": true,
+     "two knotholes at different heights": "hidden in this view",
+     "long ragged split": "hidden in this view",
+     "no brow, nose or jaw": "hidden in this view"
+    },
+    "note": "no-rump back (v2.r2): the bark reads olive with moss streaks, darker than the portrait's pale grey willow",
+    "by": "stage C creatures agent, 4x crops (review/identity-treant-02.png)"
+   }
+  },
+  "front": {
+   "idle": "frames/treant-02.front/treant-02.front.idle.png",
+   "heightWu": 100.6,
+   "anchorPx": [
+    393.4,
+    1014.4
+   ],
+   "anchorFrom": "maquette (pilot change 12)",
+   "snoutPx": null,
+   "atlas": {
+    "S": {
+     "prefix": "treant-S",
+     "frame": "treant-02.front.idle",
+     "shadow": "treant-02.front.idle.shadow",
+     "scale": 0.1861,
+     "w": 112,
+     "h": 204,
+     "mouthWu": null
+    },
+    "H": {
+     "prefix": "treant-H",
+     "frame": "treant-02.front.idle",
+     "shadow": "treant-02.front.idle.shadow",
+     "scale": 0.3722,
+     "w": 224,
+     "h": 408,
+     "mouthWu": null
+    }
+   },
+   "sheet": "stage-c/raw/creatures/treant02.front.redress.nb21.png",
+   "sha256": "4bfe6ba00bffec2ce086e7c0b6c782d34554bd62b28aba0713af8bf317e85ccd",
+   "model": "gemini-nano-banana-2.1",
+   "job": "treant02.front.redress",
+   "route": "redress",
+   "imageSize": null,
+   "references": [
+    "stage-c/raw/creatures/treant01.front.guide.r2.nb21.png",
+    "/home/user/Fluid-Magic-/art-source/portraits/thornwood/treant/02.webp"
+   ],
+   "status": "reported",
+   "failedGates": [
+    "fringe"
+   ],
+   "note": "keycast willow: key-cast pixels max 3.50% -> 0.00% of a frame; magenta edge pass: 15955 edge pixels de-tinted",
+   "keycast": {
+    "rule": "willow",
+    "window": [
+     285.0,
+     40.0
+    ],
+    "to": 125.0,
+    "castShareBefore": 0.035,
+    "castShareAfter": 0.0
+   },
+   "otherAttempts": [
+    "treant02.front.redress.r2"
+   ],
+   "checks": {
+    "camera": {
+     "iou": 0.689,
+     "iouMirrored": 0.495,
+     "aspectRatio": 1.231,
+     "pass": true
+    },
+    "identityColour": {
+     "upperThirdLab": [
+      31.7,
+      0.2,
+      9.1
+     ],
+     "portraitLab": [
+      35.6,
+      0.5,
+      9.4
+     ],
+     "dE2000": 3.2,
+     "wholeDE2000": 7.2,
+     "pass": true
+    },
+    "value": {
+     "plains": {
+      "bodyL": 32.8,
+      "groundL": 67.7,
+      "below": 34.9
+     },
+     "farmland": {
+      "bodyL": 32.8,
+      "groundL": 67.3,
+      "below": 34.5
+     },
+     "swamp": {
+      "bodyL": 32.4,
+      "groundL": 58.5,
+      "below": 26.1
+     },
+     "forest": {
+      "bodyL": 32.4,
+      "groundL": 58.7,
+      "below": 26.3
+     },
+     "worstBelow": 26.1,
+     "minContrast": 26.1,
+     "pass": true
+    },
+    "rim": {
+     "beforeMax": 12.9,
+     "afterMax": 0.2
+    },
+    "fringe": {
+     "spillEdgePct": 6.037,
+     "keyInUnitPct": 2.155,
+     "fringePct": 0.0,
+     "edgeDevPct": 1.0,
+     "pass_": false
+    },
+    "gates": {
+     "camera": true,
+     "identity": true,
+     "value": true,
+     "rim": true,
+     "fringe": false
+    },
+    "srcPx": [
+     588,
+     1081
+    ],
+    "oversampleAtH": 2.69
+   },
+   "identity": {
+    "marks": {
+     "pale furrowed willow bark": true,
+     "long drooping willow fronds": true,
+     "two knotholes at different heights": true,
+     "long ragged split": true,
+     "no brow, nose or jaw": true
+    },
+    "note": null,
+    "by": "stage C creatures agent, 4x crops (review/identity-treant-02.png)"
+   }
+  }
+ },
+ "approved": null,
+ "note": "standing only (owner review 2); the cutout is a Sprite in stage C, a MeshPlane in stage D (plan 5.3)"
+}

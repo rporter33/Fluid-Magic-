@@ -1,0 +1,6 @@
+const { launch, open, ev, mev, PAGE } = require('./lib.cjs');
+(async () => { const b = await launch(), log = { pageErrors: [], console: [], requests: [] }; const p = await open(b, process.argv[2] || PAGE, { log, settle: 800 });
+  console.log(JSON.stringify(await mev(p, `({ TX: RB.TX, BW: RB.BW, BH: RB.BH, HW: RB.HW, W, H, D: MED_DIAM, mb1: RB.L.natural.mb1 && [RB.L.natural.mb1.width, RB.L.natural.mb1.height], mb2: RB.L.natural.mb2 && [RB.L.natural.mb2.width], RLD, RLK,
+    wilds: WILDS.map((w) => ({ name: w.name, kind: w.kind, cells: w.cells.length, edges: rlWildOutline(w).length, nb: [...new Set(rlWildOutline(w).map((e) => names[e.j] + ':' + terr[e.j]))] })) })`)));
+  for (const [v, s] of [['start', 'cam.s'], ['far', '60 / MED_DIAM'], ['min', 'minScale'], ['mid', '1.0'], ['ref', '1.142'], ['near', 'maxScale * 0.8'], ['max', 'maxScale']]) console.log(v, JSON.stringify(await mev(p, `(() => { const k = cam.s; cam.s = ${s}; const o = { s: +cam.s.toFixed(3), Dpx: +(cam.s * MED_DIAM).toFixed(1), lvl: rlMipLevel(), src: rlMsSource(), tpp: +(RB.TX / cam.s).toFixed(2), fk: +rlFarK().toFixed(2) }; cam.s = k; return o; })()`)));
+  console.log('errors', log.pageErrors.length); await b.close(); })();

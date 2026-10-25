@@ -1,0 +1,7 @@
+timeout 3600 node modes.cjs natural 1 > ../../out/logs/modes-natural-1.txt 2>&1
+timeout 3600 node modes.cjs natural 2 > ../../out/logs/modes-natural-2.txt 2>&1
+timeout 3600 node modes.cjs clear 1 > ../../out/logs/modes-clear-1.txt 2>&1
+timeout 3600 node modewild.cjs 1 > ../../out/logs/modewild-1.txt 2>&1
+timeout 3600 node modewild.cjs 2 > ../../out/logs/modewild-2.txt 2>&1
+timeout 3600 node sweep.cjs 1 > ../../out/logs/sweep-1.txt 2>&1
+timeout 3600 node sweep.cjs 2 > ../../out/logs/sweep-2.txt 2>&1

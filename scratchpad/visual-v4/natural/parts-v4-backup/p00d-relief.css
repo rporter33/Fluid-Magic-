@@ -1,0 +1,27 @@
+
+/* ================================================================ v4: the relief map (map-design-final.md) */
+/* Army miniatures: DOM pieces over the map (click selects, the army card on hover, focusable); stacks fan out on hover */
+/* Only the piece's own silhouette (.hit: base plus figure) takes the pointer; the rest of its box lets the map's wheel, drag and right-click through */
+.mini { position: absolute; pointer-events: none; line-height: 0; }
+.mini canvas { display: block; }
+.mini .hit { position: absolute; pointer-events: auto; cursor: pointer; border-radius: 45%; touch-action: none; }
+.mini .hit:focus-visible { outline: 2px solid #F4EEDF; outline-offset: 1px; }
+.mini.fanned { z-index: 2; }
+.mini .cplate { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); font: 600 11.5px/1 var(--font-num); color: #F4EEDF; background: rgba(20,18,15,.92); border: 1px solid rgba(184,145,74,.6); padding: 2px 5px; border-radius: 3px; white-space: nowrap; pointer-events: none; }
+/* The mockup controls and the Try this list follow the Map look */
+body.look-relief .v3only { display: none !important; }
+body.look-v3 .rlonly { display: none !important; }
+/* Owner question 6 (default): the right dock starts collapsed to its 48 px rail at every width; Outliner and Feed one click away */
+.app.railed .rail { display: flex; }
+.app.railed .dock.right { right: 48px; display: none; }
+.app.railed .dock.right.fly { display: flex; }
+.app.railed .modes { right: 56px; }
+.app.railed .pausechip, .app.railed .toasts { right: 56px; }
+.app.railed .strip { right: 48px; }
+.app.railed .dock.right.fly ~ .modes { right: 356px; } /* the open dock is never under the mode buttons */
+
+/* the controls' summary wraps at phone width under Relief (Painted (v3) keeps its frame as it was) */
+body.look-relief .headmore > summary { width: auto; max-width: 100%; }
+/* Painted (v3) keeps its frame: the extra Map look control pushes Reduced motion (19 px) onto the controls' second row, which made the open header 1 px taller than the
+   original page's and the v3 map canvas 1 px shorter (seen at 800 px tall and more, where the controls start open); held at the row's own 18 px */
+body.look-v3 #mockctl > .grp:has(> label > #rmotion) { height: 18px; }

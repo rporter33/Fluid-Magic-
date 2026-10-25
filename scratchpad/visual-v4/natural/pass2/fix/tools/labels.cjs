@@ -1,0 +1,25 @@
+// fix 5: a pan sweep at scales 1.0 and 1.142 (8 x 6 camera centres each): labels and wild names whose box leaves the canvas or the view band, or lies under the controls;
+// fix 6: the phone (390 x 844) at Fit and at the least zoom with Varo's planned move: wild-name overflow, labels off the model, chips off the model or under pieces
+const { launch, open, ev, mev, PAGE, SHOTS, OUT } = require('./lib.cjs'); const fs = require('fs');
+const PR = fs.readFileSync(__dirname + '/ad-adprobe.js', 'utf8');
+const SWEEP = String.raw`(() => { const lay = RL_PIECE_CACHE.get('L'); if (!lay) return null; const sh = rlLiveBox(lay), cr = canvas.getBoundingClientRect(), v = viewRect(), bad = [], under = [];
+  const ctl = [...document.querySelectorAll('#modes .modebtn, #modes .fitrow')].filter((e) => e.offsetParent).map((e) => { const q = e.getBoundingClientRect(); return [q.left - cr.left, q.top - cr.top, q.right - cr.left, q.bottom - cr.top]; });
+  const k = rlLayK(lay), seatOn = (i) => { const st = lay.seats.get(i); if (!st) return false; const x = st.x * k + cam.x, y = st.y * k + cam.y; return x >= 0 && x <= cw && y >= v.t && y <= v.b; }, meets = (b) => b[2] > 0 && b[0] < cw && b[3] > v.t && b[1] < v.b;
+  const boxes = [...lay.labels.map((l) => [l.text, sh(l.box), seatOn(l.i)]), ...lay.wildOps.flatMap((o) => (o.gl ? glyphBoxes(o.gl, 1).map((b) => [o.w.name, sh(b), false]) : o.box ? [[o.w.name, sh(o.box), false]] : []))];
+  let shown = 0; for (const [t, b, on] of boxes) { if (!on && !meets(b)) continue; shown++; if (b[0] < 0 || b[2] > cw || b[1] < v.t - 1 || b[3] > v.b + 1) bad.push(t + ' ' + b.map((x) => Math.round(x)).join(',')); if (ctl.some((q) => b[2] > q[0] && b[0] < q[2] && b[3] > q[1] && b[1] < q[3])) under.push(t); }
+  return { labels: shown, off: bad, underControls: under }; })()`; // a name counts when its seat is on screen or its box meets the canvas (a name for a seat off the screen waits there for the pan)
+(async () => {
+  const b = await launch(), out = { sweep: [], phone: {} }; let log = { pageErrors: [], console: [], requests: [] }; let p = await open(b, PAGE, { log, settle: 800 }); await p.mouse.move(720, 894);
+  let n = 0, off = 0, under = 0; const ex = [];
+  for (const s of [1.0, 1.142]) for (let iy = 0; iy < 6; iy++) for (let ix = 0; ix < 8; ix++) { const x = 1600 * (ix + 0.5) / 8, y = 1000 * (iy + 0.5) / 6; await ev(p, `m.setScale(${s}, ${x}, ${y})`); await p.waitForTimeout(120); await mev(p, 'draw()'); const r = await mev(p, SWEEP); n++; off += r.off.length; under += r.underControls.length; if ((r.off.length || r.underControls.length) && ex.length < 8) ex.push({ s, x, y, ...r }); }
+  await ev(p, 'm.zoomTo(1.142, "Ashmoor")'); await p.waitForTimeout(900); out.deepmossRef = await mev(p, `(() => { const lay = RL_PIECE_CACHE.get('L'), sh = rlLiveBox(lay), i = names.indexOf('Deepmoss'), lb = lay.labels.find((l) => l.i === i); return lb ? { box: sh(lb.box).map((v) => Math.round(v)), forced: !!lb.forced } : 'not named'; })()`);
+  await p.screenshot({ path: OUT + 'x-deepmoss-ref.png', clip: { x: 1100, y: 280, width: 340, height: 240 } });
+  out.sweep = { views: n, labelsOffCanvasOrBand: off, labelsUnderControls: under, examples: ex }; out.desktopErrors = log.pageErrors.length; await p.context().close();
+  log = { pageErrors: [], console: [], requests: [] }; p = await open(b, PAGE, { log, w: 390, h: 844, settle: 1500 }); await mev(p, PR); await p.mouse.move(195, 838);
+  await ev(p, `m.ev("state.sel = { type: 'cmd', id: 'varo' }; RCK = null; draw()")`); const t = await ev(p, 'm.across()'); const [x, y] = await ev(p, `m.at(${JSON.stringify(t)})`); await p.mouse.click(x + 4, y + 30, { button: 'right' }); await p.mouse.move(195, 838); await p.waitForTimeout(800);
+  for (const [tag, s] of [['start', null], ['fit', 'fitScale'], ['min', 'minScale']]) { if (s) await ev(p, `m.ev("cam.s = ${s}; clampCam(); RCK = null; draw()")`); await p.waitForTimeout(1200);
+    const ov = await p.evaluate(() => window.__ad.overflow()), sc = await mev(p, '({ s: +cam.s.toFixed(3), min: +minScale.toFixed(3), fit: +fitScale.toFixed(3), Dpx: +(cam.s * MED_DIAM).toFixed(1) })');
+    const ch = await mev(p, `(() => { const cr = canvas.getBoundingClientRect(), [mx0, my0] = toScreen(0, 0), [mx1, my1] = toScreen(W, H); const minis = [...document.querySelectorAll('.mini')].filter((e) => e.offsetParent).map((e) => { const q = e.getBoundingClientRect(); return [q.left - cr.left, q.top - cr.top, q.right - cr.left, q.bottom - cr.top]; }); return RL_CHIPS.map((c) => ({ text: c.text, box: c.box.map((v) => Math.round(v)), onModel: c.box[0] >= mx0 && c.box[2] <= mx1 && c.box[1] >= my0 && c.box[3] <= my1, underPieces: minis.filter((q) => c.box[2] > q[0] && c.box[0] < q[2] && c.box[3] > q[1] && c.box[1] < q[3]).length })); })()`);
+    out.phone[tag] = { scale: sc, wildNames: ov.wildNames, labelsOffModel: ov.labelsOffModel, threadChips: ov.chips, chips: ch }; await p.screenshot({ path: OUT + `x-phone-${tag}.png` }); }
+  out.phoneErrors = log.pageErrors.length; console.log(JSON.stringify(out, null, 1)); await b.close();
+})();
