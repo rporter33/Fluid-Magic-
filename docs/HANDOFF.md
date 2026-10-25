@@ -114,6 +114,22 @@ pixel.
    - deeper bays so the Greyteeth stops reading as a block.
 6. Verify, publish to the map page, and put the eight questions below to the owner with screenshots.
 
+## Codex in parallel
+
+`AGENTS.md` (at the repo root) brings any coding agent up to speed on the project. `docs/codex/TASKS.md` holds five
+self-contained tasks. Start one in Codex with: "Read AGENTS.md, then do Task N in docs/codex/TASKS.md."
+
+| Task | Starts from | Delivers |
+|---|---|---|
+| 1. Independent code review (save loading, map-generation hardening, spell-effect data) | `claude/gifted-meitner-v8l3qv` | a report-only pull request |
+| 2. Preset matrix scored against a same-seat baseline | `claude/gifted-meitner-v8l3qv` | tooling and a measurement row; no rule or number changes |
+| 3. Timing-sensitive tests made reliable under load | `claude/gifted-meitner-v8l3qv` | test fixes; nothing skipped or loosened |
+| 4. Docs-versus-code audit | `claude/gifted-meitner-v8l3qv` | a report-only pull request |
+| 5. Battlefield art pass: plan and prototype | `claude/art-workspace` (its `AGENTS.md` and `CODEX-TASK-battlefield.md`) | a plan, a prototype with checks, screenshots and the owner's questions; no image generation |
+
+Codex never pushes to either branch; it opens pull requests, which Claude reviews. It stays out of the battle
+mockup's `src/` and the map's `parts/`, which Claude resumes on Thursday.
+
 ## Decisions for the owner
 
 Answer any of these before Thursday, in this chat or in a note; each has a default the work follows until then.
@@ -153,3 +169,10 @@ Answer any of these before Thursday, in this chat or in a note; each has a defau
    - Default: stage D animation first (the owner's art order: animation, then magic, then review 3).
    - Then map pass 4.
    - Phase 8 code after both reviews.
+9. **The art budget in the game.** The spec caps the game's raster art at 2 MB, with 12 KB left (`docs/09-balance.md`,
+   "Raster art"), inside milestone 1's 5 MB download. The painted armies need tens of MB. Before any painted art moves
+   into the game, choose one:
+   - raise the cap;
+   - load art on demand (per battle and per nation) outside the first download.
+
+   Default: load on demand, keeping the 5 MB first download.
