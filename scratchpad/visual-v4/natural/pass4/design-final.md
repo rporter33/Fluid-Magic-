@@ -1242,7 +1242,7 @@ declaration), as `p66` re-binds `deriveMonth`.
 
 ---
 
-## 12. Owner questions (defaults in bold; the build follows the defaults)
+## 12. Owner questions (defaults in bold; recorded owner decisions override defaults)
 
 1. **Q1. Realms as washes at Lean-back?** The record asks for washes; the owner's direction says "rails and glow".
    - **Default: yes, at Lean-back only, in Natural and Ownership mode: a 0.28 banner wash in place of the glow, with today's rails and
@@ -1271,9 +1271,11 @@ declaration), as `p66` re-binds `deriveMonth`.
    - The clock shows a season glyph, with the word in its tooltip, not "Y1 Spring M3 D14".
    - The Working's chip leads the alerts ribbon, not the top bar.
    - Scouts carry no eye glyph to mute.
-8. **Q8. Texel density on a Vast map?** **Default: one 2048 × 1280 bake on every device (map-relief §10.3), so a Vast map is about
-   half as sharp at Near.** The alternative is full-density tiles near the view at Near, about 21 to 32 MB more. Shots at Near 250
-   show both.
+8. **Q8. Texel density on a Vast map? Resolved 2026-10-26: Option B.** Owner: “Go for option B”.
+   Retain the shared 2048 × 1280 bake and add full-density terrain tiles around the visible Near view. The estimated
+   additional 21 to 32 MB is texture accounting, not measured device usage. This supersedes the former one-bake-only
+   default for Vast. See [the decision and acceptance criteria](q8-review/decision.md); implementation and device
+   qualification remain pending. The Near-250 comparison is still an acceptance deliverable, not a completed B test.
 
 ---
 

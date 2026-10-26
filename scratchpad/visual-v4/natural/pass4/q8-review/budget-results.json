@@ -1,0 +1,175 @@
+{
+  "units": "decimal MB; MiB also shown",
+  "baseBytes": 13981004,
+  "tileBytes": 5308416,
+  "configurations": [
+    {
+      "tiles": 4,
+      "extraMB": 21.233664,
+      "extraMiB": 20.25,
+      "terrainTotalMB": 35.214668
+    },
+    {
+      "tiles": 6,
+      "extraMB": 31.850496,
+      "extraMiB": 30.375,
+      "terrainTotalMB": 45.8315
+    }
+  ],
+  "tests": "PASS: mip arithmetic, 4/6 tile bytes, 270 ids plus distinct sentinel, coverage counterexample",
+  "coverage": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "dpx": 181,
+      "spanTexels": [
+        1796,
+        1123
+      ],
+      "worstGrid": [
+        3,
+        3
+      ],
+      "worstCount": 9,
+      "fitsSix": false
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "dpx": 250,
+      "spanTexels": [
+        1301,
+        813
+      ],
+      "worstGrid": [
+        3,
+        2
+      ],
+      "worstCount": 6,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "dpx": 400,
+      "spanTexels": [
+        813,
+        508
+      ],
+      "worstGrid": [
+        2,
+        2
+      ],
+      "worstCount": 4,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "dpx": 181,
+      "spanTexels": [
+        2395,
+        1347
+      ],
+      "worstGrid": [
+        4,
+        3
+      ],
+      "worstCount": 12,
+      "fitsSix": false
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "dpx": 250,
+      "spanTexels": [
+        1734,
+        975
+      ],
+      "worstGrid": [
+        3,
+        2
+      ],
+      "worstCount": 6,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        1920,
+        1080
+      ],
+      "dpx": 400,
+      "spanTexels": [
+        1084,
+        610
+      ],
+      "worstGrid": [
+        3,
+        2
+      ],
+      "worstCount": 6,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "dpx": 181,
+      "spanTexels": [
+        487,
+        1053
+      ],
+      "worstGrid": [
+        2,
+        3
+      ],
+      "worstCount": 6,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "dpx": 250,
+      "spanTexels": [
+        352,
+        762
+      ],
+      "worstGrid": [
+        2,
+        2
+      ],
+      "worstCount": 4,
+      "fitsSix": true
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "dpx": 400,
+      "spanTexels": [
+        220,
+        476
+      ],
+      "worstGrid": [
+        2,
+        2
+      ],
+      "worstCount": 4,
+      "fitsSix": true
+    }
+  ]
+}
