@@ -1706,7 +1706,10 @@ everywhere.
 take longer than a miss. The frame owns layout, settings and the player's requests. The stage
 reads only the `BattleRecord`, never live state (docs/04: "The viewer needs nothing from live
 state"). docs/04's "1 round per 1.5 seconds (adjustable)" becomes the stage's default pace at 1×,
-averaged over a round. The presentation owns the exact timing.
+averaged over a round. The presentation owns the exact timing. Owner direction 2026-10-29: the
+player sees continuous time only, with pause, play, speed and a time scrubber; the frame's
+transport steps by beat, never by round, and the header shows elapsed time, not a round
+(`battle-presentation.owner-direction.md`; `docs/07` wins where this record differs).
 
 ```ts
 interface BattleStageProps {

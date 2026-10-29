@@ -134,9 +134,12 @@ Phase 9b (proposed) adds `duel(a, b)` with its exchanges as ordinary `melee` and
 events, `duelEnd(winner, loser)`, `down(commander)` in place of `death` while the outcome is open,
 and `captured(commander, by)` after `battleEnd`.
 
-The replay viewer plays a battle blow by blow, re-run from its record, with the pacing in
-`docs/12-battle-presentation.md` (about 5 to 10 s for a busy round at 1x, a hard cap of
-150 s per battle).
+The replay viewer plays a battle blow by blow, re-run from its record, as one continuous fight
+in real time with pause, play, speed and a time scrubber, with the pacing in
+`docs/12-battle-presentation.md` (a hard cap of 150 s per battle). The rounds of this document
+are the resolver's unit and the log's `round` field; the player never sees a round number, a
+round card or a round step (owner direction 2026-10-29,
+`docs/design/battle-presentation.owner-direction.md`).
 
 ## Required tests
 

@@ -1263,6 +1263,17 @@ consecutive seeds).
   footprints, the mana glyph, fire wounds, burning kills, the Entangle hold and the brief form.
 - No code changed. The renderer takes these when Phase 10 builds `render/effects/`.
 
+## Docs: battles play out in continuous time (owner direction 2026-10-29, docs only)
+
+- `docs/design/battle-presentation.owner-direction.md` quotes the owner: battles are real time
+  when viewed, with pause and play; rounds may stay in the core. Applied: `docs/00` pillar 3,
+  `docs/04` (the resolver keeps rounds as its hidden unit), `docs/07` (header shows elapsed
+  time; transport is back-a-beat, pause and play, forward-a-beat; a time scrubber; no round
+  anything), `docs/12` (a notice at the top, the round card, round drum, round header and
+  scrubber ticks withdrawn, an implementation decision that the timeline and time map are
+  unchanged since they were already in story milliseconds), the UI spec and battle
+  presentation records (notices), and `docs/HANDOFF.md`. No code changed.
+
 ## Paused 2026-10-25 (resuming 2026-10-29)
 
 Work paused at a clean point. `docs/HANDOFF.md` is the pickup guide: where the art workspace is saved (branch

@@ -1,5 +1,9 @@
 # Battle presentation: final design and build spec
 
+> Amended by `docs/12-battle-presentation.md` on 2026-10-29: the player watches continuous time
+> and never sees rounds (`battle-presentation.owner-direction.md`). Where this record shows a
+> round card, header, drum, tick or step, the numbered doc wins.
+
 Status: final. This document merges three proposals, as the two judges directed:
 
 - `proposal-architecture.md` is the backbone: the data path, purity, the time model, the

@@ -20,7 +20,9 @@ and the colors stand on their own rather than translating Dominions' eight paths
    Spells cost colored pips plus generic mana, as in MTG, and mages are gated by pips.
 3. **Realtime, but thoughtful.** The clock runs continuously at the chosen speed, and any
    order can be issued while paused. There is no reflex gameplay. Battles auto-resolve
-   from pre-battle scripting, and a replay shows what happened.
+   from pre-battle scripting, and a replay shows what happened as one continuous fight that
+   plays out in real time with pause, play, speed and a time scrubber; the player never sees
+   rounds (owner direction 2026-10-29, `docs/design/battle-presentation.owner-direction.md`).
 4. **A god of your own.** Pretender design is the signature pre-game decision: choose a
    chassis, allocate color pips, set the five Scales (each an opposition between two enemy
    colors), set Dominion strength, and choose how early the god awakens.

@@ -44,6 +44,13 @@ requirements:
 
 ## 0. The design in sixteen points
 
+**Owner direction 2026-10-29 (`docs/design/battle-presentation.owner-direction.md`): the player
+watches one continuous fight in real time with pause, play, speed and a time scrubber, and never
+sees rounds. The resolver keeps its round loop as the hidden unit. In this document, every
+round card, round header, round tick, round drum and back-a-round control is withdrawn; `round`
+stays a field on events and keyframes, never a thing shown. The amended lines below say so where
+they occur.**
+
 1. **Per-blow truth by re-running the battle.**
    - `BattleRecord.rerun` stores the setup and the rng state from before the battle. The
      setup goes through a JSON round trip, with spells stored by id.
@@ -74,7 +81,8 @@ requirements:
    - Speed, Beats mode, slow motion, and hit-stop live in a pure piecewise time map from
      story time to real time.
    - Gore, motion, flashes, and quality are view filters.
-6. **The scene is a pure function of story time.** It is built from keyframes per round,
+6. **The scene is a pure function of story time.** It is built from keyframes per round (an
+   internal unit; the player sees continuous time),
    closed-form particles, and decals that can be re-baked. So seek, screenshots, and
    recovery from a lost WebGL context are all exact.
 7. **The stage:**
@@ -1122,7 +1130,7 @@ duration matches the table.
 | Segment | Duration | Rules |
 |---|---|---|
 | Intro | 3.0 s (Beats 1.2 s; a click skips) | armies march in; horns; pretender spotlight 1.2 s inside it |
-| Round card | 0.5 s, overlapping the previous tail by 0.2 s | |
+| Round card | withdrawn (owner direction 2026-10-29): no card; phases flow into each other with a 0.2 s overlap | |
 | Scripts (casts) | per cast, chained | full form the first time a spell is cast in the battle; short form (charge halved, no caption) on the second; **brief form 0.5 s** from a caster's third cast of the same spell when the spell is below level 3 and kills fewer than 3 |
 | Scripts (chaining) | | cast k+1's charge starts at cast k's release, and its impact never lands before cast k's; once the phase passes 5.0 s, each further cast takes 0.3 s; advance 0.8 s and retreat 0.6 s play in parallel with the casts |
 | Ranged | 1.7 s when any volley | draw 0.35, ripple 0.25, flight 0.5 to 0.85, landing 0.3 |
@@ -2194,7 +2202,8 @@ commander-death voice if the loser falls. Two new recipes: `horn.challenge` and 
   - 1.6 s: the defender's horn;
   - 2.0 s: the defender's chant;
   - 2.6 s: both drums.
-- **Rounds:** one drum per round, alternating sides.
+- **Rounds:** no drum per round (owner direction 2026-10-29); the drums belong to the intro and
+  to first contact only.
 - **Terrain sprinkles:** from a seeded Poisson stream in story time. Birds stop at first
   contact.
 - **Outro:** victory or defeat by the player's view. The aftermath under the result card
@@ -2794,7 +2803,7 @@ export function proceduralPartSet(renderer: Renderer): PartSet;   // S4
 
 ```
 +--------------------------------------------------------------------------------------------+
-| Battle of Kharsk Ford · Hills · Y2 M5 D12 | ROUND 4 [Spells][Missiles][Melee][Morale] | [field chip] [Log] [gear] [X] |
+| Battle of Kharsk Ford · Hills · Y2 M5 D12 | 0:32 elapsed  [Spells][Missiles][Melee][Morale] | [field chip] [Log] [gear] [X] |
 | [========== Cinder Horde 214 =====|====== Thornwood 187 ==========]  tug-of-war strength bar |
 +-----------+----------------------------------------------------------------+-----------+
 | LEFT DOCK |                       battle canvas                            | RIGHT DOCK|
@@ -2836,7 +2845,7 @@ export function proceduralPartSet(renderer: Renderer): PartSet;   // S4
 - **Ticker:** 4 lines, the newest on top, each fading after 6 s. Each line starts with the
   side glyph and banner color, with mana symbols for spells, and bold for beats. Clicking a
   line seeks to it.
-- **Scrubber:** round ticks and beat icons sized by weight: a skull for a commander death, a
+- **Scrubber:** a time axis (no round ticks; owner direction 2026-10-29) with beat icons sized by weight: a skull for a commander death, a
   broken flag for a rout, the spell's symbol, crossed swords for first contact. Dragging
   seeks.
 - **Name card** (S2.8) and **interlude cards.**
@@ -3220,3 +3229,11 @@ rules (`docs/04-battle.md`, "Pretender abilities and new battle rules"):
   changes no unit and plays only in the outro. The 30 pinned battles hold no Duelist and no
   downed loser, so the goldens and the equivalence tests are unchanged; a named `duel` fixture
   joins `named6b.ts`'s successor for the equivalence and re-run tests.
+- **Continuous time in the viewer** (owner direction 2026-10-29): the timeline, time map,
+  keyframes and cue builder are unchanged, because they were already in story milliseconds;
+  only what the player sees changes. Withdrawn: the round card segment, the round drum, the
+  round header, the scrubber's round ticks, and the transport's back-a-round and forward-a-round
+  (now back-a-beat and forward-a-beat over `beats`). The phase chips stay, since a phase is a
+  moment, not a count. `RoundMark` stays in `Timeline` for the Report, tests and the log's
+  filters; the Report's prose says "early", "mid" and "late" or a time, never a round number.
+  The `phase(duel)` span and everything else in this record fit unchanged.

@@ -132,6 +132,10 @@ mockup's `src/` and the map's `parts/`, which Claude resumes on Thursday.
 
 ## Decisions for the owner
 
+**Answered 2026-10-29:** battles play out in continuous real time when viewed, with pause and
+play; no rounds shown (`docs/design/battle-presentation.owner-direction.md`). Stage D's motion
+code and Phase 10 build to that: no round card, header, drum, tick or step.
+
 Answer any of these before Thursday, in this chat or in a note; each has a default the work follows until then.
 
 1. **Image credits.**
