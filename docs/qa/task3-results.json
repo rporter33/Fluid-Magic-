@@ -1,0 +1,2623 @@
+{
+  "date": "2026-10-25 (America/Denver; host timestamps are UTC on October 26)",
+  "baseline": "e2a9bcc3b504d2664e119fa9e9e19e0d7b550c9c",
+  "environment": {
+    "os": "Linux 6.18.55 x86_64",
+    "cpu": "AMD EPYC 9V74",
+    "affinity": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    "cgroupCpuMax": "800000 100000 (8 CPU quota)",
+    "primaryNode": "v24.22.1",
+    "compatibilityNode": "v22.23.4",
+    "vitest": "5.0.5",
+    "stress": "4 pinned node busy loops per logical CPU; 36 total; burners excluded from per-fork process.cpuUsage"
+  },
+  "notes": [
+    "before-normal/loaded/heavy use unchanged baseline tests. before-perf-quiet differs only by console diagnostics in a detached baseline worktree.",
+    "after-normal and after-normal-final are FAILED implementation calibration trials, not final successful validations.",
+    "Final normal/heavy full suites are after-normal-verified and after-heavy. Nine helper tests are added; all original tests remain.",
+    "All timing values are actual observations, not portable hardware guarantees."
+  ],
+  "runs": [
+    {
+      "run": "before-normal",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=../evidence/before-normal.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 48.039,
+      "oneMinuteLoadRange": [0.24, 3.707],
+      "vitestSeconds": 47.46,
+      "files": 139,
+      "passed": 2338,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 493.719
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 3135.08
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 3121.205
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2477.633
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 1488.916
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1991.267
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 710.078
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 953.399
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 1041.14
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 497.333
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 191.324
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 40.075
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 45.204
+        }
+      ],
+      "measurements": []
+    },
+    {
+      "run": "before-loaded",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=../evidence/before-loaded.json"
+      ],
+      "burners": 9,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 77.076,
+      "oneMinuteLoadRange": [2.723, 13.028],
+      "vitestSeconds": 75.08,
+      "files": 139,
+      "passed": 2338,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 730.341
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 5939.593
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 5798.17
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 6559.599
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 3102.265
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 4399.469
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 1532.754
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2573.1
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 2104.289
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 1001.93
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 337.672
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 75.246
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 98.164
+        }
+      ],
+      "measurements": []
+    },
+    {
+      "run": "before-heavy",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=../evidence/before-heavy.json"
+      ],
+      "burners": 36,
+      "exit": 1,
+      "elapsedSecondsIncludingGateAndLauncher": 198.314,
+      "oneMinuteLoadRange": [9.329, 41.675],
+      "vitestSeconds": 194.53,
+      "files": 139,
+      "passed": 2335,
+      "failed": 3,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 1821.102
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "failed",
+          "durationMs": 16259.333,
+          "failure": "AssertionError: expected 2264.2473489999993 to be less than 1000"
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 16152.49
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 18947.337
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 9949.429
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 11909.823
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 4496.807
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 6675.418
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "failed",
+          "durationMs": 6238.153,
+          "failure": "Error: Test timed out in 5000ms."
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 2827.375
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "failed",
+          "durationMs": 943.575,
+          "failure": "AssertionError: expected 109.54644199999893 to be less than 90"
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 176.992
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 210.433
+        }
+      ],
+      "measurements": []
+    },
+    {
+      "run": "after-normal",
+      "node": "v24.22.1",
+      "command": [
+        "bash",
+        "-c",
+        "npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-normal.json"
+      ],
+      "burners": 0,
+      "exit": 1,
+      "elapsedSecondsIncludingGateAndLauncher": 60.035,
+      "oneMinuteLoadRange": [3.322, 7.067],
+      "vitestSeconds": 34.31,
+      "files": 140,
+      "passed": 2345,
+      "failed": 1,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 332.599
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 2951.163
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 3147.722
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 3181.721
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 1812.335
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2322.816
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 743.728
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1031.911
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 1014.965
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "failed",
+          "durationMs": 665.06,
+          "failure": "AssertionError: {\"label\":\"heavy marching day\",\"budgetMs\":2,\"headroomMs\":0,\"cpuMedianMs\":2.100233333333333,\"wallMedianMs\":1.3034794833333307,\"samples\":[{\"cpuMs\":2.100233333333333,\"wallMs\":1.2972629833333333},{\"cpuMs\":1.9940166666666668,\"wallMs\":1.204110483333337},{\"cpuMs\":2.9010666666666665,\"wallMs\":1.7494898166666644},{\"cpuMs\":2.38855,\"wallMs\":1.5157622999999982},{\"cpuMs\":1.8346333333333333,\"wallMs\":1.3034794833333307}]}: expected 2.100233333333333 to be less than 2"
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 113.436
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 41.563
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 40.365
+        }
+      ],
+      "measurements": [
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuMedianMs": 20.2965,
+          "wallMedianMs": 13.87114600000001,
+          "samples": [
+            {
+              "cpuMs": 42.446,
+              "wallMs": 20.98239000000001
+            },
+            {
+              "cpuMs": 11.85,
+              "wallMs": 11.027875999999992
+            },
+            {
+              "cpuMs": 16.646,
+              "wallMs": 13.250409999999988
+            },
+            {
+              "cpuMs": 14.335,
+              "wallMs": 12.26465200000007
+            },
+            {
+              "cpuMs": 23.947,
+              "wallMs": 14.491882000000032
+            },
+            {
+              "cpuMs": 102.086,
+              "wallMs": 70.24759899999992
+            },
+            {
+              "cpuMs": 13.511,
+              "wallMs": 8.745170999999914
+            },
+            {
+              "cpuMs": 50.243,
+              "wallMs": 36.73248100000001
+            },
+            {
+              "cpuMs": 61.368,
+              "wallMs": 37.241394000000014
+            },
+            {
+              "cpuMs": 8.171,
+              "wallMs": 9.132131999999956
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuMedianMs": 18.262,
+          "wallMedianMs": 17.219094999999925,
+          "samples": [
+            {
+              "cpuMs": 17.309,
+              "wallMs": 17.16480300000012
+            },
+            {
+              "cpuMs": 16.342,
+              "wallMs": 20.825956000000133
+            },
+            {
+              "cpuMs": 24.335,
+              "wallMs": 18.6196759999998
+            },
+            {
+              "cpuMs": 21.408,
+              "wallMs": 16.802148000000216
+            },
+            {
+              "cpuMs": 18.262,
+              "wallMs": 17.219094999999925
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuMedianMs": 323.8505,
+          "wallMedianMs": 322.02291549999984,
+          "samples": [
+            {
+              "cpuMs": 549.542,
+              "wallMs": 469.3069560000001
+            },
+            {
+              "cpuMs": 421.534,
+              "wallMs": 429.46422900000016
+            },
+            {
+              "cpuMs": 332.784,
+              "wallMs": 338.52503999999976
+            },
+            {
+              "cpuMs": 315.154,
+              "wallMs": 305.5207909999999
+            },
+            {
+              "cpuMs": 37.059,
+              "wallMs": 39.89194600000019
+            },
+            {
+              "cpuMs": 39.382,
+              "wallMs": 38.758722000000034
+            },
+            {
+              "cpuMs": 80.99,
+              "wallMs": 67.3166369999999
+            },
+            {
+              "cpuMs": 523.479,
+              "wallMs": 520.7419250000003
+            },
+            {
+              "cpuMs": 36.63,
+              "wallMs": 40.937895000000026
+            },
+            {
+              "cpuMs": 332.547,
+              "wallMs": 346.1203250000003
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuMedianMs": 2.100233333333333,
+          "wallMedianMs": 1.3034794833333307,
+          "samples": [
+            {
+              "cpuMs": 2.100233333333333,
+              "wallMs": 1.2972629833333333
+            },
+            {
+              "cpuMs": 1.9940166666666668,
+              "wallMs": 1.204110483333337
+            },
+            {
+              "cpuMs": 2.9010666666666665,
+              "wallMs": 1.7494898166666644
+            },
+            {
+              "cpuMs": 2.38855,
+              "wallMs": 1.5157622999999982
+            },
+            {
+              "cpuMs": 1.8346333333333333,
+              "wallMs": 1.3034794833333307
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuMedianMs": 3.1138000000000003,
+          "wallMedianMs": 2.320986199999993,
+          "samples": [
+            {
+              "cpuMs": 3.3850000000000002,
+              "wallMs": 2.320986199999993
+            },
+            {
+              "cpuMs": 3.1138000000000003,
+              "wallMs": 2.719594199999983
+            },
+            {
+              "cpuMs": 3.0545999999999998,
+              "wallMs": 2.2070292000000107
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuMedianMs": 2.8508,
+          "wallMedianMs": 1.9712976000000026,
+          "samples": [
+            {
+              "cpuMs": 2.8508,
+              "wallMs": 2.7982901999999967
+            },
+            {
+              "cpuMs": 2.674,
+              "wallMs": 1.666460200000006
+            },
+            {
+              "cpuMs": 3.5482,
+              "wallMs": 1.9712976000000026
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "after-normal-final",
+      "node": "v24.22.1",
+      "command": [
+        "bash",
+        "-c",
+        "npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-normal-final.json"
+      ],
+      "burners": 0,
+      "exit": 1,
+      "elapsedSecondsIncludingGateAndLauncher": 59.025,
+      "oneMinuteLoadRange": [5.273, 7.25],
+      "vitestSeconds": 32.48,
+      "files": 140,
+      "passed": 2345,
+      "failed": 1,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 422.291
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 3276.829
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 2421.272
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2831.691
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 1314.12
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1795.441
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 795.101
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 931.554
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 1131.219
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "failed",
+          "durationMs": 817.353,
+          "failure": "AssertionError: {\"label\":\"heavy marching day\",\"budgetMs\":2,\"headroomMs\":0,\"cpuMedianMs\":2.006533333333333,\"wallMedianMs\":1.252725216666666,\"samples\":[{\"cpuMs\":2.34455,\"wallMs\":1.5597510499999998},{\"cpuMs\":2.4657,\"wallMs\":1.4820157333333328},{\"cpuMs\":1.6017000000000001,\"wallMs\":1.2132153000000017},{\"cpuMs\":2.006533333333333,\"wallMs\":1.1174329833333332},{\"cpuMs\":1.5033833333333333,\"wallMs\":1.252725216666666}]}: expected 2.006533333333333 to be less than 2"
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 173.45
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 37.284
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 38.752
+        }
+      ],
+      "measurements": [
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuMedianMs": 2.006533333333333,
+          "wallMedianMs": 1.252725216666666,
+          "samples": [
+            {
+              "cpuMs": 2.34455,
+              "wallMs": 1.5597510499999998
+            },
+            {
+              "cpuMs": 2.4657,
+              "wallMs": 1.4820157333333328
+            },
+            {
+              "cpuMs": 1.6017000000000001,
+              "wallMs": 1.2132153000000017
+            },
+            {
+              "cpuMs": 2.006533333333333,
+              "wallMs": 1.1174329833333332
+            },
+            {
+              "cpuMs": 1.5033833333333333,
+              "wallMs": 1.252725216666666
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuMedianMs": 23.486,
+          "wallMedianMs": 16.87808849999999,
+          "samples": [
+            {
+              "cpuMs": 46.433,
+              "wallMs": 43.642818999999974
+            },
+            {
+              "cpuMs": 14.817,
+              "wallMs": 15.155953000000011
+            },
+            {
+              "cpuMs": 18.442,
+              "wallMs": 16.464396999999963
+            },
+            {
+              "cpuMs": 15.023,
+              "wallMs": 16.578588999999965
+            },
+            {
+              "cpuMs": 28.53,
+              "wallMs": 17.177588000000014
+            },
+            {
+              "cpuMs": 114.164,
+              "wallMs": 93.73863599999999
+            },
+            {
+              "cpuMs": 13.581,
+              "wallMs": 12.87540000000007
+            },
+            {
+              "cpuMs": 57.574,
+              "wallMs": 49.753453000000036
+            },
+            {
+              "cpuMs": 70.2,
+              "wallMs": 54.28992800000003
+            },
+            {
+              "cpuMs": 12.049,
+              "wallMs": 12.017029999999977
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuMedianMs": 400.533,
+          "wallMedianMs": 385.89949150000007,
+          "samples": [
+            {
+              "cpuMs": 529.957,
+              "wallMs": 486.09583899999996
+            },
+            {
+              "cpuMs": 446.89,
+              "wallMs": 430.24736200000007
+            },
+            {
+              "cpuMs": 495.467,
+              "wallMs": 481.00830599999995
+            },
+            {
+              "cpuMs": 354.176,
+              "wallMs": 341.55162100000007
+            },
+            {
+              "cpuMs": 37.282,
+              "wallMs": 35.93113100000028
+            },
+            {
+              "cpuMs": 33.73,
+              "wallMs": 35.49496700000009
+            },
+            {
+              "cpuMs": 58.484,
+              "wallMs": 52.45026199999984
+            },
+            {
+              "cpuMs": 505.494,
+              "wallMs": 492.89448500000026
+            },
+            {
+              "cpuMs": 37.067,
+              "wallMs": 52.30429700000013
+            },
+            {
+              "cpuMs": 486.629,
+              "wallMs": 493.8263400000001
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuMedianMs": 32.538,
+          "wallMedianMs": 28.560719999999947,
+          "samples": [
+            {
+              "cpuMs": 32.538,
+              "wallMs": 28.560719999999947
+            },
+            {
+              "cpuMs": 17.229,
+              "wallMs": 17.799433000000136
+            },
+            {
+              "cpuMs": 35.23,
+              "wallMs": 30.811234000000013
+            },
+            {
+              "cpuMs": 43.757,
+              "wallMs": 35.97798599999987
+            },
+            {
+              "cpuMs": 25.492,
+              "wallMs": 25.324491999999964
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuMedianMs": 2.0632,
+          "wallMedianMs": 1.902203600000007,
+          "samples": [
+            {
+              "cpuMs": 2.6106000000000003,
+              "wallMs": 1.9078620000000002
+            },
+            {
+              "cpuMs": 1.848,
+              "wallMs": 1.6100850000000038
+            },
+            {
+              "cpuMs": 2.0632,
+              "wallMs": 1.902203600000007
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuMedianMs": 2.4416,
+          "wallMedianMs": 2.166101600000002,
+          "samples": [
+            {
+              "cpuMs": 2.4416,
+              "wallMs": 2.3437725999999883
+            },
+            {
+              "cpuMs": 2.1614,
+              "wallMs": 2.166101600000002
+            },
+            {
+              "cpuMs": 3.249,
+              "wallMs": 1.4441160000000082
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "warmup-heavy",
+      "node": "v24.22.1",
+      "command": ["npm", "test", "--", "tests/sim/tick.test.ts", "--reporter=default"],
+      "burners": 36,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 22.199,
+      "oneMinuteLoadRange": [1.386, 11.877],
+      "vitestSeconds": 18.3,
+      "measurements": [
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuMedianMs": 1.77655,
+          "wallMedianMs": 5.554130116666723,
+          "samples": [
+            {
+              "cpuMs": 2.3701166666666666,
+              "wallMs": 6.451740783333329
+            },
+            {
+              "cpuMs": 1.8789333333333333,
+              "wallMs": 5.703090133333353
+            },
+            {
+              "cpuMs": 1.77655,
+              "wallMs": 5.554130116666723
+            },
+            {
+              "cpuMs": 1.35755,
+              "wallMs": 4.837060633333325
+            },
+            {
+              "cpuMs": 1.148,
+              "wallMs": 5.018281466666667
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        }
+      ]
+    },
+    {
+      "run": "after-normal-verified",
+      "node": "v24.22.1",
+      "command": [
+        "bash",
+        "-c",
+        "npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-normal-verified.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 62.027,
+      "oneMinuteLoadRange": [2.925, 5.062],
+      "vitestSeconds": 34.63,
+      "files": 140,
+      "passed": 2347,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 347.111
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 3604.39
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 2936.098
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2978.872
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 1594.394
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1939.133
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 747.134
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1045.092
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 1260.453
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 869.58
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 130.017
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 35.651
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 56.074
+        }
+      ],
+      "measurements": [
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 2,
+          "cpuMedianMs": 2.48885,
+          "wallMedianMs": 1.5332482333333246,
+          "samples": [
+            {
+              "cpuMs": 2.8184,
+              "wallMs": 1.6015012333333365
+            },
+            {
+              "cpuMs": 2.646533333333333,
+              "wallMs": 1.6061632333333289
+            },
+            {
+              "cpuMs": 2.298083333333333,
+              "wallMs": 1.5332482333333246
+            },
+            {
+              "cpuMs": 2.48885,
+              "wallMs": 1.2720995166666702
+            },
+            {
+              "cpuMs": 1.6493499999999999,
+              "wallMs": 1.3372912666666708
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 21.3875,
+          "wallMedianMs": 14.249550999999997,
+          "samples": [
+            {
+              "cpuMs": 51.311,
+              "wallMs": 28.780044999999973
+            },
+            {
+              "cpuMs": 13.589,
+              "wallMs": 11.906117999999992
+            },
+            {
+              "cpuMs": 19.365,
+              "wallMs": 15.451800999999989
+            },
+            {
+              "cpuMs": 13.511,
+              "wallMs": 10.529852000000005
+            },
+            {
+              "cpuMs": 22.84,
+              "wallMs": 13.047301000000004
+            },
+            {
+              "cpuMs": 98.652,
+              "wallMs": 76.50361399999997
+            },
+            {
+              "cpuMs": 19.935,
+              "wallMs": 8.837410999999975
+            },
+            {
+              "cpuMs": 50.003,
+              "wallMs": 40.92511200000001
+            },
+            {
+              "cpuMs": 71.038,
+              "wallMs": 42.53007199999996
+            },
+            {
+              "cpuMs": 7.893,
+              "wallMs": 7.817588999999998
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 370.168,
+          "wallMedianMs": 369.457909,
+          "samples": [
+            {
+              "cpuMs": 766.291,
+              "wallMs": 645.108591
+            },
+            {
+              "cpuMs": 636.096,
+              "wallMs": 644.337489
+            },
+            {
+              "cpuMs": 365.47,
+              "wallMs": 356.5331659999997
+            },
+            {
+              "cpuMs": 374.866,
+              "wallMs": 382.38265200000023
+            },
+            {
+              "cpuMs": 30.546,
+              "wallMs": 29.00251900000012
+            },
+            {
+              "cpuMs": 25.504,
+              "wallMs": 25.321372000000338
+            },
+            {
+              "cpuMs": 59.101,
+              "wallMs": 51.95415200000025
+            },
+            {
+              "cpuMs": 518.001,
+              "wallMs": 516.31477
+            },
+            {
+              "cpuMs": 27.287,
+              "wallMs": 26.95414299999993
+            },
+            {
+              "cpuMs": 520.843,
+              "wallMs": 521.8190939999995
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 21.739,
+          "wallMedianMs": 18.642344000000094,
+          "samples": [
+            {
+              "cpuMs": 21.739,
+              "wallMs": 18.642344000000094
+            },
+            {
+              "cpuMs": 17.584,
+              "wallMs": 17.634180000000015
+            },
+            {
+              "cpuMs": 21.632,
+              "wallMs": 20.68617499999982
+            },
+            {
+              "cpuMs": 24.205,
+              "wallMs": 16.227777999999944
+            },
+            {
+              "cpuMs": 22.923,
+              "wallMs": 26.362491999999975
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 2.8424,
+          "wallMedianMs": 2.058443999999986,
+          "samples": [
+            {
+              "cpuMs": 4.2976,
+              "wallMs": 2.058443999999986
+            },
+            {
+              "cpuMs": 2.1458,
+              "wallMs": 1.9516329999999926
+            },
+            {
+              "cpuMs": 2.8424,
+              "wallMs": 2.231688999999983
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 3.6832000000000003,
+          "wallMedianMs": 2.8435410000000045,
+          "samples": [
+            {
+              "cpuMs": 3.8082000000000003,
+              "wallMs": 4.185693599999991
+            },
+            {
+              "cpuMs": 3.1968,
+              "wallMs": 2.7856356000000004
+            },
+            {
+              "cpuMs": 3.6832000000000003,
+              "wallMs": 2.8435410000000045
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "after-heavy",
+      "node": "v24.22.1",
+      "command": [
+        "bash",
+        "-c",
+        "npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-heavy.json"
+      ],
+      "burners": 36,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 368.623,
+      "oneMinuteLoadRange": [3.541, 41.57],
+      "vitestSeconds": 178.25,
+      "files": 140,
+      "passed": 2347,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 2199.816
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 17564.172
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 14043.762
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 16129.095
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 7878.181
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 10390.703
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 4632.568
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 6553.909
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 4935.353
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 3643.233
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 688.944
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 184.364
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 190.954
+        }
+      ],
+      "measurements": [
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 20.106499999999997,
+          "wallMedianMs": 79.70644599999991,
+          "samples": [
+            {
+              "cpuMs": 55.516,
+              "wallMs": 192.50321000000008
+            },
+            {
+              "cpuMs": 14.928,
+              "wallMs": 51.78217299999983
+            },
+            {
+              "cpuMs": 17.711,
+              "wallMs": 77.46321899999998
+            },
+            {
+              "cpuMs": 14.215,
+              "wallMs": 81.94967299999985
+            },
+            {
+              "cpuMs": 22.502,
+              "wallMs": 72.04521699999987
+            },
+            {
+              "cpuMs": 117.37,
+              "wallMs": 469.47478
+            },
+            {
+              "cpuMs": 13.195,
+              "wallMs": 51.60539599999993
+            },
+            {
+              "cpuMs": 53.317,
+              "wallMs": 274.04201299999977
+            },
+            {
+              "cpuMs": 63.071,
+              "wallMs": 304.41708100000005
+            },
+            {
+              "cpuMs": 10.879,
+              "wallMs": 60.927474000000075
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 335.383,
+          "wallMedianMs": 1813.0606049999997,
+          "samples": [
+            {
+              "cpuMs": 569.312,
+              "wallMs": 2701.940703
+            },
+            {
+              "cpuMs": 511.493,
+              "wallMs": 2621.311012000001
+            },
+            {
+              "cpuMs": 337.587,
+              "wallMs": 1865.5645179999992
+            },
+            {
+              "cpuMs": 333.179,
+              "wallMs": 1760.556692
+            },
+            {
+              "cpuMs": 37.706,
+              "wallMs": 211.6031149999999
+            },
+            {
+              "cpuMs": 36.705,
+              "wallMs": 201.051637999999
+            },
+            {
+              "cpuMs": 76.544,
+              "wallMs": 366.5603140000003
+            },
+            {
+              "cpuMs": 530.169,
+              "wallMs": 3061.3519989999986
+            },
+            {
+              "cpuMs": 39.047,
+              "wallMs": 228.90535199999795
+            },
+            {
+              "cpuMs": 427.598,
+              "wallMs": 2458.146627000002
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 2,
+          "cpuMedianMs": 2.247133333333333,
+          "wallMedianMs": 6.555924216666669,
+          "samples": [
+            {
+              "cpuMs": 2.247133333333333,
+              "wallMs": 6.555924216666669
+            },
+            {
+              "cpuMs": 2.308466666666667,
+              "wallMs": 7.828302666666665
+            },
+            {
+              "cpuMs": 2.431,
+              "wallMs": 7.457051833333328
+            },
+            {
+              "cpuMs": 2.043416666666667,
+              "wallMs": 6.39343651666668
+            },
+            {
+              "cpuMs": 1.3364833333333332,
+              "wallMs": 5.19331333333333
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 17.591,
+          "wallMedianMs": 92.99460299999919,
+          "samples": [
+            {
+              "cpuMs": 17.591,
+              "wallMs": 92.09600300000056
+            },
+            {
+              "cpuMs": 17.473,
+              "wallMs": 93.43995699999869
+            },
+            {
+              "cpuMs": 18.53,
+              "wallMs": 129.81539300000077
+            },
+            {
+              "cpuMs": 29.039,
+              "wallMs": 92.99460299999919
+            },
+            {
+              "cpuMs": 16.942,
+              "wallMs": 81.64160500000071
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 3.1326,
+          "wallMedianMs": 11.334042399999998,
+          "samples": [
+            {
+              "cpuMs": 3.0248,
+              "wallMs": 9.00387899999996
+            },
+            {
+              "cpuMs": 3.1326,
+              "wallMs": 11.334042399999998
+            },
+            {
+              "cpuMs": 3.2296,
+              "wallMs": 11.457105200000024
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 3.5064,
+          "wallMedianMs": 7.484047200000077,
+          "samples": [
+            {
+              "cpuMs": 3.5064,
+              "wallMs": 7.218681000000015
+            },
+            {
+              "cpuMs": 3.1532,
+              "wallMs": 12.254521399999977
+            },
+            {
+              "cpuMs": 3.8994,
+              "wallMs": 7.484047200000077
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "before-perf-quiet",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "tests/mapgen/generate.perf.test.ts",
+        "tests/sim/tick.test.ts",
+        "tests/sim/battle/resolve.test.ts",
+        "tests/sim/battle/rerun.test.ts",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=../evidence/before-perf-quiet.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 8.002,
+      "oneMinuteLoadRange": [28.2, 30.48],
+      "vitestSeconds": 6.76,
+      "files": 4,
+      "passed": 77,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 277.656
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 2190.138
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 736.178
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 346.855
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 107.223
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 22.744
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 28.248
+        }
+      ],
+      "measurements": [
+        {
+          "label": "2 nation map",
+          "wallMs": 9.048431499999992,
+          "samples": [
+            6.7561509999999885, 6.802480000000003, 8.807309999999973, 8.808269999999993,
+            9.002533000000028, 9.094329999999957, 21.256875999999977, 32.04214300000001,
+            38.15488400000004, 61.13108500000004
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "4 nation map",
+          "wallMs": 295.89160300000003,
+          "samples": [
+            24.144680000000108, 24.364479999999958, 27.76189999999997, 42.01333999999997,
+            292.75741400000015, 299.0257919999999, 344.37313600000016, 357.981952,
+            380.1154940000001, 396.8353289999999
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "marching day, fastest of 3",
+          "wallMs": 1.0021640500000026,
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "immortal rerun, fastest of 5",
+          "wallMs": 15.462446,
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "the log and the result > resolves 300 against 300 in well under 50 ms",
+          "wallMs": 1.1368842000000086,
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "the log and the result > stays well under 50 ms with four mages casting on each side",
+          "wallMs": 1.3823306000000002,
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "after-perf-quiet",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "run",
+        "test:perf",
+        "--",
+        "--reporter=json",
+        "--outputFile=../evidence/after-perf-quiet.json"
+      ],
+      "burners": 0,
+      "exit": 1,
+      "elapsedSecondsIncludingGateAndLauncher": 1.001,
+      "oneMinuteLoadRange": [21.953, 21.953],
+      "failureBeforeTestStartup": "tsx CLI IPC socket EPERM; fixed by using node --import tsx.",
+      "measurements": []
+    },
+    {
+      "run": "after-perf-quiet-verified",
+      "node": "v24.22.1",
+      "command": [
+        "npm",
+        "run",
+        "test:perf",
+        "--",
+        "--reporter=json",
+        "--outputFile=../evidence/after-perf-quiet-verified.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 9.002,
+      "oneMinuteLoadRange": [11.559, 13.303],
+      "vitestSeconds": 7.44,
+      "files": 4,
+      "passed": 77,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 282.999
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 2599.517
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 758.047
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 484.602
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 108.666
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 23.669
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 26.527
+        }
+      ],
+      "measurements": [
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 19.079,
+          "wallMedianMs": 10.200401500000027,
+          "samples": [
+            {
+              "cpuMs": 41.349,
+              "wallMs": 20.252530999999976
+            },
+            {
+              "cpuMs": 10.138,
+              "wallMs": 9.017632000000049
+            },
+            {
+              "cpuMs": 13.528,
+              "wallMs": 8.123899999999992
+            },
+            {
+              "cpuMs": 12.902,
+              "wallMs": 10.037302000000011
+            },
+            {
+              "cpuMs": 24.63,
+              "wallMs": 10.363501000000042
+            },
+            {
+              "cpuMs": 93.131,
+              "wallMs": 56.53908199999995
+            },
+            {
+              "cpuMs": 12.236,
+              "wallMs": 6.581637000000001
+            },
+            {
+              "cpuMs": 51.329,
+              "wallMs": 43.73304099999996
+            },
+            {
+              "cpuMs": 63.882,
+              "wallMs": 37.62840499999999
+            },
+            {
+              "cpuMs": 11.519,
+              "wallMs": 7.834535999999957
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 321.60400000000004,
+          "wallMedianMs": 308.19001649999996,
+          "samples": [
+            {
+              "cpuMs": 499.982,
+              "wallMs": 412.06171700000004
+            },
+            {
+              "cpuMs": 467.462,
+              "wallMs": 413.2473339999999
+            },
+            {
+              "cpuMs": 356.619,
+              "wallMs": 336.37660300000016
+            },
+            {
+              "cpuMs": 302.108,
+              "wallMs": 282.420611
+            },
+            {
+              "cpuMs": 29.371,
+              "wallMs": 27.935197000000244
+            },
+            {
+              "cpuMs": 28.898,
+              "wallMs": 27.996803
+            },
+            {
+              "cpuMs": 58.593,
+              "wallMs": 47.06555400000025
+            },
+            {
+              "cpuMs": 407.7,
+              "wallMs": 385.48120599999993
+            },
+            {
+              "cpuMs": 27.26,
+              "wallMs": 26.1106749999999
+            },
+            {
+              "cpuMs": 341.1,
+              "wallMs": 333.9594219999999
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 2,
+          "cpuMedianMs": 1.8238833333333335,
+          "wallMedianMs": 0.8676890166666681,
+          "samples": [
+            {
+              "cpuMs": 1.8238833333333335,
+              "wallMs": 0.8676890166666681
+            },
+            {
+              "cpuMs": 1.8530666666666666,
+              "wallMs": 0.9699672333333335
+            },
+            {
+              "cpuMs": 1.93235,
+              "wallMs": 0.9465219000000009
+            },
+            {
+              "cpuMs": 1.07815,
+              "wallMs": 0.7304834333333322
+            },
+            {
+              "cpuMs": 0.8026166666666666,
+              "wallMs": 0.7172138666666645
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 18.217,
+          "wallMedianMs": 16.65590300000008,
+          "samples": [
+            {
+              "cpuMs": 17.23,
+              "wallMs": 15.123381999999992
+            },
+            {
+              "cpuMs": 18.217,
+              "wallMs": 16.65590300000008
+            },
+            {
+              "cpuMs": 26.742,
+              "wallMs": 17.982843999999886
+            },
+            {
+              "cpuMs": 20.214,
+              "wallMs": 18.248763000000054
+            },
+            {
+              "cpuMs": 16.654,
+              "wallMs": 16.37261699999999
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 2.5254000000000003,
+          "wallMedianMs": 1.366274199999998,
+          "samples": [
+            {
+              "cpuMs": 2.6994,
+              "wallMs": 1.366274199999998
+            },
+            {
+              "cpuMs": 2.5254000000000003,
+              "wallMs": 1.4186528000000067
+            },
+            {
+              "cpuMs": 1.8332000000000002,
+              "wallMs": 1.2049080000000003
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 2.7214,
+          "wallMedianMs": 1.439473799999996,
+          "samples": [
+            {
+              "cpuMs": 2.7214,
+              "wallMs": 1.5871737999999938
+            },
+            {
+              "cpuMs": 2.3738,
+              "wallMs": 1.4023523999999952
+            },
+            {
+              "cpuMs": 3.8068,
+              "wallMs": 1.439473799999996
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "after-node22",
+      "node": "v22.23.4",
+      "command": [
+        "bash",
+        "-c",
+        "node --version && npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-node22.json"
+      ],
+      "burners": 0,
+      "exit": 1,
+      "elapsedSecondsIncludingGateAndLauncher": 30.015,
+      "oneMinuteLoadRange": [6.596, 8.998],
+      "failureBeforeTestStartup": "Formatting check failed for the new QA evidence JSON; formatted before final validation.",
+      "measurements": []
+    },
+    {
+      "run": "after-node22-verified",
+      "node": "v22.23.4",
+      "command": [
+        "bash",
+        "-c",
+        "node --version && npm run typecheck && npm run lint && npm test -- --reporter=default --reporter=json --outputFile=../evidence/after-node22-verified.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 67.027,
+      "oneMinuteLoadRange": [0.692, 6.535],
+      "vitestSeconds": 36.95,
+      "files": 140,
+      "passed": 2347,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 575.442
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 4332.538
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 3827.633
+        },
+        {
+          "file": "tests/mapgen/generate.termination.large.test.ts",
+          "test": "large maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 3845.676
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 2076.734
+        },
+        {
+          "file": "tests/mapgen/generate.termination.medium.test.ts",
+          "test": "medium maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 2093.795
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance without wilds",
+          "status": "passed",
+          "durationMs": 926.544
+        },
+        {
+          "file": "tests/mapgen/generate.termination.small.test.ts",
+          "test": "small maps for 100 consecutive seeds terminate within tolerance with wilds",
+          "status": "passed",
+          "durationMs": 1062.354
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 1236.078
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 810.88
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 149.996
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 43.267
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 42.5
+        }
+      ],
+      "measurements": [
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 30.756500000000003,
+          "wallMedianMs": 23.35009150000002,
+          "samples": [
+            {
+              "cpuMs": 51.505,
+              "wallMs": 44.86568
+            },
+            {
+              "cpuMs": 37.273,
+              "wallMs": 24.74165400000004
+            },
+            {
+              "cpuMs": 12.595,
+              "wallMs": 16.060555000000022
+            },
+            {
+              "cpuMs": 22.486,
+              "wallMs": 15.481446000000005
+            },
+            {
+              "cpuMs": 24.24,
+              "wallMs": 21.958529
+            },
+            {
+              "cpuMs": 189.616,
+              "wallMs": 133.015828
+            },
+            {
+              "cpuMs": 12.957,
+              "wallMs": 12.026744000000008
+            },
+            {
+              "cpuMs": 67.606,
+              "wallMs": 57.305879000000004
+            },
+            {
+              "cpuMs": 74.452,
+              "wallMs": 94.28347499999995
+            },
+            {
+              "cpuMs": 13.795,
+              "wallMs": 13.765361999999982
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 451.063,
+          "wallMedianMs": 510.44949599999995,
+          "samples": [
+            {
+              "cpuMs": 675.942,
+              "wallMs": 737.20111
+            },
+            {
+              "cpuMs": 536.665,
+              "wallMs": 562.2437640000003
+            },
+            {
+              "cpuMs": 439.1,
+              "wallMs": 491.3261520000001
+            },
+            {
+              "cpuMs": 496.666,
+              "wallMs": 529.5728399999998
+            },
+            {
+              "cpuMs": 46.173,
+              "wallMs": 45.809780000000046
+            },
+            {
+              "cpuMs": 47.241,
+              "wallMs": 47.911553999999796
+            },
+            {
+              "cpuMs": 70.065,
+              "wallMs": 70.8422230000001
+            },
+            {
+              "cpuMs": 565.125,
+              "wallMs": 648.9176039999998
+            },
+            {
+              "cpuMs": 32.928,
+              "wallMs": 42.24006499999996
+            },
+            {
+              "cpuMs": 463.026,
+              "wallMs": 564.4566029999996
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 2,
+          "cpuMedianMs": 1.2849,
+          "wallMedianMs": 1.2292115666666632,
+          "samples": [
+            {
+              "cpuMs": 2.1941333333333333,
+              "wallMs": 1.2768642500000018
+            },
+            {
+              "cpuMs": 1.2849,
+              "wallMs": 1.1749857166666666
+            },
+            {
+              "cpuMs": 1.2345,
+              "wallMs": 1.3284794500000012
+            },
+            {
+              "cpuMs": 1.1293499999999999,
+              "wallMs": 0.9241588166666664
+            },
+            {
+              "cpuMs": 1.4139000000000002,
+              "wallMs": 1.2292115666666632
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 27.258,
+          "wallMedianMs": 19.53916500000014,
+          "samples": [
+            {
+              "cpuMs": 43.14,
+              "wallMs": 33.5211139999999
+            },
+            {
+              "cpuMs": 50.928,
+              "wallMs": 30.488567999999987
+            },
+            {
+              "cpuMs": 23.955,
+              "wallMs": 19.53916500000014
+            },
+            {
+              "cpuMs": 27.258,
+              "wallMs": 18.75811399999975
+            },
+            {
+              "cpuMs": 14.678,
+              "wallMs": 14.654577000000245
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 2.854,
+          "wallMedianMs": 2.576674000000003,
+          "samples": [
+            {
+              "cpuMs": 3.7454,
+              "wallMs": 2.576674000000003
+            },
+            {
+              "cpuMs": 2.854,
+              "wallMs": 2.009348799999998
+            },
+            {
+              "cpuMs": 1.6122,
+              "wallMs": 3.2727403999999978
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 3.0224,
+          "wallMedianMs": 2.2381200000000034,
+          "samples": [
+            {
+              "cpuMs": 3.1870000000000003,
+              "wallMs": 2.6450223999999936
+            },
+            {
+              "cpuMs": 3.0224,
+              "wallMs": 1.9882170000000088
+            },
+            {
+              "cpuMs": 2.2454,
+              "wallMs": 2.2381200000000034
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    },
+    {
+      "run": "after-node22-perf",
+      "node": "v22.23.4",
+      "command": [
+        "npm",
+        "run",
+        "test:perf",
+        "--",
+        "--reporter=json",
+        "--outputFile=../evidence/after-node22-perf.json"
+      ],
+      "burners": 0,
+      "exit": 0,
+      "elapsedSecondsIncludingGateAndLauncher": 10.009,
+      "oneMinuteLoadRange": [4.458, 5.087],
+      "vitestSeconds": 9.01,
+      "files": 4,
+      "passed": 77,
+      "failed": 0,
+      "pending": 0,
+      "todo": 0,
+      "selectedTests": [
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 150 ms on Medium with 2 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 363.968
+        },
+        {
+          "file": "tests/mapgen/generate.perf.test.ts",
+          "test": "generation time with wilds takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)",
+          "status": "passed",
+          "durationMs": 2979.825
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance runs a busy game the same way twice",
+          "status": "passed",
+          "durationMs": 999.676
+        },
+        {
+          "file": "tests/sim/tick.test.ts",
+          "test": "advance keeps a heavy marching day near the 2 ms budget (docs/06)",
+          "status": "passed",
+          "durationMs": 627.564
+        },
+        {
+          "file": "tests/sim/battle/rerun.test.ts",
+          "test": "record sizes (docs/12, S1.6) re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms",
+          "status": "passed",
+          "durationMs": 122.572
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result resolves 300 against 300 in well under 50 ms",
+          "status": "passed",
+          "durationMs": 22.347
+        },
+        {
+          "file": "tests/sim/battle/resolve.test.ts",
+          "test": "the log and the result stays well under 50 ms with four mages casting on each side",
+          "status": "passed",
+          "durationMs": 24.171
+        }
+      ],
+      "measurements": [
+        {
+          "label": "Medium map, 2 nations",
+          "budgetMs": 150,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 30.994999999999997,
+          "wallMedianMs": 13.78759500000001,
+          "samples": [
+            {
+              "cpuMs": 59.164,
+              "wallMs": 28.09907400000003
+            },
+            {
+              "cpuMs": 39.973,
+              "wallMs": 14.201595999999995
+            },
+            {
+              "cpuMs": 16.363,
+              "wallMs": 10.743527000000029
+            },
+            {
+              "cpuMs": 21.936,
+              "wallMs": 12.509441999999979
+            },
+            {
+              "cpuMs": 22.017,
+              "wallMs": 13.373594000000026
+            },
+            {
+              "cpuMs": 176.543,
+              "wallMs": 85.77483099999995
+            },
+            {
+              "cpuMs": 10.164,
+              "wallMs": 8.807579000000032
+            },
+            {
+              "cpuMs": 59.042,
+              "wallMs": 44.56024500000001
+            },
+            {
+              "cpuMs": 72.122,
+              "wallMs": 44.22814699999998
+            },
+            {
+              "cpuMs": 9.73,
+              "wallMs": 8.629054999999994
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 150 ms on Medium with 2 nations (median of 10 seeds)"
+        },
+        {
+          "label": "Medium map, 4 nations",
+          "budgetMs": 1000,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 354.349,
+          "wallMedianMs": 349.022197,
+          "samples": [
+            {
+              "cpuMs": 462.399,
+              "wallMs": 417.5886110000001
+            },
+            {
+              "cpuMs": 495.409,
+              "wallMs": 486.4237230000001
+            },
+            {
+              "cpuMs": 422.284,
+              "wallMs": 412.363507
+            },
+            {
+              "cpuMs": 320.822,
+              "wallMs": 315.03856399999995
+            },
+            {
+              "cpuMs": 31.054,
+              "wallMs": 30.70009600000003
+            },
+            {
+              "cpuMs": 29.019,
+              "wallMs": 28.902970000000096
+            },
+            {
+              "cpuMs": 51.724,
+              "wallMs": 50.561163000000306
+            },
+            {
+              "cpuMs": 450.095,
+              "wallMs": 432.24577999999974
+            },
+            {
+              "cpuMs": 30.973,
+              "wallMs": 30.501028000000133
+            },
+            {
+              "cpuMs": 387.876,
+              "wallMs": 383.00583000000006
+            }
+          ],
+          "context": "tests/mapgen/generate.perf.test.ts > generation time with wilds > takes under 1,000 ms on Medium with 4 nations (median of 10 seeds)"
+        },
+        {
+          "label": "heavy marching day",
+          "budgetMs": 2,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 2,
+          "cpuMedianMs": 1.3605666666666667,
+          "wallMedianMs": 0.9673543666666622,
+          "samples": [
+            {
+              "cpuMs": 3.1597166666666667,
+              "wallMs": 1.2309256166666729
+            },
+            {
+              "cpuMs": 1.6041166666666666,
+              "wallMs": 0.951160249999998
+            },
+            {
+              "cpuMs": 1.3605666666666667,
+              "wallMs": 0.9673543666666622
+            },
+            {
+              "cpuMs": 1.04955,
+              "wallMs": 0.8396680999999944
+            },
+            {
+              "cpuMs": 1.3508666666666669,
+              "wallMs": 0.9801935999999993
+            }
+          ],
+          "context": "tests/sim/tick.test.ts > advance > keeps a heavy marching day near the 2 ms budget (docs/06)"
+        },
+        {
+          "label": "immortal battle with detail",
+          "budgetMs": 45,
+          "headroomMs": 45,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 29.14,
+          "wallMedianMs": 20.220035999999936,
+          "samples": [
+            {
+              "cpuMs": 28.915,
+              "wallMs": 17.255571000000145
+            },
+            {
+              "cpuMs": 36.887,
+              "wallMs": 18.69365700000003
+            },
+            {
+              "cpuMs": 29.14,
+              "wallMs": 20.326385000000073
+            },
+            {
+              "cpuMs": 37.276,
+              "wallMs": 21.852959000000055
+            },
+            {
+              "cpuMs": 20.414,
+              "wallMs": 20.220035999999936
+            }
+          ],
+          "context": "tests/sim/battle/rerun.test.ts > record sizes (docs/12, S1.6) > re-runs the worst battle (300 against 300 for 50 rounds) with detail in under 45 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 1.8816,
+          "wallMedianMs": 1.265541600000006,
+          "samples": [
+            {
+              "cpuMs": 1.7873999999999999,
+              "wallMs": 1.265541600000006
+            },
+            {
+              "cpuMs": 3.2984,
+              "wallMs": 1.5790094000000068
+            },
+            {
+              "cpuMs": 1.8816,
+              "wallMs": 1.0933432000000038
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > resolves 300 against 300 in well under 50 ms"
+        },
+        {
+          "label": "300 against 300 battle",
+          "budgetMs": 50,
+          "headroomMs": 0,
+          "cpuOnlyHeadroomMs": 0,
+          "cpuMedianMs": 1.8996,
+          "wallMedianMs": 1.3797046000000024,
+          "samples": [
+            {
+              "cpuMs": 1.8996,
+              "wallMs": 1.3797046000000024
+            },
+            {
+              "cpuMs": 2.8891999999999998,
+              "wallMs": 1.4237765999999965
+            },
+            {
+              "cpuMs": 1.2864,
+              "wallMs": 1.2126041999999984
+            }
+          ],
+          "context": "tests/sim/battle/resolve.test.ts > the log and the result > stays well under 50 ms with four mages casting on each side"
+        }
+      ]
+    }
+  ]
+}

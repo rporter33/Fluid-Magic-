@@ -65,11 +65,14 @@ npm ci
 npm run typecheck && npm run lint && npm test
 ```
 
-- CI runs the same gate on every push and pull request (Node 22; `package.json` asks for Node 22.12 or newer).
+- CI runs the same gate on every push and pull request (Node 22; `package.json` asks for Node 22.12 or newer),
+  then `npm run test:perf` for serial, quiet-run wall-clock acceptance.
 - `npm run lint` runs ESLint and `prettier --check` on code. Markdown, `docs/design/` and `art-source/` are excluded
   from prettier.
-- A few tests are heavy sweeps (`tests/mapgen/generate.termination.*`) or time work. On a heavily loaded machine
-  some can time out. Re-run the failing file alone before calling it a failure.
+- Timing checks in `npm test` use isolated-process CPU medians; `npm run test:perf` additionally enforces elapsed
+  budgets on a quiet runner. Heavy correctness sweeps retain their assertions and finite watchdogs. See
+  `docs/qa/timing.md` for measurement contracts and `docs/qa/task3-results.md` for load reproduction. A failing run
+  is still a failed gate: record it and investigate; a passing retry does not erase the failure.
 - Never skip, disable or loosen a test to get green.
 
 Useful commands: `npm run sim:aivai -- --games 20 --seed 1` (the runner), `npm run sim:aivai -- --matrix` (the preset

@@ -1,7 +1,8 @@
 // End-to-end map generation: the Phase 1 tests from docs/10-milestone-1.md (connectivity,
 // capital distance, province count, neighbors, springs coverage) and acceptance criterion 3,
 // checked with helpers independent of src/mapgen (playable.ts), plus determinism.
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import * as voronoi from '../../src/mapgen/voronoi';
 import { MAPGEN, type MapSizeId } from '../../src/content/mapgen';
 import { generateMap } from '../../src/mapgen/generate';
 import type { CapitalSpec, MapData, MapGenParams } from '../../src/mapgen/types';
@@ -152,11 +153,18 @@ describe('determinism', () => {
 describe('a shortfall', () => {
   it('fails the attempt with its reason, and the map with the last reasons, never spinning', () => {
     // With no draw allowed, no site finds a point inside the outline: every attempt runs short.
-    patched(MAPGEN as { pointTries: number }, 'pointTries', 0, () => {
-      expect(() => generateMap(medium(1))).toThrow(
-        'no valid map for seed 1: 60 of 60 sites found no point inside the outline',
-      );
-    });
+    const attempts = vi.spyOn(voronoi, 'poissonDisc');
+    try {
+      patched(MAPGEN as { pointTries: number }, 'pointTries', 0, () => {
+        expect(() => generateMap(medium(1))).toThrow(
+          'no valid map for seed 1: 60 of 60 sites found no point inside the outline',
+        );
+        // A shortfall exhausts exactly the documented attempt cap, regardless of scheduling.
+        expect(attempts).toHaveBeenCalledTimes(MAPGEN.maxAttempts);
+      });
+    } finally {
+      attempts.mockRestore();
+    }
     expect(generateMap(medium(1))).toEqual(MAPS[0]);
   });
 });

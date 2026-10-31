@@ -6,5 +6,7 @@ export default defineConfig({
   test: {
     include: ['tests/**/*.test.ts'],
     environment: 'node',
+    // CPU accounting must not include other test files in the same process.
+    pool: 'forks',
   },
 });

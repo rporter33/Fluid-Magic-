@@ -20,6 +20,7 @@ import { createGame } from '../../../src/sim/createGame';
 import { cloneRng, createRng } from '../../../src/sim/rng';
 import { advance } from '../../../src/sim/tick';
 import type { BattleRecord, GameState } from '../../../src/sim/types';
+import { expectPerformance, measure } from '../../helpers/performance';
 import { besiege, nation, neighbors, redField, twoNationGame } from '../fixtures';
 import { NAMED, namedFixture } from './fixtures/named';
 import { NAMED_6B2 } from './fixtures/named6b';
@@ -225,13 +226,8 @@ describe('record sizes (docs/12, S1.6)', () => {
     const setup = toSetupRecord(namedFixture('immortal').build());
     const rerun = { setup, rng: createRng(1), rules: battleRulesHash() };
     rerunBattle(rerun, []);
-    // The best of five, with x2 slack for loaded CI machines (docs/12, S1.6).
-    let best = Infinity;
-    for (let i = 0; i < 5; i++) {
-      const start = performance.now();
-      rerunBattle(rerun, []);
-      best = Math.min(best, performance.now() - start);
-    }
-    expect(best).toBeLessThan(2 * 45);
+    // Median of all five runs. Keep docs/12 S1.6's existing 45 ms + 45 ms CI headroom.
+    const samples = Array.from({ length: 5 }, () => measure(() => rerunBattle(rerun, [])));
+    expectPerformance('immortal battle with detail', samples, 45, { headroomMs: 45 });
   });
 });

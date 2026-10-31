@@ -250,3 +250,17 @@ with `npm run sim:aivai`. They do not gate M1; they gate Tier 2 of the record.
 - [ ] The AI never leaves a prisoner unhandled for 60 days.
 - [ ] No AI refusal in 20 games with officers on.
 - [ ] The playtest's two questions, answered by the owner after three matches: a named person made a story the player retold; officer pauses did not outnumber army pauses.
+
+## QA timing measurements (Task 3, 2026-10-25)
+
+No gameplay, AI, balance, or performance-target number changed. Full measurements and the
+reproduction commands are in [the Task 3 QA record](qa/task3-results.md).
+
+| Area | Before | After | Measurement / reason |
+|---|---|---|---|
+| Medium map, wilds on, 2 / 4 nations | wall median of seeds 1–10, <150 / <1,000 ms | same seeds and limits; CPU median in the loaded gate, **both** wall and CPU in serial CI acceptance; both configurations warmed with seed 99 | Original 4-nation test: 2,264.25 ms wall under 36 pinned CPU burners; no added performance headroom |
+| 300 vs 300 resolver, plain / mages | fastest of three five-seed mean times, <50 ms | median of the same three five-seed means, <50 ms CPU plus quiet wall acceptance | No new headroom; all 15 battles retained |
+| Heavy marching day | fastest of three 60-day batches, <10 ms guard for a 2 ms target | median of five 60-day batches, <4 ms process CPU and <2 ms quiet elapsed time | Two normal trials showed summed V8 process CPU about 1.6× elapsed (2.10/1.30 and 2.01/1.25 ms/day); 2× CPU-only headroom leaves ~25% above that ratio, remains stricter than the old 10 ms guard, and never increases the 2 ms elapsed target. Every batch retains its no-battles assertion and now also checks that 60 days elapsed |
+| Immortal replay with detail | fastest of five, 45 ms ×2 | median of five, 45 ms + existing 45 ms CI allowance, CPU plus quiet wall acceptance | Original fastest wall sample under load: 109.55 ms; the documented performance allowance is unchanged |
+| Busy-game 90-day determinism watchdog | 5 s | 15 s | 6.24 s under 36 burners on 9 logical CPUs; >2× observed scheduling headroom, byte equality unchanged |
+| Termination sweeps | 60 s per 100 maps | unchanged | All six original sweeps passed under the same load; slowest 18.95 s. No seed or validation removed |

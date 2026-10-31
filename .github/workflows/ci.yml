@@ -22,3 +22,5 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
+      # Keep real elapsed-time acceptance on a quiet runner, without parallel test files.
+      - run: npm run test:perf
