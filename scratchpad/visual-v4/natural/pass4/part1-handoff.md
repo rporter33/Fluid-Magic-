@@ -56,6 +56,13 @@ banks min 3.02 to 3.28; rails 0 fails at start, Near 250, Near 400 and M40; day 
 6. Frost cannot pass the snow-distance rule; the best calm colour (#95CDF7) reaches 18.6 / 17.7. Off by default, review only.
 7. At 1440 px the pinned clock covers the last two top-bar buttons (R, L), which scroll under it as designed.
 
+## Owner decision recorded after the pause
+
+2026-10-26: the owner chose **Q8 Option B**, the shared bake plus full-density Near terrain tiles.
+Read [q8-review/decision.md](q8-review/decision.md) before scale step 8. This resolves the A/B choice;
+the pool policy and new acceptance thresholds are engineering proposals, and no renderer or art was changed.
+The steps and unfinished checks below remain in order.
+
 ## Next step for whoever resumes
 
 1. On `part1/out/page-s10.html` (equal to the built page), run `part1/tools/lanes10.sh A`, `B`, `C`, `D` (the natural suites,
